@@ -1,0 +1,32 @@
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.hibernate.SpringHibernateSample'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.hibernate:hibernate-core'
+    compile 'javax.servlet:javax.servlet-api'
+    compile 'org.javassist:javassist'
+    compile 'mysql:mysql-connector-java'
+    compile 'commons-dbcp:commons-dbcp'
+    compile 'org.apache.tomcat:tomcat-dbcp:8.0.21'
+}
+
+
