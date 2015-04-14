@@ -1,11 +1,7 @@
 spring-hibernate
 ==========================
 
-This project demonstrates using Hibernate with Spring Boot. Details on the use of Hibernate and Spring in this application can be found on my blog at http://nixmash.com. 
-
-The app uses MySQL backend. Since this is for purpose of demonstration, configure connection in AppConfig class. Use setup.sql in /install to create schema and populate tables.
-
-The app is based on Chapter #7 of Pro Spring, Fourth Edition from Apress, "Using Hibernate." (An excellent book, btw.) Here is [the book's listing on Apress](http://goo.gl/q2w50H). For fellow Safari users, here is the online version of it [on Safari](http://goo.gl/TD6nuO).
+This project demonstrates using Hibernate with Spring Boot. Blog posts covering various aspects of the application can be found at http://nixmash.com. 
 
 ##Implemented##
 
@@ -38,4 +34,8 @@ The app is based on Chapter #7 of Pro Spring, Fourth Edition from Apress, "Using
 ##Installation##
 
 Run the setup.sql script in the /install directory to populate the database. Update Datasource connection properties in /resources/application.properties file. Build with gradle and run with gradle :bootRun.
+
+##References##
+
+Version 0.0.1 of the app was based on Chapter #7 of Pro Spring, Fourth Edition from Apress, "Using Hibernate." (An excellent book, btw.) Here is [the book's listing on Apress](http://goo.gl/q2w50H). For fellow Safari users, here is the online version of it [on Safari](http://goo.gl/TD6nuO).
 
