@@ -2,23 +2,34 @@ package io.hibernate;
 
 import io.hibernate.dao.Contact;
 import io.hibernate.dao.ContactDao;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 
-@EnableAutoConfiguration
 public class SpringHibernateSample {
 
+    private static PropertyClass propertyClass;
 
     public static void main(String[] args) {
-
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(AppConfig.class);
         ctx.refresh();
         ContactDao contactDao = ctx.getBean(ContactDao.class);
-        System.out.println();
+        propertyClass = ctx.getBean(PropertyClass.class);
 
+        propertiesDemo();
+        hibernateDemo(contactDao);
+
+
+    }
+
+    private static void propertiesDemo() {
+        SpringPropertiesUtil.printProperty(
+                "propertyClass.getToken() in another class",
+                propertyClass.getToken());
+    }
+
+    private static void hibernateDemo(ContactDao contactDao) {
         // region List Single Contact
 
         Contact contact = contactDao.findById(1l);
@@ -60,9 +71,7 @@ public class SpringHibernateSample {
         listContactsWithDetail(contacts);
 
         // endregion
-
     }
-
 
     private static void listContacts(List<Contact> contacts) {
         System.out.println("LISTING CONTACTS WITHOUT DETAILS -----------------------------");
