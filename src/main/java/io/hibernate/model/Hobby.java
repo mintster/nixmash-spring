@@ -1,4 +1,6 @@
-package io.hibernate.dao;
+package io.hibernate.model;
+
+import io.hibernate.model.Contact;
 
 import javax.persistence.*;
 import java.io.Serializable;

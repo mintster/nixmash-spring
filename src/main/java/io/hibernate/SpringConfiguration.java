@@ -1,14 +1,17 @@
 package io.hibernate;
 
-import io.hibernate.dao.Contact;
-import io.hibernate.dao.ContactTelDetail;
-import io.hibernate.dao.Hobby;
+import io.hibernate.model.Contact;
+import io.hibernate.model.ContactTelDetail;
+import io.hibernate.model.Hobby;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
@@ -17,35 +20,28 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-
-
-//@ImportResource("app-context.xml")
-//
-//@PropertySource("classpath:application.properties")
 
 @Configuration
 @EnableConfigurationProperties
 @EnableTransactionManagement
 @ComponentScan(basePackages = "io.hibernate")
 @PropertySource("classpath:application.properties")
-@ImportResource("app-context.xml")
-public class AppConfig {
+public class SpringConfiguration {
 
     private
-    @Value("${username}")
+    @Value("${mysql.username}")
     String username;
 
     @Autowired
     private Environment env;
 
     @Autowired
-    private PropertyClass propertyClass;
+    private SpringProperties springProperties;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
+        PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
 
         Resource[] resources = new ClassPathResource[]{
                 new ClassPathResource("application.properties")};
@@ -66,20 +62,16 @@ public class AppConfig {
                 .buildSessionFactory();
     }
 
+    // region v0.0.2 printProperties()
 
-    @PostConstruct
-    public void printProperties() {
-        SpringPropertiesUtil.printProperty(
-                "env.getProperty(\"username\")",
-                env.getProperty("username"));
-        SpringPropertiesUtil.printProperty(
-                "SpringPropertiesUtil.getProperty(\"username\")",
-                SpringPropertiesUtil.getProperty("username"));
-        SpringPropertiesUtil.printProperty(
-                "@Value(\"${username}\"", username);
-        SpringPropertiesUtil.printProperty(
-                "propertyClass.getToken()", propertyClass.getToken());
-    }
+//    @PostConstruct
+//    public void printProperties() {
+//        SpringUtils.printProperty("env.getProperty(\"token\")", env.getProperty("token"));
+//        SpringUtils.printProperty("springProperties.getToken()", springProperties.getToken());
+//        SpringUtils.printProperty("username", username);
+//    }
+
+    // endregion
 
     @Bean
     public DataSource getDataSource() {
@@ -87,9 +79,8 @@ public class AppConfig {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/" + env.getProperty("mysql.database"));
-        dataSource.setUsername(username);
+        dataSource.setUsername(env.getProperty("mysql.username"));
         dataSource.setPassword(env.getProperty("mysql.password"));
-
         return dataSource;
     }
 
@@ -97,5 +88,6 @@ public class AppConfig {
     public HibernateTransactionManager hibTransMan() {
         return new HibernateTransactionManager(sessionFactory());
     }
+
 
 }

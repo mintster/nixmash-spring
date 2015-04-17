@@ -1,38 +1,45 @@
 package io.hibernate;
 
-import io.hibernate.dao.Contact;
-import io.hibernate.dao.ContactDao;
+import io.hibernate.model.Contact;
+import io.hibernate.service.ContactService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 
-public class SpringHibernateSample {
+public class SpringHibernate {
 
-    private static PropertyClass propertyClass;
+    private static SpringProperties springProperties;
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.register(AppConfig.class);
+        ctx.register(SpringConfiguration.class);
         ctx.refresh();
-        ContactDao contactDao = ctx.getBean(ContactDao.class);
-        propertyClass = ctx.getBean(PropertyClass.class);
 
-        propertiesDemo();
-        hibernateDemo(contactDao);
+        ContactService contactService = (ContactService) ctx.getBean("contactService");
+
+        springProperties = ctx.getBean(SpringProperties.class);
+
+//        propertiesDemo();
+
+        hibernateDemo(contactService);
 
 
     }
 
+//        region v0.0.2 propertiesDemo()
     private static void propertiesDemo() {
-        SpringPropertiesUtil.printProperty(
-                "propertyClass.getToken() in another class",
-                propertyClass.getToken());
+        SpringUtils.printProperty(
+                "springProperties.getToken() in another class",
+                springProperties.getToken());
     }
 
-    private static void hibernateDemo(ContactDao contactDao) {
+//    endregion
+
+    private static void hibernateDemo(ContactService contactService) {
+
         // region List Single Contact
 
-        Contact contact = contactDao.findById(1l);
+        Contact contact = contactService.getContact(1l);
         System.out.println();
         System.out.println("CONTACT WITH ID 1 --------------------------------------");
         System.out.println();
@@ -43,7 +50,7 @@ public class SpringHibernateSample {
 
         // region List All Contacts Without Detail
 
-        List<Contact> contacts = contactDao.findAll();
+        List<Contact> contacts = contactService.getContacts();
         listContacts(contacts);
 
         // endregion
@@ -67,7 +74,7 @@ public class SpringHibernateSample {
 
         // region List All Contacts with Details
 
-        contacts = contactDao.findAllWithDetail();
+        contacts = contactService.getContactsWithDetail();
         listContactsWithDetail(contacts);
 
         // endregion

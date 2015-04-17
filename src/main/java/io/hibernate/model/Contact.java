@@ -1,4 +1,4 @@
-package io.hibernate.dao;
+package io.hibernate.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,13 +9,16 @@ import java.util.Set;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name="contact")
+@Table(name = "contact")
 @NamedQueries({
-        @NamedQuery(name="Contact.findById",
-                query="select distinct c from Contact c left join fetch c.contactTelDetails t left join fetch c.hobbies h where c.id= :id"),
-        @NamedQuery(name="Contact.findAllWithDetail",
-                query="select distinct c from Contact c left join fetch c.contactTelDetails t left join fetch c.hobbies h")
-                })
+        @NamedQuery(name = "Contact.findById",
+                query = "select distinct c from Contact c left join fetch c.contactTelDetails t left join fetch c.hobbies h where c.id= :id"),
+        @NamedQuery(name = "Contact.findAllWithDetail",
+                query = "select distinct c from Contact c left join fetch c.contactTelDetails t left join fetch c.hobbies h"),
+        @NamedQuery(
+                name = "Contact.findContactsByEmail",
+                query = "select distinct c from Contact c where email like :email")
+})
 
 public class Contact implements Serializable {
     private Long id;
@@ -32,7 +35,7 @@ public class Contact implements Serializable {
     }
 
     public void setId(Long id) {
-        this.id= id;
+        this.id = id;
     }
 
     @Version
@@ -81,8 +84,8 @@ public class Contact implements Serializable {
     private Set<ContactTelDetail> contactTelDetails =
             new HashSet<ContactTelDetail>();
 
-    @OneToMany(mappedBy="contact", cascade=CascadeType.ALL,
-            orphanRemoval=true)
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     public Set<ContactTelDetail> getContactTelDetails() {
         return this.contactTelDetails;
     }
@@ -101,6 +104,7 @@ public class Contact implements Serializable {
     }
 
     private Set<Hobby> hobbies = new HashSet<Hobby>();
+
     @ManyToMany
     @JoinTable(name = "contact_hobby_detail",
             joinColumns = @JoinColumn(name = "contact_id"),

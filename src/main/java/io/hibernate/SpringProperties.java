@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix="prop")
-public class PropertyClass {
+public class SpringProperties {
 
 
     private String token;
