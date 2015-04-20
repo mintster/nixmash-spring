@@ -43,7 +43,6 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public List<Contact> getContactsByEmail(String email) {
-        notNull(email, "email can't be null");
         return contactDao.findByEmail(email);
     }
 

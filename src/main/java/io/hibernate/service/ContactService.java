@@ -30,7 +30,6 @@ public interface ContactService {
      */
     List<Contact> getContacts();
     List<Contact> getContactsWithDetail();
-
     List<Contact> getContactsByEmail(String email);
 
     /**
