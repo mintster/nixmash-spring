@@ -1,4 +1,4 @@
-package io.hibernate.model;
+package com.nixmash.springdata.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,10 @@ import static javax.persistence.GenerationType.IDENTITY;
                 name = "Contact.findContactsByEmail",
                 query = "select distinct c from Contact c where email like :email")
 })
-
+@SqlResultSetMapping(
+        name="contactResult",
+        entities=@EntityResult(entityClass=Contact.class)
+)
 public class Contact implements Serializable {
     private Long id;
     private int version;

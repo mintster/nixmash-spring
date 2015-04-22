@@ -1,11 +1,22 @@
-spring-hibernate
+spring-data
 ==========================
 
-This project demonstrates using Hibernate with Spring Boot. Blog posts covering various aspects of the application can be found at http://nixmash.com. 
+This project demonstrates configuration and various uses of Spring Data JPA with Hibernate. Blog posts covering various aspects of the application can be found at http://nixmash.com. 
 
 ##Implemented##
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. The Master branch of this repo contains ongoing development and may not contain features in prior versions.*
+
+##v0.0.4##
+
+- Spring Data JPA Implementation
+- Dual SpringJPAConfiguration and SpringHbnConfiguration classes
+- Simultaneous use of both Spring Data JPA and Hibernate with Transaction Isolation
+- Updated MySQL Schema with additional data
+- Shared Model Entities between Hibernate and Spring Data JPA
+- _Spring 4.0.6, Spring-Boot 1.1.4_
+
+![Image of Spring Data JPA Output v0.0.4](http://nixmash.com/x/pics/github/spring-data-0.0.4.png)
 
 ##v0.0.3##
 

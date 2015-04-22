@@ -1,6 +1,6 @@
-package io.hibernate.dao;
+package com.nixmash.springdata.hbn.dao;
 
-import io.hibernate.model.Contact;
+import com.nixmash.springdata.model.Contact;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,7 @@ public class ContactHbnDao extends AbstractHbnDao<Contact> implements ContactDao
 
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly=true)
+    @Transactional(value = "hibernateTransactionManager", readOnly=true)
     public List<Contact> findByEmail(String email) {
         return getSession()
                 .getNamedQuery("Contact.findContactsByEmail")
@@ -24,7 +24,7 @@ public class ContactHbnDao extends AbstractHbnDao<Contact> implements ContactDao
 
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly=true)
+    @Transactional(value = "hibernateTransactionManager", readOnly=true)
     public List<Contact> findAllWithDetail() {
         return getSession()
                 .getNamedQuery("Contact.findAllWithDetail")
@@ -33,7 +33,7 @@ public class ContactHbnDao extends AbstractHbnDao<Contact> implements ContactDao
 
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly=true)
+    @Transactional(value = "hibernateTransactionManager", readOnly=true)
     public Contact findById(Long id) {
         return (Contact) getSession()
                 .getNamedQuery("Contact.findById")

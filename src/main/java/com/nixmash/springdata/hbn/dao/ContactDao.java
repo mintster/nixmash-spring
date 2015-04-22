@@ -1,7 +1,7 @@
-package io.hibernate.dao;
+package com.nixmash.springdata.hbn.dao;
 
 
-import io.hibernate.model.Contact;
+import com.nixmash.springdata.model.Contact;
 
 import java.util.List;
 

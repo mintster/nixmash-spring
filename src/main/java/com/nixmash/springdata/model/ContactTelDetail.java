@@ -1,4 +1,4 @@
-package io.hibernate.model;
+package com.nixmash.springdata.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

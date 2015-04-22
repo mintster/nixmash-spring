@@ -1,4 +1,4 @@
-package io.hibernate.service.impl;
+package com.nixmash.springdata.hbn.service.impl;
 /*
  * Copyright (c) 2013 Manning Publications Co.
  *
@@ -7,9 +7,9 @@ package io.hibernate.service.impl;
  * Code: https://github.com/springinpractice
  */
 
-import io.hibernate.dao.ContactDao;
-import io.hibernate.model.Contact;
-import io.hibernate.service.ContactService;
+import com.nixmash.springdata.hbn.dao.ContactDao;
+import com.nixmash.springdata.model.Contact;
+import com.nixmash.springdata.hbn.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +18,8 @@ import java.util.List;
 
 import static org.springframework.util.Assert.notNull;
 
-@Service(value="contactService")
-@Transactional
+@Service(value="hbnContactService")
+@Transactional(value = "hibernateTransactionManager")
 public class ContactServiceImpl implements ContactService {
 
     @Autowired

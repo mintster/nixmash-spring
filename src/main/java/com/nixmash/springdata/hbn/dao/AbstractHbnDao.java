@@ -1,4 +1,4 @@
-package io.hibernate.dao;
+package com.nixmash.springdata.hbn.dao;
 /*
  * Copyright (c) 2013 Manning Publications Co.
  *

@@ -1,11 +1,13 @@
-package io.hibernate;
+package com.nixmash.springdata.config;
 
-import io.hibernate.model.Contact;
-import io.hibernate.model.ContactTelDetail;
-import io.hibernate.model.Hobby;
+import com.nixmash.springdata.dev.SpringDevelopment;
+import com.nixmash.springdata.model.Contact;
+import com.nixmash.springdata.model.ContactTelDetail;
+import com.nixmash.springdata.model.Hobby;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,9 +27,9 @@ import javax.sql.DataSource;
 @Configuration
 @EnableConfigurationProperties
 @EnableTransactionManagement
-@ComponentScan(basePackages = "io.hibernate")
+@ComponentScan(basePackages = "com.nixmash.springdata")
 @PropertySource("classpath:application.properties")
-public class SpringConfiguration {
+public class SpringHbnConfiguration {
 
     private
     @Value("${mysql.username}")
@@ -56,6 +58,7 @@ public class SpringConfiguration {
     @Bean
     public SessionFactory sessionFactory() {
         return new LocalSessionFactoryBuilder(getDataSource())
+                .scanPackages("com.nixmash.springdata")
                 .addAnnotatedClasses(Contact.class)
                 .addAnnotatedClasses(ContactTelDetail.class)
                 .addAnnotatedClasses(Hobby.class)
@@ -85,6 +88,7 @@ public class SpringConfiguration {
     }
 
     @Bean
+    @Qualifier(value = "hibernateTransactionManager")
     public HibernateTransactionManager hibTransMan() {
         return new HibernateTransactionManager(sessionFactory());
     }

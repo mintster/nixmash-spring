@@ -1,6 +1,4 @@
-package io.hibernate.model;
-
-import io.hibernate.model.Contact;
+package com.nixmash.springdata.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
