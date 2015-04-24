@@ -7,6 +7,11 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. The Master branch of this repo contains ongoing development and may not contain features in prior versions.*
 
+##v0.0.5##
+
+- Broke-up the application into two separate IntelliJ Modules
+- Root and child Gradle project configuration
+
 ##v0.0.4##
 
 - Spring Data JPA Implementation
