@@ -10,8 +10,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Launcher {
 
-    private static SpringProperties springProperties;
-
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(SpringHbnConfiguration.class);
@@ -20,14 +18,14 @@ public class Launcher {
 
         ContactService contactService = (ContactService) ctx.getBean("hbnContactService");
         ContactJpaService contactJpaService = (ContactJpaService) ctx.getBean("jpaContactService");
+        SpringProperties springProperties = ctx.getBean(SpringProperties.class);
 
-        springProperties = ctx.getBean(SpringProperties.class);
+        SpringDevelopment springDevelopment = new
+                SpringDevelopment(springProperties, contactJpaService, contactService);
 
-        SpringDevelopment springDevelopment = new SpringDevelopment();
-        springDevelopment.propertiesDemo(springProperties);
-
-        springDevelopment.hibernateDemo(contactService);
-        springDevelopment.jpaDemo(contactJpaService);
+        springDevelopment.propertiesDemo();
+        springDevelopment.hibernateDemo();
+        springDevelopment.jpaDemo();
 
     }
 

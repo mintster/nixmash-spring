@@ -20,7 +20,20 @@ public class SpringDevelopment {
 
     // region Properties Demo
 
-    public void propertiesDemo(SpringProperties springProperties) {
+    SpringProperties springProperties;
+    ContactJpaService contactJpaService;
+    ContactService contactService;
+
+    public SpringDevelopment(SpringProperties springProperties,
+                             ContactJpaService contactJpaService,
+                             ContactService contactService)
+    {
+        this.springProperties = springProperties;
+        this.contactJpaService = contactJpaService;
+        this.contactService = contactService;
+    }
+
+    public void propertiesDemo() {
         SpringUtils.printProperty(
                 "springProperties.getToken()",
                 springProperties.getToken());
@@ -40,14 +53,14 @@ public class SpringDevelopment {
         contact.addContactTelDetail(contactTelDetail);
         contactTelDetail = new ContactTelDetail("Mobile", "2222222222");
         contact.addContactTelDetail(contactTelDetail);
-//        contactService.updateContact(contact);
+        contactService.updateContact(contact);
     }
 
     // endregion
 
     // region Spring Data JPA Demos
 
-    public void jpaDemo(ContactJpaService contactJpaService) {
+    public void jpaDemo() {
         SpringUtils.listContacts("JPA FIND ALL",
                 contactJpaService.findAll());
         SpringUtils.listContacts("JPA FIND BY FIRST NAME",
@@ -60,7 +73,7 @@ public class SpringDevelopment {
 
     // region Hibernate Demos
 
-    public void hibernateDemo(ContactService contactService) {
+    public void hibernateDemo() {
 
         Contact contact = contactService.getContact(1l);
         SpringUtils.listContact("HIBERNATE CONTACT(1L)", contact);
