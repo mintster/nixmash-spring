@@ -1,3 +1,5 @@
+
+
 buildscript {
     repositories { jcenter() }
     dependencies {
@@ -5,36 +7,30 @@ buildscript {
     }
 }
 
-apply plugin: 'spring-boot'
-
 allprojects {
+
+    apply plugin: 'idea'
+    apply plugin: 'spring-boot'
     apply plugin: 'java'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-}
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'com.nixmash.springdata.Launcher'
+    repositories {
+        mavenCentral()
     }
+
+
+    dependencies {
+        compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+        compile 'org.hibernate:hibernate-core'
+        compile 'javax.servlet:javax.servlet-api'
+        compile 'org.javassist:javassist'
+        compile 'mysql:mysql-connector-java'
+        compile 'commons-dbcp:commons-dbcp'
+        compile 'org.apache.tomcat:tomcat-dbcp:8.0.21'
+        compile 'com.google.guava:guava-gwt:18.0'
+        testCompile 'org.springframework.boot:spring-boot-starter-test'
+        testCompile 'junit:junit:4.12'
+    }
+
 }
-
-repositories {
-    mavenCentral()
-}
-
-
-dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.hibernate:hibernate-core'
-    compile 'javax.servlet:javax.servlet-api'
-    compile 'org.javassist:javassist'
-    compile 'mysql:mysql-connector-java'
-    compile 'commons-dbcp:commons-dbcp'
-    compile 'org.apache.tomcat:tomcat-dbcp:8.0.21'
-    compile 'com.google.guava:guava-gwt:18.0'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'junit:junit:4.12'
-}
-
-
