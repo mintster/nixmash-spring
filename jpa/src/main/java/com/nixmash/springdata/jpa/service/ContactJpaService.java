@@ -8,4 +8,5 @@ public interface ContactJpaService {
     List<Contact> findAll();
     List<Contact> findByFirstName(String firstName);
     List<Contact> findByFirstNameAndLastName(String firstName, String lastName);
+    List<Contact> getContactsWithDetail();
 }

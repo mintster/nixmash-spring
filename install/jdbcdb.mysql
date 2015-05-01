@@ -1,0 +1,145 @@
+/*
+Navicat MariaDB Data Transfer
+
+Source Server         : mariadb
+Source Server Version : 100017
+Source Host           : localhost:3306
+Source Database       : dev_springdata
+
+Target Server Type    : MariaDB
+Target Server Version : 100017
+File Encoding         : 65001
+
+Date: 2015-04-28 15:14:45
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for contacts
+-- ----------------------------
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE `contacts` (
+  `contact_id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(60) NOT NULL,
+  `last_name` varchar(40) NOT NULL,
+  `birth_date` date DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`contact_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of contacts
+-- ----------------------------
+INSERT INTO `contacts` VALUES ('1', 'Summer', 'Glass', '1968-08-05', 'vitae@egestasadui.net');
+INSERT INTO `contacts` VALUES ('2', 'Mikayla', 'Church', '1975-04-03', 'lobortis.Class@aliquam.org');
+INSERT INTO `contacts` VALUES ('3', 'Shaine', 'Brooks', '1971-08-24', 'vel.pede@metusVivamuseuismod.edu');
+INSERT INTO `contacts` VALUES ('4', 'Robin', 'Sullivan', '1961-09-09', 'purus.gravida@necleo.edu');
+INSERT INTO `contacts` VALUES ('5', 'Xantha', 'Kim', '1960-08-25', 'risus.Duis.a@velnisl.ca');
+INSERT INTO `contacts` VALUES ('6', 'Barry', 'Kirk', '1982-03-27', 'blandit.at@Maurisblanditenim.com');
+INSERT INTO `contacts` VALUES ('7', 'Tad', 'Grant', '1972-08-08', 'In.lorem.Donec@Vivamusnisi.org');
+INSERT INTO `contacts` VALUES ('8', 'Finn', 'Browning', '1974-05-27', 'aliquet@ornare.net');
+INSERT INTO `contacts` VALUES ('9', 'Ali', 'Calhoun', '1976-11-30', 'fermentum@nulla.co.uk');
+INSERT INTO `contacts` VALUES ('10', 'Alexandra', 'Hendricks', '1973-07-05', 'at.auctor@pellentesquemassalobortis.edu');
+
+-- ----------------------------
+-- Table structure for contact_hobbies
+-- ----------------------------
+DROP TABLE IF EXISTS `contact_hobbies`;
+CREATE TABLE `contact_hobbies` (
+  `contact_hobby_id` int(11) NOT NULL AUTO_INCREMENT,
+  `contact_id` int(11) NOT NULL,
+  `hobby_id` int(11) NOT NULL,
+  PRIMARY KEY (`contact_hobby_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of contact_hobbies
+-- ----------------------------
+INSERT INTO `contact_hobbies` VALUES ('1', '1', '1');
+INSERT INTO `contact_hobbies` VALUES ('2', '1', '2');
+INSERT INTO `contact_hobbies` VALUES ('3', '2', '3');
+INSERT INTO `contact_hobbies` VALUES ('4', '2', '4');
+INSERT INTO `contact_hobbies` VALUES ('5', '3', '5');
+INSERT INTO `contact_hobbies` VALUES ('6', '3', '1');
+INSERT INTO `contact_hobbies` VALUES ('7', '4', '2');
+INSERT INTO `contact_hobbies` VALUES ('8', '4', '3');
+INSERT INTO `contact_hobbies` VALUES ('9', '5', '4');
+INSERT INTO `contact_hobbies` VALUES ('10', '5', '5');
+INSERT INTO `contact_hobbies` VALUES ('11', '6', '1');
+INSERT INTO `contact_hobbies` VALUES ('12', '6', '2');
+INSERT INTO `contact_hobbies` VALUES ('13', '7', '3');
+INSERT INTO `contact_hobbies` VALUES ('14', '7', '4');
+INSERT INTO `contact_hobbies` VALUES ('15', '8', '5');
+INSERT INTO `contact_hobbies` VALUES ('16', '8', '1');
+INSERT INTO `contact_hobbies` VALUES ('17', '9', '2');
+INSERT INTO `contact_hobbies` VALUES ('18', '9', '3');
+INSERT INTO `contact_hobbies` VALUES ('19', '10', '4');
+INSERT INTO `contact_hobbies` VALUES ('20', '10', '5');
+
+-- ----------------------------
+-- Table structure for contact_phones
+-- ----------------------------
+DROP TABLE IF EXISTS `contact_phones`;
+CREATE TABLE `contact_phones` (
+  `contact_phone_id` int(11) NOT NULL AUTO_INCREMENT,
+  `contact_id` int(11) NOT NULL,
+  `tel_type` varchar(20) NOT NULL,
+  `tel_number` varchar(20) NOT NULL,
+  PRIMARY KEY (`contact_phone_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of contact_phones
+-- ----------------------------
+INSERT INTO `contact_phones` VALUES ('1', '1', 'Mobile', '1-113-753-8020');
+INSERT INTO `contact_phones` VALUES ('2', '1', 'Home', '1-996-507-0853');
+INSERT INTO `contact_phones` VALUES ('3', '2', 'Mobile', '1-407-100-1341');
+INSERT INTO `contact_phones` VALUES ('4', '2', 'Home', '1-285-981-2510');
+INSERT INTO `contact_phones` VALUES ('5', '3', 'Mobile', '1-274-311-9291');
+INSERT INTO `contact_phones` VALUES ('6', '3', 'Home', '1-499-112-9185');
+INSERT INTO `contact_phones` VALUES ('7', '4', 'Mobile', '1-234-628-6511');
+INSERT INTO `contact_phones` VALUES ('8', '4', 'Home', '1-560-178-3273');
+INSERT INTO `contact_phones` VALUES ('9', '5', 'Mobile', '1-430-941-9233');
+INSERT INTO `contact_phones` VALUES ('10', '5', 'Home', '1-271-831-8886');
+INSERT INTO `contact_phones` VALUES ('11', '6', 'Mobile', '1-255-105-0103');
+INSERT INTO `contact_phones` VALUES ('12', '6', 'Home', '1-481-652-4155');
+INSERT INTO `contact_phones` VALUES ('13', '7', 'Mobile', '1-917-917-8478');
+INSERT INTO `contact_phones` VALUES ('14', '7', 'Home', '1-766-831-2271');
+INSERT INTO `contact_phones` VALUES ('15', '8', 'Mobile', '1-863-515-3218');
+INSERT INTO `contact_phones` VALUES ('16', '8', 'Home', '1-930-909-9849');
+INSERT INTO `contact_phones` VALUES ('17', '9', 'Mobile', '1-423-399-6903');
+INSERT INTO `contact_phones` VALUES ('18', '9', 'Home', '1-294-840-1996');
+INSERT INTO `contact_phones` VALUES ('19', '10', 'Mobile', '1-661-300-3848');
+INSERT INTO `contact_phones` VALUES ('20', '10', 'Home', '1-972-479-8970');
+
+-- ----------------------------
+-- Table structure for hobbies
+-- ----------------------------
+DROP TABLE IF EXISTS `hobbies`;
+CREATE TABLE `hobbies` (
+  `hobby_id` int(11) NOT NULL AUTO_INCREMENT,
+  `hobby_title` varchar(20) NOT NULL,
+  PRIMARY KEY (`hobby_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of hobbies
+-- ----------------------------
+INSERT INTO `hobbies` VALUES ('1', 'Jogging');
+INSERT INTO `hobbies` VALUES ('2', 'Movies');
+INSERT INTO `hobbies` VALUES ('3', 'Programming');
+INSERT INTO `hobbies` VALUES ('4', 'Reading');
+INSERT INTO `hobbies` VALUES ('5', 'Swimming');
+
+-- ----------------------------
+-- View structure for v_contact_hobbies
+-- ----------------------------
+DROP VIEW IF EXISTS `v_contact_hobbies`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_contact_hobbies` AS select `contacts`.`contact_id` AS `contact_id`,`contacts`.`first_name` AS `first_name`,`contacts`.`last_name` AS `last_name`,`contacts`.`birth_date` AS `birth_date`,`contacts`.`email` AS `email`,`hobbies`.`hobby_id` AS `hobby_id`,`hobbies`.`hobby_title` AS `hobby_title` from ((`contacts` join `contact_hobbies` on((`contacts`.`contact_id` = `contact_hobbies`.`contact_id`))) join `hobbies` on((`contact_hobbies`.`hobby_id` = `hobbies`.`hobby_id`))) order by `contacts`.`contact_id` ;
+
+-- ----------------------------
+-- View structure for v_contact_phones
+-- ----------------------------
+DROP VIEW IF EXISTS `v_contact_phones`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_contact_phones` AS select `contacts`.`contact_id` AS `contact_id`,`contacts`.`first_name` AS `first_name`,`contacts`.`last_name` AS `last_name`,`contacts`.`birth_date` AS `birth_date`,`contacts`.`email` AS `email`,`contact_phones`.`tel_type` AS `tel_type`,`contact_phones`.`tel_number` AS `tel_number`,`contact_phones`.`contact_phone_id` AS `contact_phone_id` from (`contacts` join `contact_phones` on((`contacts`.`contact_id` = `contact_phones`.`contact_id`))) ;

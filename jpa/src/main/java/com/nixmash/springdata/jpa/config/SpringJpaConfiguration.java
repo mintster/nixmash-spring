@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.config;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +21,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableConfigurationProperties
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.nixmash.springdata")
+@ComponentScan(basePackages = "com.nixmash.springdata.jpa")
 @PropertySource("classpath:application.properties")
-@EnableJpaRepositories(basePackages = "com.nixmash.springdata")
+@EnableJpaRepositories(basePackages = "com.nixmash.springdata.jpa")
 public class SpringJpaConfiguration {
 
     @Autowired
@@ -58,7 +60,7 @@ public class SpringJpaConfiguration {
         LocalContainerEntityManagerFactoryBean lemfb = new LocalContainerEntityManagerFactoryBean();
         lemfb.setDataSource(getDataSource());
         lemfb.setJpaVendorAdapter(jpaVendorAdapter());
-        lemfb.setPackagesToScan("com.nixmash.springdata");
+        lemfb.setPackagesToScan("com.nixmash.springdata.jpa");
         return lemfb;
     }
 }

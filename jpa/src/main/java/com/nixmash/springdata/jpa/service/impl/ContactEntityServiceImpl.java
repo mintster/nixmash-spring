@@ -1,11 +1,10 @@
 package com.nixmash.springdata.jpa.service.impl;
 
 import com.google.common.collect.Lists;
-import com.nixmash.springdata.jpa.repository.ContactRepository;
-import com.nixmash.springdata.jpa.service.ContactJpaService;
-import com.nixmash.springdata.jpa.model.Contact;
+import com.nixmash.springdata.jpa.model.ContactEntity;
+import com.nixmash.springdata.jpa.repository.ContactEntityRepository;
+import com.nixmash.springdata.jpa.service.ContactEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,33 +12,31 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Service("jpaContactService")
+@Service("entityContactService")
 @Transactional(value = "jpaTransactionManager")
-public class ContactJpaServiceImpl implements ContactJpaService {
+public class ContactEntityServiceImpl implements ContactEntityService {
     @Autowired
-    private ContactRepository contactRepository;
-    @Autowired
-    private LocalContainerEntityManagerFactoryBean entityManagerFactory;
+    private ContactEntityRepository contactRepository;
 
     @Transactional(value = "jpaTransactionManager", readOnly=true)
-    public List<Contact> findAll() {
+    public List<ContactEntity> findAll() {
         return Lists.newArrayList(contactRepository.findAll());
     }
 
     @Transactional(value = "jpaTransactionManager", readOnly=true)
-    public List<Contact> findByFirstName(String firstName) {
+    public List<ContactEntity> findByFirstName(String firstName) {
         return contactRepository.findByFirstName(firstName);
     }
 
     @Transactional(value = "jpaTransactionManager", readOnly=true)
-    public List<Contact> findByFirstNameAndLastName(
+    public List<ContactEntity> findByFirstNameAndLastName(
         String firstName, String lastName) {
         return contactRepository.findByFirstNameAndLastName(
                 firstName, lastName);
     }
 
     @Transactional(value = "jpaTransactionManager", readOnly=true)
-    public List<Contact> getContactsWithDetail() {
+    public List<ContactEntity> getContactsWithDetail() {
         return contactRepository.findAllWithDetail();
     }
 

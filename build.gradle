@@ -3,7 +3,7 @@
 buildscript {
     repositories { jcenter() }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
     }
 }
 
@@ -32,5 +32,6 @@ allprojects {
         testCompile 'org.springframework.boot:spring-boot-starter-test'
         testCompile 'junit:junit:4.12'
     }
+
 
 }

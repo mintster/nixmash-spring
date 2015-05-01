@@ -7,6 +7,14 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. The Master branch of this repo contains ongoing development and may not contain features in prior versions.*
 
+##v0.0.6##
+
+- Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Contain "Entity" classname suffix.)
+- Output based on new Entities, shown below
+- Updated to _Spring 4.1.6, Spring-Boot 1.2.3_ 
+
+![Image of Spring Data JPA Output v0.0.6](http://nixmash.com/x/pics/github/spring-data-0.0.6.png)
+
 ##v0.0.5##
 
 - Broke-up the application into two separate IntelliJ Modules
