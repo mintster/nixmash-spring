@@ -7,9 +7,17 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. The Master branch of this repo contains ongoing development and may not contain features in prior versions.*
 
+##v0.0.7##
+
+- ApplicationContext and Data Retrieval Tests
+- "Production" and "Dev" Spring Profiles
+- Re-architected main() to load context, and a single bean to startup application 
+- Broke out Production and Dev Profile Configurations, extend base SpringConfiguration class. Plan to redesign further
+- Spring Profile set in Gradle.build bootRun task
+
 ##v0.0.6##
 
-- Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Contain "Entity" classname suffix.)
+- Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Models now contain "Entity" classname suffix.)
 - Output based on new Entities, shown below
 - Updated to _Spring 4.1.6, Spring-Boot 1.2.3_ 
 

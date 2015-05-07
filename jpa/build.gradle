@@ -5,9 +5,14 @@ jar {
     }
 }
 
-mainClassName = 'com.nixmash.springdata.jpa.Launcher'
+
+task production << {
+    bootRun.systemProperty 'spring.profiles.active', 'production'
+}
 
 bootRun {
     addResources = false
+    systemProperty 'spring.profiles.active', 'production'
+    main = 'com.nixmash.springdata.jpa.Launcher'
 }
 
