@@ -1,7 +1,7 @@
 package com.nixmash.springdata.jpa;
 
-import com.nixmash.springdata.jpa.config.SpringApplication;
-import com.nixmash.springdata.jpa.config.ProductionConfiguration;
+import com.nixmash.springdata.jpa.config.ApplicationConfig;
+import com.nixmash.springdata.jpa.common.SpringUI;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Launcher {
@@ -9,10 +9,11 @@ public class Launcher {
     public static void main(String[] args) {
 
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.register(ProductionConfiguration.class);
+        ctx.register(ApplicationConfig.class);
         ctx.refresh();
-        SpringApplication app = ctx.getBean(SpringApplication.class);
-        app.init();
+
+        SpringUI ui = ctx.getBean(SpringUI.class);
+        ui.init();
 
     }
 

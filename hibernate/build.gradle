@@ -6,8 +6,7 @@ jar {
 }
 
 
-mainClassName = 'com.nixmash.springdata.hibernate.Launcher'
-
 bootRun {
     addResources = false
+    main = 'com.nixmash.springdata.hibernate.Launcher'
 }

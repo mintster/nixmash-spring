@@ -1,4 +1,4 @@
-package com.nixmash.springdata.jpa.config;
+package com.nixmash.springdata.jpa.common;
 
 import com.nixmash.springdata.jpa.model.ContactEntity;
 

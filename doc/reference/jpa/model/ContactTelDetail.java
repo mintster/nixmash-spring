@@ -28,9 +28,10 @@ public class ContactTelDetail implements Serializable {
         this.telNumber=telNumber;
     }
 
+
     @Id
-    @GeneratedValue(strategy=IDENTITY)
-    @Column(name="ID")
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "ID")
     public Long getId() {
         return this.id;
     }

@@ -1,3 +1,4 @@
+git status
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -25,3 +26,5 @@ out
 
 
 /.nb-gradle/private/
+jpa/src/testdb.h2.db
+jpa/jpaApp.log

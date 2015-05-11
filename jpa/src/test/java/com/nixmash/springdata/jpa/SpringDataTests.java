@@ -1,7 +1,8 @@
 package com.nixmash.springdata.jpa;
 
-import com.nixmash.springdata.jpa.config.DevConfiguration;
-import com.nixmash.springdata.jpa.config.SpringProperties;
+import com.nixmash.springdata.jpa.config.ApplicationConfig;
+import com.nixmash.springdata.jpa.common.SpringProperties;
+import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(defaultRollback = true)
-@ContextConfiguration(classes = DevConfiguration.class)
+@ContextConfiguration(classes = ApplicationConfig.class)
 @Transactional
-@ActiveProfiles("dev")
+@ActiveProfiles(DataConfigProfile.H2)
 public class SpringDataTests {
 
     @Autowired

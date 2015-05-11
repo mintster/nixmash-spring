@@ -10,7 +10,7 @@ import java.util.Set;
  * Time: 1:24 PM
  */
 @Entity
-@Table(name = "hobby", schema = "", catalog = "dev_hibernate")
+@Table(name = "hobby")
 public class HobbyEntity {
     private Set<ContactEntity> contactEntities;
 

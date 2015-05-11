@@ -1,29 +1,29 @@
-package com.nixmash.springdata.jpa.config;
+package com.nixmash.springdata.jpa.common;
 
 import com.nixmash.springdata.jpa.model.ContactEntity;
 import com.nixmash.springdata.jpa.model.ContactTelDetailEntity;
 import com.nixmash.springdata.jpa.service.ContactService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: daveburke
- * Date: 4/22/15
- * Time: 3:32 PM
- */
+@Component
 public class SpringUI {
 
-    // region Properties Demo
+    @Autowired
+    private ContactService contactService;
 
-    SpringProperties springProperties;
-    ContactService contactService;
+    @Autowired
+    private SpringProperties springProperties;
 
-    public SpringUI(SpringProperties springProperties, ContactService contactEntityService)
+    public void init()
     {
-        this.springProperties = springProperties;
-        this.contactService = contactEntityService;
+        propertiesDemo();
+        entityDemo();
     }
+
+    // region Properties Demo
 
     public void propertiesDemo() {
         SpringUtils.printProperty(

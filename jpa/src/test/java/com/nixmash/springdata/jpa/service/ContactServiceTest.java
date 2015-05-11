@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.service;
 
-import com.nixmash.springdata.jpa.config.DevConfiguration;
+import com.nixmash.springdata.jpa.config.ApplicationConfig;
+import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.model.ContactEntity;
 import javassist.NotFoundException;
 import org.junit.Test;
@@ -16,17 +17,17 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(defaultRollback = true)
-@ContextConfiguration(classes = DevConfiguration.class)
+@ContextConfiguration(classes = ApplicationConfig.class)
 @Transactional
-@ActiveProfiles("dev")
+@ActiveProfiles(DataConfigProfile.H2)
 public class ContactServiceTest {
 
     @Autowired
-    private ContactService service;
+    private ContactService contactService;
 
     @Test
     public void findByFirstName() throws NotFoundException {
-        ContactEntity contact = service.findById(1L);
+        ContactEntity contact = contactService.findById(1L);
         assertEquals(contact.getFirstName(), "Summer");
     }
 

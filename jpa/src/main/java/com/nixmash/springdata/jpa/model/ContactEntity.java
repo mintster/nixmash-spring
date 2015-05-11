@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * Created with IntelliJ IDEA.
  * User: daveburke
@@ -11,7 +13,7 @@ import java.util.Set;
  * Time: 1:24 PM
  */
 @Entity
-@Table(name = "contact", schema = "", catalog = "dev_hibernate")
+@Table(name = "contact")
 @NamedQueries({
         @NamedQuery(name = "ContactEntity.findById",
                 query = "select distinct c from ContactEntity c left join fetch c.contactTelDetailEntities t left join fetch c.hobbyEntities h where c.id= :id"),
@@ -36,6 +38,7 @@ public class ContactEntity {
     private Set<HobbyEntity> hobbyEntities;
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public Long getId() {
         return id;
@@ -85,7 +88,7 @@ public class ContactEntity {
         this.email = email;
     }
 
-    @Basic
+    @Version
     @Column(name = "version", nullable = false, insertable = true, updatable = true)
     public int getVersion() {
         return version;
@@ -138,7 +141,7 @@ public class ContactEntity {
     }
 
     @ManyToMany
-    @JoinTable(name = "contact_hobby_detail", catalog = "dev_hibernate", schema = "", joinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "hobby_id", referencedColumnName = "hobby_id", nullable = false))
+    @JoinTable(name = "contact_hobby_detail", joinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "hobby_id", referencedColumnName = "hobby_id", nullable = false))
     public Set<HobbyEntity> getHobbyEntities() {
         return hobbyEntities;
     }
