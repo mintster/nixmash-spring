@@ -23,7 +23,7 @@ import static org.hibernate.jpa.AvailableSettings.NAMING_STRATEGY;
 public class MySqlConfig extends JpaCommonConfig {
 
     @Override
-    @Bean(destroyMethod = "close")
+    @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(getDriverClassName());

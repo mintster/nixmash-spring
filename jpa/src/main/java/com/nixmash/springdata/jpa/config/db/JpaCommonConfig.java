@@ -1,5 +1,9 @@
 package com.nixmash.springdata.jpa.config.db;
 
+import com.nixmash.springdata.jpa.model.Contact;
+import com.nixmash.springdata.jpa.model.ContactPhone;
+import com.nixmash.springdata.jpa.model.Hobby;
+import org.hibernate.SessionFactory;
 import org.hibernate.dialect.Dialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -21,11 +26,16 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:/META-INF/spring/application.properties")
 public abstract class JpaCommonConfig {
+
+    // region Constants
+
     private static final Logger logger = LoggerFactory.getLogger(JpaCommonConfig.class);
     public static final String UNDEFINED = "**UNDEFINED**";
     public static final String CONNECTION_CHAR_SET = "hibernate.connection.charSet";
     public static final String VALIDATOR_APPLY_TO_DDL = "hibernate.validator.apply_to_ddl";
     public static final String VALIDATOR_AUTOREGISTER_LISTENERS = "hibernate.validator.autoregister_listeners";
+
+    // endregion
 
     @Autowired
     protected Environment environment;
@@ -40,6 +50,16 @@ public abstract class JpaCommonConfig {
     @Qualifier(value = "jpaTransactionManager")
     public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
+    }
+
+    @Bean
+    public SessionFactory sessionFactory() {
+        return new LocalSessionFactoryBuilder(dataSource())
+                .scanPackages("com.nixmash.springdata.jpa")
+                .addAnnotatedClasses(Contact.class)
+                .addAnnotatedClasses(ContactPhone.class)
+                .addAnnotatedClasses(Hobby.class)
+                .buildSessionFactory();
     }
 
     @Bean
@@ -63,17 +83,13 @@ public abstract class JpaCommonConfig {
         return factory;
     }
 
-    /*
-   * ********************************
-   * PROTECTED METHODS ARE NOT BEANS
-   * PROTECTED METHODS ARE NOT BEANS
-   * ********************************
-   */
     protected abstract Class<? extends Dialect> getDatabaseDialect();
 
     protected Properties getJpaProperties() {
         return null;
     }
+
+    // region Get Properties from datasource .properties file
 
     public String getDatabaseName() {
         return environment.getProperty("database.name", UNDEFINED);
@@ -122,4 +138,7 @@ public abstract class JpaCommonConfig {
     public String getDatabaseValidationQuery() {
         return environment.getProperty("database.validation.query", UNDEFINED);
     }
+
+    // endregion
+
 }

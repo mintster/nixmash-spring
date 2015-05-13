@@ -28,7 +28,6 @@ public class SpringDataTests {
     @Test
     public void contextLoads() {
         assertNotNull(springProperties.getToken());
-
     }
 
 }

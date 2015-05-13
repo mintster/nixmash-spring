@@ -2,7 +2,7 @@ package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
-import com.nixmash.springdata.jpa.model.ContactEntity;
+import com.nixmash.springdata.jpa.model.Contact;
 import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +14,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(defaultRollback = true)
@@ -27,8 +28,14 @@ public class ContactServiceTest {
 
     @Test
     public void findByFirstName() throws NotFoundException {
-        ContactEntity contact = contactService.findById(1L);
+        Contact contact = contactService.findById(1L);
         assertEquals(contact.getFirstName(), "Summer");
+    }
+
+    @Test
+    public void findByContactIdWithDetail() throws NotFoundException {
+        Contact contact = contactService.getContactByIdWithDetail(1L);
+        assertTrue(contact.getContactPhones().size() == 2);
     }
 
 }

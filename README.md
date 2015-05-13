@@ -7,6 +7,12 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. The Master branch of this repo contains ongoing development and may not contain features in prior versions.*
 
+##v0.0.9##
+
+- Several examples of Lazy Loading. See NixMash post [Approaches to JPA Lazy Loading](http://nixmash.com/java/approaches-to-jpa-lazy-loading/) for details
+- First pass at creating schema DTO objects for use in updating and creating data
+- Modified database schema to better adhere to database relationship best practices. Updates are reflected in Entities. 
+
 ##v0.0.8##
 
 - h2database and mySQL JPA Data Configuration
@@ -78,7 +84,7 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 
 ##Installation##
 
-Run the setup.sql script in the /install directory to populate the database. Update Datasource connection properties in /resources/application.properties file. Build with gradle and run with gradle :bootRun.
+Run the _setup.mysql_ script in the /doc/install directory to populate the database for using MySQL. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. Otherwise, the tests should fire up with a database.hbm2ddl.auto create-drop setting. The H2 create-data script is located in _/resources/db._  Build with gradle and run with gradle :bootRun or run tests with gradle :jpa:test.
 
 ##References##
 
