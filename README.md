@@ -12,17 +12,13 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 - Several examples of Lazy Loading
 - First pass at creating schema DTO objects for use in updating and creating data
 - Modified database schema to better adhere to database relationship best practices. Updates are reflected in Entities. 
-
-
-- [Approaches to JPA Lazy Loading](http://nixmash.com/java/approaches-to-jpa-lazy-loading/)
+- [Post: Approaches to JPA Lazy Loading](http://nixmash.com/java/approaches-to-jpa-lazy-loading/)
 
 ##v0.0.8##
 
 - h2database and mySQL JPA Data Configuration
 - Profiles based on Enumerator value (ex: JpaDataConfig.MYSQL)
-
-
-- [A Spring JPA Configuration for Multiple Profiles](http://nixmash.com/java/a-spring-jpa-configuration-for-multiple-profiles/)
+- [Post: A Spring JPA Configuration for Multiple Profiles](http://nixmash.com/java/a-spring-jpa-configuration-for-multiple-profiles/)
 
 ##v0.0.7##
 
@@ -31,22 +27,18 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 - Re-architected main() to load context, and a single bean to startup application 
 - Broke out Production and Dev Profile Configurations, extend base SpringConfiguration class. Plan to redesign further
 - Spring Profile set in Gradle.build bootRun task
-
-
-- [Spring-Data GitHub App at v0.0.7 with Profiles](http://nixmash.com/java/spring-data-github-app-at-v0-0-7-with-profiles/)
-- [GetBeans in a Spring Main Method, A Better Way](http://nixmash.com/java/getbeans-in-a-spring-main-method-a-better-way/)
-- [Setting Spring Profiles in Gradle](http://nixmash.com/java/setting-spring-profiles-in-gradle/)
+- [Post: Spring-Data GitHub App at v0.0.7 with Profiles](http://nixmash.com/java/spring-data-github-app-at-v0-0-7-with-profiles/)
+- [Post: GetBeans in a Spring Main Method, A Better Way](http://nixmash.com/java/getbeans-in-a-spring-main-method-a-better-way/)
+- [Post: Setting Spring Profiles in Gradle](http://nixmash.com/java/setting-spring-profiles-in-gradle/)
 
 ##v0.0.6##
 
 - Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Models now contain "Entity" classname suffix.)
 - Output based on new Entities, shown below
 - Updated to _Spring 4.1.6, Spring-Boot 1.2.3_ 
-
-
-- [GUI Generated Entities for Spring-Data GitHub App v0.0.6](http://nixmash.com/java/gui-generated-entities-for-spring-data-github-app-v0-0-6/)
-- [IntelliJ ER Diagram Relationship Dialogs and the Code They Create](http://nixmash.com/java/intellij-er-diagram-relationship-dialogs-and-the-code-they-create/)
-- [Using IntelliJ Persistence View and ER Diagram Mapping Tools](http://nixmash.com/java/using-intellij-persistence-view-and-er-diagram-mapping-tools/)
+- [Post: GUI Generated Entities for Spring-Data GitHub App v0.0.6](http://nixmash.com/java/gui-generated-entities-for-spring-data-github-app-v0-0-6/)
+- [Post: IntelliJ ER Diagram Relationship Dialogs and the Code They Create](http://nixmash.com/java/intellij-er-diagram-relationship-dialogs-and-the-code-they-create/)
+- [Post: Using IntelliJ Persistence View and ER Diagram Mapping Tools](http://nixmash.com/java/using-intellij-persistence-view-and-er-diagram-mapping-tools/)
 
 ![Image of Spring Data JPA Output v0.0.6](http://nixmash.com/x/pics/github/spring-data-0.0.6.png)
 
@@ -54,9 +46,7 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 
 - Broke-up the application into two separate IntelliJ Modules
 - Root and child Gradle project configuration
-
-
-- [Supporting Multiple Transaction Managers in Spring](http://nixmash.com/java/supporting-two-transaction-managers-in-spring/)
+- [Post: Supporting Multiple Transaction Managers in Spring](http://nixmash.com/java/supporting-two-transaction-managers-in-spring/)
 
 ##v0.0.4##
 
@@ -66,9 +56,7 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 - Updated MySQL Schema with additional data
 - Shared Model Entities between Hibernate and Spring Data JPA
 - _Spring 4.0.6, Spring-Boot 1.1.4_
-
-
-- [JPA Added to Spring Data GitHub App v0.0.4](http://nixmash.com/java/jpa-added-to-spring-data-github-app-v0-0-4/)
+- [Post: JPA Added to Spring Data GitHub App v0.0.4](http://nixmash.com/java/jpa-added-to-spring-data-github-app-v0-0-4/)
 
 ![Image of Spring Data JPA Output v0.0.4](http://nixmash.com/x/pics/github/spring-data-0.0.4.png)
 
@@ -79,9 +67,7 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 - Persistence Tier broken out to Domain Model, Data Access Object and Service Layers
 - Data and Output identical to v0.0.1 
 - _Spring 4.0.6, Spring-Boot 1.1.4_
-
-
-- [Spring-Data GitHub App at v.0.0.3 with Generic DAO Interface](http://nixmash.com/java/spring-hibernate-at-v-0-0-3-with-generic-dao-interface/)
+- [Post: Spring-Data GitHub App at v.0.0.3 with Generic DAO Interface](http://nixmash.com/java/spring-hibernate-at-v-0-0-3-with-generic-dao-interface/)
 
 ##v0.0.2##
 
@@ -91,10 +77,8 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 - Custom SpringPropertiesUtil Class to retrieve overriden "username" System Property
 - Populating @Autowired PropertyClass class properties in @Configuration class and retrieving the properties in another class
 - _Spring 4.0.6, Spring-Boot 1.1.4_
-
-
-- [A Spring Property Handling Exercise](http://nixmash.com/java/a-spring-property-handling-exercise/)
-- [Spring-Data Demo App v0.0.2 on GitHub](http://nixmash.com/java/spring-hibernate-demo-app-v0-0-2-on-github/)
+- [Post: A Spring Property Handling Exercise](http://nixmash.com/java/a-spring-property-handling-exercise/)
+- [Post: Spring-Data Demo App v0.0.2 on GitHub](http://nixmash.com/java/spring-hibernate-demo-app-v0-0-2-on-github/)
 
 ![Image of Output v0.0.2](http://nixmash.com/x/pics/github/spring-hibernate-properties.png)
  
@@ -108,9 +92,7 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 - Gradle Build Configuration
 - Inserting data
 - _**Note:** v0.0.1 was created with Spring Boot v1.1.4. Using v1.2.x generates a compile error regarding JPA Entity handling._
-
-
-- [New Spring-Data Demo on GitHub](http://nixmash.com/java/new-spring-hibernate-demo-on-github/)
+- [Post: New Spring-Data Demo on GitHub](http://nixmash.com/java/new-spring-hibernate-demo-on-github/)
 
 ![Image of Output v0.0.1](http://nixmash.com/x/pics/github/spring-hibernate0411.png)
 
