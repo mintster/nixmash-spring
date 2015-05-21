@@ -1,9 +1,5 @@
 package com.nixmash.springdata.jpa.config.db;
 
-import com.nixmash.springdata.jpa.model.Contact;
-import com.nixmash.springdata.jpa.model.ContactPhone;
-import com.nixmash.springdata.jpa.model.Hobby;
-import org.hibernate.SessionFactory;
 import org.hibernate.dialect.Dialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -50,16 +45,6 @@ public abstract class JpaCommonConfig {
     @Qualifier(value = "jpaTransactionManager")
     public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
-    }
-
-    @Bean
-    public SessionFactory sessionFactory() {
-        return new LocalSessionFactoryBuilder(dataSource())
-                .scanPackages("com.nixmash.springdata.jpa")
-                .addAnnotatedClasses(Contact.class)
-                .addAnnotatedClasses(ContactPhone.class)
-                .addAnnotatedClasses(Hobby.class)
-                .buildSessionFactory();
     }
 
     @Bean
@@ -130,6 +115,11 @@ public abstract class JpaCommonConfig {
     public String getHbm2ddl() {
         return environment.getProperty("database.hbm2ddl.auto", "none");
     }
+
+    public String getShowSql() {
+        return environment.getProperty("hibernate.showsql", "TRUE");
+    }
+
 
     public String getHibernateCharSet() {
         return environment.getProperty("database.hibernateCharSet", "UTF-8");

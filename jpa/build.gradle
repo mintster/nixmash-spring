@@ -1,18 +1,47 @@
-
 jar {
     manifest {
         attributes 'Main-Class': 'com.nixmash.springdata.jpa.Launcher'
     }
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src/java'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
+task serviceTests(type: Test, dependsOn: testClasses) {
+    include '**/*Service*'
+}
+
+task showHome << {
+    println "${rootDir}"
+}
 
 task production << {
-    bootRun.systemProperty 'spring.profiles.active', 'production'
+    bootRun.systemProperty 'spring.profiles.active', 'mysql'
 }
 
 bootRun {
     addResources = false
     systemProperty 'spring.profiles.active', 'mysql'
     main = 'com.nixmash.springdata.jpa.Launcher'
+}
+
+task rmTestdb(type: Exec) {
+    commandLine "bash", "${rootDir}/doc/scripts/rmTestdb.sh"
 }
 

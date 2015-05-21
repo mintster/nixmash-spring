@@ -2,48 +2,48 @@
 <included>
     <appender name="jpalogfile"
               class="ch.qos.logback.core.FileAppender">
-        <file>${user.dir}/jpaApp.log</file>
+        <file>${user.dir}/jpaAppTest.log</file>
         <encoder>
             <pattern>%.-1level|%-30.30logger{0}|%msg%n</pattern>
         </encoder>
         <append>false</append>
     </appender>
 
-    <logger name="org.springframework.data" additivity="false" level="trace">
+    <logger name="org.springframework.data" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.springframework.orm" additivity="false" level="debug">
+    <logger name="org.springframework.orm" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.springframework.jdbc" additivity="false" level="debug">
+    <logger name="org.springframework.jdbc" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.springframework.transaction" additivity="false" level="debug">
+    <logger name="org.springframework.transaction" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
 
-    <logger name="net.sf.ehcache" additivity="false" level="debug">
+    <logger name="net.sf.ehcache" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.hibernate" level="info">
+    <logger name="org.hibernate" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.hibernate.cfg" additivity="false" level="debug">
+    <logger name="org.hibernate.cfg" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.hibernate.ejb" additivity="false" level="debug">
+    <logger name="org.hibernate.ejb" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.hibernate.sql" additivity="false" level="debug">
+    <logger name="org.hibernate.sql" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.hibernate.cache" additivity="false" level="debug">
+    <logger name="org.hibernate.cache" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.hibernate.type" additivity="false" level="debug">
+    <logger name="org.hibernate.type" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.hibernate.tool.hbm2ddl" additivity="false" level="debug">
+    <logger name="org.hibernate.tool.hbm2ddl" additivity="false" level="WARN">
         <appender-ref ref="jpalogfile"/>
     </logger>
 </included>

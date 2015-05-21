@@ -1,5 +1,7 @@
 package com.nixmash.springdata.jpa.model;
 
+import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -14,13 +16,22 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "contact_phones")
 public class ContactPhone {
     private Long contactPhoneId;
-    private String telType;
-    private String telNumber;
+
+    private String phoneType;
+    private String phoneNumber;
     private int version;
     private Contact contact;
 
-    public static final int MAX_LENGTH_TEL_TYPE = 20;
-    public static final int MAX_LENGTH_TEL_NUMBER = 20;
+    public static final int MAX_LENGTH_PHONE_TYPE = 20;
+    public static final int MAX_LENGTH_PHONE_NUMBER = 20;
+
+
+    public ContactPhone() {}
+
+    public ContactPhone(ContactPhoneDTO contactPhoneDTO) {
+        this.phoneType = contactPhoneDTO.getPhoneType();
+        this.phoneNumber = contactPhoneDTO.getPhoneNumber();
+    }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -34,23 +45,23 @@ public class ContactPhone {
     }
 
     @Basic
-    @Column(name = "tel_type", nullable = false, insertable = true, updatable = true, length = MAX_LENGTH_TEL_TYPE)
-    public String getTelType() {
-        return telType;
+    @Column(name = "phone_type", nullable = false, insertable = true, updatable = true, length = MAX_LENGTH_PHONE_TYPE)
+    public String getPhoneType() {
+        return phoneType;
     }
 
-    public void setTelType(String telType) {
-        this.telType = telType;
+    public void setPhoneType(String telType) {
+        this.phoneType = telType;
     }
 
     @Basic
-    @Column(name = "tel_number", nullable = false, insertable = true, updatable = true, length = MAX_LENGTH_TEL_NUMBER)
-    public String getTelNumber() {
-        return telNumber;
+    @Column(name = "phone_number", nullable = false, insertable = true, updatable = true, length = MAX_LENGTH_PHONE_NUMBER)
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelNumber(String telNumber) {
-        this.telNumber = telNumber;
+    public void setPhoneNumber(String telNumber) {
+        this.phoneNumber = telNumber;
     }
 
     @Basic
@@ -72,8 +83,8 @@ public class ContactPhone {
 
         if (contactPhoneId != that.contactPhoneId) return false;
         if (version != that.version) return false;
-        if (telType != null ? !telType.equals(that.telType) : that.telType != null) return false;
-        if (telNumber != null ? !telNumber.equals(that.telNumber) : that.telNumber != null) return false;
+        if (phoneType != null ? !phoneType.equals(that.phoneType) : that.phoneType != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
 
         return true;
     }
@@ -81,8 +92,8 @@ public class ContactPhone {
     @Override
     public int hashCode() {
         Long result = contactPhoneId;
-        result = 31 * result + (telType != null ? telType.hashCode() : 0);
-        result = 31 * result + (telNumber != null ? telNumber.hashCode() : 0);
+        result = 31 * result + (phoneType != null ? phoneType.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         return (int)((result >> 32) ^ result);
     }
 
@@ -100,8 +111,34 @@ public class ContactPhone {
     public String toString() {
         return "   Details: " +
                 "id=" + contactPhoneId +
-                ", telType='" + telType + '\'' +
-                ", telNumber='" + telNumber + '\'' +
+                ", telType='" + phoneType + '\'' +
+                ", telNumber='" + phoneNumber + '\'' +
                 ", version=" + version;
+    }
+
+
+    public void update(final String phoneType, final String phoneNumber) {
+        this.phoneType = phoneType;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public static Builder getBuilder(Contact contact, String phoneType, String phoneNumber) {
+        return new Builder(contact, phoneType, phoneNumber);
+    }
+
+    public static class Builder {
+
+        private ContactPhone built;
+
+        public Builder(Contact contact, String phoneType, String phoneNumber) {
+            built = new ContactPhone();
+            built.contact = contact;
+            built.phoneType = phoneType;
+            built.phoneNumber = phoneNumber;
+        }
+
+        public ContactPhone build() {
+            return built;
+        }
     }
 }

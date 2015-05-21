@@ -50,7 +50,7 @@ public class H2Config extends JpaCommonConfig {
         Properties properties = new Properties();
         properties.setProperty(HBM2DDL_AUTO, getHbm2ddl());
         properties.setProperty(GENERATE_STATISTICS, TRUE.toString());
-        properties.setProperty(SHOW_SQL, TRUE.toString());
+        properties.setProperty(SHOW_SQL, getShowSql());
         properties.setProperty(FORMAT_SQL, TRUE.toString());
         properties.setProperty(USE_SQL_COMMENTS, TRUE.toString());
         properties.setProperty(CONNECTION_CHAR_SET, getHibernateCharSet());

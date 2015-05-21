@@ -28,3 +28,4 @@ out
 /.nb-gradle/private/
 jpa/src/testdb.h2.db
 jpa/jpaApp.log
+jpa/jpaAppTest.log

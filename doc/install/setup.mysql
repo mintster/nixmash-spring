@@ -58,8 +58,8 @@ DROP TABLE IF EXISTS `contact_phones`;
 CREATE TABLE `contact_phones` (
   `contact_phone_id` BIGINT      NOT NULL AUTO_INCREMENT,
   `contact_id`       BIGINT      NOT NULL,
-  `tel_type`         VARCHAR(20) NOT NULL,
-  `tel_number`       VARCHAR(20) NOT NULL,
+  `phone_type`         VARCHAR(20) NOT NULL,
+  `phone_number`       VARCHAR(20) NOT NULL,
   `version`          INT(11)     NOT NULL DEFAULT '0',
   PRIMARY KEY (`contact_phone_id`),
   KEY `fk_contact_phones_contact_id` (`contact_id`),
@@ -115,8 +115,8 @@ CREATE ALGORITHM = UNDEFINED
     `contacts`.`last_name`              AS `last_name`,
     `contacts`.`birth_date`             AS `birth_date`,
     `contacts`.`email`                  AS `email`,
-    `contact_phones`.`tel_type`         AS `tel_type`,
-    `contact_phones`.`tel_number`       AS `tel_number`,
+    `contact_phones`.`phone_type`         AS `phone_type`,
+    `contact_phones`.`phone_number`       AS `phone_number`,
     `contact_phones`.`contact_phone_id` AS `contact_phone_id`
   FROM (`contacts`
     JOIN `contact_phones` ON ((`contacts`.`contact_id` = `contact_phones`.`contact_id`)));
@@ -165,24 +165,24 @@ VALUES ('6', '1'), ('6', '2'), ('7', '3'), ('7', '4'), ('8', '5'), ('8', '1'), (
 -- ----------------------------
 -- Records of contact_phones
 -- ----------------------------
-INSERT INTO contact_phones (contact_id, tel_type, tel_number)
+INSERT INTO contact_phones (contact_id, phone_type, phone_number)
 VALUES ('1', 'Mobile', '1-113-753-8020'), ('1', 'Home', '1-996-507-0853'), ('2', 'Mobile', '1-407-100-1341'),
   ('2', 'Home', '1-285-981-2510'), ('3', 'Mobile', '1-274-311-9291'), ('3', 'Home', '1-499-112-9185'),
   ('4', 'Mobile', '1-234-628-6511'), ('4', 'Home', '1-560-178-3273'), ('5', 'Mobile', '1-430-941-9233'),
   ('5', 'Home', '1-271-831-8886');
-INSERT INTO contact_phones (contact_id, tel_type, tel_number)
+INSERT INTO contact_phones (contact_id, phone_type, phone_number)
 VALUES ('6', 'Mobile', '1-255-105-0103'), ('6', 'Home', '1-481-652-4155'), ('7', 'Mobile', '1-917-917-8478'),
   ('7', 'Home', '1-766-831-2271'), ('8', 'Mobile', '1-863-515-3218'), ('8', 'Home', '1-930-909-9849'),
   ('9', 'Mobile', '1-423-399-6903'), ('9', 'Home', '1-294-840-1996'), ('10', 'Mobile', '1-661-300-3848'),
   ('10', 'Home', '1-972-479-8970');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('11','Mobile','1-700-975-4810'),('11','Home','1-841-475-4950'),('12','Mobile','1-540-332-5929'),('12','Home','1-305-787-5001'),('13','Mobile','1-375-858-9683'),('13','Home','1-449-614-8027'),('14','Mobile','1-850-680-7774'),('14','Home','1-860-636-1523'),('15','Mobile','1-435-817-1311'),('15','Home','1-558-597-6941');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('16','Mobile','1-279-560-1242'),('16','Home','1-525-908-3449'),('17','Mobile','1-620-476-3968'),('17','Home','1-964-291-6520'),('18','Mobile','1-715-315-5189'),('18','Home','1-235-427-2071'),('19','Mobile','1-433-929-5046'),('19','Home','1-659-580-3903'),('20','Mobile','1-745-620-3943'),('20','Home','1-615-378-2289');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('21','Mobile','1-599-942-7672'),('21','Home','1-586-543-3663'),('22','Mobile','1-281-719-3781'),('22','Home','1-164-913-3867'),('23','Mobile','1-713-373-7813'),('23','Home','1-854-970-7530'),('24','Mobile','1-551-559-3227'),('24','Home','1-353-987-0030'),('25','Mobile','1-479-983-5533'),('25','Home','1-302-826-4182');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('26','Mobile','1-218-461-7454'),('26','Home','1-860-750-5575'),('27','Mobile','1-204-936-3074'),('27','Home','1-392-712-9284'),('28','Mobile','1-314-666-8132'),('28','Home','1-468-156-5733'),('29','Mobile','1-541-668-7686'),('29','Home','1-261-130-4105'),('30','Mobile','1-265-284-1978'),('30','Home','1-216-412-5566');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('31','Mobile','1-851-500-8601'),('31','Home','1-362-623-5415'),('32','Mobile','1-277-929-6170'),('32','Home','1-116-906-6099'),('33','Mobile','1-462-472-7433'),('33','Home','1-316-396-6314'),('34','Mobile','1-877-973-6758'),('34','Home','1-113-934-8108'),('35','Mobile','1-583-331-2033'),('35','Home','1-851-242-3442');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('36','Mobile','1-734-811-9586'),('36','Home','1-558-779-0757'),('37','Mobile','1-442-967-7381'),('37','Home','1-377-470-4176'),('38','Mobile','1-623-171-8898'),('38','Home','1-594-702-0689'),('39','Mobile','1-231-846-7503'),('39','Home','1-584-615-2296'),('40','Mobile','1-995-341-8582'),('40','Home','1-967-587-1129');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('41','Mobile','1-169-735-7048'),('41','Home','1-610-422-7955'),('42','Mobile','1-317-644-9689'),('42','Home','1-743-104-0964'),('43','Mobile','1-387-933-3362'),('43','Home','1-994-652-7710'),('44','Mobile','1-523-680-2976'),('44','Home','1-603-353-1877'),('45','Mobile','1-429-253-2308'),('45','Home','1-743-976-6151');
--- INSERT INTO contact_phones (contact_id,tel_type,tel_number) VALUES ('46','Mobile','1-561-354-9166'),('46','Home','1-337-248-0267'),('47','Mobile','1-540-262-9428'),('47','Home','1-187-969-5770'),('48','Mobile','1-196-635-8512'),('48','Home','1-785-584-9612'),('49','Mobile','1-405-719-1651'),('49','Home','1-838-192-7697'),('50','Mobile','1-652-578-3126'),('50','Home','1-768-778-7355');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('11','Mobile','1-700-975-4810'),('11','Home','1-841-475-4950'),('12','Mobile','1-540-332-5929'),('12','Home','1-305-787-5001'),('13','Mobile','1-375-858-9683'),('13','Home','1-449-614-8027'),('14','Mobile','1-850-680-7774'),('14','Home','1-860-636-1523'),('15','Mobile','1-435-817-1311'),('15','Home','1-558-597-6941');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('16','Mobile','1-279-560-1242'),('16','Home','1-525-908-3449'),('17','Mobile','1-620-476-3968'),('17','Home','1-964-291-6520'),('18','Mobile','1-715-315-5189'),('18','Home','1-235-427-2071'),('19','Mobile','1-433-929-5046'),('19','Home','1-659-580-3903'),('20','Mobile','1-745-620-3943'),('20','Home','1-615-378-2289');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('21','Mobile','1-599-942-7672'),('21','Home','1-586-543-3663'),('22','Mobile','1-281-719-3781'),('22','Home','1-164-913-3867'),('23','Mobile','1-713-373-7813'),('23','Home','1-854-970-7530'),('24','Mobile','1-551-559-3227'),('24','Home','1-353-987-0030'),('25','Mobile','1-479-983-5533'),('25','Home','1-302-826-4182');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('26','Mobile','1-218-461-7454'),('26','Home','1-860-750-5575'),('27','Mobile','1-204-936-3074'),('27','Home','1-392-712-9284'),('28','Mobile','1-314-666-8132'),('28','Home','1-468-156-5733'),('29','Mobile','1-541-668-7686'),('29','Home','1-261-130-4105'),('30','Mobile','1-265-284-1978'),('30','Home','1-216-412-5566');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('31','Mobile','1-851-500-8601'),('31','Home','1-362-623-5415'),('32','Mobile','1-277-929-6170'),('32','Home','1-116-906-6099'),('33','Mobile','1-462-472-7433'),('33','Home','1-316-396-6314'),('34','Mobile','1-877-973-6758'),('34','Home','1-113-934-8108'),('35','Mobile','1-583-331-2033'),('35','Home','1-851-242-3442');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('36','Mobile','1-734-811-9586'),('36','Home','1-558-779-0757'),('37','Mobile','1-442-967-7381'),('37','Home','1-377-470-4176'),('38','Mobile','1-623-171-8898'),('38','Home','1-594-702-0689'),('39','Mobile','1-231-846-7503'),('39','Home','1-584-615-2296'),('40','Mobile','1-995-341-8582'),('40','Home','1-967-587-1129');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('41','Mobile','1-169-735-7048'),('41','Home','1-610-422-7955'),('42','Mobile','1-317-644-9689'),('42','Home','1-743-104-0964'),('43','Mobile','1-387-933-3362'),('43','Home','1-994-652-7710'),('44','Mobile','1-523-680-2976'),('44','Home','1-603-353-1877'),('45','Mobile','1-429-253-2308'),('45','Home','1-743-976-6151');
+-- INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('46','Mobile','1-561-354-9166'),('46','Home','1-337-248-0267'),('47','Mobile','1-540-262-9428'),('47','Home','1-187-969-5770'),('48','Mobile','1-196-635-8512'),('48','Home','1-785-584-9612'),('49','Mobile','1-405-719-1651'),('49','Home','1-838-192-7697'),('50','Mobile','1-652-578-3126'),('50','Home','1-768-778-7355');
 
 
 -- ----------------------------

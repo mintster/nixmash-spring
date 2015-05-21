@@ -14,18 +14,6 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "contacts")
-@NamedQueries({
-        @NamedQuery(name = "Contact.findByContactIdWithDetail",
-                query = "select distinct c from Contact c left join fetch " +
-                        "c.contactPhones p left join fetch c.hobbies h " +
-                        "where c.contactId = ?1"),
-        @NamedQuery(name = "Contact.findAllWithDetail",
-                query = "select distinct c from Contact c left join fetch " +
-                        "c.contactPhones p left join fetch c.hobbies h"),
-        @NamedQuery(
-                name = "Contact.findContactByEmail",
-                query = "select c from Contact c where c.email like :emailAddress")
-})
 public class Contact {
     private Long contactId;
     private String firstName;
@@ -170,4 +158,31 @@ public class Contact {
         this.lastName = lastName;
         this.email = emailAddress;
     }
+
+    public static Builder getBuilder(String firstName, String lastName, String email) {
+        return new Builder(firstName, lastName, email);
+    }
+
+    public static class Builder {
+
+        private Contact built;
+
+        public Builder(String firstName, String lastName, String email) {
+            built = new Contact();
+            built.firstName = firstName;
+            built.lastName = lastName;
+            built.email = email;
+        }
+
+
+        public Builder birthDate(Date birthDate) {
+            built.birthDate = birthDate;
+            return this;
+        }
+
+        public Contact build() {
+            return built;
+        }
+    }
+
 }

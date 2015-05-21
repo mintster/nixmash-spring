@@ -20,30 +20,28 @@ public class ContactPhoneDTO {
     private Long contactId;
 
     @NotEmpty
-    @Length(max = ContactPhone.MAX_LENGTH_TEL_TYPE)
-    private String telType;
+    @Length(max = ContactPhone.MAX_LENGTH_PHONE_TYPE)
+    private String phoneType;
 
     @NotEmpty
-    @Length(max = ContactPhone.MAX_LENGTH_TEL_NUMBER)
-    private String telNumber;
+    @Length(max = ContactPhone.MAX_LENGTH_PHONE_NUMBER)
+    private String phoneNumber;
 
 
     public ContactPhoneDTO() {
 
     }
 
-//    public ContactPhoneDTO(Long contactPhoneId, Long contactId, String telType, String telNumber) {
-//        this.contactPhoneId = contactPhoneId;
-//        this.contactId = contactId;
-//        this.telType = telType;
-//        this.telNumber = telNumber;
-//    }
+    public ContactPhoneDTO(String phoneType, String phoneNumber) {
+        this.phoneType = phoneType;
+        this.phoneNumber = phoneNumber;
+    }
 
     public ContactPhoneDTO(ContactPhone contactPhone) {
         this.contactPhoneId = contactPhone.getContactPhoneId();
         this.contactId = contactPhone.getContact().getContactId();
-        this.telType = contactPhone.getTelType();
-        this.telNumber = contactPhone.getTelNumber();
+        this.phoneType = contactPhone.getPhoneType();
+        this.phoneNumber = contactPhone.getPhoneNumber();
     }
 
     public Long getContactPhoneId() {
@@ -63,20 +61,20 @@ public class ContactPhoneDTO {
         this.contactId = contactId;
     }
 
-    public String getTelType() {
-        return telType;
+    public String getPhoneType() {
+        return phoneType;
     }
 
-    public void setTelType(String telType) {
-        this.telType = telType;
+    public void setPhoneType(String phoneType) {
+        this.phoneType = phoneType;
     }
 
-    public String getTelNumber() {
-        return telNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelNumber(String telNumber) {
-        this.telNumber = telNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

@@ -1,9 +1,13 @@
 package com.nixmash.springdata.jpa.common;
 
 import com.nixmash.springdata.jpa.dto.ContactDTO;
+import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
 import com.nixmash.springdata.jpa.model.Contact;
+import com.nixmash.springdata.jpa.model.ContactPhone;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,14 +45,14 @@ public class SpringUtils {
     public static void listContactWithDetail(Contact contact) {
         System.out.println("SINGLE CONTACT WITH DETAILS ---------------------------------");
         System.out.println();
-            System.out.println(contact);
-            if (contact.getContactPhones() != null) {
-                contact.getContactPhones().forEach(System.out::println);
-            }
-            if (contact.getHobbies() != null) {
-                contact.getHobbies().forEach(System.out::println);
-            }
-            System.out.println();
+        System.out.println(contact);
+        if (contact.getContactPhones() != null) {
+            contact.getContactPhones().forEach(System.out::println);
+        }
+        if (contact.getHobbies() != null) {
+            contact.getHobbies().forEach(System.out::println);
+        }
+        System.out.println();
     }
 
     public static void listContactsWithDetail(List<Contact> contacts) {
@@ -70,19 +74,28 @@ public class SpringUtils {
 
     // region Update Contacts, Phones and Hobbies
 
-    public static ContactDTO createContactDTO(Contact model) {
+    public static ContactDTO contactToContactDTO(Contact model) {
         ContactDTO dto = new ContactDTO();
 
         dto.setContactId(model.getContactId());
         dto.setFirstName(model.getFirstName());
         dto.setBirthDate(model.getBirthDate());
-        dto.setLastName("Goff");
+        dto.setLastName(model.getLastName());
         dto.setEmail(model.getEmail());
         if (model.getContactPhones() != null) {
-            model.getContactPhones().forEach(System.out::println);
-//            Set<ContactPhoneDTO> results = model.getContactPhones().stream().map(ContactPhoneDTO::new).collect(Collectors.toSet());
-//            dto.setContactPhones(results);
 
+            Set<ContactPhone> contactPhones = model.getContactPhones();
+            contactPhones.stream()
+                    .filter(contactPhone -> contactPhone.getPhoneType().equals("Mobile"))
+                    .forEach(contactPhone -> contactPhone.setPhoneNumber("1-407-100-9999"));
+
+            Set<ContactPhoneDTO> results = contactPhones
+                    .stream()
+                    .map(ContactPhoneDTO::new)
+                    .collect(Collectors.toSet());
+
+            dto.setContactPhones(results);
+            results.forEach(System.out::println);
             System.out.println(dto.toString());
         }
         return dto;

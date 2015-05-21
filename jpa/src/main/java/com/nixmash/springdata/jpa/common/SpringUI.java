@@ -14,7 +14,7 @@ public class SpringUI {
     private SpringProperties springProperties;
 
     public void init() {
-        propertiesDemo();
+//        propertiesDemo();
         entityDemo();
     }
 
@@ -60,16 +60,16 @@ public class SpringUI {
 //        SpringUtils.listContact("SINGLE CONTACT: ", contactService.getContactByEmail("Nam.nulla@pedenonummyut.edu"));
 //        SpringUtils.listContactsWithDetail(contactService.getContactsWithDetail());
 //
-//        SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
+        SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
 //
 //        SpringUtils.listContacts("FIND BY FIRST NAME", contactService.findByFirstName("Summer"));
 //
 //        SpringUtils.listContact("SINGLE CONTACT: ", contactService.getWithPhones(1L));
 
-        SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
+//        SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L));
 
 //        try {
-//            contactService.update(SpringUtils.createContactDTO(contactService.getWithPhones(2L)));
+//            contactService.update(SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L)));
 //        } catch (NotFoundException e) {
 //            e.printStackTrace();
 //        }
