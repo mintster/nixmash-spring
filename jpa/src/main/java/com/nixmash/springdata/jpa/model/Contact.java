@@ -136,7 +136,13 @@ public class Contact {
     }
 
     @ManyToMany
-    @JoinTable(name = "contact_hobby_ids", joinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "contact_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "hobby_id", referencedColumnName = "hobby_id", nullable = false))
+    @JoinTable(name = "contact_hobby_ids",
+            joinColumns = @JoinColumn(name = "contact_id",
+                    referencedColumnName = "contact_id",
+                    nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "hobby_id",
+                    referencedColumnName = "hobby_id",
+                    nullable = false))
     public Set<Hobby> getHobbies() {
         return hobbies;
     }

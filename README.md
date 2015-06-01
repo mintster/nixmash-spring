@@ -7,6 +7,15 @@ This project demonstrates configuration and various uses of Spring Data JPA with
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. The Master branch of this repo contains ongoing development and may not contain features in prior versions.*
 
+##v0.1.1##
+
+- Addition of Hobbies, a @ManyToMany Entity with Contacts
+- Adding Hobbies dynamically on new and updated Contacts, and as separate process
+- Adding and removing Hobbies from Contact
+- ContactDTO with Set<HobbyDTO>
+- Tests covering above Hobby processes
+- [Post: Working with the Many in a JPA @ManyToMany](http://nixmash.com/java/working-with-the-many-in-a-jpa-manytomany/)
+
 ##v0.1.0##
 
 - Examples of Updating, Deleting and Adding records with focus on @OneToMany relationship handling

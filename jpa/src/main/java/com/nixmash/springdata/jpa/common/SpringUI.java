@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.common;
 
 import com.nixmash.springdata.jpa.service.ContactService;
+import com.nixmash.springdata.jpa.service.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -60,7 +61,7 @@ public class SpringUI {
 //        SpringUtils.listContact("SINGLE CONTACT: ", contactService.getContactByEmail("Nam.nulla@pedenonummyut.edu"));
 //        SpringUtils.listContactsWithDetail(contactService.getContactsWithDetail());
 //
-        SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
+//        SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
 //
 //        SpringUtils.listContacts("FIND BY FIRST NAME", contactService.findByFirstName("Summer"));
 //
@@ -68,11 +69,11 @@ public class SpringUI {
 
 //        SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L));
 
-//        try {
-//            contactService.update(SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L)));
-//        } catch (NotFoundException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            contactService.update(SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L)));
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -2,11 +2,11 @@ package com.nixmash.springdata.jpa.common;
 
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
+import com.nixmash.springdata.jpa.dto.HobbyDTO;
 import com.nixmash.springdata.jpa.model.Contact;
-import com.nixmash.springdata.jpa.model.ContactPhone;
+import com.nixmash.springdata.jpa.model.Hobby;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -74,31 +74,42 @@ public class SpringUtils {
 
     // region Update Contacts, Phones and Hobbies
 
-    public static ContactDTO contactToContactDTO(Contact model) {
+    public static ContactDTO contactToContactDTO(Contact contact) {
         ContactDTO dto = new ContactDTO();
 
-        dto.setContactId(model.getContactId());
-        dto.setFirstName(model.getFirstName());
-        dto.setBirthDate(model.getBirthDate());
-        dto.setLastName(model.getLastName());
-        dto.setEmail(model.getEmail());
-        if (model.getContactPhones() != null) {
-
-            Set<ContactPhone> contactPhones = model.getContactPhones();
-            contactPhones.stream()
-                    .filter(contactPhone -> contactPhone.getPhoneType().equals("Mobile"))
-                    .forEach(contactPhone -> contactPhone.setPhoneNumber("1-407-100-9999"));
-
-            Set<ContactPhoneDTO> results = contactPhones
+        dto.setContactId(contact.getContactId());
+        dto.setFirstName(contact.getFirstName());
+        dto.setLastName("Goof"); //contact.getLastName());
+        dto.setBirthDate(contact.getBirthDate());
+        dto.setEmail(contact.getEmail());
+        if (contact.getContactPhones() != null) {
+            dto.setContactPhones(contact.getContactPhones()
                     .stream()
                     .map(ContactPhoneDTO::new)
-                    .collect(Collectors.toSet());
-
-            dto.setContactPhones(results);
-            results.forEach(System.out::println);
-            System.out.println(dto.toString());
+                    .collect(Collectors.toSet()));
         }
+        if (contact.getHobbies() != null) {
+            dto.setHobbies(contact.getHobbies()
+            .stream()
+            .map(HobbyDTO::new)
+            .collect(Collectors.toSet()));
+        }
+
         return dto;
     }
+
+    public static HobbyDTO hobbyToHobbyDTO(Hobby hobby) {
+        HobbyDTO hobbyDTO = new HobbyDTO();
+        hobbyDTO.setHobbyId(hobby.getHobbyId());
+        hobbyDTO.setHobbyTitle(hobby.getHobbyTitle());
+        return hobbyDTO;
+    }
+
+    public static HobbyDTO createHobbyDTO(String hobbyTitle) {
+        HobbyDTO hobbyDTO = new HobbyDTO();
+        hobbyDTO.setHobbyTitle(hobbyTitle);
+        return hobbyDTO;
+    }
+
     // endregion
 }

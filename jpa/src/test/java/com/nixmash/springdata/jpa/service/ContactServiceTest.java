@@ -2,10 +2,12 @@ package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
+import com.nixmash.springdata.jpa.dto.HobbyDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.ContactPhone;
-import com.nixmash.springdata.jpa.model.ContactTestUtil;
+import com.nixmash.springdata.jpa.model.ContactTestUtils;
+import com.nixmash.springdata.jpa.model.Hobby;
 import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +37,11 @@ public class ContactServiceTest {
     @Autowired
     private ContactService contactService;
 
+    // region Retrieve Contacts ------------------- */
+
     @Test
     public void findByFirstName() throws NotFoundException {
-        Contact contact = contactService.findById(1L);
+        Contact contact = contactService.findContactById(1L);
         assertEquals(contact.getFirstName(), "Summer");
     }
 
@@ -47,6 +51,10 @@ public class ContactServiceTest {
         assertTrue(contact.getContactPhones().size() == 2);
     }
 
+    // endregion
+
+    // Contact CRUD ----------------------------- */
+
     @Test
     public void addContact() {
 
@@ -54,7 +62,7 @@ public class ContactServiceTest {
         List<Contact> contacts = contactService.findAll();
         int originalContactCount = contacts.size();
 
-        ContactDTO contactDTO = ContactTestUtil.newContactDTO();
+        ContactDTO contactDTO = ContactTestUtils.newContactDTO();
         Contact contact = contactService.add(contactDTO);
         assertThat(contact.getContactId(), is(11L));
 
@@ -65,9 +73,13 @@ public class ContactServiceTest {
         assertEquals(phoneCount, 2);
 
         // Confirm Contact contains the new phone records
-        contact = contactService.findById(contact.getContactId());
+        contact = contactService.findContactById(contact.getContactId());
         phoneCount = contact.getContactPhones().size();
         assertEquals(phoneCount, 2);
+
+        // Confirm new Contact contains 3 new hobbies
+        int hobbyCount = contact.getHobbies().size();
+        assertEquals(hobbyCount, 3);
 
         // Confirm new Contact is retrieved when viewing all contacts
         contacts = contactService.findAll();
@@ -98,9 +110,11 @@ public class ContactServiceTest {
             com.nixmash.springdata.jpa.service.NotFoundException {
 
         // Contact with ID=4 in H2Database Robin Sullivan, 2 Phones
-        Contact contact =  contactService.findById(4L);
-        ContactDTO contactDTO = ContactTestUtil.contactToContactDTO(contact);
+        Contact contact = contactService.findContactById(4L);
+        ContactDTO contactDTO = ContactTestUtils.contactToContactDTO(contact);
+        contactDTO = ContactTestUtils.addHobbyToContactDTO(contactDTO);
         assertEquals(contactDTO.getFirstName().toUpperCase(), FIRST_NAME_CONTACT_ID_4L);
+        assertEquals(contactDTO.getHobbies().size(), 3);
 
         // Contact's first phone: Mobile "1-234-628-6511" -> "1-234-628-9999"
         assertThat(getFirstContactPhone(contactDTO), endsWith("6511"));
@@ -120,8 +134,8 @@ public class ContactServiceTest {
         contactService.update(contactDTO);
 
         // reload Contact from Repository to confirm records are updated
-        contact =  contactService.findById(4L);
-        contactDTO = ContactTestUtil.contactToContactDTO(contact);
+        contact = contactService.findContactById(4L);
+        contactDTO = ContactTestUtils.contactToContactDTO(contact);
         assertThat(contactDTO.getLastName(), endsWith("nanny"));
         assertThat(getFirstContactPhone(contactDTO), endsWith("9999"));
     }
@@ -135,5 +149,62 @@ public class ContactServiceTest {
                 .get()
                 .getPhoneNumber();
     }
+
+    // endregion
+
+    // Hobby CRUD ------------------------------ */
+
+    @Test
+    public void addHobby()
+            throws com.nixmash.springdata.jpa.service.NotFoundException {
+
+        List<Hobby> hobbies = contactService.findAllContacts();
+        int originalHobbyCount = hobbies.size();
+
+
+        HobbyDTO hobbyDTO = ContactTestUtils.newHobbyDTO();
+        contactService.addNewHobby(hobbyDTO);
+
+        // Confirm new hobby in database
+        hobbies = contactService.findAllContacts();
+        int finalHobbyCount = hobbies.size();
+        assertThat(finalHobbyCount, is(greaterThan(originalHobbyCount)));
+
+        // Confirm findByHobbyTitle not null
+
+        Hobby hobby =
+                contactService.findByHobbyTitle(ContactTestUtils.HOBBY_TITLE.toUpperCase());
+        assertEquals(hobby.getHobbyTitle(), ContactTestUtils.HOBBY_TITLE);
+    }
+
+    @Test
+    public void addHobbyToContact() throws
+            com.nixmash.springdata.jpa.service.NotFoundException {
+        Contact contact = contactService.findContactById(5L);
+        ContactDTO contactDTO = ContactTestUtils.contactToContactDTO(contact);
+        assertEquals(contactDTO.getHobbies().size(), 2);
+
+        contactDTO.getHobbies().add(ContactTestUtils.JOUSTING_HOBBY_DTO);
+        contact = contactService.update(contactDTO);
+        assertEquals(contact.getHobbies().size(), 3);
+
+    }
+
+    @Test
+    public void removeHobbyFromContact() throws
+            com.nixmash.springdata.jpa.service.NotFoundException {
+
+        Contact contact = contactService.findContactById(1L);
+        ContactDTO contactDTO = ContactTestUtils.contactToContactDTO(contact);
+        assertEquals(contactDTO.getHobbies().size(), 2);
+
+        Long hobbyId = contactDTO.getHobbies().iterator().next().getHobbyId();
+        contact = contactService.removeHobby(contactDTO, hobbyId);
+        assertEquals(contact.getHobbies().size(), 1);
+
+    }
+
+    // endregion
+
 
 }

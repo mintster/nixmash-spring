@@ -18,6 +18,15 @@ public class Hobby {
     private String hobbyTitle;
     private Set<Contact> contacts;
 
+    public static final int MAX_LENGTH_HOBBY_TITLE = 20;
+
+    public Hobby() {
+    }
+
+    public Hobby(String hobbyTitle) {
+        this.hobbyTitle = hobbyTitle;
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "hobby_id", nullable = false, insertable = true, updatable = true)
@@ -30,7 +39,7 @@ public class Hobby {
     }
 
     @Basic
-    @Column(name = "hobby_title", nullable = false, insertable = true, updatable = true, length = 20)
+    @Column(name = "hobby_title", nullable = false, insertable = true, updatable = true, length = MAX_LENGTH_HOBBY_TITLE)
     public String getHobbyTitle() {
         return hobbyTitle;
     }
@@ -72,4 +81,9 @@ public class Hobby {
     public String toString() {
         return "Hobby: " + getHobbyTitle();
     }
+
+    public void update(final String hobbyTitle) {
+        this.hobbyTitle = hobbyTitle;
+    }
+
 }

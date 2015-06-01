@@ -23,6 +23,7 @@ public class ContactDTO {
 
     private Long contactId;
     private Set<ContactPhoneDTO> contactPhones;
+    private Set<HobbyDTO> hobbies;
 
 
     @Email
@@ -90,6 +91,15 @@ public class ContactDTO {
 
     public void setContactPhones(Set<ContactPhoneDTO> contactPhones) {
         this.contactPhones = contactPhones;
+    }
+
+
+    public Set<HobbyDTO> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(Set<HobbyDTO> hobbies) {
+        this.hobbies = hobbies;
     }
 
     @Override
