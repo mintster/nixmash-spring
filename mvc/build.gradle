@@ -1,0 +1,47 @@
+war {
+    baseName = 'springdata-mvc'
+    version = '0.0.1-SNAPSHOT'
+}
+
+jar {
+    baseName = 'springdata-mvc'
+    version = '0.0.1'
+}
+
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
+dependencies {
+    compile project(":jpa")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile 'com.jayway.restassured:json-path:2.4.1'
+    compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
+
+    //noinspection GroovyAssignabilityCheck
+    testCompile project(':jpa').sourceSets.test.output
+}
+
+
+bootRun {
+    addResources = false
+    systemProperty 'spring.profiles.active', 'mysql'
+    main = 'com.nixmash.springdata.mvc.WebInitializer'
+}

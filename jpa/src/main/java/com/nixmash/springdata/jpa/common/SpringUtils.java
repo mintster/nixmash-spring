@@ -79,7 +79,7 @@ public class SpringUtils {
 
         dto.setContactId(contact.getContactId());
         dto.setFirstName(contact.getFirstName());
-        dto.setLastName("Goof"); //contact.getLastName());
+        dto.setLastName(contact.getLastName());
         dto.setBirthDate(contact.getBirthDate());
         dto.setEmail(contact.getEmail());
         if (contact.getContactPhones() != null) {

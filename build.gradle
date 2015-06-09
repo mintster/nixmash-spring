@@ -14,6 +14,7 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'spring-boot'
     apply plugin: 'java'
+    apply plugin: 'war'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -37,6 +38,8 @@ allprojects {
         compile 'javax.el:javax.el-api:3.0.1-b04'
         testCompile 'org.springframework.boot:spring-boot-starter-test'
         testCompile 'junit:junit:4.12'
+        testCompile "org.mockito:mockito-core"
+        testCompile "org.hamcrest:hamcrest-library"
 
     }
 

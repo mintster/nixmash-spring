@@ -62,6 +62,16 @@ public class ContactTestUtils {
         return dto;
     }
 
+    public static Contact newContact() {
+        Contact contact = new Contact();
+        contact.setContactId(CONTACT_ID);
+        contact.setFirstName(FIRST_NAME);
+        contact.setLastName(LAST_NAME);
+        contact.setBirthDate(BIRTH_DATE);
+        contact.setEmail(EMAIL);
+        return contact;
+    }
+
     public static ContactDTO contactToContactDTO(Contact contact) {
         ContactDTO dto = new ContactDTO();
 

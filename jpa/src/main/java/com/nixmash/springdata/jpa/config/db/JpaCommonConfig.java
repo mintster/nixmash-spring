@@ -36,7 +36,7 @@ public abstract class JpaCommonConfig {
     protected Environment environment;
 
     @Value("#{ environment['entity.package'] }")
-    private String entityPackage = "com.nixmash.springdata.jpa.model";
+    private String entityPackage;
 
     @Bean
     public abstract DataSource dataSource();
@@ -46,6 +46,7 @@ public abstract class JpaCommonConfig {
     public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
+
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

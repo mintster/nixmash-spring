@@ -1,11 +1,25 @@
 spring-data
 ==========================
 
-This project demonstrates configuration and various uses of Spring Data JPA with Hibernate. It accompanies blog posts at http://nixmash.com on various aspects of the application and are listed with below each version implementation listing. 
+This project demonstrates configuration and various uses of Spring Data JPA, Hibernate and MVC. It accompanies blog posts at http://nixmash.com on various aspects of the application and are listed below in their accompanying implementation version. 
 
 ##Implemented##
 
-*Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. The Master branch of this repo contains ongoing development and may not contain features in prior versions.*
+*Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
+
+##v0.1.2##
+
+- MVC Module Added
+- JPA and MVC Modules wired as single Spring Application
+- Referencing Test Source from JPA module in MVC module tests
+- Initial HomeController and ContactController classes
+- Pretty Formatted JSON output in Web Browser
+- [Post: Deployable WARs in Spring Boot, IntelliJ and Gradle](http://nixmash.com/java/deployable-wars-in-spring-boot-intellij-and-gradle/)
+- [Post: An IntelliJ Multi Module Spring Boot MVC Configuration](http://nixmash.com/java/an-intellij-multi-module-spring-boot-mvc-configuration/)
+- [Post: Referencing Test Classes in Another IntelliJ Module](http://nixmash.com/java/referencing-test-classes-in-another-intellij-module/)
+- [Post: Pretty Formatted JSON in Spring Web MVC](http://nixmash.com/java/pretty-formatted-json-in-spring-web-mvc/)
+
+![Spring-Data Does MVC in v0.1.2](http://nixmash.com/x/pics/github/spring-data-0.1.2.png)
 
 ##v0.1.1##
 

@@ -29,3 +29,7 @@ out
 jpa/testdb.*
 jpa/jpaApp.log
 jpa/jpaAppTest.log
+
+jpaAppTest.log
+mvc/testdb.h2.db
+mvc/testdb.trace.db
