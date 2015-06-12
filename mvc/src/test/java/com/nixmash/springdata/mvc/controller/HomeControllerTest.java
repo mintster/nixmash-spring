@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(defaultRollback = false)
@@ -33,7 +34,7 @@ public class HomeControllerTest {
     @Before
     public void setup() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/jsp/view/");
+        viewResolver.setPrefix("/WEB-INF/jsp/");
         viewResolver.setSuffix(".jsp");
 
         mockMvc = MockMvcBuilders.standaloneSetup(new HomeController())
@@ -42,9 +43,10 @@ public class HomeControllerTest {
     }
 
     @Test
-    public void testGreetingPage() throws Exception {
+    public void testHomePage() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(model().hasNoErrors());
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name("home"));
 //                .andDo(print())
 //                .andReturn();
     }

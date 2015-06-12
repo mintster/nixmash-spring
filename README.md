@@ -7,6 +7,12 @@ This project demonstrates configuration and various uses of Spring Data JPA, Hib
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
+##v0.1.3##
+- Thymeleaf support added
+- [Post: Thymeleaf Configuration with Spring Boot](http://nixmash.com/java/thymeleaf-configuration-with-spring-boot/)
+
+![Spring-Data MVC with Thymeleaf in v0.1.3](http://nixmash.com/x/pics/github/spring-data-0.1.3.png)
+
 ##v0.1.2##
 
 - MVC Module Added
@@ -132,7 +138,7 @@ This project demonstrates configuration and various uses of Spring Data JPA, Hib
 
 ##Installation##
 
-Run the _setup.mysql_ script in the /doc/install directory to populate the database for using MySQL. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. Otherwise, the tests should fire up with a database.hbm2ddl.auto create-drop setting. The H2 create-data script is located in _/resources/db._  Build with gradle and run with gradle :bootRun or run tests with gradle :jpa:test.
+Run the _setup.mysql_ script in the /doc/install directory to populate the database for using MySQL. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The tests in both JPA and MVC modules use a database.hbm2ddl.auto create-drop setting and should run with a simple $gradle jpa:test or $gradle mvc:test. The H2 create-data script for the tests is located in _/resources/db._
 
 ##References##
 

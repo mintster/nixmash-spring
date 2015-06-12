@@ -6,21 +6,17 @@ jar {
 
 sourceSets {
     main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/resources'
-        }
+        java.srcDirs = ['src/main/java', 'src/main/resources']
+        resources.srcDir('src/main/resources')
     }
     test {
-        java {
-            srcDir 'src/test'
-        }
-        resources {
-            srcDir 'src/resources'
-        }
+        java.srcDir('src/test')
+        resources.srcDir('src/resources')
     }
+}
+
+configurations {
+    compile.exclude module: 'org.slf4j'
 }
 
 task serviceTests(type: Test, dependsOn: testClasses) {

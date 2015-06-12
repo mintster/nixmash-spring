@@ -1,7 +1,7 @@
 package com.nixmash.springdata.jpa;
 
-import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.common.SpringUI;
+import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Launcher {

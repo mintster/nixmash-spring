@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring-Data Does MVC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.css"/>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <span class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <span th:text="#{web.site.title}">Site Title</span></a>
+        </span>
+
+    </div>
+</nav>
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="jumbotronTitle" th:text="#{web.home.title}">Jumbotron Title</h1>
+
+        <p th:text="#{web.home.subtitle}">Jumbotron Subtitle</p>
+
+        <p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+    </div>
+</div>
+
+<div class="container">
+
+</div>
+
+<script type="text/javascript" src="../../static/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../../static/js/bootstrap.js"></script>
+
+</body>
+</html>
