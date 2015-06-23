@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -13,7 +14,8 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "hobbies")
-public class Hobby {
+public class Hobby implements Serializable {
+    private static final long serialVersionUID = 1275629204584766338L;
     private Long hobbyId;
     private String hobbyTitle;
     private Set<Contact> contacts;
@@ -46,26 +48,6 @@ public class Hobby {
 
     public void setHobbyTitle(String hobbyTitle) {
         this.hobbyTitle = hobbyTitle;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Hobby hobby = (Hobby) o;
-
-        if (hobbyId != hobby.hobbyId) return false;
-        if (hobbyTitle != null ? !hobbyTitle.equals(hobby.hobbyTitle) : hobby.hobbyTitle != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        Long result = hobbyId;
-        result = 31 * result + (hobbyTitle != null ? hobbyTitle.hashCode() : 0);
-        return (int)((result >> 32) ^ result);
     }
 
     @ManyToMany(mappedBy = "hobbies")

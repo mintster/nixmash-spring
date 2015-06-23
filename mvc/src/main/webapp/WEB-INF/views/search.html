@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title th:text="#{search.page.title}"></title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('search')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="#{search.page.header}">[Search Contacts]</h1>
+
+                <p class="lead" th:text="#{search.page.subheader}">[Search Contacts by Last Name]</p>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+
+        </div>
+    </div>
+
+
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="bs-docs-section">
+            <form th:object="${contact}" action="list.html" th:action="@{/list.html}" method="get" class="form-horizontal"
+                  id="search-owner-form">
+                <table class="table table-striped">
+                    <tr th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
+                        <td class="col-sm-1">
+                            <div class="control-group" th:classappend="${#fields.hasErrors('lastName')} ? 'error'">
+                                <label class="control-label">Last Name</label>
+                            </div>
+                        </td>
+                        <td class="col-sm-2">
+                            <div class="controls">
+                                <input type="text" class="form-control" th:field="*{lastName}" size="30" maxlength="80" />
+                            </div>
+                            <div class="controls" th:if="${#fields.hasErrors('lastName')}">
+                                <h4><span class="label label-danger" th:errors="*{lastName}">[Errors]</span></h4>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="form-actions pull-right">
+                                <button type="submit" class="btn btn-success">Find Contact</button>
+                             </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+</body>
+</html>
+
+
+

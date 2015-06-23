@@ -63,6 +63,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Transactional(value = "jpaTransactionManager", readOnly = true)
+    public List<Contact> searchByLastName(String lastName) {
+        return contactRepository.searchByLastName(lastName);
+    }
+
+    @Transactional(value = "jpaTransactionManager", readOnly = true)
     public List<Contact> getContactsWithDetail() {
         return contactRepository.findAllWithDetail();
     }

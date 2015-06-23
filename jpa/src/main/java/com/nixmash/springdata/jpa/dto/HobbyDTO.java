@@ -18,7 +18,7 @@ public class HobbyDTO {
     @Length(max = Hobby.MAX_LENGTH_HOBBY_TITLE)
     private String hobbyTitle;
 
-    private Boolean deleteFlag = false;
+    private Boolean isUserHobby = false;
 
     public HobbyDTO() {}
 
@@ -52,12 +52,12 @@ public class HobbyDTO {
         this.hobbyTitle = hobbyTitle;
     }
 
-    public Boolean getDeleteFlag() {
-        return deleteFlag;
+    public Boolean getIsUserHobby() {
+        return isUserHobby;
     }
 
-    public void setDeleteFlag(Boolean deleteFlag) {
-        this.deleteFlag = deleteFlag;
+    public void setIsUserHobby(Boolean isUserHobby) {
+        this.isUserHobby = isUserHobby;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class HobbyDTO {
         return "HobbyDTO{" +
                 "hobbyId=" + hobbyId +
                 ", hobbyTitle='" + hobbyTitle + '\'' +
-                ", deleteFlag=" + deleteFlag +
+                ", isUserHobby=" + isUserHobby +
                 '}';
     }
 }

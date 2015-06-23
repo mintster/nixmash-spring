@@ -50,20 +50,20 @@ public class SpringUI {
 
 
     public void entityDemo() {
-//        SpringUtils.listContacts("ENTITIES FIND ALL",
-//                contactService.findAll());
-//        SpringUtils.listContacts("ENTITIES FIND BY FIRST NAME",
-//                contactService.findByFirstName("Barry"));
-//        SpringUtils.listContacts("ENTITIES FIND BY FIRST AND LAST NAME",
-//                contactService.findByFirstNameAndLastName("Tad", "Grant"));
-//
-//        SpringUtils.listContact("SINGLE CONTACT: ", contactService.getContactByEmail("Nam.nulla@pedenonummyut.edu"));
-//        SpringUtils.listContactsWithDetail(contactService.getContactsWithDetail());
-//
-//        SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
-//
-//        SpringUtils.listContacts("FIND BY FIRST NAME", contactService.findByFirstName("Summer"));
-//
+        SpringUtils.listContacts("ENTITIES FIND ALL",
+                contactService.findAll());
+        SpringUtils.listContacts("ENTITIES FIND BY FIRST NAME",
+                contactService.findByFirstName("Barry"));
+        SpringUtils.listContacts("ENTITIES FIND BY FIRST AND LAST NAME",
+                contactService.findByFirstNameAndLastName("Tad", "Grant"));
+
+        SpringUtils.listContact("SINGLE CONTACT: ", contactService.getContactByEmail("Nam.nulla@pedenonummyut.edu"));
+        SpringUtils.listContactsWithDetail(contactService.getContactsWithDetail());
+
+        SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
+
+        SpringUtils.listContacts("FIND BY FIRST NAME", contactService.findByFirstName("Summer"));
+
         SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(1L));
 
 //        SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L));

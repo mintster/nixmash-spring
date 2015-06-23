@@ -22,6 +22,9 @@ dependencies {
     compile "com.jayway.jsonpath:json-path-assert:$jsonPathAssertVersion"
     compile "org.thymeleaf:thymeleaf-spring4:$thymeleafVersion"
 
+    compile "org.webjars:jquery:$jqueryWebjarVersion"
+    compile "org.webjars:bootstrap:$bootstrapWebjarVersion"
+    compile "org.webjars:bootswatch:$bootswatchWebjarVersion"
 
     //noinspection GroovyAssignabilityCheck
     testCompile project(':jpa').sourceSets.test.output
@@ -29,8 +32,12 @@ dependencies {
 }
 
 
+task production << {
+    bootRun.systemProperty 'spring.profiles.active', 'mysql'
+}
+
 bootRun {
     addResources = false
-    systemProperty 'spring.profiles.active', 'mysql'
+//    systemProperty 'spring.profiles.active', 'mysql'
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }

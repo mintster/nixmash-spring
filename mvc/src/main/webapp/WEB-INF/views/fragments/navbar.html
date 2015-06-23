@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="navbar(activeTab)">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only" th:text="#{navbar.toggle}">[Toggle navigation]</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:text="#{navbar.brand}">[NixMash Spring]</a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li th:class="${activeTab == 'home'}? 'active' : null"><a href="/" th:href="@{/}"><span
+                            class="glyphicon glyphicon-home" th:text="#{navbar.home}">
+                    [Home]</span></a></li>
+                    <li th:class="${activeTab == 'contacts'}? 'active' : null"><a href="../contacts"
+                                                                                  th:href="@{/contacts}"><span
+                            class="glyphicon glyphicon-th-list" th:text="#{navbar.contacts}">[Contacts]</span>
+                    </a></li>
+                    <li th:class="${activeTab == 'search'}? 'active' : null"><a href="../search"
+                                                                                th:href="@{/search}"><span
+                            class="glyphicon glyphicon-search" th:text="#{navbar.search}">[Search]</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

@@ -7,7 +7,19 @@ This project demonstrates configuration and various uses of Spring Data JPA, Hib
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
+##v0.1.4##
+
+- jQuery, Bootstrap and Bootswatch Webjars
+- Using Bootswatch Webjar with Spring
+- Contact Display, List, and Search Form with all supporting Tests
+- [Post: Adding Bootswatch Webjar in Spring and Thymeleaf](http://nixmash.com/java/adding-bootswatch-webjar-in-spring-and-thymeleaf/)
+- [Post: Bootstrap Navbar Highlighting in Thymeleaf](http://nixmash.com/java/bootstrap-navbar-highlighting-in-thymeleaf/)
+- [Post: Testing a Spring MVC Search Form](http://nixmash.com/java/testing-a-spring-mvc-search-form/)
+
+![Bootstrap with All Contacts Display in Spring-Data MVC with Thymeleaf v0.1.4](http://nixmash.com/x/pics/github/spring-data-0.1.4.png)
+
 ##v0.1.3##
+
 - Thymeleaf support added
 - [Post: Thymeleaf Configuration with Spring Boot](http://nixmash.com/java/thymeleaf-configuration-with-spring-boot/)
 
@@ -138,7 +150,11 @@ This project demonstrates configuration and various uses of Spring Data JPA, Hib
 
 ##Installation##
 
-Run the _setup.mysql_ script in the /doc/install directory to populate the database for using MySQL. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The tests in both JPA and MVC modules use a database.hbm2ddl.auto create-drop setting and should run with a simple $gradle jpa:test or $gradle mvc:test. The H2 create-data script for the tests is located in _/resources/db._
+The application supports an H2 Profile (default) and a MySQL Profile. To run JPA Console app use **$gradle jpa:bootRun.** To run MVC Web app use **$gradle mvc:bootRun.** The Tomcat Server Port is set for **8084** (set in the MVC _application.properties_ file) so go to **http://localhost:8084** to view the app in your browser. 
+
+##Database Configuration##
+
+To use MySQL run _setup.mysql_ script in the /doc/install directory to populate the database. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The H2 create-data script for the tests is located in _/resources/db._
 
 ##References##
 

@@ -16,6 +16,8 @@ public interface ContactService {
     List<Contact> findByFirstName(String firstName);
     List<Contact> findByFirstNameAndLastName(String firstName, String lastName);
     List<Contact> getContactsWithDetail();
+    List<Contact> searchByLastName(String lastName);
+
     Contact add(ContactDTO added);
     Contact update(ContactDTO updated) throws NotFoundException;
 

@@ -5,9 +5,9 @@ package com.nixmash.springdata.jpa.dto;
 //import org.hibernate.validator.constraints.Length;
 //import org.hibernate.validator.constraints.NotEmpty;
 
+import com.nixmash.springdata.jpa.common.ExtendedEmailValidator;
 import com.nixmash.springdata.jpa.model.Contact;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -26,7 +26,7 @@ public class ContactDTO {
     private Set<HobbyDTO> hobbies;
 
 
-    @Email
+    @ExtendedEmailValidator
     @Length(max = Contact.MAX_LENGTH_EMAIL_ADDRESS)
     private String email;
 

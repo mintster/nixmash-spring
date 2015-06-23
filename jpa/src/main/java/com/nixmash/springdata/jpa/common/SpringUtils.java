@@ -74,6 +74,14 @@ public class SpringUtils {
 
     // region Update Contacts, Phones and Hobbies
 
+    public static List<ContactDTO> contactsToContactDTOs(List<Contact> contacts)
+    {
+        return contacts
+                .stream()
+                .map(SpringUtils::contactToContactDTO)
+                .collect(Collectors.toList());
+    }
+
     public static ContactDTO contactToContactDTO(Contact contact) {
         ContactDTO dto = new ContactDTO();
 

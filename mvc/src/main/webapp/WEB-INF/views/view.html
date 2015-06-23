@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title th:text="#{view.page.title}"></title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('contacts')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="|${contact.firstName} ${contact.lastName}|">[firstname lastname]</h1>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+        </div>
+    </div>
+
+</div>
+<div class="container bs-docs-container big-font-container">
+    <div class="row row-centered">
+        <div class="bs-docs-section col-lg-9 col-centered">
+            <div id="form-table">
+                <div class="heading">
+                    <h2 th:text="#{contact.heading.detail}">[Contact Details]</h2>
+                </div>
+                <table class="table table-condensed">
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{contact.label.contactId}">[ContactId]</div>
+                        </td>
+                        <td>
+                            <div th:text="${contact.contactId}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{contact.label.firstName}">[Firstname]</div>
+                        </td>
+                        <td>
+                            <div th:text="${contact.firstName}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{contact.label.lastName}">[Lastname]</div>
+                        </td>
+                        <td>
+                            <div th:text="${contact.lastName}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{contact.label.email}">[Email]</div>
+                        </td>
+                        <td>
+                            <div th:text="${contact.email}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{contact.label.birthDate}">[Birthdate]</div>
+                        </td>
+                        <td>
+                            <div th:text="${contact.birthDate}"></div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="heading">
+                    <h2 th:text="#{contact.heading.phones}">[Contact Phones]</h2>
+                </div>
+                <table class="table table-condensed">
+                    <tr th:each="ph : ${contact.contactPhones}">
+                        <td class="td-label">
+                            <div th:text="${ph.phoneType}">[PhoneType]</div>
+                        </td>
+                        <td>
+                            <div th:text="${ph.phoneNumber}">[Phone Number]</div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="heading">
+                    <h2 th:text="#{contact.heading.hobbies}">[Hobbies]</h2>
+                </div>
+                <table class="table table-condensed">
+                    <tr th:each="hb : ${contact.hobbies}">
+                        <td class="td-label">
+                        </td>
+                        <td>
+                            <div th:text="${hb.hobbyTitle}">[Hobby]</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+</body>
+</html>
