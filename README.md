@@ -1,7 +1,7 @@
-spring-data
+NixMash Spring
 ==========================
 
-This project demonstrates configuration and various uses of Spring Data JPA, Hibernate and MVC. It accompanies blog posts at http://nixmash.com on various aspects of the application and are listed below in their accompanying implementation version. 
+This project demonstrates Spring Data, Spring Web MVC and Thymeleaf. It accompanies blog posts at http://nixmash.com which are listed below in their accompanying implementation version. 
 
 ##Implemented##
 
