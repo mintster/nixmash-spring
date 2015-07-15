@@ -22,6 +22,8 @@ This project demonstrates Spring Data, Spring Web MVC and Thymeleaf. It accompan
 - [Post: Including Webjars in IntelliJ Tomcat WAR Artifact](http://nixmash.com/java/including-webjars-in-intellij-tomcat-war-artifact/)
 - [Post: Using Your Favorite Favicon in Spring MVC](http://nixmash.com/java/using-for-favorite-favicon-in-spring-mvc/)
 
+![Using jQuery-UI with Dandelion in v0.1.5](http://nixmash.com/x/pics/github/spring-data-0.1.5.png)
+
 ##v0.1.4##
 
 - jQuery, Bootstrap and Bootswatch Webjars
