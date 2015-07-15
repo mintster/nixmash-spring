@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:ddl="http://www.thymeleaf.org/dandelion"
+      lang="en">
+
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title>
+          <span th:if="${contact['new']}" th:remove="tag" th:text="#{contactform.page.title.new}">
+                    [New Contact]
+                </span>
+        <span th:unless="${contact['new']}"  th:remove="tag"
+                 th:text="#{contactform.page.title.update}">
+                     [Update Contact]
+             </span>
+              </title>
+</head>
+<body onload="$('input[name=firstName]')
+       .focus();$(function () { $('#birthDate')
+       .datepicker({ dateFormat: 'mm/dd/yy' }); });">
+
+<nav th:replace="fragments/navbar :: navbar('contacts')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1>
+                    <span th:if="${contact['new']}" th:remove="tag" th:text="#{contactform.page.header.new}">
+                    [New Contact]
+                </span>
+                    <span th:unless="${contact['new']}"  th:remove="tag"
+                          th:text="|#{contactform.page.header.update} ${contact.firstName} ${contact.lastName}|">
+                     [Update Contact]
+             </span>
+
+                </h1>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+        </div>
+    </div>
+
+</div>
+<div class="container bs-docs-container big-font-container">
+    <div class="row row-centered">
+        <div class="bs-docs-section col-lg-9 col-centered">
+            <form th:object="${contact}" method="post" action="list.html"
+                  th:action="@{${#httpServletRequest.servletPath}}"
+                  class="form-horizontal" id="contact-form">
+
+                <div th:replace="fragments/hiddenErrors :: hiddenErrors">REPLACE BEFORE COMMITTING</div>
+
+                <table class="table table-striped">
+                    <tr th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
+                        <td class="col-sm-1">
+                            <div class="control-group" th:classappend="${#fields.hasErrors('firstName')} ? 'error'">
+                                <label class="control-label">First Name</label>
+                            </div>
+                        </td>
+                        <td class="col-sm-2">
+                            <div class="controls">
+                                <input type="text" class="form-control" th:field="*{firstName}"/>
+                                <label class="control-label" th:errors="*{firstName}">[error]</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
+                        <td>
+                            <div class="control-group" th:classappend="${#fields.hasErrors('lastName')} ? 'error'">
+                                <label class="control-label">Last Name</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="controls">
+                                <input type="text" class="form-control" th:field="*{lastName}"/>
+                                <label class="control-label" th:errors="*{lastName}">[error]</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+                        <td>
+                            <div class="control-group" th:classappend="${#fields.hasErrors('email')} ? 'error'">
+                                <label class="control-label">Email</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="controls">
+                                <input type="text" class="form-control" th:field="*{email}"/>
+                                <label class="control-label" th:errors="*{email}">[error]</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:classappend="${#fields.hasErrors('birthDate')} ? 'has-error'">
+                        <td>
+                            <div class="control-group" th:classappend="${#fields.hasErrors('birthDate')} ? 'error'">
+                                <label class="control-label">BirthDate</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="controls" ddl:bundle-includes="jquery-ui-overcast">
+                                <input type="text"
+                                       class="form-control"
+                                       autocomplete="off"
+                                       th:field="*{birthDate}"/>
+                                <label class="control-label" th:errors="*{birthDate}">[error]</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="form-actions pull-right">
+                                <input type="submit" class="btn btn-success"
+                                       th:value="(${contact['new']} ? 'Add' : 'Update') + ' Contact'"/>
+                                <input type="button" th:onclick="'window.location.href=\'' + @{|/contacts/|} + '\''"
+                                       class="btn btn-danger" value="Cancel"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+</body>
+</html>

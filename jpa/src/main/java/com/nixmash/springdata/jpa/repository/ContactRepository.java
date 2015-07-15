@@ -23,4 +23,6 @@ public interface ContactRepository extends CrudRepository<Contact, Long> {
 
     @Query("select c from Contact c where c.lastName like %:lastName%")
     List<Contact> searchByLastName(@Param("lastName") String lastName);
+
+    List<Contact> findByLastNameIgnoreCaseContains(@Param("lastName") String lastName);
 }

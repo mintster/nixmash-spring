@@ -1,7 +1,5 @@
 package com.nixmash.springdata.jpa.common;
 
-import org.hibernate.validator.constraints.Email;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.constraints.Pattern;
@@ -18,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * Date: 6/2/15
  * Time: 11:34 AM
  */
-@Email(message="Please provide a valid email address")
+//@Email(message="Please provide a valid email address")
 @Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
 @Target( { METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)

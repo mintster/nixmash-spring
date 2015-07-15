@@ -41,6 +41,9 @@ public class ContactDTO {
 
     private Date birthDate;
 
+    private boolean updateChildren = true;
+
+
     public ContactDTO() {
 
     }
@@ -106,4 +109,18 @@ public class ContactDTO {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+    public boolean isNew() {
+        return (this.contactId == null);
+    }
+
+
+    public boolean isUpdateChildren() {
+        return updateChildren;
+    }
+
+    public void setUpdateChildren(boolean updateChildren) {
+        this.updateChildren = updateChildren;
+    }
+
 }

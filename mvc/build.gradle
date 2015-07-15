@@ -18,13 +18,17 @@ sourceSets {
 dependencies {
     compile project(":jpa")
     compile "org.springframework.boot:spring-boot-starter-web"
-    compile "com.jayway.restassured:json-path:$jsonPathVersion"
-    compile "com.jayway.jsonpath:json-path-assert:$jsonPathAssertVersion"
-    compile "org.thymeleaf:thymeleaf-spring4:$thymeleafVersion"
+    compile "com.jayway.restassured:json-path:2.4.1"
+    compile "com.jayway.jsonpath:json-path-assert:2.0.0"
+    compile "org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE"
 
-    compile "org.webjars:jquery:$jqueryWebjarVersion"
-    compile "org.webjars:bootstrap:$bootstrapWebjarVersion"
-    compile "org.webjars:bootswatch:$bootswatchWebjarVersion"
+    compile "org.webjars:jquery:2.1.4"
+    compile "org.webjars:bootstrap:3.3.4"
+    compile "org.webjars:bootswatch:3.3.4+1"
+    compile "org.webjars:jquery-ui:1.11.4"
+    compile "org.webjars:jquery-ui-themes:1.11.4"
+    compile "com.github.dandelion:datatables-thymeleaf:0.10.1"
+    compile "com.github.dandelion:dandelion-webjars:0.10.1"
 
     //noinspection GroovyAssignabilityCheck
     testCompile project(':jpa').sourceSets.test.output

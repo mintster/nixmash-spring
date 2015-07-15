@@ -15,6 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -68,18 +70,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-//    @Bean
-//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-//        final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
-//
-//        org.springframework.core.io.Resource[] resources = new ClassPathResource[]{
-//                new ClassPathResource("application.properties")};
-//
-//        pspc.setLocations(resources);
-//        pspc.setIgnoreResourceNotFound(true);
-//        pspc.setIgnoreUnresolvablePlaceholders(true);
-//        pspc.setLocalOverride(true);
-//        return pspc;
-//    }
+    @Bean(name = "validator")
+    public LocalValidatorFactoryBean validator()
+    {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }
+
+    @Override
+    public Validator getValidator()
+    {
+        return validator();
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
@@ -40,7 +41,7 @@ public class ContactServiceTest {
     // region Retrieve Contacts ------------------- */
 
     @Test
-    public void findByFirstName() throws NotFoundException {
+    public void findByFirstName() throws NotFoundException, ContactNotFoundException {
         Contact contact = contactService.findContactById(1L);
         assertEquals(contact.getFirstName(), "Summer");
     }
@@ -73,7 +74,11 @@ public class ContactServiceTest {
         assertEquals(phoneCount, 2);
 
         // Confirm Contact contains the new phone records
-        contact = contactService.findContactById(contact.getContactId());
+        try {
+            contact = contactService.findContactById(contact.getContactId());
+        } catch (ContactNotFoundException e) {
+            e.printStackTrace();
+        }
         phoneCount = contact.getContactPhones().size();
         assertEquals(phoneCount, 2);
 
@@ -88,7 +93,7 @@ public class ContactServiceTest {
     }
 
     @Test
-    public void deleteContact() throws com.nixmash.springdata.jpa.service.NotFoundException {
+    public void deleteContact() throws ContactNotFoundException {
         List<Contact> contacts = contactService.findAll();
         int originalContactCount = contacts.size();
 
@@ -107,7 +112,7 @@ public class ContactServiceTest {
 
     @Test
     public void updateContact() throws
-            com.nixmash.springdata.jpa.service.NotFoundException {
+            ContactNotFoundException {
 
         // Contact with ID=4 in H2Database Robin Sullivan, 2 Phones
         Contact contact = contactService.findContactById(4L);
@@ -156,7 +161,7 @@ public class ContactServiceTest {
 
     @Test
     public void addHobby()
-            throws com.nixmash.springdata.jpa.service.NotFoundException {
+            throws ContactNotFoundException {
 
         List<Hobby> hobbies = contactService.findAllContacts();
         int originalHobbyCount = hobbies.size();
@@ -179,7 +184,7 @@ public class ContactServiceTest {
 
     @Test
     public void addHobbyToContact() throws
-            com.nixmash.springdata.jpa.service.NotFoundException {
+            ContactNotFoundException {
         Contact contact = contactService.findContactById(5L);
         ContactDTO contactDTO = ContactTestUtils.contactToContactDTO(contact);
         assertEquals(contactDTO.getHobbies().size(), 2);
@@ -192,7 +197,7 @@ public class ContactServiceTest {
 
     @Test
     public void removeHobbyFromContact() throws
-            com.nixmash.springdata.jpa.service.NotFoundException {
+            ContactNotFoundException {
 
         Contact contact = contactService.findContactById(1L);
         ContactDTO contactDTO = ContactTestUtils.contactToContactDTO(contact);

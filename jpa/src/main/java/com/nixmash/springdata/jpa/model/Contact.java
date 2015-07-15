@@ -1,9 +1,17 @@
 package com.nixmash.springdata.jpa.model;
 
+import com.nixmash.springdata.jpa.common.ExtendedEmailValidator;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PropertyComparator;
+import org.springframework.core.style.ToStringCreator;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -15,7 +23,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "contacts")
-public class Contact  implements Serializable {
+public class Contact implements Serializable {
     private Long contactId;
     private String firstName;
     private String lastName;
@@ -25,12 +33,16 @@ public class Contact  implements Serializable {
     private Set<ContactPhone> contactPhones;
     private Set<Hobby> hobbies;
 
-
     private static final long serialVersionUID = 447728202717826028L;
 
     public static final int MAX_LENGTH_EMAIL_ADDRESS = 100;
     public static final int MAX_LENGTH_FIRST_NAME = 40;
     public static final int MAX_LENGTH_LAST_NAME = 40;
+
+    @Transient
+    public boolean isNew() {
+        return (this.contactId == null);
+    }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -67,7 +79,12 @@ public class Contact  implements Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "birth_date", nullable = true, insertable = true, updatable = true)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @NotNull @Past
+    @Column(name = "birth_date",
+            nullable = true,
+            insertable = true,
+            updatable = true)
     public Date getBirthDate() {
         return birthDate;
     }
@@ -77,6 +94,8 @@ public class Contact  implements Serializable {
     }
 
     @Basic
+    @ExtendedEmailValidator
+    @Length(max = Contact.MAX_LENGTH_EMAIL_ADDRESS)
     @Column(name = "email", nullable = false, insertable = true, updatable = true)
     public String getEmail() {
         return email;
@@ -126,18 +145,23 @@ public class Contact  implements Serializable {
         this.hobbies = hobbies;
     }
 
+    @Override
     public String toString() {
-        return "Contact - Id: " + contactId + ", First name: " + firstName
-                + ", Last name: " + lastName +
-                ", Email: " + email +
-                ", Birthday: " + birthDate;
+        return new ToStringCreator(this)
+                .append("id", this.getContactId())
+                .append("new", this.isNew())
+                .append("lastName", this.getLastName())
+                .append("firstName", this.getFirstName())
+                .append("email", this.getEmail())
+                .append("birthDate", this.getBirthDate())
+                .toString();
     }
 
-
-    public void update(final String firstName, final String lastName, final String emailAddress) {
+    public void update(final String firstName, final String lastName, final String emailAddress, Date birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = emailAddress;
+        this.birthDate = birthDate;
     }
 
     public static Builder getBuilder(String firstName, String lastName, String email) {
@@ -165,5 +189,6 @@ public class Contact  implements Serializable {
             return built;
         }
     }
+
 
 }

@@ -37,6 +37,9 @@ public class WebInitializer extends SpringBootServletInitializer {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(WebConfig.class);
 
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(rootContext);
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+
         //Dispatcher servlet
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(rootContext));
         dispatcher.setLoadOnStartup(1);

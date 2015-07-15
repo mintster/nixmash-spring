@@ -56,3 +56,8 @@ body {
     padding-right: 12px;
     width: 250px;
 }
+@media screen and (max-width: 970px) {
+    .page-header h1 {
+        font-size: 3em;
+    }
+}

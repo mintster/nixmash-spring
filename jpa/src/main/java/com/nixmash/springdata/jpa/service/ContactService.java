@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
 import com.nixmash.springdata.jpa.model.Contact;
@@ -19,13 +20,13 @@ public interface ContactService {
     List<Contact> searchByLastName(String lastName);
 
     Contact add(ContactDTO added);
-    Contact update(ContactDTO updated) throws NotFoundException;
+    Contact update(ContactDTO updated) throws ContactNotFoundException;
 
-    Contact findContactById(Long ID);
+    Contact findContactById(Long ID) throws ContactNotFoundException;
     Contact getContactByEmail(String email);
     Contact getContactByIdWithDetail(Long ID);
-    Contact deleteById(Long id) throws NotFoundException;
-    Contact removeHobby(ContactDTO updated, Long hobbyId) throws NotFoundException;
+    Contact deleteById(Long id) throws ContactNotFoundException;
+    Contact removeHobby(ContactDTO updated, Long hobbyId) throws ContactNotFoundException;
 
     // endregion
 
@@ -38,7 +39,7 @@ public interface ContactService {
     // region Hobbies --------------------------------------- */
 
     Hobby addNewHobby(HobbyDTO hobbyDTO);
-    Hobby updateHobbyTitle(HobbyDTO hobbyDTO) throws NotFoundException;
+    Hobby updateHobbyTitle(HobbyDTO hobbyDTO) throws ContactNotFoundException;
     List<Hobby> findAllContacts();
     Hobby findByHobbyTitle(String hobbyTitle);
 

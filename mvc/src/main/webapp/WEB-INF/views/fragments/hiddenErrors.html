@@ -1,0 +1,10 @@
+<div th:fragment="hiddenErrors" style="display: none">
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p>Global errors:</p>
+        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+    </div>
+    <div th:if="${#fields.hasAnyErrors()}">
+        <p>Field errors:</p>
+        <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+    </div>
+</div>

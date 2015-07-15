@@ -17,7 +17,9 @@ public class ContactTestUtils {
 
     private static final String CHARACTER = "a";
 
-    private static final Long CONTACT_ID = 100L;
+    public static final Long CONTACT_ID = 100L;
+    public static final String INVALID_EMAIL = "foo.bar";
+
     private static final String EMAIL = "foo.bar@bar.com";
     private static final String FIRST_NAME = "Foo";
     private static final String LAST_NAME = "Bar";
@@ -51,25 +53,35 @@ public class ContactTestUtils {
         }};
     }
 
-    public static ContactDTO newContactDTO() {
+    public static ContactDTO newContactDTO(boolean addChildren) {
         ContactDTO dto = new ContactDTO();
         dto.setFirstName(FIRST_NAME);
         dto.setLastName(LAST_NAME);
         dto.setBirthDate(BIRTH_DATE);
         dto.setEmail(EMAIL);
-        dto.setContactPhones(CONTACT_PHONE_DTOS);
-        dto.setHobbies(HOBBY_DTOS);
+        if (addChildren) {
+            dto.setContactPhones(CONTACT_PHONE_DTOS);
+            dto.setHobbies(HOBBY_DTOS);
+        }
         return dto;
     }
 
-    public static Contact newContact() {
+    public static ContactDTO newContactDTO() {
+        return newContactDTO(true);
+    }
+
+    public static Contact newContact(Long contactId) {
         Contact contact = new Contact();
-        contact.setContactId(CONTACT_ID);
+        contact.setContactId(contactId);
         contact.setFirstName(FIRST_NAME);
         contact.setLastName(LAST_NAME);
         contact.setBirthDate(BIRTH_DATE);
         contact.setEmail(EMAIL);
         return contact;
+    }
+
+    public static Contact newContact() {
+        return newContact(CONTACT_ID);
     }
 
     public static ContactDTO contactToContactDTO(Contact contact) {
