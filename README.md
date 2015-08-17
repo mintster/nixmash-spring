@@ -7,6 +7,27 @@ This project demonstrates Spring Data, Spring Web MVC and Thymeleaf. It accompan
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
+##v0.1.6##
+
+- Spring Security with Login and User Registration. Supports Multiple Role Assignment with USERS, USER_AUTHORITIES and AUTHORITIES table storage
+- H2 Console support at http://site/console. USER Role Access Denied to Console
+- User must be authenticated to view Contact Details and Search pages
+- External Properties for configuring options based on site public status (is demo site) _**To Configure Location of Properties File:** Set in Jpa/ApplicationSettings.class annotation_
+- Create Contact Update/Create Submit restricted to ADMIN Role
+- Tests for New User Registration and Form Validation
+- _**Note:** v0.1.6 supports H2Database only. MySql support to be added._
+- [Post: Using the H2 Console in Spring and IntelliJ](http://nixmash.com/java/using-the-h2-console-in-spring-and-intellij/)
+- [Post: Beware Your Spring Security Principal’s Authorities Format](http://nixmash.com/java/beware-your-spring-security-principals-granted-authorities-list-format/)
+- [Post: Spring Security in NixMash Spring App: The Parts You Can See](http://nixmash.com/java/spring-security-in-nixmash-spring-app-the-parts-you-can-see/)
+- [Post: Welcome, User! in Thymeleaf and Spring](http://nixmash.com/java/welcome-user-in-thymeleaf-and-spring/)
+- [Post: Enabling Submit on User Role in Thymeleaf and Spring](http://nixmash.com/java/enabling-submit-on-user-role-in-thymeleaf-and-spring/)
+- [Post: The Old InstanceAlreadyExistsException JUnit Trick](http://nixmash.com/java/the-old-instancealreadyexistsexception-junit-trick/)
+- [Post: External Properties File for Spring Web Site Configuration](http://nixmash.com/java/external-properties-file-for-spring-web-site-configuration/)
+- [Post: Saving Multiple Authorities to Database on New User in Spring](http://nixmash.com/java/saving-multiple-authorities-to-database-on-new-user-in-spring/)
+- [Post: User Registration Validation in Spring](http://nixmash.com/java/user-registration-validation-in-spring/)
+
+![Registration form validation in v0.1.6](http://nixmash.com/x/pics/github/spring-data-0.1.6.png)
+
 ##v0.1.5##
 
 - Multi-use Contact Add/Update Form
@@ -183,5 +204,6 @@ Multiple database JPA Configuration implemented in **Version 0.0.8** based large
 
 Several components related to Thymeleaf and Security in **Version 0.1.x** from Arnaldo Piccnelli's [Enhanced Pet Clinic.](https://github.com/arnaldop/enhanced-pet-clinic)
 
+Petri Kainulainen’s excellent book [Spring Data](https://www.packtpub.com/application-development/spring-data) from Packt Publishing and accompanying source code was a reference for Model Attribute handling and feedback messaging in **Version 0.1.5** as well as other features.
 
-
+Two excellent source references for Spring Security which initially appeared in **Version 0.1.6** were Rob Winch's [gs-spring-security-3.2](https://github.com/rwinch/gs-spring-security-3.2) something and Bartosz Kielczewski's [example-spring-boot-security](https://github.com/bkielczewski/example-spring-boot-security).

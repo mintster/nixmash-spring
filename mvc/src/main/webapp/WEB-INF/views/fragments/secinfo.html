@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div id="secInfo">
+    <h3 th:text="#{secinfo.title}">[USER INFO]</h3>
+      <p class="secLine">____________________</p>
+    <div th:if="${currentUser != null}" th:remove="tag">
+        <div class="secItem">
+            <span class="secLabel" th:text="#{secinfo.fullname}">[FULLNAME]</span>
+            <span class="secField" th:text="${currentUser.getFullName()}">[FULLNAME]</span>
+        </div>
+        <div class="secItem">
+            <span class="secLabel" th:text="#{secinfo.username}">[USERNAME]</span>
+            <span class="secField" th:text="${currentUser.username}">[USERNAME]</span>
+        </div>
+        <div class="secItem">
+            <span class="secLabel" th:text="#{secinfo.email}">[EMAIL]</span>
+            <span class="secField" th:text="${currentUser.user.email}">[EMAIL]</span>
+        </div>
+        <div class="secItem">
+            <span class="secLabel" th:text="#{secinfo.authorities}">[ROLES]</span>
+            <span class="secField" th:text="${currentUser.getAuthorities()}">[ROLES]</span>
+        </div>
+       <p class="secNote"><strong>Note:</strong> Users are restricted from creating and updating contacts. Registration is disabled on Demo Site.</p>
+    </div>
+    <div th:if="${currentUser == null}" th:remove="tag">
+        <div class="secAnonymous">
+            <div th:remove="tag" th:text="#{secinfo.anonymous}">[ANONYMOUS]</div>
+        </div>
+    </div>
+    <div class="github-footer">
+        <a href="https://github.com/mintster/spring-data">Download NixMash Spring from GitHub</a>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

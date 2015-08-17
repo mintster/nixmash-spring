@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:ddl="http://www.thymeleaf.org/dandelion"
-      lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
@@ -45,10 +43,8 @@
     <div class="row row-centered">
         <div class="bs-docs-section col-lg-9 col-centered">
             <form th:object="${contact}" method="post" action="list.html"
-                  th:action="@{${#httpServletRequest.servletPath}}"
+                  th:action="@{${#httpServletRequest.getRequestURI()}}"
                   class="form-horizontal" id="contact-form">
-
-                <div th:replace="fragments/hiddenErrors :: hiddenErrors">REPLACE BEFORE COMMITTING</div>
 
                 <table class="table table-striped">
                     <tr th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
@@ -97,7 +93,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="controls" ddl:bundle-includes="jquery-ui-overcast">
+                            <div class="controls">
                                 <input type="text"
                                        class="form-control"
                                        autocomplete="off"
@@ -111,7 +107,8 @@
                         <td>
                             <div class="form-actions pull-right">
                                 <input type="submit" class="btn btn-success"
-                                       th:value="(${contact['new']} ? 'Add' : 'Update') + ' Contact'"/>
+                                       th:value="(${contact['new']} ? 'Add' : 'Update') + ' Contact'"
+                                       th:disabled="${appSettings.getIsDemoSite()}" />
                                 <input type="button" th:onclick="'window.location.href=\'' + @{|/contacts/|} + '\''"
                                        class="btn btn-danger" value="Cancel"/>
                             </div>
@@ -119,11 +116,18 @@
                     </tr>
                 </table>
             </form>
-
+            <!--Alternatives to Restricting Access to Submit Button...-->
+            <!--th:disabled="!${currentUser?.user.hasAuthority('ROLE_ADMIN')}"-->
+            <!--th:disabled="!${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"-->
         </div>
     </div>
+    <nav th:replace="fragments/secinfo">User Info</nav>
 </div>
 
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+
+<script th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
+<link th:href="@{/webjars/jquery-ui-themes/1.11.4/overcast/jquery-ui.min.css}" rel="stylesheet" />
+
 </body>
 </html>

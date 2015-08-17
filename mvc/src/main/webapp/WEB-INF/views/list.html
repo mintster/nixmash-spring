@@ -19,8 +19,6 @@
 
         </div>
     </div>
-
-
 </div>
 <div class="container bs-docs-container">
     <div class="row">
@@ -53,20 +51,11 @@
                class="btn btn-success">[Add New Contact]</a>
         </div>
     </div>
-
+    <nav th:replace="fragments/secinfo">User Info</nav>
 </div>
 
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
-
-<script th:src="@{/static/js/handlebars-v3.0.3.js}"></script>
-<script th:src="@{/static/js/contact.js}"></script>
-
-<script id="template-alert-message" type="text/x-handlebars-template">
-    <div id="alert-message" class="alert alert-success fade in">
-        <a class="close" data-dismiss="alert">&times;</a>
-        {{message}}
-    </div>
-</script>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
 
 </body>
 </html>

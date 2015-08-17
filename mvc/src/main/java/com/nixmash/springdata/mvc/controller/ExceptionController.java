@@ -28,7 +28,8 @@ public class ExceptionController {
 
     @ExceptionHandler(UnknownResourceException.class)
     public String handleUnknownResourceException(HttpServletRequest req) {
-        logger.info("404:" + req.getRequestURI());
+        if (req.getRequestURI().indexOf("favicon") == 0)
+            logger.info("404:" + req.getRequestURI());
         return "404";
 
     }

@@ -1,9 +1,7 @@
 package com.nixmash.springdata.jpa.model;
 
-import com.nixmash.springdata.jpa.common.ExtendedEmailValidator;
+import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.format.annotation.DateTimeFormat;
 

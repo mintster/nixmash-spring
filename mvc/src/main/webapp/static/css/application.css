@@ -1,63 +1,175 @@
-.jumbotron
-{
+/*/<editor-fold> desc="HOME PAGE ----------------------------/ "*/
+
+.jumbotron {
     padding: 40px 0;
 }
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="BODY, ROWS AND COLUMNS ----------------------------/ "*/
 body {
     padding-top: 50px;
 }
+
+.row-centered {
+    text-align: center;
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+    text-align: left;
+    /* inline-block space fix */
+    margin-right: -4px;
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="PAGE HEADER AND SPONSOR REGION ----------------------------/ "*/
+
 .page-header h1 {
     font-size: 4em;
 }
+
 .page-header {
     border-bottom: none;
 }
+
 #sponsor {
     text-align: right;
 }
+
 #sponsor img {
     max-width: 175px;
 }
-.glyphicon-home:before, .glyphicon-th-list:before, .glyphicon-search:before
-{
-    padding-right: 3px;
-}
-.row-centered {
-    text-align:center;
-}
-.col-centered {
-    display:inline-block;
-    float:none;
-    text-align:left;
-    /* inline-block space fix */
-    margin-right:-4px;
-}
-#form-table, #grid-table
-{
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="TABLE-FORMS ----------------------------/ "*/
+
+#form-table, #grid-table {
     font-size: 125%;
 }
+
 #form-table .heading {
     width: 240px;
     text-align: right;
 }
+
 #form-table table {
     margin: 30px 0;
 }
-#form-table table.table-condensed td
-{
+
+#form-table table.table-condensed td {
     padding: 2px 10px;
 }
-#form-table table, #form-table table td, #form-table table tr
-{
+
+#form-table table, #form-table table td, #form-table table tr {
     border: none;
 }
+
 #form-table td.td-label {
     text-align: right;
     font-weight: bold;
     padding-right: 12px;
     width: 250px;
 }
+
 @media screen and (max-width: 970px) {
     .page-header h1 {
         font-size: 3em;
     }
 }
+
+td span.hobby {
+    display: inline;
+    padding: 0 8px;
+    border-left: solid 1px black;
+}
+
+td span.hobby:first-child {
+    border-left: none;
+    padding-left: 0;
+}
+
+td.td-label .heading h2 {
+    margin-top: 0;
+    padding-right: 8px;
+}
+
+td.hobbies span {
+    margin-top: 6px;
+    display: inline-block;
+}
+
+#form-table table.table-condensed td.hobbies {
+    padding-left: 0;
+}
+
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="NAVBAR ----------------------------/ "*/
+
+.margin-5 {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.glyphicon-home:before, .glyphicon-th-list:before, .glyphicon-search:before {
+    padding-right: 3px;
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="SECUSER USER INFO ----------------------------/ "*/
+
+#secInfo {
+    font-size: smaller;
+    display: block;
+    margin-bottom: 50px;
+}
+
+#secInfo h3 {
+    font-size: 16px;
+}
+#secInfo p.secLine {
+    line-height: 2px;
+    color: #aaa;
+    margin-top: -4px;
+}
+.secItem {
+}
+#secInfo p.secNote {
+    line-height: 1.2;
+    font-style: italic;
+    margin-top: 10px;
+}
+.secLabel {
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.secField {
+}
+
+.github-footer {
+    background: url('/static/img/github.png') no-repeat left;
+    height: 40px;
+    display: inline-block;
+    margin-top: 10px;
+}
+.github-footer a {
+    padding-left: 30px;
+    margin-top: 10px;
+    display: inherit;
+}
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="BOOTSTRAP FORMS ----------------------------/ "*/
+
+h2.form-title {
+    margin-bottom: 40px;
+}
+
+/*</editor-fold>*/

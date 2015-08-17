@@ -5,6 +5,7 @@ import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.Hobby;
+import com.nixmash.springdata.jpa.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,6 +70,33 @@ public class SpringUtils {
             System.out.println();
         }
     }
+
+    // endregion
+
+    // region Users
+
+    public static void listUsersWithDetail(List<User> users) {
+        System.out.println("LISTING ENTITIES WITH DETAILS ---------------------------------");
+        System.out.println();
+        for (User user : users) {
+            System.out.println(user);
+            if (user.getAuthorities() != null) {
+                user.getAuthorities().forEach(System.out::println);
+            }
+//            if (user.getUserProfile() != null) {
+//                System.out.println(user.getUserProfile());
+//            }
+            System.out.println();
+        }
+    }
+
+    public static void listUser(String header, User user) {
+        System.out.println("\r\n" + header + " ------------------------------ ");
+        System.out.println();
+        System.out.println(user);
+        System.out.println();
+    }
+
 
     // endregion
 

@@ -5,7 +5,7 @@ package com.nixmash.springdata.jpa.dto;
 //import org.hibernate.validator.constraints.Length;
 //import org.hibernate.validator.constraints.NotEmpty;
 
-import com.nixmash.springdata.jpa.common.ExtendedEmailValidator;
+import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 import com.nixmash.springdata.jpa.model.Contact;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;

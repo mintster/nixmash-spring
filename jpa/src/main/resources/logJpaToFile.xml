@@ -9,13 +9,13 @@
         <append>false</append>
     </appender>
 
-    <logger name="org.springframework.data" additivity="false" level="debug">
+    <logger name="org.springframework.data" additivity="false" level="warn">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.springframework.orm" additivity="false" level="debug">
+    <logger name="org.springframework.orm" additivity="false" level="warn">
         <appender-ref ref="jpalogfile"/>
     </logger>
-    <logger name="org.springframework.jdbc" additivity="false" level="debug">
+    <logger name="org.springframework.jdbc" additivity="false" level="warn">
         <appender-ref ref="jpalogfile"/>
     </logger>
     <logger name="org.springframework.transaction" additivity="false" level="warn">

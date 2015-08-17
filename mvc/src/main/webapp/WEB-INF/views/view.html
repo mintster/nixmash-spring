@@ -80,21 +80,25 @@
                         </td>
                     </tr>
                 </table>
-                <div class="heading">
-                    <h2 th:text="#{contact.heading.hobbies}">[Hobbies]</h2>
-                </div>
+
                 <table class="table table-condensed">
-                    <tr th:each="hb : ${contact.hobbies}">
+                    <tr>
                         <td class="td-label">
+                            <div class="heading">
+                                <h2 th:text="#{contact.heading.hobbies}">[Hobbies]</h2>
+                            </div>
                         </td>
-                        <td>
-                            <div th:text="${hb.hobbyTitle}">[Hobby]</div>
+                        <td class="hobbies">
+                            <div th:each="hb : ${contact.hobbies}" th:remove="tag">
+                                <span th:class="hobby" th:text="${hb.hobbyTitle}">[Hobby]</span>
+                            </div>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
+    <nav th:replace="fragments/secinfo">User Info</nav>
 </div>
 
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>

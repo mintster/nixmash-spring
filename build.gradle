@@ -8,7 +8,6 @@ buildscript {
 }
 
 
-
 allprojects {
 
     apply plugin: 'idea'
@@ -28,17 +27,20 @@ allprojects {
 
     dependencies {
         compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+        compile 'org.springframework.boot:spring-boot-starter-security'
+        compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
         compile 'org.hibernate:hibernate-core'
         compile 'javax.servlet:javax.servlet-api'
         compile 'org.javassist:javassist'
         compile 'mysql:mysql-connector-java'
         compile 'commons-dbcp:commons-dbcp'
-        compile 'org.apache.tomcat:tomcat-dbcp:8.0.21'
+        compile 'org.apache.tomcat:tomcat-dbcp:8.0.8'
         compile 'com.google.guava:guava-gwt:18.0'
         compile 'com.h2database:h2:1.3.167'
         compile 'org.apache.commons:commons-lang3:3.4'
         compile 'org.hibernate:hibernate-validator'
         compile 'javax.el:javax.el-api:3.0.1-b04'
+
         testCompile 'org.springframework.boot:spring-boot-starter-test'
         testCompile 'junit:junit:4.12'
         testCompile "org.mockito:mockito-core"
@@ -49,6 +51,6 @@ allprojects {
         }
 
     }
-    mainClassName = 'com.nixmash.springdata.jpa.Launcher'
-
+//    mainClassName = 'com.nixmash.springdata.jpa.Launcher'
+    mainClassName = 'com.nixmash.springdata.mvc.WebInitializer'
 }

@@ -1,15 +1,14 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
-import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.ContactTestUtils;
 import com.nixmash.springdata.jpa.service.ContactService;
+import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.MvcTestUtil;
-import com.nixmash.springdata.mvc.config.WebConfig;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,16 +20,11 @@ import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -50,9 +44,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -60,12 +52,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TransactionConfiguration(defaultRollback = false)
-@ContextConfiguration(classes = {WebConfig.class, ApplicationConfig.class})
-@Transactional
-@ActiveProfiles(DataConfigProfile.H2)
-@WebAppConfiguration
-public class ContactControllerTest {
+public class ContactControllerTest extends AbstractContext {
 
     private ContactService mockService;
     private ContactController controller;
@@ -226,6 +213,7 @@ public class ContactControllerTest {
     }
 
     @Test
+    @Ignore(value = "Currently Disabled")
     public void resourceNotFoundExceptionTest() throws Exception {
 
         mockMvc.perform(get("/badurl"))

@@ -1,5 +1,6 @@
 war {
     baseName = 'mvc'
+
 }
 
 sourceSets {
@@ -13,22 +14,44 @@ sourceSets {
     }
 }
 
+//configurations.runtime {
+//    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//        if (details.requested.group == 'org.apache.tomcat.embed') {
+//            details.useVersion '8.0.8'
+//        }
+//        if (details.requested.group == 'org.apache.tomcat') {
+//            details.useVersion '8.0.8'
+//        }
+//    }
+//}
 
+configurations {
+    providedRuntime
+}
 
 dependencies {
-    compile project(":jpa")
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "com.jayway.restassured:json-path:2.4.1"
-    compile "com.jayway.jsonpath:json-path-assert:2.0.0"
-    compile "org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE"
+    compile project(':jpa')
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-    compile "org.webjars:jquery:2.1.4"
-    compile "org.webjars:bootstrap:3.3.4"
-    compile "org.webjars:bootswatch:3.3.4+1"
-    compile "org.webjars:jquery-ui:1.11.4"
-    compile "org.webjars:jquery-ui-themes:1.11.4"
-    compile "com.github.dandelion:datatables-thymeleaf:0.10.1"
-    compile "com.github.dandelion:dandelion-webjars:0.10.1"
+    compile 'com.jayway.restassured:json-path:2.4.1'
+    compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
+    compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.2.RELEASE'
+
+
+    compile 'org.webjars:webjars-locator:0.27'
+    compile 'org.webjars:webjars-locator-core:0.27'
+    compile 'org.webjars:jquery:2.1.4'
+    compile 'org.webjars:bootstrap:3.3.4'
+    compile 'org.webjars:bootswatch:3.3.4+1'
+    compile 'org.webjars:jquery-ui:1.11.4'
+    compile 'org.webjars:jquery-ui-themes:1.11.4'
+
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.6.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
 
     //noinspection GroovyAssignabilityCheck
     testCompile project(':jpa').sourceSets.test.output
@@ -37,11 +60,12 @@ dependencies {
 
 
 task production << {
-    bootRun.systemProperty 'spring.profiles.active', 'mysql'
+//    bootRun.systemProperty 'spring.profiles.active', 'mysql'
 }
 
 bootRun {
     addResources = false
-//    systemProperty 'spring.profiles.active', 'mysql'
+    systemProperty 'server.port', '8084'
+    systemProperty 'spring.profiles.active', 'h2'
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }

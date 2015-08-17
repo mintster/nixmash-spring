@@ -1,7 +1,7 @@
 package com.nixmash.springdata.jpa;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
-import com.nixmash.springdata.jpa.common.SpringProperties;
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,11 +23,11 @@ import static org.junit.Assert.assertNotNull;
 public class SpringDataTests {
 
     @Autowired
-    SpringProperties springProperties;
+    ApplicationSettings applicationSettings;
 
     @Test
     public void contextLoads() {
-        assertNotNull(springProperties.getToken());
+        assertNotNull(applicationSettings.getIsDemoSite());
     }
 
 }

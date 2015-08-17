@@ -1,10 +1,10 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.google.common.collect.Lists;
-import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
+import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.ContactPhone;
 import com.nixmash.springdata.jpa.model.Hobby;

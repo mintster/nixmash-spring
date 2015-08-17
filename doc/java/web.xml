@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="3.0"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         metadata-complete="false">
+
+    <filter>
+        <filter-name>dandelionFilter</filter-name>
+        <filter-class>com.github.dandelion.core.web.DandelionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>dandelionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>dandelionServlet</servlet-name>
+        <servlet-class>com.github.dandelion.core.web.DandelionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dandelionServlet</servlet-name>
+        <url-pattern>/dandelion-assets/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
