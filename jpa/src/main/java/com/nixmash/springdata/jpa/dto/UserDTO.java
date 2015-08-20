@@ -24,11 +24,11 @@ public class UserDTO {
 
     @NotEmpty
     @Length(min=User.MIN_LENGTH_FIRST_NAME, max=User.MAX_LENGTH_FIRST_NAME)
-    private String firstname = "";
+    private String firstName = "";
 
     @NotEmpty
     @Length(min=User.MIN_LENGTH_LAST_NAME, max=User.MAX_LENGTH_LAST_NAME)
-    private String lastname = "";
+    private String lastName = "";
 
     private String repeatedPassword = "";
 
@@ -74,29 +74,29 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getLastname() {
+    public String getLastName() {
 
-        return lastname;
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     @Override
     public String toString() {
         return "UserCreateForm{" +
                 ", username='" + username + '\'' +
-                ", firstname='" + firstname + '\'' +
-                "lastname='" + lastname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                "lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

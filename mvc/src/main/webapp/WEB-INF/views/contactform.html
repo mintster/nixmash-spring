@@ -7,11 +7,11 @@
           <span th:if="${contact['new']}" th:remove="tag" th:text="#{contactform.page.title.new}">
                     [New Contact]
                 </span>
-        <span th:unless="${contact['new']}"  th:remove="tag"
-                 th:text="#{contactform.page.title.update}">
+        <span th:unless="${contact['new']}" th:remove="tag"
+              th:text="#{contactform.page.title.update}">
                      [Update Contact]
              </span>
-              </title>
+    </title>
 </head>
 <body onload="$('input[name=firstName]')
        .focus();$(function () { $('#birthDate')
@@ -27,7 +27,7 @@
                     <span th:if="${contact['new']}" th:remove="tag" th:text="#{contactform.page.header.new}">
                     [New Contact]
                 </span>
-                    <span th:unless="${contact['new']}"  th:remove="tag"
+                    <span th:unless="${contact['new']}" th:remove="tag"
                           th:text="|#{contactform.page.header.update} ${contact.firstName} ${contact.lastName}|">
                      [Update Contact]
              </span>
@@ -108,7 +108,7 @@
                             <div class="form-actions pull-right">
                                 <input type="submit" class="btn btn-success"
                                        th:value="(${contact['new']} ? 'Add' : 'Update') + ' Contact'"
-                                       th:disabled="${appSettings.getIsDemoSite()}" />
+                                       th:disabled="${appSettings.getIsDemoSite()}"/>
                                 <input type="button" th:onclick="'window.location.href=\'' + @{|/contacts/|} + '\''"
                                        class="btn btn-danger" value="Cancel"/>
                             </div>
@@ -116,6 +116,9 @@
                     </tr>
                 </table>
             </form>
+            <div th:if="${appSettings.getIsDemoSite()}" class="form-disabled-note pull-right"><strong>Note: </strong> Updating and
+                Creating Contacts requires Admin Role
+            </div>
             <!--Alternatives to Restricting Access to Submit Button...-->
             <!--th:disabled="!${currentUser?.user.hasAuthority('ROLE_ADMIN')}"-->
             <!--th:disabled="!${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"-->
@@ -127,7 +130,7 @@
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 
 <script th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
-<link th:href="@{/webjars/jquery-ui-themes/1.11.4/overcast/jquery-ui.min.css}" rel="stylesheet" />
+<link th:href="@{/webjars/jquery-ui-themes/1.11.4/overcast/jquery-ui.min.css}" rel="stylesheet"/>
 
 </body>
 </html>

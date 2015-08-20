@@ -75,6 +75,9 @@
                         <div class="col-lg-9 col-lg-offset-3">
                             <button type="submit" class="btn btn-primary" th:text="#{login.form.submit}">[Login]
                             </button>
+                            <div th:if="${appSettings.getIsDemoSite()}" class="demo-login-note">
+                                Login with username "user", password "password"
+                            </div>
                         </div>
                     </div>
                 </fieldset>

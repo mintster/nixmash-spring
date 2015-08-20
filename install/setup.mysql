@@ -237,10 +237,6 @@ CREATE TABLE `users` (
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', 'admin', 'admin@aol.com', 'Admin', 'Jones', '1', '0', '0', '0', '$2a$10$YViIt3pVQU.YJ3bfZDNLPukph6yBWHX6KVScxFvY1lcGGpHQgLi9W', '0');
 INSERT INTO `users` VALUES ('2', 'user', 'user@aol.com', 'User', 'Charlie', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('3', 'keith', 'keith@aol.com', 'Keith', 'Obannon', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('4', 'erwin', 'erwin@aol.com', 'Erwin', 'Lapote', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('5', 'jeremy', 'jeremy@aol.com', 'Jeremy', 'Sloan', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('6', 'scott', 'scott@aol.com', 'Scott', 'Shoenberger', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
 
 -- ----------------------------
 -- Table structure for user_authorities
@@ -261,7 +257,3 @@ CREATE TABLE `user_authorities` (
 INSERT INTO `user_authorities` VALUES ('1', '1');
 INSERT INTO `user_authorities` VALUES ('1', '2');
 INSERT INTO `user_authorities` VALUES ('2', '2');
-INSERT INTO `user_authorities` VALUES ('3', '2');
-INSERT INTO `user_authorities` VALUES ('4', '2');
-INSERT INTO `user_authorities` VALUES ('5', '2');
-INSERT INTO `user_authorities` VALUES ('6', '2');

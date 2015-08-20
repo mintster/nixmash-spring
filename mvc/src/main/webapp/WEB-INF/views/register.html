@@ -4,7 +4,7 @@
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
     <title th:text="#{register.page.title}">[NixMash Spring Registration Page]</title>
 </head>
-<body role="document" onload="$('input[name=firstname]').focus();">
+<body role="document" onload="$('input[name=firstName]').focus();">
 <nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
 
 <div class="container">
@@ -42,22 +42,22 @@
                 </div>
 
                 <fieldset>
-                    <div class="form-group" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
-                        <label for="firstname" class="col-lg-3 control-label" th:text="#{register.form.firstname}">[First
+                    <div class="form-group" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
+                        <label for="firstName" class="col-lg-3 control-label" th:text="#{register.form.firstName}">[First
                             Name]</label>
 
                         <div class="col-lg-9">
-                            <input type="text" th:field="*{firstname}" class="form-control"/>
-                            <label class="control-label" th:errors="*{firstname}">[error]</label>
+                            <input type="text" th:field="*{firstName}" class="form-control"/>
+                            <label class="control-label" th:errors="*{firstName}">[error]</label>
                         </div>
                     </div>
-                    <div class="form-group" th:classappend="${#fields.hasErrors('lastname')} ? 'has-error'">
-                        <label for="lastname" class="col-lg-3 control-label" th:text="#{register.form.lastname}">[Last
+                    <div class="form-group" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
+                        <label for="lastName" class="col-lg-3 control-label" th:text="#{register.form.lastName}">[Last
                             Name]</label>
 
                         <div class="col-lg-9">
-                            <input type="text" th:field="*{lastname}" class="form-control"/>
-                            <label class="control-label" th:errors="*{lastname}">[error]</label>
+                            <input type="text" th:field="*{lastName}" class="form-control"/>
+                            <label class="control-label" th:errors="*{lastName}">[error]</label>
                         </div>
                     </div>
                     <div class="form-group" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
@@ -100,6 +100,9 @@
                             <button type="submit" class="btn btn-primary" th:text="#{register.form.submit}"
                                     th:disabled="${appSettings.getIsDemoSite()}">[Submit]
                             </button>
+                            <div th:if="${appSettings.getIsDemoSite()}" class="demo-registration-note">
+                                <strong>Note: </strong>Registration disabled on Demo Site
+                            </div>
                         </div>
                     </div>
                 </fieldset>

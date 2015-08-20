@@ -44,8 +44,7 @@ public class Contact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "contact_id", nullable = false, insertable = true, updatable = true,
-            length = MAX_LENGTH_EMAIL_ADDRESS)
+    @Column(name = "contact_id")
     public Long getContactId() {
         return contactId;
     }

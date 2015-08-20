@@ -34,7 +34,7 @@
                     <tr th:each="contact : ${contacts}">
                         <td th:text="${contact.contactId}">1</td>
                         <td><a href="#" th:href="@{'/contact/' + ${contact.contactId}}"
-                               th:text="|${contact.firstName} ${contact.lastName}|">[firstname] [lastname]</a>
+                               th:text="|${contact.firstName} ${contact.lastName}|">[firstName] [lastName]</a>
 
                             <div class="form-actions pull-right">
                                 <input type="button" class="btn btn-info" th:value="#{list.page.button.update}"

@@ -1,11 +1,23 @@
 NixMash Spring
 ==========================
 
-This project demonstrates Spring Data, Spring Web MVC and Thymeleaf. It accompanies blog posts at http://nixmash.com which are listed below in their accompanying implementation version. 
+This project demonstrates Spring Data, Spring Web MVC, Spring Security and Thymeleaf. It accompanies blog posts at http://nixmash.com which are listed below in their accompanying implementation version. 
+
+A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 
 ##Implemented##
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
+
+##v0.1.7##
+
+- MySQL Spring Security Support (mysql.setup file now located in /install folder)
+- Deployed as a WAR at http://nixmashspring.daveburkevt.com
+- @ControllerAdvice firing issue with AddViewControllers() fix
+- User Login and Registration Tests
+- [Post: Why Your @ControllerAdvice May Not Be Firing](http://nixmash.com/java/why-your-controlleradvice-may-not-be-firing/)
+- [Post: Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/)
+- [Post: Adding MySQL Spring Security to Existing H2 App](http://nixmash.com/java/adding-mysql-spring-security-to-existing-h2-app/)
 
 ##v0.1.6##
 
@@ -25,6 +37,7 @@ This project demonstrates Spring Data, Spring Web MVC and Thymeleaf. It accompan
 - [Post: External Properties File for Spring Web Site Configuration](http://nixmash.com/java/external-properties-file-for-spring-web-site-configuration/)
 - [Post: Saving Multiple Authorities to Database on New User in Spring](http://nixmash.com/java/saving-multiple-authorities-to-database-on-new-user-in-spring/)
 - [Post: User Registration Validation in Spring](http://nixmash.com/java/user-registration-validation-in-spring/)
+
 
 ![Registration form validation in v0.1.6](http://nixmash.com/x/pics/github/spring-data-0.1.6.png)
 

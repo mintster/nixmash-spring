@@ -18,19 +18,16 @@ Date: 2015-04-21 17:49:43
 -- Users
 ------------------------------------------------------------
 
-INSERT INTO users (id, email, username, password, firstname, lastname, enabled, account_expired, account_locked, credentials_expired) VALUES (1, 'admin@aol.com', 'admin', '$2a$10$YViIt3pVQU.YJ3bfZDNLPukph6yBWHX6KVScxFvY1lcGGpHQgLi9W', 'Admin', 'Jones', true, false, false, false);
-INSERT INTO users (id, email, username, password, firstname, lastname, enabled, account_expired, account_locked, credentials_expired) VALUES (2, 'user@aol.com', 'user', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'User', 'Charlie', true, false, false, false);
-INSERT INTO users (id, email, username, password, firstname, lastname, enabled, account_expired, account_locked, credentials_expired) VALUES (3, 'keith@aol.com', 'keith', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Keith', 'Obannon', true, false, false, false);
-INSERT INTO users (id, email, username, password, firstname, lastname, enabled, account_expired, account_locked, credentials_expired) VALUES (4, 'erwin@aol.com', 'erwin', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Erwin', 'Lapote', true, false, false, false);
-INSERT INTO users (id, email, username, password, firstname, lastname, enabled, account_expired, account_locked, credentials_expired) VALUES (5, 'jeremy@aol.com', 'jeremy', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Jeremy', 'Sloan', true, false, false, false);
-INSERT INTO users (id, email, username, password, firstname, lastname, enabled, account_expired, account_locked, credentials_expired) VALUES (6, 'scott@aol.com', 'scott', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Scott', 'Shoenberger', true, false, false, false);
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired) VALUES (1, 'admin@email.com', 'admin', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Admin', 'Jones', true, false, false, false);
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired) VALUES (2, 'user@email.com', 'user', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'User', 'Charlie', true, false, false, false);
+
 
 ------------------------------------------------------------
 -- Authorities
 ------------------------------------------------------------
 
-INSERT INTO authorities (id, authority) VALUES (1, 'ROLE_ADMIN');
-INSERT INTO authorities (id, authority) VALUES (2, 'ROLE_USER');
+INSERT INTO authorities (authority_id, authority) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO authorities (authority_id, authority) VALUES (2, 'ROLE_USER');
 
 ------------------------------------------------------------
 -- User_Authorities
@@ -39,10 +36,6 @@ INSERT INTO authorities (id, authority) VALUES (2, 'ROLE_USER');
 INSERT INTO user_authorities (user_id, authority_id) VALUES (1, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (1, 1);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (2, 2);
-INSERT INTO user_authorities (user_id, authority_id) VALUES (3, 2);
-INSERT INTO user_authorities (user_id, authority_id) VALUES (4, 2);
-INSERT INTO user_authorities (user_id, authority_id) VALUES (5, 2);
-INSERT INTO user_authorities (user_id, authority_id) VALUES (6, 2);
 
 INSERT INTO contacts (first_name, last_name, birth_date, email, version)
 VALUES ('Summer', 'Glass', '1968-08-05', 'vitae@egestasadui.net', 0),

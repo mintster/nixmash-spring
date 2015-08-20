@@ -21,15 +21,15 @@
             <span class="secLabel" th:text="#{secinfo.authorities}">[ROLES]</span>
             <span class="secField" th:text="${currentUser.getAuthorities()}">[ROLES]</span>
         </div>
-       <p class="secNote"><strong>Note:</strong> Users are restricted from creating and updating contacts. Registration is disabled on Demo Site.</p>
-    </div>
+     </div>
     <div th:if="${currentUser == null}" th:remove="tag">
         <div class="secAnonymous">
             <div th:remove="tag" th:text="#{secinfo.anonymous}">[ANONYMOUS]</div>
         </div>
     </div>
     <div class="github-footer">
-        <a href="https://github.com/mintster/spring-data">Download NixMash Spring from GitHub</a>
+        <a href="https://github.com/mintster/spring-data"><img src="/static/img/github.png"
+                                                               alt="Download NixMash Spring on GitHub"></img></a>
     </div>
 </div>
 

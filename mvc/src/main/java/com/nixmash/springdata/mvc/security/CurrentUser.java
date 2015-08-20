@@ -19,7 +19,7 @@ public class CurrentUser
     }
 
     public String getFullName() {
-        return user.getFirstname() + ' ' + user.getLastname();
+        return user.getFirstName() + ' ' + user.getLastName();
     }
 
     public Long getId() {

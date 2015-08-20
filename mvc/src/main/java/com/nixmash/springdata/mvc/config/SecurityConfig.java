@@ -15,12 +15,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -32,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] IGNORED_RESOURCE_LIST = new String[]{"/resources/**",
             "/static/**", "/webjars/**"};
-    private static final String[] PERMITALL_RESOURCE_LIST = new String[]{"/", "/contacts/**", "/list.html", "/register/**"};
+    private static final String[] PERMITALL_RESOURCE_LIST = new
+            String[]{"/", "/login/**", "/contacts/**", "/list.html", "/register/**"};
     private static final String[] ADMIN_RESOURCE_LIST = new String[]{"/console/**"};
 
     // endregion
@@ -78,6 +84,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+
+    @Order(2)
+    @Configuration
+    @Profile(DataConfigProfile.MYSQL)
+    protected static class MySqlWebSecurityConfiguration extends
+            GlobalAuthenticationConfigurerAdapter {
+
+        @Autowired
+        private DataSource dataSource;
+
+        @Override
+        public void init(AuthenticationManagerBuilder auth) throws Exception {
+            JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
+            userDetailsService.setDataSource(dataSource);
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+            auth
+                .userDetailsService(userDetailsService)
+                    .passwordEncoder(encoder)
+                .and()
+                    .jdbcAuthentication()
+                        .dataSource(dataSource)
+            ;
+        }
     }
 
     @Override

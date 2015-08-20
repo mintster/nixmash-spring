@@ -154,15 +154,10 @@ td.hobbies span {
 }
 
 .github-footer {
-    background: url('/static/img/github.png') no-repeat left;
-    height: 40px;
-    display: inline-block;
     margin-top: 10px;
 }
-.github-footer a {
-    padding-left: 30px;
-    margin-top: 10px;
-    display: inherit;
+.github-footer a img, .github-footer a:focus, .github-footer img {
+    border: none;
 }
 /*</editor-fold>*/
 
@@ -170,6 +165,17 @@ td.hobbies span {
 
 h2.form-title {
     margin-bottom: 40px;
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="DEMO SITE NOTES ----------------------------/ "*/
+
+.demo-login-note, .demo-registration-note, .form-disabled-note {
+    font-style: italic;
+    display: block;
+    margin: 15px 0;
+    color: #333;
 }
 
 /*</editor-fold>*/

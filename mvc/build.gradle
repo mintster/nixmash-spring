@@ -1,6 +1,5 @@
 war {
-    baseName = 'mvc'
-
+    baseName = 'nixmashSpring'
 }
 
 sourceSets {
@@ -63,9 +62,10 @@ task production << {
 //    bootRun.systemProperty 'spring.profiles.active', 'mysql'
 }
 
+
 bootRun {
     addResources = false
     systemProperty 'server.port', '8084'
-    systemProperty 'spring.profiles.active', 'h2'
+    systemProperty 'spring.profiles.active', 'mysql'
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }

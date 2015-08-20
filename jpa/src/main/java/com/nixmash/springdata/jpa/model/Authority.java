@@ -24,6 +24,7 @@ public class Authority implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "authority_id")
     protected Long id;
 
     public void setId(Long id) {

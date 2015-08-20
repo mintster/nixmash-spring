@@ -31,6 +31,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     protected Long id;
 
     public void setId(Long id) {
@@ -62,12 +63,12 @@ public class User implements UserDetails {
     @Column
     @NotEmpty
     @Length(max=MAX_LENGTH_FIRST_NAME)
-    private String firstname;
+    private String firstName;
 
     @Column
     @NotEmpty
     @Length(max=MAX_LENGTH_LAST_NAME)
-    private String lastname;
+    private String lastName;
 
     @Column(name = "account_expired")
     private boolean accountExpired = false;
@@ -94,11 +95,11 @@ public class User implements UserDetails {
         this.authorities = new LinkedHashSet<>();
     }
 
-    public User(String username, String password, String firstname, String lastname) {
+    public User(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     @Override
@@ -119,20 +120,20 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -205,8 +206,8 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", accountExpired=" + accountExpired +
                 ", accountLocked=" + accountLocked +
                 ", credentialsExpired=" + credentialsExpired +
