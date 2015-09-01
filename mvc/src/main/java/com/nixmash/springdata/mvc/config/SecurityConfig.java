@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +29,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@EnableWebMvcSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackageClasses = CurrentUserDetailsService.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] IGNORED_RESOURCE_LIST = new String[]{"/resources/**",
             "/static/**", "/webjars/**"};
     private static final String[] PERMITALL_RESOURCE_LIST = new
-            String[]{"/", "/login/**", "/contacts/**", "/list.html", "/register/**"};
+            String[]{"/", "/login/**", "/contacts", "/register/**"};
     private static final String[] ADMIN_RESOURCE_LIST = new String[]{"/console/**"};
 
     // endregion

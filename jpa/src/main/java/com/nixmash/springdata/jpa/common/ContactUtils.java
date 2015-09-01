@@ -8,6 +8,7 @@ import com.nixmash.springdata.jpa.model.Hobby;
 import com.nixmash.springdata.jpa.model.User;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  * Date: 4/15/15
  * Time: 12:06 PM
  */
-public class SpringUtils {
+public class ContactUtils {
 
     // region Properties
 
@@ -106,7 +107,7 @@ public class SpringUtils {
     {
         return contacts
                 .stream()
-                .map(SpringUtils::contactToContactDTO)
+                .map(ContactUtils::contactToContactDTO)
                 .collect(Collectors.toList());
     }
 
@@ -147,5 +148,14 @@ public class SpringUtils {
         return hobbyDTO;
     }
 
+    // endregion
+
+    // region Random IDs
+
+    public static Long randomNegativeId()
+    {
+        Random rand = new Random();
+        return -1 * ((long)rand.nextInt(1000));
+    }
     // endregion
 }

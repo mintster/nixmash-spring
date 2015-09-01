@@ -1,7 +1,5 @@
 
-package com.nixmash.springdata.mvc.security;
-
-import com.nixmash.springdata.jpa.model.User;
+package com.nixmash.springdata.jpa.model;
 
 public class CurrentUser
         extends org.springframework.security.core.userdetails.User {

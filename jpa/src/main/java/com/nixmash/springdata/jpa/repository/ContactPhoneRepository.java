@@ -9,4 +9,5 @@ public interface ContactPhoneRepository extends CrudRepository<ContactPhone, Lon
 
     ContactPhone findByContactPhoneId(Long id);
     List<ContactPhone> findByContact_ContactId(Long id);
+
 }

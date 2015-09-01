@@ -16,25 +16,28 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.google.common.collect.Lists;
-import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.model.Authority;
+import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
+import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Allows users to sign up.
@@ -42,17 +45,27 @@ import javax.validation.Valid;
  * @author Rob Winch
  */
 @Controller
-@RequestMapping("/register")
-public class RegisterController {
+public class UserController {
+
+
+    public static final String MODEL_ATTRIBUTE_CURRENTUSER = "currentUser";
+    public static final String USER_PROFILE_VIEW = "users/profile";
+    public static final String REGISTER_VIEW = "register";
+    public static final String LOGIN_VIEW = "login";
+
     private final UserService userService;
+    private final CurrentUserDetailsService currentUserDetailsService;
     private final UserCreateFormValidator userCreateFormValidator;
 
-    private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    public RegisterController(UserService userService, UserCreateFormValidator userCreateFormValidator) {
+    public UserController(UserService userService,
+                          UserCreateFormValidator userCreateFormValidator,
+                          CurrentUserDetailsService currentUserDetailsService) {
         this.userService = userService;
         this.userCreateFormValidator = userCreateFormValidator;
+        this.currentUserDetailsService = currentUserDetailsService;
     }
 
 
@@ -61,30 +74,42 @@ public class RegisterController {
         binder.addValidators(userCreateFormValidator);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registrationForm(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
         if (request.getUserPrincipal() != null)
             return "redirect:/";
         else
-            return "register";
+            return REGISTER_VIEW;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result,
                            RedirectAttributes redirect) {
         if (result.hasErrors()) {
-            return "register";
+            return REGISTER_VIEW;
         }
         userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
-        try {
-            userService.create(userDTO);
-        } catch (DataIntegrityViolationException e) {
-            logger.warn("Exception occurred when trying to save the user", e);
-            result.reject("unknown.error", "An error has occurred and has been logged");
-            return "register";
-        }
-        // Okay User Created
+        userService.create(userDTO);
         redirect.addFlashAttribute(ContactController.FLASH_MESSAGE_KEY_FEEDBACK, "Successfully registered");
         return "redirect:/contacts";
+    }
+
+    @PreAuthorize("@userService.canAccessUser(principal, #username)")
+    @RequestMapping(value = "/{username}", method = GET)
+    public String profilePage(@PathVariable("username")
+                                         String username, Model model)
+            throws UsernameNotFoundException {
+        logger.info("Showing user page for user: {}", username);
+        CurrentUser found = currentUserDetailsService.loadUserByUsername(username);
+        model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, found);
+        return USER_PROFILE_VIEW;
+    }
+
+    @RequestMapping(value = "/login", method = GET)
+    public String login(HttpServletRequest request, Model model) {
+        if (request.getUserPrincipal() != null)
+            return "redirect:/contacts";
+        else
+            return LOGIN_VIEW;
     }
 }

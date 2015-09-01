@@ -9,7 +9,14 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
-##v0.1.7##
+##v0.1.8 -- Child Object Processing, MVC Method Level Security##
+
+- Add, Update, Remove Contact Phones added to Contact Update form
+- User Profile Page with @PreAuthorize to enforce owner-only plus administrator profile view
+- [Post: Spring MVC Method Security with @PreAuthorize and Sp-EL](http://nixmash.com/java/spring-mvc-method-security-with-preauthorize-and-sp-el/)
+- [Post: Consistent Fonts with Bootstrap Glyphicon and Thymeleaf](http://nixmash.com/java/consistent-fonts-with-bootstrap-glyphicon-and-thymeleaf/)
+
+##v0.1.7 -- Full MySQL Support, WAR Deployment##
 
 - MySQL Spring Security Support (mysql.setup file now located in /install folder)
 - Deployed as a WAR at http://nixmashspring.daveburkevt.com
@@ -19,7 +26,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/)
 - [Post: Adding MySQL Spring Security to Existing H2 App](http://nixmash.com/java/adding-mysql-spring-security-to-existing-h2-app/)
 
-##v0.1.6##
+##v0.1.6 -- Initial Release w/ Spring Security##
 
 - Spring Security with Login and User Registration. Supports Multiple Role Assignment with USERS, USER_AUTHORITIES and AUTHORITIES table storage
 - H2 Console support at http://site/console. USER Role Access Denied to Console
@@ -41,7 +48,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Registration form validation in v0.1.6](http://nixmash.com/x/pics/github/spring-data-0.1.6.png)
 
-##v0.1.5##
+##v0.1.5 -- Contact Add/Update Form, Dandelion Asset Bundling##
 
 - Multi-use Contact Add/Update Form
 - Fadeout Feedback Messages on Contact Add/Update with jQuery and Handlebars
@@ -58,7 +65,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Using jQuery-UI with Dandelion in v0.1.5](http://nixmash.com/x/pics/github/spring-data-0.1.5.png)
 
-##v0.1.4##
+##v0.1.4 -- Contact Display, List and Search##
 
 - jQuery, Bootstrap and Bootswatch Webjars
 - Using Bootswatch Webjar with Spring
@@ -69,14 +76,14 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Bootstrap with All Contacts Display in Spring-Data MVC with Thymeleaf v0.1.4](http://nixmash.com/x/pics/github/spring-data-0.1.4.png)
 
-##v0.1.3##
+##v0.1.3 -- Initial release w/ Thymeleaf##
 
 - Thymeleaf support added
 - [Post: Thymeleaf Configuration with Spring Boot](http://nixmash.com/java/thymeleaf-configuration-with-spring-boot/)
 
 ![Spring-Data MVC with Thymeleaf in v0.1.3](http://nixmash.com/x/pics/github/spring-data-0.1.3.png)
 
-##v0.1.2##
+##v0.1.2 -- Multi-Module with JPA and MVC Modules##
 
 - MVC Module Added
 - JPA and MVC Modules wired as single Spring Application
@@ -90,7 +97,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Spring-Data Does MVC in v0.1.2](http://nixmash.com/x/pics/github/spring-data-0.1.2.png)
 
-##v0.1.1##
+##v0.1.1 -- @ManyToMany Hobbies added to Contact Model##
 
 - Addition of Hobbies, a @ManyToMany Entity with Contacts
 - Adding Hobbies dynamically on new and updated Contacts, and as separate process
@@ -99,7 +106,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Tests covering above Hobby processes
 - [Post: Working with the Many in a JPA @ManyToMany](http://nixmash.com/java/working-with-the-many-in-a-jpa-manytomany/)
 
-##v0.1.0##
+##v0.1.0 -- @OneToMany Contact Phones added to Contact Model##
 
 - Examples of Updating, Deleting and Adding records with focus on @OneToMany relationship handling
 - ContactDTO now containing Contact and ContactPhone Set
@@ -110,20 +117,20 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Updating the Many in a JPA @OneToMany](http://nixmash.com/java/updating-the-many-in-a-jpa-onetomany/)
 
 
-##v0.0.9##
+##v0.0.9 -- Lazy Loading examples##
 
 - Several examples of Lazy Loading
 - First pass at creating schema DTO objects for use in updating and creating data
 - Modified database schema to better adhere to database relationship best practices. Updates are reflected in Entities. 
 - [Post: Approaches to JPA Lazy Loading](http://nixmash.com/java/approaches-to-jpa-lazy-loading/)
 
-##v0.0.8##
+##v0.0.8 -- Multi-database configuration w/ H2Console and MySQL##
 
 - h2database and mySQL JPA Data Configuration
 - Profiles based on Enumerator value (ex: JpaDataConfig.MYSQL)
 - [Post: A Spring JPA Configuration for Multiple Profiles](http://nixmash.com/java/a-spring-jpa-configuration-for-multiple-profiles/)
 
-##v0.0.7##
+##v0.0.7 -- Multi-profile configuration##
 
 - ApplicationContext and Data Retrieval Tests
 - "Production" and "Dev" Spring Profiles
@@ -134,7 +141,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: GetBeans in a Spring Main Method, A Better Way](http://nixmash.com/java/getbeans-in-a-spring-main-method-a-better-way/)
 - [Post: Setting Spring Profiles in Gradle](http://nixmash.com/java/setting-spring-profiles-in-gradle/)
 
-##v0.0.6##
+##v0.0.6 -- GUI Generated Entities and Diagram Examples##
 
 - Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Models now contain "Entity" classname suffix.)
 - Output based on new Entities, shown below
@@ -145,13 +152,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Image of Spring Data JPA Output v0.0.6](http://nixmash.com/x/pics/github/spring-data-0.0.6.png)
 
-##v0.0.5##
+##v0.0.5 -- Hibernate and JPA Module structure##
 
 - Broke-up the application into two separate IntelliJ Modules
 - Root and child Gradle project configuration
 - [Post: Supporting Multiple Transaction Managers in Spring](http://nixmash.com/java/supporting-two-transaction-managers-in-spring/)
 
-##v0.0.4##
+##v0.0.4 -- Initial Release with JPA##
 
 - Spring Data JPA Implementation
 - Dual SpringJPAConfiguration and SpringHbnConfiguration classes
@@ -163,7 +170,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Image of Spring Data JPA Output v0.0.4](http://nixmash.com/x/pics/github/spring-data-0.0.4.png)
 
-##v0.0.3##
+##v0.0.3 -- DAO Implementation##
 
 - Generic DAO Interface Implementation
 - Added Service Facade
@@ -172,7 +179,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - _Spring 4.0.6, Spring-Boot 1.1.4_
 - [Post: Spring-Data GitHub App at v.0.0.3 with Generic DAO Interface](http://nixmash.com/java/spring-hibernate-at-v-0-0-3-with-generic-dao-interface/)
 
-##v0.0.2##
+##v0.0.2 -- Using Spring Properties##
 
 - Populating DataSource connection from Property File
 - Using both @Value and @Autowired Environment properties
@@ -185,7 +192,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Image of Output v0.0.2](http://nixmash.com/x/pics/github/spring-hibernate-properties.png)
  
-##v0.0.1##
+##v0.0.1 -- Base Configuration in Spring and Hibernate##
 
 - Changed XML Spring Configuration to Annotations
 - Changed datasource from embedded H2 to MySql
@@ -205,7 +212,7 @@ The application supports an H2 Profile (default) and a MySQL Profile. To run JPA
 
 ##Database Configuration##
 
-To use MySQL run _setup.mysql_ script in the /doc/install directory to populate the database. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The H2 create-data script for the tests is located in _/resources/db._
+To use MySQL run _setup.mysql_ script in the /doc/install directory to populate the database. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The H2 create-data script for the tests is located in _/resources/db._ External properties in _/home/daveburke/...external.properties._ Change in JPA _common/ApplicationSettings._ Example of _external.properties_ in _/install._
 
 ##References##
 

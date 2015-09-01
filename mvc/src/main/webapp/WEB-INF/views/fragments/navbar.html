@@ -16,24 +16,23 @@
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
                     <li th:class="${activeTab == 'home'}? 'active' : null"><a href="/" th:href="@{/}"><span
-                            class="glyphicon glyphicon-home" th:text="#{navbar.home}">
-                    [Home]</span></a></li>
-                    <li th:class="${activeTab == 'contacts'}? 'active' : null"><a href="../contacts"
+                            class="glyphicon glyphicon-home"></span><span th:text="#{navbar.home}" th:remove="tag">[Home]</span></a></li>
+                    <li th:class="${activeTab == 'contacts'}? 'active' : null"><a href="/contacts"
                                                                                   th:href="@{/contacts}"><span
-                            class="glyphicon glyphicon-th-list" th:text="#{navbar.contacts}">[Contacts]</span>
+                            class="glyphicon glyphicon-th-list" ></span><span th:text="#{navbar.contacts}" th:remove="tag">[Contacts]</span>
                     </a></li>
-                    <li th:class="${activeTab == 'search'}? 'active' : null"><a href="../search"
-                                                                                th:href="@{/search}"><span
-                            class="glyphicon glyphicon-search" th:text="#{navbar.search}">[Search]</span></a></li>
+                    <li th:class="${activeTab == 'search'}? 'active' : null"><a href="/contacts/search"
+                                                                                th:href="@{/contacts/search}"><span
+                            class="glyphicon glyphicon-search"></span><span th:text="#{navbar.search}" th:remove="tag">[Search]</span></a></li>
                 </ul>
 
                 <div th:if="${currentUser != null}">
                     <form class="navbar-form pull-right" th:action="@{/logout}" method="post">
                         <input type="submit" value="Log out" class="btn btn-default"/>
                     </form>
-                    <p class="navbar-text pull-right" th:utext="#{navbar.welcome(${currentUser.getFullName()})}">
+                    <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right" th:utext="#{navbar.welcome(${currentUser.getFullName()})}">
                         [User FullName]
-                    </p>
+                    </a>
                 </div>
                 <div th:if="${currentUser == null}" class="navbar-right">
                     <a th:href="@{'/login/'}" th:text="#{web.site.login}" class="navbar-text margin-5">[Login]</a>

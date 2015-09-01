@@ -122,7 +122,7 @@ td.hobbies span {
 
 /*</editor-fold>*/
 
-/*/<editor-fold> desc="SECUSER USER INFO ----------------------------/ "*/
+/*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
 
 #secInfo {
     font-size: smaller;
@@ -159,12 +159,39 @@ td.hobbies span {
 .github-footer a img, .github-footer a:focus, .github-footer img {
     border: none;
 }
+
+.github-footer a.github-version
+{
+    display: inline-block;
+    margin-left: 6px;
+}
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="BOOTSTRAP FORMS ----------------------------/ "*/
 
 h2.form-title {
     margin-bottom: 40px;
+}
+
+.col-align-right, .button-col-align-right
+{
+    display: inline-block;
+    float: none;
+    text-align: right;
+}
+.button-col-align-right
+{
+    padding-right: 6px !important;
+}
+.input-button-right {
+    width: 80%;
+    float: left;
+}
+
+.row-delete-button
+{
+
 }
 
 /*</editor-fold>*/

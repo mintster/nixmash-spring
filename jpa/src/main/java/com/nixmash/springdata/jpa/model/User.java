@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.model;
 
+import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -158,8 +159,11 @@ public class User implements UserDetails {
     }
 
 
+    public boolean hasAuthority(Role role) {
+        return hasAuthority(String.valueOf(role));
+    }
 
-    public boolean hasAuthority(String targetAuthority) {
+    private boolean hasAuthority(String targetAuthority) {
         if (targetAuthority == null) {
             return false;
         }

@@ -1,6 +1,8 @@
 package com.nixmash.springdata.jpa.model;
 
 import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,6 +37,12 @@ public class ContactPhone implements Serializable {
         this.phoneNumber = contactPhoneDTO.getPhoneNumber();
     }
 
+
+    @Transient
+    public boolean isNew() {
+        return (this.contactPhoneId == null);
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "contact_phone_id", nullable = false, insertable = true, updatable = true)
@@ -48,6 +56,7 @@ public class ContactPhone implements Serializable {
 
     @Basic
     @Column(name = "phone_type", nullable = false, insertable = true, updatable = true, length = MAX_LENGTH_PHONE_TYPE)
+    @NotEmpty
     public String getPhoneType() {
         return phoneType;
     }
@@ -58,6 +67,7 @@ public class ContactPhone implements Serializable {
 
     @Basic
     @Column(name = "phone_number", nullable = false, insertable = true, updatable = true, length = MAX_LENGTH_PHONE_NUMBER)
+    @NotEmpty
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -88,12 +98,16 @@ public class ContactPhone implements Serializable {
 
     @Override
     public String toString() {
-        return "   Details: " +
-                "id=" + contactPhoneId +
-                ", telType='" + phoneType + '\'' +
-                ", telNumber='" + phoneNumber + '\'' +
-                ", version=" + version;
+        return new ToStringCreator(this)
+                .append("id", this.getContactPhoneId())
+                .append("new", this.isNew())
+                .append("contactId", this.getContact().getContactId())
+                .append("phoneType", this.getPhoneType())
+                .append("phoneNumber", this.getPhoneNumber())
+                .append("version", this.getVersion())
+                .toString();
     }
+
 
 
     public void update(final String phoneType, final String phoneNumber) {

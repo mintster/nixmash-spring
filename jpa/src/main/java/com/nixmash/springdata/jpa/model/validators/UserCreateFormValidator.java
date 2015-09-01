@@ -12,7 +12,7 @@ import org.springframework.validation.Validator;
 @Component
 public class UserCreateFormValidator implements Validator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserCreateFormValidator.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserCreateFormValidator.class);
     private final UserService userService;
 
     @Autowired
@@ -27,7 +27,7 @@ public class UserCreateFormValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        LOGGER.debug("Validating {}", target);
+        logger.debug("Validating {}", target);
         UserDTO form = (UserDTO) target;
         validatePasswords(errors, form);
         validateEmail(errors, form);

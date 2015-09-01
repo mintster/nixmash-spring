@@ -1,8 +1,10 @@
 package com.nixmash.springdata.jpa.service;
 
-import com.nixmash.springdata.jpa.model.Authority;
-import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.enums.Role;
+import com.nixmash.springdata.jpa.model.Authority;
+import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.repository.AuthorityRepository;
 import com.nixmash.springdata.jpa.repository.UserRepository;
 import org.slf4j.Logger;
@@ -33,25 +35,25 @@ public class UserServiceImpl implements UserService {
         this.authorityRepository = authorityRepository;
     }
 
-    @Transactional(value = "jpaTransactionManager", readOnly = true)
+    @Transactional(readOnly = true)
     public Optional<User> getUserById(long id) {
         logger.debug("Getting user={}", id);
         return Optional.ofNullable(userRepository.findById(id));
     }
 
-    @Transactional(value = "jpaTransactionManager", readOnly = true)
+    @Transactional(readOnly = true)
     public User getUserByUsername(String username) {
         logger.debug("Getting user={}", username);
         return userRepository.findByUsername(username);
     }
 
-    @Transactional(value = "jpaTransactionManager", readOnly = true)
+    @Transactional(readOnly = true)
     public Optional<User> getByEmail(String email) {
         logger.debug("Getting user by email={}", email);
         return userRepository.findOneByEmail(email);
     }
 
-    @Transactional(value = "jpaTransactionManager", readOnly = true)
+    @Transactional(readOnly = true)
     public Collection<User> getAllUsers() {
         logger.debug("Getting all users");
         return userRepository.findAll();
@@ -87,4 +89,15 @@ public class UserServiceImpl implements UserService {
     {
         return userRepository.getUsersWithDetail();
     }
+
+    @Override
+    public boolean canAccessUser(CurrentUser currentUser, String username) {
+        logger.debug("Checking if user={} has access to user={}",
+                currentUser, username);
+        return currentUser != null
+                && (currentUser.getUser().hasAuthority(Role.ROLE_ADMIN) ||
+                    currentUser.getUsername().equals(username));
+    }
 }
+
+

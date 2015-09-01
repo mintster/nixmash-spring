@@ -108,8 +108,8 @@ public class ContactControllerTest extends AbstractContext {
 
         final ExceptionHandlerExceptionResolver exceptionResolver = new ExceptionHandlerExceptionResolver();
         final StaticApplicationContext applicationContext = new StaticApplicationContext();
-        applicationContext.registerBeanDefinition("exceptionController",
-                new RootBeanDefinition(ExceptionController.class, null, null));
+        applicationContext.registerBeanDefinition("globalController",
+                new RootBeanDefinition(GlobalController.class, null, null));
         exceptionResolver.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         exceptionResolver.setApplicationContext(applicationContext);
         exceptionResolver.afterPropertiesSet();
@@ -120,6 +120,7 @@ public class ContactControllerTest extends AbstractContext {
     }
 
     @Test
+    @Ignore(value = "Moved to GeneralController")
     public void homePageTest() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(model().hasNoErrors())
@@ -141,7 +142,7 @@ public class ContactControllerTest extends AbstractContext {
     public void getContactByIdTest() throws Exception {
 
         mockMvc.perform(get("/contact/100").contentType(MediaType.TEXT_HTML))
-                .andExpect(view().name("view"))
+                .andExpect(view().name("contacts/view"))
                 .andExpect(model().attributeExists("contact"))
                 .andExpect(model().attribute("contact", contact));
     }
@@ -151,10 +152,10 @@ public class ContactControllerTest extends AbstractContext {
     public void getContactsTest() throws Exception {
 
         Model model = new BindingAwareModelMap();
-        String view = controller.home(model);
+        String view = controller.showContactsPage(model);
 
         MvcResult result = mockMvc.perform(get("/contacts"))
-                .andExpect(view().name("list"))
+                .andExpect(view().name("contacts/list"))
                 .andExpect(model().attributeExists("contacts"))
                 .andExpect(model().attribute("contacts",
                         hasItems(allContacts.toArray())))
@@ -166,7 +167,7 @@ public class ContactControllerTest extends AbstractContext {
         verify(mockService, times(1)).findAll();
         verifyNoMoreInteractions(mockService);
 
-        assertEquals(ContactController.HOME_VIEW, view);
+        assertEquals(controller.CONTACT_LIST_VIEW, view);
     }
 
     @Test
@@ -174,36 +175,36 @@ public class ContactControllerTest extends AbstractContext {
 
         mockMvc = standaloneSetup(new ContactController(contactService))
                 .setSingleView(
-                        new InternalResourceView("/WEB-INF/views/list.html"))
+                        new InternalResourceView("/WEB-INF/views/contacts/list.html"))
                 .build();
 
         // TEST SINGLE CONTACT RETRIEVED
 
-        mockMvc.perform(get("/list").param("lastName", "Glass"))
+        mockMvc.perform(get("/contacts/list").param("lastName", "Glass"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/contact/1"));
 
         // TEST MULTIPLE CONTACTS RETRIEVED
 
-        mockMvc.perform(get("/list").param("lastName", "Rob"))
+        mockMvc.perform(get("/contacts/list").param("lastName", "Rob"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("contacts"))
-                .andExpect(view().name("list"));
+                .andExpect(view().name("contacts/list"));
 
         // TEST NO CONTACTS RETRIEVED
 
-        mockMvc.perform(get("/list").param("lastName", "Bubba"))
+        mockMvc.perform(get("/contacts/list").param("lastName", "Bubba"))
                 .andExpect(status().isOk())
                 .andExpect(model()
                         .attributeHasFieldErrorCode("contact",
                                 "lastName",
                                 "search.contact.notfound"))
-                .andExpect(view().name("search"));
+                .andExpect(view().name("contacts/search"));
 
 
         // TEST EMPTY FORM - ALL CONTACTS RETRIEVED
 
-        mockMvc.perform(get("/list").param("lastName", ""))
+        mockMvc.perform(get("/contacts/list").param("lastName", ""))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("contacts"))
                 .andExpect(view().name("redirect:/contacts/"))
@@ -232,6 +233,7 @@ public class ContactControllerTest extends AbstractContext {
                 .andExpect(status().isOk())
                 .andExpect(view().name("error"));
     }
+
 
     @Test
     public void addContactTest() {

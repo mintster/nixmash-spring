@@ -46,6 +46,12 @@
                   th:action="@{${#httpServletRequest.getRequestURI()}}"
                   class="form-horizontal" id="contact-form">
 
+                <div th:if="${#fields.hasGlobalErrors()}"
+                     class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <label class="control-label" th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</label>
+                </div>
+
                 <table class="table table-striped">
                     <tr th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
                         <td class="col-sm-1">
@@ -102,21 +108,45 @@
                             </div>
                         </td>
                     </tr>
+
+                </table>
+                <table class="table table-striped" th:if="${!contact['new']}">
                     <tr>
+                        <th class="col-sm-1"></th>
+                        <th class="col-sm-1">Contact Type</th>
+                        <th class="col-sm-1">Contact Number</th>
+                    </tr>
+                    <tr th:each="contactPhone, rowStat : *{contactPhones}">
                         <td></td>
-                        <td>
-                            <div class="form-actions pull-right">
-                                <input type="submit" class="btn btn-success"
-                                       th:value="(${contact['new']} ? 'Add' : 'Update') + ' Contact'"
-                                       th:disabled="${appSettings.getIsDemoSite()}"/>
-                                <input type="button" th:onclick="'window.location.href=\'' + @{|/contacts/|} + '\''"
-                                       class="btn btn-danger" value="Cancel"/>
-                            </div>
+                        <td><input type="text" class="form-control"
+                                   th:field="*{contactPhones[__${rowStat.index}__].phoneType}"/></td>
+                        <td><input type="text" class="form-control input-button-right"
+                                   th:field="*{contactPhones[__${rowStat.index}__].phoneNumber}"/>
+                            <span class="col-sm-1 row-delete-button">
+                               <button type="submit" class="btn btn-default"
+                                       th:value="*{contactPhones[__${rowStat.index}__].contactPhoneId}"
+                                       name="removeContactPhone">
+                                   <i class="glyphicon glyphicon-trash icon-white"></i>
+                               </button>
+                            </span>
                         </td>
                     </tr>
                 </table>
+
+                <div class="col-lg-12 button-col-align-right">
+                    <input type="submit" class="btn btn-primary"
+                           th:value="(${contact['new']} ? 'Add' : 'Update') + ' Contact'"
+                           th:disabled="${appSettings.getIsDemoSite()}"/>
+                    <input th:type="submit" class="btn btn-success" th:if="${!contact['new']}"
+                           name="addContactPhone"
+                           th:value="#{contactform.contactPhone.row.add}"/>
+                    <input type="button" th:onclick="'window.location.href=\'' + @{|/contacts/|} + '\''"
+                           class="btn btn-success" value="Cancel"/>
+                </div>
+
             </form>
-            <div th:if="${appSettings.getIsDemoSite()}" class="form-disabled-note pull-right"><strong>Note: </strong> Updating and
+            <div th:if="${appSettings.getIsDemoSite()}" class="form-disabled-note pull-right"><strong>Note: </strong>
+                Updating and
                 Creating Contacts requires Admin Role
             </div>
             <!--Alternatives to Restricting Access to Submit Button...-->

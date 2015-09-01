@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title th:text="#{user.page.title}"></title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="|${currentUser.getFullName()}|">[fullname]</h1>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+        </div>
+    </div>
+
+</div>
+<div class="container bs-docs-container big-font-container">
+    <div class="row row-centered">
+        <div class="bs-docs-section col-lg-9 col-centered">
+            <div id="form-table">
+                <div class="heading">
+                    <h2 th:text="#{user.heading.profile}">[User Profile]</h2>
+                </div>
+                <table class="table table-condensed">
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{user.label.id}">[Id]</div>
+                        </td>
+                        <td>
+                            <div th:text="${currentUser.user.id}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{user.label.firstName}">[Firstname]</div>
+                        </td>
+                        <td>
+                            <div th:text="${currentUser.user.firstName}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{user.label.lastName}">[Lastname]</div>
+                        </td>
+                        <td>
+                            <div th:text="${currentUser.user.lastName}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">
+                            <div th:text="#{user.label.email}">[Email]</div>
+                        </td>
+                        <td>
+                            <div th:text="${currentUser.user.email}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <nav th:replace="fragments/secinfo">User Info</nav>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+</body>
+</html>

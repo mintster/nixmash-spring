@@ -2,6 +2,7 @@ package com.nixmash.springdata.jpa.model;
 
 import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -56,6 +57,7 @@ public class Contact implements Serializable {
     @Basic
     @Column(name = "first_name", nullable = false, insertable = true, updatable = true,
             length = MAX_LENGTH_FIRST_NAME)
+    @NotEmpty
     public String getFirstName() {
         return firstName;
     }
@@ -67,6 +69,7 @@ public class Contact implements Serializable {
     @Basic
     @Column(name = "last_name", nullable = false, insertable = true, updatable = true,
             length = MAX_LENGTH_LAST_NAME)
+    @NotEmpty
     public String getLastName() {
         return lastName;
     }

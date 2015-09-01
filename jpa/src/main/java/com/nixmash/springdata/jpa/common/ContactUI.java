@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringUI {
+public class ContactUI {
 
     @Autowired
     private ContactService contactService;
@@ -19,13 +19,29 @@ public class SpringUI {
 
     public void init() {
 //        propertiesDemo();
-        entityDemo();
+//        entityDemo();
+        randomDemo();
     }
+
+    // region Random Demo
+
+    public void randomDemo()
+    {
+        System.out.println(ContactUtils.randomNegativeId());
+        System.out.println(ContactUtils.randomNegativeId());
+        System.out.println(ContactUtils.randomNegativeId());
+        System.out.println(ContactUtils.randomNegativeId());
+        System.out.println(ContactUtils.randomNegativeId());
+        System.out.println(ContactUtils.randomNegativeId());
+        System.out.println(ContactUtils.randomNegativeId());
+        System.out.println(ContactUtils.randomNegativeId());
+    }
+    // endregion
 
     // region Properties Demo
 
     public void propertiesDemo() {
-        SpringUtils.printProperty(
+        ContactUtils.printProperty(
                 "ApplicationSettings.getIsDemoSite()",
                 applicationSettings.getIsDemoSite().toString());
     }
@@ -55,7 +71,7 @@ public class SpringUI {
 
     public void entityDemo() {
 
-        SpringUtils.listUsersWithDetail(userService.getUsersWithDetail());
+        ContactUtils.listUsersWithDetail(userService.getUsersWithDetail());
 //        SpringUtils.listUser("USER BY EMAIL", userService.getByEmail("user@aol.com").get());
 //        try {
 //            SpringUtils.listContact("CONTACT BY EMAIL", contactService.findContactById(1L));
