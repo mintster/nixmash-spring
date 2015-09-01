@@ -17,6 +17,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Consistent Fonts with Bootstrap Glyphicon and Thymeleaf](http://nixmash.com/java/consistent-fonts-with-bootstrap-glyphicon-and-thymeleaf/)
 - [Post: Object Child Lists in Thymeleaf Forms and Spring MVC](http://nixmash.com/java/object-child-lists-in-thymeleaf-forms-and-spring-mvc/)
 
+![Contact Phone Children in v0.1.8](http://nixmash.com/x/pics/github/spring-data-0.1.8.png)
+
 ##v0.1.7 -- Full MySQL Support, WAR Deployment##
 
 - MySQL Spring Security Support (mysql.setup file now located in /install folder)
@@ -27,7 +29,6 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/)
 - [Post: Adding MySQL Spring Security to Existing H2 App](http://nixmash.com/java/adding-mysql-spring-security-to-existing-h2-app/)
 
-![Contact Phone Children in v0.1.8](http://nixmash.com/x/pics/github/spring-data-0.1.8.png)
 
 ##v0.1.6 -- Initial Release w/ Spring Security##
 
