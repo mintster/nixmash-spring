@@ -1,18 +1,17 @@
 package com.nixmash.springdata.jpa.dto;
 
-//import org.apache.commons.lang.builder.ToStringBuilder;
-//import org.hibernate.validator.constraints.Email;
-//import org.hibernate.validator.constraints.Length;
-//import org.hibernate.validator.constraints.NotEmpty;
-
-import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 import com.nixmash.springdata.jpa.model.Contact;
+import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
 import java.util.Set;
+
+//import org.hibernate.validator.constraints.Email;
+//import org.hibernate.validator.constraints.Length;
+//import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * A form object for contracts.

@@ -106,7 +106,6 @@ td.hobbies span {
     padding-left: 0;
 }
 
-
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="NAVBAR ----------------------------/ "*/
@@ -133,18 +132,22 @@ td.hobbies span {
 #secInfo h3 {
     font-size: 16px;
 }
+
 #secInfo p.secLine {
     line-height: 2px;
     color: #aaa;
     margin-top: -4px;
 }
+
 .secItem {
 }
+
 #secInfo p.secNote {
     line-height: 1.2;
     font-style: italic;
     margin-top: 10px;
 }
+
 .secLabel {
     font-weight: bold;
     margin-right: 4px;
@@ -156,12 +159,12 @@ td.hobbies span {
 .github-footer {
     margin-top: 10px;
 }
+
 .github-footer a img, .github-footer a:focus, .github-footer img {
     border: none;
 }
 
-.github-footer a.github-version
-{
+.github-footer a.github-version {
     display: inline-block;
     margin-left: 6px;
 }
@@ -174,24 +177,33 @@ h2.form-title {
     margin-bottom: 40px;
 }
 
-.col-align-right, .button-col-align-right
-{
+.col-align-right, .button-col-align-right {
     display: inline-block;
     float: none;
     text-align: right;
 }
-.button-col-align-right
-{
+
+.button-col-align-right {
     padding-right: 6px !important;
 }
+
 .input-button-right {
     width: 80%;
     float: left;
 }
 
-.row-delete-button
-{
+.row-delete-button {
 
+}
+
+ul.hobbyList {
+    padding-left: 0px;
+}
+
+ul.hobbyList li {
+    list-style: none;
+    display: inline-block;
+    padding-right: 8px;
 }
 
 /*</editor-fold>*/

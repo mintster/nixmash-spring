@@ -30,8 +30,10 @@ public class ContactFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         logger.debug("Validating {}", target);
         Contact form = (Contact) target;
-        if (!form.isNew())
+        if (!form.isNew()) {
             validateContactPhones(errors, form);
+            validateHobbies(errors, form);
+        }
     }
 
     private void validateContactPhones(Errors errors, Contact form) {
@@ -43,5 +45,9 @@ public class ContactFormValidator implements Validator {
             }
     }
 
+    private void validateHobbies(Errors errors, Contact form) {
+        if (form.getHobbies() == null)
+            errors.reject("NotEmpty.contact.hobbies");
+    }
 
 }

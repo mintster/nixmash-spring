@@ -9,7 +9,18 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
-##v0.1.8 -- Child Object Processing, MVC Method Level Security##
+##v0.1.9 -- More Child Object Handling in MVC and Thymeleaf
+
+- Hobbies added to Contact Update Form w/ Custom Data Validation
+- Demo of Spring Boot CommandLineRunner
+- Contact Form tests added
+- [Post: Using Spring Boot CommandLineRunner](http://nixmash.com/java/using-spring-boot-commandlinerunner/)
+- [Post: Testing Custom Exception Handling Classes in Spring MVC](http://nixmash.com/java/testing-custom-exception-handling-classes-in-spring-mvc/)
+- [Post: Handling Null Radio Button Data in Thymeleaf and Spring MVC](http://nixmash.com/java/handling-null-radio-button-data-in-thymeleaf-and-spring-mvc/)
+
+![Radio Button Child Hobby Objects in v0.1.9](http://nixmash.com/x/pics/github/spring-data-0.1.9.png)
+
+##v0.1.8 -- Child Object Processing (Phones), MVC Method Level Security##
 
 - Add, Update, Remove Contact Phones added to Contact Update form
 - User Profile Page with @PreAuthorize to enforce owner-only plus administrator profile view

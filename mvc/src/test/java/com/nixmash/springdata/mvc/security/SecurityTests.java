@@ -244,8 +244,8 @@ public class SecurityTests extends AbstractContext {
 
         mvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(view().name("contacts/contactform"));
-//                .andDo(MockMvcResultHandlers.print());
+                .andExpect(view().name("contacts/contactform"))
+                .andDo(MockMvcResultHandlers.print());
 
     }
 

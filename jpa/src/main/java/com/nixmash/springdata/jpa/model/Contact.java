@@ -43,6 +43,12 @@ public class Contact implements Serializable {
         return (this.contactId == null);
     }
 
+    @Transient
+    public String getFullName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "contact_id")

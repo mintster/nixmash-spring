@@ -8,6 +8,7 @@ import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.ContactPhone;
+import com.nixmash.springdata.jpa.model.Hobby;
 import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
 import com.nixmash.springdata.jpa.service.ContactService;
 import org.slf4j.Logger;
@@ -57,22 +58,18 @@ public class ContactController {
 
     protected static final String MODEL_ATTRIBUTE_CONTACT = "contact";
     protected static final String MODEL_ATTRIBUTE_CONTACTS = "contacts";
+    protected static final String MODEL_ATTRIBUTE_HOBBIES = "hobbies";
     protected static final String PARAMETER_CONTACT_ID = "id";
 
     @Autowired
-    public ContactController(ContactService contactService, ContactFormValidator contactFormValidator) {
+    public ContactController(ContactService contactService,
+                             ContactFormValidator contactFormValidator) {
         this.contactService = contactService;
         this.contactFormValidator = contactFormValidator;
     }
 
     @Resource
     private MessageSource messageSource;
-
-    // remember non-editable domain object values to send to service layer
-//    @InitBinder
-//    public void setAllowedFields(WebDataBinder dataBinder) {
-//        dataBinder
-//    }
 
     @InitBinder("contact")
     public void initBinder(WebDataBinder binder) {
@@ -119,7 +116,7 @@ public class ContactController {
             addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_CONTACT_ADDED,
                     added.getFirstName(), added.getLastName());
 
-            return "redirect:/contacts/";
+            return "redirect:/contacts";
         }
     }
 
@@ -143,7 +140,9 @@ public class ContactController {
         Contact found = contactService.getContactByIdWithDetail(id);
         logger.info("Found contact: {}", found);
 
+        List<Hobby> hobbies = contactService.findAllHobbies();
         model.addAttribute(MODEL_ATTRIBUTE_CONTACT, found);
+        model.addAttribute(MODEL_ATTRIBUTE_HOBBIES, hobbies);
         return CONTACT_FORM_VIEW;
     }
 
@@ -179,9 +178,13 @@ public class ContactController {
 
     @RequestMapping(value = "/contact/update/{contactId}", method = RequestMethod.POST)
     public String updateContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult result,
-                                RedirectAttributes attributes)
+                                RedirectAttributes attributes, Model model)
             throws ContactNotFoundException {
         if (result.hasErrors()) {
+            if (contact.getHobbies() == null) {
+                List<Hobby> hobbies = contactService.findAllHobbies();
+                model.addAttribute(MODEL_ATTRIBUTE_HOBBIES, hobbies);
+            }
             return CONTACT_FORM_VIEW;
         } else {
 

@@ -4,11 +4,12 @@ import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.ContactTestUtils;
+import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.MvcTestUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,6 +21,7 @@ import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -47,15 +49,16 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ContactControllerTest extends AbstractContext {
+public class ContactControllerTests extends AbstractContext {
 
     private ContactService mockService;
-    private ContactController controller;
+    private ContactController mockController;
     private ContactController h2Controller;
     private MockMvc mockMvc;
     private Contact contact;
@@ -63,10 +66,17 @@ public class ContactControllerTest extends AbstractContext {
     private MessageSource mockMessageSource;
 
     private static final String FIELD_NAME_EMAIL_ADDRESS = "email";
+    private static final String FIELD_NAME_LAST_NAME = "lastName";
     private static final String FEEDBACK_MESSAGE = "feedbackMessage";
 
     @Autowired
+    private ContactFormValidator contactFormValidator;
+
+    @Autowired
     private ContactService contactService;
+
+    @Autowired
+    MockHttpSession session;
 
     @Resource
     private Validator validator;
@@ -81,17 +91,11 @@ public class ContactControllerTest extends AbstractContext {
         mockMessageSource = mock(MessageSource.class);
         mockService = mock(ContactService.class);
 
-        controller = new ContactController(mockService);
-        h2Controller = new ContactController(contactService);
+        mockController = new ContactController(mockService, contactFormValidator);
+        h2Controller = new ContactController(contactService, contactFormValidator);
 
-        mockMvc = standaloneSetup(controller).build();
-
-        ReflectionTestUtils.setField(controller, "messageSource", mockMessageSource);
-        ReflectionTestUtils.setField(controller, "contactService", mockService);
-
+        ReflectionTestUtils.setField(mockController, "messageSource", mockMessageSource);
         ReflectionTestUtils.setField(h2Controller, "messageSource", mockMessageSource);
-        ReflectionTestUtils.setField(h2Controller, "contactService", contactService);
-
 
         // Contact is H2 Contact ID #1 "Summer Glass"
         try {
@@ -104,8 +108,6 @@ public class ContactControllerTest extends AbstractContext {
         allContacts = contactService.findAll();
         when(mockService.findAll()).thenReturn(allContacts);
 
-        // Testing application context
-
         final ExceptionHandlerExceptionResolver exceptionResolver = new ExceptionHandlerExceptionResolver();
         final StaticApplicationContext applicationContext = new StaticApplicationContext();
         applicationContext.registerBeanDefinition("globalController",
@@ -114,17 +116,10 @@ public class ContactControllerTest extends AbstractContext {
         exceptionResolver.setApplicationContext(applicationContext);
         exceptionResolver.afterPropertiesSet();
 
-        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+        mockMvc = MockMvcBuilders.standaloneSetup(mockController)
+                .setValidator(contactFormValidator)
                 .setHandlerExceptionResolvers(exceptionResolver).build();
 
-    }
-
-    @Test
-    @Ignore(value = "Moved to GeneralController")
-    public void homePageTest() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(model().hasNoErrors())
-                .andExpect(view().name("home"));
     }
 
     @Test
@@ -152,7 +147,7 @@ public class ContactControllerTest extends AbstractContext {
     public void getContactsTest() throws Exception {
 
         Model model = new BindingAwareModelMap();
-        String view = controller.showContactsPage(model);
+        String view = mockController.showContactsPage(model);
 
         MvcResult result = mockMvc.perform(get("/contacts"))
                 .andExpect(view().name("contacts/list"))
@@ -167,13 +162,13 @@ public class ContactControllerTest extends AbstractContext {
         verify(mockService, times(1)).findAll();
         verifyNoMoreInteractions(mockService);
 
-        assertEquals(controller.CONTACT_LIST_VIEW, view);
+        assertEquals(ContactController.CONTACT_LIST_VIEW, view);
     }
 
     @Test
     public void searchContactsTest() throws Exception {
 
-        mockMvc = standaloneSetup(new ContactController(contactService))
+        mockMvc = standaloneSetup(new ContactController(contactService, contactFormValidator))
                 .setSingleView(
                         new InternalResourceView("/WEB-INF/views/contacts/list.html"))
                 .build();
@@ -213,14 +208,6 @@ public class ContactControllerTest extends AbstractContext {
 
     }
 
-    @Test
-    @Ignore(value = "Currently Disabled")
-    public void resourceNotFoundExceptionTest() throws Exception {
-
-        mockMvc.perform(get("/badurl"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("404"));
-    }
 
     @Test(expected = ContactNotFoundException.class)
     public void contactNotFoundExceptionTest() throws Exception {
@@ -246,12 +233,63 @@ public class ContactControllerTest extends AbstractContext {
         initMessageSourceForFeedbackMessage(ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_ADDED);
 
         String view = h2Controller.addContact(contact, result, mockSessionStatus, attributes);
-        String expectedView = createExpectedRedirectViewPath("/contacts/");
+        String expectedView = createExpectedRedirectViewPath("/contacts");
 
         assertEquals(expectedView, view);
         assertEquals(contact.getContactId(), ContactTestUtils.CONTACT_ID);
 
         assertFeedbackMessage(attributes, ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_ADDED);
+    }
+
+    @Test
+    public void updateContactTest() throws ContactNotFoundException {
+        MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/contact/update/5");
+
+        Contact contact = mockService.findContactById(100L);
+        contact.setLastName("Smith");
+        Model model = new BindingAwareModelMap();
+        BindingResult result = bindAndValidate(mockRequest, contact);
+
+        RedirectAttributes attributes = new RedirectAttributesModelMap();
+        initMessageSourceForFeedbackMessage(ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_UPDATED);
+
+        String view = mockController.updateContact(contact, result,
+                attributes, model);
+        verify(mockService, times(1)).update(any(ContactDTO.class));
+        String expectedView = createExpectedRedirectViewPath("/contacts");
+
+        assertEquals(expectedView, view);
+        contact = mockService.findContactById(100L);
+        assertTrue(contact.getLastName().equals("Smith"));
+        assertFeedbackMessage(attributes, ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_UPDATED);
+    }
+
+    @Test
+    public void updateContactWithNoLastNameTest() throws Exception {
+        MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/contact/update/100");
+
+        contact.setLastName(StringUtils.EMPTY);
+        Model model = new BindingAwareModelMap();
+        BindingResult result = bindAndValidate(mockRequest, contact);
+
+        RedirectAttributes attributes = new RedirectAttributesModelMap();
+
+        String view = mockController.updateContact(contact, result, attributes, model);
+
+        verifyZeroInteractions(mockService);
+        assertEquals(ContactController.CONTACT_FORM_VIEW, view);
+        assertFieldErrors(result, FIELD_NAME_LAST_NAME);
+    }
+
+    @Test
+    public void updateContactWithNoHobbiesTest() throws Exception {
+
+        contact.setHobbies(null);
+
+        mockMvc.perform(post("/contact/update/1")
+                .sessionAttr("contact", contact))
+                .andExpect(view().name(ContactController.CONTACT_FORM_VIEW))
+                .andExpect(model().attributeHasErrors("contact"));
     }
 
     @Test
@@ -263,7 +301,7 @@ public class ContactControllerTest extends AbstractContext {
 
         BindingResult result = bindAndValidate(mockRequest, contact);
         RedirectAttributes attributes = new RedirectAttributesModelMap();
-        String view = controller.addContact(contact, result, mockSessionStatus, attributes);
+        String view = mockController.addContact(contact, result, mockSessionStatus, attributes);
 
         verifyZeroInteractions(mockService);
         assertEquals(ContactController.CONTACT_FORM_VIEW, view);
@@ -276,6 +314,7 @@ public class ContactControllerTest extends AbstractContext {
     private BindingResult bindAndValidate(HttpServletRequest request, Object formObject) {
         WebDataBinder binder = new WebDataBinder(formObject);
         binder.setValidator(validator);
+        binder.addValidators(contactFormValidator);
         binder.bind(new MutablePropertyValues(request.getParameterMap()));
         binder.getValidator().validate(binder.getTarget(), binder.getBindingResult());
         return binder.getBindingResult();

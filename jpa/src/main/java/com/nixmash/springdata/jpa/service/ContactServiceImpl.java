@@ -25,7 +25,7 @@ import java.util.List;
 @Service("contactService")
 @Transactional
 public class ContactServiceImpl implements ContactService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContactService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContactService.class);
 
     // region Beans ------------------------- */
 
@@ -87,12 +87,12 @@ public class ContactServiceImpl implements ContactService {
     @Transactional(readOnly = true)
     public Contact findContactById(Long ID) throws ContactNotFoundException {
 
-        LOGGER.info("Finding contact by id: {}", ID);
+        logger.info("Finding contact by id: {}", ID);
 
         Contact found = contactRepository.findOne(ID);
 
         if (found == null) {
-            LOGGER.info("No contact found with id: {}", ID);
+            logger.info("No contact found with id: {}", ID);
             throw new ContactNotFoundException("No contact found with id: " + ID);
         }
 
@@ -107,19 +107,19 @@ public class ContactServiceImpl implements ContactService {
     @Transactional(rollbackFor = ContactNotFoundException.class)
     @Override
     public Contact deleteById(Long id) throws ContactNotFoundException {
-        LOGGER.info("Deleting contact by id: {}", id);
+        logger.info("Deleting contact by id: {}", id);
 
         Contact deleted = findContactById(id);
         contactRepository.delete(deleted);
 
-        LOGGER.info("Deleted contact: {}", deleted);
+        logger.info("Deleted contact: {}", deleted);
         return deleted;
     }
 
     @Transactional(rollbackFor = ContactNotFoundException.class)
     @Override
     public Contact update(ContactDTO contactDto) throws ContactNotFoundException {
-        LOGGER.info("Updating contact with information: {}", contactDto);
+        logger.info("Updating contact with information: {}", contactDto);
 
         Contact found = findContactById(contactDto.getContactId());
 
@@ -147,6 +147,7 @@ public class ContactServiceImpl implements ContactService {
             }
 
             if (contactDto.getHobbies() != null) {
+                found.getHobbies().clear();
                 for (HobbyDTO hobbyDTO : contactDto.getHobbies()) {
                     Hobby hobby = hobbyRepository.findByHobbyTitleIgnoreCase(hobbyDTO.getHobbyTitle());
 
@@ -161,7 +162,7 @@ public class ContactServiceImpl implements ContactService {
     @Transactional
     @Override
     public Contact add(ContactDTO contactDto) {
-        LOGGER.info("Adding new contact with information: {}", contactDto);
+        logger.info("Adding new contact with information: {}", contactDto);
 
         //Creates an instance of a Contact by using the builder pattern
         Contact contact = Contact.getBuilder(contactDto.getFirstName(),
@@ -214,7 +215,7 @@ public class ContactServiceImpl implements ContactService {
 
         ContactPhone contactPhone = contactPhoneRepository.findOne(contactPhoneId);
         if (contactPhone != null) {
-            LOGGER.info("Removing contact phone with information: {}", contactPhone);
+            logger.info("Removing contact phone with information: {}", contactPhone);
             contactPhoneRepository.delete(contactPhone);
         }
 
@@ -250,7 +251,7 @@ public class ContactServiceImpl implements ContactService {
     @Transactional
     @Override
     public Hobby addHobby(HobbyDTO hobbyDto) {
-        LOGGER.info("Adding new hobby with information: {}", hobbyDto);
+        logger.info("Adding new hobby with information: {}", hobbyDto);
 
         Hobby hobby = hobbyRepository.findByHobbyTitleIgnoreCase(hobbyDto.getHobbyTitle());
         if (hobby == null) {
@@ -264,7 +265,7 @@ public class ContactServiceImpl implements ContactService {
     @Transactional(rollbackFor = ContactNotFoundException.class)
     @Override
     public Hobby updateHobbyTitle(HobbyDTO hobbyDto) throws ContactNotFoundException {
-        LOGGER.info("Updating hobby with information: {}", hobbyDto);
+        logger.info("Updating hobby with information: {}", hobbyDto);
 
         Hobby found = hobbyRepository.findOne(hobbyDto.getHobbyId());
 
@@ -282,7 +283,7 @@ public class ContactServiceImpl implements ContactService {
     @Transactional(rollbackFor = ContactNotFoundException.class)
     @Override
     public Contact removeHobby(ContactDTO contactDto, Long hobbyId) throws ContactNotFoundException {
-        LOGGER.info("Removing contact hobby with information: {}", contactDto);
+        logger.info("Removing contact hobby with information: {}", contactDto);
 
         Contact found = findContactById(contactDto.getContactId());
         Hobby hobby = hobbyRepository.findOne(hobbyId);
