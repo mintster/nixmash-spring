@@ -1,16 +1,24 @@
 package com.nixmash.springdata.jpa.model;
 
 import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.io.Serializable;
-import java.util.*;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -21,6 +29,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * Time: 3:25 PM
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "contacts")
 public class Contact implements Serializable {
     private Long contactId;
@@ -59,6 +68,24 @@ public class Contact implements Serializable {
     public void setContactId(Long contactId) {
         this.contactId = contactId;
     }
+
+    @Column(name = "created_by_user", nullable = false)
+    @CreatedBy
+    private String createdByUser;
+
+    @Column(name = "creation_time", nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+    @CreatedDate
+    private ZonedDateTime creationTime;
+
+    @Column(name = "modified_by_user", nullable = false)
+    @LastModifiedBy
+    private String modifiedByUser;
+
+    @Column(name = "modification_time")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+    @LastModifiedDate
+    private ZonedDateTime modificationTime;
 
     @Basic
     @Column(name = "first_name", nullable = false, insertable = true, updatable = true,
@@ -99,6 +126,22 @@ public class Contact implements Serializable {
         this.birthDate = birthDate;
     }
 
+    public void setCreatedByUser(String createdByUser) {
+        this.createdByUser = createdByUser;
+    }
+
+    public void setCreationTime(ZonedDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public void setModifiedByUser(String modifiedByUser) {
+        this.modifiedByUser = modifiedByUser;
+    }
+
+    public void setModificationTime(ZonedDateTime modificationTime) {
+        this.modificationTime = modificationTime;
+    }
+
     @Basic
     @ExtendedEmailValidator
     @Length(max = Contact.MAX_LENGTH_EMAIL_ADDRESS)
@@ -109,6 +152,22 @@ public class Contact implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCreatedByUser() {
+        return createdByUser;
+    }
+
+    public ZonedDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public String getModifiedByUser() {
+        return modifiedByUser;
+    }
+
+    public ZonedDateTime getModificationTime() {
+        return modificationTime;
     }
 
     @Version
@@ -160,6 +219,10 @@ public class Contact implements Serializable {
                 .append("firstName", this.getFirstName())
                 .append("email", this.getEmail())
                 .append("birthDate", this.getBirthDate())
+                .append("createdByUser", this.getCreatedByUser())
+                .append("creationTime", this.getCreationTime())
+                .append("modifiedByUser", this.getModifiedByUser())
+                .append("modificationTime", this.getModificationTime())
                 .toString();
     }
 

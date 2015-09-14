@@ -1,6 +1,9 @@
 package com.nixmash.springdata.jpa.config;
 
+import com.nixmash.springdata.jpa.model.auditors.CurrentTimeDateTimeService;
+import com.nixmash.springdata.jpa.model.auditors.DateTimeService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -20,5 +23,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = "com.nixmash.springdata.jpa")
 @PropertySource("classpath:/META-INF/spring/application.properties")
 public class ApplicationConfig {
+
+
+    @Bean
+    DateTimeService currentTimeDateTimeService() {
+        return new CurrentTimeDateTimeService();
+    }
 
 }

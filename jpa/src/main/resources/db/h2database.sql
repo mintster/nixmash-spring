@@ -45,17 +45,18 @@ INSERT INTO user_authorities (user_id, authority_id) VALUES (4, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (5, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (6, 2);
 
-INSERT INTO contacts (first_name, last_name, birth_date, email, version)
-VALUES ('Summer', 'Glass', '1968-08-05', 'vitae@egestasadui.net', 0),
-  ('Mikayla', 'Church', '1975-04-03', 'lobortis.Class@aliquam.org', 0),
-  ('Shaine', 'Brooks', '1971-08-24', 'vel.pede@metusVivamuseuismod.edu', 0),
-  ('Robin', 'Sullivan', '1961-09-09', 'purus.gravida@necleo.edu', 0),
-  ('Xantha', 'Kim', '1960-08-25', 'risus.Duis.a@velnisl.ca', 0),
-  ('Barry', 'Kirk', '1982-03-27', 'blandit.at@Maurisblanditenim.com', 0),
-  ('Tad', 'Robellaboy', '1972-08-08', 'In.lorem.Donec@Vivamusnisi.org', 0),
-  ('Finn', 'Robertorobo', '1974-05-27', 'aliquet@ornare.net', 0),
-  ('Ali', 'Calhoun', '1976-11-30', 'fermentum@nulla.co.uk', 0),
-  ('Alexandra', 'Hendricks', '1973-07-05', 'at.auctor@pellentesquemassalobortis.edu', 0);
+
+INSERT INTO contacts (first_name, last_name, birth_date, email, created_by_user, creation_time, modified_by_user, modification_time, version)
+VALUES ('Summer', 'Glass', '1968-08-05', 'vitae@egestasadui.net', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Mikayla', 'Church', '1975-04-03', 'lobortis.Class@aliquam.org', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Shaine', 'Brooks', '1971-08-24', 'vel.pede@metusVivamuseuismod.edu', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Robin', 'Sullivan', '1961-09-09', 'purus.gravida@necleo.edu', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Xantha', 'Kim', '1960-08-25', 'risus.Duis.a@velnisl.ca', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Barry', 'Kirk', '1982-03-27', 'blandit.at@Maurisblanditenim.com', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Tad', 'Robellaboy', '1972-08-08', 'In.lorem.Donec@Vivamusnisi.org', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Finn', 'Robertorobo', '1974-05-27', 'aliquet@ornare.net', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Ali', 'Calhoun', '1976-11-30', 'fermentum@nulla.co.uk', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+('Alexandra', 'Hendricks', '1973-07-05', 'at.auctor@pellentesquemassalobortis.edu', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0);
 
 
 INSERT INTO contact_phones (contact_id,phone_type,phone_number) VALUES ('1','Mobile','1-113-753-8020'),('1','Home','1-996-507-0853'),('2','Mobile','1-407-100-1341'),('2','Home','1-285-981-2510'),('3','Mobile','1-274-311-9291'),('3','Home','1-499-112-9185'),('4','Mobile','1-234-628-6511'),('4','Home','1-560-178-3273'),('5','Mobile','1-430-941-9233'),('5','Home','1-271-831-8886');

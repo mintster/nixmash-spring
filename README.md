@@ -9,7 +9,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
-##v0.1.9 -- More Child Object Handling in MVC and Thymeleaf
+##v0.2.0 -- Spring Data JPA Auditing##
+
+- Spring Data JPA Auditing
+- [Post: Spring JPA Auditing with ZonedDateTime and MySQL](http://nixmash.com/java/spring-jpa-auditing-with-zoneddatetime-and-mysql/)
+- [Post: A Spring War Deployment Bash Script](http://nixmash.com/java/a-spring-war-deployment-bash-script/)
+
+##v0.1.9 -- More Child Object Handling in MVC and Thymeleaf##
 
 - Hobbies added to Contact Update Form w/ Custom Data Validation
 - Demo of Spring Boot CommandLineRunner
@@ -227,7 +233,7 @@ The application supports an H2 Profile (default) and a MySQL Profile. To run JPA
 
 ##Database Configuration##
 
-To use MySQL run _setup.mysql_ script in the /doc/install directory to populate the database. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The H2 create-data script for the tests is located in _/resources/db._ External properties in _/home/daveburke/...external.properties._ Change in JPA _common/ApplicationSettings._ Example of _external.properties_ in _/install._
+To use MySQL run _setup.mysql_ script in the _/install_ directory to populate the database. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The H2 create-data script for the tests is located in _/resources/db._ External properties in _/home/daveburke/...external.properties._ Change in JPA _common/ApplicationSettings._ Example of _external.properties_ in _/install._
 
 ##References##
 

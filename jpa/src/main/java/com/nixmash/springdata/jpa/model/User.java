@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 2002390446280945447L;
     private static final Logger logger = LoggerFactory.getLogger(User.class);

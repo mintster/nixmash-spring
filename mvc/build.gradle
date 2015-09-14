@@ -66,6 +66,6 @@ task production << {
 bootRun {
     addResources = false
     systemProperty 'server.port', '8084'
-    systemProperty 'spring.profiles.active', 'h2'
+    systemProperty 'spring.profiles.active', 'mysql'
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }

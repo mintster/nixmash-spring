@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -42,6 +43,10 @@ public class ContactDTO {
 
     private boolean updateChildren = true;
 
+    private String createdByUser;
+    private ZonedDateTime creationTime;
+    private String modifiedByUser;
+    private ZonedDateTime modificationTime;
 
     public ContactDTO() {
 
@@ -54,6 +59,39 @@ public class ContactDTO {
     public void setContactId(Long contactId) {
         this.contactId = contactId;
     }
+
+    public String getCreatedByUser() {
+        return createdByUser;
+    }
+
+    public ZonedDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public String getModifiedByUser() {
+        return modifiedByUser;
+    }
+
+    public ZonedDateTime getModificationTime() {
+        return modificationTime;
+    }
+
+    public void setCreatedByUser(String createdByUser) {
+        this.createdByUser = createdByUser;
+    }
+
+    public void setCreationTime(ZonedDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public void setModifiedByUser(String modifiedByUser) {
+        this.modifiedByUser = modifiedByUser;
+    }
+
+    public void setModificationTime(ZonedDateTime modificationTime) {
+        this.modificationTime = modificationTime;
+    }
+
 
     public Date getBirthDate() {
         return birthDate;

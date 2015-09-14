@@ -119,6 +119,10 @@ public class ContactUtils {
         dto.setLastName(contact.getLastName());
         dto.setBirthDate(contact.getBirthDate());
         dto.setEmail(contact.getEmail());
+        dto.setCreatedByUser(contact.getCreatedByUser());
+        dto.setCreationTime(contact.getCreationTime());
+        dto.setModifiedByUser(contact.getModifiedByUser());
+        dto.setModificationTime(contact.getModificationTime());
         if (contact.getContactPhones() != null) {
             dto.setContactPhones(contact.getContactPhones()
                     .stream()
