@@ -15,6 +15,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Spring JPA Auditing with ZonedDateTime and MySQL](http://nixmash.com/java/spring-jpa-auditing-with-zoneddatetime-and-mysql/)
 - [Post: A Spring War Deployment Bash Script](http://nixmash.com/java/a-spring-war-deployment-bash-script/)
 
+![MySQL JPA Audit Data in v0.2.0](http://nixmash.com/x/pics/github/spring-data-0.2.0.png)
+
 ##v0.1.9 -- More Child Object Handling in MVC and Thymeleaf##
 
 - Hobbies added to Contact Update Form w/ Custom Data Validation
