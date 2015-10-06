@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] IGNORED_RESOURCE_LIST = new String[]{"/resources/**",
             "/static/**", "/webjars/**"};
     private static final String[] PERMITALL_RESOURCE_LIST = new
-            String[]{"/", "/login/**", "/contacts", "/register/**"};
+            String[]{"/", "/login/**", "/contacts", "/json/**", "/register/**"};
     private static final String[] ADMIN_RESOURCE_LIST = new String[]{"/console/**"};
 
     // endregion
@@ -103,11 +103,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             PasswordEncoder encoder = new BCryptPasswordEncoder();
 
             auth
-                .userDetailsService(userDetailsService)
+                    .userDetailsService(userDetailsService)
                     .passwordEncoder(encoder)
-                .and()
+                    .and()
                     .jdbcAuthentication()
-                        .dataSource(dataSource)
+                    .dataSource(dataSource)
             ;
         }
     }
@@ -124,6 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(PERMITALL_RESOURCE_LIST).permitAll()
                 .anyRequest().authenticated()
+                .and().anonymous().key("anonymous")
                 .and()
                 .formLogin()
                 .loginPage("/login")

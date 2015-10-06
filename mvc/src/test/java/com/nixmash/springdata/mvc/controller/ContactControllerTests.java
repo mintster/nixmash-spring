@@ -8,6 +8,7 @@ import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.MvcTestUtil;
+import com.nixmash.springdata.mvc.common.WebUI;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -64,6 +66,9 @@ public class ContactControllerTests extends AbstractContext {
     private Contact contact;
     private List<Contact> allContacts;
     private MessageSource mockMessageSource;
+    private AuditorAware<String> auditorAware;
+
+    String user;
 
     private static final String FIELD_NAME_EMAIL_ADDRESS = "email";
     private static final String FIELD_NAME_LAST_NAME = "lastName";
@@ -78,6 +83,9 @@ public class ContactControllerTests extends AbstractContext {
     @Autowired
     MockHttpSession session;
 
+    @Autowired
+    WebUI webUI;
+
     @Resource
     private Validator validator;
 
@@ -86,6 +94,11 @@ public class ContactControllerTests extends AbstractContext {
 
     @Before
     public void setUp() {
+
+//        user = "admin";
+//
+//        auditorAware = mock(AuditorAware.class);
+//        when(auditorAware.getCurrentAuditor()).thenReturn(user);
 
         mockSessionStatus = mock(SessionStatus.class);
         mockMessageSource = mock(MessageSource.class);
@@ -125,7 +138,7 @@ public class ContactControllerTests extends AbstractContext {
     @Test
     public void getContactByIdJsonTest() throws Exception {
 
-        mockMvc.perform(get("/contact/json/100").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/json/contact/100").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MvcTestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.contactId", is(1)))
@@ -340,7 +353,7 @@ public class ContactControllerTests extends AbstractContext {
 
 
     private void assertFeedbackMessage(RedirectAttributes model, String messageCode) {
-        assertFlashMessages(model, messageCode, ContactController.FLASH_MESSAGE_KEY_FEEDBACK);
+        assertFlashMessages(model, messageCode, webUI.FLASH_MESSAGE_KEY_FEEDBACK);
     }
 
     private void assertFlashMessages(RedirectAttributes model, String messageCode, String flashMessageParameterName) {

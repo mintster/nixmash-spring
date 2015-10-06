@@ -1,7 +1,7 @@
 package com.nixmash.springdata.jpa;
 
-import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import org.junit.Test;
 import org.junit.runner.RunWith;

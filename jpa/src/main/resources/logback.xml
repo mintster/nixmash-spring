@@ -1,5 +1,5 @@
 <configuration>
-
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
@@ -17,10 +17,9 @@
     <logger name="org.thymeleaf" level="info"/>
     <logger name="org.hibernate" level="OFF"/>
 
-
     <!--<include resource="logJpaToFile.xml" />-->
 
-    <root level="error">
+    <root level="OFF">
         <appender-ref ref="console"/>
     </root>
 >

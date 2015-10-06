@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div th:fragment="contactOfTheDay">
+    <div th:text="#{js.cod.message(|${cod.firstName} ${cod.lastName}|)}" class="cod-name">[CONTACT NAME]</div>
+    <div th:text="#{js.cod.hobbies(|${cod.firstName}|)}" class="cod-hobbies"></div> <ul class="cod-hobbylist"> <li th:each="hobby : ${cod.hobbies}" th:text="${hobby.hobbyTitle}">[HOBBIES]</li> </ul>
+</div>
+
+<div th:fragment="functions">
+
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        function codDialog() {
+            var url = '/json/cod';
+            $.get(url, function (result) {
+                showDialog([[#{js.cod.title}]], result);
+            });
+        }
+
+        function secretDialog() {
+
+            var currentUser = [[${currentUser}]];
+
+            if (currentUser) {
+                $.getJSON('/json/secret', function (result) {
+                    var message = result.message;
+                    showDialog([[#{js.secret.title}]], message);
+                });
+            }
+            else
+                showDialog([[#{js.secret.notlogged.title}]],
+                        [[#{js.secret.notlogged.message}]])
+        }
+
+
+        function showDialog(title, result) {
+
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_PRIMARY,
+                title: title,
+                message: result,
+                draggable: true,
+                buttons: [{
+                    label: 'Close',
+                    cssClass: 'btn-info',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            })
+
+        }
+
+        $(document).ready(function () {
+
+            var badgeBoy = [[#{js.badgeboy.button}]];
+
+            $.getJSON('/json/badges', null, function (data) {
+
+                $('#multiselect-badgeboy')
+                        .multiselect({
+                    includeSelectAllOption: true,
+                    buttonClass: 'btn btn-default btn-xs btn-badgeboy',
+                    enableHTML: true,
+                    checkboxName: 'badgeboxes[]',
+                    buttonText: function (options, select) {
+                        if (options.length === 0) {
+                            return badgeBoy;
+                        }
+                        else {
+                            if (options.length > 0)
+                                return badgeBoy + "<span class=\'badge\'>" + options.length + "</span>";
+                        }
+                    },
+                    onDropdownHidden: function (event) {
+                        var selectedBadgeValues = $('select#multiselect-badgeboy').val();
+                        updateBadges(selectedBadgeValues);
+                    }
+
+                })
+                        .multiselect('dataprovider', data);
+
+            });
+
+            function updateBadges(selectedBadgeValues) {
+
+                $.ajax({
+                    dataType: "json",
+                    url: "/json/badges/update",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify(selectedBadgeValues),
+                    type: 'POST',
+                    success: function (data) {
+                        $("#badges").html(data);
+                    },
+                    error: function (data, status, er) {
+                        alert("error: " + data + " | " + status + " | " + er);
+                    }
+                });
+            }
+        });
+
+        /*]]>*/
+    </script>
+
+</div>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

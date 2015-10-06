@@ -1,5 +1,7 @@
 package com.nixmash.springdata.jpa;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,5 +24,11 @@ public class TestUtil {
         Calendar working = GregorianCalendar.getInstance();
         working.set(year, month, date, 0, 0, 1);
         return working.getTime();
+    }
+
+    public static ZonedDateTime currentZonedDateTime() {
+        Calendar now = Calendar.getInstance();
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault());
+        return zdt;
     }
 }

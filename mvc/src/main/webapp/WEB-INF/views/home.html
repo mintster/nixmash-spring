@@ -10,9 +10,22 @@
 <div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
 
 <div class="container">
+
+    <button id="codButton" class="btn btn-default btn-xs" name="codButton" onclick="codDialog()" type="button"
+            th:text="#{js.cod.button}">[CLICK]
+    </button>
+    <button id="secretButton" class="btn btn-default btn-xs" name="secretButton" onclick="secretDialog()" type="button"
+            th:text="#{js.secret.button}">[CLICK]
+    </button>
+    <select id="multiselect-badgeboy" multiple="multiple">
+    </select>
+
+    <div id="badges"></div>
+
     <nav th:replace="fragments/secinfo">User Info</nav>
 </div>
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/js :: functions" th:remove="tag">Functions</div>
 
 
 </body>

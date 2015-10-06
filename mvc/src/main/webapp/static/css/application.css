@@ -218,3 +218,56 @@ ul.hobbyList li {
 }
 
 /*</editor-fold>*/
+
+/*/<editor-fold> desc="JAVASCRIPT----------------------------/ "*/
+
+.cod-name {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+.cod-hobbies {
+    float: left;
+    margin-right: 4px;
+}
+
+ul.cod-hobbylist {
+    padding-left: 0px;
+}
+
+ul.cod-hobbylist li {
+    list-style: none;
+    display: inline-block;
+    padding-right: 4px;
+}
+
+ul.cod-hobbylist li:after {
+    content: ", ";
+}
+
+ul.cod-hobbylist li:last-child:after {
+    content: "";
+}
+/*</editor-fold>*/
+
+
+/*/<editor-fold> desc="MULTI-SELECT DROPDOWNS ----------------------------/ "*/
+
+.btn-badgeboy
+{
+}
+.btn-badgeboy b.caret {
+    display: none;
+}
+
+.btn-xs .badge, .btn-group-xs>.btn .badge {
+    margin-left: 5px;
+}
+
+#badges {
+    display: block;
+    margin-top: 9px;
+    font-style: italic;
+}
+
+/*</editor-fold>*/
+

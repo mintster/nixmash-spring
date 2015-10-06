@@ -13,17 +13,6 @@ sourceSets {
     }
 }
 
-//configurations.runtime {
-//    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-//        if (details.requested.group == 'org.apache.tomcat.embed') {
-//            details.useVersion '8.0.8'
-//        }
-//        if (details.requested.group == 'org.apache.tomcat') {
-//            details.useVersion '8.0.8'
-//        }
-//    }
-//}
-
 configurations {
     providedRuntime
 }
@@ -37,7 +26,6 @@ dependencies {
     compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
     compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.2.RELEASE'
-
 
     compile 'org.webjars:webjars-locator:0.27'
     compile 'org.webjars:webjars-locator-core:0.27'
@@ -62,10 +50,20 @@ task production << {
 //    bootRun.systemProperty 'spring.profiles.active', 'mysql'
 }
 
+//configurations { springLoaded }
+//dependencies {
+//    springLoaded("org.springframework:springloaded:1.2.4.RELEASE")
+//}
 
 bootRun {
-    addResources = false
+
+//    def springLoadedFile = configurations.springLoaded.find
+//            { it.name == "springloaded-1.2.4.RELEASE.jar" }
+
     systemProperty 'server.port', '8084'
-    systemProperty 'spring.profiles.active', 'mysql'
+    systemProperty 'spring.profiles.active', 'h2'
+//    jvmArgs "-javaagent:$springLoadedFile", "-noverify"
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }
+
+

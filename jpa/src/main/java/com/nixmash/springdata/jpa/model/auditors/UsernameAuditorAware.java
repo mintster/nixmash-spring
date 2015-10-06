@@ -19,15 +19,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UsernameAuditorAware implements AuditorAware<String> {
 
     private static final Logger logger = LoggerFactory.getLogger(UsernameAuditorAware.class);
+    protected static final String ANONYMOUS_USERNAME = "anonymous";
+    protected static final String TESTGUY_USERNAME = "testguy";
 
     @Override
     public String getCurrentAuditor() {
         logger.debug("Getting the username of authenticated user.");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null || !authentication.isAuthenticated()) {
-            logger.debug("Current user is anonymous. Returning null.");
-            return null;
+        if (authentication == null)
+        {
+            // in testing mode, return admin
+            return TESTGUY_USERNAME;
+        }
+
+        if (authentication.getPrincipal().equals("anonymousUser")) {
+            logger.debug("Current user is anonymous.");
+            return ANONYMOUS_USERNAME;
         }
 
         String username = ((CurrentUser) authentication.getPrincipal()).getUsername();

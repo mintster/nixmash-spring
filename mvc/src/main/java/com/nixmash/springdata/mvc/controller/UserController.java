@@ -90,7 +90,7 @@ public class UserController {
         }
         userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
         userService.create(userDTO);
-        redirect.addFlashAttribute(ContactController.FLASH_MESSAGE_KEY_FEEDBACK, "Successfully registered");
+        redirect.addFlashAttribute("feedbackMessage", "Successfully registered");
         return "redirect:/contacts";
     }
 
