@@ -19,6 +19,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Spring MVC, JSON, CSRF, and a Bootstrap Multiselect Plugin](http://nixmash.com/java/spring-mvc-json-csrf-and-a-bootstrap-multiselect-plugin/)
 - [Post: Populate Bootstrap Multiselect Options with JSON and Spring MVC](http://nixmash.com/java/populate-bootstrap-multiselect-plugin-with-json-and-spring-mvc/)
 
+![Bootstrap Multiselect Plugin in v0.2.1](http://nixmash.com/x/pics/github/spring-data-0.2.1.png)
+
 ##v0.2.0 -- Spring Data JPA Auditing##
 
 - Spring Data JPA Auditing
