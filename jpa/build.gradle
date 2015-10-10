@@ -10,8 +10,8 @@ sourceSets {
         resources.srcDir('src/main/resources')
     }
     test {
-        java.srcDir('src/test')
-        resources.srcDir('src/resources')
+        java.srcDir('src/test/java')
+        resources.srcDir('src/main/resources')
     }
 }
 
@@ -33,7 +33,7 @@ task production << {
 
 bootRun {
     addResources = false
-//    systemProperty 'spring.profiles.active', 'h2'
+    systemProperty 'spring.profiles.active', 'h2'
     main = 'com.nixmash.springdata.jpa.Launcher'
 }
 

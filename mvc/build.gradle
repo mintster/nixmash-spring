@@ -8,8 +8,8 @@ sourceSets {
         resources.srcDir('src/main/resources')
     }
     test {
-        java.srcDir('src/test')
-        resources.srcDir('src/resources')
+        java.srcDir('src/test/java')
+        resources.srcDir('src/main/resources')
     }
 }
 

@@ -1,8 +1,6 @@
 /dev
-git status
 *.class
 
-# Mobile Tools for Java (J2ME)
 /dev/scripts/rmTestdb.sh
 .mtj.tmp/
 

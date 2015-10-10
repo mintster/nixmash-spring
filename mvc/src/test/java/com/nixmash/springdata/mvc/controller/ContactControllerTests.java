@@ -66,7 +66,6 @@ public class ContactControllerTests extends AbstractContext {
     private Contact contact;
     private List<Contact> allContacts;
     private MessageSource mockMessageSource;
-    private AuditorAware<String> auditorAware;
 
     String user;
 
@@ -95,20 +94,13 @@ public class ContactControllerTests extends AbstractContext {
     @Before
     public void setUp() {
 
-//        user = "admin";
-//
-//        auditorAware = mock(AuditorAware.class);
-//        when(auditorAware.getCurrentAuditor()).thenReturn(user);
-
         mockSessionStatus = mock(SessionStatus.class);
         mockMessageSource = mock(MessageSource.class);
         mockService = mock(ContactService.class);
 
-        mockController = new ContactController(mockService, contactFormValidator);
-        h2Controller = new ContactController(contactService, contactFormValidator);
+		mockController = new ContactController(mockService, contactFormValidator, webUI);
+        h2Controller = new ContactController(contactService, contactFormValidator, webUI);
 
-        ReflectionTestUtils.setField(mockController, "messageSource", mockMessageSource);
-        ReflectionTestUtils.setField(h2Controller, "messageSource", mockMessageSource);
 
         // Contact is H2 Contact ID #1 "Summer Glass"
         try {
@@ -181,7 +173,7 @@ public class ContactControllerTests extends AbstractContext {
     @Test
     public void searchContactsTest() throws Exception {
 
-        mockMvc = standaloneSetup(new ContactController(contactService, contactFormValidator))
+        mockMvc = standaloneSetup(new ContactController(contactService, contactFormValidator, webUI))
                 .setSingleView(
                         new InternalResourceView("/WEB-INF/views/contacts/list.html"))
                 .build();
@@ -266,15 +258,14 @@ public class ContactControllerTests extends AbstractContext {
         RedirectAttributes attributes = new RedirectAttributesModelMap();
         initMessageSourceForFeedbackMessage(ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_UPDATED);
 
-        String view = mockController.updateContact(contact, result,
-                attributes, model);
+        String view = mockController.updateContact(contact, result, attributes, model);
         verify(mockService, times(1)).update(any(ContactDTO.class));
         String expectedView = createExpectedRedirectViewPath("/contacts");
 
         assertEquals(expectedView, view);
         contact = mockService.findContactById(100L);
         assertTrue(contact.getLastName().equals("Smith"));
-        assertFeedbackMessage(attributes, ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_UPDATED);
+		assertFeedbackMessage(attributes, ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_UPDATED);
     }
 
     @Test
@@ -353,18 +344,13 @@ public class ContactControllerTests extends AbstractContext {
 
 
     private void assertFeedbackMessage(RedirectAttributes model, String messageCode) {
-        assertFlashMessages(model, messageCode, webUI.FLASH_MESSAGE_KEY_FEEDBACK);
+        assertFlashMessages(model, messageCode, WebUI.FLASH_MESSAGE_KEY_FEEDBACK);
     }
 
     private void assertFlashMessages(RedirectAttributes model, String messageCode, String flashMessageParameterName) {
         Map<String, ?> flashMessages = model.getFlashAttributes();
         Object message = flashMessages.get(flashMessageParameterName);
         assertNotNull(message);
-        flashMessages.remove(message);
-        assertTrue(flashMessages.isEmpty());
-
-        verify(mockMessageSource, times(1)).getMessage(eq(messageCode), any(Object[].class), any(Locale.class));
-        verifyNoMoreInteractions(mockMessageSource);
     }
 
     // endregion

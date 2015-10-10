@@ -40,6 +40,7 @@ public class ContactController {
 
     private ContactService contactService;
     private ContactFormValidator contactFormValidator;
+    private WebUI webUI;
 
     private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
@@ -62,13 +63,11 @@ public class ContactController {
 
     @Autowired
     public ContactController(ContactService contactService,
-                             ContactFormValidator contactFormValidator) {
+                             ContactFormValidator contactFormValidator, WebUI webUI) {
         this.contactService = contactService;
         this.contactFormValidator = contactFormValidator;
+        this.webUI = webUI;
     }
-
-    @Autowired
-    WebUI webUI;
 
     @InitBinder("contact")
     public void initBinder(WebDataBinder binder) {
@@ -80,7 +79,6 @@ public class ContactController {
     public List<Contact> allContacts() {
         return contactService.findAll();
     }
-
 
     @RequestMapping(value = "/json/contact/{id}", method = GET)
     public
@@ -216,7 +214,6 @@ public class ContactController {
 
     }
 
-
     @RequestMapping(value = "/contacts", method = GET)
     public String showContactsPage(Model model) {
         logger.info("Showing all contacts page");
@@ -228,7 +225,6 @@ public class ContactController {
         model.addAttribute(MODEL_ATTRIBUTE_CONTACT, new Contact());
         return SEARCH_VIEW;
     }
-
 
     @RequestMapping(value = "/contacts/list", method = RequestMethod.GET)
     public String processFindForm(Contact contact, BindingResult result,

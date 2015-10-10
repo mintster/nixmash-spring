@@ -9,6 +9,16 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
+##v0.2.2 -- Eclipse-Friendly NixMash Spring##
+
+- Modified Gradle build.gradle files to eliminate Eclipse Build errors
+- Added JDK JAVA_HOME properties to root Gradle .properties files
+- Updated Gradle Wrapper to v2.7
+- [Post: Prepping Eclipse Mars for Spring and Gradle](http://nixmash.com/java/prepping-eclipse-mars-for-spring-and-gradle/)
+- [Post: Loading a Multi-Project Gradle Application in Eclipse](http://nixmash.com/java/loading-a-multi-project-gradle-application-in-eclipse/)
+
+![NixMash Spring in Eclipse Project Explorer for v0.2.2](http://nixmash.com/x/pics/github/spring-data-0.2.2.png)
+
 ##v0.2.1 -- Spring MVC and JavaScript Samplings##
 
 - Bootstrap Dialog Box with requirement to be logged-in to view
