@@ -37,7 +37,8 @@ public class ContactTestUtils {
 
     private static final Set<HobbyDTO> HOBBY_DTOS = createHobbyDTOs();
 
-    private static Set<HobbyDTO> createHobbyDTOs() {
+    @SuppressWarnings("serial")
+	private static Set<HobbyDTO> createHobbyDTOs() {
         return new HashSet<HobbyDTO>() {{
             add(new HobbyDTO("Jogging"));
             add(new HobbyDTO("Movies"));
@@ -55,7 +56,8 @@ public class ContactTestUtils {
         return new ContactPhoneDTO("Home", "717-244-4444");
     }
 
-    private static Set<ContactPhoneDTO> createContactPhoneDTOs() {
+    @SuppressWarnings("serial")
+	private static Set<ContactPhoneDTO> createContactPhoneDTOs() {
         return new HashSet<ContactPhoneDTO>() {{
             add(new ContactPhoneDTO("Mobile", "717-244-2222"));
             add(new ContactPhoneDTO("Business", "717-244-3333"));

@@ -63,12 +63,12 @@ public class User implements UserDetails, Serializable {
     @Column(unique=true, nullable = false)
     private String email;
 
-    @Column
+    @Column(name = "first_name")
     @NotEmpty
     @Length(max=MAX_LENGTH_FIRST_NAME)
     private String firstName;
 
-    @Column
+    @Column(name = "last_name")
     @NotEmpty
     @Length(max=MAX_LENGTH_LAST_NAME)
     private String lastName;

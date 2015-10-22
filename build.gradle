@@ -1,9 +1,12 @@
 
 
 buildscript {
-    repositories { jcenter() }
+ ext {
+        springBootVersion = '1.2.6.RELEASE'
+    }
+    repositories {  mavenCentral() }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.springframework:springloaded:1.2.4.RELEASE")
     }
 }
@@ -64,6 +67,16 @@ allprojects {
             outputDir = file("$buildDir/classes/main/")
         }
     }
+	
+	task wrapper(type: Wrapper) {
+	    gradleVersion = '2.7'
+	}
 
+	eclipse {
+	    classpath {
+	         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+	         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	    }
+	}
 
 }

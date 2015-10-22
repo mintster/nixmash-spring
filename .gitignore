@@ -4,7 +4,7 @@
 /dev/scripts/rmTestdb.sh
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
@@ -12,23 +12,23 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# tools
+# IDE Generated Files
 .idea
 *.iml
 .settings
 .project
 .classpath
 .gradle
+.springBeans
 build
 classes
 target
 out
+bin
+.externalToolBuilders
 
 
 /.nb-gradle/private/
-jpa/testdb.*
-jpa/jpaApp.log
-jpa/jpaAppTest.log
+testdb.*
+*.log
 
-jpaAppTest.log
-mvc/testdb.*

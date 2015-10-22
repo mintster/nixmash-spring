@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.AccessType.PROPERTY;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,6 +33,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "contacts")
+@Access(PROPERTY)
 public class Contact implements Serializable {
     private Long contactId;
     private String firstName;
@@ -57,7 +60,6 @@ public class Contact implements Serializable {
         return this.firstName + ' ' + this.lastName;
     }
 
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "contact_id")
@@ -69,19 +71,20 @@ public class Contact implements Serializable {
         this.contactId = contactId;
     }
 
+
     @Column(name = "created_by_user", nullable = false)
     @CreatedBy
     private String createdByUser;
-
+    
     @Column(name = "creation_time", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     @CreatedDate
     private ZonedDateTime creationTime;
-
+    
     @Column(name = "modified_by_user", nullable = false)
     @LastModifiedBy
     private String modifiedByUser;
-
+    
     @Column(name = "modification_time")
     @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     @LastModifiedDate

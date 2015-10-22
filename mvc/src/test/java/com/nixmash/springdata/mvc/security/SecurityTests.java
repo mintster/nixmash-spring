@@ -1,23 +1,23 @@
 package com.nixmash.springdata.mvc.security;
 
 
-import com.nixmash.springdata.jpa.model.Authority;
-import com.nixmash.springdata.jpa.model.CurrentUser;
-import com.nixmash.springdata.jpa.model.User;
-import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
-import com.nixmash.springdata.jpa.service.ContactService;
-import com.nixmash.springdata.jpa.service.UserService;
-import com.nixmash.springdata.mvc.AbstractContext;
-import com.nixmash.springdata.mvc.controller.ContactController;
-import com.nixmash.springdata.mvc.controller.GeneralController;
-import com.nixmash.springdata.mvc.controller.UserController;
+import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
+import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import javax.servlet.Filter;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -25,14 +25,9 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.servlet.Filter;
-
-import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
-import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.user;
-import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.userDeatilsService;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.mvc.AbstractContext;
+import com.nixmash.springdata.mvc.controller.UserController;
 
 /**
  * @author Rob Winch

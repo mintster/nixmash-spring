@@ -9,7 +9,6 @@ sourceSets {
     }
     test {
         java.srcDir('src/test/java')
-        resources.srcDir('src/main/resources')
     }
 }
 
@@ -61,7 +60,7 @@ bootRun {
 //            { it.name == "springloaded-1.2.4.RELEASE.jar" }
 
     systemProperty 'server.port', '8084'
-    systemProperty 'spring.profiles.active', 'h2'
+    systemProperty 'spring.profiles.active', 'mysql'
 //    jvmArgs "-javaagent:$springLoadedFile", "-noverify"
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }
