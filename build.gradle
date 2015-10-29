@@ -4,7 +4,10 @@ buildscript {
  ext {
         springBootVersion = '1.2.6.RELEASE'
     }
-    repositories {  mavenCentral() }
+    repositories {  
+    	mavenCentral() 
+    	maven { url "http://maven.restlet.org" }
+    }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.springframework:springloaded:1.2.4.RELEASE")
@@ -24,6 +27,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+    	maven { url "http://maven.restlet.org" }
     }
 
     configurations {
