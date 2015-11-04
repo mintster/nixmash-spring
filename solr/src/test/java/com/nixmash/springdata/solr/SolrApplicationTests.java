@@ -37,8 +37,8 @@ public class SolrApplicationTests {
 
 	@Test
 	public void testProductService() {
-		List<Product> page = productService.search("solr");
-		Assert.assertEquals(1, page.size());
+		List<Product> list = productService.search("solr");
+		Assert.assertEquals(1, list.size());
 	}
 
 }

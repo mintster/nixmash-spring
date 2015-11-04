@@ -1,13 +1,20 @@
 NixMash Spring
 ==========================
 
-This project demonstrates Spring Data, Spring Web MVC, Spring Security and Thymeleaf. It accompanies blog posts at http://nixmash.com which are listed below in their accompanying implementation version. 
+This project demonstrates Spring Data, Spring Web MVC, Spring Security and Thymeleaf. It accompanies blog posts at http://nixmash.com which are listed below in their accompanying implementation version. See the [Installation](#installation) section below on how to quickly configure application settings to run NixMash Spring.
 
 A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 
 ##Implemented##
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
+
+##v0.2.3 -- Solr Samplings (In Progress)##
+
+- New Solr Project based on Solr TechProducts Demo Collection in v5.3.2
+- Embedded and HTTP Solr Server configuration (Profiles "dev" and "prod" respectively)
+- [Post: On Embedded Solr Paths and Http Solr Server Urls](http://nixmash.com/java/on-embedded-solr-paths-and-http-solr-server-urls/)
+- [Post: Profile-Specific Application.Properties in Spring](http://nixmash.com/java/profile-specific-application-properties-in-spring/)
 
 ##v0.2.2 -- Eclipse-Friendly NixMash Spring##
 
@@ -73,7 +80,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.1.6 -- Initial Release w/ Spring Security##
 
-- Spring Security with Login and User Registration. Supports Multiple Role Assignment with USERS, USER_AUTHORITIES and AUTHORITIES table storage
+- Spring Security with Login and User Registration. Supports Multiple Role Assignment with USERS, USER`AUTHORITIES and AUTHORITIES table storage
 - H2 Console support at http://site/console. USER Role Access Denied to Console
 - User must be authenticated to view Contact Details and Search pages
 - External Properties for configuring options based on site public status (is demo site) _**To Configure Location of Properties File:** Set in Jpa/ApplicationSettings.class annotation_
@@ -190,7 +197,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 - Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Models now contain "Entity" classname suffix.)
 - Output based on new Entities, shown below
-- Updated to _Spring 4.1.6, Spring-Boot 1.2.3_ 
+- Updated to _Spring 4.1.6, Spring-Boot 1.2.3_
 - [Post: GUI Generated Entities for Spring-Data GitHub App v0.0.6](http://nixmash.com/java/gui-generated-entities-for-spring-data-github-app-v0-0-6/)
 - [Post: IntelliJ ER Diagram Relationship Dialogs and the Code They Create](http://nixmash.com/java/intellij-er-diagram-relationship-dialogs-and-the-code-they-create/)
 - [Post: Using IntelliJ Persistence View and ER Diagram Mapping Tools](http://nixmash.com/java/using-intellij-persistence-view-and-er-diagram-mapping-tools/)
@@ -253,11 +260,26 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Installation##
 
-The application supports an H2 Profile (default) and a MySQL Profile. To run JPA Console app use **$gradle jpa:bootRun.** To run MVC Web app use **$gradle mvc:bootRun.** The Tomcat Server Port is set for **8084** (set in the MVC _application.properties_ file) so go to **http://localhost:8084** to view the app in your browser. 
+The application supports an H2 Profile (default) and a MySQL Profile. To run JPA Console app use **$gradle jpa:bootRun.** To run MVC Web app use **$gradle mvc:bootRun.** The Tomcat Server Port is set for **8084** (set in the MVC `application.properties` file) so go to **http://localhost:8084** to view the app in your browser. 
 
-##Database Configuration##
+##Installation - Database Configuration##
 
-To use MySQL run _setup.mysql_ script in the _/install_ directory to populate the database. Update Datasource connection properties in _/resources/META-INF/spring/mysql.properties_ file. The H2 create-data script for the tests is located in _/resources/db._ External properties in _/home/daveburke/...external.properties._ Change in JPA _common/ApplicationSettings._ Example of _external.properties_ in _/install._
+To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.` External properties in `/home/daveburke/...external.properties.` Change in JPA `common/ApplicationSettings.` Example of `external.properties` in `/install.`
+
+##Installation - External Properties File Settings##
+
+The JPA Project demonstrates using an external Property File. To Configure Location of Properties File, change the @PropertySource annotation setting in Jpa/ApplicationSettings.class.
+
+```java
+@Component
+@PropertySource("file:/home/daveburke/web/nixmashspring/external.properties")
+@ConfigurationProperties(prefix="external")
+public class ApplicationSettings {
+```
+
+##Installation - Solr##
+
+The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in `application-dev` or `application-prod`.properties files.
 
 ##References##
 
@@ -272,3 +294,5 @@ Several components related to Thymeleaf and Security in **Version 0.1.x** from A
 Petri Kainulainen’s excellent book [Spring Data](https://www.packtpub.com/application-development/spring-data) from Packt Publishing and accompanying source code was a reference for Model Attribute handling and feedback messaging in **Version 0.1.5** as well as other features.
 
 Two excellent source references for Spring Security which initially appeared in **Version 0.1.6** were Rob Winch's [gs-spring-security-3.2](https://github.com/rwinch/gs-spring-security-3.2) something and Bartosz Kielczewski's [example-spring-boot-security](https://github.com/bkielczewski/example-spring-boot-security).
+
+Petri Kainulainen also served as a great reference on Solr in **Version 0.2.3.** See his excellent Spring Data Solr Tutorial(http://www.petrikainulainen.net/spring-data-solr-tutorial/) on his blog. Another good reference on Solr was Christoph Strobl's [spring-data-solr-examples](https://github.com/spring-projects/spring-data-solr-examples) on GitHub.
