@@ -1,3 +1,6 @@
+
+mainClassName = 'com.nixmash.springdata.solr.SolrLauncher'
+
 jar {
     baseName = 'springdata-solr'
     version = '0.0.1-SNAPSHOT'
@@ -25,6 +28,10 @@ dependencies {
         exclude(group: "org.slf4j", module: "slf4j-jdk14")
         exclude(group: "ch.qos.logback", module: "logback-classic")
     }
+}
+
+run {
+	systemProperty 'spring.profiles.active', 'prod'
 }
 
 bootRun {

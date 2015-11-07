@@ -1,7 +1,5 @@
 /dev
 *.class
-
-/dev/scripts/rmTestdb.sh
 .mtj.tmp/
 
 # Package Files

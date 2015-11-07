@@ -10,11 +10,14 @@ import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 import org.springframework.data.solr.server.support.HttpSolrServerFactoryBean;
 
+import com.nixmash.springdata.solr.repository.SolrProductRepository;
+import com.nixmash.springdata.solr.repository.factory.CustomSolrRepositoryFactoryBean;
+
 /**
  * @author Petri Kainulainen
  */
 @Configuration
-@EnableSolrRepositories("com.nixmash.springdata.solr.repository")
+@EnableSolrRepositories(basePackages = "com.nixmash.springdata.solr.repository", repositoryFactoryBeanClass = CustomSolrRepositoryFactoryBean.class)
 @Profile("prod")
 public class HttpSolrContext {
 
@@ -23,17 +26,22 @@ public class HttpSolrContext {
 	@Resource
 	private Environment environment;
 
-	@Bean
+	@Bean(name = "solrServer")
 	public HttpSolrServerFactoryBean solrServerFactoryBean() {
 		HttpSolrServerFactoryBean factory = new HttpSolrServerFactoryBean();
-
 		factory.setUrl(environment.getRequiredProperty(PROPERTY_NAME_SOLR_SERVER_URL));
-
 		return factory;
 	}
 
 	@Bean
 	public SolrTemplate solrTemplate() throws Exception {
 		return new SolrTemplate(solrServerFactoryBean().getObject());
+	}
+
+	@Bean
+	public SolrProductRepository searchRepository() throws Exception {
+		SolrProductRepository searchRepository = new SolrProductRepository();
+		searchRepository.setSolrOperations(solrTemplate());
+		return searchRepository;
 	}
 }

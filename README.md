@@ -1,7 +1,7 @@
 NixMash Spring
 ==========================
 
-This project demonstrates Spring Data, Spring Web MVC, Spring Security and Thymeleaf. It accompanies blog posts at http://nixmash.com which are listed below in their accompanying implementation version. See the [Installation](#installation) section below on how to quickly configure application settings to run NixMash Spring.
+This project demonstrates Spring Data JPA, Spring Data Solr, Spring Web MVC, Spring Security and Thymeleaf. It accompanies blog posts at http://nixmash.com which are listed below in their accompanying implementation version. See the [Installation](#installation) section below on how to quickly configure application settings to run NixMash Spring.
 
 A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 
@@ -13,8 +13,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 - New Solr Project based on Solr TechProducts Demo Collection in v5.3.2
 - Embedded and HTTP Solr Server configuration (Profiles "dev" and "prod" respectively)
+- Solr Data files and script for populating, refreshing Http and Embedded Solr indexes
+- Custom Solr Queries
 - [Post: On Embedded Solr Paths and Http Solr Server Urls](http://nixmash.com/java/on-embedded-solr-paths-and-http-solr-server-urls/)
 - [Post: Profile-Specific Application.Properties in Spring](http://nixmash.com/java/profile-specific-application-properties-in-spring/)
+- [Post: Solr Http and Embedded Data Refresh for Development](http://nixmash.com/java/solr-http-and-embedded-data-refresh-for-development/)
 
 ##v0.2.2 -- Eclipse-Friendly NixMash Spring##
 

@@ -1,12 +1,11 @@
 package com.nixmash.springdata.solr.repository;
 
-import java.util.List;
-
-import org.springframework.data.solr.repository.SolrCrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.CrudRepository;
 
 import com.nixmash.springdata.solr.model.Product;
 
-public interface ProductRepository extends ProductSolrRepository, SolrCrudRepository<Product, String> {
+public interface ProductRepository extends CrudRepository<Product, String> {
 
-	public List<Product> search(String searchTerm);
+	Page<Product> findByAvailableTrue();
 }

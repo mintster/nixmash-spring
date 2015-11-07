@@ -22,7 +22,7 @@ import org.apache.solr.client.solrj.beans.Field;
 /**
  * @author Christoph Strobl
  */
-public class Product implements SearchableProduct {
+public class Product implements IProduct {
 
 	@Field(ID_FIELD)
 	private String id;

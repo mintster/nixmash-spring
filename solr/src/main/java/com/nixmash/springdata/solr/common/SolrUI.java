@@ -1,7 +1,5 @@
 package com.nixmash.springdata.solr.common;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.core.env.Environment;
@@ -33,7 +31,8 @@ public class SolrUI {
 	}
 
 	public void productListDemo() {
-		List<Product> products = service.search("*:*");
+
+		Iterable<Product> products = service.displayAllProducts();
 		for (Product product : products) {
 			System.out.println("Product: " + product.getName());
 		}

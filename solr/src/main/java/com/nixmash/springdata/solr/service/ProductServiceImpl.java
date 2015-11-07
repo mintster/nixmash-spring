@@ -1,28 +1,36 @@
 package com.nixmash.springdata.solr.service;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.repository.ProductRepository;
+import com.nixmash.springdata.solr.repository.SolrProductRepository;
+import com.nixmash.springdata.solr.repository.factory.CustomProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
-	@Resource
-	private ProductRepository repository;
+	@Autowired
+	SolrProductRepository solrProductRepository;
+
+	@Autowired
+	CustomProductRepository customProductRepository;
 
 	@Override
-	public List<Product> search(String searchTerm) {
-		logger.debug("Searching documents with search term: {}", searchTerm);
-		return repository.search(searchTerm);
+	public Page<Product> displayAvailable() {
+		logger.debug("Retrieving all available products");
+		return solrProductRepository.findByAvailableTrue();
+	}
+
+	@Override
+	public Iterable<Product> displayAllProducts() {
+		logger.debug("Retrieving all products");
+		return solrProductRepository.findAll();
 	}
 
 }
