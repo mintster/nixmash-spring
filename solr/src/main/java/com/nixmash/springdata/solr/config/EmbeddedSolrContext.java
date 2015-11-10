@@ -35,18 +35,6 @@ public class EmbeddedSolrContext {
 		return new SolrTemplate(solrServerFactoryBean().getObject());
 	}
 
-	// @Bean(name = "solrServer")
-	// public HttpSolrServerFactoryBean solrServer() {
-	// HttpSolrServerFactoryBean factory = new HttpSolrServerFactoryBean();
-	// factory.setUrl(environment.getRequiredProperty(PROPERTY_NAME_SOLR_SERVER_URL));
-	// return factory;
-	// }
-	//
-	// @Bean
-	// public SolrOperations solrTemplate() throws Exception {
-	// return new SolrTemplate(solrServer().getObject());
-	// }
-
 	@Bean
 	public SolrProductRepository searchRepository() throws Exception {
 		SolrProductRepository searchRepository = new SolrProductRepository();

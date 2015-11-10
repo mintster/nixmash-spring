@@ -9,15 +9,19 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
-##v0.2.3 -- Solr Samplings (In Progress)##
+##v0.2.3 -- Initial Solr Release##
 
 - New Solr Project based on Solr TechProducts Demo Collection in v5.3.2
 - Embedded and HTTP Solr Server configuration (Profiles "dev" and "prod" respectively)
 - Solr Data files and script for populating, refreshing Http and Embedded Solr indexes
-- Custom Solr Queries
+- Method Name and SimpleSolrRepository base CRUD Queries
+- Java Annotation Solr Context Configuration
 - [Post: On Embedded Solr Paths and Http Solr Server Urls](http://nixmash.com/java/on-embedded-solr-paths-and-http-solr-server-urls/)
 - [Post: Profile-Specific Application.Properties in Spring](http://nixmash.com/java/profile-specific-application-properties-in-spring/)
 - [Post: Solr Http and Embedded Data Refresh for Development](http://nixmash.com/java/solr-http-and-embedded-data-refresh-for-development/)
+- [Post: Spring Solr Minimum Daily Configuration Requirements](http://nixmash.com/java/spring-solr-minimum-daily-requirements/)
+
+![Simple Solr Query results in v0.2.2](http://nixmash.com/x/pics/github/spring-data-0.2.3.png)
 
 ##v0.2.2 -- Eclipse-Friendly NixMash Spring##
 

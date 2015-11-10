@@ -45,6 +45,9 @@ public class Product implements IProduct {
 	@Field(AVAILABLE_FIELD)
 	private boolean available;
 
+	@Field(DOCTYPE_FIELD)
+	private String doctype;
+
 	public String getId() {
 		return id;
 	}
@@ -101,10 +104,18 @@ public class Product implements IProduct {
 		this.available = available;
 	}
 
+	public String getDoctype() {
+		return doctype;
+	}
+
+	public void setDoctype(String doctype) {
+		this.doctype = doctype;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", weight=" + weight + ", price="
-				+ price + ", popularity=" + popularity + ", available=" + available + "]";
+				+ price + ", popularity=" + popularity + ", available=" + available + ", doctype=" + doctype + "]";
 	}
 
 }

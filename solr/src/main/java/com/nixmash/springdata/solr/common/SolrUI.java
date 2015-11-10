@@ -32,7 +32,7 @@ public class SolrUI {
 
 	public void productListDemo() {
 
-		Iterable<Product> products = service.displayAllProducts();
+		Iterable<Product> products = service.displayAvailable();
 		for (Product product : products) {
 			System.out.println("Product: " + product.getName());
 		}

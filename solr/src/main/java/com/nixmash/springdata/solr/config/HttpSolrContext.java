@@ -13,15 +13,12 @@ import org.springframework.data.solr.server.support.HttpSolrServerFactoryBean;
 import com.nixmash.springdata.solr.repository.SolrProductRepository;
 import com.nixmash.springdata.solr.repository.factory.CustomSolrRepositoryFactoryBean;
 
-/**
- * @author Petri Kainulainen
- */
 @Configuration
 @EnableSolrRepositories(basePackages = "com.nixmash.springdata.solr.repository", repositoryFactoryBeanClass = CustomSolrRepositoryFactoryBean.class)
 @Profile("prod")
 public class HttpSolrContext {
 
-	private static final String PROPERTY_NAME_SOLR_SERVER_URL = "solr.server.url";
+	private static final String SOLR_SERVER_URL = "solr.server.url";
 
 	@Resource
 	private Environment environment;
@@ -29,7 +26,7 @@ public class HttpSolrContext {
 	@Bean(name = "solrServer")
 	public HttpSolrServerFactoryBean solrServerFactoryBean() {
 		HttpSolrServerFactoryBean factory = new HttpSolrServerFactoryBean();
-		factory.setUrl(environment.getRequiredProperty(PROPERTY_NAME_SOLR_SERVER_URL));
+		factory.setUrl(environment.getRequiredProperty(SOLR_SERVER_URL));
 		return factory;
 	}
 

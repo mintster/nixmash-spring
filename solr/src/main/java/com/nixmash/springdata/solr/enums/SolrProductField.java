@@ -14,7 +14,8 @@ public enum SolrProductField implements Field {
 	AVAILABLE(IProduct.AVAILABLE_FIELD), 
 	CATEGORY(IProduct.CATEGORY_FIELD), 
 	WEIGHT(IProduct.WEIGHT_FIELD), 
-	POPULARITY(IProduct.POPULARITY_FIELD);
+	POPULARITY(IProduct.POPULARITY_FIELD),
+	DOCTYPE(IProduct.DOCTYPE_FIELD);
 
 	// @formatter:on
 

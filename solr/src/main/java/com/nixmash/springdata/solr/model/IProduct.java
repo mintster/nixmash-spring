@@ -9,5 +9,6 @@ public interface IProduct {
 	String CATEGORY_FIELD = "cat";
 	String WEIGHT_FIELD = "weight";
 	String POPULARITY_FIELD = "popularity";
+	String DOCTYPE_FIELD = "doctype";
 
 }
