@@ -16,7 +16,7 @@ import org.springframework.data.solr.repository.support.SolrRepositoryFactoryBea
  * http://www.petrikainulainen.net/spring-data-solr-tutorial/
  *
  */
-public class CustomSolrRepositoryFactoryBean extends SolrRepositoryFactoryBean {
+public class MySolrRepositoryFactoryBean extends SolrRepositoryFactoryBean {
 
 	@Override
 	protected RepositoryFactorySupport doCreateRepositoryFactory() {
@@ -35,12 +35,12 @@ public class CustomSolrRepositoryFactoryBean extends SolrRepositoryFactoryBean {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Object getTargetRepository(RepositoryMetadata metadata) {
-			return new CustomBaseRepositoryImpl<T, ID>(solrOperations, (Class<T>) metadata.getDomainType());
+			return new FactoryBaseRepositoryImpl<T, ID>(solrOperations, (Class<T>) metadata.getDomainType());
 		}
 
 		@Override
 		protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-			return CustomBaseRepository.class;
+			return FactoryBaseRepository.class;
 		}
 	}
 }

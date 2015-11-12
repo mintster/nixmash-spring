@@ -9,6 +9,14 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
+##v0.2.4 -- Multiple Solr Repository Configurations##
+
+- Four different examples of configuring Solr Repositories
+- 1) Simple @NoRepositoryBean, 2) Derived @NoRepositoryBean, 3) Custom w/ @Repository, 4) SolrFactoryBean Shared Model Repository
+- [Post: Four Spring Solr Repository Configurations](http://nixmash.com/java/four-spring-solr-repository-configurations/)
+
+![Four Solr Repository Options in v0.2.4](http://nixmash.com/x/pics/github/spring-data-0.2.4.png)
+
 ##v0.2.3 -- Initial Solr Release##
 
 - New Solr Project based on Solr TechProducts Demo Collection in v5.3.2
@@ -21,7 +29,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Solr Http and Embedded Data Refresh for Development](http://nixmash.com/java/solr-http-and-embedded-data-refresh-for-development/)
 - [Post: Spring Solr Minimum Daily Configuration Requirements](http://nixmash.com/java/spring-solr-minimum-daily-requirements/)
 
-![Simple Solr Query results in v0.2.2](http://nixmash.com/x/pics/github/spring-data-0.2.3.png)
+![Simple Solr Query results in v0.2.3](http://nixmash.com/x/pics/github/spring-data-0.2.3.png)
 
 ##v0.2.2 -- Eclipse-Friendly NixMash Spring##
 

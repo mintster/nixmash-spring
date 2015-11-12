@@ -1,4 +1,4 @@
-package com.nixmash.springdata.solr.repository;
+package com.nixmash.springdata.solr.repository.simple;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import com.nixmash.springdata.solr.model.IProduct;
 import com.nixmash.springdata.solr.model.Product;
 
 @NoRepositoryBean
-public class SolrProductRepository extends SimpleSolrRepository<Product, String>implements ProductRepository {
+public class SimpleProductRepository extends SimpleSolrRepository<Product, String>implements SimpleBaseProductRepository {
 
 	@Override
 	public List<Product> findByAvailableTrue() {

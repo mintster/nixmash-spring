@@ -21,12 +21,12 @@ import com.nixmash.springdata.solr.model.Product;
  * http://www.petrikainulainen.net/spring-data-solr-tutorial/
  *
  */
-public class CustomBaseRepositoryImpl<T, ID extends Serializable> extends SimpleSolrRepository<T, ID>
-		implements CustomBaseRepository<T, ID> {
+public class FactoryBaseRepositoryImpl<T, ID extends Serializable> extends SimpleSolrRepository<T, ID>
+		implements FactoryBaseRepository<T, ID> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomBaseRepositoryImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FactoryBaseRepositoryImpl.class);
 
-	public CustomBaseRepositoryImpl(SolrOperations solrOperations, Class<T> entityClass) {
+	public FactoryBaseRepositoryImpl(SolrOperations solrOperations, Class<T> entityClass) {
 		super(solrOperations, entityClass);
 	}
 

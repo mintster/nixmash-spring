@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nixmash.springdata.solr.repository.custom;
+package com.nixmash.springdata.solr.repository.derived;
 
 import java.util.List;
 
@@ -36,15 +36,15 @@ import com.nixmash.springdata.solr.model.Product;
  * On GitHub: https://goo.gl/JoAYaT
  * 
  */
-public class CustomSolrRepositoryImpl implements CustomSolrRepository {
+public class DerivedBaseRepositoryImpl implements DerivedBaseRepository {
 
 	private SolrOperations solrTemplate;
 
-	public CustomSolrRepositoryImpl() {
+	public DerivedBaseRepositoryImpl() {
 		super();
 	}
 
-	public CustomSolrRepositoryImpl(SolrOperations solrTemplate) {
+	public DerivedBaseRepositoryImpl(SolrOperations solrTemplate) {
 		super();
 		this.solrTemplate = solrTemplate;
 	}

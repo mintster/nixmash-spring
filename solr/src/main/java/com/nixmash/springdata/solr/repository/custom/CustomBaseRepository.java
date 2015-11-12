@@ -31,10 +31,12 @@ import com.nixmash.springdata.solr.model.Product;
  * On GitHub: https://goo.gl/JoAYaT
  * 
  */
-public interface CustomSolrRepository {
+public interface CustomBaseRepository {
 
 	Page<Product> findProductsByCustomImplementation(String value, Pageable page);
 
 	void updateProductCategory(String productId, List<String> categories);
+
+	void update(Product product);
 
 }

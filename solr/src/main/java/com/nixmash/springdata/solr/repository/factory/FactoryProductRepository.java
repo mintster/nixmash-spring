@@ -15,7 +15,7 @@ import com.nixmash.springdata.solr.model.Product;
  * http://www.petrikainulainen.net/spring-data-solr-tutorial/
  *
  */
-public interface CustomProductRepository extends CustomBaseRepository<Product, String> {
+public interface FactoryProductRepository extends FactoryBaseRepository<Product, String> {
 
 	public List<Product> findByNameContains(String name, Pageable page);
 

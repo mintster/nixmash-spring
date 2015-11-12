@@ -10,10 +10,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.repository.SolrProductRepository;
-import com.nixmash.springdata.solr.repository.custom.DerivedSolrProductRepository;
-import com.nixmash.springdata.solr.repository.derived.MyProductRepository;
-import com.nixmash.springdata.solr.repository.factory.CustomProductRepository;
+import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
+import com.nixmash.springdata.solr.repository.derived.DerivedProductRepository;
+import com.nixmash.springdata.solr.repository.factory.FactoryProductRepository;
+import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -21,21 +21,21 @@ public class ProductServiceImpl implements ProductService {
 	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
 	@Resource
-	SolrProductRepository searchRepository;
+	SimpleProductRepository simpleProductRepository;
+
+	@Resource
+	FactoryProductRepository factoryProductRepository;
+
+	@Resource
+	DerivedProductRepository derivedProductRepository;
 
 	@Resource
 	CustomProductRepository customProductRepository;
 
-	@Resource
-	DerivedSolrProductRepository derivedProductRepository;
-
-	@Resource
-	MyProductRepository myProductRepository;
-
 	@Override
 	public List<Product> displayAvailable() {
 		logger.debug("Retrieving all available products");
-		return searchRepository.findByAvailableTrue();
+		return simpleProductRepository.findByAvailableTrue();
 	}
 
 	@Override
@@ -49,17 +49,17 @@ public class ProductServiceImpl implements ProductService {
 		logger.debug("Retrieving products by findByQueryAnnotation - ('name:*?0* OR cat:*?0*')");
 		// return todoRepository.findByQueryAnnotation(searchTerm,
 		// sortByIdDesc());
-		return myProductRepository.findAll();
+		return customProductRepository.findAll();
 	}
 
 	@Override
 	public Product getProduct(String Id) {
-		return customProductRepository.findOne(Id);
+		return factoryProductRepository.findOne(Id);
 	}
 
 	@Override
 	public void updateProductName(Product product) {
-		customProductRepository.update(product);
+		factoryProductRepository.update(product);
 	}
 
 	private Sort sortByIdDesc() {

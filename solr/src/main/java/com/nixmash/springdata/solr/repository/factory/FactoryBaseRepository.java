@@ -16,7 +16,7 @@ import com.nixmash.springdata.solr.model.Product;
  *
  */
 @NoRepositoryBean
-public interface CustomBaseRepository<T, ID extends Serializable> extends SolrCrudRepository<T, ID> {
+public interface FactoryBaseRepository<T, ID extends Serializable> extends SolrCrudRepository<T, ID> {
 
 	public long count(String searchTerm);
 

@@ -31,7 +31,7 @@ import com.nixmash.springdata.solr.model.Product;
  * On GitHub: https://goo.gl/JoAYaT
  * 
  */
-public interface MyDerivedRepository {
+public interface DerivedBaseRepository {
 
 	Page<Product> findProductsByCustomImplementation(String value, Pageable page);
 

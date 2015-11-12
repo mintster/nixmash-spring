@@ -11,13 +11,13 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 import org.springframework.data.solr.repository.support.SolrRepositoryFactory;
 import org.springframework.data.solr.server.support.HttpSolrServerFactoryBean;
 
-import com.nixmash.springdata.solr.repository.SolrProductRepository;
-import com.nixmash.springdata.solr.repository.custom.CustomSolrRepositoryImpl;
-import com.nixmash.springdata.solr.repository.custom.DerivedSolrProductRepository;
-import com.nixmash.springdata.solr.repository.factory.CustomSolrRepositoryFactoryBean;
+import com.nixmash.springdata.solr.repository.derived.DerivedBaseRepositoryImpl;
+import com.nixmash.springdata.solr.repository.derived.DerivedProductRepository;
+import com.nixmash.springdata.solr.repository.factory.MySolrRepositoryFactoryBean;
+import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 
 @Configuration
-@EnableSolrRepositories(basePackages = "com.nixmash.springdata.solr.repository", repositoryFactoryBeanClass = CustomSolrRepositoryFactoryBean.class)
+@EnableSolrRepositories(basePackages = "com.nixmash.springdata.solr.repository", repositoryFactoryBeanClass = MySolrRepositoryFactoryBean.class)
 @Profile("prod")
 public class HttpSolrContext {
 
@@ -39,16 +39,16 @@ public class HttpSolrContext {
 	}
 
 	@Bean
-	public SolrProductRepository searchRepository() throws Exception {
-		SolrProductRepository searchRepository = new SolrProductRepository();
-		searchRepository.setSolrOperations(solrTemplate());
-		return searchRepository;
+	public SimpleProductRepository simpleRepository() throws Exception {
+		SimpleProductRepository simpleRepository = new SimpleProductRepository();
+		simpleRepository.setSolrOperations(solrTemplate());
+		return simpleRepository;
 	}
 
 	@Bean
-	public DerivedSolrProductRepository derivedRepository() throws Exception {
-		return new SolrRepositoryFactory(solrTemplate()).getRepository(DerivedSolrProductRepository.class,
-				new CustomSolrRepositoryImpl(solrTemplate()));
+	public DerivedProductRepository derivedRepository() throws Exception {
+		return new SolrRepositoryFactory(solrTemplate()).getRepository(DerivedProductRepository.class,
+				new DerivedBaseRepositoryImpl(solrTemplate()));
 	}
 
 }

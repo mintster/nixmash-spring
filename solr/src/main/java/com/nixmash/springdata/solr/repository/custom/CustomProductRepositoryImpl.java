@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nixmash.springdata.solr.repository.derived;
+package com.nixmash.springdata.solr.repository.custom;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.SolrTemplate;
@@ -40,7 +42,9 @@ import com.nixmash.springdata.solr.model.Product;
  * 
  */
 @Repository
-public class MyProductRepositoryImpl implements MyDerivedRepository {
+public class CustomProductRepositoryImpl implements CustomBaseRepository {
+
+	private static final Logger logger = LoggerFactory.getLogger(CustomProductRepositoryImpl.class);
 
 	@Resource
 	private SolrTemplate solrTemplate;
@@ -53,12 +57,18 @@ public class MyProductRepositoryImpl implements MyDerivedRepository {
 
 	@Override
 	public void updateProductCategory(String productId, List<String> categories) {
-
 		PartialUpdate update = new PartialUpdate(IProduct.ID_FIELD, productId);
 		update.setValueOfField(IProduct.CATEGORY_FIELD, categories);
-
 		solrTemplate.saveBean(update);
 		solrTemplate.commit();
 	}
 
+	@Override
+	public void update(Product product) {
+		logger.debug("Performing partial update for todo entry: {}", product);
+		PartialUpdate update = new PartialUpdate(Product.ID_FIELD, product.getId().toString());
+		update.add(Product.NAME_FIELD, product.getName());
+		solrTemplate.saveBean(update);
+		solrTemplate.commit();
+	}
 }

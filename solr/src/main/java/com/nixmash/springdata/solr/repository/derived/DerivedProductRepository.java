@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nixmash.springdata.solr.repository.custom;
+package com.nixmash.springdata.solr.repository.derived;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ import com.nixmash.springdata.solr.model.Product;
  * 
  */
 @NoRepositoryBean
-public interface DerivedSolrProductRepository extends CustomSolrRepository, SolrCrudRepository<Product, String> {
+public interface DerivedProductRepository extends DerivedBaseRepository, SolrCrudRepository<Product, String> {
 
 	Page<Product> findByPopularity(Integer popularity, Pageable page);
 

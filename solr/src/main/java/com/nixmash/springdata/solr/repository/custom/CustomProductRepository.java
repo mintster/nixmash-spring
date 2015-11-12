@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nixmash.springdata.solr.repository.derived;
+package com.nixmash.springdata.solr.repository.custom;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
@@ -35,7 +35,7 @@ import com.nixmash.springdata.solr.model.Product;
  * On GitHub: https://goo.gl/JoAYaT
  * 
  */
-public interface MyProductRepository extends MyDerivedRepository, SolrCrudRepository<Product, String> {
+public interface CustomProductRepository extends CustomBaseRepository, SolrCrudRepository<Product, String> {
 
 	Page<Product> findByPopularity(Integer popularity, Pageable page);
 
@@ -45,5 +45,13 @@ public interface MyProductRepository extends MyDerivedRepository, SolrCrudReposi
 
 	@Query(IProduct.AVAILABLE_FIELD + ":false")
 	Page<Product> findByAvailableFalseUsingAnnotatedQuery(Pageable page);
+
+	public List<Product> findByNameContainsOrCategoriesContains(String title, String category, Sort sort);
+
+	@Query(name = "Product.findByNamedQuery")
+	public List<Product> findByNamedQuery(String searchTerm, Sort sort);
+
+	@Query("name:*?0* OR cat:*?0*")
+	public List<Product> findByQueryAnnotation(String searchTerm, Sort sort);
 
 }
