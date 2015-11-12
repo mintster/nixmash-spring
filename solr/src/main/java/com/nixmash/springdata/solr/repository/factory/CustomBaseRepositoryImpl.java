@@ -59,11 +59,8 @@ public class CustomBaseRepositoryImpl<T, ID extends Serializable> extends Simple
 	@Override
 	public void update(Product product) {
 		LOGGER.debug("Performing partial update for todo entry: {}", product);
-
 		PartialUpdate update = new PartialUpdate(IProduct.ID_FIELD, product.getId().toString());
-
 		update.add(IProduct.NAME_FIELD, product.getName());
-
 		getSolrOperations().saveBean(update);
 		getSolrOperations().commit();
 	}

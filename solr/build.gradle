@@ -36,7 +36,7 @@ run {
 
 bootRun {
     addResources = false
-    systemProperty 'spring.profiles.active', 'dev'
+    systemProperty 'spring.profiles.active', 'prod'
     main = 'com.nixmash.springdata.solr.SolrLauncher'
 }
 

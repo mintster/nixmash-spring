@@ -6,5 +6,11 @@ public interface ProductService {
 
 	public Iterable<Product> displayAvailable();
 
-	Iterable<Product> displayAllProducts();
+	Iterable<Product> displayAllRecords();
+
+	Iterable<Product> displayByNameOrCategory(String searchTerm);
+
+	Product getProduct(String Id);
+
+	void updateProductName(Product product);
 }

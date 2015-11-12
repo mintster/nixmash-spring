@@ -19,8 +19,8 @@ public interface CustomProductRepository extends CustomBaseRepository<Product, S
 
 	public List<Product> findByNameContains(String name, Pageable page);
 
-	// @Query(name = "Product.findByNamedQuery")
-	// public List<Product> findByNamedQuery(String searchTerm, Pageable page);
+	@Query(name = "Product.findByNamedQuery")
+	public List<Product> findByNamedQuery(String searchTerm, Pageable page);
 
 	@Query("name:*?0*")
 	public List<Product> findByQueryAnnotation(String searchTerm, Pageable page);

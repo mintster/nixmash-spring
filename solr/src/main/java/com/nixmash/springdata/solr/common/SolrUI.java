@@ -20,19 +20,34 @@ public class SolrUI {
 	private ProductService service;
 
 	public void init() {
-		propertiesDemo();
-		productListDemo();
+		// propertiesDemo();
+		// productListDemo();
+		// productUpdateDemo();
+		productAnnotationSearchDemo();
 	}
 
-	// region Properties Demo
+	// region Demos
 
-	public void propertiesDemo() {
+	private void productAnnotationSearchDemo() {
+		Iterable<Product> products = service.displayByNameOrCategory("electronics");
+		for (Product product : products) {
+			System.out.println(product.getName());
+		}
+	}
+
+	private void productUpdateDemo() {
+		Product product = service.getProduct("SOLR1000");
+		product.setName("Solr, The Enterprise Http Search Server");
+		service.updateProductName(product);
+	}
+
+	private void propertiesDemo() {
 		System.out.println(environment.getProperty(PROPERTY_NAME_PROFILE_DESCRIPTION));
 	}
 
-	public void productListDemo() {
+	private void productListDemo() {
 
-		Iterable<Product> products = service.displayAvailable();
+		Iterable<Product> products = service.displayAllRecords();
 		for (Product product : products) {
 			System.out.println("Product: " + product.getName());
 		}

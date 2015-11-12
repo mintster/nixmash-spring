@@ -17,14 +17,10 @@ import com.nixmash.springdata.solr.model.Product;
 @NoRepositoryBean
 public class SolrProductRepository extends SimpleSolrRepository<Product, String>implements ProductRepository {
 
-	// @Resource
-	// SolrTemplate solrOperations;
-
 	@Override
 	public List<Product> findByAvailableTrue() {
 		Query query = new SimpleQuery(new Criteria(new SimpleField(Criteria.WILDCARD)).expression(Criteria.WILDCARD));
 		query.addFilterQuery(new SimpleQuery(new Criteria(IProduct.DOCTYPE_FIELD).is(SolrDocType.PRODUCT)));
-
 		query.setRows(1000);
 		Page<Product> results = getSolrOperations().queryForPage(query, Product.class);
 		return results.getContent();

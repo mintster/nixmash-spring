@@ -8,9 +8,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.repository.config.EnableSolrRepositories;
+import org.springframework.data.solr.repository.support.SolrRepositoryFactory;
 import org.springframework.data.solr.server.support.HttpSolrServerFactoryBean;
 
 import com.nixmash.springdata.solr.repository.SolrProductRepository;
+import com.nixmash.springdata.solr.repository.custom.CustomSolrRepositoryImpl;
+import com.nixmash.springdata.solr.repository.custom.DerivedSolrProductRepository;
 import com.nixmash.springdata.solr.repository.factory.CustomSolrRepositoryFactoryBean;
 
 @Configuration
@@ -41,4 +44,11 @@ public class HttpSolrContext {
 		searchRepository.setSolrOperations(solrTemplate());
 		return searchRepository;
 	}
+
+	@Bean
+	public DerivedSolrProductRepository derivedRepository() throws Exception {
+		return new SolrRepositoryFactory(solrTemplate()).getRepository(DerivedSolrProductRepository.class,
+				new CustomSolrRepositoryImpl(solrTemplate()));
+	}
+
 }
