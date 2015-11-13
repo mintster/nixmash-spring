@@ -13,4 +13,6 @@ public interface ProductService {
 	Product getProduct(String Id);
 
 	void updateProductName(Product product);
+
+	Iterable<Product> displayByNamedQuery(String searchTerm);
 }

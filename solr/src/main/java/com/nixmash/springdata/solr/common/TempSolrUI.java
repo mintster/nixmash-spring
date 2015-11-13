@@ -3,13 +3,11 @@ package com.nixmash.springdata.solr.common;
 import javax.annotation.Resource;
 
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.service.ProductService;
 
-@Component
-public class SolrUI {
+public class TempSolrUI {
 
 	private static final String PROPERTY_NAME_PROFILE_DESCRIPTION = "profile.description";
 

@@ -7,16 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 import org.springframework.data.solr.repository.support.SolrRepositoryFactory;
 import org.springframework.data.solr.server.support.EmbeddedSolrServerFactoryBean;
 
 import com.nixmash.springdata.solr.repository.derived.DerivedBaseRepositoryImpl;
 import com.nixmash.springdata.solr.repository.derived.DerivedProductRepository;
-import com.nixmash.springdata.solr.repository.factory.MySolrRepositoryFactoryBean;
 import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 
-@EnableSolrRepositories(basePackages = "com.nixmash.springdata.solr.repository", repositoryFactoryBeanClass = MySolrRepositoryFactoryBean.class)
 @Configuration
 @Profile("dev")
 public class EmbeddedSolrContext {

@@ -45,6 +45,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public Iterable<Product> displayByNamedQuery(String searchTerm) {
+		logger.debug("Retrieving products by namedQuery - ('name:*?0* OR cat:*?0*')");
+		return customProductRepository.findByNamedQuery(searchTerm, sortByIdDesc());
+	}
+
+	@Override
 	public Iterable<Product> displayByNameOrCategory(String searchTerm) {
 		logger.debug("Retrieving products by findByQueryAnnotation - ('name:*?0* OR cat:*?0*')");
 		// return todoRepository.findByQueryAnnotation(searchTerm,
