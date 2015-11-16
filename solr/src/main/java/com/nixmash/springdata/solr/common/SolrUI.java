@@ -29,9 +29,7 @@ public class SolrUI {
 	// region Demos
 
 	private void productAnnotationSearchDemo() {
-		// Iterable<Product> products =
-		// service.displayByNameOrCategory("electronics");
-		Iterable<Product> products = service.displayByNamedQuery("software");
+		Iterable<Product> products = service.displayByNamedQuery("canon");
 		for (Product product : products) {
 			System.out.println(product.getName());
 		}
