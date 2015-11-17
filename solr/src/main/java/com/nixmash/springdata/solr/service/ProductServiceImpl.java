@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
 import com.nixmash.springdata.solr.repository.derived.DerivedProductRepository;
-import com.nixmash.springdata.solr.repository.factory.FactoryProductRepository;
 import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 
 @Service
@@ -23,8 +22,8 @@ public class ProductServiceImpl implements ProductService {
 	@Resource
 	SimpleProductRepository simpleProductRepository;
 
-	@Resource
-	FactoryProductRepository factoryProductRepository;
+	// @Resource
+	// FactoryProductRepository factoryProductRepository;
 
 	@Resource
 	DerivedProductRepository derivedProductRepository;
@@ -60,12 +59,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product getProduct(String Id) {
-		return factoryProductRepository.findOne(Id);
+		return customProductRepository.findOne(Id);
 	}
 
 	@Override
 	public void updateProductName(Product product) {
-		factoryProductRepository.update(product);
+		customProductRepository.update(product);
 	}
 
 	private Sort sortByIdDesc() {

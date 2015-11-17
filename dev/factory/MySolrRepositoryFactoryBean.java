@@ -12,8 +12,7 @@ import org.springframework.data.solr.repository.support.SolrRepositoryFactoryBea
  * 
  * NixMash Spring Notes: ---------------------------------------------------
  * 
- * Based on Petri Kainulainen's Spring Data Solr Tutorial at
- * http://www.petrikainulainen.net/spring-data-solr-tutorial/
+ * Based on Petri Kainulainen's Spring Data Solr Tutorial at http://www.petrikainulainen.net/spring-data-solr-tutorial/
  *
  */
 public class MySolrRepositoryFactoryBean extends SolrRepositoryFactoryBean {
@@ -33,7 +32,6 @@ public class MySolrRepositoryFactoryBean extends SolrRepositoryFactoryBean {
 		}
 
 		@SuppressWarnings("unchecked")
-		@Override
 		protected Object getTargetRepository(RepositoryMetadata metadata) {
 			return new FactoryBaseRepositoryImpl<T, ID>(solrOperations, (Class<T>) metadata.getDomainType());
 		}
