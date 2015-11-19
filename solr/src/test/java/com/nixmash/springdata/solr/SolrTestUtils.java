@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nixmash.springdata.solr.repository.derived;
+package com.nixmash.springdata.solr;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.solr.repository.Query;
-import org.springframework.data.solr.repository.SolrCrudRepository;
-
-import com.nixmash.springdata.solr.model.IProduct;
 import com.nixmash.springdata.solr.model.Product;
 
 /**
@@ -35,16 +30,27 @@ import com.nixmash.springdata.solr.model.Product;
  * On GitHub: https://goo.gl/JoAYaT
  * 
  */
-@NoRepositoryBean
-public interface DerivedProductRepository extends DerivedBaseRepository, SolrCrudRepository<Product, String> {
+public abstract class SolrTestUtils {
 
-	Page<Product> findByPopularity(Integer popularity, Pageable page);
+	private static List<String> categories = Collections.singletonList("test");
 
-	List<Product> findByNameStartingWith(String name);
+	protected static List<Product> createProductList(int nrProducts) {
+		List<Product> products = new ArrayList<Product>(nrProducts);
+		for (int i = 0; i < nrProducts; i++) {
+			products.add(createProduct(i));
+		}
+		return products;
+	}
 
-	Page<Product> findByAvailableTrue(Pageable page);
-
-	@Query(IProduct.AVAILABLE_FIELD + ":false")
-	Page<Product> findByAvailableFalseUsingAnnotatedQuery(Pageable page);
-
+	protected static Product createProduct(int id) {
+		Product product = new Product();
+		product.setId(Integer.toString(id));
+		product.setAvailable(id % 2 == 0);
+		product.setName("product-" + id);
+		product.setPopularity(id * 10);
+		product.setCategories(categories);
+		product.setPrice((float) id * 100);
+		product.setWeight((float) id * 2);
+		return product;
+	}
 }

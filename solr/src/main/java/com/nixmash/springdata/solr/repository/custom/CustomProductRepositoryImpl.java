@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.PartialUpdate;
@@ -48,6 +49,13 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 
 	@Resource
 	private SolrTemplate solrTemplate;
+
+	@Override
+	public Page<Product> findTestCategoryRecords() {
+		return solrTemplate.queryForPage(
+				new SimpleQuery(new SimpleStringCriteria("cat:test")).setPageRequest(new PageRequest(0, 100)),
+				Product.class);
+	}
 
 	@Override
 	public Page<Product> findProductsByCustomImplementation(String value, Pageable page) {

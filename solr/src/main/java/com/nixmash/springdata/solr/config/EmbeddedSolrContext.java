@@ -7,11 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.repository.support.SolrRepositoryFactory;
 import org.springframework.data.solr.server.support.EmbeddedSolrServerFactoryBean;
 
-import com.nixmash.springdata.solr.repository.derived.DerivedBaseRepositoryImpl;
-import com.nixmash.springdata.solr.repository.derived.DerivedProductRepository;
 import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 
 @Configuration
@@ -40,12 +37,6 @@ public class EmbeddedSolrContext {
 		SimpleProductRepository simpleRepository = new SimpleProductRepository();
 		simpleRepository.setSolrOperations(solrTemplate());
 		return simpleRepository;
-	}
-
-	@Bean
-	public DerivedProductRepository derivedRepository() throws Exception {
-		return new SolrRepositoryFactory(solrTemplate()).getRepository(DerivedProductRepository.class,
-				new DerivedBaseRepositoryImpl(solrTemplate()));
 	}
 
 }

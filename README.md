@@ -9,6 +9,10 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
+##v0.2.6 -- Solr Samplings (In Progress)##
+
+- Tests for CRUD and Custom Solr Queries
+
 ##v0.2.5 -- Spring Boot 1.3##
 
 - Spring-Boot-1.3.0.RELEASE

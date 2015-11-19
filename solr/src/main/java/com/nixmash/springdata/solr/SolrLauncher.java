@@ -12,7 +12,7 @@ public class SolrLauncher {
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 		ctx.register(SolrApplicationConfig.class);
 		ctx.refresh();
-		System.out.println("version: " + SpringVersion.getVersion());
+		System.out.println("Using Spring Framework Version: " + SpringVersion.getVersion());
 		SolrUI ui = ctx.getBean(SolrUI.class);
 		ui.init();
 		ctx.close();

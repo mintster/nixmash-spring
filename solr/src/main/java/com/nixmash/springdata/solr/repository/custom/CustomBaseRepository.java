@@ -39,4 +39,6 @@ public interface CustomBaseRepository {
 
 	void update(Product product);
 
+	Page<Product> findTestCategoryRecords();
+
 }

@@ -35,4 +35,5 @@
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
   <!-- Buffalo store -->
   <field name="store">45.19614,-93.90341</field>
+  <field name="doctype">product</field>
 </doc></add>
