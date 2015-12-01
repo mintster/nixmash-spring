@@ -18,7 +18,6 @@ package com.nixmash.springdata.solr.repository.custom;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.nixmash.springdata.solr.model.Product;
 
@@ -33,11 +32,9 @@ import com.nixmash.springdata.solr.model.Product;
  */
 public interface CustomBaseRepository {
 
-	Page<Product> findProductsByCustomImplementation(String value, Pageable page);
-
 	void updateProductCategory(String productId, List<String> categories);
 
-	void update(Product product);
+	void updateProductName(Product product);
 
 	Page<Product> findTestCategoryRecords();
 

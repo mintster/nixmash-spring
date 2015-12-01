@@ -12,6 +12,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##v0.2.6 -- Solr Samplings (In Progress)##
 
 - Tests for CRUD and Custom Solr Queries
+- [Post: Simple CRUD Examples With Spring Data Solr](http://nixmash.com/java/simple-crud-examples-with-spring-data-solr/)
 
 ##v0.2.5 -- Spring Boot 1.3##
 

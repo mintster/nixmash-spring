@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAvailableProducts() {
 		logger.debug("Retrieving all available products");
-		List<Product> products = Lists.newArrayList(productRepo.findAvailableProducts());
+		List<Product> products = Lists.newArrayList(productRepo.findByQueryAnnotation("electronics", sortByIdDesc()));
 		return products;
 	}
 
@@ -59,15 +59,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Iterable<Product> displayByNamedQuery(String searchTerm) {
+	public Iterable<Product> getProductsByNameOrCategory(String searchTerm) {
 		logger.debug("Retrieving products by namedQuery - ('name:*?0* OR cat:*?0*')");
-		return productRepo.findByNamedQuery(searchTerm, sortByIdDesc());
-	}
-
-	@Override
-	public Iterable<Product> displayByNameOrCategory(String searchTerm) {
-		logger.debug("Retrieving products by findByQueryAnnotation - ('name:*?0* OR cat:*?0*')");
-		return productRepo.findByQueryAnnotation(searchTerm, sortByIdDesc());
+		return productRepo.findByNameOrCategory(searchTerm, sortByIdDesc());
 	}
 
 	@Override
@@ -82,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void updateProductName(Product product) {
-		productRepo.update(product);
+		productRepo.updateProductName(product);
 	}
 
 	private Sort sortByIdDesc() {

@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.PartialUpdate;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -58,12 +57,6 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 	}
 
 	@Override
-	public Page<Product> findProductsByCustomImplementation(String value, Pageable page) {
-		return solrTemplate.queryForPage(
-				new SimpleQuery(new SimpleStringCriteria("name:" + value)).setPageRequest(page), Product.class);
-	}
-
-	@Override
 	public void updateProductCategory(String productId, List<String> categories) {
 		PartialUpdate update = new PartialUpdate(IProduct.ID_FIELD, productId);
 		update.setValueOfField(IProduct.CATEGORY_FIELD, categories);
@@ -72,7 +65,7 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 	}
 
 	@Override
-	public void update(Product product) {
+	public void updateProductName(Product product) {
 		logger.debug("Performing partial update for todo entry: {}", product);
 		PartialUpdate update = new PartialUpdate(Product.ID_FIELD, product.getId().toString());
 		update.add(Product.NAME_FIELD, product.getName());

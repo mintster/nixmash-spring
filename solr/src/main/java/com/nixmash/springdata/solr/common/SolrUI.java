@@ -84,7 +84,7 @@ public class SolrUI {
 
 		case NAMED_QUERY:
 
-			Iterable<Product> nqProducts = service.displayByNamedQuery("canon");
+			Iterable<Product> nqProducts = service.getProductsByNameOrCategory("canon");
 			printProducts(nqProducts);
 			break;
 

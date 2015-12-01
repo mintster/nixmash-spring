@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +40,6 @@ public class SolrApplicationTests extends SolrContext {
 	@Autowired
 	SolrOperations solrOperations;
 
-	@Before
-	public void setup() {
-	}
-
 	@After
 	public void tearDown() {
 		Query query = new SimpleQuery(new SimpleStringCriteria("cat:test"));
@@ -56,7 +51,7 @@ public class SolrApplicationTests extends SolrContext {
 
 	@Test
 	public void testCustomQueries() {
-		List<Product> products = customProductRepository.findByNamedQuery(SOLR_STRING, sortByIdDesc());
+		List<Product> products = customProductRepository.findByNameOrCategory(SOLR_STRING, sortByIdDesc());
 		Assert.assertEquals(1, products.size());
 
 		Product product = SolrTestUtils.createProduct(PRODUCT_ID);
@@ -67,8 +62,6 @@ public class SolrApplicationTests extends SolrContext {
 		Assert.assertEquals(1, popularProducts.getTotalElements());
 		Assert.assertEquals(Integer.toString(PRODUCT_ID), popularProducts.getContent().get(0).getId());
 
-		Query query = new SimpleQuery(new SimpleStringCriteria("cat:test"));
-		solrOperations.delete(query);
 	}
 
 	@Test
@@ -80,21 +73,28 @@ public class SolrApplicationTests extends SolrContext {
 
 	@Test
 	public void testProductCRUD() {
+
+		// create local product object
 		Product product = SolrTestUtils.createProduct(PRODUCT_ID);
 
+		// save product to Solr Index and confirm index count increased by 1
 		customProductRepository.save(product);
 		Assert.assertEquals(INITIAL_RECORD_COUNT + 1, customProductRepository.count());
 
+		// find single product from Solr
 		Product loaded = customProductRepository.findOne(Integer.toString(PRODUCT_ID));
 		Assert.assertEquals(product.getName(), loaded.getName());
 
+		// update product name in Solr and confirm index count not changed
 		loaded.setName("changed named");
 		customProductRepository.save(loaded);
 		Assert.assertEquals(INITIAL_RECORD_COUNT + 1, customProductRepository.count());
 
+		// retrieve product from Solr and confirm name change
 		loaded = customProductRepository.findOne(Integer.toString(PRODUCT_ID));
 		Assert.assertEquals("changed named", loaded.getName());
 
+		// delete the test product in Solr and confirm index count equal to initial count
 		customProductRepository.delete(loaded);
 		Assert.assertEquals(INITIAL_RECORD_COUNT, customProductRepository.count());
 

@@ -49,12 +49,12 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	public List<Product> findByNameContainsOrCategoriesContains(String title, String category, Sort sort);
 
 	@Query(name = "Product.findByNameOrCategory")
-	public List<Product> findByNamedQuery(String searchTerm, Sort sort);
+	public List<Product> findByNameOrCategory(String searchTerm, Sort sort);
 
-	@Query("name:*?0* OR cat:*?0* AND doctype:product")
+	@Query("(name:*?0* OR cat:*?0*) AND doctype:product")
 	public List<Product> findByQueryAnnotation(String searchTerm, Sort sort);
 
-	@Query("inStock:true")
+	@Query("inStock:true AND doctype:product")
 	public List<Product> findAvailableProducts();
 
 	// @Query(value = "*:*", filters = { "doctype:product" })

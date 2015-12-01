@@ -16,13 +16,11 @@ public interface ProductService {
 
 	List<Product> getProductsByQuery();
 
-	Iterable<Product> displayByNameOrCategory(String searchTerm);
-
 	Product getProduct(String Id);
 
 	void updateProductName(Product product);
 
-	Iterable<Product> displayByNamedQuery(String searchTerm);
+	Iterable<Product> getProductsByNameOrCategory(String searchTerm);
 
 	Page<Product> getProductsByPopularity(int popularity);
 
