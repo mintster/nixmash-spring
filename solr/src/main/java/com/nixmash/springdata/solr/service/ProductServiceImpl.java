@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAvailableProducts() {
 		logger.debug("Retrieving all available products");
-		List<Product> products = Lists.newArrayList(productRepo.findByQueryAnnotation("electronics", sortByIdDesc()));
+		List<Product> products = Lists.newArrayList(productRepo.findByAnnotatedQuery("electronics", sortByIdDesc()));
 		return products;
 	}
 
@@ -60,8 +60,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Iterable<Product> getProductsByNameOrCategory(String searchTerm) {
-		logger.debug("Retrieving products by namedQuery - ('name:*?0* OR cat:*?0*')");
+		logger.debug("Using 'Product.findByNameOrCategory' named query - ('name:*?0* OR cat:*?0*')");
 		return productRepo.findByNameOrCategory(searchTerm, sortByIdDesc());
+	}
+
+	@Override
+	public List<Product> getProductsByNameOrCategoryAnnotatedQuery(String searchTerm) {
+		logger.debug("Using annotated @query  - ('(name:*?0* OR cat:*?0*) AND doctype:product'");
+		return productRepo.findByAnnotatedQuery(searchTerm, sortByIdDesc());
 	}
 
 	@Override
@@ -79,8 +85,12 @@ public class ProductServiceImpl implements ProductService {
 		productRepo.updateProductName(product);
 	}
 
-	private Sort sortByIdDesc() {
-		return new Sort(Sort.Direction.DESC, Product.ID_FIELD);
+	@Override
+	public List<Product> searchWithCriteria(String searchTerm) {
+		return productRepo.searchWithCriteria(searchTerm);
 	}
 
+	public Sort sortByIdDesc() {
+		return new Sort(Sort.Direction.DESC, Product.ID_FIELD);
+	}
 }

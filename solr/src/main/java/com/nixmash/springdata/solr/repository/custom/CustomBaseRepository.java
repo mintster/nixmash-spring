@@ -38,4 +38,6 @@ public interface CustomBaseRepository {
 
 	Page<Product> findTestCategoryRecords();
 
+	List<Product> searchWithCriteria(String searchTerm);
+
 }

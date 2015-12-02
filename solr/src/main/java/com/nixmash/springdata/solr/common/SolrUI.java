@@ -32,13 +32,15 @@ public class SolrUI {
 		PAGEABLE_POPULARITY, 
 		AVAILABLE_PRODUCTS, 
 		ALL_RECORDS,
-		TEST_RECORDS
+		TEST_RECORDS,
+		CRITERIA_SEARCH,
+		ANNOTATED_QUERY
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.AVAILABLE_PRODUCTS;
+		DEMO demo = DEMO.ANNOTATED_QUERY;
 		System.out.println(environment.getProperty(PROPERTY_NAME_PROFILE_DESCRIPTION));
 		System.out.println("Running Demo: " + demo.name() + "\n");
 
@@ -48,6 +50,12 @@ public class SolrUI {
 	private void runDemos(DEMO demo) {
 
 		switch (demo) {
+
+		case ANNOTATED_QUERY:
+
+			List<Product> aqProducts = service.getProductsByNameOrCategoryAnnotatedQuery("canon");
+			printProducts(aqProducts);
+			break;
 
 		case PAGEABLE_POPULARITY:
 
@@ -100,6 +108,13 @@ public class SolrUI {
 
 			urProductUpdated.setName("Solr, The Enterprise Http Search Server");
 			service.updateProductName(urProductUpdated);
+
+			break;
+
+		case CRITERIA_SEARCH:
+
+			List<Product> csProducts = service.searchWithCriteria("Canon Camera memory");
+			printProducts(csProducts);
 
 			break;
 

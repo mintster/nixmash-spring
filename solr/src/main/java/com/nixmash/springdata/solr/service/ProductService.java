@@ -25,4 +25,9 @@ public interface ProductService {
 	Page<Product> getProductsByPopularity(int popularity);
 
 	Page<Product> getTestRecords();
+
+	List<Product> searchWithCriteria(String searchTerm);
+
+	List<Product> getProductsByNameOrCategoryAnnotatedQuery(String searchTerm);
+
 }

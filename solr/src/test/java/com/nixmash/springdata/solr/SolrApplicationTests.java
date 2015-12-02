@@ -51,9 +51,12 @@ public class SolrApplicationTests extends SolrContext {
 
 	@Test
 	public void testCustomQueries() {
+
+		// Named Query from named-queries.properties
 		List<Product> products = customProductRepository.findByNameOrCategory(SOLR_STRING, sortByIdDesc());
 		Assert.assertEquals(1, products.size());
 
+		// Method Name Query test for findByPopularityGreaterThanEqual()
 		Product product = SolrTestUtils.createProduct(PRODUCT_ID);
 		customProductRepository.save(product);
 

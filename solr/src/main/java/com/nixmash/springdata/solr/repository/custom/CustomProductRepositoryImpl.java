@@ -23,7 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrTemplate;
+import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.core.query.PartialUpdate;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.SimpleStringCriteria;
@@ -71,5 +73,39 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 		update.add(Product.NAME_FIELD, product.getName());
 		solrTemplate.saveBean(update);
 		solrTemplate.commit();
+	}
+
+	@Override
+	public List<Product> searchWithCriteria(String searchTerm) {
+		logger.debug("Building a criteria query with search term: {}", searchTerm);
+
+		String[] words = searchTerm.split(" ");
+
+		Criteria conditions = createSearchConditions(words);
+		SimpleQuery search = new SimpleQuery(conditions);
+		search.addSort(sortByIdDesc());
+
+		Page<Product> results = solrTemplate.queryForPage(search, Product.class);
+		return results.getContent();
+	}
+
+	private Criteria createSearchConditions(String[] words) {
+		Criteria conditions = null;
+
+		for (String word : words) {
+			if (conditions == null) {
+				conditions = new Criteria(Product.NAME_FIELD).contains(word)
+						.or(new Criteria(Product.CATEGORY_FIELD).contains(word));
+			} else {
+				conditions = conditions.or(new Criteria(Product.NAME_FIELD).contains(word))
+						.or(new Criteria(Product.CATEGORY_FIELD).contains(word));
+			}
+		}
+
+		return conditions;
+	}
+
+	public Sort sortByIdDesc() {
+		return new Sort(Sort.Direction.DESC, Product.ID_FIELD);
 	}
 }
