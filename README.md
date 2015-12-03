@@ -12,7 +12,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##v0.2.6 -- Solr Samplings (In Progress)##
 
 - Tests for CRUD and Custom Solr Queries
+- Named Method Queries, Java Criteria API, Annotated Queries, Named Queries
 - [Post: Simple CRUD Examples With Spring Data Solr](http://nixmash.com/java/simple-crud-examples-with-spring-data-solr/)
+- [Post: A Spring Solr Criteria API Query Example](http://nixmash.com/java/a-spring-solr-criteria-api-query-example/)
+- [Post: Spring Solr Named and Annotated Query Examples](http://nixmash.com/java/spring-solr-named-and-annotated-query-examples/)
+- [Post: A Named Method Query With A Solr Twist](http://nixmash.com/java/a-named-method-query-with-a-solr-twist/)
 
 ##v0.2.5 -- Spring Boot 1.3##
 

@@ -29,18 +29,19 @@ public class SolrUI {
 		ALL_PRODUCTS, 
 		NAMED_QUERY, 
 		UPDATE_RECORD, 
-		PAGEABLE_POPULARITY, 
+		METHOD_NAME_QUERY, 
 		AVAILABLE_PRODUCTS, 
 		ALL_RECORDS,
 		TEST_RECORDS,
 		CRITERIA_SEARCH,
 		ANNOTATED_QUERY
+		
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.ANNOTATED_QUERY;
+		DEMO demo = DEMO.METHOD_NAME_QUERY;
 		System.out.println(environment.getProperty(PROPERTY_NAME_PROFILE_DESCRIPTION));
 		System.out.println("Running Demo: " + demo.name() + "\n");
 
@@ -51,17 +52,24 @@ public class SolrUI {
 
 		switch (demo) {
 
+		case METHOD_NAME_QUERY:
+			
+			List<Product> mnqProducts = service.getProductsByStartOfName("co");
+			printProducts(mnqProducts);
+			break;
+
 		case ANNOTATED_QUERY:
 
 			List<Product> aqProducts = service.getProductsByNameOrCategoryAnnotatedQuery("canon");
 			printProducts(aqProducts);
 			break;
 
-		case PAGEABLE_POPULARITY:
+		case NAMED_QUERY:
 
-			Page<Product> apProducts = service.getProductsByPopularity(6);
-			printProducts(apProducts);
+			Iterable<Product> nqProducts = service.getProductsByNameOrCategory("canon");
+			printProducts(nqProducts);
 			break;
+
 
 		case TEST_RECORDS:
 
@@ -88,12 +96,6 @@ public class SolrUI {
 
 			Iterable<Product> allRecords = service.getAllRecords();
 			printProducts(allRecords);
-			break;
-
-		case NAMED_QUERY:
-
-			Iterable<Product> nqProducts = service.getProductsByNameOrCategory("canon");
-			printProducts(nqProducts);
 			break;
 
 		case UPDATE_RECORD:

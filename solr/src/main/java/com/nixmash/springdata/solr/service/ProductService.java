@@ -30,4 +30,6 @@ public interface ProductService {
 
 	List<Product> getProductsByNameOrCategoryAnnotatedQuery(String searchTerm);
 
+	List<Product> getProductsByStartOfName(String nameStart);
+
 }

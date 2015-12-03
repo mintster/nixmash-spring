@@ -31,9 +31,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAvailableProducts() {
-		logger.debug("Retrieving all available products");
-		List<Product> products = Lists.newArrayList(productRepo.findByAnnotatedQuery("electronics", sortByIdDesc()));
+		logger.debug("Retrieving all available products where inStock:true");
+//		List<Product> products = productRepo.findByAvailableTrue();
+		List<Product> products = productRepo.findByAvailableTrueAndDoctype(SolrDocType.PRODUCT);
 		return products;
+//		return products.stream().filter(p -> 
+//				p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -47,15 +50,23 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findTestCategoryRecords();
 	}
 
+	@Override
 	public List<Product> getProducts() {
 		logger.debug("Retrieving all records and filtering out by 'doctype:product'");
 		List<Product> products = Lists.newArrayList(productRepo.findAll());
 		return products.stream().filter(p -> p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
 	}
 
+	@Override
 	public List<Product> getProductsByQuery() {
 		logger.debug("Retrieving all products by solr @Query");
 		return productRepo.findAllProducts();
+	}
+
+	@Override
+	public List<Product> getProductsByStartOfName(String nameStart) {
+		logger.debug("Named Method Query -  findByNameStartingWith()");
+		return productRepo.findByNameStartingWith(nameStart);
 	}
 
 	@Override
@@ -72,6 +83,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Page<Product> getProductsByPopularity(int popularity) {
+		logger.debug("Using JPA Method Name Query - findByPopularityGreaterThanEqual()");
 		return productRepo.findByPopularityGreaterThanEqual(popularity, new PageRequest(0, 10));
 	}
 

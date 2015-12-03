@@ -41,7 +41,8 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 
 	List<Product> findByNameStartingWith(String name);
 
-	Page<Product> findByAvailableTrue(Pageable page);
+	List<Product> findByAvailableTrue();
+	List<Product> findByAvailableTrueAndDoctype(String docType);
 
 	@Query(IProduct.AVAILABLE_FIELD + ":false")
 	Page<Product> findByAvailableFalseUsingAnnotatedQuery(Pageable page);
