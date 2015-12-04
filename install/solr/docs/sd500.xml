@@ -22,7 +22,7 @@
   <!-- Join -->
   <field name="manu_id_s">canon</field>
   <field name="cat">electronics</field>
-  <field name="cat">camera</field>
+  <field name="cat">cameras</field>
   <field name="features">3x zoop, 7.1 megapixel Digital ELPH</field>
   <field name="features">movie clips up to 640x480 @30 fps</field>
   <field name="features">2.0" TFT LCD, 118,000 pixels</field>

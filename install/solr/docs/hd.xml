@@ -23,7 +23,8 @@
   <!-- Join -->
   <field name="manu_id_s">samsung</field>
   <field name="cat">electronics</field>
-  <field name="cat">hard drive</field>
+  <field name="cat">computers</field>
+  <field name="cat">storage</field>
   <field name="features">7200RPM, 8MB cache, IDE Ultra ATA-133</field>
   <field name="features">NoiseGuard, SilentSeek technology, Fluid Dynamic Bearing (FDB) motor</field>
   <field name="price">92</field>
@@ -41,7 +42,7 @@
   <!-- Join -->
   <field name="manu_id_s">maxtor</field>
   <field name="cat">electronics</field>
-  <field name="cat">hard drive</field>
+  <field name="cat">computers</field>
   <field name="features">SATA 3.0Gb/s, NCQ</field>
   <field name="features">8.5ms seek</field>
   <field name="features">16MB cache</field>

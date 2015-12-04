@@ -22,10 +22,9 @@
   <!-- Join -->
   <field name="manu_id_s">canon</field>
   <field name="cat">electronics</field>
-  <field name="cat">multifunction printer</field>
-  <field name="cat">printer</field>
-  <field name="cat">scanner</field>
-  <field name="cat">copier</field>
+  <field name="cat">printers</field>
+  <field name="cat">peripherals</field>
+  <field name="cat">computers</field>
   <field name="features">Multifunction ink-jet color photo printer</field>
   <field name="features">Flatbed scanner, optical scan resolution of 1,200 x 2,400 dpi</field>
   <field name="features">2.5" color LCD preview screen</field>

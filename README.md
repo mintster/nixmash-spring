@@ -17,6 +17,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: A Spring Solr Criteria API Query Example](http://nixmash.com/java/a-spring-solr-criteria-api-query-example/)
 - [Post: Spring Solr Named and Annotated Query Examples](http://nixmash.com/java/spring-solr-named-and-annotated-query-examples/)
 - [Post: A Named Method Query With A Solr Twist](http://nixmash.com/java/a-named-method-query-with-a-solr-twist/)
+- [Post: Changing the Size of Solr Facet Pages](http://nixmash.com/java/changing-the-size-of-solr-facet-pages/)
+- [Post: Spring Solr Facet Query Examples](http://nixmash.com/java/spring-solr-facet-query-examples/)
 
 ##v0.2.5 -- Spring Boot 1.3##
 

@@ -3,6 +3,7 @@ package com.nixmash.springdata.solr.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.solr.core.query.result.FacetPage;
 
 import com.nixmash.springdata.solr.model.Product;
 
@@ -31,5 +32,9 @@ public interface ProductService {
 	List<Product> getProductsByNameOrCategoryAnnotatedQuery(String searchTerm);
 
 	List<Product> getProductsByStartOfName(String nameStart);
+
+	FacetPage<Product> getFacetedProductsAvailable();
+
+	FacetPage<Product> getFacetedProductsCategory();
 
 }

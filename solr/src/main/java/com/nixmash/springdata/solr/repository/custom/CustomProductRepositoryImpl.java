@@ -51,12 +51,14 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 	@Resource
 	private SolrTemplate solrTemplate;
 
+	
 	@Override
 	public Page<Product> findTestCategoryRecords() {
 		return solrTemplate.queryForPage(
-				new SimpleQuery(new SimpleStringCriteria("cat:test")).setPageRequest(new PageRequest(0, 100)),
-				Product.class);
+				new SimpleQuery(new SimpleStringCriteria("cat:test"))
+						.setPageRequest(new PageRequest(0, 100)), Product.class);
 	}
+
 
 	@Override
 	public void updateProductCategory(String productId, List<String> categories) {

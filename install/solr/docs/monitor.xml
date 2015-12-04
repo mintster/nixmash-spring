@@ -21,7 +21,10 @@
   <field name="manu">Dell, Inc.</field>
   <!-- Join -->
   <field name="manu_id_s">dell</field>
-  <field name="cat">electronics and computers</field>
+  <field name="cat">electronics</field>
+  <field name="cat">computers</field>
+  <field name="cat">peripherals</field>
+  <field name="cat">video</field>
   <field name="features">30" TFT active matrix LCD, 2560 x 1600, .25mm dot pitch, 700:1 contrast</field>
   <field name="includes">USB cable</field>
   <field name="weight">401.6</field>

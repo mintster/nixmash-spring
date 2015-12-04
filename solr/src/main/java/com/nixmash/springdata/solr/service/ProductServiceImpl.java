@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -32,11 +33,25 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAvailableProducts() {
 		logger.debug("Retrieving all available products where inStock:true");
-//		List<Product> products = productRepo.findByAvailableTrue();
 		List<Product> products = productRepo.findByAvailableTrueAndDoctype(SolrDocType.PRODUCT);
 		return products;
+		
+//		List<Product> products = productRepo.findByAvailableTrue();
 //		return products.stream().filter(p -> 
 //				p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
+	}
+
+	@Override
+	public FacetPage<Product> getFacetedProductsAvailable() {
+		logger.debug("Retrieving faceted products by available");
+		return simpleProductRepo.findByFacetOnAvailable();
+	}
+
+	@Override
+	public FacetPage<Product> getFacetedProductsCategory() {
+		logger.debug("Retrieving faceted products by category");
+		return productRepo.findProductCategoryFacets(new PageRequest(0, 20));
+//		return simpleProductRepo.findByFacetOnCategory();
 	}
 
 	@Override
@@ -105,4 +120,5 @@ public class ProductServiceImpl implements ProductService {
 	public Sort sortByIdDesc() {
 		return new Sort(Sort.Direction.DESC, Product.ID_FIELD);
 	}
+
 }

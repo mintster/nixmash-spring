@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
+import org.springframework.data.solr.core.query.result.FacetFieldEntry;
+import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Component;
 
 import com.nixmash.springdata.solr.model.Product;
@@ -34,14 +36,16 @@ public class SolrUI {
 		ALL_RECORDS,
 		TEST_RECORDS,
 		CRITERIA_SEARCH,
-		ANNOTATED_QUERY
+		ANNOTATED_QUERY,
+		FACET_ON_AVAILABLE,
+		FACET_ON_CATEGORY
 		
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.METHOD_NAME_QUERY;
+		DEMO demo = DEMO.FACET_ON_CATEGORY;
 		System.out.println(environment.getProperty(PROPERTY_NAME_PROFILE_DESCRIPTION));
 		System.out.println("Running Demo: " + demo.name() + "\n");
 
@@ -52,8 +56,34 @@ public class SolrUI {
 
 		switch (demo) {
 
-		case METHOD_NAME_QUERY:
+		case FACET_ON_AVAILABLE:
+
+			FacetPage<Product> avfacetPage = service.getFacetedProductsAvailable();
+			Page<FacetFieldEntry> avPage = 
+					avfacetPage.getFacetResultPage(Product.AVAILABLE_FIELD);
 			
+			for (FacetFieldEntry entry : avPage) {
+				System.out.println(String.format("%s:%s \t %s", 
+						entry.getField().getName(), entry.getValue(), entry.getValueCount()));
+			}
+
+			break;
+
+		case FACET_ON_CATEGORY:
+
+			FacetPage<Product> catfacetPage = service.getFacetedProductsCategory();
+			Page<FacetFieldEntry> catPage = 
+					catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
+			
+			for (FacetFieldEntry entry : catPage) {
+				System.out.println(String.format("%s:%s \t %s", 
+						entry.getField().getName(), entry.getValue(), entry.getValueCount()));
+			}
+
+			break;
+
+		case METHOD_NAME_QUERY:
+
 			List<Product> mnqProducts = service.getProductsByStartOfName("co");
 			printProducts(mnqProducts);
 			break;
@@ -69,7 +99,6 @@ public class SolrUI {
 			Iterable<Product> nqProducts = service.getProductsByNameOrCategory("canon");
 			printProducts(nqProducts);
 			break;
-
 
 		case TEST_RECORDS:
 

@@ -20,6 +20,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.repository.Facet;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
@@ -42,6 +44,7 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	List<Product> findByNameStartingWith(String name);
 
 	List<Product> findByAvailableTrue();
+
 	List<Product> findByAvailableTrueAndDoctype(String docType);
 
 	@Query(IProduct.AVAILABLE_FIELD + ":false")
@@ -58,8 +61,13 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	@Query("inStock:true AND doctype:product")
 	public List<Product> findAvailableProducts();
 
-	// @Query(value = "*:*", filters = { "doctype:product" })
 	@Query("doctype:product")
 	public List<Product> findAllProducts();
 
+	
+	@Query(value = "*:*", filters = { "doctype:product" })
+	@Facet(fields = IProduct.CATEGORY_FIELD, limit = 100)
+	public FacetPage<Product> findProductCategoryFacets(Pageable page);
+
+	
 }

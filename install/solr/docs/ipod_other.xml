@@ -24,7 +24,8 @@
   <!-- Join -->
   <field name="manu_id_s">belkin</field>
   <field name="cat">electronics</field>
-  <field name="cat">connector</field>
+  <field name="cat">peripherals</field>
+  <field name="cat">music</field>
   <field name="features">car power adapter, white</field>
   <field name="weight">4</field>
   <field name="price">19.95</field>
@@ -42,7 +43,8 @@
   <!-- Join -->
   <field name="manu_id_s">belkin</field>
   <field name="cat">electronics</field>
-  <field name="cat">connector</field>
+  <field name="cat">peripherals</field>
+  <field name="cat">music</field>
   <field name="features">car power adapter for iPod, white</field>
   <field name="weight">2</field>
   <field name="price">11.50</field>
