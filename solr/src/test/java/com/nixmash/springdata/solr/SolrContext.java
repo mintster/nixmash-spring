@@ -5,14 +5,13 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nixmash.springdata.solr.common.SolrSettings;
 import com.nixmash.springdata.solr.config.SolrApplicationConfig;
-import com.nixmash.springdata.solr.service.ProductService;
 
 /**
  * 
@@ -29,17 +28,12 @@ import com.nixmash.springdata.solr.service.ProductService;
 @ActiveProfiles("dev")
 public class SolrContext {
 
-	private static final String PROPERTY_NAME_SOLR_HOME = "solr.solr.home";
-
 	@Autowired
-	ProductService productService;
-
-	@Autowired
-	Environment environment;
+	private SolrSettings solrSettings;
 
 	@Test
 	public void contextLoads() {
-		assertNotNull(environment.getRequiredProperty(PROPERTY_NAME_SOLR_HOME));
+		assertNotNull(solrSettings.getSolrServerUrl());
 	}
 
 }

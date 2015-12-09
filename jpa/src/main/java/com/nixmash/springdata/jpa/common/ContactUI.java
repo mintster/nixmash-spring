@@ -24,8 +24,6 @@ public class ContactUI {
 		randomDemo();
 	}
 
-	// region Random Demo
-
 	public void randomDemo() {
 		System.out.println(ContactUtils.randomNegativeId());
 		System.out.println(ContactUtils.randomNegativeId());
@@ -36,18 +34,11 @@ public class ContactUI {
 		System.out.println(ContactUtils.randomNegativeId());
 		System.out.println(ContactUtils.randomNegativeId());
 	}
-	// endregion
-
-	// region Properties Demo
 
 	public void propertiesDemo() {
 		ContactUtils.printProperty("ApplicationSettings.getIsDemoSite()",
 				applicationSettings.getIsDemoSite().toString());
 	}
-
-	// endregion
-
-	// region Add Contact
 
 	public void AddContact() {
 		// Contact contact = new Contact();
@@ -62,10 +53,6 @@ public class ContactUI {
 		// contact.addContactPhone(contactPhone);
 		// contactService.save(contact);
 	}
-
-	// endregion
-
-	// region Spring Data JPA Demos
 
 	public void entityDemo() {
 
@@ -105,7 +92,5 @@ public class ContactUI {
 		// e.printStackTrace();
 		// }
 	}
-
-	// endregion
 
 }

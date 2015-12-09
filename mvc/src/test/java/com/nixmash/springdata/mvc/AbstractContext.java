@@ -11,13 +11,14 @@ import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.mvc.config.SecurityConfig;
 import com.nixmash.springdata.mvc.config.WebConfig;
+import com.nixmash.springdata.solr.enums.SolrConfigProfile;
 
 @SuppressWarnings("deprecation")
 // @TransactionConfiguration(defaultRollback = true)
 @ContextConfiguration(classes = { WebConfig.class, ApplicationConfig.class, SecurityConfig.class })
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(DataConfigProfile.H2)
+@ActiveProfiles({ DataConfigProfile.H2, SolrConfigProfile.DEV })
 public class AbstractContext {
 
 	@Autowired

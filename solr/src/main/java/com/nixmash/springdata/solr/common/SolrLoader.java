@@ -1,4 +1,4 @@
-package com.nixmash.springdata.jpa.common;
+package com.nixmash.springdata.solr.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +8,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApplicationLoader implements CommandLineRunner {
+public class SolrLoader implements CommandLineRunner {
 
     // Simple demonstration of using CommandLineRunner Interface
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(SolrLoader.class);
 
     @Autowired
     Environment environment;
@@ -23,9 +23,12 @@ public class ApplicationLoader implements CommandLineRunner {
             sb.append(" ").append(option);
         }
         sb = sb.length() == 0 ? sb.append("No Options Specified") : sb;
-        String activeProfile = environment.getActiveProfiles()[0];
-
-        logger.info(String.format("WAR launched with following options: %s", sb.toString()));
-        logger.info(String.format("Current JPA Active Profile: %s", activeProfile));
+        
+        try {
+			String activeProfile = environment.getActiveProfiles()[1];
+			logger.info(String.format("Current Solr Active Profile: %s", activeProfile));
+		} catch (Exception e) {
+			logger.info("No second profile entered.");
+		}
     }
 }

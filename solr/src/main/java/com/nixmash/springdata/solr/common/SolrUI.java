@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.solr.core.query.result.FacetFieldEntry;
@@ -16,7 +17,6 @@ import com.nixmash.springdata.solr.service.ProductService;
 @Component
 public class SolrUI {
 
-	private static final String PROPERTY_NAME_PROFILE_DESCRIPTION = "profile.description";
 	private static final String SOLR_RECORD_ID = "SOLR1000";
 
 	@Resource
@@ -24,6 +24,10 @@ public class SolrUI {
 
 	@Resource
 	private ProductService service;
+	
+
+	@Autowired
+	private SolrSettings solrSettings;
 
 	// @formatter:off
 	
@@ -46,7 +50,12 @@ public class SolrUI {
 
 	public void init() {
 		DEMO demo = DEMO.FACET_ON_CATEGORY;
-		System.out.println(environment.getProperty(PROPERTY_NAME_PROFILE_DESCRIPTION));
+		
+		String[] profiles = environment.getActiveProfiles();
+		if (profiles[0].equals("dev"))
+			System.out.println("DEVELOPMENT mode: Embedded SOLR Home: " + solrSettings.getSolrEmbeddedPath());
+		else
+			System.out.println("PRODUCTION mode: SOLR Server Url: " + solrSettings.getSolrServerUrl());
 		System.out.println("Running Demo: " + demo.name() + "\n");
 
 		runDemos(demo);

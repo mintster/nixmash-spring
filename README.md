@@ -9,7 +9,16 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 *Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
 
-##v0.2.6 -- Solr Samplings##
+##v0.2.7 -- Solr MVC (In Progress)##
+
+- Replaced application-dev.properties/application-prod.properties logic with External Properties file `solr.properties`
+- Configured for local and public Solr Server Url of http://solr/nixmashspring or a public url
+- Updated Solr Index Installation "refreshSolr.sh" script to support new Url logic
+- Updated Solr Server to 4.10.4
+- Web display of Solr Facets
+- Web Solr Search
+
+##v0.2.6 -- Solr Query Samplings##
 
 - Tests for CRUD and Custom Solr Queries
 - Console demonstrations of Named Method Queries, Java Criteria API, Annotated Queries, Named Queries and Solr Facets
@@ -19,6 +28,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: A Named Method Query With A Solr Twist](http://nixmash.com/java/a-named-method-query-with-a-solr-twist/)
 - [Post: Changing the Size of Solr Facet Pages](http://nixmash.com/java/changing-the-size-of-solr-facet-pages/)
 - [Post: Spring Solr Facet Query Examples](http://nixmash.com/java/spring-solr-facet-query-examples/)
+
+![Solr Facet Query in v0.2.6](http://nixmash.com/x/pics/github/spring-data-0.2.6.png)
 
 ##v0.2.5 -- Spring Boot 1.3##
 
@@ -296,9 +307,9 @@ The application supports an H2 Profile (default) and a MySQL Profile. To run JPA
 
 To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.` External properties in `/home/daveburke/...external.properties.` Change in JPA `common/ApplicationSettings.` Example of `external.properties` in `/install.`
 
-##Installation - External Properties File Settings##
+##Installation - External Property File Settings##
 
-The JPA Project demonstrates using an external Property File. To Configure Location of Properties File, change the @PropertySource annotation setting in Jpa/ApplicationSettings.class.
+The JPA Project demonstrates using an external Property File. To Configure Location of Properties File, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class`.
 
 ```java
 @Component
@@ -309,7 +320,9 @@ public class ApplicationSettings {
 
 ##Installation - Solr##
 
-The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in `application-dev` or `application-prod`.properties files.
+Configure Solr as normally on your development machine. Documents are included in `/dev/solr/docs` and scripts to populate the Solr Url and Embedded Servers located in `/dev/solr`. Script name: `refreshSolr.sh`. It contains additional installation instructions.
+
+The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in an external `solr.properties` file. Same configuration as **external.properties** file just discussed. Set `solr.properties` file location in **Solr** project `common/SolrSettings.java` `@PropertySource` value. 
 
 ##References##
 
