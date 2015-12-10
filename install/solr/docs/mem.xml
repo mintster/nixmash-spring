@@ -59,6 +59,26 @@
 </doc>
 
 <doc>
+  <field name="id">INT4330J7</field>
+  <field name="name">Intel 64GB 256-Pin DDR SDRAM Buffered DDR 400 (PC 6400) System Memory - Retail</field>
+  <field name="manu">Intel Inc.</field>
+  <!-- Join -->
+  <field name="manu_id_s">intel</field>
+  <field name="cat">electronics</field>
+  <field name="cat">memory</field>
+  <field name="cat">computers</field>
+  <field name="price">129.99</field>
+  <field name="popularity">7</field>
+  <field name="inStock">true</field>
+  <!-- Dodge City store -->
+  <field name="store">37.7752,-100.0232</field>
+  <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
+
+  <field name="payloads">electronics|4.0 memory|2.0</field>
+  <field name="doctype">product</field>
+</doc>
+
+<doc>
   <field name="id">VDBDB1A16</field>
   <field name="name">A-DATA V-Series 1GB 184-Pin DDR SDRAM Unbuffered DDR 400 (PC 3200) System Memory - OEM</field>
   <field name="manu">A-DATA Technology Inc.</field>

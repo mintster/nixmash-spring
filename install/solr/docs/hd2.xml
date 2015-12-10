@@ -1,0 +1,58 @@
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<add>
+<doc>
+  <field name="id">WDD3500N</field>
+  <field name="name">Western Digital 3500N - hard drive - 1 TB - ATA-100</field>
+  <field name="manu">Western Digital, Inc.</field>
+  <!-- Join -->
+  <field name="manu_id_s">westerndigital</field>
+  <field name="cat">electronics</field>
+  <field name="cat">computers</field>
+  <field name="cat">storage</field>
+  <field name="features">9000RPM, 16MB cache, IDE Ultra ATA-100</field>
+  <field name="features">Jones Faberge motor</field>
+  <field name="price">110</field>
+  <field name="popularity">6</field>
+  <field name="inStock">false</field>
+  <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
+  <!-- Near Oklahoma city -->
+  <field name="store">35.0752,-97.032</field>
+  <field name="doctype">product</field>
+</doc>
+<doc>
+  <field name="id">WDD4200N</field>
+  <field name="name">Western Digital 4200N - hard drive - 2 TB - ATA-w00</field>
+  <field name="manu">Western Digital, Inc.</field>
+  <!-- Join -->
+  <field name="manu_id_s">westerndigital</field>
+  <field name="cat">electronics</field>
+  <field name="cat">computers</field>
+  <field name="features">SATA 5.0Gb/s, NCQ</field>
+  <field name="features">12.2ms seek</field>
+  <field name="features">64MB cache</field>
+  <field name="price">220</field>
+  <field name="popularity">6</field>
+  <field name="inStock">true</field>
+  <!-- Buffalo store -->
+  <field name="store">45.17614,-93.87341</field>
+  <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
+  <field name="doctype">product</field>
+</doc>
+</add>
+

@@ -65,6 +65,12 @@
     <field name="doctype">manufacturer</field>
   </doc>
   <doc>
+    <field name="id">intel</field>
+    <field name="compName_s">Intel, Inc.</field>
+    <field name="address_s">1000 Intel Way, CA 95233</field>
+    <field name="doctype">manufacturer</field>
+  </doc>
+  <doc>
     <field name="id">maxtor</field>
     <field name="compName_s">Maxtor Corporation</field>
     <field name="address_s">920 Disc Drive Scotts Valley, CA 95066</field>
@@ -80,6 +86,12 @@
     <field name="id">viewsonic</field>
     <field name="compName_s">ViewSonic Corp</field>
     <field name="address_s">381 Brea Canyon Road Walnut, CA 91789-0708</field>
+    <field name="doctype">manufacturer</field>
+  </doc>
+  <doc>
+    <field name="id">westerndigital</field>
+    <field name="compName_s">Western Digital, Inc.</field>
+    <field name="address_s">Western Way Road, Mississippi 53493</field>
     <field name="doctype">manufacturer</field>
   </doc>
 </add>

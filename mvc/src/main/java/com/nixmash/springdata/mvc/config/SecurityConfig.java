@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] IGNORED_RESOURCE_LIST = new String[] { "/resources/**", "/static/**", "/webjars/**" };
 	private static final String[] PERMITALL_RESOURCE_LIST = new String[] { "/", "/login/**", "/contacts", "/json/**",
-			"/register/**" };
+			"/register/**", "/products/**" };
 	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/h2-console/**" };
 
 	// endregion

@@ -35,7 +35,7 @@ public class SolrApplicationTests extends SolrContext {
 
 	private static final String SOLR_STRING = "solr";
 	private static final int PRODUCT_ID = 1000;
-	private static final int INITIAL_RECORD_COUNT = 44;
+	private static final int INITIAL_RECORD_COUNT = 51;
 
 	@Autowired
 	SolrOperations solrOperations;

@@ -17,7 +17,7 @@
 
 <add>
 <doc>
-  <field name="id">EN7800GTX/2DHTV/256M</field>
+  <field name="id">EN7800GTX-2DHTV-256M</field>
   <field name="name">ASUS Extreme N7800GTX/2DHTV (256 MB)</field>
   <!-- Denormalized -->
   <field name="manu">ASUS Computer Inc.</field>

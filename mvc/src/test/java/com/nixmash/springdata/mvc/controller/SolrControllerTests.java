@@ -34,7 +34,7 @@ public class SolrControllerTests extends AbstractContext {
     @Test
     public void getProducts() throws Exception {
 
-        mockMvc.perform(get("/solr/products"))
+        mockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
 //                .andExpect(model().attributeExists("contacts"))
 //                .andExpect(model().attribute("contacts",

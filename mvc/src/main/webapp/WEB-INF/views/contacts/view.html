@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-    <title th:text="#{view.page.title}"></title>
+    <title th:text="#{contact.view.page.title}"></title>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('contacts')">Navbar</nav>
@@ -23,7 +23,7 @@
         <div class="bs-docs-section col-lg-9 col-centered">
             <div id="form-table">
                 <div class="heading">
-                    <h2 th:text="#{contact.heading.detail}">[Contact Details]</h2>
+                    <h2 th:text="#{contact.heading.details}">[Contact Details]</h2>
                 </div>
                 <table class="table table-condensed">
                     <tr>

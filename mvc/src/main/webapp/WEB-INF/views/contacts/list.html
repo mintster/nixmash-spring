@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-    <title th:text="#{list.page.title}">[NixMash Spring Contact List]</title>
+    <title th:text="#{contact.list.page.title}">[NixMash Spring Contact List]</title>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('contacts')">Navbar</nav>
@@ -11,9 +11,9 @@
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="#{list.page.header}">[Contacts]</h1>
+                <h1 th:text="#{contact.list.page.header}">[Contacts]</h1>
 
-                <p class="lead" th:text="#{list.page.subheader}">[All Contacts]</p>
+                <p class="lead" th:text="#{contact.list.page.subheader}">[All Contacts]</p>
             </div>
             <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
 
@@ -37,7 +37,7 @@
                                th:text="|${contact.firstName} ${contact.lastName}|">[firstName] [lastName]</a>
 
                             <div class="form-actions pull-right">
-                                <input type="button" class="btn btn-info" th:value="#{list.page.button.update}"
+                                <input type="button" class="btn btn-info" th:value="#{contact.list.page.button.update}"
                                        value="[Edit Contact]" onclick="window.location.href='contactform.html'"
                                        th:onclick="'window.location.href=\'' + @{|/contact/update/${contact.contactId}|} + '\''"/>
                             </div>
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
-            <a th:href="@{'/contact/new/'}" th:text="#{list.page.button.new}" href="contactform.html"
+            <a th:href="@{'/contact/new/'}" th:text="#{contact.list.page.button.new}" href="contactform.html"
                class="btn btn-success">[Add New Contact]</a>
         </div>
     </div>
