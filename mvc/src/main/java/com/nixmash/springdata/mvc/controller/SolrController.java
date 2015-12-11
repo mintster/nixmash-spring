@@ -46,7 +46,7 @@ public class SolrController {
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String showProductsPage() {
-		logger.debug("Showing all products page. Found {} products", allProducts().size());
+		logger.info("Showing all products page. Found {} products", allProducts().size());
 		return PRODUCT_LIST_VIEW;
 	}
 

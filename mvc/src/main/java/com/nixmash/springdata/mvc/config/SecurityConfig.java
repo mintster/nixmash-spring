@@ -33,14 +33,10 @@ import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 @ComponentScan(basePackageClasses = CurrentUserDetailsService.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	// region RESOURCE LISTS
-
 	private static final String[] IGNORED_RESOURCE_LIST = new String[] { "/resources/**", "/static/**", "/webjars/**" };
 	private static final String[] PERMITALL_RESOURCE_LIST = new String[] { "/", "/login/**", "/contacts", "/json/**",
 			"/register/**", "/products/**" };
 	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/h2-console/**" };
-
-	// endregion
 
 	@Autowired
 	private UserDetailsService userDetailsService;
