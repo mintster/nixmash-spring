@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Service;
@@ -35,10 +36,6 @@ public class ProductServiceImpl implements ProductService {
 		logger.debug("Retrieving all available products where inStock:true");
 		List<Product> products = productRepo.findByAvailableTrueAndDoctype(SolrDocType.PRODUCT);
 		return products;
-		
-//		List<Product> products = productRepo.findByAvailableTrue();
-//		return products.stream().filter(p -> 
-//				p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -51,7 +48,6 @@ public class ProductServiceImpl implements ProductService {
 	public FacetPage<Product> getFacetedProductsCategory() {
 		logger.debug("Retrieving faceted products by category");
 		return productRepo.findProductCategoryFacets(new PageRequest(0, 20));
-//		return simpleProductRepo.findByFacetOnCategory();
 	}
 
 	@Override
@@ -66,18 +62,24 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProducts() {
+	public List<Product> getProductsByFilter() {
 		logger.debug("Retrieving all records and filtering out by 'doctype:product'");
 		List<Product> products = Lists.newArrayList(productRepo.findAll());
 		return products.stream().filter(p -> p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Product> getProductsByQuery() {
+	public List<Product> getProducts() {
 		logger.debug("Retrieving all products by solr @Query");
 		return productRepo.findAllProducts();
 	}
 
+	@Override
+	public Page<Product> getProductsPaged(Pageable page) {
+		logger.debug("Retrieving all products by solr @Query");
+		return productRepo.findAllProductsPaged(page);
+	}
+	
 	@Override
 	public List<Product> getProductsByStartOfName(String nameStart) {
 		logger.debug("Named Method Query -  findByNameStartingWith()");

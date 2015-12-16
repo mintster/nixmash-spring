@@ -1,7 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.CoreMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -41,7 +42,9 @@ public class SolrControllerTests extends AbstractContext {
 
 		mockProductService = mock(ProductService.class);
 		solrController = new SolrController(mockProductService);
-		mockMvc = MockMvcBuilders.standaloneSetup(solrController).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(solrController)
+				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+				.build();
 		
 		product = createProduct(1000);
 		when(mockProductService.getProduct(PRODUCT_ID)).thenReturn(product);
@@ -54,12 +57,17 @@ public class SolrControllerTests extends AbstractContext {
 	// @formatter:off
 	
 	@Test
-	public void getProducts() throws Exception {
+	public void testProductsRedirectionPage() throws Exception {
 		mockMvc.perform(get("/products"))
+			.andExpect(status().is3xxRedirection());
+	}
+
+	@Test
+	public void getPagedProducts() throws Exception {
+		mockMvc.perform(get("/products/page/1"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeExists("products"))
-			.andExpect(model().attribute("products", hasSize(allProducts.size())))
-			.andReturn();
+			.andExpect(model().attribute("products",  isA(PagedListHolder.class)));
 	}
 
 	@Test

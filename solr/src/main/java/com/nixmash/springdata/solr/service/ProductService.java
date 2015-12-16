@@ -3,6 +3,7 @@ package com.nixmash.springdata.solr.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
 
 import com.nixmash.springdata.solr.model.Product;
@@ -13,9 +14,9 @@ public interface ProductService {
 
 	Iterable<Product> getAllRecords();
 
-	List<Product> getProducts();
+	List<Product> getProductsByFilter();
 
-	List<Product> getProductsByQuery();
+	List<Product> getProducts();
 
 	Product getProduct(String Id);
 
@@ -36,5 +37,7 @@ public interface ProductService {
 	FacetPage<Product> getFacetedProductsAvailable();
 
 	FacetPage<Product> getFacetedProductsCategory();
+
+	Page<Product> getProductsPaged(Pageable page);
 
 }

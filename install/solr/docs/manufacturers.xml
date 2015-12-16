@@ -70,6 +70,12 @@
     <field name="address_s">1000 Intel Way, CA 95233</field>
     <field name="doctype">manufacturer</field>
   </doc>
+    <doc>
+    <field name="id">hp</field>
+    <field name="compName_s">Hewlett Packard</field>
+    <field name="address_s">367 Addison Ave, CA 94923</field>
+    <field name="doctype">manufacturer</field>
+  </doc>
   <doc>
     <field name="id">maxtor</field>
     <field name="compName_s">Maxtor Corporation</field>

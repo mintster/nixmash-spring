@@ -14,7 +14,6 @@ import com.nixmash.springdata.mvc.config.WebConfig;
 import com.nixmash.springdata.solr.enums.SolrConfigProfile;
 
 @SuppressWarnings("deprecation")
-// @TransactionConfiguration(defaultRollback = true)
 @ContextConfiguration(classes = { WebConfig.class, ApplicationConfig.class, SecurityConfig.class })
 @WebAppConfiguration
 @Transactional

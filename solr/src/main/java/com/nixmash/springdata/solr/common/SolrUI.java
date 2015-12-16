@@ -122,10 +122,10 @@ public class SolrUI {
 
 		case ALL_PRODUCTS:
 
-			List<Product> daProducts = service.getProducts();
+			List<Product> daProducts = service.getProductsByFilter();
 			printProducts(daProducts);
 
-			List<Product> qProducts = service.getProductsByQuery();
+			List<Product> qProducts = service.getProducts();
 			printProducts(qProducts);
 
 			break;
