@@ -17,6 +17,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Updated Solr Server to 4.10.4
 - Web display of Solr Facets
 - Web Solr Search
+- [Post: Pagination with Spring MVC, Solr, Thymeleaf and Bootstrap](http://nixmash.com/java/pagination-with-spring-mvc-solr-thymeleaf-and-bootstrap/)
 
 ##v0.2.6 -- Solr Query Samplings##
 
