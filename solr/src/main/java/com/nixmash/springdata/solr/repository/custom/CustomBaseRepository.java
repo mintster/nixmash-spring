@@ -40,4 +40,6 @@ public interface CustomBaseRepository {
 
 	List<Product> searchWithCriteria(String searchTerm);
 
+	List<Product> findProductsBySimpleQuery(String userQuery);
+
 }

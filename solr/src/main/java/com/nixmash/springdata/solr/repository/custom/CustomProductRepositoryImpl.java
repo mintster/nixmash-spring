@@ -27,10 +27,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.core.query.PartialUpdate;
+import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.SimpleStringCriteria;
 import org.springframework.stereotype.Repository;
 
+import com.nixmash.springdata.solr.enums.SolrDocType;
 import com.nixmash.springdata.solr.model.IProduct;
 import com.nixmash.springdata.solr.model.Product;
 
@@ -59,6 +61,14 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 						.setPageRequest(new PageRequest(0, 100)), Product.class);
 	}
 
+	@Override
+	public List<Product> findProductsBySimpleQuery(String userQuery) {
+		Query query = new SimpleQuery(userQuery);
+		query.addFilterQuery(new SimpleQuery(new Criteria(IProduct.DOCTYPE_FIELD).is(SolrDocType.PRODUCT)));
+		query.setRows(1000);
+		Page<Product> results = solrTemplate.queryForPage(query, Product.class);
+		return results.getContent();
+	}
 
 	@Override
 	public void updateProductCategory(String productId, List<String> categories) {

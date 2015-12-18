@@ -87,6 +87,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> getProductsWithUserQuery(String userQuery) {
+		logger.debug("SimpleQuery from user search string -  findProductsBySimpleQuery()");
+		return productRepo.findProductsBySimpleQuery(userQuery);
+	}
+
+	
+	@Override
 	public Iterable<Product> getProductsByNameOrCategory(String searchTerm) {
 		logger.debug("Using 'Product.findByNameOrCategory' named query - ('name:*?0* OR cat:*?0*')");
 		return productRepo.findByNameOrCategory(searchTerm, sortByIdDesc());

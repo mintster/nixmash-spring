@@ -36,14 +36,21 @@ public class SolrApplicationTests extends SolrContext {
 	private static final String SOLR_STRING = "solr";
 	private static final int PRODUCT_ID = 1000;
 	private static final int INITIAL_RECORD_COUNT = 55;
+	private static final int TEST_RECORD_COUNT = 10;
 
 	@Autowired
 	SolrOperations solrOperations;
 
+//	@Before
+//	public void setUp() {
+//		
+//	}
+	
 	@After
 	public void tearDown() {
 		Query query = new SimpleQuery(new SimpleStringCriteria("cat:test"));
 		solrOperations.delete(query);
+		solrOperations.commit();
 	}
 
 	@Resource
@@ -68,12 +75,23 @@ public class SolrApplicationTests extends SolrContext {
 	}
 
 	@Test
-	public void testRetrieveAllCount() {
+	public void retrieveAllRecordCount() {
 		Query query = new SimpleQuery(new SimpleStringCriteria("*:*"));
 		Page<Product> products = solrOperations.queryForPage(query, Product.class);
 		Assert.assertEquals(INITIAL_RECORD_COUNT, products.getTotalElements());
 	}
 
+	@Test
+	public void simpleQueryTest() {
+		List<Product> baseList = SolrTestUtils.createProductList(10);
+		customProductRepository.save(baseList);
+		Assert.assertEquals(baseList.size(), TEST_RECORD_COUNT);
+		Assert.assertEquals(INITIAL_RECORD_COUNT + TEST_RECORD_COUNT, customProductRepository.count());
+		
+		List<Product> productsByCategory = customProductRepository.findProductsBySimpleQuery("cat:test");
+		Assert.assertEquals(TEST_RECORD_COUNT, productsByCategory.size());
+	}
+	
 	@Test
 	public void testProductCRUD() {
 

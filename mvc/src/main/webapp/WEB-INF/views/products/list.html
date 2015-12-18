@@ -39,12 +39,7 @@
 						<tr th:each="product : ${products.pageList}">
 							<td th:text="${product.id}">1</td>
 							<td><a href="#" th:href="@{'/products/' + ${product.id}}"
-								th:text="${product.name}">[productName]</a> <!--                             <div class="form-actions pull-right">
-                                <input type="button" class="btn btn-info" th:value="#{contact.list.page.button.update}"
-                                       value="[Edit Contact]" onclick="window.location.href='contactform.html'"
-                                       th:onclick="'window.location.href=\'' + @{|/contact/update/${contact.contactId}|} + '\''"/>
-                            </div>
- --></td>
+								th:text="${product.name}">[productName]</a></td>
 						</tr>
 					</table>
 				</div>
@@ -52,46 +47,12 @@
 			</div>
 		</div>
 
-		<div class="row">
-
-			<div class="col-md-12 text-center">
-				<div class='pagination pagination-centered'>
-					<ul class="pagination">
-						<li th:class="${currentIndex == 1}? 'disabled' : ''"><span
-							th:if='${currentIndex == 1}'>First</span> <a
-							th:if='${currentIndex != 1}' th:href="@{/products/page/1}">First</a>
-						</li>
-						<li th:class="${currentIndex != 1}? '' : 'disabled'"><span
-							th:if='${currentIndex == 1}'>«</span> <a
-							th:if='${currentIndex != 1}'
-							th:href="@{|${baseUrl}${currentIndex - 1}|}"
-							title='Go to previous page'>«</a></li>
-
-						<li th:each="item : ${#numbers.sequence(beginIndex,endIndex)}"
-							th:class="${item == currentIndex ? 'active' : '' }"><span
-							th:if='${item == currentIndex}' th:text='${item}'>1</span> <a
-							th:if='${item != currentIndex}'
-							th:href="@{|${baseUrl}${item}|}"> <span
-								th:text='${item}'>1</span>
-						</a></li>
-
-						<li th:class="${currentIndex != totalPageCount}? '' : 'disabled'">
-							<span th:if='${currentIndex == totalPageCount}'>»</span> <a
-							th:if='${currentIndex != totalPageCount}'
-							th:href="@{|${baseUrl}${currentIndex + 1}|}"
-							title='Go to next page'>»</a>
-						</li>
-						<li th:class="${currentIndex == totalPageCount}? 'disabled' : ''">
-							<span th:if='${currentIndex == totalPageCount}'>Last</span> <a
-							th:if='${currentIndex != totalPageCount}'
-							th:href="@{|${baseUrl}${totalPageCount}|}">Last</a>
-						</li>
-					</ul>
-				</div>
-			</div>
+		<div th:if="${pager.totalItems > 5}" class="row">
+			<div th:replace="fragments/pagination :: [id='paginator']"
+				th:remove="tag">Pagination Control</div>
 		</div>
 
-		<nav th:replace="fragments/secinfo">User Info</nav>
+		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
 	</div>
 
 	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>

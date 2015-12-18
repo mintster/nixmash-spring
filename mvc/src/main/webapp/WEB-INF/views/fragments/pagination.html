@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div id="paginator">
+		<div class="col-md-12 text-center">
+			<div class='pagination pagination-centered'>
+				<ul class="pagination">
+					<li th:class="${pager.currentIndex == 1}? 'disabled' : ''"><span
+						th:if='${pager.currentIndex == 1}'>First</span> <a
+						th:if='${pager.currentIndex != 1}' th:href="@{/products/page/1}">First</a>
+					</li>
+					<li th:class="${pager.currentIndex != 1}? '' : 'disabled'"><span
+						th:if='${pager.currentIndex == 1}'>«</span> <a
+						th:if='${pager.currentIndex != 1}'
+						th:href="@{|${pager.baseUrl}${pager.currentIndex - 1}|}"
+						title='Go to previous page'>«</a></li>
+
+					<li th:each="item : ${#numbers.sequence(pager.beginIndex,pager.endIndex)}"
+						th:class="${item == pager.currentIndex ? 'active' : '' }"><span
+						th:if='${item == pager.currentIndex}' th:text='${item}'>1</span> <a
+						th:if='${item != pager.currentIndex}' th:href="@{|${pager.baseUrl}${item}|}">
+							<span th:text='${item}'>1</span>
+					</a></li>
+
+					<li th:class="${pager.currentIndex != pager.totalPageCount}? '' : 'disabled'">
+						<span th:if='${pager.currentIndex == pager.totalPageCount}'>»</span> <a
+						th:if='${pager.currentIndex != pager.totalPageCount}'
+						th:href="@{|${pager.baseUrl}${pager.currentIndex + 1}|}"
+						title='Go to next page'>»</a>
+					</li>
+					<li th:class="${pager.currentIndex == pager.totalPageCount}? 'disabled' : ''">
+						<span th:if='${pager.currentIndex == pager.totalPageCount}'>Last</span> <a
+						th:if='${pager.currentIndex != pager.totalPageCount}'
+						th:href="@{|${pager.baseUrl}${pager.totalPageCount}|}">Last</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

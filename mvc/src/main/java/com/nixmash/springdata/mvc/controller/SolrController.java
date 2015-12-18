@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nixmash.springdata.mvc.containers.Pager;
 import com.nixmash.springdata.solr.common.SolrUtils;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.model.ProductDTO;
@@ -31,9 +32,9 @@ public class SolrController {
 
 	private static final String MODEL_ATTRIBUTE_PRODUCTS = "products";
 	private static final String MODEL_ATTRIBUTE_PRODUCT = "product";
-	
-	public static final int PRODUCT_LIST_PAGE_SIZE = 3;
-	public static final String PRODUCT_LIST_BASEURL = "/products/page/";
+
+	private static final int PRODUCT_LIST_PAGE_SIZE = 3;
+	private static final String PRODUCT_LIST_BASEURL = "/products/page/";
 
 	private static final String PRODUCT_LIST_VIEW = "products/list";
 	private static final String PRODUCT_VIEW = "products/view";
@@ -50,14 +51,11 @@ public class SolrController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/products/page/{pageNumber}", 
-		method = RequestMethod.GET)
-	public String showPagedProductsPage(HttpServletRequest request, 
-			@PathVariable Integer pageNumber, Model uiModel) {
+	@RequestMapping(value = "/products/page/{pageNumber}", method = RequestMethod.GET)
+	public String pagedProductsPage(HttpServletRequest request, @PathVariable Integer pageNumber, Model uiModel) {
 
 		logger.info("Showing paged products page # {}", pageNumber);
-		PagedListHolder<?> pagedListHolder = 
-				(PagedListHolder<?>) request.getSession().getAttribute("productList");
+		PagedListHolder<?> pagedListHolder = (PagedListHolder<?>) request.getSession().getAttribute("productList");
 
 		if (pagedListHolder == null) {
 
@@ -74,17 +72,22 @@ public class SolrController {
 
 		request.getSession().setAttribute("productList", pagedListHolder);
 
-		int current = pagedListHolder.getPage() + 1;
-		int begin = Math.max(1, current - PRODUCT_LIST_PAGE_SIZE);
-		int end = Math.min(begin + 5, pagedListHolder.getPageCount());
+		int currentIndex = pagedListHolder.getPage() + 1;
+		int beginIndex = Math.max(1, currentIndex - PRODUCT_LIST_PAGE_SIZE);
+		int endIndex = Math.min(beginIndex + 5, pagedListHolder.getPageCount());
 		int totalPageCount = pagedListHolder.getPageCount();
+		int totalItems = pagedListHolder.getNrOfElements();
 		String baseUrl = PRODUCT_LIST_BASEURL;
 
-		uiModel.addAttribute("beginIndex", begin);
-		uiModel.addAttribute("endIndex", end);
-		uiModel.addAttribute("currentIndex", current);
-		uiModel.addAttribute("totalPageCount", totalPageCount);
-		uiModel.addAttribute("baseUrl", baseUrl);
+		Pager pager = new Pager();
+		pager.setBeginIndex(beginIndex);
+		pager.setEndIndex(endIndex);
+		pager.setCurrentIndex(currentIndex);
+		pager.setTotalPageCount(totalPageCount);
+		pager.setTotalItems(totalItems);
+		pager.setBaseUrl(baseUrl);
+
+		uiModel.addAttribute("pager", pager);
 		uiModel.addAttribute(MODEL_ATTRIBUTE_PRODUCTS, pagedListHolder);
 
 		return PRODUCT_LIST_VIEW;

@@ -41,7 +41,6 @@ public class SimpleProductRepository extends SimpleSolrRepository<Product, Strin
 
 	}
 	
-
 	@Override
 	public FacetPage<Product> findByFacetOnCategory() {
 		

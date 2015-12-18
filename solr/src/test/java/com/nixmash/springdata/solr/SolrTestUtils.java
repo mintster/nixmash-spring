@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.nixmash.springdata.solr.enums.SolrDocType;
 import com.nixmash.springdata.solr.model.Product;
 
 /**
@@ -51,6 +52,7 @@ public abstract class SolrTestUtils {
 		product.setCategories(categories);
 		product.setPrice((float) id * 100);
 		product.setWeight((float) id * 2);
+		product.setDoctype(SolrDocType.PRODUCT);
 		return product;
 	}
 }

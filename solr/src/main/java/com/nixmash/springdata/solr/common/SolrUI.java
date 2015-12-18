@@ -42,14 +42,14 @@ public class SolrUI {
 		CRITERIA_SEARCH,
 		ANNOTATED_QUERY,
 		FACET_ON_AVAILABLE,
-		FACET_ON_CATEGORY
-		
+		FACET_ON_CATEGORY,
+		USER_SIMPLE_QUERY
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.FACET_ON_CATEGORY;
+		DEMO demo = DEMO.USER_SIMPLE_QUERY;
 		
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
@@ -65,6 +65,13 @@ public class SolrUI {
 
 		switch (demo) {
 
+		case USER_SIMPLE_QUERY:
+//			List<Product> usqProducts = service.getProductsWithUserQuery("name:memory AND name:corsair) AND popularity:[6 TO *]");
+//			List<Product> usqProducts = service.getProductsWithUserQuery("name:Western+Digital AND inStock:TRUE");
+			List<Product> usqProducts = service.getProductsWithUserQuery("cat:memory");
+			printProducts(usqProducts);
+			break;
+		
 		case FACET_ON_AVAILABLE:
 
 			FacetPage<Product> avfacetPage = service.getFacetedProductsAvailable();
@@ -167,7 +174,7 @@ public class SolrUI {
 	private void printProducts(Iterable<? extends Product> products) {
 		int i = 0;
 		for (Product product : products) {
-			System.out.println(product.getName());
+			System.out.println(product.getName() + " | Popularity: " + product.getPopularity());
 			i++;
 		}
 		System.out.println("\nTOTAL RECORDS: " + i);

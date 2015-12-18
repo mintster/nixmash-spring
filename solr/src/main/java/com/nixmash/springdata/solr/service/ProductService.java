@@ -40,4 +40,6 @@ public interface ProductService {
 
 	Page<Product> getProductsPaged(Pageable page);
 
+	List<Product> getProductsWithUserQuery(String userQuery);
+
 }
