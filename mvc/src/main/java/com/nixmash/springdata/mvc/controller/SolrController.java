@@ -30,8 +30,10 @@ public class SolrController {
 	private static final Logger logger = LoggerFactory.getLogger(SolrController.class);
 
 	private static final String MODEL_ATTRIBUTE_PRODUCTS = "products";
-	private static final String MODEL_ATTRIBUTE_PAGED_PRODUCTS = "paged_products";
 	private static final String MODEL_ATTRIBUTE_PRODUCT = "product";
+	
+	public static final int PRODUCT_LIST_PAGE_SIZE = 3;
+	public static final String PRODUCT_LIST_BASEURL = "/products/page/";
 
 	private static final String PRODUCT_LIST_VIEW = "products/list";
 	private static final String PRODUCT_VIEW = "products/view";
@@ -48,16 +50,19 @@ public class SolrController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/products/page/{pageNumber}", method = RequestMethod.GET)
-	public String showPagedProductsPage(HttpServletRequest request, @PathVariable Integer pageNumber, Model uiModel) {
+	@RequestMapping(value = "/products/page/{pageNumber}", 
+		method = RequestMethod.GET)
+	public String showPagedProductsPage(HttpServletRequest request, 
+			@PathVariable Integer pageNumber, Model uiModel) {
 
 		logger.info("Showing paged products page # {}", pageNumber);
-		PagedListHolder<?> pagedListHolder = (PagedListHolder<?>) request.getSession().getAttribute("productList");
+		PagedListHolder<?> pagedListHolder = 
+				(PagedListHolder<?>) request.getSession().getAttribute("productList");
 
 		if (pagedListHolder == null) {
 
 			pagedListHolder = new PagedListHolder(productService.getProducts());
-			pagedListHolder.setPageSize(3);
+			pagedListHolder.setPageSize(PRODUCT_LIST_PAGE_SIZE);
 
 		} else {
 
@@ -69,13 +74,11 @@ public class SolrController {
 
 		request.getSession().setAttribute("productList", pagedListHolder);
 
-		// Pagination variables
-
 		int current = pagedListHolder.getPage() + 1;
-		int begin = Math.max(1, current - 3);
+		int begin = Math.max(1, current - PRODUCT_LIST_PAGE_SIZE);
 		int end = Math.min(begin + 5, pagedListHolder.getPageCount());
 		int totalPageCount = pagedListHolder.getPageCount();
-		String baseUrl = "/products/page/";
+		String baseUrl = PRODUCT_LIST_BASEURL;
 
 		uiModel.addAttribute("beginIndex", begin);
 		uiModel.addAttribute("endIndex", end);
