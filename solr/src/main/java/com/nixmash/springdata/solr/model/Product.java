@@ -30,6 +30,9 @@ public class Product implements IProduct {
 	@Field(NAME_FIELD)
 	private String name;
 
+	@Field(FEATURE_FIELD)
+	private List<String> features;
+
 	@Field(CATEGORY_FIELD)
 	private List<String> categories;
 
@@ -48,6 +51,13 @@ public class Product implements IProduct {
 	@Field(DOCTYPE_FIELD)
 	private String doctype;
 
+
+	public Product() {};
+	
+	public Product(String name) {
+		setName(name);
+	}
+	
 	public String getId() {
 		return id;
 	}

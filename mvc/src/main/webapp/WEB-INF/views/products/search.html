@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:include="fragments/head :: head" th:remove="tag">Global
+	Header</div>
+<title th:text="#{product.search.page.title}"></title>
+</head>
+<body>
+	<nav th:replace="fragments/navbar :: navbar('contacts')">Navbar</nav>
+
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+					<h1 th:text="#{product.search.page.header}">[Search Products]</h1>
+
+					<p class="lead" th:text="#{product.search.page.subheader}">[Search
+						Contacts by Last Name]</p>
+				</div>
+				<div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
+					Image</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="container bs-docs-container">
+		<div class="row">
+			<div class="bs-docs-section">
+				<form th:object="${userQuery}" action="/products/list.html"
+					th:action="@{/products/list}" method="get" class="form-horizontal"
+					id="search-product-form">
+					<table class="table table-striped">
+						<tr th:classappend="${#fields.hasErrors('query')} ? 'has-error'">
+							<td class="col-sm-1">
+								<div class="control-group"
+									th:classappend="${#fields.hasErrors('query')} ? 'error'">
+									<label class="control-label">Search Query</label>
+								</div>
+							</td>
+							<td class="col-sm-2">
+								<div class="controls">
+									<input type="text" class="form-control" name="query" size="30"
+										maxlength="80" />
+								</div>
+								<div class="controls" th:if="${#fields.hasErrors('query')}">
+									<h4>
+										<span class="label label-danger" th:errors="*{query}">[Errors]</span>
+									</h4>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<div class="form-actions pull-right">
+									<button type="submit" class="btn btn-success">Search
+										Products</button>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<blockquote>
+				<p>This Demo supports full Solr Search Syntax. Working samples include:</p>
+				<small>inStock:TRUE</small>
+				<small>cat:memory</small>
+				<small>name:Western+Digital AND inStock:FALSE</small>
+				<small>popularity:7</small>
+				<small>(name:memory AND name:corsair) AND popularity:[6 TO *]</small>
+			</blockquote>
+		</div>
+		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+	</div>
+
+	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+</body>
+</html>
+
+
+

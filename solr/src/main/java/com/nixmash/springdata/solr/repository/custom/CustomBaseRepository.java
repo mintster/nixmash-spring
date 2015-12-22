@@ -18,6 +18,7 @@ package com.nixmash.springdata.solr.repository.custom;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.solr.UncategorizedSolrException;
 
 import com.nixmash.springdata.solr.model.Product;
 
@@ -40,6 +41,6 @@ public interface CustomBaseRepository {
 
 	List<Product> searchWithCriteria(String searchTerm);
 
-	List<Product> findProductsBySimpleQuery(String userQuery);
+	List<Product> findProductsBySimpleQuery(String userQuery) throws UncategorizedSolrException;
 
 }

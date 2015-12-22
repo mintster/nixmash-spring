@@ -63,9 +63,12 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 
 	@Override
 	public List<Product> findProductsBySimpleQuery(String userQuery) {
+		
 		Query query = new SimpleQuery(userQuery);
-		query.addFilterQuery(new SimpleQuery(new Criteria(IProduct.DOCTYPE_FIELD).is(SolrDocType.PRODUCT)));
+		query.addFilterQuery(new 
+				SimpleQuery(new Criteria(IProduct.DOCTYPE_FIELD).is(SolrDocType.PRODUCT)));
 		query.setRows(1000);
+		
 		Page<Product> results = solrTemplate.queryForPage(query, Product.class);
 		return results.getContent();
 	}

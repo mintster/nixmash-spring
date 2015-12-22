@@ -33,26 +33,26 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAvailableProducts() {
-		logger.debug("Retrieving all available products where inStock:true");
+		logger.info("Retrieving all available products where inStock:true");
 		List<Product> products = productRepo.findByAvailableTrueAndDoctype(SolrDocType.PRODUCT);
 		return products;
 	}
 
 	@Override
 	public FacetPage<Product> getFacetedProductsAvailable() {
-		logger.debug("Retrieving faceted products by available");
+		logger.info("Retrieving faceted products by available");
 		return simpleProductRepo.findByFacetOnAvailable();
 	}
 
 	@Override
 	public FacetPage<Product> getFacetedProductsCategory() {
-		logger.debug("Retrieving faceted products by category");
+		logger.info("Retrieving faceted products by category");
 		return productRepo.findProductCategoryFacets(new PageRequest(0, 20));
 	}
 
 	@Override
 	public Iterable<Product> getAllRecords() {
-		logger.debug("Retrieving all records in index");
+		logger.info("Retrieving all records in index");
 		return simpleProductRepo.findAll();
 	}
 
@@ -63,51 +63,50 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getProductsByFilter() {
-		logger.debug("Retrieving all records and filtering out by 'doctype:product'");
+		logger.info("Retrieving all records and filtering out by 'doctype:product'");
 		List<Product> products = Lists.newArrayList(productRepo.findAll());
 		return products.stream().filter(p -> p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Product> getProducts() {
-		logger.debug("Retrieving all products by solr @Query");
+		logger.info("Retrieving all products by solr @Query");
 		return productRepo.findAllProducts();
 	}
 
 	@Override
 	public Page<Product> getProductsPaged(Pageable page) {
-		logger.debug("Retrieving all products by solr @Query");
+		logger.info("Retrieving all products by solr @Query");
 		return productRepo.findAllProductsPaged(page);
 	}
-	
+
 	@Override
 	public List<Product> getProductsByStartOfName(String nameStart) {
-		logger.debug("Named Method Query -  findByNameStartingWith()");
+		logger.info("Named Method Query -  findByNameStartingWith()");
 		return productRepo.findByNameStartingWith(nameStart);
 	}
 
 	@Override
 	public List<Product> getProductsWithUserQuery(String userQuery) {
-		logger.debug("SimpleQuery from user search string -  findProductsBySimpleQuery()");
-		return productRepo.findProductsBySimpleQuery(userQuery);
+		logger.info("SimpleQuery from user search string -  findProductsBySimpleQuery()");
+			return productRepo.findProductsBySimpleQuery(userQuery);
 	}
 
-	
 	@Override
 	public Iterable<Product> getProductsByNameOrCategory(String searchTerm) {
-		logger.debug("Using 'Product.findByNameOrCategory' named query - ('name:*?0* OR cat:*?0*')");
+		logger.info("Using 'Product.findByNameOrCategory' named query - ('name:*?0* OR cat:*?0*')");
 		return productRepo.findByNameOrCategory(searchTerm, sortByIdDesc());
 	}
 
 	@Override
 	public List<Product> getProductsByNameOrCategoryAnnotatedQuery(String searchTerm) {
-		logger.debug("Using annotated @query  - ('(name:*?0* OR cat:*?0*) AND doctype:product'");
+		logger.info("Using annotated @query  - ('(name:*?0* OR cat:*?0*) AND doctype:product'");
 		return productRepo.findByAnnotatedQuery(searchTerm, sortByIdDesc());
 	}
 
 	@Override
 	public Page<Product> getProductsByPopularity(int popularity) {
-		logger.debug("Using JPA Method Name Query - findByPopularityGreaterThanEqual()");
+		logger.info("Using JPA Method Name Query - findByPopularityGreaterThanEqual()");
 		return productRepo.findByPopularityGreaterThanEqual(popularity, new PageRequest(0, 10));
 	}
 

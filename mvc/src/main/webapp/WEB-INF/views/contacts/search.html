@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-    <title th:text="#{search.page.title}"></title>
+    <title th:text="#{contact.search.page.title}"></title>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('contacts')">Navbar</nav>
@@ -11,9 +11,9 @@
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="#{search.page.header}">[Search Contacts]</h1>
+                <h1 th:text="#{contact.search.page.header}">[Search Contacts]</h1>
 
-                <p class="lead" th:text="#{search.page.subheader}">[Search Contacts by Last Name]</p>
+                <p class="lead" th:text="#{contact.search.page.subheader}">[Search Contacts by Last Name]</p>
             </div>
             <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
 

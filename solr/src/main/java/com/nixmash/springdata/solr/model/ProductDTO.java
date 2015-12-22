@@ -23,6 +23,7 @@ public class ProductDTO implements Serializable {
 	private String id;
 	private String name;
 	private List<String> categories;
+	private List<String> features;
 	private Float weight;
 	private Float price;
 	private Integer popularity;
@@ -95,8 +96,16 @@ public class ProductDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", weight=" + weight + ", price="
+		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", features =" + features +  ", weight=" + weight + ", price="
 				+ price + ", popularity=" + popularity + ", available=" + available + ", doctype=" + doctype + "]";
+	}
+
+	public List<String> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(List<String> features) {
+		this.features = features;
 	}
 
 }

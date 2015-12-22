@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -20,6 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
+import com.nixmash.springdata.solr.service.ProductService;
 
 /**
  * 
@@ -41,11 +43,11 @@ public class SolrApplicationTests extends SolrContext {
 	@Autowired
 	SolrOperations solrOperations;
 
-//	@Before
-//	public void setUp() {
-//		
-//	}
-	
+	// @Before
+	// public void setUp() {
+	//
+	// }
+
 	@After
 	public void tearDown() {
 		Query query = new SimpleQuery(new SimpleStringCriteria("cat:test"));
@@ -55,6 +57,32 @@ public class SolrApplicationTests extends SolrContext {
 
 	@Resource
 	CustomProductRepository customProductRepository;
+
+	@Autowired
+	private ProductService productService;
+	
+	@Test
+	public void badSimpleQueryThrowsUncategorizedSolrException() {
+		int i = 0;
+		try {
+			productService.getProductsWithUserQuery("bad:field");
+		} catch (Exception ex) {
+			i++;
+			Assert.assertTrue(ex instanceof UncategorizedSolrException);
+		}
+		try {
+			productService.getProductsWithUserQuery("bad::format");
+		} catch (UncategorizedSolrException ex) {
+			i++;
+			Assert.assertTrue(ex instanceof UncategorizedSolrException);
+		}
+		try {
+			productService.getProductsWithUserQuery("name:goodQuery");
+		} catch (UncategorizedSolrException ex) {
+			i++;
+		}
+		Assert.assertEquals(2, i);
+	}
 
 	@Test
 	public void testCustomQueries() {
@@ -87,11 +115,11 @@ public class SolrApplicationTests extends SolrContext {
 		customProductRepository.save(baseList);
 		Assert.assertEquals(baseList.size(), TEST_RECORD_COUNT);
 		Assert.assertEquals(INITIAL_RECORD_COUNT + TEST_RECORD_COUNT, customProductRepository.count());
-		
+
 		List<Product> productsByCategory = customProductRepository.findProductsBySimpleQuery("cat:test");
 		Assert.assertEquals(TEST_RECORD_COUNT, productsByCategory.size());
 	}
-	
+
 	@Test
 	public void testProductCRUD() {
 

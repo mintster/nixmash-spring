@@ -7,6 +7,7 @@ public interface IProduct {
 	String PRICE_FIELD = "price";
 	String AVAILABLE_FIELD = "inStock";
 	String CATEGORY_FIELD = "cat";
+	String FEATURE_FIELD = "features";
 	String WEIGHT_FIELD = "weight";
 	String POPULARITY_FIELD = "popularity";
 	String DOCTYPE_FIELD = "doctype";

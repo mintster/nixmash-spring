@@ -62,7 +62,7 @@ bootRun {
 //            { it.name == "springloaded-1.2.4.RELEASE.jar" }
 
     systemProperty 'server.port', '8084'
-    systemProperty 'spring.profiles.active', 'h2,dev'
+    systemProperty 'spring.profiles.active', 'h2,prod'
 //    jvmArgs "-javaagent:$springLoadedFile", "-noverify"
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }

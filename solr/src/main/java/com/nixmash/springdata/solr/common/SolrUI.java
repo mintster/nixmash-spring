@@ -43,13 +43,13 @@ public class SolrUI {
 		ANNOTATED_QUERY,
 		FACET_ON_AVAILABLE,
 		FACET_ON_CATEGORY,
-		USER_SIMPLE_QUERY
+		SIMPLE_QUERY
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.USER_SIMPLE_QUERY;
+		DEMO demo = DEMO.SIMPLE_QUERY;
 		
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
@@ -65,10 +65,12 @@ public class SolrUI {
 
 		switch (demo) {
 
-		case USER_SIMPLE_QUERY:
+		case SIMPLE_QUERY:
 //			List<Product> usqProducts = service.getProductsWithUserQuery("name:memory AND name:corsair) AND popularity:[6 TO *]");
 //			List<Product> usqProducts = service.getProductsWithUserQuery("name:Western+Digital AND inStock:TRUE");
-			List<Product> usqProducts = service.getProductsWithUserQuery("cat:memory");
+//			List<Product> usqProducts = service.getProductsWithUserQuery("cat:memory");
+//			List<Product> usqProducts = service.getProductsWithUserQuery("features::printer");
+			List<Product> usqProducts = service.getProductsWithUserQuery("inStock:true");
 			printProducts(usqProducts);
 			break;
 		
@@ -173,6 +175,7 @@ public class SolrUI {
 
 	private void printProducts(Iterable<? extends Product> products) {
 		int i = 0;
+		System.out.println("");
 		for (Product product : products) {
 			System.out.println(product.getName() + " | Popularity: " + product.getPopularity());
 			i++;
