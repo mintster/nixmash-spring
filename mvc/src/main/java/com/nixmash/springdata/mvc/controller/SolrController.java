@@ -96,7 +96,8 @@ public class SolrController {
 	}
 
 	@RequestMapping(value = "/products/list", method = RequestMethod.GET)
-	public String processFindForm(UserQuery userQuery, BindingResult result, Model model, HttpServletRequest request) {
+	public String processFindForm(UserQuery userQuery, 
+			BindingResult result, Model model, HttpServletRequest request) {
 		List<Product> results = null;
 
 		if (StringUtils.isEmpty(userQuery.getQuery())) {
@@ -106,7 +107,8 @@ public class SolrController {
 				results = this.productService.getProductsWithUserQuery(userQuery.getQuery());
 			} catch (UncategorizedSolrException ex) {
 				logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
-				result.rejectValue("query", "product.search.error", new Object[] { userQuery.getQuery() }, "not found");
+				result.rejectValue("query", "product.search.error", 
+						new Object[] { userQuery.getQuery() }, "not found");
 				return PRODUCT_SEARCH_VIEW;
 			}
 

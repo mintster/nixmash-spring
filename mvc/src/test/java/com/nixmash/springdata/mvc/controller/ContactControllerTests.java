@@ -1,14 +1,34 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.nixmash.springdata.jpa.dto.ContactDTO;
-import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
-import com.nixmash.springdata.jpa.model.Contact;
-import com.nixmash.springdata.jpa.model.ContactTestUtils;
-import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
-import com.nixmash.springdata.jpa.service.ContactService;
-import com.nixmash.springdata.mvc.AbstractContext;
-import com.nixmash.springdata.mvc.MvcTestUtil;
-import com.nixmash.springdata.mvc.common.WebUI;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,13 +39,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.StaticApplicationContext;
-import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -40,20 +58,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import org.springframework.web.servlet.view.InternalResourceView;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import com.nixmash.springdata.jpa.dto.ContactDTO;
+import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
+import com.nixmash.springdata.jpa.model.Contact;
+import com.nixmash.springdata.jpa.model.ContactTestUtils;
+import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
+import com.nixmash.springdata.jpa.service.ContactService;
+import com.nixmash.springdata.mvc.AbstractContext;
+import com.nixmash.springdata.mvc.MvcTestUtil;
+import com.nixmash.springdata.mvc.common.WebUI;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -198,7 +211,7 @@ public class ContactControllerTests extends AbstractContext {
                 .andExpect(model()
                         .attributeHasFieldErrorCode("contact",
                                 "lastName",
-                                "search.contact.notfound"))
+                                "contact.search.notfound"))
                 .andExpect(view().name("contacts/search"));
 
 

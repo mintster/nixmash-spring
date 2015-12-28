@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.view.InternalResourceView;
 
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.solr.model.Product;
@@ -29,13 +31,15 @@ import com.nixmash.springdata.solr.service.ProductService;
 public class SolrControllerTests extends AbstractContext {
 
 	private static final String PRODUCT_ID = "LOMAX7";
+
+	private ProductService mockProductService;
 	private SolrController solrController;
 	private MockMvc mockMvc;
 	private List<Product> allProducts;
 	private Product product;
 
 	@Autowired
-	private ProductService mockProductService;
+	private ProductService productService;
 
 	@Before
 	public void setUp() {
@@ -43,9 +47,8 @@ public class SolrControllerTests extends AbstractContext {
 		mockProductService = mock(ProductService.class);
 		solrController = new SolrController(mockProductService);
 		mockMvc = MockMvcBuilders.standaloneSetup(solrController)
-				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-				.build();
-		
+				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
+
 		product = createProduct(1000);
 		when(mockProductService.getProduct(PRODUCT_ID)).thenReturn(product);
 
@@ -78,8 +81,26 @@ public class SolrControllerTests extends AbstractContext {
 			.andExpect(model().attribute("product", product));
 	}
 
+	   @Test
+	    public void badSimplyQueryShouldDisplayError() throws Exception {
+		   
+	       mockMvc = standaloneSetup(new SolrController(productService))
+	                .setSingleView(
+	                        new InternalResourceView("/WEB-INF/views/products/list.html"))
+	                .build();
+
+		   mockMvc.perform(get("/products/list").param("query", "name1:memory"))
+           .andExpect(status().isOk())
+           .andExpect(model()
+                   .attributeHasFieldErrorCode("userQuery",
+                           "query",
+                           "product.search.error"))
+           .andExpect(view().name("products/search"));
+
+	    }
+	   
 	// @formatter:on
-	
+
 	private Product createProduct(int id) {
 		Product product = new Product();
 		product.setId(Integer.toString(id));
