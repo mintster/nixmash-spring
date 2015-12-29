@@ -17,8 +17,11 @@ import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.SimpleStringCriteria;
+import org.springframework.data.solr.core.query.result.FacetFieldEntry;
+import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.nixmash.springdata.solr.enums.SolrProductField;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
 import com.nixmash.springdata.solr.service.ProductService;
@@ -38,6 +41,7 @@ public class SolrApplicationTests extends SolrContext {
 	private static final String SOLR_STRING = "solr";
 	private static final int PRODUCT_ID = 1000;
 	private static final int INITIAL_RECORD_COUNT = 55;
+	private static final int INITIAL_CATEGORY_COUNT = 11;
 	private static final int TEST_RECORD_COUNT = 10;
 
 	@Autowired
@@ -60,7 +64,7 @@ public class SolrApplicationTests extends SolrContext {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Test
 	public void badSimpleQueryThrowsUncategorizedSolrException() {
 		int i = 0;
@@ -100,6 +104,21 @@ public class SolrApplicationTests extends SolrContext {
 		Assert.assertEquals(1, popularProducts.getTotalElements());
 		Assert.assertEquals(Integer.toString(PRODUCT_ID), popularProducts.getContent().get(0).getId());
 
+	}
+
+	@Test
+	public void testFacetQuery() {
+
+		FacetPage<Product> facetPage = customProductRepository.findProductCategoryFacets(new PageRequest(0, 100));
+		 Assert.assertEquals(customProductRepository.findAllProducts().size(), facetPage.getNumberOfElements());
+
+		Page<FacetFieldEntry> page = facetPage.getFacetResultPage(SolrProductField.CATEGORY);
+		Assert.assertEquals(INITIAL_CATEGORY_COUNT, page.getNumberOfElements());
+
+		for (FacetFieldEntry entry : page) {
+			 Assert.assertEquals(SolrProductField.CATEGORY.getName(), entry.getField().getName());
+			Assert.assertEquals(customProductRepository.findByCategory(entry.getValue()).size(), entry.getValueCount());
+		}
 	}
 
 	@Test

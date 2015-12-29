@@ -1,5 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
+import static java.lang.Math.toIntExact;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.text.MessageFormat;
@@ -12,7 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Page;
 import org.springframework.data.solr.UncategorizedSolrException;
+import org.springframework.data.solr.core.query.result.FacetFieldEntry;
+import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nixmash.springdata.mvc.containers.Pager;
+import com.nixmash.springdata.mvc.containers.ProductCategory;
 import com.nixmash.springdata.mvc.containers.UserQuery;
 import com.nixmash.springdata.solr.common.SolrUtils;
 import com.nixmash.springdata.solr.model.Product;
@@ -44,11 +49,14 @@ public class SolrController {
 
 	private static final String PRODUCT_LIST_VIEW = "products/list";
 	private static final String PRODUCT_SEARCH_VIEW = "products/search";
+	private static final String PRODUCT_CATEGORIES_VIEW = "products/categories";
 	private static final String PRODUCT_VIEW = "products/view";
 
 	private static final String MODEL_ATTRIBUTE_PAGER = "pager";
 
 	private static final String SESSION_ATTRIBUTE_PRODUCTLIST = "productList";
+
+	private static final String MODEL_ATTRIBUTE_PRODUCTCATEGORIES = "productCategories";
 
 	@Autowired
 	public SolrController(ProductService productService) {
@@ -95,6 +103,21 @@ public class SolrController {
 		return PRODUCT_SEARCH_VIEW;
 	}
 
+
+	@RequestMapping(value = "/products/categories", method = RequestMethod.GET)
+	public String productCategories(Model model) {
+		FacetPage<Product> catfacetPage = productService.getFacetedProductsCategory();
+		Page<FacetFieldEntry> catPage = 
+				catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
+
+		List<ProductCategory> results = new ArrayList<ProductCategory>();
+		for (FacetFieldEntry entry : catPage) {
+			results.add(new ProductCategory(entry.getValue(), toIntExact(entry.getValueCount())));
+		}
+		model.addAttribute(MODEL_ATTRIBUTE_PRODUCTCATEGORIES, results);
+		return PRODUCT_CATEGORIES_VIEW;
+	}
+
 	@RequestMapping(value = "/products/list", method = RequestMethod.GET)
 	public String processFindForm(UserQuery userQuery, 
 			BindingResult result, Model model, HttpServletRequest request) {
@@ -104,7 +127,7 @@ public class SolrController {
 			return "redirect:/products/search";
 		} else
 			try {
-				results = this.productService.getProductsWithUserQuery(userQuery.getQuery());
+				results = productService.getProductsWithUserQuery(userQuery.getQuery());
 			} catch (UncategorizedSolrException ex) {
 				logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
 				result.rejectValue("query", "product.search.error", 

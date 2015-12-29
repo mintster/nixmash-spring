@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:include="fragments/head :: head" th:remove="tag">Global
+	Header</div>
+<title th:text="#{product.categories.page.title}">[NixMash Spring
+	Products by Category]</title>
+</head>
+<body>
+	<nav th:replace="fragments/navbar :: navbar('products')">Navbar</nav>
+
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+					<h1 th:text="#{product.categories.page.header}">[Products by Category]</h1>
+
+					<p class="lead" th:text="#{product.categories.page.subheader}">[Solr Facet Demo]</p>
+				</div>
+				<div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
+					Image</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="container bs-docs-container">
+		<div class="row">
+			<div class="bs-docs-section">
+				<div id="message-holder">
+					<div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
+						th:text="${feedbackMessage}"></div>
+				</div>
+
+				<div id="grid-table">
+					<table class="table table-striped table-bordered table-hover">
+						<tr th:each="productCategory : ${productCategories}">
+							<td th:text="${productCategory.category}">[Category]</td>
+							<td><a href="#" th:href="@{'/products/category/' + ${productCategory.category}}"
+								th:text="${productCategory.productCount}">[productCount]</a></td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+		</div>
+
+
+		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+	</div>
+
+	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+	<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+</body>
+</html>
+
+
+

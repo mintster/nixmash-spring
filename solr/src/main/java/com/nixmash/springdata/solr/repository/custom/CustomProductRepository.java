@@ -55,6 +55,9 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	@Query(name = "Product.findByNameOrCategory")
 	public List<Product> findByNameOrCategory(String searchTerm, Sort sort);
 
+	@Query("cat:*?0* AND doctype:product")
+	public List<Product> findByCategory(String category);
+
 	@Query("(name:*?0* OR cat:*?0*) AND doctype:product")
 	public List<Product> findByAnnotatedQuery(String searchTerm, Sort sort);
 

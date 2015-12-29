@@ -49,7 +49,7 @@ public class SolrUI {
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.SIMPLE_QUERY;
+		DEMO demo = DEMO.FACET_ON_CATEGORY;
 		
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))

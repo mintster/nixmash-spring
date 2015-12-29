@@ -18,6 +18,9 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Web display of Solr Facets
 - Web Solr Search
 - [Post: Pagination with Spring MVC, Solr, Thymeleaf and Bootstrap](http://nixmash.com/java/pagination-with-spring-mvc-solr-thymeleaf-and-bootstrap/)
+- [Post: Testing for Bad Solr Query Strings](http://nixmash.com/java/testing-for-bad-solr-query-strings/)
+
+![Solr Search in v0.2.7](http://nixmash.com/x/pics/github/spring-data-0.2.7.png)
 
 ##v0.2.6 -- Solr Query Samplings##
 
