@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import org.springframework.data.solr.core.query.result.FacetFieldEntry;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +43,9 @@ public class SolrController {
 	private static final String MODEL_ATTRIBUTE_PRODUCTS = "products";
 	private static final String MODEL_ATTRIBUTE_PRODUCT = "product";
 	private static final String MODEL_ATTRIBUTE_USERQUERY = "userQuery";
+	private static final String MODEL_ATTRIBUTE_PAGER = "pager";
+	private static final String MODEL_ATTRIBUTE_PRODUCTCATEGORIES = "productCategories";
+	private static final String MODEL_ATTRIBUTE_CATEGORY = "category";
 
 	private static final int PRODUCT_LIST_PAGE_SIZE = 5;
 	private static final String PRODUCT_LIST_BASEURL = "/products/page/";
@@ -51,12 +54,12 @@ public class SolrController {
 	private static final String PRODUCT_SEARCH_VIEW = "products/search";
 	private static final String PRODUCT_CATEGORIES_VIEW = "products/categories";
 	private static final String PRODUCT_VIEW = "products/view";
-
-	private static final String MODEL_ATTRIBUTE_PAGER = "pager";
+	private static final String PRODUCTS_BYCATEGORY_VIEW = "products/category";
 
 	private static final String SESSION_ATTRIBUTE_PRODUCTLIST = "productList";
 
-	private static final String MODEL_ATTRIBUTE_PRODUCTCATEGORIES = "productCategories";
+
+
 
 	@Autowired
 	public SolrController(ProductService productService) {
@@ -118,6 +121,18 @@ public class SolrController {
 		return PRODUCT_CATEGORIES_VIEW;
 	}
 
+	@RequestMapping(value = "/products/categories/{category}", method = GET)
+	public String productByCategory(@PathVariable("category") String category, Model model) {
+		logger.info("Showing product page for category: {}", category);
+
+		List<Product> found = productService.getProductsByCategory(category);
+		logger.info("Found {} products for category: {}", found.size(), category);
+
+		model.addAttribute(MODEL_ATTRIBUTE_CATEGORY, StringUtils.capitalize(category));
+		model.addAttribute(MODEL_ATTRIBUTE_PRODUCTS, found);
+		return PRODUCTS_BYCATEGORY_VIEW;
+	}
+	
 	@RequestMapping(value = "/products/list", method = RequestMethod.GET)
 	public String processFindForm(UserQuery userQuery, 
 			BindingResult result, Model model, HttpServletRequest request) {

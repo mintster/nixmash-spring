@@ -9,14 +9,14 @@
 
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%.-1level||TEST|%-30.30logger{0}|%msg%n</pattern>
+			<pattern>%.-1level|MVC|%-30.30logger{0}|%msg%n</pattern>
 		</encoder>
 	</appender>
 
-	<logger name="com.nixmash.springdata.mvc" level="OFF" />
+	<logger name="com.nixmash.springdata.mvc" level="INFO" />
 	<logger name="org.thymeleaf" level="OFF" />
 	<logger name="org.hibernate" level="OFF" />
-	<logger name="org.springframework" level="OFF" />
+	<logger name="org.springframework" level="info" />
 
 	<root level="OFF">
 		<appender-ref ref="console" />

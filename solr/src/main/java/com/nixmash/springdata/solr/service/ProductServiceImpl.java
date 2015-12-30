@@ -51,6 +51,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> getProductsByCategory(String category) {
+		logger.info("Retrieving products by category: {}", category);
+		return productRepo.findByCategory(category);
+	}
+
+	
+	@Override
 	public Iterable<Product> getAllRecords() {
 		logger.info("Retrieving all records in index");
 		return simpleProductRepo.findAll();

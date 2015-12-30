@@ -42,4 +42,6 @@ public interface ProductService {
 
 	List<Product> getProductsWithUserQuery(String userQuery);
 
+	List<Product> getProductsByCategory(String category);
+
 }
