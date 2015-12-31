@@ -44,7 +44,7 @@ public class SolrController {
 	private static final String MODEL_ATTRIBUTE_PRODUCT = "product";
 	private static final String MODEL_ATTRIBUTE_USERQUERY = "userQuery";
 	private static final String MODEL_ATTRIBUTE_PAGER = "pager";
-	private static final String MODEL_ATTRIBUTE_PRODUCTCATEGORIES = "productCategories";
+	private static final String MODEL_ATTRIBUTE_PRODUCT_CATEGORIES = "productCategories";
 	private static final String MODEL_ATTRIBUTE_CATEGORY = "category";
 
 	private static final int PRODUCT_LIST_PAGE_SIZE = 5;
@@ -109,6 +109,7 @@ public class SolrController {
 
 	@RequestMapping(value = "/products/categories", method = RequestMethod.GET)
 	public String productCategories(Model model) {
+
 		FacetPage<Product> catfacetPage = productService.getFacetedProductsCategory();
 		Page<FacetFieldEntry> catPage = 
 				catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
@@ -117,7 +118,8 @@ public class SolrController {
 		for (FacetFieldEntry entry : catPage) {
 			results.add(new ProductCategory(entry.getValue(), toIntExact(entry.getValueCount())));
 		}
-		model.addAttribute(MODEL_ATTRIBUTE_PRODUCTCATEGORIES, results);
+		
+		model.addAttribute(MODEL_ATTRIBUTE_PRODUCT_CATEGORIES, results);
 		return PRODUCT_CATEGORIES_VIEW;
 	}
 

@@ -71,7 +71,7 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	public Page<Product> findAllProductsPaged(Pageable page);
 	
 	@Query(value = "*:*", filters = { "doctype:product" })
-	@Facet(fields = IProduct.CATEGORY_FIELD, limit = 100)
+	@Facet(fields = IProduct.CATEGORY_FIELD, limit = 6)
 	public FacetPage<Product> findProductCategoryFacets(Pageable page);
 
 	

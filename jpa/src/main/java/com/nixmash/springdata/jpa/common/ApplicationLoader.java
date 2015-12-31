@@ -25,7 +25,7 @@ public class ApplicationLoader implements CommandLineRunner {
         sb = sb.length() == 0 ? sb.append("No Options Specified") : sb;
         String activeProfile = environment.getActiveProfiles()[0];
 
-        logger.info(String.format("WAR launched with following options: %s", sb.toString()));
+        logger.info(String.format("WAR launched with following profiles: %s", sb.toString()));
         logger.info(String.format("Current JPA Active Profile: %s", activeProfile));
     }
 }

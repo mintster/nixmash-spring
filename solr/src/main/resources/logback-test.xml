@@ -9,11 +9,11 @@
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%.-1level|%-30.30logger{0}|%msg%n</pattern>
+            <pattern>%.-1level|MVC-TEST|%-30.30logger{0}|%msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="com.nixmash.springdata" level="OFF"/>
+    <logger name="com.nixmash.springdata.solr" level="OFF"/>
     <logger name="org.thymeleaf" level="info"/>
     <logger name="org.hibernate" level="OFF"/>
 
