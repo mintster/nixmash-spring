@@ -15,6 +15,7 @@
  */
 package com.nixmash.springdata.solr.repository.custom;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -41,6 +42,7 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 
 	Page<Product> findByPopularityGreaterThanEqual(Integer popularity, Pageable page);
 
+	@Query("name:*?0* AND doctype:product")
 	List<Product> findByNameStartingWith(String name);
 
 	List<Product> findByAvailableTrue();
@@ -74,5 +76,8 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	@Facet(fields = IProduct.CATEGORY_FIELD, limit = 6)
 	public FacetPage<Product> findProductCategoryFacets(Pageable page);
 
-	
+	@Query("doctype:product")
+	@Facet(fields = IProduct.NAME_FIELD, limit = 100)
+	public FacetPage<Product> findByNameStartingWith(Collection<String> nameFragments, Pageable pageable);
+
 }

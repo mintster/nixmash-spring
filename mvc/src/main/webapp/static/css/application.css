@@ -271,3 +271,6 @@ ul.cod-hobbylist li:last-child:after {
 
 /*</editor-fold>*/
 
+blockquote small {
+	color: #716561;
+}

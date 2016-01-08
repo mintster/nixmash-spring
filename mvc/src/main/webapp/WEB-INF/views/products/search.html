@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<div th:include="fragments/head :: head" th:remove="tag">Global
-	Header</div>
+<div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+
+<script type="text/javascript" th:src="@{/static/js/jquery-ui-1.9.0.custom.min.js}"></script>
+<link rel="stylesheet" th:href="@{/static/css/ui-lightness/jquery-ui-1.9.0.custom.css}" type="text/css" />
+
 <title th:text="#{product.search.page.title}"></title>
 </head>
 <body>
@@ -15,11 +17,9 @@
 				<div class="col-lg-8 col-md-7 col-sm-6">
 					<h1 th:text="#{product.search.page.header}">[Search Products]</h1>
 
-					<p class="lead" th:text="#{product.search.page.subheader}">[Search
-						Contacts by Last Name]</p>
+					<p class="lead" th:text="#{product.search.page.subheader}">[Search Contacts by Last Name]</p>
 				</div>
-				<div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
-					Image</div>
+				<div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
 
 			</div>
 		</div>
@@ -27,21 +27,35 @@
 	<div class="container bs-docs-container">
 		<div class="row">
 			<div class="bs-docs-section">
-				<form th:object="${userQuery}" action="/products/list.html"
-					th:action="@{/products/list}" method="get" class="form-horizontal"
-					id="search-product-form">
+				<form th:object="${userQuery}" action="/products/list.html" th:action="@{/products/list}" method="get"
+					class="form-horizontal" id="search-product-form">
 					<table class="table table-striped">
 						<tr th:classappend="${#fields.hasErrors('query')} ? 'has-error'">
 							<td class="col-sm-1">
-								<div class="control-group"
-									th:classappend="${#fields.hasErrors('query')} ? 'error'">
+								<div class="control-group" th:classappend="${#fields.hasErrors('query')} ? 'error'">
 									<label class="control-label">Search Query</label>
 								</div>
 							</td>
 							<td class="col-sm-2">
 								<div class="controls">
-									<input type="text" class="form-control" name="query" size="30"
-										maxlength="80" />
+									<input type="text" class="form-control" id="queryField" name="query" size="30" maxlength="80" />
+									<script type="text/javascript">
+										$(function() {
+											$("#queryField")
+													.autocomplete(
+															{
+																source : '/products/autocomplete',
+																minLength : 1,
+																select : function(
+																		event,
+																		ui) {
+																	$("#queryField").value = ui.item.value;
+																	document.searchform
+																			.submit();
+																}
+															});
+										});
+									</script>
 								</div>
 								<div class="controls" th:if="${#fields.hasErrors('query')}">
 									<h4>
@@ -54,8 +68,7 @@
 							<td></td>
 							<td>
 								<div class="form-actions pull-right">
-									<button type="submit" class="btn btn-success">Search
-										Products</button>
+									<button type="submit" class="btn btn-success">Search Products</button>
 								</div>
 							</td>
 						</tr>
@@ -65,11 +78,8 @@
 		</div>
 		<div class="row">
 			<blockquote>
-				<p>This Demo supports full Solr Search Syntax. Working samples include:</p>
-				<small>inStock:TRUE</small>
-				<small>cat:memory</small>
-				<small>name:Western+Digital AND inStock:FALSE</small>
-				<small>popularity:7</small>
+				<p>This Demo supports Autocomplete Search Term entry and full Solr Search Syntax. <br/>Working Solr search samples include:</p>
+				<small>inStock:TRUE</small> <small>cat:memory</small> <small>name:Western+Digital AND inStock:FALSE</small> <small>popularity:7</small>
 				<small>(name:memory AND name:corsair) AND popularity:[6 TO *]</small>
 			</blockquote>
 		</div>

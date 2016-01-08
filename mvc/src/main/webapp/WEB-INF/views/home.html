@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-    <title>NixMash Spring Home Page</title>
+<div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+<title>NixMash Spring Home Page</title>
 </head>
 <body>
-<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
-<div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
+	<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
+	<div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
 
-<div class="container">
+	<div class="container">
+		<div class="row">
+			<blockquote>
+				<p>
+					As its name implies, this site demonstrates Spring in action with accompanying posts at <a href="http://nixmash.com">NixMash.com.</a> Areas include:</p>
+				<small>Hibernate and Spring JPA -- <em>Contacts</em></small>
+				<small>Spring Security -- <em>Contact View restricted to Logged-in Users</em></small>
+				<small>Spring Solr -- <em>Products</em></small>
+				<small>Javascript with Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em></small>
+				<small>Thymeleaf with Spring</small>
+			</blockquote>
+		</div>
+		<button id="codButton" class="btn btn-default btn-xs" name="codButton" onclick="codDialog()" type="button"
+			th:text="#{js.cod.button}">[CLICK]</button>
+		<button id="secretButton" class="btn btn-default btn-xs" name="secretButton" onclick="secretDialog()" type="button"
+			th:text="#{js.secret.button}">[CLICK]</button>
+		<select id="multiselect-badgeboy" multiple="multiple">
+		</select>
 
-    <button id="codButton" class="btn btn-default btn-xs" name="codButton" onclick="codDialog()" type="button"
-            th:text="#{js.cod.button}">[CLICK]
-    </button>
-    <button id="secretButton" class="btn btn-default btn-xs" name="secretButton" onclick="secretDialog()" type="button"
-            th:text="#{js.secret.button}">[CLICK]
-    </button>
-    <select id="multiselect-badgeboy" multiple="multiple">
-    </select>
+		<div id="badges"></div>
 
-    <div id="badges"></div>
-
-    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
-</div>
-<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
-<div th:include="fragments/js :: functions" th:remove="tag">Functions</div>
+		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+	</div>
+	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+	<div th:include="fragments/js :: functions" th:remove="tag">Functions</div>
 
 
 </body>

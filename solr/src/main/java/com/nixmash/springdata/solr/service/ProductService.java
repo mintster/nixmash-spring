@@ -44,4 +44,6 @@ public interface ProductService {
 
 	List<Product> getProductsByCategory(String category);
 
+	FacetPage<Product> autocompleteNameFragment(String fragment, Pageable pageable);
+	
 }

@@ -19,6 +19,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Web Solr Search
 - [Post: Pagination with Spring MVC, Solr, Thymeleaf and Bootstrap](http://nixmash.com/java/pagination-with-spring-mvc-solr-thymeleaf-and-bootstrap/)
 - [Post: Testing for Malformed Solr Query Strings](http://nixmash.com/java/testing-for-bad-solr-query-strings/)
+- [Post: Solr Faceted Search Example in Spring and Thymeleaf](http://nixmash.com/java/solr-faceted-search-example-in-spring-and-thymeleaf/)
+- [Post: Solr Search Term Autocomplete with Spring MVC](http://nixmash.com/java/solr-search-term-autocomplete-with-spring-mvc/)
 
 ![Solr Search in v0.2.7](http://nixmash.com/x/pics/github/spring-data-0.2.7.png)
 

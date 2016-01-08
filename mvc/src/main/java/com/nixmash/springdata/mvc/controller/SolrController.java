@@ -5,7 +5,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.query.result.FacetFieldEntry;
 import org.springframework.data.solr.core.query.result.FacetPage;
@@ -24,6 +28,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nixmash.springdata.mvc.containers.Pager;
 import com.nixmash.springdata.mvc.containers.ProductCategory;
@@ -167,6 +173,41 @@ public class SolrController {
 			return "redirect:/products/" + product.getId();
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/products/autocomplete", produces = "application/json")
+	public Set<String> autoComplete(Model model, @RequestParam("term") String query) {
+		if (StringUtils.isBlank(query)) {
+			return Collections.emptySet();
+		}
+
+		PageRequest pageRequest = new PageRequest(0,1);
+		FacetPage<Product> result = 
+				productService.autocompleteNameFragment(query, pageRequest);
+
+		Set<String> titles = new LinkedHashSet<String>();
+		for (Page<FacetFieldEntry> page : result.getFacetResultPages()) {
+			for (FacetFieldEntry entry : page) {
+				if (entry.getValue().contains(query)) { 
+					titles.add(entry.getValue());
+				}
+			}
+		}
+		
+//		To display complete Product Name field in dropdown ----------------------------------- */
+//		
+//		List<Product> result = productService.getProductsByStartOfName(query);
+//
+//		Set<String> titles = new LinkedHashSet<String>();
+//		for (Product product : result) {
+//				if (product.getName().toLowerCase().contains(query.toLowerCase())) { 
+//					titles.add(product.getName());
+//			}
+//		}
+		
+		return titles;
+	}
+
 
 	@RequestMapping(value = "/products/{id}", method = GET)
 	public String productPage(@PathVariable("id") String id, Model model) {

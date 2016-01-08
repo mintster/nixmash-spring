@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.FacetFieldEntry;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,6 @@ public class SolrUI {
 
 	@Resource
 	private ProductService service;
-	
 
 	@Autowired
 	private SolrSettings solrSettings;
@@ -43,14 +43,15 @@ public class SolrUI {
 		ANNOTATED_QUERY,
 		FACET_ON_AVAILABLE,
 		FACET_ON_CATEGORY,
+		FACET_ON_NAME,
 		SIMPLE_QUERY
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.FACET_ON_CATEGORY;
-		
+		DEMO demo = DEMO.METHOD_NAME_QUERY;
+
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
 			System.out.println("DEVELOPMENT mode: Embedded SOLR Home: " + solrSettings.getSolrEmbeddedPath());
@@ -66,23 +67,35 @@ public class SolrUI {
 		switch (demo) {
 
 		case SIMPLE_QUERY:
-//			List<Product> usqProducts = service.getProductsWithUserQuery("name:memory AND name:corsair) AND popularity:[6 TO *]");
-//			List<Product> usqProducts = service.getProductsWithUserQuery("name:Western+Digital AND inStock:TRUE");
-//			List<Product> usqProducts = service.getProductsWithUserQuery("cat:memory");
-//			List<Product> usqProducts = service.getProductsWithUserQuery("features::printer");
+			// List<Product> usqProducts = service.getProductsWithUserQuery("name:memory AND name:corsair) AND
+			// popularity:[6 TO *]");
+			// List<Product> usqProducts = service.getProductsWithUserQuery("name:Western+Digital AND inStock:TRUE");
+			// List<Product> usqProducts = service.getProductsWithUserQuery("cat:memory");
+			// List<Product> usqProducts = service.getProductsWithUserQuery("features::printer");
 			List<Product> usqProducts = service.getProductsWithUserQuery("inStock:true");
 			printProducts(usqProducts);
 			break;
-		
+
+		case FACET_ON_NAME:
+
+			FacetPage<Product> fnfacetPage = service.autocompleteNameFragment("pr", new PageRequest(0, 1));
+			Page<FacetFieldEntry> fnPage = fnfacetPage.getFacetResultPage(Product.NAME_FIELD);
+
+			for (FacetFieldEntry entry : fnPage) {
+				System.out.println(String.format("%s:%s \t %s", entry.getField().getName(), entry.getValue(),
+						entry.getValueCount()));
+			}
+
+			break;
+			
 		case FACET_ON_AVAILABLE:
 
 			FacetPage<Product> avfacetPage = service.getFacetedProductsAvailable();
-			Page<FacetFieldEntry> avPage = 
-					avfacetPage.getFacetResultPage(Product.AVAILABLE_FIELD);
-			
+			Page<FacetFieldEntry> avPage = avfacetPage.getFacetResultPage(Product.AVAILABLE_FIELD);
+
 			for (FacetFieldEntry entry : avPage) {
-				System.out.println(String.format("%s:%s \t %s", 
-						entry.getField().getName(), entry.getValue(), entry.getValueCount()));
+				System.out.println(String.format("%s:%s \t %s", entry.getField().getName(), entry.getValue(),
+						entry.getValueCount()));
 			}
 
 			break;
@@ -90,19 +103,18 @@ public class SolrUI {
 		case FACET_ON_CATEGORY:
 
 			FacetPage<Product> catfacetPage = service.getFacetedProductsCategory();
-			Page<FacetFieldEntry> catPage = 
-					catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
-			
+			Page<FacetFieldEntry> catPage = catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
+
 			for (FacetFieldEntry entry : catPage) {
-				System.out.println(String.format("%s:%s \t %s", 
-						entry.getField().getName(), entry.getValue(), entry.getValueCount()));
+				System.out.println(String.format("%s:%s \t %s", entry.getField().getName(), entry.getValue(),
+						entry.getValueCount()));
 			}
 
 			break;
 
 		case METHOD_NAME_QUERY:
 
-			List<Product> mnqProducts = service.getProductsByStartOfName("co");
+			List<Product> mnqProducts = service.getProductsByStartOfName("power cord");
 			printProducts(mnqProducts);
 			break;
 

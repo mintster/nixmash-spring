@@ -1,10 +1,15 @@
 package com.nixmash.springdata.solr.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -24,7 +30,8 @@ import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 public class ProductServiceImpl implements ProductService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
-
+	private static final Pattern IGNORED_CHARS_PATTERN = Pattern.compile("\\p{Punct}");
+	
 	@Resource
 	SimpleProductRepository simpleProductRepo;
 
@@ -136,4 +143,23 @@ public class ProductServiceImpl implements ProductService {
 		return new Sort(Sort.Direction.DESC, Product.ID_FIELD);
 	}
 
+	@Override
+	public FacetPage<Product> autocompleteNameFragment(String fragment, Pageable pageable) {
+		if (StringUtils.isBlank(fragment)) {
+			return new SolrResultPage<Product>(Collections.<Product> emptyList());
+		}
+		return productRepo.findByNameStartingWith(splitSearchTermAndRemoveIgnoredCharacters(fragment), pageable);
+	}
+
+	private Collection<String> splitSearchTermAndRemoveIgnoredCharacters(String searchTerm) {
+		String[] searchTerms = StringUtils.split(searchTerm, " ");
+		List<String> result = new ArrayList<String>(searchTerms.length);
+		for (String term : searchTerms) {
+			if (StringUtils.isNotEmpty(term)) {
+				result.add(IGNORED_CHARS_PATTERN.matcher(term).replaceAll(" "));
+			}
+		}
+		return result;
+	}
+	
 }
