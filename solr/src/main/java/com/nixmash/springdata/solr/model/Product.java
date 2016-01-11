@@ -18,6 +18,8 @@ package com.nixmash.springdata.solr.model;
 import java.util.List;
 
 import org.apache.solr.client.solrj.beans.Field;
+import org.springframework.data.geo.Point;
+import org.springframework.data.solr.core.geo.GeoConverters;
 
 /**
  * @author Christoph Strobl
@@ -51,6 +53,10 @@ public class Product implements IProduct {
 	@Field(DOCTYPE_FIELD)
 	private String doctype;
 
+	@Field(LOCATION_FIELD)
+	private String location;
+	
+	private Point point;
 
 	public Product() {};
 	
@@ -122,10 +128,26 @@ public class Product implements IProduct {
 		this.doctype = doctype;
 	}
 
+	public Point getPoint() {
+		return GeoConverters.StringToPointConverter.INSTANCE.convert(this.getLocation());
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
+	}
+	
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", weight=" + weight + ", price="
 				+ price + ", popularity=" + popularity + ", available=" + available + ", doctype=" + doctype + "]";
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 }

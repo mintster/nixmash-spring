@@ -103,7 +103,6 @@ public class SolrControllerTests extends AbstractContext {
 
 		for (String string : fragments) {
 			assert(string.contains(AUTOCOMPLETE_FRAGMENT));
-			System.out.println(string);
 		}
 	}
 

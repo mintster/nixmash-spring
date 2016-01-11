@@ -50,7 +50,7 @@ public class SolrUI {
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.METHOD_NAME_QUERY;
+		DEMO demo = DEMO.AVAILABLE_PRODUCTS;
 
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
@@ -87,7 +87,7 @@ public class SolrUI {
 			}
 
 			break;
-			
+
 		case FACET_ON_AVAILABLE:
 
 			FacetPage<Product> avfacetPage = service.getFacetedProductsAvailable();
@@ -189,7 +189,11 @@ public class SolrUI {
 		int i = 0;
 		System.out.println("");
 		for (Product product : products) {
-			System.out.println(product.getName() + " | Popularity: " + product.getPopularity());
+			if (product.getLocation() != null)
+				System.out.println(product.getName() + " | Popularity: " + product.getPopularity() + " | Point: "
+						+ product.getPoint().getX() + ", " + product.getPoint().getY());
+			else
+				System.out.println(product.getName() + " | Popularity: " + product.getPopularity());
 			i++;
 		}
 		System.out.println("\nTOTAL RECORDS: " + i);

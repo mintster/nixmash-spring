@@ -11,5 +11,6 @@ public interface IProduct {
 	String WEIGHT_FIELD = "weight";
 	String POPULARITY_FIELD = "popularity";
 	String DOCTYPE_FIELD = "doctype";
+	String LOCATION_FIELD = "store";
 
 }
