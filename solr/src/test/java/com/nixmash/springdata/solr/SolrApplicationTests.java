@@ -1,5 +1,10 @@
 package com.nixmash.springdata.solr;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,31 +31,17 @@ import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
 import com.nixmash.springdata.solr.service.ProductService;
 
-/**
- * 
- * NixMash Spring Notes: ---------------------------------------------------
- * 
- * Based on Christoph Strobl's Spring Solr Repository Example for Spring Boot
- * 
- * On GitHub: https://goo.gl/JoAYaT
- * 
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SolrApplicationTests extends SolrContext {
 
 	private static final String SOLR_STRING = "solr";
 	private static final int PRODUCT_ID = 1000;
 	private static final int INITIAL_RECORD_COUNT = 55;
-	private static final int INITIAL_CATEGORY_COUNT = 11;
+	private static final int INITIAL_CATEGORY_COUNT = 6;
 	private static final int TEST_RECORD_COUNT = 10;
 
 	@Autowired
 	SolrOperations solrOperations;
-
-	// @Before
-	// public void setUp() {
-	//
-	// }
 
 	@After
 	public void tearDown() {
@@ -65,6 +56,15 @@ public class SolrApplicationTests extends SolrContext {
 	@Autowired
 	private ProductService productService;
 
+	@Test
+	public void missingLocationsProduceNegativePointValues() {
+		Product product = SolrTestUtils.createProduct(PRODUCT_ID);
+		customProductRepository.save(product);
+		
+		assertNull(product.getLocation());
+		assertThat(product.getPoint().getX(), is(lessThan((double)0)));
+	}
+	
 	@Test
 	public void badSimpleQueryThrowsUncategorizedSolrException() {
 		int i = 0;

@@ -30,7 +30,7 @@
   <field name="popularity">5</field>
   <field name="inStock">true</field>
   <!-- San Francisco store -->
-  <field name="store">37.7752,-122.4232</field>
+  <field name="store">37.003,-124.632</field>
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
 
   <!-- a field for testing payload tagged text via DelimitedPayloadTokenFilter -->
@@ -51,7 +51,7 @@
   <field name="popularity">7</field>
   <field name="inStock">true</field>
   <!-- Dodge City store -->
-  <field name="store">37.7752,-100.0232</field>
+  <field name="store">38.252,-102.732</field>
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
 
   <field name="payloads">electronics|4.0 memory|2.0</field>
@@ -71,7 +71,7 @@
   <field name="popularity">7</field>
   <field name="inStock">true</field>
   <!-- Dodge City store -->
-  <field name="store">37.7752,-100.0232</field>
+  <field name="store">35.752,-102.642</field>
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
   <field name="payloads">electronics|4.0 memory|2.0</field>
   <field name="doctype">product</field>
@@ -90,7 +90,7 @@
   <field name="popularity">7</field>
   <field name="inStock">true</field>
   <!-- Dodge City store -->
-  <field name="store">37.7752,-100.0232</field>
+  <field name="store">34.7752,-103.066</field>
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
   <field name="payloads">electronics|4.0 memory|2.0</field>
   <field name="doctype">product</field>
@@ -109,7 +109,7 @@
   <field name="popularity">0</field>
   <field name="inStock">true</field>
   <!-- Buffalo store -->
-  <field name="store">45.18414,-93.88141</field>
+  <field name="store">46.18414,-93.90141</field>
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
 
   <field name="payloads">electronics|0.9 memory|0.1</field>

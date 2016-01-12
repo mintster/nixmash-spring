@@ -55,15 +55,16 @@ public class Product implements IProduct {
 
 	@Field(LOCATION_FIELD)
 	private String location;
-	
+
 	private Point point;
 
-	public Product() {};
-	
+	public Product() {
+	};
+
 	public Product(String name) {
 		setName(name);
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -128,26 +129,30 @@ public class Product implements IProduct {
 		this.doctype = doctype;
 	}
 
-	public Point getPoint() {
-		return GeoConverters.StringToPointConverter.INSTANCE.convert(this.getLocation());
-	}
-
-	public void setPoint(Point point) {
-		this.point = point;
-	}
-	
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", weight=" + weight + ", price="
-				+ price + ", popularity=" + popularity + ", available=" + available + ", doctype=" + doctype + "]";
-	}
-
 	public String getLocation() {
 		return location;
 	}
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	public Point getPoint() {
+		String _location = this.getLocation();
+		if (this.getLocation() == null)
+			_location = "-1,-1";
+		return GeoConverters.StringToPointConverter.INSTANCE.convert(_location);
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", weight=" + weight + ", price="
+				+ price + ", popularity=" + popularity + ", available=" + available + ", doctype=" + doctype + "]";
 	}
 
 }

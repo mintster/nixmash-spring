@@ -32,7 +32,7 @@
   <field name="inStock">false</field>
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
   <!-- Near Oklahoma city -->
-  <field name="store">35.0752,-97.032</field>
+  <field name="store">36.002,-97.122</field>
   <field name="doctype">product</field>
 </doc>
 <doc>
@@ -50,7 +50,7 @@
   <field name="popularity">6</field>
   <field name="inStock">true</field>
   <!-- Buffalo store -->
-  <field name="store">45.17614,-93.87341</field>
+  <field name="store">45.544,-92.80041</field>
   <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
   <field name="doctype">product</field>
 </doc>

@@ -18,6 +18,8 @@ package com.nixmash.springdata.solr.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.data.geo.Point;
+
 public class ProductDTO implements Serializable {
 
 	private String id;
@@ -29,6 +31,8 @@ public class ProductDTO implements Serializable {
 	private Integer popularity;
 	private boolean available;
 	private String doctype;
+	private Point point;
+	private String location;
 
 	public String getId() {
 		return id;
@@ -106,6 +110,22 @@ public class ProductDTO implements Serializable {
 
 	public void setFeatures(List<String> features) {
 		this.features = features;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 }

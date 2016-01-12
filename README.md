@@ -17,10 +17,12 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Updated Solr Server to 4.10.4
 - Web display of Solr Facets
 - Web Solr Search
+- Solr Spatial Searching and Location Data handling
 - [Post: Pagination with Spring MVC, Solr, Thymeleaf and Bootstrap](http://nixmash.com/java/pagination-with-spring-mvc-solr-thymeleaf-and-bootstrap/)
 - [Post: Testing for Malformed Solr Query Strings](http://nixmash.com/java/testing-for-bad-solr-query-strings/)
 - [Post: Solr Faceted Search Example in Spring and Thymeleaf](http://nixmash.com/java/solr-faceted-search-example-in-spring-and-thymeleaf/)
 - [Post: Solr Search Term Autocomplete with Spring MVC](http://nixmash.com/java/solr-search-term-autocomplete-with-spring-mvc/)
+- [Post: Retrieving Location Data with Spring Solr](http://nixmash.com/java/retrieving-location-data-with-spring-solr/)
 
 ![Solr Search in v0.2.7](http://nixmash.com/x/pics/github/spring-data-0.2.7.png)
 

@@ -1,5 +1,6 @@
 package com.nixmash.springdata.solr.common;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -50,7 +51,7 @@ public class SolrUI {
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.AVAILABLE_PRODUCTS;
+		DEMO demo = DEMO.ALL_PRODUCTS;
 
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
@@ -182,18 +183,25 @@ public class SolrUI {
 		default:
 			break;
 		}
-
+ 
 	}
 
 	private void printProducts(Iterable<? extends Product> products) {
 		int i = 0;
 		System.out.println("");
 		for (Product product : products) {
-			if (product.getLocation() != null)
-				System.out.println(product.getName() + " | Popularity: " + product.getPopularity() + " | Point: "
-						+ product.getPoint().getX() + ", " + product.getPoint().getY());
-			else
-				System.out.println(product.getName() + " | Popularity: " + product.getPopularity());
+			MessageFormat mf = new MessageFormat("{0} | Popularity: {1} | Lng/Lat: {2},{3}");
+			Object[] items = { 
+					product.getName(), 
+					product.getPopularity(), 
+					product.getPoint().getX(),
+					product.getPoint().getY() };
+
+			if (product.getPoint().getX() < 0) {
+				mf = new MessageFormat("{0} | Popularity: {1}");
+			}
+
+			System.out.println(mf.format(items));
 			i++;
 		}
 		System.out.println("\nTOTAL RECORDS: " + i);

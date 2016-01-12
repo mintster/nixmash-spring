@@ -17,7 +17,8 @@ public class SolrUtils {
 		dto.setAvailable(product.isAvailable());
 		dto.setDoctype(product.getDoctype());
 		dto.setCategories(product.getCategories());
-		
+		dto.setLocation(product.getLocation());
+		dto.setPoint(product.getPoint());
 		return dto;
 	}
 }
