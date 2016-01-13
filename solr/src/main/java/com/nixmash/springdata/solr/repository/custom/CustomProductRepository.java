@@ -21,6 +21,9 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.geo.Box;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Point;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.repository.Facet;
 import org.springframework.data.solr.repository.Query;
@@ -80,4 +83,12 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	@Facet(fields = IProduct.NAME_FIELD, limit = 100)
 	public FacetPage<Product> findByNameStartingWith(Collection<String> nameFragments, Pageable pageable);
 
+	public List<Product> findByLocationWithin(Point location, Distance distance);
+	
+	public List<Product> findByLocationNear(Point location, Distance distance);
+	public List<Product> findByLocationNear(Box bbox);
+	
+	@Query("{!geofilt pt=?0 sfield=store d=?1}")
+	public List<Product> findByLocationSomewhereNear(Point location, Distance distance);
+	
 }

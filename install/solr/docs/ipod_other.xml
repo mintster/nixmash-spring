@@ -32,7 +32,7 @@
   <field name="popularity">1</field>
   <field name="inStock">false</field>
   <!-- Buffalo store -->
-  <field name="store">45.192,-94.3741</field>
+  <field name="store">35.192,-96.3741</field>
   <field name="manufacturedate_dt">2005-08-01T16:30:25Z</field>
   <field name="doctype">product</field>
 </doc>
@@ -51,7 +51,7 @@
   <field name="popularity">1</field>
   <field name="inStock">false</field>
   <!-- San Francisco store -->
-  <field name="store">38.1252,-120.632</field>
+  <field name="store">35.392,-96.1741</field>
   <field name="manufacturedate_dt">2006-02-14T23:55:59Z</field>
   <field name="doctype">product</field>
 </doc>

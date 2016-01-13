@@ -52,6 +52,7 @@ public abstract class SolrTestUtils {
 		product.setCategories(categories);
 		product.setPrice((float) id * 100);
 		product.setWeight((float) id * 2);
+		product.setLocation(null);
 		product.setDoctype(SolrDocType.PRODUCT);
 		return product;
 	}

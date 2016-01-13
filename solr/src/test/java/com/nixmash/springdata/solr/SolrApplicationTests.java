@@ -1,10 +1,5 @@
 package com.nixmash.springdata.solr;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -40,6 +35,7 @@ public class SolrApplicationTests extends SolrContext {
 	private static final int INITIAL_CATEGORY_COUNT = 6;
 	private static final int TEST_RECORD_COUNT = 10;
 
+
 	@Autowired
 	SolrOperations solrOperations;
 
@@ -51,20 +47,12 @@ public class SolrApplicationTests extends SolrContext {
 	}
 
 	@Resource
-	CustomProductRepository customProductRepository;
+	CustomProductRepository repo;
 
 	@Autowired
 	private ProductService productService;
 
-	@Test
-	public void missingLocationsProduceNegativePointValues() {
-		Product product = SolrTestUtils.createProduct(PRODUCT_ID);
-		customProductRepository.save(product);
-		
-		assertNull(product.getLocation());
-		assertThat(product.getPoint().getX(), is(lessThan((double)0)));
-	}
-	
+
 	@Test
 	public void badSimpleQueryThrowsUncategorizedSolrException() {
 		int i = 0;
@@ -92,15 +80,14 @@ public class SolrApplicationTests extends SolrContext {
 	public void testCustomQueries() {
 
 		// Named Query from named-queries.properties
-		List<Product> products = customProductRepository.findByNameOrCategory(SOLR_STRING, sortByIdDesc());
+		List<Product> products = repo.findByNameOrCategory(SOLR_STRING, sortByIdDesc());
 		Assert.assertEquals(1, products.size());
 
 		// Method Name Query test for findByPopularityGreaterThanEqual()
 		Product product = SolrTestUtils.createProduct(PRODUCT_ID);
-		customProductRepository.save(product);
+		repo.save(product);
 
-		Page<Product> popularProducts = customProductRepository.findByPopularityGreaterThanEqual(10000,
-				new PageRequest(0, 10));
+		Page<Product> popularProducts = repo.findByPopularityGreaterThanEqual(10000, new PageRequest(0, 10));
 		Assert.assertEquals(1, popularProducts.getTotalElements());
 		Assert.assertEquals(Integer.toString(PRODUCT_ID), popularProducts.getContent().get(0).getId());
 
@@ -109,15 +96,15 @@ public class SolrApplicationTests extends SolrContext {
 	@Test
 	public void testFacetQuery() {
 
-		FacetPage<Product> facetPage = customProductRepository.findProductCategoryFacets(new PageRequest(0, 100));
-		 Assert.assertEquals(customProductRepository.findAllProducts().size(), facetPage.getNumberOfElements());
+		FacetPage<Product> facetPage = repo.findProductCategoryFacets(new PageRequest(0, 100));
+		Assert.assertEquals(repo.findAllProducts().size(), facetPage.getNumberOfElements());
 
 		Page<FacetFieldEntry> page = facetPage.getFacetResultPage(SolrProductField.CATEGORY);
 		Assert.assertEquals(INITIAL_CATEGORY_COUNT, page.getNumberOfElements());
 
 		for (FacetFieldEntry entry : page) {
-			 Assert.assertEquals(SolrProductField.CATEGORY.getName(), entry.getField().getName());
-			Assert.assertEquals(customProductRepository.findByCategory(entry.getValue()).size(), entry.getValueCount());
+			Assert.assertEquals(SolrProductField.CATEGORY.getName(), entry.getField().getName());
+			Assert.assertEquals(repo.findByCategory(entry.getValue()).size(), entry.getValueCount());
 		}
 	}
 
@@ -131,11 +118,11 @@ public class SolrApplicationTests extends SolrContext {
 	@Test
 	public void simpleQueryTest() {
 		List<Product> baseList = SolrTestUtils.createProductList(10);
-		customProductRepository.save(baseList);
+		repo.save(baseList);
 		Assert.assertEquals(baseList.size(), TEST_RECORD_COUNT);
-		Assert.assertEquals(INITIAL_RECORD_COUNT + TEST_RECORD_COUNT, customProductRepository.count());
+		Assert.assertEquals(INITIAL_RECORD_COUNT + TEST_RECORD_COUNT, repo.count());
 
-		List<Product> productsByCategory = customProductRepository.findProductsBySimpleQuery("cat:test");
+		List<Product> productsByCategory = repo.findProductsBySimpleQuery("cat:test");
 		Assert.assertEquals(TEST_RECORD_COUNT, productsByCategory.size());
 	}
 
@@ -146,25 +133,25 @@ public class SolrApplicationTests extends SolrContext {
 		Product product = SolrTestUtils.createProduct(PRODUCT_ID);
 
 		// save product to Solr Index and confirm index count increased by 1
-		customProductRepository.save(product);
-		Assert.assertEquals(INITIAL_RECORD_COUNT + 1, customProductRepository.count());
+		repo.save(product);
+		Assert.assertEquals(INITIAL_RECORD_COUNT + 1, repo.count());
 
 		// find single product from Solr
-		Product loaded = customProductRepository.findOne(Integer.toString(PRODUCT_ID));
+		Product loaded = repo.findOne(Integer.toString(PRODUCT_ID));
 		Assert.assertEquals(product.getName(), loaded.getName());
 
 		// update product name in Solr and confirm index count not changed
 		loaded.setName("changed named");
-		customProductRepository.save(loaded);
-		Assert.assertEquals(INITIAL_RECORD_COUNT + 1, customProductRepository.count());
+		repo.save(loaded);
+		Assert.assertEquals(INITIAL_RECORD_COUNT + 1, repo.count());
 
 		// retrieve product from Solr and confirm name change
-		loaded = customProductRepository.findOne(Integer.toString(PRODUCT_ID));
+		loaded = repo.findOne(Integer.toString(PRODUCT_ID));
 		Assert.assertEquals("changed named", loaded.getName());
 
 		// delete the test product in Solr and confirm index count equal to initial count
-		customProductRepository.delete(loaded);
-		Assert.assertEquals(INITIAL_RECORD_COUNT, customProductRepository.count());
+		repo.delete(loaded);
+		Assert.assertEquals(INITIAL_RECORD_COUNT, repo.count());
 
 	}
 
