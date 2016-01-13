@@ -35,7 +35,7 @@
   <field name="popularity">10</field>
   <field name="inStock">true</field>
   <!-- Dodge City store -->
-  <field name="store">38.2252,-103.732</field>
+  <field name="store">35.196,-96.7741</field>
   <field name="manufacturedate_dt">2005-10-12T08:00:00Z</field>
   <field name="doctype">product</field>
 </doc></add>

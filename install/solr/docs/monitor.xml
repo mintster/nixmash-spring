@@ -32,7 +32,7 @@
   <field name="popularity">6</field>
   <field name="inStock">true</field>
   <!-- Buffalo store -->
-  <field name="store">45.6614,-92.69341</field>
+  <field name="store">35.1944,-96.3811</field>
   <field name="doctype">product</field>
 </doc></add>
 
