@@ -86,6 +86,7 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	public List<Product> findByLocationWithin(Point location, Distance distance);
 	
 	public List<Product> findByLocationNear(Point location, Distance distance);
+	
 	public List<Product> findByLocationNear(Box bbox);
 	
 	@Query("{!geofilt pt=?0 sfield=store d=?1}")

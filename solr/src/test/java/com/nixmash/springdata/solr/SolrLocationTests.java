@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.geo.Box;
 import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.Criteria;
@@ -34,11 +33,11 @@ import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SolrLocationTests extends SolrContext {
 
-	private Product locatedInYonkers;
-	private Product locatedInBedfordFalls;
-
 	@Autowired
 	SolrOperations solrOperations;
+	
+	private Product locatedInYonkers;
+	private Product locatedInBedfordFalls;
 
 	@Before
 	public void setup() {
@@ -70,6 +69,27 @@ public class SolrLocationTests extends SolrContext {
 	}
 
 	@Test
+	public void testFindByLocationWithin() {
+		List<Product> found = 
+				repo.findByLocationWithin(new Point(22.15, -90.85), new Distance(5));
+		locationAsserts(found);
+	}
+
+	@Test
+	public void testFindByNear() {
+		List<Product> found = 
+				repo.findByLocationNear(new Point(22.15, -90.85), new Distance(5));
+		locationAsserts(found);
+	}
+	
+	@Test
+	public void testFindByAnnotatedQueryNear() {
+		List<Product> found = 
+				repo.findByLocationSomewhereNear(new Point(22.15, -90.85), new Distance(5));
+		locationAsserts(found);
+	}
+
+	@Test
 	public void testFindByLocationCriteria() {
 		Point location = new Point(22.15, -90.85);
 		Criteria criteria = new Criteria("store").near(location, new Distance(5));
@@ -79,21 +99,7 @@ public class SolrLocationTests extends SolrContext {
 		Assert.assertEquals(1, result.getTotalElements());
 		Assert.assertEquals(locatedInYonkers.getId(), result.getContent().get(0).getId());
 	}
-
-	@Test
-	public void testFindByLocationWithin() {
-		List<Product> found = 
-				repo.findByLocationWithin(new Point(22.15, -90.85), new Distance(5, Metrics.MILES));
-		locationAsserts(found);
-	}
-
-	@Test
-	public void testFindByAnnotatedQueryNear() {
-		List<Product> found = 
-				repo.findByLocationSomewhereNear(new Point(22.15, -90.85), new Distance(5, Metrics.MILES));
-		locationAsserts(found);
-	}
-
+	
 	@Test
 	public void testFindByNearWithBox() {
 		//  locatedinYonkers location: 22.17614, -90.87341
@@ -102,15 +108,10 @@ public class SolrLocationTests extends SolrContext {
 		locationAsserts(found);
 	}
 
-	@Test
-	public void testFindByNear() {
-		List<Product> found = 
-				repo.findByLocationNear(new Point(22.15, -90.85), new Distance(5, Metrics.MILES));
-		locationAsserts(found);
-	}
-
 	private void locationAsserts(List<Product> found) {
 		Assert.assertEquals(1, found.size());
 		Assert.assertEquals(locatedInYonkers.getId(), found.get(0).getId());
 	}
+	
+	
 }
