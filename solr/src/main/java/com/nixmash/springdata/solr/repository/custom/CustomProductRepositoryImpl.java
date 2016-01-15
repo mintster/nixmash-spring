@@ -108,14 +108,12 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 	}
 
 	@Override
-	public HighlightPage<Product> searchProductsWithHighlights(String term) {
+	public HighlightPage<Product> searchProductsWithHighlights(String searchTerm) {
 		SimpleHighlightQuery query = new SimpleHighlightQuery();
-		// ie solr fl, fields to include in results
-//		query.addProjectionOnFields("id url");
-		Criteria conditions = new Criteria("name").contains(term);
+		String[] words = searchTerm.split(" ");
+		Criteria conditions = createSearchConditions(words);
 		query.addCriteria(conditions);
 		HighlightOptions hlOptions = new HighlightOptions();
-		// ie solr hl.fl, fields to apply highlighting 
 		hlOptions.addField("name");
 		hlOptions.setSimplePrefix("<b>");
 		hlOptions.setSimplePostfix("</b>");
