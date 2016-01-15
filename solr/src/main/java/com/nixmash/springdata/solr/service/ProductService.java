@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.HighlightPage;
 
 import com.nixmash.springdata.solr.model.Product;
 
@@ -45,5 +46,9 @@ public interface ProductService {
 	List<Product> getProductsByCategory(String category);
 
 	FacetPage<Product> autocompleteNameFragment(String fragment, Pageable pageable);
+
+	HighlightPage<Product> findByHighlightedNameCriteria(String searchTerm);
+
+	HighlightPage<Product> findByHighlightedName(String searchTerm, Pageable pageable);
 	
 }

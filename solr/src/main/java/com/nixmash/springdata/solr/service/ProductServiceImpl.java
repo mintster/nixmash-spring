@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,16 @@ public class ProductServiceImpl implements ProductService {
 		return products;
 	}
 
+	@Override
+	public HighlightPage<Product> findByHighlightedName(String searchTerm, Pageable pageable) {
+		return productRepo.findByNameIn(splitSearchTermAndRemoveIgnoredCharacters(searchTerm), pageable);
+	}
+	
+	@Override
+	public HighlightPage<Product> findByHighlightedNameCriteria(String searchTerm) {
+		return productRepo.searchProductsWithHighlights(searchTerm);
+	}
+	
 	@Override
 	public FacetPage<Product> getFacetedProductsAvailable() {
 		logger.info("Retrieving faceted products by available");

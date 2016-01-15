@@ -11,8 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.FacetFieldEntry;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.HighlightEntry;
+import org.springframework.data.solr.core.query.result.HighlightEntry.Highlight;
+import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Component;
 
+import com.nixmash.springdata.solr.model.IProduct;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.service.ProductService;
 
@@ -45,13 +49,15 @@ public class SolrUI {
 		FACET_ON_AVAILABLE,
 		FACET_ON_CATEGORY,
 		FACET_ON_NAME,
-		SIMPLE_QUERY
+		SIMPLE_QUERY,
+		HIGHLIGHT_SEARCH, 
+		HIGHLIGHT_SEARCH_CRITERIA
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.ALL_PRODUCTS;
+		DEMO demo = DEMO.HIGHLIGHT_SEARCH;
 
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
@@ -65,22 +71,40 @@ public class SolrUI {
 
 	private void runDemos(DEMO demo) {
 
+		Page<Product> productListPage;
+		HighlightPage<Product> hlProductPage;
+		List<Product> productList;
+		FacetPage<Product> facetProductPage;
+		Iterable<Product> productIterable;
+
 		switch (demo) {
 
+		case HIGHLIGHT_SEARCH_CRITERIA:
+			hlProductPage = service.findByHighlightedNameCriteria("canon");
+			processHighlights(hlProductPage);
+			printProducts(hlProductPage);
+			break;
+
+		case HIGHLIGHT_SEARCH:
+			hlProductPage = service.findByHighlightedName("canon", new PageRequest(0, 20));
+			processHighlights(hlProductPage);
+			printProducts(hlProductPage);
+			break;
+
 		case SIMPLE_QUERY:
-			// List<Product> usqProducts = service.getProductsWithUserQuery("name:memory AND name:corsair) AND
+			// productList = service.getProductsWithUserQuery("name:memory AND name:corsair) AND
 			// popularity:[6 TO *]");
-			// List<Product> usqProducts = service.getProductsWithUserQuery("name:Western+Digital AND inStock:TRUE");
-			// List<Product> usqProducts = service.getProductsWithUserQuery("cat:memory");
-			// List<Product> usqProducts = service.getProductsWithUserQuery("features::printer");
-			List<Product> usqProducts = service.getProductsWithUserQuery("inStock:true");
-			printProducts(usqProducts);
+			// productList = service.getProductsWithUserQuery("name:Western+Digital AND inStock:TRUE");
+			// productList = service.getProductsWithUserQuery("cat:memory");
+			// productList = service.getProductsWithUserQuery("features::printer");
+			productList = service.getProductsWithUserQuery("inStock:true");
+			printProducts(productList);
 			break;
 
 		case FACET_ON_NAME:
 
-			FacetPage<Product> fnfacetPage = service.autocompleteNameFragment("pr", new PageRequest(0, 1));
-			Page<FacetFieldEntry> fnPage = fnfacetPage.getFacetResultPage(Product.NAME_FIELD);
+			facetProductPage = service.autocompleteNameFragment("pr", new PageRequest(0, 1));
+			Page<FacetFieldEntry> fnPage = facetProductPage.getFacetResultPage(Product.NAME_FIELD);
 
 			for (FacetFieldEntry entry : fnPage) {
 				System.out.println(String.format("%s:%s \t %s", entry.getField().getName(), entry.getValue(),
@@ -91,8 +115,8 @@ public class SolrUI {
 
 		case FACET_ON_AVAILABLE:
 
-			FacetPage<Product> avfacetPage = service.getFacetedProductsAvailable();
-			Page<FacetFieldEntry> avPage = avfacetPage.getFacetResultPage(Product.AVAILABLE_FIELD);
+			facetProductPage = service.getFacetedProductsAvailable();
+			Page<FacetFieldEntry> avPage = facetProductPage.getFacetResultPage(Product.AVAILABLE_FIELD);
 
 			for (FacetFieldEntry entry : avPage) {
 				System.out.println(String.format("%s:%s \t %s", entry.getField().getName(), entry.getValue(),
@@ -103,8 +127,8 @@ public class SolrUI {
 
 		case FACET_ON_CATEGORY:
 
-			FacetPage<Product> catfacetPage = service.getFacetedProductsCategory();
-			Page<FacetFieldEntry> catPage = catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
+			facetProductPage = service.getFacetedProductsCategory();
+			Page<FacetFieldEntry> catPage = facetProductPage.getFacetResultPage(Product.CATEGORY_FIELD);
 
 			for (FacetFieldEntry entry : catPage) {
 				System.out.println(String.format("%s:%s \t %s", entry.getField().getName(), entry.getValue(),
@@ -115,40 +139,40 @@ public class SolrUI {
 
 		case METHOD_NAME_QUERY:
 
-			List<Product> mnqProducts = service.getProductsByStartOfName("power cord");
-			printProducts(mnqProducts);
+			productList = service.getProductsByStartOfName("power cord");
+			printProducts(productList);
 			break;
 
 		case ANNOTATED_QUERY:
 
-			List<Product> aqProducts = service.getProductsByNameOrCategoryAnnotatedQuery("canon");
-			printProducts(aqProducts);
+			productList = service.getProductsByNameOrCategoryAnnotatedQuery("canon");
+			printProducts(productList);
 			break;
 
 		case NAMED_QUERY:
 
-			Iterable<Product> nqProducts = service.getProductsByNameOrCategory("canon");
-			printProducts(nqProducts);
+			productIterable = service.getProductsByNameOrCategory("canon");
+			printProducts(productIterable);
 			break;
 
 		case TEST_RECORDS:
 
-			Page<Product> testProducts = service.getTestRecords();
-			printProducts(testProducts);
+			productListPage = service.getTestRecords();
+			printProducts(productListPage);
 			break;
 
 		case AVAILABLE_PRODUCTS:
-			List<Product> avpProducts = service.getAvailableProducts();
-			printProducts(avpProducts);
+			productList = service.getAvailableProducts();
+			printProducts(productList);
 			break;
 
 		case ALL_PRODUCTS:
 
-			List<Product> daProducts = service.getProductsByFilter();
-			printProducts(daProducts);
+			productList = service.getProductsByFilter();
+			printProducts(productList);
 
-			List<Product> qProducts = service.getProducts();
-			printProducts(qProducts);
+			productList = service.getProducts();
+			printProducts(productList);
 
 			break;
 
@@ -175,26 +199,38 @@ public class SolrUI {
 
 		case CRITERIA_SEARCH:
 
-			List<Product> csProducts = service.searchWithCriteria("Canon Camera memory");
-			printProducts(csProducts);
+			productList = service.searchWithCriteria("Canon Camera memory");
+			printProducts(productList);
 
 			break;
 
 		default:
 			break;
 		}
- 
+
 	}
 
+	private HighlightPage<Product> processHighlights(HighlightPage<Product> productPage) {
+		int i = 0;
+		for (HighlightEntry<Product> product : productPage.getHighlighted()) {
+			for (Highlight highlight : product.getHighlights()) {
+				for (String snippet : highlight.getSnipplets()) {
+					if (highlight.getField().getName().equals(IProduct.NAME_FIELD)) {
+						productPage.getContent().get(i).setName(snippet);
+					}
+				}
+			}
+			i++;
+		}
+		return productPage;
+	}
+	
 	private void printProducts(Iterable<? extends Product> products) {
 		int i = 0;
 		System.out.println("");
 		for (Product product : products) {
 			MessageFormat mf = new MessageFormat("{0} | Popularity: {1} | Lng/Lat: {2},{3}");
-			Object[] items = { 
-					product.getName(), 
-					product.getPopularity(), 
-					product.getPoint().getX(),
+			Object[] items = { product.getName(), product.getPopularity(), product.getPoint().getX(),
 					product.getPoint().getY() };
 
 			if (product.getPoint().getX() < 0) {

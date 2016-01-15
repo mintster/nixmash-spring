@@ -23,6 +23,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Solr Faceted Search Example in Spring and Thymeleaf](http://nixmash.com/java/solr-faceted-search-example-in-spring-and-thymeleaf/)
 - [Post: Solr Search Term Autocomplete with Spring MVC](http://nixmash.com/java/solr-search-term-autocomplete-with-spring-mvc/)
 - [Post: Retrieving Location Data with Spring Solr](http://nixmash.com/java/retrieving-location-data-with-spring-solr/)
+- [Post: Location Queries with Spring Data Solr](http://nixmash.com/java/location-queries-with-spring-data-solr/)
 
 ![Solr Search in v0.2.7](http://nixmash.com/x/pics/github/spring-data-0.2.7.png)
 

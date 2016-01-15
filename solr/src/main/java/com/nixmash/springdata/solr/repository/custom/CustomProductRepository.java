@@ -24,8 +24,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Box;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
+import org.springframework.data.solr.core.query.Query.Operator;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.data.solr.repository.Facet;
+import org.springframework.data.solr.repository.Highlight;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
@@ -91,5 +94,10 @@ public interface CustomProductRepository extends CustomBaseRepository, SolrCrudR
 	
 	@Query("{!geofilt pt=?0 sfield=store d=?1}")
 	public List<Product> findByLocationSomewhereNear(Point location, Distance distance);
+	
+	@Highlight(prefix = "<b>", postfix = "</b>")
+	@Query(fields = { IProduct.ID_FIELD, IProduct.NAME_FIELD,
+			IProduct.FEATURE_FIELD, IProduct.CATEGORY_FIELD , IProduct.POPULARITY_FIELD, IProduct.LOCATION_FIELD}, defaultOperator = Operator.AND)
+	public HighlightPage<Product> findByNameIn(Collection<String> names, Pageable page);
 	
 }

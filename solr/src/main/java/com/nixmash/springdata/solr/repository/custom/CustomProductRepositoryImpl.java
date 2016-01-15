@@ -26,10 +26,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.HighlightOptions;
 import org.springframework.data.solr.core.query.PartialUpdate;
 import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleHighlightQuery;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.SimpleStringCriteria;
+import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Repository;
 
 import com.nixmash.springdata.solr.enums.SolrDocType;
@@ -104,6 +107,22 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 		return results.getContent();
 	}
 
+	@Override
+	public HighlightPage<Product> searchProductsWithHighlights(String term) {
+		SimpleHighlightQuery query = new SimpleHighlightQuery();
+		// ie solr fl, fields to include in results
+//		query.addProjectionOnFields("id url");
+		Criteria conditions = new Criteria("name").contains(term);
+		query.addCriteria(conditions);
+		HighlightOptions hlOptions = new HighlightOptions();
+		// ie solr hl.fl, fields to apply highlighting 
+		hlOptions.addField("name");
+		hlOptions.setSimplePrefix("<b>");
+		hlOptions.setSimplePostfix("</b>");
+		query.setHighlightOptions(hlOptions);
+		return solrTemplate.queryForHighlightPage(query, Product.class);
+	}
+	
 	private Criteria createSearchConditions(String[] words) {
 		Criteria conditions = null;
 
