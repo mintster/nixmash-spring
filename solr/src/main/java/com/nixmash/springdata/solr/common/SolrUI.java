@@ -34,6 +34,12 @@ public class SolrUI {
 	@Autowired
 	private SolrSettings solrSettings;
 
+	private Page<Product> productListPage;
+	private HighlightPage<Product> highlightProductPage;
+	private List<Product> productList;
+	private FacetPage<Product> facetProductPage;
+	private Iterable<Product> productIterable;
+	
 	// @formatter:off
 	
 	private enum DEMO {
@@ -71,24 +77,18 @@ public class SolrUI {
 
 	private void runDemos(DEMO demo) {
 
-		Page<Product> productListPage;
-		HighlightPage<Product> hlProductPage;
-		List<Product> productList;
-		FacetPage<Product> facetProductPage;
-		Iterable<Product> productIterable;
-
 		switch (demo) {
 
 		case HIGHLIGHT_SEARCH_CRITERIA:
-			hlProductPage = service.findByHighlightedNameCriteria("canon powershot");
-			processHighlights(hlProductPage);
-			printProducts(hlProductPage);
+			highlightProductPage = service.findByHighlightedNameCriteria("canon powershot");
+			processHighlights(highlightProductPage);
+			printProducts(highlightProductPage);
 			break;
 
 		case HIGHLIGHT_SEARCH:
-			hlProductPage = service.findByHighlightedName("canon powershot", new PageRequest(0, 20));
-			processHighlights(hlProductPage);
-			printProducts(hlProductPage);
+			highlightProductPage = service.findByHighlightedName("canon powershot", new PageRequest(0, 20));
+			processHighlights(highlightProductPage);
+			printProducts(highlightProductPage);
 			break;
 
 		case SIMPLE_QUERY:
@@ -224,7 +224,7 @@ public class SolrUI {
 		}
 		return productPage;
 	}
-	
+
 	private void printProducts(Iterable<? extends Product> products) {
 		int i = 0;
 		System.out.println("");

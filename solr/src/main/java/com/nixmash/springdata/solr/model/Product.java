@@ -89,6 +89,14 @@ public class Product implements IProduct {
 		this.categories = categories;
 	}
 
+	public List<String> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(List<String> features) {
+		this.features = features;
+	}
+
 	public Float getWeight() {
 		return weight;
 	}
@@ -148,10 +156,21 @@ public class Product implements IProduct {
 		this.point = point;
 	}
 
+	   public boolean hasCategories() {
+	        return (this.categories != null);
+	    }
+	   
+	   public boolean hasFeatures() {
+	        return (this.features != null);
+	    }
+	   
+	   public boolean hasLocation() {
+		   return (!this.location.equals("-1,-1"));
+	   }
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", weight=" + weight + ", price="
+		return "Product [id=" + id + ", name=" + name + ", categories=" + categories + ", features=" + features + ", weight=" + weight + ", price="
 				+ price + ", popularity=" + popularity + ", available=" + available + ", doctype=" + doctype + "]";
 	}
 

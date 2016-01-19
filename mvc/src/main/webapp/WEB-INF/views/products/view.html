@@ -1,54 +1,103 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-    <title th:text="#{product.view.page.title}"></title>
+<div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+<title th:text="#{product.view.page.title}"></title>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script>
+function initMap() {
+	  var myLatLng = {lat: -25.363, lng: 131.044};
+
+	  var map = new google.maps.Map(document.getElementById('map'), {
+	    zoom: 4,
+	    center: myLatLng
+	  });
+
+	  var marker = new google.maps.Marker({
+	    position: myLatLng,
+	    map: map,
+	    title: 'Hello World!'
+	  });
+	}
+</script>
 </head>
 <body>
-<nav th:replace="fragments/navbar :: navbar('products')">Navbar</nav>
+	<nav th:replace="fragments/navbar :: navbar('products')">Navbar</nav>
 
-<div class="container">
-    <div class="page-header" id="banner">
-        <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="|#{product.view.page.heading} ${product.id}|">[Product Heading with ID]</h1>
-            </div>
-            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+					<h1 th:text="|#{product.view.page.heading} ${product.id}|">[Product Heading with ID]</h1>
+				</div>
+				<div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+			</div>
+		</div>
 
-</div>
-<div class="container bs-docs-container big-font-container">
-    <div class="row row-centered">
-        <div class="bs-docs-section col-lg-9 col-centered">
-            <div id="form-table">
-                <div class="heading">
-                    <h2 th:text="#{product.view.page.gridheading}">[Product Details]</h2>
-                </div>
-                <table class="table table-condensed">
-                    <tr>
-                        <td class="td-label">
-                            <div th:text="#{product.label.id}">[ProductId]</div>
-                        </td>
-                        <td>
-                            <div th:text="${product.id}"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">
-                            <div th:text="#{product.label.name}">[ProductName]</div>
-                        </td>
-                        <td>
-                            <div th:text="${product.name}"></div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
-</div>
+	</div>
+	<div class="container bs-docs-container big-font-container">
+		<div class="row row-centered">
+			<div class="bs-docs-section col-lg-9 col-centered">
+				<div id="form-table">
+					<div class="heading">
+						<h2 th:text="#{product.view.page.gridheading}">[Product Details]</h2>
+					</div>
+					<table class="table table-condensed">
+						<tr>
+							<td class="td-label">
+								<div th:text="#{product.label.id}">[ProductId]</div>
+							</td>
+							<td>
+								<div th:text="${product.id}"></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-label">
+								<div th:text="#{product.label.name}">[ProductName]</div>
+							</td>
+							<td>
+								<div th:text="${product.name}"></div>
+							</td>
+						</tr>
+						<tr th:if="${product.hasFeatures()}">
+							<td class="td-label">
+								<div th:text="#{product.label.features}">[Features]</div>
+							</td>
+							<td th:inline="text">
+								<ul class="featurelist">
+									<li th:each="feature : ${product.features}" th:text="${feature}" />
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-label">
+								<div th:text="#{product.label.categories}">[Categories]</div>
+							</td>
+							<td th:inline="text">
+								<div th:switch="${product.hasCategories()}" th:remove="tag">
+									<ul th:case="${true}" class="catlist">
+										<li th:each="category : ${product.categories}"><a th:href="@{|/products/categories/${category}|}"
+											th:text="${#strings.capitalize(category)}">[Category]</a></li>
+									</ul>
+									<div th:case="${false}" th:text="#{product.message.nocategories}" th:remove="tag">[No categories]</div>
+								</div>
+							</td>
+						</tr>
+						<tr th:if="${product.hasLocation()}">
+							<td class="td-label">
+								<div th:text="#{product.label.location}">[Location]</div>
+							</td>
+							<td>
+								<div id="map"></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+	</div>
 
-<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 </body>
 </html>

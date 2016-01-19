@@ -56,22 +56,20 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 	@Resource
 	private SolrTemplate solrTemplate;
 
-	
 	@Override
 	public Page<Product> findTestCategoryRecords() {
 		return solrTemplate.queryForPage(
-				new SimpleQuery(new SimpleStringCriteria("cat:test"))
-						.setPageRequest(new PageRequest(0, 100)), Product.class);
+				new SimpleQuery(new SimpleStringCriteria("cat:test")).setPageRequest(new PageRequest(0, 100)),
+				Product.class);
 	}
 
 	@Override
 	public List<Product> findProductsBySimpleQuery(String userQuery) {
-		
+
 		Query query = new SimpleQuery(userQuery);
-		query.addFilterQuery(new 
-				SimpleQuery(new Criteria(IProduct.DOCTYPE_FIELD).is(SolrDocType.PRODUCT)));
+		query.addFilterQuery(new SimpleQuery(new Criteria(IProduct.DOCTYPE_FIELD).is(SolrDocType.PRODUCT)));
 		query.setRows(1000);
-		
+
 		Page<Product> results = solrTemplate.queryForPage(query, Product.class);
 		return results.getContent();
 	}
@@ -111,16 +109,32 @@ public class CustomProductRepositoryImpl implements CustomBaseRepository {
 	public HighlightPage<Product> searchProductsWithHighlights(String searchTerm) {
 		SimpleHighlightQuery query = new SimpleHighlightQuery();
 		String[] words = searchTerm.split(" ");
-		Criteria conditions = createSearchConditions(words);
+		Criteria conditions = createHighlightedNameConditions(words);
 		query.addCriteria(conditions);
+
 		HighlightOptions hlOptions = new HighlightOptions();
 		hlOptions.addField("name");
 		hlOptions.setSimplePrefix("<b>");
 		hlOptions.setSimplePostfix("</b>");
 		query.setHighlightOptions(hlOptions);
+
 		return solrTemplate.queryForHighlightPage(query, Product.class);
 	}
-	
+
+	private Criteria createHighlightedNameConditions(String[] words) {
+		Criteria conditions = null;
+
+		for (String word : words) {
+			if (conditions == null) {
+				conditions = new Criteria(Product.NAME_FIELD).contains(word);
+			} else {
+				conditions = conditions.or(new Criteria(Product.NAME_FIELD).contains(word));
+			}
+		}
+
+		return conditions;
+	}
+
 	private Criteria createSearchConditions(String[] words) {
 		Criteria conditions = null;
 

@@ -249,6 +249,32 @@ ul.cod-hobbylist li:last-child:after {
 }
 /*</editor-fold>*/
 
+/*/<editor-fold> desc="MULTI-ITEM DISPLAY----------------------------/ "*/
+
+ul.catlist { list-style: none; margin: 0; padding: 0; }
+ul.catlist li { display: inline; }
+ul.catlist li a:after { content: ","; }
+ul.catlist li:last-child a:after { content: ""; }
+
+ul.featurelist {
+    list-style: none;
+    margin: 0;
+    padding-left: 1em;
+    padding-top: 0.1em;
+    padding: .1em 0 .5em 1em;
+}
+
+ul.featurelist li:before {
+    content: "\e005";
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    float: left;
+    margin-top: 7px;
+    margin-left: -18px;
+    color: #dd4814;
+}
+
+/*</editor-fold>*/
 
 /*/<editor-fold> desc="MULTI-SELECT DROPDOWNS ----------------------------/ "*/
 
@@ -274,3 +300,9 @@ ul.cod-hobbylist li:last-child:after {
 blockquote small {
 	color: #716561;
 }
+
+/* GOOGLE MAPS ---------------------------------------------- */
+
+ #map {
+        height: 100%;
+      }
