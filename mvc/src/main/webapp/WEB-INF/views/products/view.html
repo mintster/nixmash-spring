@@ -3,23 +3,9 @@
 <head>
 <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
 <title th:text="#{product.view.page.title}"></title>
-<script src="https://maps.googleapis.com/maps/api/js"></script>
-<script>
-function initMap() {
-	  var myLatLng = {lat: -25.363, lng: 131.044};
 
-	  var map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 4,
-	    center: myLatLng
-	  });
+<div th:if="${product.hasLocation()}" th:include="fragments/map :: functions" th:remove="tag">[Map Javascript]</div>
 
-	  var marker = new google.maps.Marker({
-	    position: myLatLng,
-	    map: map,
-	    title: 'Hello World!'
-	  });
-	}
-</script>
 </head>
 <body>
 	<nav th:replace="fragments/navbar :: navbar('products')">Navbar</nav>
@@ -83,12 +69,12 @@ function initMap() {
 								</div>
 							</td>
 						</tr>
-						<tr th:if="${product.hasLocation()}">
+						<tr th:if="${product.hasLocation()}" class="locationRow">
 							<td class="td-label">
 								<div th:text="#{product.label.location}">[Location]</div>
 							</td>
 							<td>
-								<div id="map"></div>
+								<div id="googleMap" style="width: 500px; height: 380px;"></div>
 							</td>
 						</tr>
 					</table>

@@ -35,7 +35,7 @@
 	  <field name="inStock">true</field>
 	  <field name="manufacturedate_dt">2006-02-13T15:26:37Z</field>
 	  <!-- Buffalo store -->
-	  <field name="store">35.19255,-96.3755</field>
+	  <field name="store">35.4065,-97.5379</field>
 	  <field name="doctype">product</field>
 	</doc>
 </add>

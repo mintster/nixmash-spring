@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div th:fragment="functions">
+
+	<script src="http://maps.googleapis.com/maps/api/js"></script>
+	
+	
+	<script th:inline="text">
+        /*<![CDATA[*/
+                   
+		/*
+		*	var myCenter = 
+		*		new google.maps.LatLng([[@{|${product.getPoint().getX()},${product.getPoint().getY()}|}]]);
+		*/
+		
+        var myCenter = new google.maps.LatLng([[${product.location}]]);
+        
+		function initialize() {
+			var mapProp = {
+				center : myCenter,
+				zoom : 9,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			};
+
+			var map = new google.maps.Map(document.getElementById("googleMap"),
+					mapProp);
+
+			var marker = new google.maps.Marker({
+				position : myCenter,
+			});
+
+			marker.setMap(map);
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+        /*]]>*/
+	    </script>
+
+</div>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

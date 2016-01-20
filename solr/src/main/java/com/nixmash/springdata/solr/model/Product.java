@@ -165,7 +165,7 @@ public class Product implements IProduct {
 	    }
 	   
 	   public boolean hasLocation() {
-		   return (!this.location.equals("-1,-1"));
+		   return (this.getLocation() != null);
 	   }
 
 	@Override

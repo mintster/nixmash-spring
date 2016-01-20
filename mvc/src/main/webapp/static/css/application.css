@@ -303,6 +303,6 @@ blockquote small {
 
 /* GOOGLE MAPS ---------------------------------------------- */
 
- #map {
-        height: 100%;
-      }
+#form-table tr.locationRow td {
+	padding-top: 15px;
+}
