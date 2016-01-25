@@ -52,7 +52,6 @@ public class SolrApplicationTests extends SolrContext {
 	@Autowired
 	private ProductService productService;
 
-
 	@Test
 	public void badSimpleQueryThrowsUncategorizedSolrException() {
 		int i = 0;

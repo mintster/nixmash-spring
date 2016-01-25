@@ -50,5 +50,7 @@ public interface ProductService {
 	HighlightPage<Product> findByHighlightedNameCriteria(String searchTerm);
 
 	HighlightPage<Product> findByHighlightedName(String searchTerm, Pageable pageable);
+
+	List<Product> getProductsByLocation(String LatLng);
 	
 }

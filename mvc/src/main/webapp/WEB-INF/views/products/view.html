@@ -4,7 +4,8 @@
 <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
 <title th:text="#{product.view.page.title}"></title>
 
-<div th:if="${product.hasLocation()}" th:include="fragments/map :: functions" th:remove="tag">[Map Javascript]</div>
+<div th:if="${product.hasLocation()}" 
+		th:include="fragments/map :: functions" th:remove="tag">[Map Javascript]</div>
 
 </head>
 <body>
@@ -59,7 +60,7 @@
 							<td class="td-label">
 								<div th:text="#{product.label.categories}">[Categories]</div>
 							</td>
-							<td th:inline="text">
+							<td>
 								<div th:switch="${product.hasCategories()}" th:remove="tag">
 									<ul th:case="${true}" class="catlist">
 										<li th:each="category : ${product.categories}"><a th:href="@{|/products/categories/${category}|}"

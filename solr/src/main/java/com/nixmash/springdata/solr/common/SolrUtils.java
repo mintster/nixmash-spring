@@ -1,8 +1,6 @@
 package com.nixmash.springdata.solr.common;
-
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.model.ProductDTO;
-
 
 public class SolrUtils {
 

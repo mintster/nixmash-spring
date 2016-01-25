@@ -57,13 +57,14 @@ public class SolrUI {
 		FACET_ON_NAME,
 		SIMPLE_QUERY,
 		HIGHLIGHT_SEARCH, 
-		HIGHLIGHT_SEARCH_CRITERIA
+		HIGHLIGHT_SEARCH_CRITERIA,
+		BY_LOCATION
 	};
 
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.HIGHLIGHT_SEARCH_CRITERIA;
+		DEMO demo = DEMO.BY_LOCATION;
 
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
@@ -79,6 +80,11 @@ public class SolrUI {
 
 		switch (demo) {
 
+		case BY_LOCATION:
+			productList = service.getProductsByLocation("35.10,-96.102");
+			printProducts(productList);
+			break;
+			
 		case HIGHLIGHT_SEARCH_CRITERIA:
 			highlightProductPage = service.findByHighlightedNameCriteria("canon powershot");
 			processHighlights(highlightProductPage);

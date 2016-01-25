@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Point;
+import org.springframework.data.solr.core.geo.GeoConverters;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.data.solr.core.query.result.SolrResultPage;
@@ -46,6 +49,13 @@ public class ProductServiceImpl implements ProductService {
 		return products;
 	}
 
+	@Override
+	public List<Product> getProductsByLocation(String LatLng) {
+		Point point = GeoConverters.StringToPointConverter.INSTANCE.convert(LatLng);
+		List<Product> found = 
+				productRepo.findByLocationNear(new Point(point.getX(),point.getY()), new Distance(30));
+		return found;
+	}
 	@Override
 	public HighlightPage<Product> findByHighlightedName(String searchTerm, Pageable pageable) {
 		return productRepo.findByNameIn(splitSearchTermAndRemoveIgnoredCharacters(searchTerm), pageable);

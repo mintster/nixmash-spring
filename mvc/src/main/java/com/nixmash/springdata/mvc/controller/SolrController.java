@@ -65,11 +65,16 @@ public class SolrController {
 	private static final String SESSION_ATTRIBUTE_PRODUCTLIST = "productList";
 
 
-
-
 	@Autowired
 	public SolrController(ProductService productService) {
 		this.productService = productService;
+	}
+
+	@RequestMapping(value = "/products/json", method = RequestMethod.GET)
+	public @ResponseBody List<Product> getProductsByLocation( @RequestParam("latlng") String latlng) {
+			List<Product> found = productService.getProductsByLocation(latlng);
+			logger.info("Found {} products for location: {}", found.size(), latlng);
+			return found;
 	}
 
 	@RequestMapping(value = "/products")
