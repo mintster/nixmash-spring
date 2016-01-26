@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+<title th:text="#{product.map.page.title}"></title>
+
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+<link rel="stylesheet" th:href="@{/static/css/maps.css}" type="text/css" />
+<script th:src="@{/static/js/multimap.js}"></script>
+</head>
+<body>
+	<nav th:replace="fragments/navbar :: navbar('products')">Navbar</nav>
+
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+					<h1 th:text="#{product.map.page.header}">[Product Heading with ID]</h1>
+					<p class="lead" th:utext="#{product.category.page.subheader}">[Solr Facet Search Demo]</p>
+				</div>
+				<div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container bs-docs-container big-font-container">
+		<div class="row row-map">
+			<div class="col-lg-9">
+				<div class="map-info" th:text="#{product.map.page.mapinfo}">[Map Info]</div>
+				<div class="map_container">
+					<div id="map_canvas" class="map_canvas"></div>
+				</div>
+			</div>
+		</div>
+		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+	</div>
+
+	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+</body>
+</html>

@@ -61,7 +61,8 @@ public class SolrController {
 	private static final String PRODUCT_CATEGORIES_VIEW = "products/categories";
 	private static final String PRODUCT_VIEW = "products/view";
 	private static final String PRODUCTS_BYCATEGORY_VIEW = "products/category";
-
+	private static final String PRODUCT_MAP_VIEW = "products/map";
+	
 	private static final String SESSION_ATTRIBUTE_PRODUCTLIST = "productList";
 
 
@@ -83,6 +84,11 @@ public class SolrController {
 		return "redirect:/products/page/1";
 	}
 
+	@RequestMapping(value = "/products/map", method = GET)
+	public String productMap() {
+		return PRODUCT_MAP_VIEW;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/products/page/{pageNumber}", method = RequestMethod.GET)
 	public String pagedProductsPage(HttpServletRequest request, @PathVariable Integer pageNumber, Model uiModel) {
