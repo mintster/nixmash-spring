@@ -12,7 +12,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##Release History##
 
 - **[v0.2.7 -- Solr MVC](#v027----solr-mvc-in-progress)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
-- **[v0.2.6 -- Solr Query Samplings](v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
+- **[v0.2.6 -- Solr Query Samplings](#v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
 - **[v0.2.5 -- Spring Boot 1.3](#v025----spring-boot-13)** : *Update all libraries to support v1.3*
 - **[v0.2.4 -- Multiple Solr Repository Configurations](#v024----multiple-solr-repository-configurations)** : *Four different examples of configuring Solr Repositories*
 - **[v0.2.3 -- Initial Solr Release](#v023----initial-solr-release)** : *Embedded and HTTP Solr Server profiles, SimpleSolrRepository CRUD Queries, Spring Annotation Solr Context Configuration*
