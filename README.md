@@ -7,7 +7,38 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Implemented##
 
-*Implementations listed below by version are found in their corresponding branch, v0.0.1, v0.0.2, etc. Recent branches may not contain features found in prior versions.*
+*Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
+
+##Release History##
+
+- **[v0.2.7 -- Solr MVC](#v027----solr-mvc-in-progress)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
+- **[v0.2.6 -- Solr Query Samplings](v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
+- **[v0.2.5 -- Spring Boot 1.3](#v025----spring-boot-13)** : *Update all libraries to support v1.3*
+- **[v0.2.4 -- Multiple Solr Repository Configurations](#v024----multiple-solr-repository-configurations)** : *Four different examples of configuring Solr Repositories*
+- **[v0.2.3 -- Initial Solr Release](#v023----initial-solr-release)** : *Embedded and HTTP Solr Server profiles, SimpleSolrRepository CRUD Queries, Spring Annotation Solr Context Configuration*
+- **[v0.2.2 -- Eclipse-Friendly NixMash Spring](#v022----eclipse-friendly-nixmash-spring)** : *Project Gradle build and configuration updated to support Eclipse IDE*
+- **[v0.2.1 -- Spring MVC and JavaScript Samplings](#v021----spring-mvc-and-javascript-samplings)** : *Bootstrap Dialog Box supporting Spring User Authentication, Spring MVC JSON-Populated Multiselect plugin, SpringLoaded for Hot Reload development*
+- **[v0.2.0 -- Spring Data JPA Auditing](#v020----spring-data-jpa-auditing)** : *Spring JPA Auditing with ZonedDateTime and MySQL support*
+- **[v0.1.9 -- More Child Object Handling in MVC and Thymeleaf](#v019----more-child-object-handling-in-mvc-and-thymeleaf)** : *Hobbies added to Contact Forms, Custom Data Validation, CommandLineRunner example, Form JUnit Tests*
+- **[v0.1.8 -- Child Object Processing (Phones), MVC Method Level Security](#v018----child-object-processing-phones-mvc-method-level-security)** : *PreAuthorize Annotation and Sp-EL MVC Method Security, Thymeleaf Forms*
+- **[v0.1.7 -- Full MySQL Support, WAR Deployment](#v017----full-mysql-support-war-deployment)** : *Application deployed as WAR with deployment script, @ControllerAdvice*
+- **[v0.1.6 -- Initial Release w/ Spring Security](#v016----initial-release-w-spring-security)** : *Spring Security with User Login and Registration, Role-based Contact Details viewing, External Properties file configuration*
+- **[v0.1.5 -- Contact Add/Update Form, Dandelion Asset Bundling](#v015----contact-addupdate-form-dandelion-asset-bundling)** : *Dandelion Asset Bundling, Custom Favicon, Custom Exception Handling and all supporting Tests*
+- **[v0.1.4 -- Contact Display, List and Search](#v014----contact-display-list-and-search)** : *jQuery, Bootstrap and Bootswatch Webjars with Spring, Contact web display with Thymeleaf*
+- **[v0.1.3 -- Initial release w/ Thymeleaf](#v013----initial-release-w-thymeleaf)**
+- **[v0.1.2 -- Multi-Module with JPA and MVC Modules](#v012----multi-module-with-jpa-and-mvc-modules)** : *MVC Module added to project, initial HomeController and ContactControllers, Pretty Formatted JSON with Jayway*
+- **[v0.1.1 -- @ManyToMany Hobbies added to Contact Model](#v011----manytomany-hobbies-added-to-contact-model)**
+- **[v0.1.0 -- @OneToMany Contact Phones added to Contact Model](#v010----onetomany-contact-phones-added-to-contact-model)**
+- **[v0.0.9 -- Lazy Loading examples](#v009----lazy-loading-examples)**
+- **[v0.0.8 -- Multi-database configuration w/ H2Console and MySQL](#v008----multi-database-configuration-w-h2console-and-mysql)**
+- **[v0.0.7 -- Multi-profile configuration](#v007----multi-profile-configuration)** : *PROD and DEV Spring Profiles*
+- **[v0.0.6 -- GUI Generated Entities and Diagram Examples](#v006----gui-generated-entities-and-diagram-examples)** : *IntelliJ IDE Persistence Tool Demos*
+- **[v0.0.5 -- Hibernate and JPA Module structure](#v005----hibernate-and-jpa-module-structure)**
+- **[v0.0.4 -- Initial Release with JPA](#v004----initial-release-with-jpa)**
+- **[v0.0.3 -- DAO Implementation](#v003----dao-implementation)**
+- **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
+- **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
+
 
 ##v0.2.7 -- Solr MVC (In Progress)##
 
@@ -30,6 +61,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Solr Search in v0.2.7](http://nixmash.com/x/pics/github/spring-data-0.2.7.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.2.6 -- Solr Query Samplings##
 
 - Tests for CRUD and Custom Solr Queries
@@ -43,9 +76,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Solr Facet Query in v0.2.6](http://nixmash.com/x/pics/github/spring-data-0.2.6.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.2.5 -- Spring Boot 1.3##
 
 - Spring-Boot-1.3.0.RELEASE
+
+[[back to top](#nixmash-spring)]
 
 ##v0.2.4 -- Multiple Solr Repository Configurations##
 
@@ -54,6 +91,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Four Spring Solr Repository Configurations](http://nixmash.com/java/four-spring-solr-repository-configurations/)
 
 ![Four Solr Repository Options in v0.2.4](http://nixmash.com/x/pics/github/spring-data-0.2.4.png)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.2.3 -- Initial Solr Release##
 
@@ -69,6 +108,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Simple Solr Query results in v0.2.3](http://nixmash.com/x/pics/github/spring-data-0.2.3.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.2.2 -- Eclipse-Friendly NixMash Spring##
 
 - Modified Gradle build.gradle files to eliminate Eclipse Build errors
@@ -78,6 +119,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Loading a Multi-Project Gradle Application in Eclipse](http://nixmash.com/java/loading-a-multi-project-gradle-application-in-eclipse/)
 
 ![NixMash Spring in Eclipse Project Explorer for v0.2.2](http://nixmash.com/x/pics/github/spring-data-0.2.2.png)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.2.1 -- Spring MVC and JavaScript Samplings##
 
@@ -91,6 +134,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Bootstrap Multiselect Plugin in v0.2.1](http://nixmash.com/x/pics/github/spring-data-0.2.1.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.2.0 -- Spring Data JPA Auditing##
 
 - Spring Data JPA Auditing
@@ -98,6 +143,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: A Spring War Deployment Bash Script](http://nixmash.com/java/a-spring-war-deployment-bash-script/)
 
 ![MySQL JPA Audit Data in v0.2.0](http://nixmash.com/x/pics/github/spring-data-0.2.0.png)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.1.9 -- More Child Object Handling in MVC and Thymeleaf##
 
@@ -110,6 +157,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Radio Button Child Hobby Objects in v0.1.9](http://nixmash.com/x/pics/github/spring-data-0.1.9.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.1.8 -- Child Object Processing (Phones), MVC Method Level Security##
 
 - Add, Update, Remove Contact Phones added to Contact Update form
@@ -119,6 +168,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Object Child Lists in Thymeleaf Forms and Spring MVC](http://nixmash.com/java/object-child-lists-in-thymeleaf-forms-and-spring-mvc/)
 
 ![Contact Phone Children in v0.1.8](http://nixmash.com/x/pics/github/spring-data-0.1.8.png)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.1.7 -- Full MySQL Support, WAR Deployment##
 
@@ -130,6 +181,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/)
 - [Post: Adding MySQL Spring Security to Existing H2 App](http://nixmash.com/java/adding-mysql-spring-security-to-existing-h2-app/)
 
+[[back to top](#nixmash-spring)]
 
 ##v0.1.6 -- Initial Release w/ Spring Security##
 
@@ -150,8 +202,9 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Saving Multiple Authorities to Database on New User in Spring](http://nixmash.com/java/saving-multiple-authorities-to-database-on-new-user-in-spring/)
 - [Post: User Registration Validation in Spring](http://nixmash.com/java/user-registration-validation-in-spring/)
 
-
 ![Registration form validation in v0.1.6](http://nixmash.com/x/pics/github/spring-data-0.1.6.png)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.1.5 -- Contact Add/Update Form, Dandelion Asset Bundling##
 
@@ -170,6 +223,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Using jQuery-UI with Dandelion in v0.1.5](http://nixmash.com/x/pics/github/spring-data-0.1.5.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.1.4 -- Contact Display, List and Search##
 
 - jQuery, Bootstrap and Bootswatch Webjars
@@ -181,12 +236,16 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Bootstrap with All Contacts Display in Spring-Data MVC with Thymeleaf v0.1.4](http://nixmash.com/x/pics/github/spring-data-0.1.4.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.1.3 -- Initial release w/ Thymeleaf##
 
 - Thymeleaf support added
 - [Post: Thymeleaf Configuration with Spring Boot](http://nixmash.com/java/thymeleaf-configuration-with-spring-boot/)
 
 ![Spring-Data MVC with Thymeleaf in v0.1.3](http://nixmash.com/x/pics/github/spring-data-0.1.3.png)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.1.2 -- Multi-Module with JPA and MVC Modules##
 
@@ -202,6 +261,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Spring-Data Does MVC in v0.1.2](http://nixmash.com/x/pics/github/spring-data-0.1.2.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.1.1 -- @ManyToMany Hobbies added to Contact Model##
 
 - Addition of Hobbies, a @ManyToMany Entity with Contacts
@@ -210,6 +271,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - ContactDTO with Set<HobbyDTO>
 - Tests covering above Hobby processes
 - [Post: Working with the Many in a JPA @ManyToMany](http://nixmash.com/java/working-with-the-many-in-a-jpa-manytomany/)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.1.0 -- @OneToMany Contact Phones added to Contact Model##
 
@@ -221,6 +284,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Adding a JPA Entity and its @OneToMany Children](http://nixmash.com/java/adding-a-jpa-entity-and-its-onetomany-children/)
 - [Post: Updating the Many in a JPA @OneToMany](http://nixmash.com/java/updating-the-many-in-a-jpa-onetomany/)
 
+[[back to top](#nixmash-spring)]
 
 ##v0.0.9 -- Lazy Loading examples##
 
@@ -229,11 +293,15 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Modified database schema to better adhere to database relationship best practices. Updates are reflected in Entities. 
 - [Post: Approaches to JPA Lazy Loading](http://nixmash.com/java/approaches-to-jpa-lazy-loading/)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.0.8 -- Multi-database configuration w/ H2Console and MySQL##
 
 - h2database and mySQL JPA Data Configuration
 - Profiles based on Enumerator value (ex: JpaDataConfig.MYSQL)
 - [Post: A Spring JPA Configuration for Multiple Profiles](http://nixmash.com/java/a-spring-jpa-configuration-for-multiple-profiles/)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.0.7 -- Multi-profile configuration##
 
@@ -246,6 +314,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: GetBeans in a Spring Main Method, A Better Way](http://nixmash.com/java/getbeans-in-a-spring-main-method-a-better-way/)
 - [Post: Setting Spring Profiles in Gradle](http://nixmash.com/java/setting-spring-profiles-in-gradle/)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.0.6 -- GUI Generated Entities and Diagram Examples##
 
 - Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Models now contain "Entity" classname suffix.)
@@ -257,11 +327,15 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Image of Spring Data JPA Output v0.0.6](http://nixmash.com/x/pics/github/spring-data-0.0.6.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.0.5 -- Hibernate and JPA Module structure##
 
 - Broke-up the application into two separate IntelliJ Modules
 - Root and child Gradle project configuration
 - [Post: Supporting Multiple Transaction Managers in Spring](http://nixmash.com/java/supporting-two-transaction-managers-in-spring/)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.0.4 -- Initial Release with JPA##
 
@@ -275,6 +349,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Image of Spring Data JPA Output v0.0.4](http://nixmash.com/x/pics/github/spring-data-0.0.4.png)
 
+[[back to top](#nixmash-spring)]
+
 ##v0.0.3 -- DAO Implementation##
 
 - Generic DAO Interface Implementation
@@ -283,6 +359,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Data and Output identical to v0.0.1 
 - _Spring 4.0.6, Spring-Boot 1.1.4_
 - [Post: Spring-Data GitHub App at v.0.0.3 with Generic DAO Interface](http://nixmash.com/java/spring-hibernate-at-v-0-0-3-with-generic-dao-interface/)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.0.2 -- Using Spring Properties##
 
@@ -297,6 +375,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ![Image of Output v0.0.2](http://nixmash.com/x/pics/github/spring-hibernate-properties.png)
  
+[[back to top](#nixmash-spring)]
+
 ##v0.0.1 -- Base Configuration in Spring and Hibernate##
 
 - Changed XML Spring Configuration to Annotations
