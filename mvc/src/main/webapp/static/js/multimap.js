@@ -1,10 +1,12 @@
+/*<![CDATA[*/
+
 function renderGoogleMap() {
-	var start_point = new google.maps.LatLng(35.453487,-97.5184727);
+	var start_point = new google.maps.LatLng(0, 0);
 
 	// Creating a new map
 	var map = new google.maps.Map(document.getElementById("map_canvas"), {
 		center : start_point,
-		zoom : 8,
+		zoom : 5,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	});
 
@@ -16,7 +18,8 @@ function renderGoogleMap() {
 
 		$.ajax({
 			type : "GET",
-			url : '/products/json?latlng=35.453487,-97.5184727',
+			//url : '/products/json?latlng=35.453487-97.5184727',
+			url : '/products/json',
 			dataType : "json",
 			success : function(data) {
 
@@ -60,7 +63,6 @@ function renderGoogleMap() {
 					});
 
 				}
-
 			},
 			error : function(data) {
 				console.log('Please refresh the page and try again');
@@ -70,10 +72,12 @@ function renderGoogleMap() {
 
 		// end loop through json
 
-//		map.setCenter(start_point);
+		map.setCenter(start_point);
 		map.fitBounds(bounds);
 	}
 	setMarkerPoints(map);
 }
 
-google.maps.event.addDomListener(window, 'load', renderGoogleMap);
+/* ]]> */
+
+// google.maps.event.addDomListener(window, 'load', renderGoogleMap);

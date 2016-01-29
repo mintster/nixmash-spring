@@ -17,16 +17,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceView;
+import org.springframework.web.util.NestedServletException;
 
 import com.nixmash.springdata.mvc.AbstractContext;
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.service.ProductService;
 
@@ -40,6 +45,7 @@ public class SolrControllerTests extends AbstractContext {
 	private ProductService mockProductService;
 	private SolrController solrController;
 	private MockMvc mockMvc;
+	private MockMvc integrationMvc;
 	private List<Product> allProducts;
 	private Product product;
 
@@ -47,12 +53,25 @@ public class SolrControllerTests extends AbstractContext {
 	private ProductService productService;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws GeoLocationException {
 
+		final ExceptionHandlerExceptionResolver exceptionResolver = new ExceptionHandlerExceptionResolver();
+		final StaticApplicationContext applicationContext = new StaticApplicationContext();
+		applicationContext.registerBeanDefinition("solrController",
+				new RootBeanDefinition(SolrController.class, null, null));
+		exceptionResolver.setApplicationContext(applicationContext);
+		exceptionResolver.afterPropertiesSet();
+
+	
 		mockProductService = mock(ProductService.class);
+		
+		String badLocation = "35.453487-97.5184727";
+		when(mockProductService.getProductsByLocation(badLocation)).thenThrow(new GeoLocationException());
+
 		solrController = new SolrController(mockProductService);
 		mockMvc = MockMvcBuilders.standaloneSetup(solrController)
-				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
+				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+				.setHandlerExceptionResolvers(exceptionResolver).build();
 
 		product = createProduct(1000);
 		when(mockProductService.getProduct(PRODUCT_ID)).thenReturn(product);
@@ -83,21 +102,19 @@ public class SolrControllerTests extends AbstractContext {
 	@Test
 	public void autoCompleteShouldReturnJson() throws Exception {
 
-		mockMvc = standaloneSetup(new SolrController(productService))
+		integrationMvc = standaloneSetup(new SolrController(productService))
 				.setSingleView(new InternalResourceView("/WEB-INF/views/products/search.html")).build();
 
-		MvcResult result = mockMvc
+		MvcResult result = integrationMvc
 				.perform(get(String.format("/products/autocomplete?term=%s", AUTOCOMPLETE_FRAGMENT))
 						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andReturn();
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON)).andReturn();
 
 		// Using Jackson ObjectMapper on JSON
-		//		
+		//
 		// ObjectMapper mapper = new ObjectMapper();
 		// List<String> fragments = Arrays.asList(mapper.readValue(body, String[].class));
-		
+
 		String body = result.getResponse().getContentAsString();
 		String[] fragments = body.replaceAll("[\\p{Ps}\\p{Pe}\\\"]", "").split(",");
 
@@ -109,13 +126,24 @@ public class SolrControllerTests extends AbstractContext {
 	@Test
 	public void badSimplyQueryShouldDisplayError() throws Exception {
 
-		mockMvc = standaloneSetup(new SolrController(productService))
+		integrationMvc = standaloneSetup(new SolrController(productService))
 				.setSingleView(new InternalResourceView("/WEB-INF/views/products/list.html")).build();
 
-		mockMvc.perform(get("/products/list").param("query", "name1:memory")).andExpect(status().isOk())
+		integrationMvc.perform(get("/products/list").param("query", "name1:memory")).andExpect(status().isOk())
 				.andExpect(model().attributeHasFieldErrorCode("userQuery", "query", "product.search.error"))
 				.andExpect(view().name("products/search"));
 
+	}
+
+	@Test(expected = NestedServletException.class)
+	public void badLocationShouldThrowGeoLocationException() throws Exception {
+		 mockMvc.perform(get("/products/map/bad"));
+	}
+
+	@Test
+	public void goodLocationDisplaysAMap() throws Exception {
+		mockMvc.perform(get("/products/map")).andExpect(status().isOk())
+				.andExpect(model().attributeDoesNotExist(GlobalController.LOCATION_ERROR_ATTRIBUTE));
 	}
 
 	private Product createProduct(int id) {

@@ -36,3 +36,18 @@ div.map-info {
 	color: #DD4814;
 	margin-bottom: 2px;
 }
+div.mappingError {
+}
+div.mapGoodLink {
+    font-style: italic;
+}
+div.mapBadLink {
+    margin-top: 3px;
+    font-style: italic;
+}
+p.mapErrorLineSeparator {
+    color: #ccc;
+    margin-top: 10px;
+    font-size: 15px;
+    letter-spacing: 4px;
+}

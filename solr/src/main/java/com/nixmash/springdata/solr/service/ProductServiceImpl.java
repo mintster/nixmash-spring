@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.nixmash.springdata.solr.enums.SolrDocType;
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
 import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 	private static final Pattern IGNORED_CHARS_PATTERN = Pattern.compile("\\p{Punct}");
-	
+
 	@Resource
 	SimpleProductRepository simpleProductRepo;
 
@@ -50,22 +51,29 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProductsByLocation(String LatLng) {
-		Point point = GeoConverters.StringToPointConverter.INSTANCE.convert(LatLng);
-		List<Product> found = 
-				productRepo.findByLocationNear(new Point(point.getX(),point.getY()), new Distance(30));
+	public List<Product> getProductsByLocation(String LatLng) throws GeoLocationException {
+		List<Product> found;
+		try {
+			Point point = GeoConverters.StringToPointConverter.INSTANCE.convert(LatLng);
+			found = productRepo.findByLocationNear(new Point(point.getX(), point.getY()), new Distance(30));
+		} catch (Exception e) {
+			logger.info("No location found with coordinates: {}", LatLng);
+			throw new GeoLocationException("Error in mapping latLng: " + LatLng);
+		}
+
 		return found;
 	}
+
 	@Override
 	public HighlightPage<Product> findByHighlightedName(String searchTerm, Pageable pageable) {
 		return productRepo.findByNameIn(splitSearchTermAndRemoveIgnoredCharacters(searchTerm), pageable);
 	}
-	
+
 	@Override
 	public HighlightPage<Product> findByHighlightedNameCriteria(String searchTerm) {
 		return productRepo.searchProductsWithHighlights(searchTerm);
 	}
-	
+
 	@Override
 	public FacetPage<Product> getFacetedProductsAvailable() {
 		logger.info("Retrieving faceted products by available");
@@ -84,7 +92,6 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findByCategory(category);
 	}
 
-	
 	@Override
 	public Iterable<Product> getAllRecords() {
 		logger.info("Retrieving all records in index");
@@ -124,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getProductsWithUserQuery(String userQuery) {
 		logger.info("SimpleQuery from user search string -  findProductsBySimpleQuery()");
-			return productRepo.findProductsBySimpleQuery(userQuery);
+		return productRepo.findProductsBySimpleQuery(userQuery);
 	}
 
 	@Override
@@ -182,5 +189,5 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return result;
 	}
-	
+
 }

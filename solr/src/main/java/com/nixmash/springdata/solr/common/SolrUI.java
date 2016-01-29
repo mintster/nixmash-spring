@@ -16,6 +16,7 @@ import org.springframework.data.solr.core.query.result.HighlightEntry.Highlight;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Component;
 
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import com.nixmash.springdata.solr.model.IProduct;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.service.ProductService;
@@ -81,7 +82,11 @@ public class SolrUI {
 		switch (demo) {
 
 		case BY_LOCATION:
-			productList = service.getProductsByLocation("35.10,-96.102");
+			try {
+				productList = service.getProductsByLocation("35.10,-96.102");
+			} catch (GeoLocationException e) {
+				e.printStackTrace();
+			}
 			printProducts(productList);
 			break;
 			

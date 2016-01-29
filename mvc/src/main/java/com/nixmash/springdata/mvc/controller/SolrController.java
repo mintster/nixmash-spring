@@ -30,11 +30,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.nixmash.springdata.mvc.containers.Pager;
 import com.nixmash.springdata.mvc.containers.ProductCategory;
 import com.nixmash.springdata.mvc.containers.UserQuery;
 import com.nixmash.springdata.solr.common.SolrUtils;
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.model.ProductDTO;
 import com.nixmash.springdata.solr.service.ProductService;
@@ -62,9 +64,12 @@ public class SolrController {
 	private static final String PRODUCT_VIEW = "products/view";
 	private static final String PRODUCTS_BYCATEGORY_VIEW = "products/category";
 	private static final String PRODUCT_MAP_VIEW = "products/map";
-	
+
 	private static final String SESSION_ATTRIBUTE_PRODUCTLIST = "productList";
 
+	private static final String LOCATION_ATTRIBUTE_NAME = "location";
+
+	private List<Product> locationProducts;
 
 	@Autowired
 	public SolrController(ProductService productService) {
@@ -72,10 +77,31 @@ public class SolrController {
 	}
 
 	@RequestMapping(value = "/products/json", method = RequestMethod.GET)
-	public @ResponseBody List<Product> getProductsByLocation( @RequestParam("latlng") String latlng) {
-			List<Product> found = productService.getProductsByLocation(latlng);
-			logger.info("Found {} products for location: {}", found.size(), latlng);
-			return found;
+	public @ResponseBody List<Product> getProductsByLocation() {
+		return locationProducts;
+	}
+
+	@RequestMapping(value = "/products/map/bad", method = GET)
+	public ModelAndView badLocationMap(HttpServletRequest request) throws GeoLocationException {
+		return productMap(request, "35.453487-97.5184727");
+	}
+
+	@RequestMapping(value = "/products/map", method = GET)
+	public ModelAndView goodLocationMap(HttpServletRequest request) throws GeoLocationException {
+		return productMap(request, "35.453487,-97.5184727");
+	}
+
+	public ModelAndView productMap(HttpServletRequest request, String location) throws GeoLocationException {
+
+		request.setAttribute("location", location);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(LOCATION_ATTRIBUTE_NAME, location);
+
+		locationProducts = productService.getProductsByLocation(location);
+		logger.info("Found {} products for location: {}", locationProducts.size(), location);
+
+		mav.setViewName(PRODUCT_MAP_VIEW);
+		return mav;
 	}
 
 	@RequestMapping(value = "/products")
@@ -84,11 +110,6 @@ public class SolrController {
 		return "redirect:/products/page/1";
 	}
 
-	@RequestMapping(value = "/products/map", method = GET)
-	public String productMap() {
-		return PRODUCT_MAP_VIEW;
-	}
-	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/products/page/{pageNumber}", method = RequestMethod.GET)
 	public String pagedProductsPage(HttpServletRequest request, @PathVariable Integer pageNumber, Model uiModel) {
@@ -123,19 +144,17 @@ public class SolrController {
 		return PRODUCT_SEARCH_VIEW;
 	}
 
-
 	@RequestMapping(value = "/products/categories", method = RequestMethod.GET)
 	public String productCategories(Model model) {
 
 		FacetPage<Product> catfacetPage = productService.getFacetedProductsCategory();
-		Page<FacetFieldEntry> catPage = 
-				catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
+		Page<FacetFieldEntry> catPage = catfacetPage.getFacetResultPage(Product.CATEGORY_FIELD);
 
 		List<ProductCategory> results = new ArrayList<ProductCategory>();
 		for (FacetFieldEntry entry : catPage) {
 			results.add(new ProductCategory(entry.getValue(), toIntExact(entry.getValueCount())));
 		}
-		
+
 		model.addAttribute(MODEL_ATTRIBUTE_PRODUCT_CATEGORIES, results);
 		return PRODUCT_CATEGORIES_VIEW;
 	}
@@ -151,10 +170,9 @@ public class SolrController {
 		model.addAttribute(MODEL_ATTRIBUTE_PRODUCTS, found);
 		return PRODUCTS_BYCATEGORY_VIEW;
 	}
-	
+
 	@RequestMapping(value = "/products/list", method = RequestMethod.GET)
-	public String processFindForm(UserQuery userQuery, 
-			BindingResult result, Model model, HttpServletRequest request) {
+	public String processFindForm(UserQuery userQuery, BindingResult result, Model model, HttpServletRequest request) {
 		List<Product> results = null;
 
 		if (StringUtils.isEmpty(userQuery.getQuery())) {
@@ -164,8 +182,7 @@ public class SolrController {
 				results = productService.getProductsWithUserQuery(userQuery.getQuery());
 			} catch (UncategorizedSolrException ex) {
 				logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
-				result.rejectValue("query", "product.search.error", 
-						new Object[] { userQuery.getQuery() }, "not found");
+				result.rejectValue("query", "product.search.error", new Object[] { userQuery.getQuery() }, "not found");
 				return PRODUCT_SEARCH_VIEW;
 			}
 
@@ -184,7 +201,7 @@ public class SolrController {
 			return "redirect:/products/" + product.getId();
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/products/autocomplete", produces = "application/json")
 	public Set<String> autoComplete(Model model, @RequestParam("term") String query) {
@@ -192,33 +209,31 @@ public class SolrController {
 			return Collections.emptySet();
 		}
 
-		PageRequest pageRequest = new PageRequest(0,1);
-		FacetPage<Product> result = 
-				productService.autocompleteNameFragment(query, pageRequest);
+		PageRequest pageRequest = new PageRequest(0, 1);
+		FacetPage<Product> result = productService.autocompleteNameFragment(query, pageRequest);
 
 		Set<String> titles = new LinkedHashSet<String>();
 		for (Page<FacetFieldEntry> page : result.getFacetResultPages()) {
 			for (FacetFieldEntry entry : page) {
-				if (entry.getValue().contains(query)) { 
+				if (entry.getValue().contains(query)) {
 					titles.add(entry.getValue());
 				}
 			}
 		}
-		
-//		To display complete Product Name field in dropdown ----------------------------------- */
-//		
-//		List<Product> result = productService.getProductsByStartOfName(query);
-//
-//		Set<String> titles = new LinkedHashSet<String>();
-//		for (Product product : result) {
-//				if (product.getName().toLowerCase().contains(query.toLowerCase())) { 
-//					titles.add(product.getName());
-//			}
-//		}
-		
+
+		// To display complete Product Name field in dropdown ----------------------------------- */
+		//
+		// List<Product> result = productService.getProductsByStartOfName(query);
+		//
+		// Set<String> titles = new LinkedHashSet<String>();
+		// for (Product product : result) {
+		// if (product.getName().toLowerCase().contains(query.toLowerCase())) {
+		// titles.add(product.getName());
+		// }
+		// }
+
 		return titles;
 	}
-
 
 	@RequestMapping(value = "/products/{id}", method = GET)
 	public String productPage(@PathVariable("id") String id, Model model) {

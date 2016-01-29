@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import com.nixmash.springdata.solr.model.Product;
 
 public interface ProductService {
@@ -51,6 +52,6 @@ public interface ProductService {
 
 	HighlightPage<Product> findByHighlightedName(String searchTerm, Pageable pageable);
 
-	List<Product> getProductsByLocation(String LatLng);
+	List<Product> getProductsByLocation(String LatLng)  throws GeoLocationException;
 	
 }
