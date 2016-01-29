@@ -65,7 +65,7 @@ public class SolrUI {
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.BY_LOCATION;
+		DEMO demo = DEMO.HIGHLIGHT_SEARCH;
 
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))
@@ -97,7 +97,8 @@ public class SolrUI {
 			break;
 
 		case HIGHLIGHT_SEARCH:
-			highlightProductPage = service.findByHighlightedName("canon powershot", new PageRequest(0, 20));
+			highlightProductPage = service.findByHighlightedName("canon", new PageRequest(0, 20));
+			highlightProductPage.getContent();
 			processHighlights(highlightProductPage);
 			printProducts(highlightProductPage);
 			break;

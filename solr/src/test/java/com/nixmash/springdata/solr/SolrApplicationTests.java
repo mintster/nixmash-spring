@@ -1,5 +1,7 @@
 package com.nixmash.springdata.solr;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,9 +21,13 @@ import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.SimpleStringCriteria;
 import org.springframework.data.solr.core.query.result.FacetFieldEntry;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.HighlightEntry;
+import org.springframework.data.solr.core.query.result.HighlightEntry.Highlight;
+import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nixmash.springdata.solr.enums.SolrProductField;
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
 import com.nixmash.springdata.solr.service.ProductService;
@@ -34,7 +40,6 @@ public class SolrApplicationTests extends SolrContext {
 	private static final int INITIAL_RECORD_COUNT = 55;
 	private static final int INITIAL_CATEGORY_COUNT = 6;
 	private static final int TEST_RECORD_COUNT = 10;
-
 
 	@Autowired
 	SolrOperations solrOperations;
@@ -73,6 +78,15 @@ public class SolrApplicationTests extends SolrContext {
 			i++;
 		}
 		Assert.assertEquals(2, i);
+	}
+
+	@Test
+	public void badLatLngThrowsGeoLocationException() {
+		try {
+			productService.getProductsByLocation("12345");
+		} catch (Exception ex) {
+			Assert.assertTrue(ex instanceof GeoLocationException);
+		}
 	}
 
 	@Test
@@ -152,6 +166,29 @@ public class SolrApplicationTests extends SolrContext {
 		repo.delete(loaded);
 		Assert.assertEquals(INITIAL_RECORD_COUNT, repo.count());
 
+	}
+
+	@Test
+	public void highlightedResultsShouldContainTermsInBold() {
+		List<Product> baseList = SolrTestUtils.createProductList(10);
+		repo.save(baseList);
+
+		HighlightPage<Product> highlightProductPage = 
+				productService.findByHighlightedName("product", new PageRequest(0, 20));
+		assertTrue(containsSnipplet(highlightProductPage, "<b>product</b>"));
+	}
+
+	private boolean containsSnipplet(HighlightPage<Product> productsHighlightPage, String snippletToCheck) {
+		for (HighlightEntry<Product> he : productsHighlightPage.getHighlighted()) {
+			for (Highlight highlight : he.getHighlights()) {
+				for (String snipplet : highlight.getSnipplets()) {
+					if (snipplet.contains(snippletToCheck)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private Sort sortByIdDesc() {

@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,6 +14,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +30,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceView;
-import org.springframework.web.util.NestedServletException;
 
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.solr.exceptions.GeoLocationException;
@@ -62,9 +63,8 @@ public class SolrControllerTests extends AbstractContext {
 		exceptionResolver.setApplicationContext(applicationContext);
 		exceptionResolver.afterPropertiesSet();
 
-	
 		mockProductService = mock(ProductService.class);
-		
+
 		String badLocation = "35.453487-97.5184727";
 		when(mockProductService.getProductsByLocation(badLocation)).thenThrow(new GeoLocationException());
 
@@ -135,9 +135,17 @@ public class SolrControllerTests extends AbstractContext {
 
 	}
 
-	@Test(expected = NestedServletException.class)
-	public void badLocationShouldThrowGeoLocationException() throws Exception {
-		 mockMvc.perform(get("/products/map/bad"));
+	@Test
+	public void badLocationShouldThrowGeoLocationException() {
+		
+		integrationMvc = standaloneSetup(new SolrController(productService))
+				.setSingleView(new InternalResourceView("/WEB-INF/views/products/map.html")).build();
+		
+		try {
+			integrationMvc.perform(get("/products/map/bad")).andDo(print()).andReturn();
+		} catch (Exception ex) {
+			Assert.assertTrue(ex.getCause() instanceof GeoLocationException);
+		}
 	}
 
 	@Test

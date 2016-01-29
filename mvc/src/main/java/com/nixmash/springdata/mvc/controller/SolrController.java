@@ -82,16 +82,19 @@ public class SolrController {
 	}
 
 	@RequestMapping(value = "/products/map/bad", method = GET)
-	public ModelAndView badLocationMap(HttpServletRequest request) throws GeoLocationException {
+	public ModelAndView badLocationMap(HttpServletRequest request) 
+			throws GeoLocationException {
 		return productMap(request, "35.453487-97.5184727");
 	}
 
 	@RequestMapping(value = "/products/map", method = GET)
-	public ModelAndView goodLocationMap(HttpServletRequest request) throws GeoLocationException {
+	public ModelAndView goodLocationMap(HttpServletRequest request) 
+			throws GeoLocationException {
 		return productMap(request, "35.453487,-97.5184727");
 	}
 
-	public ModelAndView productMap(HttpServletRequest request, String location) throws GeoLocationException {
+	public ModelAndView productMap(HttpServletRequest request, String location) 
+			throws GeoLocationException {
 
 		request.setAttribute("location", location);
 		ModelAndView mav = new ModelAndView();

@@ -55,12 +55,12 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> found;
 		try {
 			Point point = GeoConverters.StringToPointConverter.INSTANCE.convert(LatLng);
-			found = productRepo.findByLocationNear(new Point(point.getX(), point.getY()), new Distance(30));
+			found = 
+					productRepo.findByLocationNear(new Point(point.getX(), point.getY()), new Distance(30));
 		} catch (Exception e) {
 			logger.info("No location found with coordinates: {}", LatLng);
 			throw new GeoLocationException("Error in mapping latLng: " + LatLng);
 		}
-
 		return found;
 	}
 

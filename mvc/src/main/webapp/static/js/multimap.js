@@ -18,7 +18,6 @@ function renderGoogleMap() {
 
 		$.ajax({
 			type : "GET",
-			//url : '/products/json?latlng=35.453487-97.5184727',
 			url : '/products/json',
 			dataType : "json",
 			success : function(data) {
