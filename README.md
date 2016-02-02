@@ -58,6 +58,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Location Queries with Spring Data Solr](http://nixmash.com/java/location-queries-with-spring-data-solr/)
 - [Post: Thymeleaf Conditions, Comma Control and Glyphicons as List Styles](http://nixmash.com/java/thymeleaf-conditions-comma-control-and-glyphicons-as-list-styles/)
 - [Post: Using Google Maps API with Thymeleaf and Spring](http://nixmash.com/java/using-google-maps-api-with-thymeleaf-and-spring/)
+- [Post: A Google Multi-Marker Map Example with Solr, Spring MVC and Thymeleaf](http://nixmash.com/java/a-google-multi-marker-map-example-with-solr-spring-mvc-and-thymeleaf/)
 
 ![Solr Search in v0.2.7](http://nixmash.com/x/pics/github/spring-data-0.2.7.png)
 

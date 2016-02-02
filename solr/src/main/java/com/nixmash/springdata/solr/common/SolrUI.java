@@ -11,13 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.FacetFieldEntry;
 import org.springframework.data.solr.core.query.result.FacetPage;
-import org.springframework.data.solr.core.query.result.HighlightEntry;
-import org.springframework.data.solr.core.query.result.HighlightEntry.Highlight;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Component;
 
 import com.nixmash.springdata.solr.exceptions.GeoLocationException;
-import com.nixmash.springdata.solr.model.IProduct;
 import com.nixmash.springdata.solr.model.Product;
 import com.nixmash.springdata.solr.service.ProductService;
 
@@ -92,14 +89,14 @@ public class SolrUI {
 			
 		case HIGHLIGHT_SEARCH_CRITERIA:
 			highlightProductPage = service.findByHighlightedNameCriteria("canon powershot");
-			processHighlights(highlightProductPage);
+			SolrUtils.processHighlights(highlightProductPage);
 			printProducts(highlightProductPage);
 			break;
 
 		case HIGHLIGHT_SEARCH:
 			highlightProductPage = service.findByHighlightedName("canon", new PageRequest(0, 20));
 			highlightProductPage.getContent();
-			processHighlights(highlightProductPage);
+			SolrUtils.processHighlights(highlightProductPage);
 			printProducts(highlightProductPage);
 			break;
 
@@ -222,20 +219,6 @@ public class SolrUI {
 
 	}
 
-	private HighlightPage<Product> processHighlights(HighlightPage<Product> productPage) {
-		int i = 0;
-		for (HighlightEntry<Product> product : productPage.getHighlighted()) {
-			for (Highlight highlight : product.getHighlights()) {
-				for (String snippet : highlight.getSnipplets()) {
-					if (highlight.getField().getName().equals(IProduct.NAME_FIELD)) {
-						productPage.getContent().get(i).setName(snippet);
-					}
-				}
-			}
-			i++;
-		}
-		return productPage;
-	}
 
 	private void printProducts(Iterable<? extends Product> products) {
 		int i = 0;
