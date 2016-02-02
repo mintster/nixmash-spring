@@ -4,7 +4,7 @@
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
     <title th:text="#{contact.search.page.title}"></title>
 </head>
-<body>
+<body onload="$('input[name=lastName]').focus();">
 <nav th:replace="fragments/navbar :: navbar('contacts')">Navbar</nav>
 
 <div class="container">
@@ -34,7 +34,7 @@
                         </td>
                         <td class="col-sm-2">
                             <div class="controls">
-                                <input type="text" class="form-control" th:field="*{lastName}" size="30" maxlength="80" />
+                                <input type="text" class="form-control" th:field="*{lastName}" name="lastName" size="30" maxlength="80" />
                             </div>
                             <div class="controls" th:if="${#fields.hasErrors('lastName')}">
                                 <h4><span class="label label-danger" th:errors="*{lastName}">[Errors]</span></h4>

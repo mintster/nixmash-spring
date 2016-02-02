@@ -1,4 +1,8 @@
 package com.nixmash.springdata.solr.common;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.solr.core.query.result.HighlightEntry;
 import org.springframework.data.solr.core.query.result.HighlightEntry.Highlight;
 import org.springframework.data.solr.core.query.result.HighlightPage;
@@ -24,7 +28,7 @@ public class SolrUtils {
 		dto.setPoint(product.getPoint());
 		return dto;
 	}
-	
+
 	public static HighlightPage<Product> processHighlights(HighlightPage<Product> productPage) {
 		int i = 0;
 		for (HighlightEntry<Product> product : productPage.getHighlighted()) {
@@ -39,5 +43,24 @@ public class SolrUtils {
 		}
 		return productPage;
 	}
-	
+
+	public static List<Product> highlightPagesToList(HighlightPage<Product> productPage) { 
+		
+		List<Product> products = new ArrayList<Product>();
+		for (HighlightEntry<Product> highlightedProduct : productPage.getHighlighted()) {
+			
+			Product product = new Product(highlightedProduct.getEntity().getId(), highlightedProduct.getEntity().getName());
+			products.add(product);
+			
+			for (Highlight highlight : highlightedProduct.getHighlights()) {
+				for (String snippet : highlight.getSnipplets()) {
+					if (highlight.getField().getName().equals(IProduct.NAME_FIELD)) {
+						product.setName(snippet);
+					}
+				}
+			}
+		}
+		return products;
+	}
+
 }

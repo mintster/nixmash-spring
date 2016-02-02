@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.query.result.FacetFieldEntry;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -82,19 +83,16 @@ public class SolrController {
 	}
 
 	@RequestMapping(value = "/products/map/bad", method = GET)
-	public ModelAndView badLocationMap(HttpServletRequest request) 
-			throws GeoLocationException {
+	public ModelAndView badLocationMap(HttpServletRequest request) throws GeoLocationException {
 		return productMap(request, "35.453487-97.5184727");
 	}
 
 	@RequestMapping(value = "/products/map", method = GET)
-	public ModelAndView goodLocationMap(HttpServletRequest request) 
-			throws GeoLocationException {
+	public ModelAndView goodLocationMap(HttpServletRequest request) throws GeoLocationException {
 		return productMap(request, "35.453487,-97.5184727");
 	}
 
-	public ModelAndView productMap(HttpServletRequest request, String location) 
-			throws GeoLocationException {
+	public ModelAndView productMap(HttpServletRequest request, String location) throws GeoLocationException {
 
 		request.setAttribute("location", location);
 		ModelAndView mav = new ModelAndView();
@@ -176,37 +174,36 @@ public class SolrController {
 
 	@RequestMapping(value = "/products/list", method = RequestMethod.GET)
 	public String processFindForm(UserQuery userQuery, BindingResult result, Model model, HttpServletRequest request) {
-		 List<Product> highlightedResults = null;
-		
+		List<Product> results = null;
+
 		if (StringUtils.isEmpty(userQuery.getQuery())) {
 			return "redirect:/products/search";
 		} else
 			try {
-				highlightedResults =  productService.getProductsWithUserQuery(userQuery.getQuery());
-//				highlightedResults = productService.findByHighlightedNameCriteria(userQuery.getQuery());
+				if (userQuery.getQuery().contains(":")) {
+					results = productService.getProductsWithUserQuery(userQuery.getQuery());
+				} else {
+					HighlightPage<Product> highlightedResults = productService.findByHighlightedNameCriteria(userQuery.getQuery());
+					results = SolrUtils.highlightPagesToList(highlightedResults);
+				}
 			} catch (UncategorizedSolrException ex) {
 				logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
 				result.rejectValue("query", "product.search.error", new Object[] { userQuery.getQuery() }, "not found");
 				return PRODUCT_SEARCH_VIEW;
 			}
 
-		if (highlightedResults.getContent().size() < 1) {
+		if (results.size() < 1) {
 			result.rejectValue("query", "product.search.noresults", new Object[] { userQuery.getQuery() }, "not found");
 			return PRODUCT_SEARCH_VIEW;
-		}
-		else
-		{
-			highlightedResults = SolrUtils.processHighlights(highlightedResults);
-		}
-		
-		
-		if (highlightedResults.getContent().size() > 1) {
-			PagedListHolder<Product> pagedListHolder = new PagedListHolder<Product>(highlightedResults.getContent());
+		} 
+
+		if (results.size() > 1) {
+			PagedListHolder<Product> pagedListHolder = new PagedListHolder<Product>(results);
 			pagedListHolder.setPageSize(PRODUCT_LIST_PAGE_SIZE);
 			request.getSession().setAttribute(SESSION_ATTRIBUTE_PRODUCTLIST, pagedListHolder);
 			return "redirect:/products/page/1";
 		} else {
-			Product product = highlightedResults.iterator().next();
+			Product product = results.iterator().next();
 			return "redirect:/products/" + product.getId();
 		}
 	}

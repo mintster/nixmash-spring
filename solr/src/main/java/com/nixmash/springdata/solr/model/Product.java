@@ -65,6 +65,11 @@ public class Product implements IProduct {
 		setName(name);
 	}
 
+	public Product(String id, String name) {
+		setId(id);
+		setName(name);
+	}
+
 	public String getId() {
 		return id;
 	}

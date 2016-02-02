@@ -8,7 +8,7 @@
 
 <title th:text="#{product.search.page.title}"></title>
 </head>
-<body>
+<body onload="$('input[name=query]').focus();">
 	<nav th:replace="fragments/navbar :: navbar('products')">Navbar</nav>
 
 	<div class="container">
