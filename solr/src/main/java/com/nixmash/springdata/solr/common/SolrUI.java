@@ -94,10 +94,13 @@ public class SolrUI {
 			break;
 
 		case HIGHLIGHT_SEARCH:
-			highlightProductPage = service.findByHighlightedName("canon", new PageRequest(0, 20));
-			highlightProductPage.getContent();
-			SolrUtils.processHighlights(highlightProductPage);
-			printProducts(highlightProductPage);
+			String queryString = "Can on yep";
+			Boolean matches = queryString.matches("[a-zA-Z_0-9 ]*");
+			System.out.println("MATCHES: " + matches);
+			//			highlightProductPage = service.findByHighlightedName("canon", new PageRequest(0, 20));
+//			highlightProductPage.getContent();
+//			SolrUtils.processHighlights(highlightProductPage);
+//			printProducts(highlightProductPage);
 			break;
 
 		case SIMPLE_QUERY:
