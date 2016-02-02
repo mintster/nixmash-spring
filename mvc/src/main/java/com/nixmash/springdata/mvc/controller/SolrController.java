@@ -176,31 +176,37 @@ public class SolrController {
 
 	@RequestMapping(value = "/products/list", method = RequestMethod.GET)
 	public String processFindForm(UserQuery userQuery, BindingResult result, Model model, HttpServletRequest request) {
-		List<Product> results = null;
-
+		 List<Product> highlightedResults = null;
+		
 		if (StringUtils.isEmpty(userQuery.getQuery())) {
 			return "redirect:/products/search";
 		} else
 			try {
-				results = productService.getProductsWithUserQuery(userQuery.getQuery());
+				highlightedResults =  productService.getProductsWithUserQuery(userQuery.getQuery());
+//				highlightedResults = productService.findByHighlightedNameCriteria(userQuery.getQuery());
 			} catch (UncategorizedSolrException ex) {
 				logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
 				result.rejectValue("query", "product.search.error", new Object[] { userQuery.getQuery() }, "not found");
 				return PRODUCT_SEARCH_VIEW;
 			}
 
-		if (results.size() < 1) {
+		if (highlightedResults.getContent().size() < 1) {
 			result.rejectValue("query", "product.search.noresults", new Object[] { userQuery.getQuery() }, "not found");
 			return PRODUCT_SEARCH_VIEW;
 		}
-
-		if (results.size() > 1) {
-			PagedListHolder<Product> pagedListHolder = new PagedListHolder<Product>(results);
+		else
+		{
+			highlightedResults = SolrUtils.processHighlights(highlightedResults);
+		}
+		
+		
+		if (highlightedResults.getContent().size() > 1) {
+			PagedListHolder<Product> pagedListHolder = new PagedListHolder<Product>(highlightedResults.getContent());
 			pagedListHolder.setPageSize(PRODUCT_LIST_PAGE_SIZE);
 			request.getSession().setAttribute(SESSION_ATTRIBUTE_PRODUCTLIST, pagedListHolder);
 			return "redirect:/products/page/1";
 		} else {
-			Product product = results.iterator().next();
+			Product product = highlightedResults.iterator().next();
 			return "redirect:/products/" + product.getId();
 		}
 	}

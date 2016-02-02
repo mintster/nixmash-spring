@@ -306,3 +306,9 @@ blockquote small {
 #form-table tr.locationRow td {
 	padding-top: 15px;
 }
+
+/* HIGHLIGHTING ---------------------------------------------- */
+
+td a b {
+	background-color: Yellow;
+}

@@ -38,7 +38,7 @@
 						<tr th:each="product : ${products.pageList}">
 							<td th:text="${product.id}">1</td>
 							<td><a href="#" th:href="@{'/products/' + ${product.id}}"
-								th:text="${product.name}">[productName]</a></td>
+								th:utext="${product.name}">[productName]</a></td>
 						</tr>
 					</table>
 				</div>

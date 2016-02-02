@@ -39,4 +39,5 @@ public class SolrUtils {
 		}
 		return productPage;
 	}
+	
 }
