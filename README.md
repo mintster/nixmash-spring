@@ -11,7 +11,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.2.7 -- Solr MVC](#v027----solr-mvc-in-progress)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
+- **[v0.2.7 -- Solr MVC](#v027----solr-mvc)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
 - **[v0.2.6 -- Solr Query Samplings](#v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
 - **[v0.2.5 -- Spring Boot 1.3](#v025----spring-boot-13)** : *Update all libraries to support v1.3*
 - **[v0.2.4 -- Multiple Solr Repository Configurations](#v024----multiple-solr-repository-configurations)** : *Four different examples of configuring Solr Repositories*
@@ -40,7 +40,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
 
-##v0.2.7 -- Solr MVC (In Progress)##
+##v0.2.7 -- Solr MVC##
 
 - Replaced application-dev.properties/application-prod.properties logic with External Properties file `solr.properties`
 - Configured for local and public Solr Server Url of http://solr/nixmashspring or a public url
@@ -48,6 +48,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Updated Solr Server to 4.10.4
 - Web display of Solr Facets
 - Web Solr Search
+- Solr Highlighting
 - Solr Spatial Searching and Location Data handling
 - Display Map with Google Map Javascript API, Thymeleaf and Solr Product Location data 
 - [Post: Pagination with Spring MVC, Solr, Thymeleaf and Bootstrap](http://nixmash.com/java/pagination-with-spring-mvc-solr-thymeleaf-and-bootstrap/)
@@ -59,6 +60,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Thymeleaf Conditions, Comma Control and Glyphicons as List Styles](http://nixmash.com/java/thymeleaf-conditions-comma-control-and-glyphicons-as-list-styles/)
 - [Post: Using Google Maps API with Thymeleaf and Spring](http://nixmash.com/java/using-google-maps-api-with-thymeleaf-and-spring/)
 - [Post: A Google Multi-Marker Map Example with Solr, Spring MVC and Thymeleaf](http://nixmash.com/java/a-google-multi-marker-map-example-with-solr-spring-mvc-and-thymeleaf/)
+- [Post: Highlighted Search Results with Spring Solr](http://nixmash.com/java/highlighted-search-results-with-spring-solr/)
 
 ![Solr Search in v0.2.7](http://nixmash.com/x/pics/github/spring-data-0.2.7.png)
 

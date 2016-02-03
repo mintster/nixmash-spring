@@ -62,7 +62,7 @@ public class SolrUI {
 	// @formatter:on
 
 	public void init() {
-		DEMO demo = DEMO.HIGHLIGHT_SEARCH;
+		DEMO demo = DEMO.HIGHLIGHT_SEARCH_CRITERIA;
 
 		String[] profiles = environment.getActiveProfiles();
 		if (profiles[0].equals("dev"))

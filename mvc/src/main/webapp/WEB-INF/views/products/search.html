@@ -80,7 +80,10 @@
 			<blockquote>
 				<p>This Demo supports Autocomplete Search Term entry and full Solr Search Syntax. <br/>Working Solr search samples include:</p>
 				<small>inStock:TRUE</small> <small>cat:memory</small> <small>name:Western+Digital AND inStock:FALSE</small> <small>popularity:7</small>
-				<small>(name:memory AND name:corsair) AND popularity:[6 TO *]</small>
+				<small>(name:memory AND name:corsair) AND popularity:[6 TO *]</small><small>"canon powershot"</small>
+				<div style="display: inline-block; height: 15px;"></div>
+				<p>Solr Highlighted Search results are also supported. Working search samples include:</p>
+				<small>dell</small><small>dell monitor</small><small>intel memory</small>
 			</blockquote>
 		</div>
 		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
