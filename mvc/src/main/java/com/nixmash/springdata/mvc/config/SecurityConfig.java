@@ -71,16 +71,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(IGNORED_RESOURCE_LIST);
 	}
 
+	// @formatter:off
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers(PERMITALL_RESOURCE_LIST).permitAll().anyRequest().authenticated().and()
-				.anonymous().key("anonymous").and().formLogin().loginPage("/login").defaultSuccessUrl("/")
-				.failureUrl("/login?error").permitAll().and().logout().deleteCookies("remember-me").permitAll().and()
-				.rememberMe().and().exceptionHandling().accessDeniedPage("/403");
+		http
+			.authorizeRequests()
+				.antMatchers(PERMITALL_RESOURCE_LIST)
+				.permitAll()
+				.anyRequest()
+				.authenticated()
+			.and()
+				.anonymous()
+				.key("anonymous")
+			.and()
+				.formLogin()
+					.loginPage("/login")
+					.defaultSuccessUrl("/")
+					.failureUrl("/login?error")
+					.permitAll()
+			.and()
+				.logout()
+					.deleteCookies("remember-me")
+					.permitAll()
+			.and()
+				.rememberMe()
+			.and()
+				.exceptionHandling()
+				.accessDeniedPage("/403");
 
-		http.authorizeRequests().antMatchers(ADMIN_RESOURCE_LIST).hasAuthority("ROLE_ADMIN");
-		// http.antMatcher("/h2-console/**").csrf().disable();
+		http
+			.authorizeRequests()
+				.antMatchers(ADMIN_RESOURCE_LIST)
+				.hasAuthority("ROLE_ADMIN");
+
 	}
+
+	// @formatter:on
 
 	@Autowired
 	public void registerAuthentication(AuthenticationManagerBuilder auth) throws Exception {
