@@ -1,0 +1,29 @@
+war {
+	baseName = 'nixmashSocial'
+}
+
+sourceSets {
+	main {
+		java.srcDir 'src/main/java'
+		resources.srcDir 'src/main/resources'
+	}
+	test {
+		java.srcDir 'src/test/java'
+	}
+}
+
+dependencies {
+	compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
+	compile 'org.springframework.social:spring-social-facebook-web:2.0.3.RELEASE'
+	compile 'org.springframework.social:spring-social-config:1.1.4.RELEASE'
+
+	compile("org.springframework.boot:spring-boot-starter-social-twitter")
+	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.springframework.boot:spring-boot-starter-jdbc")
+}
+
+bootRun {
+		systemProperty 'server.port', '9000'
+		main = 'org.springframework.social.showcase.config.Application'
+	}
+	

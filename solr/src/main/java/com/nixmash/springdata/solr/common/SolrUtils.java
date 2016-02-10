@@ -49,7 +49,8 @@ public class SolrUtils {
 		List<Product> products = new ArrayList<Product>();
 		for (HighlightEntry<Product> highlightedProduct : productPage.getHighlighted()) {
 			
-			Product product = new Product(highlightedProduct.getEntity().getId(), highlightedProduct.getEntity().getName());
+			Product product = new 
+					Product(highlightedProduct.getEntity().getId(), highlightedProduct.getEntity().getName());
 			products.add(product);
 			
 			for (Highlight highlight : highlightedProduct.getHighlights()) {

@@ -176,15 +176,18 @@ public class SolrController {
 	public String processFindForm(UserQuery userQuery, BindingResult result, Model model, HttpServletRequest request) {
 		List<Product> results = null;
 
+		Boolean isSimpleTermQuery = userQuery.getQuery().matches("[a-zA-Z_0-9 ]*");
+
 		if (StringUtils.isEmpty(userQuery.getQuery())) {
 			return "redirect:/products/search";
 		} else
 			try {
-				if (userQuery.getQuery().contains(":")) {
-					results = productService.getProductsWithUserQuery(userQuery.getQuery());
-				} else {
-					HighlightPage<Product> highlightedResults = productService.findByHighlightedNameCriteria(userQuery.getQuery());
+				if (isSimpleTermQuery) {
+					HighlightPage<Product> highlightedResults = productService
+							.findByHighlightedNameCriteria(userQuery.getQuery());
 					results = SolrUtils.highlightPagesToList(highlightedResults);
+				} else {
+					results = productService.getProductsWithUserQuery(userQuery.getQuery());
 				}
 			} catch (UncategorizedSolrException ex) {
 				logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
@@ -195,7 +198,7 @@ public class SolrController {
 		if (results.size() < 1) {
 			result.rejectValue("query", "product.search.noresults", new Object[] { userQuery.getQuery() }, "not found");
 			return PRODUCT_SEARCH_VIEW;
-		} 
+		}
 
 		if (results.size() > 1) {
 			PagedListHolder<Product> pagedListHolder = new PagedListHolder<Product>(results);

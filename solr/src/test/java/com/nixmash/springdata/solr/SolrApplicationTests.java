@@ -178,7 +178,8 @@ public class SolrApplicationTests extends SolrContext {
 		assertTrue(containsSnipplet(highlightProductPage, "<b>product</b>"));
 	}
 
-	private boolean containsSnipplet(HighlightPage<Product> productsHighlightPage, String snippletToCheck) {
+	private boolean containsSnipplet(HighlightPage<Product> productsHighlightPage, 
+			String snippletToCheck) {
 		for (HighlightEntry<Product> he : productsHighlightPage.getHighlighted()) {
 			for (Highlight highlight : he.getHighlights()) {
 				for (String snipplet : highlight.getSnipplets()) {
