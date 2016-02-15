@@ -1,3 +1,4 @@
+
 /*<![CDATA[*/
 
 function renderGoogleMap() {
@@ -77,6 +78,8 @@ function renderGoogleMap() {
 	setMarkerPoints(map);
 }
 
+google.maps.event.addDomListener(window, 'ready', renderGoogleMap);
+
 /* ]]> */
 
-// google.maps.event.addDomListener(window, 'load', renderGoogleMap);
+

@@ -1,0 +1,24 @@
+<configuration>
+	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<!-- To enable JMX Management -->
+	<jmxConfigurator />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%.-1level|MVC|%-30.30logger{0}|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.springframework.social.showcase" level="info" />
+	<logger name="com.nixmash.springdata.jpa" level="info" />
+	<logger name="org.thymeleaf" level="off" />
+	<logger name="org.hibernate" level="off" />
+
+	<root level="off">
+		<appender-ref ref="console" />
+	</root>
+</configuration>
