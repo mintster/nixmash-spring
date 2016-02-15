@@ -1,18 +1,15 @@
-war {
-	baseName = 'nixmashSocial'
-}
+war { baseName = 'nixmashSocial' }
 
 sourceSets {
 	main {
 		java.srcDir 'src/main/java'
 		resources.srcDir 'src/main/resources'
 	}
-	test {
-		java.srcDir 'src/test/java'
-	}
+	test { java.srcDir 'src/test/java' }
 }
 
 dependencies {
+	compile project(':jpa')
 	compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
 	compile 'org.springframework.social:spring-social-facebook-web:2.0.3.RELEASE'
 	compile 'org.springframework.social:spring-social-config:1.1.4.RELEASE'
@@ -23,7 +20,8 @@ dependencies {
 }
 
 bootRun {
-		systemProperty 'server.port', '9000'
-		main = 'org.springframework.social.showcase.config.Application'
-	}
-	
+	systemProperty 'server.port', '9000'
+	systemProperty 'spring.profiles.active', 'h2,dev'
+	main = 'org.springframework.social.showcase.config.Application'
+}
+

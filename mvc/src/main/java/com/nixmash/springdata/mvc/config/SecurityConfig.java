@@ -18,13 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-/**
- * Created with IntelliJ IDEA.
- * User: daveburke
- * Date: 7/16/15
- * Time: 4:40 PM
- */
-
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 
