@@ -143,7 +143,7 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void validRegistration() throws Exception {
-		RequestBuilder request = post("/register").param("username", "bobby").param("firstName", "Bob")
+		RequestBuilder request = post("/signup").param("username", "bobby").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "bob@aol.com").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 
@@ -152,7 +152,7 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void invalidRegistrationEmail() throws Exception {
-		RequestBuilder request = post("/register").param("username", "bobby").param("firstName", "Bob")
+		RequestBuilder request = post("/signup").param("username", "bobby").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "user").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 		mvc.perform(request).andExpect(invalidRegistration());
@@ -160,7 +160,7 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void preExistingUsernameRegistration() throws Exception {
-		RequestBuilder request = post("/register").param("username", "user").param("firstName", "Bob")
+		RequestBuilder request = post("/signup").param("username", "user").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "bob@email.com").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 		mvc.perform(request).andExpect(model().attributeHasErrors("userDTO")).andExpect(invalidRegistration());
@@ -201,7 +201,7 @@ public class SecurityTests extends AbstractContext {
 		return result -> {
 
 			status().isOk().match(result);
-			view().name("register").match(result);
+			view().name("signup").match(result);
 		};
 	}
 

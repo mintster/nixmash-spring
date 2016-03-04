@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.config;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,6 +73,26 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return messageSource;
 	}
 
+	   @Bean
+	    public SimpleMappingExceptionResolver exceptionResolver() {
+	        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+
+	        Properties exceptionMappings = new Properties();
+
+	        exceptionMappings.put("java.lang.Exception", "errors/generic");
+	        exceptionMappings.put("java.lang.RuntimeException", "errors/generic");
+
+	        exceptionResolver.setExceptionMappings(exceptionMappings);
+
+	        Properties statusCodes = new Properties();
+
+	        statusCodes.put("errors/404", "404");
+	        statusCodes.put("errors/generic", "500");
+
+	        exceptionResolver.setStatusCodes(statusCodes);
+
+	        return exceptionResolver;
+	    }
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();

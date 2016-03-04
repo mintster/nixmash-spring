@@ -443,3 +443,5 @@ Two excellent source references for Spring Security which initially appeared in 
 Petri Kainulainen also served as a great reference on Solr in **Version 0.2.3.** See his excellent Spring Data Solr Tutorial(http://www.petrikainulainen.net/spring-data-solr-tutorial/) on his blog. Another good reference on Solr was Christoph Strobl's [spring-data-solr-examples](https://github.com/spring-projects/spring-data-solr-examples) on GitHub.
 
 Spring Framework contributor Christoph Strobl's Spring Data Solr Showcase(https://github.com/christophstrobl/spring-data-solr-showcase) served as the basis of Solr Autocomplete found in **Version 0.2.7.**
+
+The [Social Showcase for Spring Boot Sample Project](https://github.com/spring-projects/spring-social-samples/tree/master/spring-social-showcase-boot) was helpful in becoming oriented with Spring Social in **Version 0.2.8.** Petri Kainulainen remains my Go-To Spring Guru, here for Spring Social in his [4-Part Tutorial](http://www.petrikainulainen.net/spring-social-tutorial/).

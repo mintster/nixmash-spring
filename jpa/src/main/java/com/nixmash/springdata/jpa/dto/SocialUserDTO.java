@@ -11,7 +11,7 @@ import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 
-public class UserDTO {
+public class SocialUserDTO {
 
     @Length(min= User.MIN_LENGTH_USERNAME, max=User.MAX_LENGTH_USERNAME)
     private String username = "";
@@ -21,7 +21,6 @@ public class UserDTO {
     @Length(max=User.MAX_LENGTH_EMAIL_ADDRESS)
     private String email = "";
 
-    @Length(min=User.MIN_LENGTH_PASSWORD, max=User.MAX_LENGTH_PASSWORD)
     private String password = "";
 
     @NotEmpty
@@ -31,8 +30,6 @@ public class UserDTO {
     @NotEmpty
     @Length(min=User.MIN_LENGTH_LAST_NAME, max=User.MAX_LENGTH_LAST_NAME)
     private String lastName = "";
-
-    private String repeatedPassword = "";
 
     private Collection<Authority> authorities;
 
@@ -53,21 +50,11 @@ public class UserDTO {
     }
 
     public String getPassword() {
-        return "something";
-    	//return password;
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRepeatedPassword() {
-      return "something";
-    	//  return repeatedPassword;
-    }
-
-    public void setRepeatedPassword(String repeatedPassword) {
-        this.repeatedPassword = repeatedPassword;
     }
 
     public String getUsername() {
@@ -79,7 +66,6 @@ public class UserDTO {
     }
 
     public String getLastName() {
-
         return lastName;
     }
 

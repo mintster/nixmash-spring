@@ -19,7 +19,7 @@
 		</div>
 		
 		<div id="content" layout:fragment="content">
-			<p>Welcome, <span th:text="${account.firstName}">first-name</span>!</p>
+			<p>Welcome, <span th:text="${user.firstName}">first-name</span>!</p>
 			
 			<form method="POST" th:action="@{/signout}">
 				<input type="hidden" name="_csrf" th:value="${_csrf.token}" />

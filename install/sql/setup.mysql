@@ -241,3 +241,27 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 DROP VIEW IF EXISTS `v_contact_phones`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_contact_phones` AS select `contacts`.`contact_id` AS `contact_id`,`contacts`.`first_name` AS `first_name`,`contacts`.`last_name` AS `last_name`,`contacts`.`birth_date` AS `birth_date`,`contacts`.`email` AS `email`,`contact_phones`.`phone_type` AS `phone_type`,`contact_phones`.`phone_number` AS `phone_number`,`contact_phones`.`contact_phone_id` AS `contact_phone_id` from (`contacts` join `contact_phones` on((`contacts`.`contact_id` = `contact_phones`.`contact_id`))) ;
+
+
+-- ----------------------------
+-- Table structure for userconnection
+-- ----------------------------
+DROP TABLE IF EXISTS `userconnection`;
+CREATE TABLE `userconnection` (
+  `userId` varchar(255) NOT NULL,
+  `providerId` varchar(255) NOT NULL,
+  `providerUserId` varchar(255) NOT NULL DEFAULT '',
+  `rank` int(11) NOT NULL,
+  `displayName` varchar(255) DEFAULT NULL,
+  `profileUrl` varchar(512) DEFAULT NULL,
+  `imageUrl` varchar(512) DEFAULT NULL,
+  `accessToken` varchar(255) NOT NULL,
+  `secret` varchar(255) DEFAULT NULL,
+  `refreshToken` varchar(255) DEFAULT NULL,
+  `expireTime` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`userId`,`providerId`,`providerUserId`),
+  UNIQUE KEY `UserConnectionRank` (`userId`,`providerId`,`rank`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE UNIQUE INDEX UserConnectionProviderUser ON UserConnection(providerId, providerUserId);
+ 

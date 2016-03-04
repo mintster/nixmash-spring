@@ -21,7 +21,12 @@ dependencies {
     compile project(':solr')
     compile 'org.springframework.boot:spring-boot-starter-web'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-
+	
+	compile("org.springframework.boot:spring-boot-starter-social-twitter")
+	compile("org.springframework.boot:spring-boot-starter-social-facebook")
+	compile("org.springframework.social:spring-social-security:1.1.4.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-security")
+	
     compile 'com.jayway.restassured:json-path:2.4.1'
     compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
     compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
@@ -61,8 +66,8 @@ bootRun {
 //    def springLoadedFile = configurations.springLoaded.find
 //            { it.name == "springloaded-1.2.4.RELEASE.jar" }
 
-    systemProperty 'server.port', '8084'
-    systemProperty 'spring.profiles.active', 'h2,dev'
+    systemProperty 'server.port', '9000'
+    systemProperty 'spring.profiles.active', 'mysql,dev'
 //    jvmArgs "-javaagent:$springLoadedFile", "-noverify"
     main = 'com.nixmash.springdata.mvc.WebInitializer'
 }

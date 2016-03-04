@@ -44,7 +44,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	public void createAccount(Account user) throws UsernameAlreadyInUseException {
 		try {
 			jdbcTemplate.update(
-					"insert into Account (firstName, lastName, username, password) values (?, ?, ?, ?)",
+					"insert into users (firstName, lastName, username, password) values (?, ?, ?, ?)",
 					user.getFirstName(), user.getLastName(), user.getUsername(),
 					passwordEncoder.encode(user.getPassword()));
 		} catch (DuplicateKeyException e) {

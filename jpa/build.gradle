@@ -18,6 +18,12 @@ configurations {
     compile.exclude module: 'org.slf4j'
 }
 
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-social-twitter")
+	compile("org.springframework.boot:spring-boot-starter-social-facebook")
+	compile("org.springframework.social:spring-social-security:1.1.4.RELEASE")
+}
+
 task serviceTests(type: Test, dependsOn: testClasses) {
     include '**/*Service*'
 }

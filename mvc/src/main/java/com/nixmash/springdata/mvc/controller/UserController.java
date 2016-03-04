@@ -15,29 +15,37 @@
  */
 package com.nixmash.springdata.mvc.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.google.common.collect.Lists;
+import com.nixmash.springdata.jpa.dto.SocialUserDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Allows users to sign up.
@@ -47,69 +55,89 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Controller
 public class UserController {
 
+	public static final String MODEL_ATTRIBUTE_CURRENTUSER = "currentUser";
+	public static final String USER_PROFILE_VIEW = "users/profile";
+	public static final String SIGNUP_VIEW = "signup";
+	public static final String SIGNIN_VIEW = "signin";
+	public static final String REGISTER_VIEW = "register";
 
-    public static final String MODEL_ATTRIBUTE_CURRENTUSER = "currentUser";
-    public static final String USER_PROFILE_VIEW = "users/profile";
-    public static final String REGISTER_VIEW = "register";
-    public static final String LOGIN_VIEW = "login";
+	private final UserService userService;
+	private final CurrentUserDetailsService currentUserDetailsService;
+	private final UserCreateFormValidator userCreateFormValidator;
+	private final ProviderSignInUtils providerSignInUtils;
 
-    private final UserService userService;
-    private final CurrentUserDetailsService currentUserDetailsService;
-    private final UserCreateFormValidator userCreateFormValidator;
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	@Autowired
+	public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator,
+			ProviderSignInUtils providerSignInUtils, CurrentUserDetailsService currentUserDetailsService) {
+		this.userService = userService;
+		this.userCreateFormValidator = userCreateFormValidator;
+		this.providerSignInUtils = providerSignInUtils;
+		this.currentUserDetailsService = currentUserDetailsService;
+	}
 
-    @Autowired
-    public UserController(UserService userService,
-                          UserCreateFormValidator userCreateFormValidator,
-                          CurrentUserDetailsService currentUserDetailsService) {
-        this.userService = userService;
-        this.userCreateFormValidator = userCreateFormValidator;
-        this.currentUserDetailsService = currentUserDetailsService;
-    }
+	@InitBinder("userDTO")
+	public void initBinder(WebDataBinder binder) {
+		binder.addValidators(userCreateFormValidator);
+	}
 
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String registrationForm(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
+		if (request.getUserPrincipal() != null)
+			return "redirect:/";
+		else
+			return REGISTER_VIEW;
+	}
 
-    @InitBinder("userDTO")
-    public void initBinder(WebDataBinder binder) {
-        binder.addValidators(userCreateFormValidator);
-    }
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String register(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result, WebRequest request,
+			RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return REGISTER_VIEW;
+		}
+		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
+		userService.create(userDTO);
+		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
+		return "redirect:/";
+	}
+	
+ 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	public String signupForm(@ModelAttribute SocialUserDTO socialUserDTO, HttpServletRequest request) {
+		if (request.getUserPrincipal() != null)
+			return "redirect:/";
+		else
+			return SIGNUP_VIEW;
+	}
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registrationForm(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
-        if (request.getUserPrincipal() != null)
-            return "redirect:/";
-        else
-            return REGISTER_VIEW;
-    }
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result, WebRequest request,
+			RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return SIGNUP_VIEW;
+		}
+		
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUsername(socialUserDTO.getUsername());
+		userDTO.setFirstName(socialUserDTO.getFirstName());
+		userDTO.setLastName(socialUserDTO.getLastName());
+		userDTO.setEmail(socialUserDTO.getEmail());
+		userDTO.setPassword("something");
+		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
+        
+		userService.create(userDTO);
+		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
+		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
+		return "redirect:/";
+	}
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result,
-                           RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return REGISTER_VIEW;
-        }
-        userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
-        userService.create(userDTO);
-        redirect.addFlashAttribute("feedbackMessage", "Successfully registered");
-        return "redirect:/contacts";
-    }
+	@PreAuthorize("@userService.canAccessUser(principal, #username)")
+	@RequestMapping(value = "/{username}", method = GET)
+	public String profilePage(@PathVariable("username") String username, Model model) throws UsernameNotFoundException {
+		logger.info("Showing user page for user: {}", username);
+		CurrentUser found = currentUserDetailsService.loadUserByUsername(username);
+		model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, found);
+		return USER_PROFILE_VIEW;
+	}
 
-    @PreAuthorize("@userService.canAccessUser(principal, #username)")
-    @RequestMapping(value = "/{username}", method = GET)
-    public String profilePage(@PathVariable("username")
-                                         String username, Model model)
-            throws UsernameNotFoundException {
-        logger.info("Showing user page for user: {}", username);
-        CurrentUser found = currentUserDetailsService.loadUserByUsername(username);
-        model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, found);
-        return USER_PROFILE_VIEW;
-    }
-
-    @RequestMapping(value = "/login", method = GET)
-    public String login(HttpServletRequest request, Model model) {
-        if (request.getUserPrincipal() != null)
-            return "redirect:/contacts";
-        else
-            return LOGIN_VIEW;
-    }
 }

@@ -49,13 +49,11 @@
 						<a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right"
 							th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
 
-
-
 					</div>
 					<div th:if="${currentUser == null}" class="navbar-right">
-						<a th:href="@{'/login/'}" th:text="#{web.site.login}" class="navbar-text margin-5">[Login]</a> <span
-							class="navbar-text margin-5">|</span> <a th:href="@{'/register/'}" th:text="#{web.site.register}"
-							class="navbar-text margin-5">[Register]</a>
+						<a th:href="@{'/signin/'}" th:text="#{web.site.login}" class="navbar-text margin-5">[Login]</a> <span
+							class="navbar-text margin-5">|</span> <a th:href="@{'/register/'}" th:text="#{web.site.signup}"
+							class="navbar-text margin-5">[Signup]</a>
 					</div>
 				</div>
 			</div>
@@ -66,6 +64,3 @@
 </body>
 </html>
 
-<!--<div class="navbar-right">-->
-<!--<a class="navbar-text" href="/login/">Login</a><span class="navbar-text">|</span><a class="navbar-text" href="/register/">Register</a>-->
-<!--</div>-->

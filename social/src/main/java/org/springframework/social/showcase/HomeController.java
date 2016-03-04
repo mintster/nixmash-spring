@@ -21,20 +21,21 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.showcase.account.AccountRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.nixmash.springdata.jpa.repository.UserRepository;
 
 @Controller
 public class HomeController {
 	
 	private final Provider<ConnectionRepository> connectionRepositoryProvider;
 	
-	private final AccountRepository accountRepository;
+	private final UserRepository accountRepository;
 
 	@Inject
-	public HomeController(Provider<ConnectionRepository> connectionRepositoryProvider, AccountRepository accountRepository) {
+	public HomeController(Provider<ConnectionRepository> connectionRepositoryProvider, UserRepository accountRepository) {
 		this.connectionRepositoryProvider = connectionRepositoryProvider;
 		this.accountRepository = accountRepository;
 	}
@@ -42,7 +43,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Principal currentUser, Model model) {
 		model.addAttribute("connectionsToProviders", getConnectionRepository().findAllConnections());
-		model.addAttribute(accountRepository.findAccountByUsername(currentUser.getName()));
+		model.addAttribute(accountRepository.findByUsername(currentUser.getName()));
 		return "home";
 	}
 	

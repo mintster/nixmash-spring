@@ -1,12 +1,9 @@
 package com.nixmash.springdata.jpa.service;
 
-import com.nixmash.springdata.jpa.dto.UserDTO;
-import com.nixmash.springdata.jpa.enums.Role;
-import com.nixmash.springdata.jpa.model.Authority;
-import com.nixmash.springdata.jpa.model.CurrentUser;
-import com.nixmash.springdata.jpa.model.User;
-import com.nixmash.springdata.jpa.repository.AuthorityRepository;
-import com.nixmash.springdata.jpa.repository.UserRepository;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +14,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.enums.Role;
+import com.nixmash.springdata.jpa.model.Authority;
+import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.repository.AuthorityRepository;
+import com.nixmash.springdata.jpa.repository.UserRepository;
 
 @Service("userService")
 @Transactional

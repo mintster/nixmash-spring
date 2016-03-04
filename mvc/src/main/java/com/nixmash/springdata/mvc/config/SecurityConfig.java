@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,18 +18,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.social.security.SocialUserDetailsService;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
+import com.nixmash.springdata.mvc.security.SimpleSocialUserDetailsService;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackageClasses = CurrentUserDetailsService.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final String[] IGNORED_RESOURCE_LIST = new String[] { "/resources/**", "/static/**", "/webjars/**"};
-	private static final String[] PERMITALL_RESOURCE_LIST = new String[] { "/", "/login/**", "/contacts", "/json/**",
-			"/register/**", "/products/**" };
+	private static final String[] IGNORED_RESOURCE_LIST = new String[] { "/resources/**", "/static/**", "/webjars/**" };
+	private static final String[] PERMITALL_RESOURCE_LIST = new String[] { "/auth/**", "/signin/**", "/signup/**", "/", "/register/**", 
+			"/contacts", "/json/**", "/products/**" };
 	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/h2-console/**" };
 
 	@Autowired
@@ -64,6 +68,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(IGNORED_RESOURCE_LIST);
 	}
 
+	@Bean
+	public SocialUserDetailsService socialUserDetailsService() {
+		return new SimpleSocialUserDetailsService(userDetailsService());
+	}
+
 	// @formatter:off
 	
 	@Override
@@ -79,10 +88,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.key("anonymous")
 			.and()
 				.formLogin()
-					.loginPage("/login")
-					.defaultSuccessUrl("/")
-					.failureUrl("/login?error")
-					.permitAll()
+				.loginPage("/signin")
+				.loginProcessingUrl("/signin/authenticate")
+				.failureUrl("/signin?param.error=bad_credentials")
+				.permitAll()
 			.and()
 				.logout()
 					.deleteCookies("remember-me")
@@ -91,7 +100,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMe()
 			.and()
 				.exceptionHandling()
-				.accessDeniedPage("/403");
+				.accessDeniedPage("/403")
+		   .and()
+				.apply(new SpringSocialConfigurer()
+				.postLoginUrl("/")
+				.alwaysUsePostLoginUrl(true));
 
 		http
 			.authorizeRequests()

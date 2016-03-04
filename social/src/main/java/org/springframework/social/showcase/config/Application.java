@@ -10,8 +10,8 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.showcase.signin.SimpleSignInAdapter;
 
-@ComponentScan({ "org.springframework.social.showcase", "com.nixmash.springdata" })
-@EnableJpaRepositories(basePackages = "com.nixmash.springdata.jpa")
+@ComponentScan({ "org.springframework.social.showcase", "com.nixmash.springdata.jpa"})
+@EnableJpaRepositories(basePackages = { "org.springframework.social.showcase", "com.nixmash.springdata.jpa"})
 @EnableConfigurationProperties
 @EnableAutoConfiguration
 public class Application {

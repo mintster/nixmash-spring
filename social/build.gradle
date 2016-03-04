@@ -10,18 +10,19 @@ sourceSets {
 
 dependencies {
 	compile project(':jpa')
-	compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
-	compile 'org.springframework.social:spring-social-facebook-web:2.0.3.RELEASE'
-	compile 'org.springframework.social:spring-social-config:1.1.4.RELEASE'
+//	compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
+//	compile 'org.springframework.social:spring-social-facebook-web:2.0.3.RELEASE'
+//	compile 'org.springframework.social:spring-social-config:1.1.4.RELEASE'
 
 	compile("org.springframework.boot:spring-boot-starter-social-twitter")
+	compile("org.springframework.boot:spring-boot-starter-social-facebook")
 	compile("org.springframework.boot:spring-boot-starter-web")
 	compile("org.springframework.boot:spring-boot-starter-jdbc")
 }
 
 bootRun {
 	systemProperty 'server.port', '9000'
-	systemProperty 'spring.profiles.active', 'h2,dev'
+	systemProperty 'spring.profiles.active', 'mysql'
 	main = 'org.springframework.social.showcase.config.Application'
 }
 

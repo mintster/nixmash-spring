@@ -50,8 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public void registerAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 				.dataSource(dataSource)
-				.usersByUsernameQuery("select username, password, true from Account where username = ?")
-				.authoritiesByUsernameQuery("select username, 'ROLE_USER' from Account where username = ?")
+				.usersByUsernameQuery("select username, password, true from users where username = ?")
+				.authoritiesByUsernameQuery("select username, 'ROLE_USER' from users where username = ?")
 				.passwordEncoder(passwordEncoder());
 	}
 	
