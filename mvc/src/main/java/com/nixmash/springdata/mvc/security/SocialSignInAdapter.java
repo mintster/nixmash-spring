@@ -15,16 +15,27 @@
  */
 package com.nixmash.springdata.mvc.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.web.SignInAdapter;
+import org.springframework.web.context.request.NativeWebRequest;
 
-public class SignInUtils {
+import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.repository.UserRepository;
+
+public class SocialSignInAdapter implements SignInAdapter {
+
+	@Autowired
+	UserRepository userRepository;
 	
-	/**
-	 * Programmatically signs in the user with the given the user ID.
-	 */
-	public static void signin(String userId) {
-		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, null, null));	
-	}
-	
+	@Override
+    public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
+       User user = userRepository.findByUsername(localUserId);
+		SecurityContextHolder.getContext().setAuthentication(
+            new UsernamePasswordAuthenticationToken(user,user.getPassword(), user.getAuthorities()));
+        return null;
+    }
+
 }

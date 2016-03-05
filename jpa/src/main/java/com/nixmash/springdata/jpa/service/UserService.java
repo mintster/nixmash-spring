@@ -1,12 +1,12 @@
 package com.nixmash.springdata.jpa.service;
 
-import com.nixmash.springdata.jpa.dto.UserDTO;
-import com.nixmash.springdata.jpa.model.CurrentUser;
-import com.nixmash.springdata.jpa.model.User;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.model.User;
 
 public interface UserService {
 
@@ -22,5 +22,7 @@ public interface UserService {
 
     List<User> getUsersWithDetail();
 
-    boolean canAccessUser(CurrentUser currentUser, String username);
+//	boolean canAccessUser(String username);
+
+	boolean canAccessUser(CurrentUser currentUser, String username);
 }

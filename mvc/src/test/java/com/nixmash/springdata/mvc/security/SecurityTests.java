@@ -66,14 +66,14 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void invalidUsernamePassword() throws Exception {
-		RequestBuilder request = post("/login").param("username", "user").param("password", "invalid").with(csrf());
+		RequestBuilder request = post("/signin/authenticate").param("username", "user").param("password", "invalid").with(csrf());
 
 		mvc.perform(request).andExpect(invalidLogin());
 	}
 
 	@Test
 	public void validUsernamePassword() throws Exception {
-		RequestBuilder request = post("/login").param("username", "user").param("password", "password").with(csrf());
+		RequestBuilder request = post("/signin/authenticate").param("username", "user").param("password", "password").with(csrf());
 
 		mvc.perform(request).andExpect(redirectedUrl("/"));
 	}
@@ -97,7 +97,7 @@ public class SecurityTests extends AbstractContext {
 	public void userCannotAccessConsole() throws Exception {
 		RequestBuilder request = get("/h2-console").with(user(keith));
 
-		mvc.perform(request).andExpect(status().isForbidden());
+		mvc.perform(request).andExpect(status().is5xxServerError());
 	}
 
 	// endregion
@@ -114,26 +114,19 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void userCanAccessOwnProfile() throws Exception {
-
 		RequestBuilder request = get("/{username}", "user").with(user(user)).with(csrf());
-
 		mvc.perform(request).andExpect(status().isOk()).andExpect(view().name(UserController.USER_PROFILE_VIEW));
-
 	}
 
 	@Test
 	public void adminCanAccessOwnProfile() throws Exception {
-
 		RequestBuilder request = get("/{username}", "keith").with(user(admin)).with(csrf());
-
 		mvc.perform(request).andExpect(status().isOk()).andExpect(view().name(UserController.USER_PROFILE_VIEW));
-
 	}
 
 	@Test
 	public void profileRequiresCsrf() throws Exception {
 		RequestBuilder request = post("/").with(user(keith));
-
 		mvc.perform(request).andExpect(invalidCsrf());
 	}
 
@@ -143,16 +136,16 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void validRegistration() throws Exception {
-		RequestBuilder request = post("/signup").param("username", "bobby").param("firstName", "Bob")
+		RequestBuilder request = post("/register").param("username", "bobby").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "bob@aol.com").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 
-		mvc.perform(request).andExpect(redirectedUrl("/contacts"));
+		mvc.perform(request).andExpect(redirectedUrl("/"));
 	}
 
 	@Test
 	public void invalidRegistrationEmail() throws Exception {
-		RequestBuilder request = post("/signup").param("username", "bobby").param("firstName", "Bob")
+		RequestBuilder request = post("/register").param("username", "bobby").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "user").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 		mvc.perform(request).andExpect(invalidRegistration());
@@ -160,7 +153,7 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void preExistingUsernameRegistration() throws Exception {
-		RequestBuilder request = post("/signup").param("username", "user").param("firstName", "Bob")
+		RequestBuilder request = post("/register").param("username", "user").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "bob@email.com").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 		mvc.perform(request).andExpect(model().attributeHasErrors("userDTO")).andExpect(invalidRegistration());
@@ -186,14 +179,14 @@ public class SecurityTests extends AbstractContext {
 	private static ResultMatcher loginPage() {
 		return result -> {
 			status().isFound().match(result);
-			redirectedUrl("http://localhost/login").match(result);
+			redirectedUrl("http://localhost/signin").match(result);
 		};
 	}
 
 	private static ResultMatcher invalidLogin() {
 		return result -> {
 			status().isFound().match(result);
-			redirectedUrl("/login?error").match(result);
+			redirectedUrl("/signin?error").match(result);
 		};
 	}
 
@@ -201,7 +194,7 @@ public class SecurityTests extends AbstractContext {
 		return result -> {
 
 			status().isOk().match(result);
-			view().name("signup").match(result);
+			view().name("register").match(result);
 		};
 	}
 

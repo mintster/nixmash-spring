@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
@@ -18,7 +17,7 @@ import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 
-import com.nixmash.springdata.mvc.security.SimpleSignInAdapter;
+import com.nixmash.springdata.mvc.security.SocialSignInAdapter;
 
 
 @Configuration
@@ -34,19 +33,14 @@ public class SocialConfig extends SocialConfigurerAdapter {
         return new JdbcUsersConnectionRepository (
                 dataSource,
                 connectionFactoryLocator,
-                Encryptors.noOpText() // refer http://stackoverflow.com/questions/12619986/what-is-the-correct-way-to-configure-a-spring-textencryptor-for-use-on-heroku
+                Encryptors.noOpText() 
         );
-        
-        // Create the table in the database by executing the commands at
-        // http://docs.spring.io/spring-social/docs/1.1.0.RELEASE/reference/htmlsingle/#section_jdbcConnectionFactory
-        // and then execute
-        // create unique index UserConnectionProviderUser on UserConnection(providerId, providerUserId);
 
     }
     
 	@Bean
 	public SignInAdapter signInAdapter() {
-		return new SimpleSignInAdapter(new HttpSessionRequestCache());
+		return new SocialSignInAdapter();
 	}
 
     @Bean

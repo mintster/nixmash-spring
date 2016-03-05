@@ -91,6 +91,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersWithDetail();
     }
 
+//    @Override
+//    public boolean canAccessUser(String username) {
+//        logger.debug("Checking if user has access to user={}",username);
+//        
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        return authentication.isAuthenticated()
+//                && (authentication.getAuthorities().contains(Role.ROLE_ADMIN) ||
+//                		authentication.getPrincipal().equals(username));
+//    }
+    
     @Override
     public boolean canAccessUser(CurrentUser currentUser, String username) {
         logger.debug("Checking if user={} has access to user={}",
@@ -99,6 +109,7 @@ public class UserServiceImpl implements UserService {
                 && (currentUser.getUser().hasAuthority(Role.ROLE_ADMIN) ||
                     currentUser.getUsername().equals(username));
     }
+    
 }
 
 

@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.nixmash.springdata.jpa.enums.SocialMediaService;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
@@ -23,6 +24,8 @@ public class SocialUserDTO {
 
     private String password = "";
 
+    private SocialMediaService signInProvider;
+    
     @NotEmpty
     @Length(min=User.MIN_LENGTH_FIRST_NAME, max=User.MAX_LENGTH_FIRST_NAME)
     private String firstName = "";
@@ -81,12 +84,21 @@ public class SocialUserDTO {
         this.firstName = firstName;
     }
 
+    public SocialMediaService getSignInProvider() {
+        return signInProvider;
+    }
+
+    public void setSignInProvider(SocialMediaService signInProvider) {
+        this.signInProvider = signInProvider;
+    }
+
     @Override
     public String toString() {
-        return "UserCreateForm{" +
+        return "SocialUserDTO{" +
                 ", username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 "lastName='" + lastName + '\'' +
+                "signInProvider='" + signInProvider + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

@@ -73,26 +73,27 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return messageSource;
 	}
 
-	   @Bean
-	    public SimpleMappingExceptionResolver exceptionResolver() {
-	        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+	@Bean
+	public SimpleMappingExceptionResolver exceptionResolver() {
+		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
 
-	        Properties exceptionMappings = new Properties();
+		Properties exceptionMappings = new Properties();
 
-	        exceptionMappings.put("java.lang.Exception", "errors/generic");
-	        exceptionMappings.put("java.lang.RuntimeException", "errors/generic");
+		exceptionMappings.put("java.lang.Exception", "errors/error");
+		exceptionMappings.put("java.lang.RuntimeException", "errors/error");
 
-	        exceptionResolver.setExceptionMappings(exceptionMappings);
+		exceptionResolver.setExceptionMappings(exceptionMappings);
 
-	        Properties statusCodes = new Properties();
+		Properties statusCodes = new Properties();
 
-	        statusCodes.put("errors/404", "404");
-	        statusCodes.put("errors/generic", "500");
+		statusCodes.put("errors/404", "404");
+		statusCodes.put("errors/error", "500");
 
-	        exceptionResolver.setStatusCodes(statusCodes);
+		exceptionResolver.setStatusCodes(statusCodes);
 
-	        return exceptionResolver;
-	    }
+		return exceptionResolver;
+	}
+
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
