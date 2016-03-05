@@ -31,8 +31,6 @@ import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -177,10 +175,10 @@ public class UserController {
 	@RequestMapping(value = "/{username}", method = GET)
 	public String profilePage(@PathVariable("username") String username, Model model) throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
-		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
-		if (connection != null) {
-			User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
-		}
+//		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
+//		if (connection != null) {
+//			User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
+//		}
 
 		CurrentUser found = currentUserDetailsService.loadUserByUsername(username);
 		model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, found);
