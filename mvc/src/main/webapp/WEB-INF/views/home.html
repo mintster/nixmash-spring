@@ -18,13 +18,13 @@
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input> <input type="hidden" name="scope"
 						value="email,user_posts,user_photos,user_friends"></input>
 					<button type="submit" class="btn btn-facebook">
-						<i class="icon-facebook"></i> | <span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
+						<i class="fa fa-facebook"></i> | <span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
 					</button>
 				</form>
 				<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
 					<button type="submit" class="btn btn-twitter">
-						<i class="icon-twitter"></i> | <span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
+						<i class="fa fa-twitter"></i> | <span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
 					</button>
 				</form>
 			</div>
