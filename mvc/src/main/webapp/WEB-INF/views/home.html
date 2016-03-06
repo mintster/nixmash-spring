@@ -4,21 +4,45 @@
 <head>
 <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
 <title>NixMash Spring Home Page</title>
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/social-buttons-3.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/font-awesome.css}" />
 </head>
 <body>
 	<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
 	<div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
 
+<div th:if="${currentUser == null}" class="container">
+		<div class="row social-button-row">
+			<div class="col-lg-6">
+				<form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input> <input type="hidden" name="scope"
+						value="email,user_posts,user_photos,user_friends"></input>
+					<button type="submit" class="btn btn-facebook">
+						<i class="icon-facebook"></i> | <span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
+					</button>
+				</form>
+				<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
+					<button type="submit" class="btn btn-twitter">
+						<i class="icon-twitter"></i> | <span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<div class="container">
 		<div class="row">
 			<blockquote>
 				<p>
-					As its name implies, this site demonstrates Spring in action with accompanying posts at <a href="http://nixmash.com">NixMash.com.</a> Areas include:</p>
-				<small>Hibernate and Spring JPA -- <em>Contacts</em></small>
-				<small>Spring Security -- <em>Contact View restricted to Logged-in Users</em></small>
-				<small>Spring Solr -- <em>Products</em></small>
-				<small>Javascript with Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em></small>
-				<small>Thymeleaf with Spring</small>
+					As its name implies, this site demonstrates Spring in action with accompanying posts at <a
+						href="http://nixmash.com">NixMash.com.</a> Areas include:
+				</p>
+				<small>Spring Social -- <em>Twitter and Facebook</em></small>
+				<small>Hibernate and Spring JPA -- <em>Contacts</em></small> <small>Spring Security -- <em>Contact View
+						restricted to Logged-in Users</em></small> <small>Spring Solr -- <em>Products</em></small> <small>Javascript with
+					Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em>
+				</small> <small>Thymeleaf with Spring</small>
 			</blockquote>
 		</div>
 		<button id="codButton" class="btn btn-default btn-xs" name="codButton" onclick="codDialog()" type="button"
@@ -34,7 +58,5 @@
 	</div>
 	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 	<div th:include="fragments/js :: functions" th:remove="tag">Functions</div>
-
-
 </body>
 </html>

@@ -1,314 +1,370 @@
 /*/<editor-fold> desc="HOME PAGE ----------------------------/ "*/
-
 .jumbotron {
-    padding: 40px 0;
+	padding: 40px 0;
+}
+
+.jumbotron p {
+	max-width: 550px;	
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="BODY, ROWS AND COLUMNS ----------------------------/ "*/
 body {
-    padding-top: 50px;
+	padding-top: 50px;
 }
 
 .row-centered {
-    text-align: center;
+	text-align: center;
+}
+
+.row-right {
+	text-align: right;
 }
 
 .col-centered {
-    display: inline-block;
-    float: none;
-    text-align: left;
-    /* inline-block space fix */
-    margin-right: -4px;
+	display: inline-block;
+	float: none;
+	text-align: left;
+	/* inline-block space fix */
+	margin-right: -4px;
+}
+
+col-right {
+	display: inline-block;
+	float: right;
+	text-align: right;
+	/* inline-block space fix */
+	margin-right: -4px;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="PAGE HEADER AND SPONSOR REGION ----------------------------/ "*/
-
 .page-header h1 {
-    font-size: 4em;
+	font-size: 4em;
 }
 
 .page-header {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 #sponsor {
-    text-align: right;
+	text-align: right;
 }
 
 #sponsor img {
-    max-width: 175px;
+	max-width: 175px;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="TABLE-FORMS ----------------------------/ "*/
-
 #form-table, #grid-table {
-    font-size: 125%;
+	font-size: 125%;
 }
 
 #form-table .heading {
-    width: 240px;
-    text-align: right;
+	width: 240px;
+	text-align: right;
 }
 
 #form-table table {
-    margin: 30px 0;
+	margin: 30px 0;
 }
 
 #form-table table.table-condensed td {
-    padding: 2px 10px;
+	padding: 2px 10px;
 }
 
 #form-table table, #form-table table td, #form-table table tr {
-    border: none;
+	border: none;
 }
 
 #form-table td.td-label {
-    text-align: right;
-    font-weight: bold;
-    padding-right: 12px;
-    width: 250px;
+	text-align: right;
+	font-weight: bold;
+	padding-right: 12px;
+	width: 250px;
 }
 
 @media screen and (max-width: 970px) {
-    .page-header h1 {
-        font-size: 3em;
-    }
+	.page-header h1 {
+		font-size: 3em;
+	}
 }
 
 td span.hobby {
-    display: inline;
-    padding: 0 8px;
-    border-left: solid 1px black;
+	display: inline;
+	padding: 0 8px;
+	border-left: solid 1px black;
 }
 
 td span.hobby:first-child {
-    border-left: none;
-    padding-left: 0;
+	border-left: none;
+	padding-left: 0;
 }
 
 td.td-label .heading h2 {
-    margin-top: 0;
-    padding-right: 8px;
+	margin-top: 0;
+	padding-right: 8px;
 }
 
 td.hobbies span {
-    margin-top: 6px;
-    display: inline-block;
+	margin-top: 6px;
+	display: inline-block;
 }
 
 #form-table table.table-condensed td.hobbies {
-    padding-left: 0;
+	padding-left: 0;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="NAVBAR ----------------------------/ "*/
-
 .margin-5 {
-    margin-left: 5px;
-    margin-right: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
-.glyphicon-home:before, .glyphicon-th-list:before, .glyphicon-search:before {
-    padding-right: 3px;
+.glyphicon-home:before, .glyphicon-th-list:before, .glyphicon-search:before
+	{
+	padding-right: 3px;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
-
 #secInfo {
-    font-size: smaller;
-    display: block;
-    margin-bottom: 50px;
+	font-size: smaller;
+	display: block;
+	margin-bottom: 50px;
 }
 
 #secInfo h3 {
-    font-size: 16px;
+	font-size: 16px;
 }
 
 #secInfo p.secLine {
-    line-height: 2px;
-    color: #aaa;
-    margin-top: -4px;
+	line-height: 2px;
+	color: #aaa;
+	margin-top: -4px;
 }
 
 .secItem {
+	
 }
 
 #secInfo p.secNote {
-    line-height: 1.2;
-    font-style: italic;
-    margin-top: 10px;
+	line-height: 1.2;
+	font-style: italic;
+	margin-top: 10px;
 }
 
 .secLabel {
-    font-weight: bold;
-    margin-right: 4px;
+	font-weight: bold;
+	margin-right: 4px;
 }
 
 .secField {
+	
 }
 
 .github-footer {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .github-footer a img, .github-footer a:focus, .github-footer img {
-    border: none;
+	border: none;
 }
 
 .github-footer a.github-version {
-    display: inline-block;
-    margin-left: 6px;
+	display: inline-block;
+	margin-left: 6px;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="BOOTSTRAP FORMS ----------------------------/ "*/
-
 h2.form-title {
-    margin-bottom: 40px;
+	margin-bottom: 40px;
 }
 
 .col-align-right, .button-col-align-right {
-    display: inline-block;
-    float: none;
-    text-align: right;
+	display: inline-block;
+	float: none;
+	text-align: right;
 }
 
 .button-col-align-right {
-    padding-right: 6px !important;
+	padding-right: 6px !important;
 }
 
 .input-button-right {
-    width: 80%;
-    float: left;
+	width: 80%;
+	float: left;
 }
 
 .row-delete-button {
-
+	
 }
 
 ul.hobbyList {
-    padding-left: 0px;
+	padding-left: 0px;
 }
 
 ul.hobbyList li {
-    list-style: none;
-    display: inline-block;
-    padding-right: 8px;
+	list-style: none;
+	display: inline-block;
+	padding-right: 8px;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="DEMO SITE NOTES ----------------------------/ "*/
-
 .demo-login-note, .demo-registration-note, .form-disabled-note {
-    font-style: italic;
-    display: block;
-    margin: 15px 0;
-    color: #333;
+	font-style: italic;
+	display: block;
+	margin: 15px 0;
+	color: #333;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="JAVASCRIPT----------------------------/ "*/
-
 .cod-name {
-    display: inline-block;
-    margin-bottom: 4px;
+	display: inline-block;
+	margin-bottom: 4px;
 }
+
 .cod-hobbies {
-    float: left;
-    margin-right: 4px;
+	float: left;
+	margin-right: 4px;
 }
 
 ul.cod-hobbylist {
-    padding-left: 0px;
+	padding-left: 0px;
 }
 
 ul.cod-hobbylist li {
-    list-style: none;
-    display: inline-block;
-    padding-right: 4px;
+	list-style: none;
+	display: inline-block;
+	padding-right: 4px;
 }
 
 ul.cod-hobbylist li:after {
-    content: ", ";
+	content: ", ";
 }
 
 ul.cod-hobbylist li:last-child:after {
-    content: "";
+	content: "";
 }
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="MULTI-ITEM DISPLAY----------------------------/ "*/
+ul.catlist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
 
-ul.catlist { list-style: none; margin: 0; padding: 0; }
-ul.catlist li { display: inline; }
-ul.catlist li a:after { content: ","; }
-ul.catlist li:last-child a:after { content: ""; }
+ul.catlist li {
+	display: inline;
+}
+
+ul.catlist li a:after {
+	content: ",";
+}
+
+ul.catlist li:last-child a:after {
+	content: "";
+}
 
 ul.featurelist {
-    list-style: none;
-    margin: 0;
-    padding-left: 1em;
-    padding-top: 0.1em;
-    padding: .1em 0 .5em 1em;
+	list-style: none;
+	margin: 0;
+	padding-left: 1em;
+	padding-top: 0.1em;
+	padding: .1em 0 .5em 1em;
 }
 
 ul.featurelist li:before {
-    content: "\e005";
-    font-family: 'Glyphicons Halflings';
-    font-size: 9px;
-    float: left;
-    margin-top: 7px;
-    margin-left: -18px;
-    color: #dd4814;
+	content: "\e005";
+	font-family: 'Glyphicons Halflings';
+	font-size: 9px;
+	float: left;
+	margin-top: 7px;
+	margin-left: -18px;
+	color: #dd4814;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="MULTI-SELECT DROPDOWNS ----------------------------/ "*/
-
-.btn-badgeboy
-{
+.btn-badgeboy {
+	
 }
+
 .btn-badgeboy b.caret {
-    display: none;
+	display: none;
 }
 
 .btn-xs .badge, .btn-group-xs>.btn .badge {
-    margin-left: 5px;
+	margin-left: 5px;
 }
 
 #badges {
-    display: block;
-    margin-top: 9px;
-    font-style: italic;
+	display: block;
+	margin-top: 9px;
+	font-style: italic;
 }
 
 /*</editor-fold>*/
-
 blockquote small {
 	color: #716561;
 }
 
 /* GOOGLE MAPS ---------------------------------------------- */
-
 #form-table tr.locationRow td {
 	padding-top: 15px;
 }
 
 /* HIGHLIGHTING ---------------------------------------------- */
-
 td a b {
 	background-color: Yellow;
+}
+
+/* SOCIAL BUTTONS ---------------------------------------------- */
+.social-button-row {
+	padding-bottom: 3.0em;
+}
+
+.login-social-button-row {
+	padding-bottom: 3.0em;
+	padding-top: 40px;
+}
+
+.social-button-row-flushright {
+	float: right;
+}
+
+i.icon-twitter {
+	margin-right: 2px;
+}
+
+i.icon-facebook {
+	margin-right: 4px;
+}
+
+.btn-facebook, .btn-twitter {
+	
+}
+
+form#fb_signin {
+	display: inline-block;
+	margin-right: 6px;
+}
+
+form#tw_signin {
+	display: inline-block;
 }

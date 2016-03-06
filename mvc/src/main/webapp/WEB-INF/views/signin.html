@@ -5,6 +5,7 @@
 <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
 <title th:text="#{login.page.title}">[NixMash Spring Login Page]</title>
 <link rel="stylesheet" type="text/css" th:href="@{/static/css/social-buttons-3.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/font-awesome.css}" />
 </head>
 <body role="document" onload="$('input[name=username]').focus();">
 	<nav th:replace="fragments/navbar :: navbar('na')">Navbar</nav>
@@ -78,36 +79,26 @@
 					</fieldset>
 				</form>
 			</div>
+
 		</div>
 	</div>
 
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<h2>
-				<spring:message code="label.social.sign.in.title" />
-			</h2>
-			<div class="row social-button-row">
-				<div class="col-lg-4">
-					<form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
-						<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input> <input type="hidden" name="scope"
-							value="email,user_posts,user_photos,user_friends"></input>
-						<button type="submit" class="btn btn-twitter">
-							<i class="icon-twitter"></i> |
-							<span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
-						</button>
-					</form>
-				</div>
-			</div>
-			<div class="row social-button-row">
-				<div class="col-lg-4">
-					<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
-						<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
-						<button type="submit" class="btn btn-twitter">
-							<i class="icon-twitter"></i> |
-							<span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
-						</button>
-					</form>
-				</div>
+	<div class="container">
+		<div class="row login-social-button-row">
+			<div class="col-lg-9 col-lg-offset-5">
+				<form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input> <input type="hidden" name="scope"
+						value="email,user_posts,user_photos,user_friends"></input>
+					<button type="submit" class="btn btn-facebook">
+						<i class="icon-facebook"></i> | <span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
+					</button>
+				</form>
+				<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
+					<button type="submit" class="btn btn-twitter">
+						<i class="icon-twitter"></i> | <span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
+					</button>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -175,10 +175,13 @@ public class UserController {
 	@RequestMapping(value = "/{username}", method = GET)
 	public String profilePage(@PathVariable("username") String username, Model model) throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
-//		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
-//		if (connection != null) {
-//			User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
-//		}
+		
+		// Tests in v0.2.8 currently do not support Spring Social
+		//
+		// Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
+		// if (connection != null) {
+		// User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
+		// }
 
 		CurrentUser found = currentUserDetailsService.loadUserByUsername(username);
 		model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, found);

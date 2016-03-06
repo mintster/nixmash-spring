@@ -5,12 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.SimpleCommandLinePropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationLoader implements CommandLineRunner {
 
-    // Simple demonstration of using CommandLineRunner Interface
     private static final Logger logger = LoggerFactory.getLogger(ApplicationLoader.class);
 
     @Autowired
@@ -27,5 +28,14 @@ public class ApplicationLoader implements CommandLineRunner {
 
         logger.info(String.format("WAR launched with following profiles: %s", sb.toString()));
         logger.info(String.format("Current JPA Active Profile: %s", activeProfile));
+        
+        PropertySource<?> ps = new SimpleCommandLinePropertySource(strings);
+        String appUrl = (String) ps.getProperty("appurl");
+        
+        logger.info(String.format("Command-line appurl is %s", appUrl));
+        
+        String applicationPropertyUrl = environment.getProperty("spring.social.application.url");
+        logger.info(String.format("Current Spring Social ApplicationUrl is %s", applicationPropertyUrl));
+        
     }
 }
