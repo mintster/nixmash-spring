@@ -59,7 +59,7 @@ bootRun {
 
 	systemProperty 'server.port', '9000'
 	systemProperty 'spring.profiles.active', 'mysql,dev'
-//	args "--appurl=http://localhost:9000"
+	args "--appurl=http://localhost:9000"
 	main = 'com.nixmash.springdata.mvc.WebInitializer'
 }
 

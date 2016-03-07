@@ -27,9 +27,6 @@
 				<div role="alert" th:if="${statusMessage}"
 					th:class="'alert ' + ${statusMessageClass}?: 'alert-dismissible alert-success'" th:text="${statusMessage}"></div>
 
-
-				<h2 th:text="#{signup.form.title}" class="form-title">[Please create site account]</h2>
-
 				<form name="f" th:action="@{/signup}" th:object="${socialUserDTO}" method="post" class="form-horizontal">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 

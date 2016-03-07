@@ -13,8 +13,8 @@
         </encoder>
     </appender>
 
-    <logger name="com.nixmash.springdata" level="OFF"/>
-    <logger name="org.thymeleaf" level="info"/>
+    <logger name="com.nixmash.springdata" level="info"/>
+    <logger name="org.thymeleaf" level="off"/>
     <logger name="org.hibernate" level="OFF"/>
 
     <!--<include resource="logJpaToFile.xml" />-->

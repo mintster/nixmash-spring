@@ -18,18 +18,18 @@ public class ApplicationLoader implements CommandLineRunner {
     Environment environment;
 
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... args) throws Exception {
         StringBuilder sb = new StringBuilder();
-        for (String option : strings) {
+        for (String option : args) {
             sb.append(" ").append(option);
         }
-        sb = sb.length() == 0 ? sb.append("No Options Specified") : sb;
         String activeProfile = environment.getActiveProfiles()[0];
-
-        logger.info(String.format("WAR launched with following profiles: %s", sb.toString()));
         logger.info(String.format("Current JPA Active Profile: %s", activeProfile));
+
+        sb = sb.length() == 0 ? sb.append("No Options Specified") : sb;
+        logger.info(String.format("App launched with following arguments: %s", sb.toString()));
         
-        PropertySource<?> ps = new SimpleCommandLinePropertySource(strings);
+        PropertySource<?> ps = new SimpleCommandLinePropertySource(args);
         String appUrl = (String) ps.getProperty("appurl");
         
         logger.info(String.format("Command-line appurl is %s", appUrl));

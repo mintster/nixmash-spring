@@ -49,10 +49,12 @@ import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.SocialMediaService;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
+import com.nixmash.springdata.mvc.security.SocialUtil;
 
 /**
  * Allows users to sign up.
@@ -165,8 +167,9 @@ public class UserController {
 		userDTO.setPassword("something");
 		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
 
-		userService.create(userDTO);
+		User user = userService.create(userDTO);
 		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
+		SocialUtil.authorizeUser(user);
 		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
 		return "redirect:/";
 	}
@@ -176,7 +179,7 @@ public class UserController {
 	public String profilePage(@PathVariable("username") String username, Model model) throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
 		
-		// Tests in v0.2.8 currently do not support Spring Social
+		// Tests in NixMash Spring v0.2.8 currently do not support Spring Social
 		//
 		// Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
 		// if (connection != null) {
