@@ -11,7 +11,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.2.8 -- Spring Social](#v028----spring-social-in-progress)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
+- **[v0.2.8 -- Spring Social (In Progress)](#v028----spring-social-in-progress)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
 - **[v0.2.7 -- Solr MVC](#v027----solr-mvc)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
 - **[v0.2.6 -- Solr Query Samplings](#v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
 - **[v0.2.5 -- Spring Boot 1.3](#v025----spring-boot-13)** : *Update all libraries to support v1.3*
@@ -42,6 +42,10 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.2.8 -- Spring Social (In Progress)##
 
+- Social Services app-id and secret keys configured in `external.properties` file
+- Social ProviderSignInController SetApplicationUrl() set with `--appurl` property. See *"Passing Arguments to Spring Boot"*
+- SignIn form with @InitBinder and custom validation for all fields
+- [Post: Passing Arguments to Spring Boot](http://nixmash.com/java/passing-arguments-to-spring-boot/)
 - [Post: Spring Boot Social Showcase Starting Points](http://nixmash.com/java/spring-boot-social-showcase-starting-points/)
 - [Post: Facebook Email Access in Spring Boot Social Showcase](http://nixmash.com/java/facebook-email-access-in-spring-boot-social-showcase/)
 
@@ -403,11 +407,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Installation##
 
-The application supports an H2 Profile (default) and a MySQL Profile. To run JPA Console app use **$gradle jpa:bootRun.** To run MVC Web app use **$gradle mvc:bootRun.** The Tomcat Server Port is set for **8084** (set in the MVC `application.properties` file) so go to **http://localhost:8084** to view the app in your browser. 
+The application supports an H2 Profile (default) and a MySQL Profile. To run JPA Console app use **$gradle jpa:bootRun.** To run MVC Web app use **$gradle mvc:bootRun.** The Tomcat Server Port is set for **9000** (set in the MVC `application.properties` file) so go to **http://localhost:9000** to view the app in your browser. 
 
 ##Installation - Database Configuration##
 
-To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.` External properties in `/home/daveburke/...external.properties.` Change in JPA `common/ApplicationSettings.` Example of `external.properties` in `/install.`
+To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.` External properties in `/home/daveburke/...external.properties.` Change in JPA `common/ApplicationSettings.` Example of `external.properties` is found in `/install.`
 
 ##Installation - External Property File Settings##
 
