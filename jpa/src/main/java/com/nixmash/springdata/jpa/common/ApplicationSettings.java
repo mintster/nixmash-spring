@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("file:/home/daveburke/web/nixmashspring/external.properties")
+@PropertySource("file:/home/dev/web/nixmashspring/external.properties")
 @ConfigurationProperties(prefix = "external")
 public class ApplicationSettings {
 
@@ -15,14 +15,6 @@ public class ApplicationSettings {
 	private String twitterAppSecret;
 	private String facebookAppId;
 	private String facebookAppSecret;
-
-	public Boolean getIsDemoSite() {
-		return isDemoSite;
-	}
-
-	public void setIsDemoSite(Boolean isDemoSite) {
-		this.isDemoSite = isDemoSite;
-	}
 
 	public String getTwitterAppId() {
 		return twitterAppId;
@@ -54,6 +46,14 @@ public class ApplicationSettings {
 
 	public void setFacebookAppSecret(String facebookAppSecret) {
 		this.facebookAppSecret = facebookAppSecret;
+	}
+
+	public Boolean getIsDemoSite() {
+		return isDemoSite;
+	}
+
+	public void setIsDemoSite(Boolean isDemoSite) {
+		this.isDemoSite = isDemoSite;
 	}
 
 }
