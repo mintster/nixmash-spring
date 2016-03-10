@@ -31,7 +31,7 @@ public class SocialSignInAdapter implements SignInAdapter {
 	@Override
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
        User user = userRepository.findByUsername(localUserId);
-		SocialUtil.authorizeUser(user);
+		SignInUtil.authorizeUser(user);
         return null;
     }
 

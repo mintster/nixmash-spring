@@ -7,9 +7,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,16 +67,13 @@ public class UserServiceImpl implements UserService {
         user.setLastName(form.getLastName());
         user.setEmail(form.getEmail());
         user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
+        user.setSignInProvider(form.getSignInProvider());
         User saved = userRepository.save(user);
 
         for (Authority authority : form.getAuthorities()) {
             Authority _authority = authorityRepository.findByAuthority(authority.getAuthority());
             saved.getAuthorities().add(_authority);
         }
-
-        Authentication auth =
-                new UsernamePasswordAuthenticationToken(saved, saved.getPassword(), saved.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(auth);
 
         return saved;
     }
@@ -91,16 +85,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersWithDetail();
     }
 
-//    @Override
-//    public boolean canAccessUser(String username) {
-//        logger.debug("Checking if user has access to user={}",username);
-//        
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        return authentication.isAuthenticated()
-//                && (authentication.getAuthorities().contains(Role.ROLE_ADMIN) ||
-//                		authentication.getPrincipal().equals(username));
-//    }
-    
     @Override
     public boolean canAccessUser(CurrentUser currentUser, String username) {
         logger.debug("Checking if user={} has access to user={}",

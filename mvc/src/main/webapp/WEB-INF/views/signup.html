@@ -29,7 +29,8 @@
 
 				<form name="f" th:action="@{/signup}" th:object="${socialUserDTO}" method="post" class="form-horizontal">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
+					<input type="hidden" name="signInProvider" th:value="*{signInProvider}" />
+					
 					<div th:if="${#fields.hasGlobalErrors()}" class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
 						<button type="button" class="close" data-dismiss="alert">×</button>
 						<label class="control-label" th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</label>

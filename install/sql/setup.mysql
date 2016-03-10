@@ -176,6 +176,7 @@ CREATE TABLE `users` (
   `account_expired` tinyint(1) NOT NULL,
   `account_locked` tinyint(1) NOT NULL,
   `credentials_expired` tinyint(1) NOT NULL,
+  `provider_id` varchar(25) NOT NULL DEFAULT 'SITE',
   `password` varchar(255) NOT NULL,
   `version` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
@@ -184,10 +185,10 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'admin', 'admin@aol.com', 'Admin', 'Jones', '1', '0', '0', '0', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', '0');
-INSERT INTO `users` VALUES ('2', 'user', 'user@aol.com', 'User', 'Charlie', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('7', 'john', 'john@email.com', 'John', 'Bubkis', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('8', 'ken', 'ken@email.com', 'Ken', 'Watts', '1', '0', '0', '0', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
+INSERT INTO `users` VALUES ('1', 'admin', 'admin@aol.com', 'Admin', 'Jones', '1', '0', '0', '0', 'SITE', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', '0');
+INSERT INTO `users` VALUES ('2', 'user', 'user@aol.com', 'User', 'Charlie', '1', '0', '0', '0', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
+INSERT INTO `users` VALUES ('7', 'john', 'john@email.com', 'John', 'Bubkis', '1', '0', '0', '0', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
+INSERT INTO `users` VALUES ('8', 'ken', 'ken@email.com', 'Ken', 'Watts', '1', '0', '0', '0', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
 
 -- ----------------------------
 -- Table structure for user_authorities

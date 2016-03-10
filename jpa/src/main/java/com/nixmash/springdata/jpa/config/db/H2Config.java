@@ -1,6 +1,18 @@
 package com.nixmash.springdata.jpa.config.db;
 
-import com.nixmash.springdata.jpa.enums.DataConfigProfile;
+import static java.lang.Boolean.TRUE;
+import static org.hibernate.cfg.AvailableSettings.FORMAT_SQL;
+import static org.hibernate.cfg.AvailableSettings.GENERATE_STATISTICS;
+import static org.hibernate.cfg.AvailableSettings.HBM2DDL_AUTO;
+import static org.hibernate.cfg.AvailableSettings.SHOW_SQL;
+import static org.hibernate.cfg.AvailableSettings.USE_SQL_COMMENTS;
+import static org.hibernate.jpa.AvailableSettings.NAMING_STRATEGY;
+
+import java.sql.SQLException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Dialect;
@@ -13,13 +25,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Properties;
-
-import static java.lang.Boolean.TRUE;
-import static org.hibernate.cfg.AvailableSettings.*;
-import static org.hibernate.jpa.AvailableSettings.NAMING_STRATEGY;
+import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 
 @Configuration
 @PropertySource("classpath:/META-INF/spring/h2database.properties")

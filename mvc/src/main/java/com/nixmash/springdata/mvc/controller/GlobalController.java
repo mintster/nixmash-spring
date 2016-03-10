@@ -16,7 +16,6 @@ import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.UnknownResourceException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.mvc.common.WebUI;
-import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 
 @ControllerAdvice
@@ -30,9 +29,6 @@ public class GlobalController {
 	private static final String PRODUCT_MAP_VIEW = "products/map";
 	private static final String LOCATION_ERROR_MESSAGE_KEY = "product.map.page.feedback.error";
 	public static final String LOCATION_ERROR_ATTRIBUTE = "mappingError";
-	
-	@Autowired
-	private CurrentUserDetailsService userDetailsService;
 
 	@Autowired
 	WebUI webUI;
@@ -42,7 +38,21 @@ public class GlobalController {
 
 	@ModelAttribute("currentUser")
 	public CurrentUser getCurrentUser(Authentication authentication) {
-		return (authentication == null) ? null : userDetailsService.loadUserByUsername(authentication.getName());
+		CurrentUser currentUser = null;
+		if (authentication == null)
+			return null;
+		else {
+			currentUser = (CurrentUser) authentication.getPrincipal();
+			
+			// Old approach follows. 
+			//
+			// 	Since Spring Security retains authentication object, 
+			// 	which I store as CurrentUser object, CurrentUser is always available as Principal
+			//
+			// 	currentUser = userDetailsService.loadUserByUsername(authentication.getName());
+		}
+		return currentUser;
+		
 	}
 
 	@ModelAttribute("appSettings")

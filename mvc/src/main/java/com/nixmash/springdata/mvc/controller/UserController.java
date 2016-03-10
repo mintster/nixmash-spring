@@ -17,6 +17,8 @@ package com.nixmash.springdata.mvc.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.UUID;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -46,7 +48,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.common.collect.Lists;
 import com.nixmash.springdata.jpa.dto.SocialUserDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
-import com.nixmash.springdata.jpa.enums.SocialMediaService;
+import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
@@ -54,7 +56,7 @@ import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
-import com.nixmash.springdata.mvc.security.SocialUtil;
+import com.nixmash.springdata.mvc.security.SignInUtil;
 
 /**
  * Allows users to sign up.
@@ -117,8 +119,10 @@ public class UserController {
 		if (result.hasErrors()) {
 			return REGISTER_VIEW;
 		}
+		userDTO.setSignInProvider(SignInProvider.SITE);
 		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
-		userService.create(userDTO);
+		User user = userService.create(userDTO);
+		SignInUtil.authorizeUser(user);
 		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
 		return "redirect:/";
 	}
@@ -129,7 +133,6 @@ public class UserController {
 			return "redirect:/";
 		else {
 			Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
-
 			socialUserDTO = createSocialUserDTO(connection);
 			model.addAttribute(MODEL_ATTRIBUTE_SOCIALUSER, socialUserDTO);
 			return SIGNUP_VIEW;
@@ -146,7 +149,7 @@ public class UserController {
 			dto.setLastName(socialMediaProfile.getLastName());
 
 			ConnectionKey providerKey = connection.getKey();
-			dto.setSignInProvider(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
+			dto.setSignInProvider(SignInProvider.valueOf(providerKey.getProviderId().toUpperCase()));
 		}
 
 		return dto;
@@ -154,7 +157,7 @@ public class UserController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
-			WebRequest request, RedirectAttributes redirect) {
+			WebRequest request, RedirectAttributes redirect, Connection<?> connection) {
 		if (result.hasErrors()) {
 			return SIGNUP_VIEW;
 		}
@@ -164,30 +167,34 @@ public class UserController {
 		userDTO.setFirstName(socialUserDTO.getFirstName());
 		userDTO.setLastName(socialUserDTO.getLastName());
 		userDTO.setEmail(socialUserDTO.getEmail());
-		userDTO.setPassword("something");
+		userDTO.setSignInProvider(socialUserDTO.getSignInProvider());
+		userDTO.setPassword(UUID.randomUUID().toString());
 		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
 
 		User user = userService.create(userDTO);
 		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
-		SocialUtil.authorizeUser(user);
+		SignInUtil.authorizeUser(user);
 		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
 		return "redirect:/";
 	}
 
 	@PreAuthorize("@userService.canAccessUser(principal, #username)")
 	@RequestMapping(value = "/{username}", method = GET)
-	public String profilePage(@PathVariable("username") String username, Model model) throws UsernameNotFoundException {
+	public String profilePage(@PathVariable("username") String username, CurrentUser currentUser, Model model)
+			throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
-		
+
 		// Tests in NixMash Spring v0.2.8 currently do not support Spring Social
 		//
-		// Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
-		// if (connection != null) {
-		// User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
-		// }
+//		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
+//		if (connection != null) {
+//			org.springframework.social.facebook.api.User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
+//		}
 
-		CurrentUser found = currentUserDetailsService.loadUserByUsername(username);
-		model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, found);
+//		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		 CurrentUser currentUser  = (CurrentUser) authentication.getPrincipal();
+
+		model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, currentUser);
 		return USER_PROFILE_VIEW;
 	}
 

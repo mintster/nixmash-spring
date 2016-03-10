@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.enums;
 
-public enum SocialMediaService {
+public enum SignInProvider {
+	SITE,
     FACEBOOK,
     TWITTER
 }

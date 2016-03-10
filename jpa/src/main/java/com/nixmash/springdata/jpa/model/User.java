@@ -1,18 +1,34 @@
 package com.nixmash.springdata.jpa.model;
 
-import com.nixmash.springdata.jpa.enums.Role;
-import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import com.nixmash.springdata.jpa.enums.Role;
+import com.nixmash.springdata.jpa.enums.SignInProvider;
+import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +42,7 @@ public class User implements UserDetails, Serializable {
     public static final int MAX_LENGTH_LAST_NAME = 50;
     public static final int MAX_LENGTH_USERNAME = 15;
     public static final int MAX_LENGTH_PASSWORD = 20;
+    public static final int MAX_LENGTH_PROVIDERID = 25;
 
     public static final int MIN_LENGTH_USERNAME = 3;
     public static final int MIN_LENGTH_PASSWORD = 6;
@@ -82,6 +99,10 @@ public class User implements UserDetails, Serializable {
     @Column(name = "credentials_expired")
     private boolean credentialsExpired = false;
 
+    @Column(name = "provider_id", length =25)
+    @Enumerated(EnumType.STRING)
+    private SignInProvider signInProvider;
+    
     @Column
     private boolean enabled = true;
 
@@ -155,6 +176,14 @@ public class User implements UserDetails, Serializable {
         this.userProfile = userProfile;
     }
 
+    public SignInProvider getSignInProvider() {
+        return signInProvider;
+    }
+
+    public void setSignInProvider(SignInProvider signInProvider) {
+        this.signInProvider = signInProvider;
+    }
+
     @Override
     public Collection<Authority> getAuthorities() {
         return authorities;
@@ -206,6 +235,8 @@ public class User implements UserDetails, Serializable {
         this.enabled = enabled;
     }
 
+	// @formatter:off
+    
     @Override
     public String toString() {
         return "User{" +
@@ -217,7 +248,11 @@ public class User implements UserDetails, Serializable {
                 ", accountExpired=" + accountExpired +
                 ", accountLocked=" + accountLocked +
                 ", credentialsExpired=" + credentialsExpired +
+                 "signInProvider=" + signInProvider +
                 ", enabled=" + enabled +
                 '}';
     }
+    
+	// @formatter:on
+    
 }

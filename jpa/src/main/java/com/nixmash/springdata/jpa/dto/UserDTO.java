@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
@@ -32,6 +33,8 @@ public class UserDTO {
     @Length(min=User.MIN_LENGTH_LAST_NAME, max=User.MAX_LENGTH_LAST_NAME)
     private String lastName = "";
 
+    private SignInProvider signInProvider;
+    
     private String repeatedPassword = "";
 
     private Collection<Authority> authorities;
@@ -93,6 +96,14 @@ public class UserDTO {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public SignInProvider getSignInProvider() {
+        return signInProvider;
+    }
+
+    public void setSignInProvider(SignInProvider signInProvider) {
+        this.signInProvider = signInProvider;
     }
 
     @Override
