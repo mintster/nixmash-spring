@@ -33,6 +33,7 @@ import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -172,8 +173,9 @@ public class UserController {
 		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
 
 		User user = userService.create(userDTO);
-		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
 		SignInUtil.authorizeUser(user);
+		
+		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
 		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
 		return "redirect:/";
 	}
@@ -186,10 +188,10 @@ public class UserController {
 
 		// Tests in NixMash Spring v0.2.8 currently do not support Spring Social
 		//
-//		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
-//		if (connection != null) {
-//			org.springframework.social.facebook.api.User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
-//		}
+		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
+		if (connection != null) {
+			org.springframework.social.facebook.api.User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
+		}
 
 //		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //		 CurrentUser currentUser  = (CurrentUser) authentication.getPrincipal();

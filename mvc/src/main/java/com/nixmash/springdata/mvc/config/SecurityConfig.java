@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] IGNORED_RESOURCE_LIST = new String[] { "/resources/**", "/static/**", "/webjars/**" };
 	private static final String[] PERMITALL_RESOURCE_LIST = new String[] { "/auth/**", "/signin/**", "/signup/**", "/",
 			"/register/**", "/contacts", "/json/**", "/products/**" };
-	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/h2-console/**" };
+	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/admin/h2-console/**" };
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -115,9 +115,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// @formatter:on
 
-	@Autowired
-	public void registerAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
-	}
+//	@Autowired
+//	public void registerAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.userDetailsService(userDetailsService);
+//	}
 
 }

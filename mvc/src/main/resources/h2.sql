@@ -12,3 +12,7 @@ create table UserConnection (
   expireTime bigint,
   primary key (userId, providerId, providerUserId));
 create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
+
+
+INSERT INTO `userconnection` VALUES ('yeyeye', 'facebook', '103695sdsds', '1', 'sdsds', 'https:///103695193351811/', 'https://graph.facebook.com/v2.5/103695193351811/picture', 'CAACoujK6ltwBAGjAjtkUyABVriHAq8VyKKPuXgWn0RBbkZBMCdHyrJZB6IUlm84tDSCodVuUynVF9D8O9m2gNu8xvWIuNFL0vGyi1QLmPBFfpsBfF3D0UGv0itcl5KUfoiVexzzAG7051ZArHUXMNWWqPF7oeuQZCpQt4LtvtZBpg7C6VD8ZBLtGusNgHqUZBYZD', null, null, '1462733317625');
+
