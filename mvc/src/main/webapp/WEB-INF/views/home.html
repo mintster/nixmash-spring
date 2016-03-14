@@ -11,7 +11,7 @@
 	<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
 	<div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
 
-<div th:if="${currentUser == null}" class="container">
+	<div th:if="${currentUser == null}" class="container">
 		<div class="row social-button-row">
 			<div class="col-lg-6">
 				<form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
@@ -31,6 +31,20 @@
 		</div>
 	</div>
 
+	<div th:if="${currentUserConnection != null}" class="row social-button-row">
+		Signed in using <a th:if="${currentUserConnection.providerId == 'linkedin'}"
+			class="ml btn btn-social-icon btn-sm btn-linkedin"> <i class="fa fa-linkedin"></i></a> <a
+			th:if="${currentUserConnection.providerId == 'facebook'}" class="ml btn btn-social-icon btn-sm btn-facebook"> <i
+			class="fa fa-facebook"></i></a> <a th:if="${currentUserConnection.providerId == 'twitter'}"
+			class="ml btn btn-social-icon btn-sm btn-twitter"> <i class="fa fa-twitter"></i></a> <a
+			th:if="${currentUserConnection.providerId == 'live'}" class="ml btn btn-social-icon btn-sm btn-microsoft"> <i
+			class="fa fa-windows"></i></a> <a th:if="${currentUserConnection.providerId == 'github'}"
+			class="ml btn btn-social-icon btn-sm btn-github"> <i class="fa fa-github"></i></a> <a
+			th:if="${currentUserConnection.providerId == 'google'}" class="ml btn btn-social-icon btn-sm btn-google-plus"><i
+			class="fa fa-google-plus"></i></a> as <a th:href="${currentUserConnection.profileUrl}" class="navbar-link"><span
+			th:text="${currentUserDisplayName}" /></a> <img th:src="${currentUserConnection.imageUrl}" width="32" height="32" />
+	</div>
+
 	<div class="container">
 		<div class="row">
 			<blockquote>
@@ -38,10 +52,10 @@
 					As its name implies, this site demonstrates Spring in action with accompanying posts at <a
 						href="http://nixmash.com">NixMash.com.</a> Areas include:
 				</p>
-				<small>Spring Social -- <em>Twitter and Facebook</em></small>
-				<small>Hibernate and Spring JPA -- <em>Contacts</em></small> <small>Spring Security -- <em>Contact View
-						restricted to Logged-in Users</em></small> <small>Spring Solr -- <em>Products</em></small> <small>Javascript with
-					Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em>
+				<small>Spring Social -- <em>Twitter and Facebook</em></small> <small>Hibernate and Spring JPA -- <em>Contacts</em></small>
+				<small>Spring Security -- <em>Contact View restricted to Logged-in Users</em></small> <small>Spring Solr --
+					<em>Products</em>
+				</small> <small>Javascript with Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em>
 				</small> <small>Thymeleaf with Spring</small>
 			</blockquote>
 		</div>

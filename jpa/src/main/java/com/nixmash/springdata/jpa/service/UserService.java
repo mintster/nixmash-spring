@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.model.UserConnection;
 
 public interface UserService {
 
@@ -25,4 +26,6 @@ public interface UserService {
 //	boolean canAccessUser(String username);
 
 	boolean canAccessUser(CurrentUser currentUser, String username);
+
+	UserConnection getUserConnectionByUserId(String userId);
 }

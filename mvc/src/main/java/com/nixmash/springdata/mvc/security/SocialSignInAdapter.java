@@ -15,24 +15,41 @@
  */
 package com.nixmash.springdata.mvc.security;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.repository.UserRepository;
+import com.nixmash.springdata.jpa.service.UserService;
 
 public class SocialSignInAdapter implements SignInAdapter {
 
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	UserService userService;
+
+	private final RequestCache requestCache;
+
+	@Inject
+	public SocialSignInAdapter(RequestCache requestCache) {
+		this.requestCache = requestCache;
+	}
+	
 	@Override
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
        User user = userRepository.findByUsername(localUserId);
 		SignInUtil.authorizeUser(user);
+		SignInUtil.setUserConnection(request, localUserId, userService);
         return null;
     }
+
+
 
 }

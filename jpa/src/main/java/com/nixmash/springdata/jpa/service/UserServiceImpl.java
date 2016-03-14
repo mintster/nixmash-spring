@@ -16,7 +16,9 @@ import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.repository.AuthorityRepository;
+import com.nixmash.springdata.jpa.repository.UserConnectionRepository;
 import com.nixmash.springdata.jpa.repository.UserRepository;
 
 @Service("userService")
@@ -26,11 +28,14 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    private final UserConnectionRepository userConnectionRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository) {
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository, 
+    		UserConnectionRepository userConnectionRepository) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
+        this.userConnectionRepository = userConnectionRepository;
     }
 
     @Transactional(readOnly = true)
@@ -92,6 +97,13 @@ public class UserServiceImpl implements UserService {
         return currentUser != null
                 && (currentUser.getUser().hasAuthority(Role.ROLE_ADMIN) ||
                     currentUser.getUsername().equals(username));
+    }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public UserConnection getUserConnectionByUserId(String userId) {
+        logger.debug("Getting userConnection={}", userId);
+        return userConnectionRepository.findByUserId(userId);
     }
     
 }

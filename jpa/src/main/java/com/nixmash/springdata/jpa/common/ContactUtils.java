@@ -10,6 +10,7 @@ import com.nixmash.springdata.jpa.dto.HobbyDTO;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.Hobby;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.model.UserConnection;
 
 /**
  * Created with IntelliJ IDEA. User: daveburke Date: 4/15/15 Time: 12:06 PM
@@ -95,8 +96,16 @@ public class ContactUtils {
 		System.out.println();
 	}
 
+	public static void listUserConnection(String header, UserConnection user) {
+		System.out.println("\r\n" + header + " ------------------------------ ");
+		System.out.println();
+		System.out.println(user);
+		System.out.println();
+	}
+	
 	// endregion
 
+	
 	// region Update Contacts, Phones and Hobbies
 
 	public static List<ContactDTO> contactsToContactDTOs(List<Contact> contacts) {

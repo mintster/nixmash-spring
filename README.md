@@ -45,6 +45,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Social Services app-id and secret keys configured in `external.properties` file
 - Social ProviderSignInController SetApplicationUrl() supporting multiple environments.<br/>SetApplicationUrl() set with `--appurl` commandline argument. See post [Passing Arguments to Spring Boot](http://nixmash.com/java/passing-arguments-to-spring-boot/) for details.
 - SignIn form with @InitBinder and custom validation for all fields
+- [Post: Spring Social Additions to a Spring Security App](http://nixmash.com/java/spring-social-additions-to-a-spring-security-app/)
+- [Post: NixMash Spring Social Web Flow Overview, First Pass](http://nixmash.com/java/nixmash-spring-social-web-flow-overview-first-pass/)
 - [Post: Using External Properties for Spring Social Connection Keys](http://nixmash.com/java/using-external-properties-for-spring-social-connection-keys/)
 - [Post: Passing Arguments to Spring Boot](http://nixmash.com/java/passing-arguments-to-spring-boot/)
 - [Post: Spring Boot Social Showcase Starting Points](http://nixmash.com/java/spring-boot-social-showcase-starting-points/)

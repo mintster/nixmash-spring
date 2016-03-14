@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.jpa.service.UserService;
 
@@ -21,7 +22,7 @@ public class ContactUI {
 	public void init() {
 		propertiesDemo();
 		entityDemo();
-		randomDemo();
+//		randomDemo();
 	}
 
 	public void randomDemo() {
@@ -56,7 +57,9 @@ public class ContactUI {
 
 	public void entityDemo() {
 
-		ContactUtils.listUsersWithDetail(userService.getUsersWithDetail());
+		UserConnection userConnection = userService.getUserConnectionByUserId("daver");
+		ContactUtils.listUserConnection("My User Connection", userConnection);
+//		ContactUtils.listUsersWithDetail(userService.getUsersWithDetail());
 		// SpringUtils.listUser("USER BY EMAIL",
 		// userService.getByEmail("user@aol.com").get());
 		// try {

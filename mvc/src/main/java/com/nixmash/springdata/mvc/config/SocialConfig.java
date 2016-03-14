@@ -1,5 +1,6 @@
 package com.nixmash.springdata.mvc.config;
 
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.EnableSocial;
@@ -57,7 +59,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
 	@Bean
 	public SignInAdapter signInAdapter() {
-		return new SocialSignInAdapter();
+		return new SocialSignInAdapter(new HttpSessionRequestCache());
 	}
 
 	@Bean

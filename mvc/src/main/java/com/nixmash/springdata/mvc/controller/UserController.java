@@ -158,7 +158,7 @@ public class UserController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
-			WebRequest request, RedirectAttributes redirect, Connection<?> connection) {
+			WebRequest request, RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return SIGNUP_VIEW;
 		}
@@ -176,13 +176,14 @@ public class UserController {
 		SignInUtil.authorizeUser(user);
 		
 		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
+		SignInUtil.setUserConnection(request, socialUserDTO.getUsername(), userService);
 		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
 		return "redirect:/";
 	}
 
 	@PreAuthorize("@userService.canAccessUser(principal, #username)")
 	@RequestMapping(value = "/{username}", method = GET)
-	public String profilePage(@PathVariable("username") String username, CurrentUser currentUser, Model model)
+	public String profilePage(@PathVariable("username") String username, CurrentUser currentUser, Model model, WebRequest request)
 			throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
 
