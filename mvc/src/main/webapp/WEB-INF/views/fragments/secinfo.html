@@ -1,26 +1,26 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <body>
 	<div id="secInfo">
 		<h3 th:text="#{secinfo.title}">[USER INFO]</h3>
 		<p class="secLine">____________________</p>
 		<div th:if="${currentUser != null}" th:remove="tag">
 			<div class="secItem">
-				<span class="secLabel" th:text="#{secinfo.fullname}">[FULLNAME]</span>
-				<span class="secField" th:text="${currentUser.getFullName()}">[FULLNAME]</span>
+				<span class="secLabel" th:text="#{secinfo.fullname}">[FULLNAME]</span> <span class="secField" th:text="${currentUser.getFullName()}">[FULLNAME]</span>
 			</div>
 			<div class="secItem">
-				<span class="secLabel" th:text="#{secinfo.username}">[USERNAME]</span>
-				<span class="secField" th:text="${currentUser.username}">[USERNAME]</span>
+				<span class="secLabel" th:text="#{secinfo.username}">[USERNAME]</span> <span class="secField" th:text="${currentUser.username}">[USERNAME]</span>
 			</div>
 			<div class="secItem">
-				<span class="secLabel" th:text="#{secinfo.email}">[EMAIL]</span> <span
-					class="secField" th:text="${currentUser.user.email}">[EMAIL]</span>
+				<span class="secLabel" th:text="#{secinfo.email}">[EMAIL]</span> <span class="secField" th:text="${currentUser.user.email}">[EMAIL]</span>
 			</div>
 			<div class="secItem">
-				<span class="secLabel" th:text="#{secinfo.authorities}">[ROLES]</span>
-				<span class="secField" th:text="${currentUser.getAuthorities()}">[ROLES]</span>
+				<span class="secLabel" th:text="#{secinfo.authorities}">[ROLES]</span> <span class="secField" th:text="${currentUser.getAuthorities()}">[ROLES]</span>
+			</div>
+			<div th:if="${currentUserConnection}" class="secItemSocial" th:with="provider=${currentUserConnection.providerId}">
+				<span class="secLabel" th:text="#{secinfo.social}">[SOCIAL]</span> <span class="secField"> <span th:class="|btn-sm btn-${provider} btn-secinfo-social|"> <i
+						th:class="|fa fa-${provider}|"></i> | <span th:text="${provider}">[SOCIAL]</span>
+				</span>
+				</span>
 			</div>
 		</div>
 		<div th:if="${currentUser == null}" th:remove="tag">
@@ -29,11 +29,8 @@
 			</div>
 		</div>
 		<div class="github-footer">
-			<a href="https://github.com/mintster/spring-data"><img
-				src="/static/img/github.png" alt="Download NixMash Spring on GitHub"></img></a>
-			<a href="https://github.com/mintster/spring-data"
-				class="github-version"> <span th:text="#{web.site.version}"
-				th:remove="tag">[SITE NAME AND VERSION]</span></a>
+			<a href="https://github.com/mintster/spring-data"><img src="/static/img/github.png" alt="Download NixMash Spring on GitHub"></img></a> <a
+				href="https://github.com/mintster/spring-data" class="github-version"> <span th:text="#{web.site.version}" th:remove="tag">[SITE NAME AND VERSION]</span></a>
 		</div>
 	</div>
 </body>

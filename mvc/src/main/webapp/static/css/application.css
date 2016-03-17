@@ -132,6 +132,12 @@ td.hobbies span {
 	padding-right: 3px;
 }
 
+img.navbar-profilepic {
+    margin-top: 10px;
+    border: #ddd 1px solid;
+    margin-left: -8px;
+    margin-right: 10px;
+}
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
@@ -152,7 +158,7 @@ td.hobbies span {
 }
 
 .secItem {
-	
+	padding-top: 2px;
 }
 
 #secInfo p.secNote {
@@ -170,6 +176,14 @@ td.hobbies span {
 	
 }
 
+.secItemSocial {
+    height: 35px;
+    padding-top: 3px;
+}
+
+.secItemSocial .secLabel {
+	vertical-align: super;
+}
 .github-footer {
 	margin-top: 10px;
 }
@@ -183,6 +197,9 @@ td.hobbies span {
 	margin-left: 6px;
 }
 
+.btn-secinfo-social {
+	width: 80px !important;
+}
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="BOOTSTRAP FORMS ----------------------------/ "*/
@@ -335,6 +352,10 @@ td a b {
 }
 
 /* SOCIAL BUTTONS ---------------------------------------------- */
+.welcome-row {
+	font-size: 18px;
+    padding-bottom: 2em;
+}
 .social-button-row {
 	padding-bottom: 3.0em;
 }

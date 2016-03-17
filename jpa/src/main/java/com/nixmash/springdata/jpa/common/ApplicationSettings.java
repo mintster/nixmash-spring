@@ -15,6 +15,7 @@ public class ApplicationSettings {
 	private String twitterAppSecret;
 	private String facebookAppId;
 	private String facebookAppSecret;
+	private  String siteName;
 
 	public String getTwitterAppId() {
 		return twitterAppId;
@@ -54,6 +55,14 @@ public class ApplicationSettings {
 
 	public void setIsDemoSite(Boolean isDemoSite) {
 		this.isDemoSite = isDemoSite;
+	}
+
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
 	}
 
 }

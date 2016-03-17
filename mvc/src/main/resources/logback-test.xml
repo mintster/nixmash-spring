@@ -16,7 +16,7 @@
 	<logger name="com.nixmash.springdata.mvc" level="OFF" />
 	<logger name="org.thymeleaf" level="OFF" />
 	<logger name="org.hibernate" level="OFF" />
-	<logger name="org.springframework" level="DEBUG" />
+	<logger name="org.springframework" level="OFF" />
 
 	<root level="OFF">
 		<appender-ref ref="console" />

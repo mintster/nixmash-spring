@@ -33,9 +33,9 @@ import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -43,6 +43,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,11 +52,11 @@ import com.nixmash.springdata.jpa.dto.SocialUserDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
-import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
+import com.nixmash.springdata.mvc.common.WebUI;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 import com.nixmash.springdata.mvc.security.SignInUtil;
 
@@ -74,11 +75,14 @@ public class UserController {
 	public static final String SIGNIN_VIEW = "signin";
 	public static final String REGISTER_VIEW = "register";
 
+	public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
+
 	private final UserService userService;
 	private final CurrentUserDetailsService currentUserDetailsService;
 	private final UserCreateFormValidator userCreateFormValidator;
 	private final SocialUserFormValidator socialUserFormValidator;
 	private final ProviderSignInUtils providerSignInUtils;
+	private WebUI webUI;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -88,12 +92,13 @@ public class UserController {
 	@Autowired
 	public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator,
 			SocialUserFormValidator socialUserFormValidator, ProviderSignInUtils providerSignInUtils,
-			CurrentUserDetailsService currentUserDetailsService) {
+			CurrentUserDetailsService currentUserDetailsService, WebUI webUI) {
 		this.userService = userService;
 		this.userCreateFormValidator = userCreateFormValidator;
 		this.socialUserFormValidator = socialUserFormValidator;
 		this.providerSignInUtils = providerSignInUtils;
 		this.currentUserDetailsService = currentUserDetailsService;
+		this.webUI = webUI;
 	}
 
 	@InitBinder("userDTO")
@@ -104,6 +109,10 @@ public class UserController {
 	@InitBinder("socialUserDTO")
 	public void initSocialUserBinder(WebDataBinder binder) {
 		binder.addValidators(socialUserFormValidator);
+	}
+
+	@RequestMapping(value = "/signin", method = RequestMethod.GET)
+	public void signin() {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -124,7 +133,6 @@ public class UserController {
 		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
 		User user = userService.create(userDTO);
 		SignInUtil.authorizeUser(user);
-		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
 		return "redirect:/";
 	}
 
@@ -134,6 +142,11 @@ public class UserController {
 			return "redirect:/";
 		else {
 			Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+			request.setAttribute("connectionSubheader",
+					webUI.parameterizedMessage(MESSAGE_KEY_SOCIAL_SIGNUP,
+							StringUtils.capitalize(connection.getKey().getProviderId())),
+					RequestAttributes.SCOPE_REQUEST);
+
 			socialUserDTO = createSocialUserDTO(connection);
 			model.addAttribute(MODEL_ATTRIBUTE_SOCIALUSER, socialUserDTO);
 			return SIGNUP_VIEW;
@@ -158,7 +171,7 @@ public class UserController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
-			WebRequest request, RedirectAttributes redirect) {
+			WebRequest request, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			return SIGNUP_VIEW;
 		}
@@ -174,30 +187,18 @@ public class UserController {
 
 		User user = userService.create(userDTO);
 		SignInUtil.authorizeUser(user);
-		
+
 		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
 		SignInUtil.setUserConnection(request, socialUserDTO.getUsername(), userService);
-		redirect.addFlashAttribute("feedbackMessage", "Account successfully created!");
+		redirectAttributes.addFlashAttribute("connectionWelcomeMessage", "TRUE");
 		return "redirect:/";
 	}
 
 	@PreAuthorize("@userService.canAccessUser(principal, #username)")
 	@RequestMapping(value = "/{username}", method = GET)
-	public String profilePage(@PathVariable("username") String username, CurrentUser currentUser, Model model, WebRequest request)
+	public String profilePage(@PathVariable("username") String username, Model model, WebRequest request)
 			throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
-
-		// Tests in NixMash Spring v0.2.8 currently do not support Spring Social
-		//
-		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
-		if (connection != null) {
-			org.springframework.social.facebook.api.User socialMediaProfile = connection.getApi().userOperations().getUserProfile();
-		}
-
-//		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		 CurrentUser currentUser  = (CurrentUser) authentication.getPrincipal();
-
-		model.addAttribute(MODEL_ATTRIBUTE_CURRENTUSER, currentUser);
 		return USER_PROFILE_VIEW;
 	}
 
