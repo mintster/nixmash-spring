@@ -14,7 +14,7 @@
 	</appender>
 
 	<logger name="com.nixmash.springdata.mvc" level="info" />
-	<logger name="com.nixmash.springdata.solr" level="off" />
+	<logger name="com.nixmash.springdata.solr" level="info" />
 	<logger name="org.thymeleaf" level="off" />
 	<logger name="org.hibernate" level="off" />
 	<logger name="org.springframework" level="info" />
