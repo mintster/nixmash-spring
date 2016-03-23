@@ -1,1 +1,1 @@
-include "jpa", "mvc", "solr", "social"
+include "jpa", "mvc", "solr"

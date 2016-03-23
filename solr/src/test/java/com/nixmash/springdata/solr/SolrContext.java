@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.nixmash.springdata.solr.common.SolrSettings;
 import com.nixmash.springdata.solr.config.SolrApplicationConfig;
@@ -24,7 +23,6 @@ import com.nixmash.springdata.solr.config.SolrApplicationConfig;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SolrApplicationConfig.class)
-@Transactional
 @ActiveProfiles("dev")
 public class SolrContext {
 
