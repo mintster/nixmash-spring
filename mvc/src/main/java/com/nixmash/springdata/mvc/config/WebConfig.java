@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +19,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -30,33 +27,18 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
-@EnableWebMvc
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @ComponentScan(basePackages = "com.nixmash.springdata")
 @EnableJpaRepositories(basePackages = "com.nixmash.springdata.jpa")
 @PropertySource("classpath:application.properties")
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcAutoConfigurationAdapter  {
 
 	private static final String MESSAGESOURCE_BASENAME = "message.source.basename";
 	private static final String MESSAGESOURCE_USE_CODE_AS_DEFAULT_MESSAGE = "message.source.use.code.as.default.message";
 
 	@Autowired
 	private Environment environment;
-
-
-	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-	        "classpath:/META-INF/resources/", "classpath:/resources/",
-	        "classpath:/static/", "classpath:/public/" };
-
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		if (!registry.hasMappingForPattern("/webjars/**")) {
-//			registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-//		}
-		registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
-	}
-	
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -99,11 +81,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		exceptionResolver.setStatusCodes(statusCodes);
 
 		return exceptionResolver;
-	}
-
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
 	}
 
 	@Bean(name = "validator")
