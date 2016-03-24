@@ -4,8 +4,8 @@
 <head>
 <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
 <title th:text="#{login.page.title}">[NixMash Spring Login Page]</title>
-<link rel="stylesheet" type="text/css" th:href="@{/static/css/social-buttons-3.css}" />
-<link rel="stylesheet" type="text/css" th:href="@{/static/css/font-awesome.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/social-buttons-3.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.css}" />
 </head>
 <body role="document" onload="$('input[name=username]').focus();">
 	<nav th:replace="fragments/navbar :: navbar('na')">Navbar</nav>

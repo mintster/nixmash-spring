@@ -3,7 +3,7 @@
 <head>
 <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
 <title th:text="#{product.map.page.title}"></title>
-<link rel="stylesheet" th:href="@{/static/css/maps.css}" type="text/css" />
+<link rel="stylesheet" th:href="@{/css/maps.css}" type="text/css" />
 </head>
 <body>
 	<nav th:replace="fragments/navbar :: navbar('products')">Navbar</nav>
@@ -45,7 +45,7 @@
 	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 
 	<div th:if="${mappingError == null}">
-		<script th:src="@{/static/js/multimap.js}"></script>
+		<script th:src="@{/js/multimap.js}"></script>
 		<script
 			src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false&amp;key=AIzaSyAN40J-X2vlp7NX9iD_T396Mp2ysTp67P0&amp;callback=renderGoogleMap"></script>
 		<script src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
