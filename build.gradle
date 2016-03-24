@@ -62,7 +62,7 @@ allprojects {
 	}
 
 	springBoot {
-		mainClass = 'com.nixmash.springdata.mvc.WebInitializer'
+		mainClass = 'com.nixmash.springdata.mvc.config.Application'
 	}
 	
 	idea {

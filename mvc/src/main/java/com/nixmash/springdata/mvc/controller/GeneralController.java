@@ -38,8 +38,8 @@ public class GeneralController {
 		return HOME_VIEW;
 	}
 
-	@RequestMapping(value = { "{path:(?!webjars|static|h2-console).*$}",
-			"{path:(?!webjars|static|h2-console).*$}/**" }, headers = "Accept=text/html")
+	@RequestMapping(value = { "{path:(?!webjars|css|js|img|fonts|h2-console).*$}",
+			"{path:(?!webjars|css|js|img|fonts|h2-console).*$}/**" }, headers = "Accept=text/html")
 	public void unknown() {
 		throw new UnknownResourceException();
 	}

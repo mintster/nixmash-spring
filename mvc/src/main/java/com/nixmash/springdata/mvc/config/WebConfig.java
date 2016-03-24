@@ -4,18 +4,14 @@ import java.util.List;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -31,10 +27,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
 @EnableWebMvc
-@EnableTransactionManagement
-@EnableConfigurationProperties
-@ComponentScan(basePackages = "com.nixmash.springdata")
-@EnableJpaRepositories(basePackages = "com.nixmash.springdata.jpa")
 @PropertySource("classpath:application.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
@@ -44,11 +36,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Autowired
 	private Environment environment;
 
+	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+	        "classpath:/META-INF/resources/", "classpath:/resources/",
+	        "classpath:/static/", "classpath:/public/" };
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		if (!registry.hasMappingForPattern("/webjars/**")) {
-			registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-		}
+//		if (!registry.hasMappingForPattern("/webjars/**")) {
+//			registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+//		}
+		registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
 	}
 
 	@Override
