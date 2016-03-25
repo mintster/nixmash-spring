@@ -2,7 +2,7 @@ war { baseName = 'nixmashSpring' }
 
 sourceSets {
 	main {
-		java.srcDirs  = ['src/main/java', 'src/main/resources']
+		java.srcDirs = ['src/main/java', 'src/main/resources']
 		resources.srcDir 'src/main/resources'
 	}
 	test { java.srcDir 'src/test/java' }
@@ -20,12 +20,13 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-social-facebook")
 	compile("org.springframework.social:spring-social-security:1.1.4.RELEASE")
 	compile("org.springframework.boot:spring-boot-starter-security")
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 
 	compile 'com.jayway.restassured:json-path:2.4.1'
 	compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
 	compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
 
-	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
+//	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 
 	compile 'org.webjars:webjars-locator:0.27'
 	compile 'org.webjars:webjars-locator-core:0.27'
@@ -60,7 +61,7 @@ bootRun {
 	systemProperty 'server.port', '9000'
 	systemProperty 'spring.profiles.active', 'mysql,dev'
 	args "--appurl=http://localhost:9000"
-	main = 'com.nixmash.springdata.mvc.WebInitializer'
+	main = 'com.nixmash.springdata.mvc.config.Application'
 }
 
 
