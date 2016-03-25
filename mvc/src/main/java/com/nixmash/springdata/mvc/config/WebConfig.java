@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
+@EnableAutoConfiguration
 @PropertySource("classpath:application.properties")
 public class WebConfig extends WebMvcAutoConfigurationAdapter {
 
