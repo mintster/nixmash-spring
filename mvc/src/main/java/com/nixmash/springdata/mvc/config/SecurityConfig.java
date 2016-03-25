@@ -30,7 +30,7 @@ import com.nixmash.springdata.mvc.security.SimpleSocialUserDetailsService;
 @ComponentScan(basePackageClasses = CurrentUserDetailsService.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final String[] IGNORED_RESOURCE_LIST = new String[] {  "/static/**"};
+	private static final String[] IGNORED_RESOURCE_LIST = new String[] {  "/css/**" };
 	private static final String[] PERMITALL_RESOURCE_LIST = new String[] { "/favicon.ico","/auth/**", "/signin/**", "/signup/**", "/",
 			"/register/**", "/contacts", "/json/**", "/products/**" };
 	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/admin/**" };
