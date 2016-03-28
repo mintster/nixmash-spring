@@ -189,8 +189,11 @@ public class UserController {
 		SignInUtil.authorizeUser(user);
 
 		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
-		SignInUtil.setUserConnection(request, socialUserDTO.getUsername(), userService);
-		redirectAttributes.addFlashAttribute("connectionWelcomeMessage", "TRUE");
+		
+//		Connection<?> connection = 
+//		ConnectionData connectionData =  connection.createData();
+//		SignInUtil.setUserConnection(request, connectionData);
+		redirectAttributes.addFlashAttribute("connectionWelcomeMessage");
 		return "redirect:/";
 	}
 

@@ -40,9 +40,12 @@
 						<form class="navbar-form pull-right" th:action="@{/logout}" method="post">
 							<input type="submit" value="Log out" class="btn btn-default" />
 						</form>
-						<img class="navbar-profilepic pull-right" th:if="${currentUserConnection}" th:src="${currentUserConnection.imageUrl}" width="32" height="32" /> <a
-							th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right" th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
-
+						
+						<img class="navbar-profilepic pull-right" th:if="${currentUserConnection}" 
+							th:src="${currentUserConnection.imageUrl}" width="32" height="32" /> 
+							<a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right" 
+										th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
+					
 					</div>
 					<div th:if="${currentUser == null}" class="navbar-right">
 						<a th:href="@{'/signin/'}" th:text="#{web.site.login}" class="navbar-text margin-5">[Login]</a> <span class="navbar-text margin-5">|</span> <a th:href="@{'/register/'}"

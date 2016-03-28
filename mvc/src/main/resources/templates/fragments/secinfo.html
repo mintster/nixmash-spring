@@ -17,8 +17,9 @@
 				<span class="secLabel" th:text="#{secinfo.authorities}">[ROLES]</span> <span class="secField" th:text="${currentUser.getAuthorities()}">[ROLES]</span>
 			</div>
 			<div th:if="${currentUserConnection}" class="secItemSocial" th:with="provider=${currentUserConnection.providerId}">
-				<span class="secLabel" th:text="#{secinfo.social}">[SOCIAL]</span> <span class="secField"> <span th:class="|btn-sm btn-${provider} btn-secinfo-social|"> <i
-						th:class="|fa fa-${provider}|"></i> | <span th:text="${provider}">[SOCIAL]</span>
+				<span class="secLabel" th:text="#{secinfo.social}">[SOCIAL]</span> 
+				<span class="secField"> <span th:class="|btn-sm btn-${provider} btn-secinfo-social|"> 
+				<i th:class="|fa fa-${provider}|"></i> | <span th:text="${provider}">[SOCIAL]</span>
 				</span>
 				</span>
 			</div>

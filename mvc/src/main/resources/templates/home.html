@@ -28,6 +28,7 @@
 	</div>
 
 	<div th:if="${connectionWelcomeMessage}" class="container">
+	yousa!
 		<div th:with="provider=${currentUserConnection.providerId}, 
 				capProvider=${#strings.capitalize(currentUserConnection.providerId)}">
 			<div class="row welcome-row">

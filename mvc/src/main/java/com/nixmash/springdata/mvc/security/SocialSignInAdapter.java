@@ -46,7 +46,8 @@ public class SocialSignInAdapter implements SignInAdapter {
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
        User user = userRepository.findByUsername(localUserId);
 		SignInUtil.authorizeUser(user);
-		SignInUtil.setUserConnection(request, localUserId, userService);
+//		ConnectionData connectionData =  connection.createData();
+//		SignInUtil.setUserConnection(request, connectionData);
         return null;
     }
 
