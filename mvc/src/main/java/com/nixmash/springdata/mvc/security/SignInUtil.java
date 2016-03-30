@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc.security;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.ConnectionData;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.nixmash.springdata.jpa.model.CurrentUser;
@@ -19,9 +20,9 @@ public class SignInUtil {
 
 	}
 
-	public static void setUserConnection(WebRequest request, ConnectionData userConnection) {
-		String sessionUserConnectionAttribute = GlobalController.SESSION_ATTRIBUTE_USER_CONNECTION;
-		request.setAttribute(sessionUserConnectionAttribute, userConnection, request.SCOPE_SESSION);
+	public static void setUserConnection(WebRequest request, ConnectionData connectionData) {
+		String attribute = GlobalController.SESSION_USER_CONNECTION;
+		request.setAttribute(attribute, connectionData, RequestAttributes.SCOPE_SESSION);
 	}
 
 }

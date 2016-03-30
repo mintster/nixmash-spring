@@ -6,14 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,16 +32,13 @@ public class GlobalController {
 	private static final String PRODUCT_MAP_VIEW = "products/map";
 	private static final String LOCATION_ERROR_MESSAGE_KEY = "product.map.page.feedback.error";
 	public static final String LOCATION_ERROR_ATTRIBUTE = "mappingError";
-	public static final String SESSION_ATTRIBUTE_USER_CONNECTION = "MY_USER_CONNECTION";
+	public static final String SESSION_USER_CONNECTION = "MY_USER_CONNECTION";
 
 	@Autowired
 	WebUI webUI;
 
 	@Autowired
 	private ApplicationSettings applicationSettings;
-
-	@Autowired
-	private UsersConnectionRepository usersConnectionRepository;
 
 	@ModelAttribute("currentUser")
 	public CurrentUser getCurrentUser(Authentication authentication) {
@@ -58,22 +52,9 @@ public class GlobalController {
 	}
 
 	@ModelAttribute("currentUserConnection")
-	public ConnectionData getUserConnection(Authentication authentication, WebRequest request) {
-		ConnectionData currentUserConnection = null;
-		if (authentication == null)
-			return null;
-		else {
-			
-			CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
-			ConnectionRepository repository = usersConnectionRepository.createConnectionRepository(currentUser.getUsername());
-			Connection<Facebook>  connection =  repository.getPrimaryConnection(Facebook.class);
-			currentUserConnection = connection.createData();
-		}
-		return currentUserConnection;
-		
-		
-//		return (ConnectionData) request.getAttribute(SESSION_ATTRIBUTE_USER_CONNECTION,
-//				RequestAttributes.SCOPE_SESSION);
+	public ConnectionData getUserConnection(WebRequest request) {
+		return (ConnectionData) request.getAttribute(SESSION_USER_CONNECTION,
+				RequestAttributes.SCOPE_SESSION);
 	}
 
 	@ModelAttribute("appSettings")

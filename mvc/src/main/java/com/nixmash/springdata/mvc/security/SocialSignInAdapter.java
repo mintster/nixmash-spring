@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 
@@ -46,8 +47,8 @@ public class SocialSignInAdapter implements SignInAdapter {
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
        User user = userRepository.findByUsername(localUserId);
 		SignInUtil.authorizeUser(user);
-//		ConnectionData connectionData =  connection.createData();
-//		SignInUtil.setUserConnection(request, connectionData);
+		ConnectionData connectionData =  connection.createData();
+		SignInUtil.setUserConnection(request, connectionData);
         return null;
     }
 

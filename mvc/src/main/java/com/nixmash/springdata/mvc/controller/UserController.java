@@ -29,9 +29,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionKey;
-import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,7 +88,7 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Inject
-	private ConnectionRepository connectionRepository;
+	private UsersConnectionRepository usersConnectionRepository;
 
 	@Autowired
 	public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator,
@@ -147,13 +148,17 @@ public class UserController {
 							StringUtils.capitalize(connection.getKey().getProviderId())),
 					RequestAttributes.SCOPE_REQUEST);
 
-			socialUserDTO = createSocialUserDTO(connection);
+			socialUserDTO = createSocialUserDTO(request, connection);
+			
+			ConnectionData connectionData =  connection.createData();
+			SignInUtil.setUserConnection(request, connectionData);
+			
 			model.addAttribute(MODEL_ATTRIBUTE_SOCIALUSER, socialUserDTO);
 			return SIGNUP_VIEW;
 		}
 	}
 
-	private SocialUserDTO createSocialUserDTO(Connection<?> connection) {
+	private SocialUserDTO createSocialUserDTO(WebRequest request, Connection<?> connection) {
 		SocialUserDTO dto = new SocialUserDTO();
 
 		if (connection != null) {
@@ -164,6 +169,7 @@ public class UserController {
 
 			ConnectionKey providerKey = connection.getKey();
 			dto.setSignInProvider(SignInProvider.valueOf(providerKey.getProviderId().toUpperCase()));
+			
 		}
 
 		return dto;
@@ -189,11 +195,7 @@ public class UserController {
 		SignInUtil.authorizeUser(user);
 
 		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
-		
-//		Connection<?> connection = 
-//		ConnectionData connectionData =  connection.createData();
-//		SignInUtil.setUserConnection(request, connectionData);
-		redirectAttributes.addFlashAttribute("connectionWelcomeMessage");
+		redirectAttributes.addFlashAttribute("connectionWelcomeMessage", true);
 		return "redirect:/";
 	}
 

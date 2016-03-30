@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.social.connect.ConnectionData;
 
 @Entity
 @Table(name = "userconnection")
@@ -70,6 +71,21 @@ public class UserConnection implements Serializable {
 		this.expireTime = expireTime;
 	}
 
+	public UserConnection(ConnectionData connectionData, String userId)
+	{
+		this.userId = userId;
+		this.providerId = connectionData.getProviderId();
+		this.providerUserId = connectionData.getProviderUserId();
+		this.rank = 1;
+		this.displayName = connectionData.getDisplayName();
+		this.profileUrl = connectionData.getProfileUrl();
+		this.imageUrl = connectionData.getImageUrl();
+		this.accessToken = connectionData.getAccessToken();
+		this.secret = connectionData.getSecret();
+		this.refreshToken = connectionData.getRefreshToken();
+		this.expireTime = connectionData.getExpireTime();
+	}
+	
 	public String toString() {
 		return "userId = " + userId + ", providerId = " + providerId + ", providerUserId = " + providerUserId
 				+ ", rank = " + rank + ", displayName = " + displayName + ", profileUrl = " + profileUrl

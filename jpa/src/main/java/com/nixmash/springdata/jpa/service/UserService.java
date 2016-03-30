@@ -23,8 +23,6 @@ public interface UserService {
 
     List<User> getUsersWithDetail();
 
-//	boolean canAccessUser(String username);
-
 	boolean canAccessUser(CurrentUser currentUser, String username);
 
 	UserConnection getUserConnectionByUserId(String userId);
