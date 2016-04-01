@@ -10,17 +10,26 @@
 
 	<div th:if="${currentUser == null}" class="container">
 		<div class="row social-button-row">
-			<div class="col-lg-6">
+			<div class="col-lg-7">
 				<form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input> <input type="hidden" name="scope" value="email,user_posts,user_photos,user_friends"></input>
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+					<input type="hidden" name="scope" value="email,user_posts,user_photos,user_friends" />
 					<button type="submit" class="btn btn-facebook">
 						<i class="fa fa-facebook"></i> | <span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
 					</button>
 				</form>
 				<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 					<button type="submit" class="btn btn-twitter">
 						<i class="fa fa-twitter"></i> | <span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
+					</button>
+				</form>
+				<form id="gl_signin" th:action="@{/signin/google}" method="POST">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+					<input type="hidden" name="scope"
+						   value="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me" />
+					<button type="submit" class="btn btn-google">
+						<i class="fa fa-google"></i> | <span th:text="#{label.google.sign.in.button}">[Sign In with Google]</span>
 					</button>
 				</form>
 			</div>
@@ -28,12 +37,12 @@
 	</div>
 
 	<div th:if="${connectionWelcomeMessage}" class="container">
-		<div th:with="provider=${currentUserConnection.providerId}, 
+		<div th:with="provider=${currentUserConnection.providerId},
 				capProvider=${#strings.capitalize(currentUserConnection.providerId)}">
 			<div class="row welcome-row">
 				<div class="col-lg-12">
-					Thank you for creating a Site Account with <span th:text="${capProvider}">[provider]</span>. 
-					In the future, please use the <span th:class="|btn-sm btn-${provider}|"> 
+					Thank you for creating a Site Account with <span th:text="${capProvider}">[provider]</span>.
+					In the future, please use the <span th:class="|btn-sm btn-${provider}|">
 					<i th:class="|fa fa-${provider}|"></i> | 
 					<span th:text="#{|label.${provider}.sign.in.button|}">[Sign In with Provider]</span>
 					</span> &nbsp;buttons for one-click Sign In!
@@ -48,7 +57,7 @@
 				<p>
 					As its name implies, this site demonstrates Spring in action with accompanying posts at <a href="http://nixmash.com">NixMash.com.</a> Areas include:
 				</p>
-				<small>Spring Social -- <em>Twitter and Facebook</em></small> <small>Hibernate and Spring JPA -- <em>Contacts</em></small> <small>Spring Security -- <em>Contact
+				<small>Spring Social -- <em>Twitter, Facebook and Google OAuth Login</em></small> <small>Hibernate and Spring JPA -- <em>Contacts</em></small> <small>Spring Security -- <em>Contact
 						View restricted to Logged-in Users</em></small> <small>Spring Solr -- <em>Products</em>
 				</small> <small>Javascript with Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em>
 				</small> <small>Thymeleaf with Spring</small>

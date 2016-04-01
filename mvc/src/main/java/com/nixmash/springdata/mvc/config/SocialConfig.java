@@ -1,8 +1,8 @@
 package com.nixmash.springdata.mvc.config;
 
 
-import javax.sql.DataSource;
-
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.mvc.security.SocialSignInAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +21,12 @@ import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
-import com.nixmash.springdata.jpa.common.ApplicationSettings;
-import com.nixmash.springdata.mvc.security.SocialSignInAdapter;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableSocial
@@ -49,6 +50,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
 				applicationSettings.getTwitterAppSecret()));
 		cfConfig.addConnectionFactory(new FacebookConnectionFactory(applicationSettings.getFacebookAppId(),
 				applicationSettings.getFacebookAppSecret()));
+		cfConfig.addConnectionFactory(new GoogleConnectionFactory(applicationSettings.getGoogleAppId(),
+				applicationSettings.getGoogleAppSecret()));
 	}
 
 	@Override

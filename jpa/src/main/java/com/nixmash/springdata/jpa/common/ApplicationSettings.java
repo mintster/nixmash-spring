@@ -15,6 +15,25 @@ public class ApplicationSettings {
 	private String twitterAppSecret;
 	private String facebookAppId;
 	private String facebookAppSecret;
+	private String googleAppId;
+	private String googleAppSecret;
+
+	public String getGoogleAppId() {
+		return googleAppId;
+	}
+
+	public void setGoogleAppId(String googleAppId) {
+		this.googleAppId = googleAppId;
+	}
+
+	public String getGoogleAppSecret() {
+		return googleAppSecret;
+	}
+
+	public void setGoogleAppSecret(String googleAppSecret) {
+		this.googleAppSecret = googleAppSecret;
+	}
+
 	private  String siteName;
 
 	public String getTwitterAppId() {

@@ -377,15 +377,19 @@ i.fa-facebook {
 	margin-right: 4px;
 }
 
-.btn-facebook, .btn-twitter {
-	
+i.fa-google {
+	margin-right: 2px;
 }
 
-form#fb_signin {
-	display: inline-block;
-	margin-right: 6px;
+.btn-facebook-login {
+	margin-left: 40px;
 }
 
-form#tw_signin {
+.btn-facebook, .btn-twitter, .btn-google {
+
+}
+
+form#fb_signin, form#tw_signin, form#gl_signin {
 	display: inline-block;
+	margin-right: 4px;
 }
