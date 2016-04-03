@@ -21,7 +21,6 @@ import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
-import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
@@ -32,56 +31,58 @@ import javax.sql.DataSource;
 @EnableSocial
 public class SocialConfig extends SocialConfigurerAdapter {
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@Autowired
-	private ApplicationSettings applicationSettings;
+    @Autowired
+    private ApplicationSettings appSettings;
 
-	@Autowired
-	private Environment environment;
+    @Autowired
+    private Environment environment;
 
-	@Value("#{ environment['spring.social.application.url'] }")
-	private String applicationUrl;
+    @Value("#{ environment['spring.social.application.url'] }")
+    private String applicationUrl;
 
-	@Override
-	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
-		cfConfig.addConnectionFactory(new TwitterConnectionFactory(applicationSettings.getTwitterAppId(),
-				applicationSettings.getTwitterAppSecret()));
-		cfConfig.addConnectionFactory(new FacebookConnectionFactory(applicationSettings.getFacebookAppId(),
-				applicationSettings.getFacebookAppSecret()));
-		cfConfig.addConnectionFactory(new GoogleConnectionFactory(applicationSettings.getGoogleAppId(),
-				applicationSettings.getGoogleAppSecret()));
-	}
+    @Override
+    public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
+        cfConfig.addConnectionFactory(new TwitterConnectionFactory(appSettings.getTwitterAppId(),
+                appSettings.getTwitterAppSecret()));
+        cfConfig.addConnectionFactory(new FacebookConnectionFactory(appSettings.getFacebookAppId(),
+                appSettings.getFacebookAppSecret()));
+        cfConfig.addConnectionFactory(new GoogleConnectionFactory(appSettings.getGoogleAppId(),
+                appSettings.getGoogleAppSecret()));
+    }
 
-	@Override
-	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
-	}
+    @Override
+    public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+        return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+    }
 
-	@Bean
-	public SignInAdapter signInAdapter() {
-		return new SocialSignInAdapter(new HttpSessionRequestCache());
-	}
+    @Bean
+    public SignInAdapter signInAdapter() {
+        return new SocialSignInAdapter(new HttpSessionRequestCache());
+    }
 
-	@Bean
-	public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator,
-			UsersConnectionRepository connectionRepository) {
-		return new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
-	};
+    @Bean
+    public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator,
+                                                   UsersConnectionRepository connectionRepository) {
+        return new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
+    }
 
-	@Bean
-	public ProviderSignInController providerSignInController(ConnectionFactoryLocator connectionFactoryLocator,
-			UsersConnectionRepository usersConnectionRepository) {
-		ProviderSignInController controller = new ProviderSignInController(connectionFactoryLocator,
-				usersConnectionRepository, signInAdapter());
-		 controller.setApplicationUrl(applicationUrl);
-		return controller;
-	}
+    ;
 
-	@Override
-	public UserIdSource getUserIdSource() {
-		return new AuthenticationNameUserIdSource();
-	}
+    @Bean
+    public ProviderSignInController providerSignInController(ConnectionFactoryLocator connectionFactoryLocator,
+                                                             UsersConnectionRepository usersConnectionRepository) {
+        ProviderSignInController controller = new ProviderSignInController(connectionFactoryLocator,
+                usersConnectionRepository, signInAdapter());
+        controller.setApplicationUrl(applicationUrl);
+        return controller;
+    }
+
+    @Override
+    public UserIdSource getUserIdSource() {
+        return new AuthenticationNameUserIdSource();
+    }
 
 }

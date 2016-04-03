@@ -27,9 +27,11 @@
 				<form id="gl_signin" th:action="@{/signin/google}" method="POST">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 					<input type="hidden" name="scope"
-						   value="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me" />
+						   value="https://www.googleapis.com/auth/plus.login
+						   					https://www.googleapis.com/auth/plus.me" />
 					<button type="submit" class="btn btn-google">
-						<i class="fa fa-google"></i> | <span th:text="#{label.google.sign.in.button}">[Sign In with Google]</span>
+						<i class="fa fa-google"></i> |
+							<span th:text="#{label.google.sign.in.button}">[Sign In with Google]</span>
 					</button>
 				</form>
 			</div>

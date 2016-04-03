@@ -42,9 +42,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.2.8 -- Spring Social (In Progress)##
 
+- Google, Facebook and Twitter Sign-In
 - Social Services app-id and secret keys configured in `external.properties` file
 - Social ProviderSignInController SetApplicationUrl() supporting multiple environments.<br/>SetApplicationUrl() set with `--appurl` commandline argument. See post [Passing Arguments to Spring Boot](http://nixmash.com/java/passing-arguments-to-spring-boot/) for details.
 - SignIn form with @InitBinder and custom validation for all fields
+- [Post: Adding Google Sign-In to Spring Social](http://nixmash.com/java/adding-google-sign-in-to-spring-social/)
+- [Post: Revisiting a Custom UserConnection JPA Object in Spring Social](http://nixmash.com/java/revisiting-a-custom-userconnection-jpa-object-in-spring-social/)
+- [Post: The Case of the Spring Boot CSS Folder 404](http://nixmash.com/java/the-case-of-the-spring-boot-css-folder-404/)
 - [Post: Resolving an H2 Deadlock in Spring Social](http://nixmash.com/java/resolving-an-h2-deadlock-in-spring-social/)
 - [Post: Spring Social Additions to a Spring Security App](http://nixmash.com/java/spring-social-additions-to-a-spring-security-app/)
 - [Post: NixMash Spring Social Web Flow Overview, First Pass](http://nixmash.com/java/nixmash-spring-social-web-flow-overview-first-pass/)
@@ -52,6 +56,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Passing Arguments to Spring Boot](http://nixmash.com/java/passing-arguments-to-spring-boot/)
 - [Post: Spring Boot Social Showcase Starting Points](http://nixmash.com/java/spring-boot-social-showcase-starting-points/)
 - [Post: Facebook Email Access in Spring Boot Social Showcase](http://nixmash.com/java/facebook-email-access-in-spring-boot-social-showcase/)
+
+![v0.2.8 Social Sign-In Buttons](http://nixmash.com/x/pics/github/spring-data-0.2.8.png)
 
 [[back to top](#nixmash-spring)]
 
