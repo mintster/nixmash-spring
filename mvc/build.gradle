@@ -27,7 +27,7 @@ dependencies {
 	compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
 	compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
 
-//	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
+	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 
 	compile 'org.webjars:webjars-locator:0.27'
 	compile 'org.webjars:webjars-locator-core:0.27'

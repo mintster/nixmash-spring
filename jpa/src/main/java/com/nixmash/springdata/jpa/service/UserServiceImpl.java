@@ -1,16 +1,5 @@
 package com.nixmash.springdata.jpa.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.model.Authority;
@@ -20,6 +9,16 @@ import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.repository.AuthorityRepository;
 import com.nixmash.springdata.jpa.repository.UserConnectionRepository;
 import com.nixmash.springdata.jpa.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Service("userService")
 @Transactional
@@ -98,7 +97,7 @@ public class UserServiceImpl implements UserService {
                 && (currentUser.getUser().hasAuthority(Role.ROLE_ADMIN) ||
                     currentUser.getUsername().equals(username));
     }
-    
+
     @Transactional(readOnly = true)
     @Override
     public UserConnection getUserConnectionByUserId(String userId) {

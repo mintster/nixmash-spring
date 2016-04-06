@@ -1,0 +1,27 @@
+div.left_col.scroll-view div.profile {
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.site_title i {
+    border: none;
+}
+
+.sidebar-footer-text {
+    margin-left: 5px;
+}
+
+.sidebar-footer a {
+    text-align: left;
+    width: 100%;
+}
+span.pad-right {
+    padding-right: 5px;
+}
+.fill-body {
+    min-height: 600px;
+}
+.fill-body-message {
+    font-size: 20px;
+    font-style: italic;
+}

@@ -1,13 +1,13 @@
 package com.nixmash.springdata.jpa.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.UserConnection;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 

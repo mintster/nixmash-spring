@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title>NixMash Spring Error Page</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('error')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="#{error.page.title}">[error title]</h1>
+
+                <p class="lead">Error encounter at <span th:text="${timestamp}"/></p>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">[sponsor image]</div>
+        </div>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="container">
+            <h3>Exception Details</h3>
+
+            <p>
+            <div  th:unless="${status == null}">
+                <span style="font-weight: bold">HTTP Status: </span><span th:text="${status}"/> (<span
+                    th:text="${error}"/>)
+            </div>
+            <div  th:unless="${message == null}">
+                <span style="font-weight: bold">Message: </span><span th:text="${message}"/>
+            </div>
+
+            <div th:unless="${exception == null}">
+                <span style="font-weight: bold">Exception: </span><span th:text="${exception}"/>
+            </div>
+            </p>
+            <p>
+                Back to the <a th:href="@{/}">Home Page</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">[scripts]</div>
+</body>
+</html>

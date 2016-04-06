@@ -1,8 +1,9 @@
 package com.nixmash.springdata.mvc.config;
 
-import java.util.List;
-import java.util.Properties;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
@@ -16,12 +17,8 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.List;
 
 @Configuration
 @EnableAutoConfiguration
@@ -56,26 +53,26 @@ public class WebConfig extends WebMvcAutoConfigurationAdapter {
 		return messageSource;
 	}
 
-	@Bean
-	public SimpleMappingExceptionResolver exceptionResolver() {
-		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
-
-		Properties exceptionMappings = new Properties();
-
-		exceptionMappings.put("java.lang.Exception", "errors/error");
-		exceptionMappings.put("java.lang.RuntimeException", "errors/error");
-
-		exceptionResolver.setExceptionMappings(exceptionMappings);
-
-		Properties statusCodes = new Properties();
-
-		statusCodes.put("errors/404", "404");
-		statusCodes.put("errors/error", "500");
-
-		exceptionResolver.setStatusCodes(statusCodes);
-
-		return exceptionResolver;
-	}
+//	@Bean
+//	public SimpleMappingExceptionResolver exceptionResolver() {
+//		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+//
+//		Properties exceptionMappings = new Properties();
+//
+//		exceptionMappings.put("java.lang.Exception", "errors/error");
+//		exceptionMappings.put("java.lang.RuntimeException", "errors/error");
+//
+//		exceptionResolver.setExceptionMappings(exceptionMappings);
+//
+//		Properties statusCodes = new Properties();
+//
+//		statusCodes.put("errors/404", "404");
+//		statusCodes.put("errors/error", "500");
+//
+//		exceptionResolver.setStatusCodes(statusCodes);
+//
+//		return exceptionResolver;
+//	}
 
 	@Bean(name = "validator")
 	public LocalValidatorFactoryBean validator() {

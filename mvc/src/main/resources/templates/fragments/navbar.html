@@ -1,60 +1,96 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
-	<div th:fragment="navbar(activeTab)">
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only" th:text="#{navbar.toggle}">[Toggle navigation]</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" th:text="#{navbar.brand}">[NixMash Spring]</a>
-				</div>
-				<div class="navbar-collapse collapse" id="navbar-main">
-					<ul class="nav navbar-nav">
-						<li th:class="${activeTab == 'home'}? 'active' : null"><a href="/" th:href="@{/}"><span class="glyphicon glyphicon-home"></span><span th:text="#{navbar.home}"
-								th:remove="tag">[Home]</span></a></li>
-						<li th:class="${activeTab == 'contacts'}? 'active dropdown' : 'dropdown'"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span
-								th:text="#{navbar.contacts}" th:remove="tag">[Contacts]</span> <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="/contacts" th:href="@{/contacts}"><span class="glyphicon glyphicon-th-list"></span><span th:text="#{navbar.contacts.view}" th:remove="tag">[Contacts]</span>
-								</a></li>
-								<li><a href="/contacts/search" th:href="@{/contacts/search}"><span class="glyphicon glyphicon-search"></span><span th:text="#{navbar.contacts.search}"
-										th:remove="tag">[Search]</span></a></li>
-							</ul></li>
-						<li th:class="${activeTab == 'products'}? 'active dropdown' : 'dropdown'"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span
-								th:text="#{navbar.products}" th:remove="tag">[Products]</span> <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="/products" th:href="@{/products}"><span class="glyphicon glyphicon-th-list"></span><span th:text="#{navbar.products.view}" th:remove="tag">[Products]</span>
-								</a></li>
-								<li><a href="/products/search" th:href="@{/products/search}"><span class="glyphicon glyphicon-search"></span><span th:text="#{navbar.products.search}"
-										th:remove="tag">[Search Products]</span></a></li>
-								<li><a href="/products/search" th:href="@{/products/categories}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;<span
-										th:text="#{navbar.products.categories}" th:remove="tag">[Product Categories]</span></a></li>
-								<li><a href="/products/map" th:href="@{/products/map}"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;<span th:text="#{navbar.products.map}"
-										th:remove="tag">[Product Map]</span></a></li>
-							</ul></li>
-					</ul>
+<div th:fragment="navbar(activeTab)">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only" th:text="#{navbar.toggle}">[Toggle navigation]</span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:text="#{navbar.brand}">[NixMash Spring]</a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li th:class="${activeTab == 'home' || activeTab == 'error'}? 'active' : null"><a href="/"
+                                                                                                      th:href="@{/}"><span
+                            class="glyphicon glyphicon-home"></span><span th:text="#{navbar.home}"
+                                                                          th:remove="tag">[Home]</span></a></li>
+                    <li th:class="${activeTab == 'contacts'}? 'active dropdown' : 'dropdown'"><a href="#"
+                                                                                                 class="dropdown-toggle"
+                                                                                                 data-toggle="dropdown"
+                                                                                                 role="button"
+                                                                                                 aria-expanded="false"><span
+                            th:text="#{navbar.contacts}" th:remove="tag">[Contacts]</span> <span
+                            class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/contacts" th:href="@{/contacts}"><span
+                                    class="glyphicon glyphicon-th-list"></span><span th:text="#{navbar.contacts.view}"
+                                                                                     th:remove="tag">[Contacts]</span>
+                            </a></li>
+                            <li><a href="/contacts/search" th:href="@{/contacts/search}"><span
+                                    class="glyphicon glyphicon-search"></span><span th:text="#{navbar.contacts.search}"
+                                                                                    th:remove="tag">[Search]</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li th:class="${activeTab == 'products'}? 'active dropdown' : 'dropdown'"><a href="#"
+                                                                                                 class="dropdown-toggle"
+                                                                                                 data-toggle="dropdown"
+                                                                                                 role="button"
+                                                                                                 aria-expanded="false"><span
+                            th:text="#{navbar.products}" th:remove="tag">[Products]</span> <span
+                            class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/products" th:href="@{/products}"><span
+                                    class="glyphicon glyphicon-th-list"></span><span th:text="#{navbar.products.view}"
+                                                                                     th:remove="tag">[Products]</span>
+                            </a></li>
+                            <li><a href="/products/search" th:href="@{/products/search}"><span
+                                    class="glyphicon glyphicon-search"></span><span th:text="#{navbar.products.search}"
+                                                                                    th:remove="tag">[Search Products]</span></a>
+                            </li>
+                            <li><a href="/products/search" th:href="@{/products/categories}"><span
+                                    class="glyphicon glyphicon-list-alt"></span>&nbsp;<span
+                                    th:text="#{navbar.products.categories}" th:remove="tag">[Product Categories]</span></a>
+                            </li>
+                            <li><a href="/products/map" th:href="@{/products/map}"><span
+                                    class="glyphicon glyphicon-map-marker"></span>&nbsp;<span
+                                    th:text="#{navbar.products.map}"
+                                    th:remove="tag">[Product Map]</span></a></li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="/admin" th:href="@{/admin}"><span th:text="#{navbar.admin}"
+                                                                   th:remove="tag">[Admin]</span></a>
+                    </li>
+                </ul>
 
-					<div th:if="${currentUser != null}">
-						<form class="navbar-form pull-right" th:action="@{/logout}" method="post">
-							<input type="submit" value="Log out" class="btn btn-default" />
-						</form>
-						
-						<img class="navbar-profilepic pull-right" th:if="${currentUserConnection}" 
-							th:src="${currentUserConnection.imageUrl}" width="32" height="32" /> 
-							<a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right" 
-										th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
-					
-					</div>
-					<div th:if="${currentUser == null}" class="navbar-right">
-						<a th:href="@{'/signin/'}" th:text="#{web.site.login}" class="navbar-text margin-5">[Login]</a> <span class="navbar-text margin-5">|</span> <a th:href="@{'/register/'}"
-							th:text="#{web.site.signup}" class="navbar-text margin-5">[Signup]</a>
-					</div>
-				</div>
-			</div>
-		</nav>
-	</div>
+                <div th:unless="${activeTab == 'error'}" th:remove="tag">
+                    <div th:if="${currentUser != null}">
+                        <form class="navbar-form pull-right" th:action="@{/logout}" method="post">
+                            <input type="submit" value="Log out" class="btn btn-default"/>
+                        </form>
+
+                        <img class="navbar-profilepic pull-right" th:if="${currentUserConnection}"
+                             th:src="${currentUserConnection.imageUrl}" width="32" height="32"/>
+                        <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right"
+                           th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
+
+                    </div>
+                    <div th:if="${currentUser == null}" class="navbar-right">
+                        <a th:href="@{'/signin/'}" th:text="#{web.site.login}" class="navbar-text margin-5">[Login]</a>
+                        <span class="navbar-text margin-5">|</span> <a th:href="@{'/register/'}"
+                                                                       th:text="#{web.site.signup}"
+                                                                       class="navbar-text margin-5">[Signup]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
 
 
 </body>

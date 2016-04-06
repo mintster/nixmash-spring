@@ -1,12 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
-import static java.util.stream.Collectors.joining;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.nixmash.springdata.jpa.dto.SelectOptionDTO;
+import com.nixmash.springdata.mvc.common.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nixmash.springdata.jpa.dto.SelectOptionDTO;
-import com.nixmash.springdata.jpa.exceptions.UnknownResourceException;
-import com.nixmash.springdata.mvc.common.WebUI;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.stream.Collectors.joining;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class GeneralController {
@@ -38,11 +36,11 @@ public class GeneralController {
 		return HOME_VIEW;
 	}
 
-	@RequestMapping(value = { "{path:(?!webjars|css|js|images|fonts).*$}",
-			"{path:(?!webjars|css|js|images|fonts).*$}/**" }, headers = "Accept=text/html")
-	public void unknown() {
-		throw new UnknownResourceException();
-	}
+//	@RequestMapping(value = { "{path:(?!webjars|css|js|images|fonts|dashboard).*$}",
+//			"{path:(?!webjars|css|js|images|fonts|dashboard).*$}/**" }, headers = "Accept=text/html")
+//	public void unknown() {
+//		throw new UnknownResourceException();
+//	}
 
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public ModelAndView accesssDenied(Principal user) {
