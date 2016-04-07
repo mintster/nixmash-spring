@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      xmlns="http://www.w3.org/1999/xhtml">
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables" xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
     <div class="row">
@@ -12,10 +12,23 @@
                     </h2>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content  fill-body">
-                    <div class="fill-body-message">
-                        <p>Future location for users list...</p>
-                    </div>
+                <div class="x_content  fill-body-table">
+                    <table id="usersTable" dt:table="true" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user?.id}">1</td>
+                            <td th:text="${user?.lastName}">Doe</td>
+                            <td th:text="${user?.firstName}">John</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -18,8 +18,11 @@ div.left_col.scroll-view div.profile {
 span.pad-right {
     padding-right: 5px;
 }
-.fill-body {
+.fill-body, .fill-body-table {
     min-height: 600px;
+}
+.fill-body-table {
+    font-size: 14px;
 }
 .fill-body-message {
     font-size: 20px;
