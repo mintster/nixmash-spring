@@ -64,7 +64,11 @@ allprojects {
 	springBoot {
 		mainClass = 'com.nixmash.springdata.mvc.config.Application'
 	}
-	
+
+	task getHomeDir << {
+		println gradle.gradleHomeDir
+	}
+
 	idea {
 		module {
 			inheritOutputDirs = false
@@ -72,7 +76,7 @@ allprojects {
 		}
 	}
 
-	task wrapper(type: Wrapper) { gradleVersion = '2.7' }
+	task wrapper(type: Wrapper) { gradleVersion = '2.12' }
 
 	eclipse {
 		classpath {

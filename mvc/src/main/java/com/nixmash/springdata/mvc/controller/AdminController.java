@@ -16,7 +16,8 @@ public class AdminController {
 
     private static final String ADMIN_MOCKUP_VIEW = "admin/mockup";
     private static final String ADMIN_HOME_VIEW = "admin/dashboard";
-    private static final String ADMIN_USERLIST_VIEW = "admin/security/users";
+    private static final String ADMIN_USERS_VIEW = "admin/security/users";
+    private static final String ADMIN_ROLES_VIEW = "admin/security/roles";
 
     private final UserService userService;
 
@@ -41,13 +42,17 @@ public class AdminController {
 
     // endregion
 
+    // region Security
+
     @RequestMapping(value = "/security/users", method = GET)
     public String userlist(Model model) {
-        return ADMIN_USERLIST_VIEW;
+        return ADMIN_USERS_VIEW;
     }
 
-    // region Users
-
+    @RequestMapping(value = "/security/roles", method = GET)
+    public String roleslist(Model model) {
+        return ADMIN_ROLES_VIEW;
+    }
 
     // endregion
 

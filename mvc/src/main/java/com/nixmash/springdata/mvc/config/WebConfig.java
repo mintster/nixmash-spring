@@ -53,27 +53,6 @@ public class WebConfig extends WebMvcAutoConfigurationAdapter {
 		return messageSource;
 	}
 
-//	@Bean
-//	public SimpleMappingExceptionResolver exceptionResolver() {
-//		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
-//
-//		Properties exceptionMappings = new Properties();
-//
-//		exceptionMappings.put("java.lang.Exception", "errors/error");
-//		exceptionMappings.put("java.lang.RuntimeException", "errors/error");
-//
-//		exceptionResolver.setExceptionMappings(exceptionMappings);
-//
-//		Properties statusCodes = new Properties();
-//
-//		statusCodes.put("errors/404", "404");
-//		statusCodes.put("errors/error", "500");
-//
-//		exceptionResolver.setStatusCodes(statusCodes);
-//
-//		return exceptionResolver;
-//	}
-
 	@Bean(name = "validator")
 	public LocalValidatorFactoryBean validator() {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();

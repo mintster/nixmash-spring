@@ -1,6 +1,5 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.nixmash.springdata.jpa.exceptions.UnknownResourceException;
 import com.nixmash.springdata.mvc.AbstractContext;
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,8 +15,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -59,12 +56,8 @@ public class GeneralControllerTests extends AbstractContext {
     public void resourceNotFoundExceptionTest() throws Exception {
 
         MvcResult result = mockMvc.perform(get("/badurl"))
-                .andExpect(status().isOk())
-                .andExpect(view().name(GlobalController.ERROR_404_VIEW))
+                .andExpect(status().isNotFound())
                 .andReturn();
-
-        assertThat(result.getResolvedException().getClass(),
-                typeCompatibleWith(UnknownResourceException.class));
     }
 
 }
