@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+    <!--/*@thymesVar id="user" type="com.nixmash.springdata.jpa.model.User"*/-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                    <span th:if="${user['new']}" th:remove="tag" th:text="#{admin.userform.add.title}">
+                    [New User]
+                </span>
+                    <span th:unless="${user['new']}" th:remove="tag"
+                          th:text="|#{admin.userform.update.title} ${user.firstName} ${user.lastName}|">
+                     [Update User Bob Schmoe]
+             </span>
+                    </h2>
+                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a th:href="@{'/admin/users'}" th:text="#{admin.users.button.return}"
+                           class="btn btn-primary">[Return All Users]</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body">
+                    <div class="fill-body-message">
+                        <h3 th:text="${user.username}">username</h3>
+                        <h3 th:text="${user.isNew()}">isNew</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

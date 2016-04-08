@@ -1,34 +1,18 @@
 package com.nixmash.springdata.jpa.model;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
+import com.nixmash.springdata.jpa.enums.Role;
+import com.nixmash.springdata.jpa.enums.SignInProvider;
+import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.nixmash.springdata.jpa.enums.Role;
-import com.nixmash.springdata.jpa.enums.SignInProvider;
-import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 @Entity
 @Table(name = "users")
@@ -62,6 +46,10 @@ public class User implements UserDetails, Serializable {
         return id;
     }
 
+    @Transient
+    public boolean isNew() {
+        return (this.id == null);
+    }
 
     @Column(unique = true)
     @NotEmpty
@@ -250,6 +238,7 @@ public class User implements UserDetails, Serializable {
                 ", credentialsExpired=" + credentialsExpired +
                  "signInProvider=" + signInProvider +
                 ", enabled=" + enabled +
+                ", new=" + this.isNew() +
                 '}';
     }
     

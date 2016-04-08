@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
@@ -7,15 +9,30 @@
         <div class="col-md-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>User Administration
-                        <small>List Roles</small>
+                    <h2 th:text="#{admin.roles.title}">[Role Administration]
                     </h2>
+                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a th:href="@{'/admin/roles/new'}" th:text="#{admin.roles.button.new}"
+                           class="btn btn-primary">[Add Role]</a>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content  fill-body">
-                    <div class="fill-body-message">
-                        <p>Future location for roles list...</p>
-                    </div>
+                <div class="x_content  fill-body-table">
+                    <table id="rolesTable" dt:table="true" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="role : ${roles}">
+                            <!--/*@thymesVar id="role" type="com.nixmash.springdata.jpa.model.Authority"*/-->
+                            <td th:text="${role.id}">1</td>
+                            <td th:text="${role.authority}">ROLE_SOMETHING</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
