@@ -11,7 +11,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.2.9 -- Site Administration (In Progress)](#v029----site-administration-in-progress)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
+- **[v0.2.9 -- Site Administration (In Progress)](#v029----site-administration-in-progress)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella)*
 - **[v0.2.8 -- Spring Social ](#v028----spring-social)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
 - **[v0.2.7 -- Solr MVC](#v027----solr-mvc)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
 - **[v0.2.6 -- Solr Query Samplings](#v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
@@ -44,7 +44,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##v0.2.9 -- Site Administration (In Progress)##
 
 - Gentelella Bootstrap 3 Admin Template [Github](https://github.com/puikinsh/gentelella)
+- User Administration and Role Creation, Role Assignment
+- Dandelion Datatables
+- [Post: Minimal Dandelion Datatables Spring Boot Configuration](http://nixmash.com/java/minimal-dandelion-datatables-spring-boot-configuration/)
 
+![v0.2.9 Administration](http://nixmash.com/x/pics/github/spring-data-0.2.9.png)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.2.8 -- Spring Social##
 
