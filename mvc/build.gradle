@@ -25,8 +25,8 @@ dependencies {
 	
 	compile 'com.jayway.restassured:json-path:2.4.1'
 	compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
-	compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
 
+	compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
 	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 	compile 'com.github.dandelion:datatables-thymeleaf:1.1.0'
 
