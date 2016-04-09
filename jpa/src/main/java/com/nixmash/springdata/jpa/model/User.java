@@ -241,7 +241,14 @@ public class User implements UserDetails, Serializable {
                 ", new=" + this.isNew() +
                 '}';
     }
-    
-	// @formatter:on
+
+    public void update(String username, String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+    }
+
+    // @formatter:on
     
 }

@@ -18,6 +18,11 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content  fill-body-table">
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
+                    </div>
                     <table id="rolesTable" dt:table="true" class="table table-striped">
                         <thead>
                         <tr>

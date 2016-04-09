@@ -31,4 +31,6 @@ public interface UserService {
 	boolean canAccessUser(CurrentUser currentUser, String username);
 
 	UserConnection getUserConnectionByUserId(String userId);
+
+    User update(UserDTO userDTO);
 }

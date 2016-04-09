@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
-    <!--/*@thymesVar id="user" type="com.nixmash.springdata.jpa.model.User"*/-->
+    <!--/*@thymesVar id="user" type="com.nixmash.springdata.jpa.dto.UserDTO"*/-->
     <div class="row">
         <div class="col-md-12">
             <div class="x_panel">
@@ -25,8 +25,99 @@
                 </div>
                 <div class="x_content  fill-body">
                     <div class="fill-body-message">
-                        <h3 th:text="${user.username}">username</h3>
-                        <h3 th:text="${user.isNew()}">isNew</h3>
+
+                        <div class="row row-centered">
+                            <div class="bs-docs-section col-lg-9 col-centered">
+                                <form th:object="${user}" method="post"
+                                      th:action="@{${#httpServletRequest.getRequestURI()}}"
+                                      class="form-horizontal" id="user-form">
+
+                                    <div th:if="${#fields.hasGlobalErrors()}"
+                                         class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <label class="control-label" th:each="err : ${#fields.globalErrors()}"
+                                               th:text="${err}">...</label>
+                                    </div>
+
+                                    <table class="table table-striped">
+
+
+
+                                        <tr th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
+                                            <td>
+                                                <div class="control-group"
+                                                     th:classappend="${#fields.hasErrors('username')} ? 'error'">
+                                                    <label class="control-label">Username</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" th:field="*{username}"/>
+                                                    <label class="control-label"
+                                                           th:errors="*{username}">[error]</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
+                                            <td>
+                                                <div class="control-group"
+                                                     th:classappend="${#fields.hasErrors('firstName')} ? 'error'">
+                                                    <label class="control-label">First Name</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" th:field="*{firstName}"/>
+                                                    <label class="control-label"
+                                                           th:errors="*{firstName}">[error]</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
+                                            <td>
+                                                <div class="control-group"
+                                                     th:classappend="${#fields.hasErrors('lastName')} ? 'error'">
+                                                    <label class="control-label">Last Name</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" th:field="*{lastName}"/>
+                                                    <label class="control-label"
+                                                           th:errors="*{lastName}">[error]</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+                                            <td>
+                                                <div class="control-group"
+                                                     th:classappend="${#fields.hasErrors('email')} ? 'error'">
+                                                    <label class="control-label">Email</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" th:field="*{email}"/>
+                                                    <label class="control-label" th:errors="*{email}">[error]</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+
+                                    </table>
+
+                                    <div class="col-lg-12 button-col-align-right">
+                                        <input type="submit" class="btn btn-primary"
+                                               th:value="(${user['new']} ? 'Add' : 'Update') + ' '"/>
+                                        <input type="button"
+                                               th:onclick="'window.location.href=\'' + @{|/users/|} + '\''"
+                                               class="btn btn-success" value="Cancel"/>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

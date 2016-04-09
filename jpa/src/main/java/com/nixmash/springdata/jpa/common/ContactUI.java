@@ -1,11 +1,11 @@
 package com.nixmash.springdata.jpa.common;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.jpa.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ContactUI {
@@ -42,6 +42,9 @@ public class ContactUI {
 	}
 
 	public void AddContact() {
+
+		Contact contact = new Contact();
+
 		// Contact contact = new Contact();
 		// contact.setFirstName("Michael");
 		// contact.setLastName("Jackson");

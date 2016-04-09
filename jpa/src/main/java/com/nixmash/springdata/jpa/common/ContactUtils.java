@@ -1,16 +1,17 @@
 package com.nixmash.springdata.jpa.common;
 
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
+import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.Hobby;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.UserConnection;
+
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA. User: daveburke Date: 4/15/15 Time: 12:06 PM
@@ -161,5 +162,6 @@ public class ContactUtils {
 		Random rand = new Random();
 		return (long) (rand.nextInt(10) + 1);
 	}
+
 	// endregion
 }

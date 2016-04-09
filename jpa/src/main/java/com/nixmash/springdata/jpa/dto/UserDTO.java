@@ -1,18 +1,26 @@
 package com.nixmash.springdata.jpa.dto;
 
-import java.util.Collection;
-
-import javax.persistence.Basic;
-
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.Basic;
+import java.util.Collection;
 
 public class UserDTO {
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    private Long userId;
 
     @Length(min= User.MIN_LENGTH_USERNAME, max=User.MAX_LENGTH_USERNAME)
     private String username = "";
@@ -22,7 +30,7 @@ public class UserDTO {
     @Length(max=User.MAX_LENGTH_EMAIL_ADDRESS)
     private String email = "";
 
-    @Length(min=User.MIN_LENGTH_PASSWORD, max=User.MAX_LENGTH_PASSWORD)
+//    @Length(min=User.MIN_LENGTH_PASSWORD, max=User.MAX_LENGTH_PASSWORD)
     private String password = "";
 
     @NotEmpty
@@ -104,6 +112,10 @@ public class UserDTO {
 
     public void setSignInProvider(SignInProvider signInProvider) {
         this.signInProvider = signInProvider;
+    }
+
+    public boolean isNew() {
+        return (this.userId == null);
     }
 
     @Override

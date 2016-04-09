@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
     private final UserConnectionRepository userConnectionRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository, 
-    		UserConnectionRepository userConnectionRepository) {
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository,
+                           UserConnectionRepository userConnectionRepository) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.userConnectionRepository = userConnectionRepository;
@@ -84,15 +84,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<Authority> getRoles()
-    {
+    public Collection<Authority> getRoles() {
         return authorityRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> getUsersWithDetail()
-    {
+    public List<User> getUsersWithDetail() {
         return userRepository.getUsersWithDetail();
     }
 
@@ -102,7 +100,7 @@ public class UserServiceImpl implements UserService {
                 currentUser, username);
         return currentUser != null
                 && (currentUser.getUser().hasAuthority(Role.ROLE_ADMIN) ||
-                    currentUser.getUsername().equals(username));
+                currentUser.getUsername().equals(username));
     }
 
     @Transactional(readOnly = true)
@@ -111,7 +109,16 @@ public class UserServiceImpl implements UserService {
         logger.debug("Getting userConnection={}", userId);
         return userConnectionRepository.findByUserId(userId);
     }
-    
+
+    @Transactional
+    @Override
+    public User update(UserDTO userDTO) {
+
+        User user = userRepository.findById(userDTO.getUserId());
+        user.update(userDTO.getUsername(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
+        return user;
+    }
+
 }
 
 

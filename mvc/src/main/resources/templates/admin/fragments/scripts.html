@@ -1,13 +1,15 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="scripts">
     <script th:src="@{/dashboard/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-dialog.js}"></script>
     <script th:src="@{/dashboard/js/nicescroll/jquery.nicescroll.min.js}"></script>
-
-    <!-- bootstrap progress js -->
     <script th:src="@{/dashboard/js/progressbar/bootstrap-progressbar.min.js}"></script>
+    <script th:src="@{/dashboard/js/custom.js}"></script>
+</div>
 
+<div th:fragment="mockup">
     <!-- icheck -->
     <script th:src="@{/dashboard/js/icheck/icheck.min.js}"></script>
     <!-- daterangepicker -->
@@ -17,8 +19,6 @@
     <script th:src="@{/dashboard/js/chartjs/chart.min.js}"></script>
     <!-- sparkline -->
     <script th:src="@{/dashboard/js/sparkline/jquery.sparkline.min.js}"></script>
-
-    <script th:src="@{/dashboard/js/custom.js}"></script>
 
     <!-- flot js -->
     <script type="text/javascript" th:src="@{/dashboard/js/flot/jquery.flot.js}"></script>
@@ -32,9 +32,7 @@
     <script type="text/javascript" th:src="@{/dashboard/js/flot/jquery.flot.resize.js}"></script>
     <!-- pace -->
     <script th:src="@{/dashboard/js/pace/pace.min.js}"></script>
-</div>
 
-<div th:fragment="mockup">
     <!-- flot -->
     <script type="text/javascript">
         //<![CDATA[
@@ -152,7 +150,9 @@
     <!-- /flot -->
     <!--  -->
     <script>
+
         $('document').ready(function () {
+
             $(".sparkline_one").sparkline([2, 4, 3, 4, 5, 4, 5, 4, 3, 4, 5, 6, 4, 5, 6, 3, 5, 4, 5, 4, 5, 4, 3, 4, 5, 6, 7, 5, 4, 3, 5, 6], {
                 type: 'bar',
                 height: '125',
@@ -305,7 +305,8 @@
                     }]
                 }
             });
-        });
+        })
+        ;
     </script>
     <!-- -->
     <!-- datepicker -->
