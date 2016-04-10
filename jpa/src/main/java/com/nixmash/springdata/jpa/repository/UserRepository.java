@@ -43,6 +43,10 @@ public interface UserRepository extends Repository<User, Long> {
             "u.authorities left join fetch u.userProfile p")
     List<User> getUsersWithDetail();
 
+    @Query("select distinct u from User u left join fetch " +
+            "u.authorities left join fetch u.userProfile p where u.id = ?1")
+    Optional<User> findByUserIdWithDetail(Long ID);
+
     Optional<User> findOneByEmail(String email);
 
 }

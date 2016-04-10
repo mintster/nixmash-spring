@@ -2,8 +2,8 @@ var Contact = {
 
     addMessage:function (message) {
         var alertTemplate = Handlebars.compile($("#template-alert-message").html());
-        $jq("#message-holder").html(alertTemplate({message:message}));
-        $jq("#alert-message").delay(5000).fadeOut(400, function() { $(this).remove(); })
+        $("#message-holder").html(alertTemplate({message:message}));
+        $("#alert-message").delay(5000).fadeOut(400, function() { $(this).remove(); })
     }
 };
 

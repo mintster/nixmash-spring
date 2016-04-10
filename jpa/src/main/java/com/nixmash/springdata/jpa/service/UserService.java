@@ -33,4 +33,7 @@ public interface UserService {
 	UserConnection getUserConnectionByUserId(String userId);
 
     User update(UserDTO userDTO);
+
+    @Transactional(readOnly = true)
+    Optional<User> getUserByIdWithDetail(Long ID);
 }

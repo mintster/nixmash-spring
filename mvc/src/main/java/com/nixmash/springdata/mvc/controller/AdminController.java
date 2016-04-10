@@ -74,11 +74,15 @@ public class AdminController {
     @RequestMapping(value = "/users/update/{userId}", method = GET)
     public ModelAndView userlist(@PathVariable("userId") Long id, Model model) {
 
-        Optional<User> user = userService.getUserById(id);
-        logger.info("Editing User with id and username: {} {}", id, user.get().getUsername());
-
         ModelAndView mav = new ModelAndView();
-        mav.addObject("user", UserUtils.userToUserDTO(user.get()));
+        Optional<User> found = userService.getUserByIdWithDetail(id);
+        User user = new User();
+        if (found.isPresent()) {
+            user = found.get();
+            logger.info("Editing User with id and username: {} {}", id, user.getUsername());
+            mav.addObject("user", UserUtils.userToUserDTO(user));
+        }
+        mav.addObject("authorities", userService.getRoles());
         mav.setViewName(ADMIN_USERFORM_VIEW);
         return mav;
     }
@@ -91,6 +95,7 @@ public class AdminController {
             return ADMIN_USERFORM_VIEW;
         } else {
 
+            userDTO.setUpdateChildren(true);
             userService.update(userDTO);
 
             attributes.addAttribute(PARAMETER_USER_ID, userDTO.getUserId());

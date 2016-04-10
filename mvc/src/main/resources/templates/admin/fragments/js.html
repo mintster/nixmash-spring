@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+
+<div th:fragment="functions(currentPath)">
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        /* Sidebar Menu active class */
+        $(document).ready(function () {
+            $(function () {
+                var path = [[${currentPath}]];
+                $('#sidebar-menu a[href="' + path + '"]').parent('li').addClass('current-page');
+                $('#sidebar-menu a').filter(function () {
+                    return this.pathname == path;
+                }).parent('li').addClass('current-page').parent('ul').slideDown().parent().addClass('active');
+            });
+        });
+
+        /*]]>*/
+    </script>
+
+</div>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

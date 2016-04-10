@@ -116,7 +116,24 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(userDTO.getUserId());
         user.update(userDTO.getUsername(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
+        if (userDTO.isUpdateChildren()) {
+
+            user.getAuthorities().clear();
+            for (Authority authority : userDTO.getAuthorities())
+            {
+                Authority match = authorityRepository.findOne(authority.getId());
+                if (!user.getAuthorities().contains(match)) {
+                    user.getAuthorities().add(match);
+                }
+            }
+        }
         return user;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<User> getUserByIdWithDetail(Long ID) {
+        return userRepository.findByUserIdWithDetail(ID);
     }
 
 }

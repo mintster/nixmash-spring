@@ -29,6 +29,7 @@
                         <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Username</th>
                             <th>Last Name</th>
                             <th dt:sortable="false">First Name</th>
                             <th style="width: 36px;" dt:sortable="false"></th>
@@ -37,10 +38,10 @@
                         <tbody>
                         <tr th:each="user : ${users}">
                             <td th:text="${user.id}">1</td>
+                            <td th:text="${user.username}">johndoe</td>
                             <td th:text="${user.lastName}">Doe</td>
                             <td th:text="${user.firstName}">John</td>
-                            <td> <a th:href="@{|/admin/users/update/${user.id}|}"><span class="glyphicon glyphicon-pencil"></span></a>
-                                <a href="#myModal" role="button" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            <td> <a th:href="@{|/admin/users/update/${user.id}|}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                         </tr>
                         </tbody>
                     </table>

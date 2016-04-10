@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
-    <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+    <div th:include="admin/fragments/js :: functions('/admin/users')" th:remove="tag">Functions</div>
     <title>NixMash Spring Administration - List Users</title>
 </head>
 

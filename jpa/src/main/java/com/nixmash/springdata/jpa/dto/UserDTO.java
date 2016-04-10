@@ -12,6 +12,9 @@ import java.util.Collection;
 
 public class UserDTO {
 
+    public UserDTO() {
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -21,28 +24,29 @@ public class UserDTO {
     }
 
     private Long userId;
+    private boolean updateChildren = true;
 
-    @Length(min= User.MIN_LENGTH_USERNAME, max=User.MAX_LENGTH_USERNAME)
+    @Length(min = User.MIN_LENGTH_USERNAME, max = User.MAX_LENGTH_USERNAME)
     private String username = "";
 
     @Basic
     @ExtendedEmailValidator
-    @Length(max=User.MAX_LENGTH_EMAIL_ADDRESS)
+    @Length(max = User.MAX_LENGTH_EMAIL_ADDRESS)
     private String email = "";
 
-//    @Length(min=User.MIN_LENGTH_PASSWORD, max=User.MAX_LENGTH_PASSWORD)
+    //    @Length(min=User.MIN_LENGTH_PASSWORD, max=User.MAX_LENGTH_PASSWORD)
     private String password = "";
 
     @NotEmpty
-    @Length(min=User.MIN_LENGTH_FIRST_NAME, max=User.MAX_LENGTH_FIRST_NAME)
+    @Length(min = User.MIN_LENGTH_FIRST_NAME, max = User.MAX_LENGTH_FIRST_NAME)
     private String firstName = "";
 
     @NotEmpty
-    @Length(min=User.MIN_LENGTH_LAST_NAME, max=User.MAX_LENGTH_LAST_NAME)
+    @Length(min = User.MIN_LENGTH_LAST_NAME, max = User.MAX_LENGTH_LAST_NAME)
     private String lastName = "";
 
     private SignInProvider signInProvider;
-    
+
     private String repeatedPassword = "";
 
     private Collection<Authority> authorities;
@@ -65,7 +69,7 @@ public class UserDTO {
 
     public String getPassword() {
         return "something";
-    	//return password;
+        //return password;
     }
 
     public void setPassword(String password) {
@@ -73,8 +77,8 @@ public class UserDTO {
     }
 
     public String getRepeatedPassword() {
-      return "something";
-    	//  return repeatedPassword;
+        return "something";
+        //  return repeatedPassword;
     }
 
     public void setRepeatedPassword(String repeatedPassword) {
@@ -118,6 +122,14 @@ public class UserDTO {
         return (this.userId == null);
     }
 
+    public boolean isUpdateChildren() {
+        return updateChildren;
+    }
+
+    public void setUpdateChildren(boolean updateChildren) {
+        this.updateChildren = updateChildren;
+    }
+
     @Override
     public String toString() {
         return "UserCreateForm{" +
@@ -127,5 +139,4 @@ public class UserDTO {
                 ", email='" + email + '\'' +
                 '}';
     }
-
 }

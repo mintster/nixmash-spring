@@ -17,8 +17,7 @@ public class UserUtils {
         userDTO.setPassword(user.getPassword());
         userDTO.setEmail(user.getEmail());
         userDTO.setSignInProvider(user.getSignInProvider());
-
+        userDTO.setAuthorities(user.getAuthorities());
         return userDTO;
     }
-
 }

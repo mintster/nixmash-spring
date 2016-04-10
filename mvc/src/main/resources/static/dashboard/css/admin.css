@@ -1,3 +1,5 @@
+/*/<editor-fold> desc="GENERAL ----------------------------/ "*/
+
 div.left_col.scroll-view div.profile {
     margin-bottom: 20px;
     display: inline-block;
@@ -7,17 +9,30 @@ div.left_col.scroll-view div.profile {
     border: none;
 }
 
+span.pad-right {
+    padding-right: 5px;
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="SIDEBAR ----------------------------/ "*/
+
+li.current-page {
+    background: rgba(236, 214, 214, 0.26)
+}
+
 .sidebar-footer-text {
     margin-left: 5px;
 }
-
 .sidebar-footer a {
     text-align: left;
     width: 100%;
 }
-span.pad-right {
-    padding-right: 5px;
-}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="BODY AREA ----------------------------/ "*/
+
 .fill-body, .fill-body-table {
     min-height: 600px;
 }
@@ -28,3 +43,19 @@ span.pad-right {
     font-size: 20px;
     font-style: italic;
 }
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="FORMS ----------------------------/ "*/
+
+ul.roleList {
+    padding-left: 0px;
+}
+
+ul.roleList li {
+    list-style: none;
+    display: inline-block;
+    padding-right: 8px;
+}
+
+/*</editor-fold>*/

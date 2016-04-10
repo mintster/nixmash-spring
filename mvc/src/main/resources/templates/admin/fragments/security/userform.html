@@ -24,7 +24,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content  fill-body">
-                    <div class="fill-body-message">
+                    <div class="fill-body-table">
 
                         <div class="row row-centered">
                             <div class="bs-docs-section col-lg-9 col-centered">
@@ -38,11 +38,7 @@
                                         <label class="control-label" th:each="err : ${#fields.globalErrors()}"
                                                th:text="${err}">...</label>
                                     </div>
-
                                     <table class="table table-striped">
-
-
-
                                         <tr th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
                                             <td>
                                                 <div class="control-group"
@@ -102,16 +98,28 @@
                                                 </div>
                                             </td>
                                         </tr>
-
-
+                                    </table>
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <td class="col-sm-1">
+                                                <label th:text="#{admin.userform.roles.label}">[Roles]</label>
+                                            </td>
+                                            <td class="col-sm-2">
+                                                <ul class="roleList">
+                                                    <li th:each="authority : ${authorities}">
+                                                        <input type="checkbox" th:field="*{authorities}" th:value="${authority.id}"/>
+                                                        <label th:for="${#ids.prev('authorities')}" th:text="#{${authority}}">[Role]</label>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
 
                                     </table>
-
                                     <div class="col-lg-12 button-col-align-right">
                                         <input type="submit" class="btn btn-primary"
                                                th:value="(${user['new']} ? 'Add' : 'Update') + ' '"/>
                                         <input type="button"
-                                               th:onclick="'window.location.href=\'' + @{|/users/|} + '\''"
+                                               th:onclick="'window.location.href=\'' + @{|/admin/users/|} + '\''"
                                                class="btn btn-success" value="Cancel"/>
                                     </div>
 
