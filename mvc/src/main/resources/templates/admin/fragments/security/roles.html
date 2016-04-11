@@ -5,6 +5,26 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
+
+    <script type="text/javascript">
+        var oTable_rolesTable = $('#rolesTable');
+
+        $(document).ready(function () {
+
+            $('#addRole').on('click', function () {
+                $('#rolesTable_wrapper').css('display', 'none');
+                $('#newRoleTable').css('display','table');
+            });
+
+
+            $('#editRoles').on('click', function () {
+                oTable_rolesTable.column(2).visible(true);
+                oTable_rolesTable.column(1).visible(false);
+            });
+
+        });
+    </script>
+
     <div class="row">
         <div class="col-md-12">
             <div class="x_panel">
@@ -12,8 +32,10 @@
                     <h2 th:text="#{admin.roles.title}">[Role Administration]
                     </h2>
                     <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
-                        <a th:href="@{'/admin/roles/new'}" th:text="#{admin.roles.button.new}"
+                        <a id="addRole" th:text="#{admin.roles.button.new}"
                            class="btn btn-primary">[Add Role]</a>
+                        <a id="editRoles" th:text="#{admin.roles.button.edit}"
+                           class="btn btn-primary">[Edit Roles]</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -23,11 +45,37 @@
                              th:class="'messageblock hidden'"
                              th:text="${feedbackMessage}"></div>
                     </div>
-                    <table id="rolesTable" dt:table="true" class="table table-striped">
+
+                    <!--<button id="editRoles">Edit Roles</button>-->
+
+                    <table id="newRoleTable" style="display: none;" class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th width="100px"></th>
                             <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--/*@thymesVar id="role" type="com.nixmash.springdata.jpa.model.Authority"*/-->
+                        <!--/*@thymesVar id="roles" type="List<com.nixmash.springdata.jpa.model.Authority>"*/-->
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <form th:object="${newRole}" method="post" th:action="@{|/admin/roles/new}"  class="form-inline" id="new-role-form">
+                                    <input type="text" class="form-control" th:field="*{authority}" />
+                                    <input type="submit" class="btn btn-primary" th:value="Add"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table id="rolesTable" dt:table="true" class="table table-striped" dt:cssStyle="display: table;">
+                        <thead>
+                        <tr>
+                            <th width="100px">Id</th>
+                            <th>Role</th>
+                            <th dt:visible="false">Role</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -36,9 +84,19 @@
                         <tr th:each="role : ${roles}">
                             <td th:text="${role.id}">1</td>
                             <td th:text="${role.authority}">SOME_ROLE</td>
+                            <td>
+                                <form th:object="${role}" method="post"
+                                      th:action="@{|/admin/roles/update/${role.id}|}"
+                                      class="form-inline" id="role-form">
+                                    <input type="text" class="form-control" th:value="${role.authority}" />
+                                    <input type="submit" class="btn btn-primary" th:value="Update"/>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
+
+
                 </div>
             </div>
         </div>

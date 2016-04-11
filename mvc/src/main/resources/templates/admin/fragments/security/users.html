@@ -5,6 +5,7 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
+
     <!--/*@thymesVar id="user" type="com.nixmash.springdata.jpa.model.User"*/-->
     <div class="row">
         <div class="col-md-12">
@@ -41,7 +42,8 @@
                             <td th:text="${user.username}">johndoe</td>
                             <td th:text="${user.lastName}">Doe</td>
                             <td th:text="${user.firstName}">John</td>
-                            <td> <a th:href="@{|/admin/users/update/${user.id}|}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            <td><a th:href="@{|/admin/users/update/${user.id}|}"><span
+                                    class="glyphicon glyphicon-pencil"></span></a></td>
                         </tr>
                         </tbody>
                     </table>
