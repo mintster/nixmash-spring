@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
@@ -36,4 +37,10 @@ public interface UserService {
 
     @Transactional(readOnly = true)
     Optional<User> getUserByIdWithDetail(Long ID);
+
+    Authority createAuthority(RoleDTO roleDTO);
+
+    @Transactional
+    Authority updateAuthority(RoleDTO roleDTO);
+
 }

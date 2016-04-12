@@ -58,4 +58,7 @@ ul.roleList li {
     padding-right: 8px;
 }
 
+input#authority {
+    vertical-align: top;
+}
 /*</editor-fold>*/

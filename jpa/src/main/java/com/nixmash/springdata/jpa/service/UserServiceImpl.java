@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.model.Authority;
@@ -135,6 +136,27 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getUserByIdWithDetail(Long ID) {
         return userRepository.findByUserIdWithDetail(ID);
     }
+
+    // region Authorities
+
+    @Transactional
+    @Override
+    public Authority createAuthority(RoleDTO roleDTO) {
+        Authority authority = new Authority();
+        authority.setAuthority(roleDTO.getAuthority());
+        return authorityRepository.save(authority);
+    }
+
+
+    @Transactional
+    @Override
+    public Authority updateAuthority(RoleDTO roleDTO) {
+        Authority authority = authorityRepository.findOne(roleDTO.getId());
+        authority.setAuthority(roleDTO.getAuthority());
+        return authority;
+    }
+
+    // endregion
 
 }
 

@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.model;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -9,8 +10,12 @@ import javax.persistence.*;
 @Table(name = "authorities")
 public class Authority implements GrantedAuthority {
 
+    public static final int MAX_LENGTH_AUTHORITY = 30;
+    public static final int MIN_LENGTH_AUTHORITY = 4;
+
     @Column
     @NotEmpty
+    @Length(min = Authority.MIN_LENGTH_AUTHORITY, max = Authority.MAX_LENGTH_AUTHORITY)
     private String authority;
 
     public Authority() {
@@ -38,6 +43,10 @@ public class Authority implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     @Override

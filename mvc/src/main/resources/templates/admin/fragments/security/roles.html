@@ -61,8 +61,8 @@
                         <tr>
                             <td>&nbsp;</td>
                             <td>
-                                <form th:object="${newRole}" method="post" th:action="@{|/admin/roles/new}"  class="form-inline" id="new-role-form">
-                                    <input type="text" class="form-control" th:field="*{authority}" />
+                                <form th:object="${newRole}" method="post" th:action="@{/admin/roles/new}"  class="form-inline" id="new-role-form">
+                                    <input type="text" class="form-control align-top" th:field="*{authority}" />
                                     <input type="submit" class="btn btn-primary" th:value="Add"/>
                                 </form>
                             </td>
@@ -88,7 +88,7 @@
                                 <form th:object="${role}" method="post"
                                       th:action="@{|/admin/roles/update/${role.id}|}"
                                       class="form-inline" id="role-form">
-                                    <input type="text" class="form-control" th:value="${role.authority}" />
+                                    <input type="text" class="form-control" th:name="authority" th:value="${role.authority}" />
                                     <input type="submit" class="btn btn-primary" th:value="Update"/>
                                 </form>
                             </td>

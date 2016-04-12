@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.UserUtils;
+import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
@@ -31,6 +32,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
+    // region View Constants
+
     private static final String ADMIN_MOCKUP_VIEW = "admin/mockup";
     private static final String ADMIN_HOME_VIEW = "admin/dashboard";
     private static final String ADMIN_USERS_VIEW = "admin/security/users";
@@ -38,8 +41,18 @@ public class AdminController {
     private static final String ADMIN_USERFORM_VIEW = "admin/security/userform";
     private static final String PARAMETER_USER_ID = "id";
 
+    // endregion
+
+    // region Feedback Message Constants
+
     protected static final String FEEDBACK_MESSAGE_KEY_USER_UPDATED = "feedback.message.user.updated";
     private static final String FEEDBACK_MESSAGE_KEY_USER_ADDED = "feedback.message.user.added";
+    private static final String FEEDBACK_MESSAGE_KEY_ROLE_ADDED = "feedback.message.role.added";
+    private static final String FEEDBACK_MESSAGE_KEY_ROLE_UPDATED = "feedback.message.role.updated";
+    private static final String FEEDBACK_MESSAGE_KEY_ROLE_ERROR = "feedback.message.role.error";
+
+    // endregion
+
 
     private final UserService userService;
     private final WebUI webUI;
@@ -66,7 +79,7 @@ public class AdminController {
 
     // endregion
 
-    // region Security
+    // region Users
 
     @RequestMapping(value = "/users", method = GET)
     public ModelAndView userlist(Model model) {
@@ -83,7 +96,7 @@ public class AdminController {
 
     @RequestMapping(value = "/users/new", method = RequestMethod.GET)
     public ModelAndView initAddUserForm() {
-        return populateUserForm((long)-1);
+        return populateUserForm((long) -1);
     }
 
     private ModelAndView populateUserForm(Long id) {
@@ -95,9 +108,7 @@ public class AdminController {
             user = found.get();
             logger.info("Editing User with id and username: {} {}", id, user.getUsername());
             mav.addObject("user", UserUtils.userToUserDTO(user));
-        }
-        else
-        {
+        } else {
             mav.addObject("user", new UserDTO());
         }
         mav.addObject("authorities", userService.getRoles());
@@ -107,7 +118,7 @@ public class AdminController {
 
     @RequestMapping(value = "/users/update/{userId}", method = RequestMethod.POST)
     public String updateUser(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult result,
-                                RedirectAttributes attributes, Model model) {
+                             RedirectAttributes attributes, Model model) {
         if (result.hasErrors()) {
             return ADMIN_USERFORM_VIEW;
         } else {
@@ -125,7 +136,7 @@ public class AdminController {
 
     @RequestMapping(value = "/users/new", method = RequestMethod.POST)
     public String addUser(@Valid UserDTO userDTO, BindingResult result, SessionStatus status,
-                             RedirectAttributes attributes) {
+                          RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return ADMIN_USERFORM_VIEW;
         } else {
@@ -142,8 +153,47 @@ public class AdminController {
         }
     }
 
+    // endregion
+
+    // region Roles
+
+
+    @RequestMapping(value = "/roles/update/{Id}", method = RequestMethod.POST)
+    public String updateUser(@Valid @ModelAttribute(value = "authority") RoleDTO roleDTO, BindingResult result,
+                             RedirectAttributes attributes, Model model) {
+        if (result.hasErrors()) {
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_ERROR);
+            return "redirect:/admin/roles";
+        } else {
+            userService.updateAuthority(roleDTO);
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_UPDATED, roleDTO.getAuthority());
+            return "redirect:/admin/roles";
+        }
+    }
+
+
+
+    @RequestMapping(value = "/roles/new", method = RequestMethod.POST)
+    public String addUser(@Valid RoleDTO roleDTO,
+                          BindingResult result,
+                          SessionStatus status,
+                          RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            return ADMIN_ROLES_VIEW;
+        } else {
+
+            Authority authority = userService.createAuthority(roleDTO);
+            logger.info("Role Added: {}", authority);
+            status.setComplete();
+
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_ADDED, authority.getAuthority());
+            return "redirect:/admin/roles";
+        }
+    }
+
     @RequestMapping(value = "/roles", method = GET)
     public ModelAndView roleList(Model model) {
+
         ModelAndView mav = new ModelAndView();
         mav.addObject("roles", userService.getRoles());
         mav.addObject("newRole", new Authority());
