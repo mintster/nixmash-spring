@@ -40,7 +40,11 @@ public interface UserService {
 
     Authority createAuthority(RoleDTO roleDTO);
 
-    @Transactional
     Authority updateAuthority(RoleDTO roleDTO);
 
+    Authority getAuthorityById(Long id);
+
+    void deleteAuthority(Authority authority, List<User> users);
+
+    Collection<User> getUsersByAuthorityId(Long authorityId);
 }

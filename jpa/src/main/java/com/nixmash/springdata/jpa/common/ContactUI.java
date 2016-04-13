@@ -1,7 +1,6 @@
 package com.nixmash.springdata.jpa.common;
 
 import com.nixmash.springdata.jpa.model.Contact;
-import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.jpa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class ContactUI {
 	private ApplicationSettings applicationSettings;
 
 	public void init() {
-		propertiesDemo();
+//		propertiesDemo();
 		entityDemo();
 //		randomDemo();
 	}
@@ -60,9 +59,9 @@ public class ContactUI {
 
 	public void entityDemo() {
 
-		UserConnection userConnection = userService.getUserConnectionByUserId("daver");
-		ContactUtils.listUserConnection("My User Connection", userConnection);
-//		ContactUtils.listUsersWithDetail(userService.getUsersWithDetail());
+//		UserConnection userConnection = userService.getUserConnectionByUserId("daver");
+//		ContactUtils.listUserConnection("My User Connection", userConnection);
+		ContactUtils.listUsersWithDetail(userService.getUsersByAuthorityId(1L));
 		// SpringUtils.listUser("USER BY EMAIL",
 		// userService.getByEmail("user@aol.com").get());
 		// try {
@@ -72,8 +71,7 @@ public class ContactUI {
 		// e.printStackTrace();
 		// }
 
-		// SpringUtils.listContacts("ENTITIES FIND ALL",
-		// contactService.findAll());
+//		 ContactUtils.listContacts("ENTITIES FIND ALL", contactService.findAll());
 		// SpringUtils.listContacts("ENTITIES FIND BY FIRST NAME",
 		// contactService.findByFirstName("Barry"));
 		// SpringUtils.listContacts("ENTITIES FIND BY FIRST AND LAST NAME",

@@ -108,7 +108,7 @@
                                                 <ul class="roleList">
                                                     <li th:each="authority : ${authorities}">
                                                         <input type="checkbox" th:field="*{authorities}" th:value="${authority.id}"/>
-                                                        <label th:for="${#ids.prev('authorities')}" th:text="#{${authority}}">[Role]</label>
+                                                        <label th:for="${#ids.prev('authorities')}" th:text="#{${authority.authority}}">[Role]</label>
                                                     </li>
                                                 </ul>
                                             </td>

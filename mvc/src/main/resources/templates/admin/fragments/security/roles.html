@@ -88,8 +88,11 @@
                                 <form th:object="${role}" method="post"
                                       th:action="@{|/admin/roles/update/${role.id}|}"
                                       class="form-inline" id="role-form">
-                                    <input type="text" class="form-control" th:name="authority" th:value="${role.authority}" />
+                                    <input type="text" class="form-control" th:name="authority" id="authority" th:value="${role.authority}" />
                                     <input type="submit" class="btn btn-primary" th:value="Update"/>
+                                    <input th:type="submit" class="btn btn-success"
+                                           name="deleteRole"
+                                           th:value="Remove"/>
                                 </form>
                             </td>
                         </tr>

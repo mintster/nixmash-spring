@@ -73,14 +73,6 @@ public class ContactServiceImpl implements ContactService {
 
     @Transactional(readOnly = true)
     public Contact getContactByIdWithDetail(Long ID) {
-//        Contact contact = contactRepository.findOne(ID);
-//        contact.getContactPhones();
-//        contact.getHobbies();
-//        return contact;
-//        return em.createNamedQuery("Contact.findByContactIdWithDetail",
-//                Contact.class)
-//                .setParameter("contactId", ID)
-//                .getSingleResult();
         return contactRepository.findByContactIdWithDetail(ID);
     }
 

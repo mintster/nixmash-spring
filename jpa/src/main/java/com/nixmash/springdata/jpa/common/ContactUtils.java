@@ -3,12 +3,12 @@ package com.nixmash.springdata.jpa.common;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
-import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.Hobby;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.UserConnection;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -75,7 +75,7 @@ public class ContactUtils {
 
 	// region Users
 
-	public static void listUsersWithDetail(List<User> users) {
+	public static void listUsersWithDetail(Collection<User> users) {
 		System.out.println("LISTING ENTITIES WITH DETAILS ---------------------------------");
 		System.out.println();
 		for (User user : users) {

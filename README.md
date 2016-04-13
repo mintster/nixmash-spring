@@ -44,8 +44,10 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##v0.2.9 -- Site Administration (In Progress)##
 
 - Gentelella Bootstrap 3 Admin Template [Github](https://github.com/puikinsh/gentelella)
-- User Administration and Role Creation, Role Assignment
+- User Administration and Role Creation, Role Assignment, Role Deletion and removal from User Assignments
+- Locked Authentication property to prevent removal and update of essential roles like ADMIN and USER
 - Dandelion Datatables
+- [Post: Using Thymeleaf with JavaScript for Menu Highlighting](http://nixmash.com/java/using-thymeleaf-with-javascript-for-menu-highlighting/)
 - [Post: Minimal Dandelion Datatables Spring Boot Configuration](http://nixmash.com/java/minimal-dandelion-datatables-spring-boot-configuration/)
 
 ![v0.2.9 Administration](http://nixmash.com/x/pics/github/spring-data-0.2.9.png)

@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class RoleDTO {
 
     private Long id;
+    private boolean isLocked = false;
 
     @NotEmpty
     @Length(min = Authority.MIN_LENGTH_AUTHORITY, max = Authority.MAX_LENGTH_AUTHORITY)
@@ -32,5 +33,22 @@ public class RoleDTO {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public boolean getLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean locked) {
+        isLocked = locked;
+    }
+
+    @Override
+    public String toString() {
+        return "RoleDTO{" +
+                "id=" + id +
+                ", isLocked=" + isLocked +
+                ", authority='" + authority + '\'' +
+                '}';
     }
 }

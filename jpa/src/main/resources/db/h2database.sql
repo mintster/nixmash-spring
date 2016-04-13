@@ -30,8 +30,8 @@ INSERT INTO users (user_id, email, username, password, first_name, last_name, en
 -- Authorities
 ------------------------------------------------------------
 
-INSERT INTO authorities (authority_id, authority) VALUES (1, 'ROLE_ADMIN');
-INSERT INTO authorities (authority_id, authority) VALUES (2, 'ROLE_USER');
+INSERT INTO authorities (authority_id, authority, is_locked) VALUES (1, 'ROLE_ADMIN', true);
+INSERT INTO authorities (authority_id, authority, is_locked) VALUES (2, 'ROLE_USER', true);
 
 ------------------------------------------------------------
 -- User_Authorities

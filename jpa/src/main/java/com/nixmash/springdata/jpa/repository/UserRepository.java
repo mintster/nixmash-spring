@@ -28,7 +28,6 @@ public interface UserRepository extends Repository<User, Long> {
 
     User findByUsername(String username) throws DataAccessException;
 
-
     Collection<User> findAll() throws DataAccessException;
 
     User findById(Long id) throws DataAccessException;
@@ -48,5 +47,8 @@ public interface UserRepository extends Repository<User, Long> {
     Optional<User> findByUserIdWithDetail(Long ID);
 
     Optional<User> findOneByEmail(String email);
+
+    @Query("select distinct u from User u left join u.authorities a where a.id = ?1")
+    List<User> findByAuthorityId(Long id);
 
 }

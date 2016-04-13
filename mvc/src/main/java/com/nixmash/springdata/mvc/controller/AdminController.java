@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,11 +47,13 @@ public class AdminController {
 
     // region Feedback Message Constants
 
-    protected static final String FEEDBACK_MESSAGE_KEY_USER_UPDATED = "feedback.message.user.updated";
+    private static final String FEEDBACK_MESSAGE_KEY_USER_UPDATED = "feedback.message.user.updated";
     private static final String FEEDBACK_MESSAGE_KEY_USER_ADDED = "feedback.message.user.added";
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_ADDED = "feedback.message.role.added";
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_UPDATED = "feedback.message.role.updated";
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_ERROR = "feedback.message.role.error";
+    private static final String FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED = "feedback.message.role.islocked";
+    private static final String FEEDBACK_MESSAGE_KEY_ROLE_DELETED = "feedback.message.role.deleted";
 
     // endregion
 
@@ -159,19 +163,46 @@ public class AdminController {
 
 
     @RequestMapping(value = "/roles/update/{Id}", method = RequestMethod.POST)
-    public String updateUser(@Valid @ModelAttribute(value = "authority") RoleDTO roleDTO, BindingResult result,
+    public String updateRole(@Valid @ModelAttribute(value = "authority") RoleDTO roleDTO, BindingResult result,
                              RedirectAttributes attributes, Model model) {
         if (result.hasErrors()) {
             webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_ERROR);
             return "redirect:/admin/roles";
         } else {
-            userService.updateAuthority(roleDTO);
-            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_UPDATED, roleDTO.getAuthority());
-            return "redirect:/admin/roles";
+            Authority authority = userService.getAuthorityById(roleDTO.getId());
+            if (authority.isLocked()) {
+                webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED);
+                return "redirect:/admin/roles";
+            } else {
+                userService.updateAuthority(roleDTO);
+                webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_UPDATED, roleDTO.getAuthority());
+                return "redirect:/admin/roles";
+            }
         }
     }
 
+    @RequestMapping(value = "/roles/update/{Id}", params = {"deleteRole"}, method = RequestMethod.POST)
+    public String deleteRole(@Valid @ModelAttribute(value = "authority") RoleDTO roleDTO, BindingResult result,
+                             RedirectAttributes attributes, Model model) {
+        if (result.hasErrors()) {
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_ERROR);
+            return "redirect:/admin/roles";
+        } else {
+            Authority authority = userService.getAuthorityById(roleDTO.getId());
+            List<User> usersInRole;
 
+            if (authority.isLocked()) {
+                webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED);
+            } else {
+                Collection<User> users = userService.getUsersByAuthorityId(roleDTO.getId());
+                userService.deleteAuthority(authority, (List<User>) users);
+                webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_DELETED,
+                        roleDTO.getAuthority(), users.size());
+            }
+
+            return "redirect:/admin/roles";
+        }
+    }
 
     @RequestMapping(value = "/roles/new", method = RequestMethod.POST)
     public String addUser(@Valid RoleDTO roleDTO,

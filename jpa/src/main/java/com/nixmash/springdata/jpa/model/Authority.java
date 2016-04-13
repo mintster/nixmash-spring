@@ -32,6 +32,9 @@ public class Authority implements GrantedAuthority {
     @Column(name = "authority_id")
     protected Long id;
 
+    @Column(name = "is_locked")
+    private boolean isLocked = false;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,6 +60,14 @@ public class Authority implements GrantedAuthority {
         return result;
     }
 
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean locked) {
+        isLocked = locked;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -74,8 +85,18 @@ public class Authority implements GrantedAuthority {
         return true;
     }
 
+//    @Override
+//    public String toString() {
+//        return authority;
+//    }
+//
     @Override
     public String toString() {
-        return authority;
+        return "Authority{" +
+                "authority='" + authority + '\'' +
+                ", id=" + id +
+                ", isLocked=" + isLocked +
+                '}';
     }
+
 }

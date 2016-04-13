@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `authorities`;
 CREATE TABLE `authorities` (
   `authority_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `authority` varchar(50) NOT NULL,
+  `is_locked` tinyint(1) NOT NULL,
   PRIMARY KEY (`authority_id`),
   UNIQUE KEY `uc_authorities` (`authority`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -29,8 +30,8 @@ CREATE TABLE `authorities` (
 -- ----------------------------
 -- Records of authorities
 -- ----------------------------
-INSERT INTO `authorities` VALUES ('1', 'ROLE_ADMIN');
-INSERT INTO `authorities` VALUES ('2', 'ROLE_USER');
+INSERT INTO `authorities` VALUES ('1', 'ROLE_ADMIN','1');
+INSERT INTO `authorities` VALUES ('2', 'ROLE_USER','1');
 
 -- ----------------------------
 -- Table structure for contacts

@@ -60,5 +60,10 @@ ul.roleList li {
 
 input#authority {
     vertical-align: top;
+    margin-right: 8px;
+}
+
+#role-form input.btn.btn-primary {
+    margin-right: 0px;
 }
 /*</editor-fold>*/

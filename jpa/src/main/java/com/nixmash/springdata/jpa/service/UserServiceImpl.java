@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final UserConnectionRepository userConnectionRepository;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository,
@@ -120,8 +125,7 @@ public class UserServiceImpl implements UserService {
         if (userDTO.isUpdateChildren()) {
 
             user.getAuthorities().clear();
-            for (Authority authority : userDTO.getAuthorities())
-            {
+            for (Authority authority : userDTO.getAuthorities()) {
                 Authority match = authorityRepository.findOne(authority.getId());
                 if (!user.getAuthorities().contains(match)) {
                     user.getAuthorities().add(match);
@@ -156,6 +160,27 @@ public class UserServiceImpl implements UserService {
         return authority;
     }
 
+    @Override
+    public Authority getAuthorityById(Long id) {
+        return authorityRepository.findOne(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAuthority(Authority authority, List<User> users) {
+        if (users != null) {
+            for (User user : users) {
+                user.getAuthorities().remove(authority);
+            }
+        }
+        authorityRepository.delete(authority);
+    }
+
+    @Override
+    public Collection<User> getUsersByAuthorityId(Long authorityId) {
+        return userRepository.findByAuthorityId(authorityId);
+
+    }
     // endregion
 
 }
