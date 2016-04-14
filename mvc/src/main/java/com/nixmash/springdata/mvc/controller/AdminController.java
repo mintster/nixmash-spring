@@ -195,7 +195,7 @@ public class AdminController {
                 webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED);
             } else {
                 Collection<User> users = userService.getUsersByAuthorityId(roleDTO.getId());
-                userService.deleteAuthority(authority, (List<User>) users);
+                userService.deleteAuthority(authority, users);
                 webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_DELETED,
                         roleDTO.getAuthority(), users.size());
             }

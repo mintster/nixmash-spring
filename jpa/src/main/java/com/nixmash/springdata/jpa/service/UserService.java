@@ -44,7 +44,7 @@ public interface UserService {
 
     Authority getAuthorityById(Long id);
 
-    void deleteAuthority(Authority authority, List<User> users);
+    void deleteAuthority(Authority authority, Collection<User> users);
 
     Collection<User> getUsersByAuthorityId(Long authorityId);
 }

@@ -5,6 +5,8 @@ This project demonstrates Spring Data JPA, Spring Data Solr, Spring Web MVC, Spr
 
 A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 
+![Home Page in v0.2.9](http://nixmash.com/x/pics/github/spring-home-0.2.9.png)
+
 ##Implemented##
 
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
@@ -47,6 +49,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - User Administration and Role Creation, Role Assignment, Role Deletion and removal from User Assignments
 - Locked Authentication property to prevent removal and update of essential roles like ADMIN and USER
 - Dandelion Datatables
+- [Post: Querying Object Children in Hibernate](http://nixmash.com/java/querying-object-children-in-hibernate/)
 - [Post: Using Thymeleaf with JavaScript for Menu Highlighting](http://nixmash.com/java/using-thymeleaf-with-javascript-for-menu-highlighting/)
 - [Post: Minimal Dandelion Datatables Spring Boot Configuration](http://nixmash.com/java/minimal-dandelion-datatables-spring-boot-configuration/)
 

@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void deleteAuthority(Authority authority, List<User> users) {
+    public void deleteAuthority(Authority authority, Collection<User> users) {
         if (users != null) {
             for (User user : users) {
                 user.getAuthorities().remove(authority);
