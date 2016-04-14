@@ -171,7 +171,7 @@ public class AdminController {
         } else {
             Authority authority = userService.getAuthorityById(roleDTO.getId());
             if (authority.isLocked()) {
-                webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED);
+                webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED, roleDTO.getAuthority().toUpperCase());
                 return "redirect:/admin/roles";
             } else {
                 userService.updateAuthority(roleDTO);
@@ -192,7 +192,8 @@ public class AdminController {
             List<User> usersInRole;
 
             if (authority.isLocked()) {
-                webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED);
+                webUI.addFeedbackMessage(attributes,
+                        FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED, roleDTO.getAuthority());
             } else {
                 Collection<User> users = userService.getUsersByAuthorityId(roleDTO.getId());
                 userService.deleteAuthority(authority, users);

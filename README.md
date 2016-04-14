@@ -13,7 +13,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.2.9 -- Site Administration (In Progress)](#v029----site-administration-in-progress)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella)*
+- **[v0.2.9 -- Site Administration (In Progress)](#v029----site-administration-in-progress)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella) Bootstrap 3 Template*
 - **[v0.2.8 -- Spring Social ](#v028----spring-social)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
 - **[v0.2.7 -- Solr MVC](#v027----solr-mvc)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
 - **[v0.2.6 -- Solr Query Samplings](#v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
@@ -48,7 +48,9 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Gentelella Bootstrap 3 Admin Template [Github](https://github.com/puikinsh/gentelella)
 - User Administration and Role Creation, Role Assignment, Role Deletion and removal from User Assignments
 - Locked Authentication property to prevent removal and update of essential roles like ADMIN and USER
-- Dandelion Datatables
+- Dandelion Datatables in Administration
+- [Post: Using JavaScript with Dandelion Datatables](http://nixmash.com/java/using-javascript-with-dandelion-datatables/)
+- [Post: Role Locking in NixMash Spring Administration](http://nixmash.com/java/role-locking-in-nixmash-spring-administration/)
 - [Post: Querying Object Children in Hibernate](http://nixmash.com/java/querying-object-children-in-hibernate/)
 - [Post: Using Thymeleaf with JavaScript for Menu Highlighting](http://nixmash.com/java/using-thymeleaf-with-javascript-for-menu-highlighting/)
 - [Post: Minimal Dandelion Datatables Spring Boot Configuration](http://nixmash.com/java/minimal-dandelion-datatables-spring-boot-configuration/)
@@ -63,6 +65,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Social Services app-id and secret keys configured in `external.properties` file
 - Social ProviderSignInController SetApplicationUrl() supporting multiple environments.<br/>SetApplicationUrl() set with `--appurl` commandline argument. See post [Passing Arguments to Spring Boot](http://nixmash.com/java/passing-arguments-to-spring-boot/) for details.
 - SignIn form with @InitBinder and custom validation for all fields
+- Removed /webapp and reconfigured for Thymeleaf templates and static content in /resources
 - [Post: Adding Google Sign-In to Spring Social](http://nixmash.com/java/adding-google-sign-in-to-spring-social/)
 - [Post: Revisiting a Custom UserConnection JPA Object in Spring Social](http://nixmash.com/java/revisiting-a-custom-userconnection-jpa-object-in-spring-social/)
 - [Post: The Case of the Spring Boot CSS Folder 404](http://nixmash.com/java/the-case-of-the-spring-boot-css-folder-404/)

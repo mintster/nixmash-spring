@@ -13,13 +13,19 @@
 
             $('#addRole').on('click', function () {
                 $('#rolesTable_wrapper').css('display', 'none');
-                $('#newRoleTable').css('display','table');
+                $('#newRoleTable').css('display', 'table');
             });
-
 
             $('#editRoles').on('click', function () {
                 oTable_rolesTable.column(2).visible(true);
                 oTable_rolesTable.column(1).visible(false);
+            });
+
+            $('#refreshRoles').on('click', function () {
+                oTable_rolesTable.column(1).visible(true);
+                oTable_rolesTable.column(2).visible(false);
+                $('#rolesTable_wrapper').css('display', 'table');
+                $('#newRoleTable').css('display', 'none');
             });
 
         });
@@ -36,6 +42,8 @@
                            class="btn btn-primary">[Add Role]</a>
                         <a id="editRoles" th:text="#{admin.roles.button.edit}"
                            class="btn btn-primary">[Edit Roles]</a>
+                        <a id="refreshRoles" th:text="#{admin.roles.button.cancel}"
+                           class="btn btn-primary">[Cancel]</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -46,8 +54,6 @@
                              th:text="${feedbackMessage}"></div>
                     </div>
 
-                    <!--<button id="editRoles">Edit Roles</button>-->
-
                     <table id="newRoleTable" style="display: none;" class="table table-striped">
                         <thead>
                         <tr>
@@ -56,13 +62,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--/*@thymesVar id="role" type="com.nixmash.springdata.jpa.model.Authority"*/-->
-                        <!--/*@thymesVar id="roles" type="List<com.nixmash.springdata.jpa.model.Authority>"*/-->
                         <tr>
                             <td>&nbsp;</td>
                             <td>
-                                <form th:object="${newRole}" method="post" th:action="@{/admin/roles/new}"  class="form-inline" id="new-role-form">
-                                    <input type="text" class="form-control align-top" th:field="*{authority}" />
+                                <form th:object="${newRole}" method="post" th:action="@{/admin/roles/new}"
+                                      class="form-inline" id="new-role-form">
+                                    <input type="text" class="form-control align-top" th:field="*{authority}"/>
                                     <input type="submit" class="btn btn-primary" th:value="Add"/>
                                 </form>
                             </td>
@@ -70,7 +75,11 @@
                         </tbody>
                     </table>
 
-                    <table id="rolesTable" dt:table="true" class="table table-striped" dt:cssStyle="display: table;">
+                    <!--/*@thymesVar id="role" type="com.nixmash.springdata.jpa.model.Authority"*/-->
+                    <!--/*@thymesVar id="roles" type="List<com.nixmash.springdata.jpa.model.Authority>"*/-->
+
+                    <table id="rolesTable" dt:table="true" class="table table-striped"
+                            dt:cssStyle="display: table;">
                         <thead>
                         <tr>
                             <th width="100px">Id</th>
@@ -79,16 +88,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--/*@thymesVar id="role" type="com.nixmash.springdata.jpa.model.Authority"*/-->
-                        <!--/*@thymesVar id="roles" type="List<com.nixmash.springdata.jpa.model.Authority>"*/-->
-                        <tr th:each="role : ${roles}">
                             <td th:text="${role.id}">1</td>
                             <td th:text="${role.authority}">SOME_ROLE</td>
                             <td>
                                 <form th:object="${role}" method="post"
                                       th:action="@{|/admin/roles/update/${role.id}|}"
                                       class="form-inline" id="role-form">
-                                    <input type="text" class="form-control" th:name="authority" id="authority" th:value="${role.authority}" />
+                                    <input type="text" class="form-control" th:name="authority"
+                                           id="authority" th:value="${role.authority}"/>
                                     <input type="submit" class="btn btn-primary" th:value="Update"/>
                                     <input th:type="submit" class="btn btn-success"
                                            name="deleteRole"
