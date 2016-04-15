@@ -9,6 +9,8 @@ import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.DispatcherType;
+
 @Configuration
 public class DandelionConfig {
 
@@ -27,9 +29,12 @@ public class DandelionConfig {
     @Bean
     public FilterRegistrationBean filterRegistrationBean()
     {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(new DandelionFilter());
-        return filterRegistrationBean;
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new DandelionFilter());
+        registration.addUrlPatterns("/*");
+        registration.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.FORWARD,
+                DispatcherType.INCLUDE, DispatcherType.ERROR);
+        return registration;
     }
 
     @Bean

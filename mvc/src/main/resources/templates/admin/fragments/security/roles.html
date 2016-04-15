@@ -88,14 +88,16 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <!--/*@thymesVar id="role" type="com.nixmash.springdata.jpa.model.Authority"*/-->
+                        <!--/*@thymesVar id="roles" type="List<com.nixmash.springdata.jpa.model.Authority>"*/-->
+                        <tr th:each="role : ${roles}">
                             <td th:text="${role.id}">1</td>
                             <td th:text="${role.authority}">SOME_ROLE</td>
                             <td>
                                 <form th:object="${role}" method="post"
                                       th:action="@{|/admin/roles/update/${role.id}|}"
                                       class="form-inline" id="role-form">
-                                    <input type="text" class="form-control" th:name="authority"
-                                           id="authority" th:value="${role.authority}"/>
+                                    <input type="text" class="form-control" th:name="authority" id="authority" th:value="${role.authority}" />
                                     <input type="submit" class="btn btn-primary" th:value="Update"/>
                                     <input th:type="submit" class="btn btn-success"
                                            name="deleteRole"

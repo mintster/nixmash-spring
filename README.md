@@ -49,8 +49,9 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - User Administration and Role Creation, Role Assignment, Role Deletion and removal from User Assignments
 - Locked Authentication property to prevent removal and update of essential roles like ADMIN and USER
 - Dandelion Datatables in Administration
+- [Post: Tracking Down a Bundle NullPointerException in Dandelion](http://nixmash.com/java/tracking-down-a-bundle-nullpointerexception-in-dandelion/)
 - [Post: Using JavaScript with Dandelion Datatables](http://nixmash.com/java/using-javascript-with-dandelion-datatables/)
-- [Post: Role Locking in NixMash Spring Administration](http://nixmash.com/java/role-locking-in-nixmash-spring-administration/)
+- [Post: Applying User Role Locking](http://nixmash.com/java/role-locking-in-nixmash-spring-administration/)
 - [Post: Querying Object Children in Hibernate](http://nixmash.com/java/querying-object-children-in-hibernate/)
 - [Post: Using Thymeleaf with JavaScript for Menu Highlighting](http://nixmash.com/java/using-thymeleaf-with-javascript-for-menu-highlighting/)
 - [Post: Minimal Dandelion Datatables Spring Boot Configuration](http://nixmash.com/java/minimal-dandelion-datatables-spring-boot-configuration/)
