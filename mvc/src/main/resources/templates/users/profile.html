@@ -1,81 +1,113 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-<title th:text="#{user.page.title}"></title>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title th:text="#{user.page.title}"></title>
 </head>
 <body>
-	<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
+<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
 
-	<div class="container">
-		<div class="page-header" id="banner">
-			<div class="row">
-				<div class="col-lg-8 col-md-7 col-sm-6">
-					<h1 th:text="|${currentUser.getFullName()}|">[fullname]</h1>
-				</div>
-				<div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
-			</div>
-		</div>
+<!--/*@thymesVar id="currentUser" type="com.nixmash.springdata.jpa.model.CurrentUser"*/-->
+<!--/*@thymesVar id="currentUserConnection" type="com.nixmash.springdata.jpa.model.UserConnection"*/-->
 
-	</div>
-	<div class="container bs-docs-container big-font-container">
-		<div class="row row-centered">
-			<div class="bs-docs-section col-lg-9 col-centered">
-				<div id="form-table">
-					<div class="heading">
-						<h2 th:text="#{user.heading.profile}">[User Profile]</h2>
-					</div>
-					<table class="table table-condensed">
-						<tr>
-							<td class="td-label">
-								<div th:text="#{user.label.id}">[Id]</div>
-							</td>
-							<td>
-								<div th:text="${currentUser.user.id}"></div>
-							</td>
-						</tr>
-						<tr>
-							<td class="td-label">
-								<div th:text="#{user.label.firstName}">[Firstname]</div>
-							</td>
-							<td>
-								<div th:text="${currentUser.user.firstName}"></div>
-							</td>
-						</tr>
-						<tr>
-							<td class="td-label">
-								<div th:text="#{user.label.lastName}">[Lastname]</div>
-							</td>
-							<td>
-								<div th:text="${currentUser.user.lastName}"></div>
-							</td>
-						</tr>
-						<tr>
-							<td class="td-label">
-								<div th:text="#{user.label.email}">[Email]</div>
-							</td>
-							<td>
-								<div th:text="${currentUser.user.email}"></div>
-							</td>
-						</tr>
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="${currentUser.getFullName()}">[fullname]</h1>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+        </div>
+    </div>
 
-					</table>
-				</div>
-			</div>
-		</div>
-		<div th:if="${currentUserConnection}" class="row">
-			<div th:with="provider=${currentUserConnection.providerId}, 
+</div>
+<div class="container bs-docs-container big-font-container">
+    <div class="row row-centered">
+        <div class="bs-docs-section col-lg-7 col-centered">
+            <div id="message-holder">
+                <div th:if="${feedbackMessage}"
+                     th:class="'messageblock hidden'"
+                     th:text="${feedbackMessage}"></div>
+            </div>
+
+            <div id="form-table">
+                <div>
+                    <h1 th:text="#{user.heading.profile}">[User Profile]</h1>
+                </div>
+                <div id="profile-area">
+                    <div class="profile-pic">
+                        <img th:src="@{/images/user.png}" alt=""> </img>
+                        <div class="profile-pic-button" style="display: none;">
+                            <a th:href="@{/profile/}" class="btn btn-primary" th:text="#{user.button.profilePic.update}">[Update Profile Pic]</a>
+                        </div>
+                    </div>
+                    <table class="table table-condensed table-profile">
+                        <tr>
+                            <td class="td-label">
+                                <div th:text="#{user.label.username}">[Id]</div>
+                            </td>
+                            <td>
+                                <div th:text="${currentUser.user.username}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-label">
+                                <div th:text="#{user.label.firstName}">[Firstname]</div>
+                            </td>
+                            <td>
+                                <div th:text="${currentUser.user.firstName}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-label">
+                                <div th:text="#{user.label.lastName}">[Lastname]</div>
+                            </td>
+                            <td>
+                                <div th:text="${currentUser.user.lastName}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-label">
+                                <div th:text="#{user.label.email}">[Email]</div>
+                            </td>
+                            <td>
+                                <div th:text="${currentUser.user.email}"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="profile-pic-upload-form">
+                        <form method="POST" th:object="${profileImageDTO}" enctype="multipart/form-data" th:action="@{/users/upload}">
+                            <div th:if="${#fields.hasGlobalErrors()}"
+                                 class="has-error alert alert-dismissible alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <label class="control-label" th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</label>
+                            </div>
+
+                            <h3 th:text="#{user.subheading.new.image}">[Select New Image]</h3>
+                            <div><input type="file" name="file" size="60"/></div>
+                            <div><input type="submit" value="Upload" class="btn btn-success"/></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${currentUserConnection}" class="row">
+        <div th:with="provider=${currentUserConnection.providerId},
 				capProvider=${#strings.capitalize(currentUserConnection.providerId)}">
-					<div class="col-lg-9">
-						You created a Site Account with <span th:text="${capProvider}">[provider]</span> and use the <span th:class="|btn-sm btn-${provider}|"> <i
-							th:class="|fa fa-${provider}|"></i> | <span th:text="#{|label.${provider}.sign.in.button|}">[Sign In with Provider]</span>
+            <div class="col-lg-9">
+                You created a Site Account with <span th:text="${capProvider}">[provider]</span> and use the <span
+                    th:class="|btn-sm btn-${provider}|"> <i
+                    th:class="|fa fa-${provider}|"></i> | <span th:text="#{|label.${provider}.sign.in.button|}">[Sign In with Provider]</span>
 						</span> &nbsp;button to sign in.
-					</div>
-				</div>
-		</div>
-		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
-	</div>
+            </div>
+        </div>
+    </div>
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+</div>
 
-	<div th:include=" fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include=" fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
 </body>
 </html>

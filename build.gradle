@@ -47,7 +47,7 @@ allprojects {
 		compile 'javax.el:javax.el-api:3.0.1-b04'
 		compile 'org.jadira.usertype:usertype.extended:3.2.0.GA'
 		compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1'
-
+		compile 'net.coobird:thumbnailator:0.4.8'
 		
 		runtime('com.h2database:h2')
 		runtime('mysql:mysql-connector-java')

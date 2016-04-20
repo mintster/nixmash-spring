@@ -47,4 +47,7 @@ public interface UserService {
     void deleteAuthority(Authority authority, Collection<User> users);
 
     Collection<User> getUsersByAuthorityId(Long authorityId);
+
+    User updateHasAvatar(Long userId, boolean hasAvatar);
+
 }

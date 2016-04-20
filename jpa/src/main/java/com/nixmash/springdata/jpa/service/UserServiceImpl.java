@@ -10,9 +10,13 @@ import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.repository.AuthorityRepository;
 import com.nixmash.springdata.jpa.repository.UserConnectionRepository;
 import com.nixmash.springdata.jpa.repository.UserRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +81,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(form.getLastName());
         user.setEmail(form.getEmail());
         user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
+        user.setUserKey(RandomStringUtils.randomAlphanumeric(16));
         user.setSignInProvider(form.getSignInProvider());
         User saved = userRepository.save(user);
 
@@ -180,6 +185,21 @@ public class UserServiceImpl implements UserService {
     public Collection<User> getUsersByAuthorityId(Long authorityId) {
         return userRepository.findByAuthorityId(authorityId);
 
+    }
+
+    @Transactional
+    @Override
+    public User updateHasAvatar(Long userId, boolean hasAvatar) {
+        User user = userRepository.findById(userId);
+        user.setHasAvatar(hasAvatar);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+
+        CurrentUser currentUser = new CurrentUser(user);
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(currentUser, user.getPassword(), user.getAuthorities()));
+
+        return user;
     }
     // endregion
 

@@ -85,18 +85,18 @@ public class Authority implements GrantedAuthority {
         return true;
     }
 
-//    @Override
-//    public String toString() {
-//        return authority;
-//    }
-//
     @Override
     public String toString() {
-        return "Authority{" +
-                "authority='" + authority + '\'' +
-                ", id=" + id +
-                ", isLocked=" + isLocked +
-                '}';
+        return authority;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Authority{" +
+//                "authority='" + authority + '\'' +
+//                ", id=" + id +
+//                ", isLocked=" + isLocked +
+//                '}';
+//    }
 
 }

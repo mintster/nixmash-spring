@@ -69,6 +69,8 @@
                 </ul>
 
                 <div th:unless="${activeTab == 'error'}" th:remove="tag">
+                    <!--/*@thymesVar id="currentUserConnection" type="com.nixmash.springdata.jpa.model.UserConnection"*/-->
+                    <!--/*@thymesVar id="currentUser" type="com.nixmash.springdata.jpa.model.CurrentUser"*/-->
                     <div th:if="${currentUser != null}">
                         <form class="navbar-form pull-right" th:action="@{/logout}" method="post">
                             <input type="submit" value="Log out" class="btn btn-default"/>
@@ -76,6 +78,8 @@
 
                         <img class="navbar-profilepic pull-right" th:if="${currentUserConnection}"
                              th:src="${currentUserConnection.imageUrl}" width="32" height="32"/>
+                        <img class="navbar-profilepic pull-right" th:unless="${currentUserConnection}"
+                             th:src="@{|${currentUser.getProfileIconUrl()}|}" width="32" height="32"/>
                         <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right"
                            th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
 

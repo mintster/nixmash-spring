@@ -45,6 +45,9 @@ public class UserDTO {
     @Length(min = User.MIN_LENGTH_LAST_NAME, max = User.MAX_LENGTH_LAST_NAME)
     private String lastName = "";
 
+    private boolean hasAvatar;
+    private String userKey;
+
     private SignInProvider signInProvider;
 
     private String repeatedPassword = "";
@@ -94,7 +97,6 @@ public class UserDTO {
     }
 
     public String getLastName() {
-
         return lastName;
     }
 
@@ -118,6 +120,22 @@ public class UserDTO {
         this.signInProvider = signInProvider;
     }
 
+    public boolean isHasAvatar() {
+        return hasAvatar;
+    }
+
+    public void setHasAvatar(boolean hasAvatar) {
+        this.hasAvatar = hasAvatar;
+    }
+
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
+    }
+
     public boolean isNew() {
         return (this.userId == null);
     }
@@ -133,10 +151,10 @@ public class UserDTO {
     @Override
     public String toString() {
         return "UserCreateForm{" +
-                ", username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                "lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
+                ", username=" + username  +
+                ", firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", email=" + email +
                 '}';
     }
 }

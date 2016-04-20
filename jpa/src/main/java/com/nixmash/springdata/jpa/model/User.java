@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -90,7 +91,13 @@ public class User implements UserDetails, Serializable {
     @Column(name = "provider_id", length =25)
     @Enumerated(EnumType.STRING)
     private SignInProvider signInProvider;
-    
+
+    @Column(name = "user_key", length =25)
+    private String userKey;
+
+    @Column(name = "has_avatar")
+    private boolean hasAvatar = false;
+
     @Column
     private boolean enabled = true;
 
@@ -223,20 +230,38 @@ public class User implements UserDetails, Serializable {
         this.enabled = enabled;
     }
 
-	// @formatter:off
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
+    }
+
+    public boolean hasAvatar() {
+        return hasAvatar;
+    }
+
+    public void setHasAvatar(boolean hasAvatar) {
+        this.hasAvatar = hasAvatar;
+    }
+
+// @formatter:off
     
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", username=" + username +
+                ", email=" + email +
+                ", firstName=" + firstName  +
+                ", lastName=" + lastName  +
                 ", accountExpired=" + accountExpired +
                 ", accountLocked=" + accountLocked +
                 ", credentialsExpired=" + credentialsExpired +
-                 "signInProvider=" + signInProvider +
+                ", userKey=" + userKey +
+                ", hasAvatar=" + hasAvatar +
+                ", signInProvider=" + signInProvider +
                 ", enabled=" + enabled +
                 ", new=" + this.isNew() +
                 '}';

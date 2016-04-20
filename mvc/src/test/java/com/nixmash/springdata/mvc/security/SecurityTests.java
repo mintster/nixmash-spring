@@ -133,8 +133,10 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void validRegistration() throws Exception {
-		RequestBuilder request = post("/register").param("username", "bobby").param("firstName", "Bob")
-				.param("lastName", "Crachet").param("email", "bob@aol.com").param("password", "password")
+		RequestBuilder request = post("/register")
+				.param("username", "bobby").param("firstName", "Bob")
+				.param("lastName", "Crachet").param("email", "bob@aol.com")
+				.param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 
 		mvc.perform(request).andExpect(redirectedUrl("/"));

@@ -18,6 +18,12 @@ public class ApplicationSettings {
 	private String googleAppId;
 	private String googleAppSecret;
 
+	private String profileImagePath;
+	private String profileImageUrlRoot;
+
+	private String profileIconPath;
+	private String profileIconUrlRoot;
+
 	public String getGoogleAppId() {
 		return googleAppId;
 	}
@@ -82,6 +88,38 @@ public class ApplicationSettings {
 
 	public void setSiteName(String siteName) {
 		this.siteName = siteName;
+	}
+
+	public String getProfileImagePath() {
+		return profileImagePath;
+	}
+
+	public void setProfileImagePath(String profileImagePath) {
+		this.profileImagePath = profileImagePath;
+	}
+
+	public String getProfileImageUrlRoot() {
+		return profileImageUrlRoot;
+	}
+
+	public void setProfileImageUrlRoot(String profileImageUrlRoot) {
+		this.profileImageUrlRoot = profileImageUrlRoot;
+	}
+
+	public String getProfileIconUrlRoot() {
+		return profileIconUrlRoot;
+	}
+
+	public void setProfileIconUrlRoot(String profileIconUrlRoot) {
+		this.profileIconUrlRoot = profileIconUrlRoot;
+	}
+
+	public String getProfileIconPath() {
+		return profileIconPath;
+	}
+
+	public void setProfileIconPath(String profileIconPath) {
+		this.profileIconPath = profileIconPath;
 	}
 
 }

@@ -15,40 +15,8 @@
  */
 package com.nixmash.springdata.mvc.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-import java.util.UUID;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionData;
-import org.springframework.social.connect.ConnectionKey;
-import org.springframework.social.connect.UserProfile;
-import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.web.ProviderSignInUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.google.common.collect.Lists;
+import com.nixmash.springdata.jpa.dto.ProfileImageDTO;
 import com.nixmash.springdata.jpa.dto.SocialUserDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
@@ -60,6 +28,29 @@ import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.common.WebUI;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 import com.nixmash.springdata.mvc.security.SignInUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.social.connect.*;
+import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.UUID;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Allows users to sign up.
@@ -204,6 +195,8 @@ public class UserController {
 	public String profilePage(@PathVariable("username") String username, Model model, WebRequest request)
 			throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
+		ProfileImageDTO profileImageDTO = new ProfileImageDTO();
+		model.addAttribute("profileImageDTO", profileImageDTO);
 		return USER_PROFILE_VIEW;
 	}
 
