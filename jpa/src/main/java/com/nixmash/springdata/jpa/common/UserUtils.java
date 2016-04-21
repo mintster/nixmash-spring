@@ -3,9 +3,6 @@ package com.nixmash.springdata.jpa.common;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.User;
 
-/**
- * Created by daveburke on 4/9/16.
- */
 public class UserUtils {
 
     public static UserDTO userToUserDTO(User user) {
@@ -18,6 +15,9 @@ public class UserUtils {
         userDTO.setEmail(user.getEmail());
         userDTO.setSignInProvider(user.getSignInProvider());
         userDTO.setAuthorities(user.getAuthorities());
+        userDTO.setHasAvatar(user.hasAvatar());
+        userDTO.setUserKey(user.getUserKey());
         return userDTO;
     }
+
 }

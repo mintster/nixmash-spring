@@ -66,7 +66,7 @@ import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.MvcTestUtil;
-import com.nixmash.springdata.mvc.common.WebUI;
+import com.nixmash.springdata.mvc.components.WebUI;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

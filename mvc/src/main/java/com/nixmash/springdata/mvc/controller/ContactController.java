@@ -10,7 +10,7 @@ import com.nixmash.springdata.jpa.model.ContactPhone;
 import com.nixmash.springdata.jpa.model.Hobby;
 import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
 import com.nixmash.springdata.jpa.service.ContactService;
-import com.nixmash.springdata.mvc.common.WebUI;
+import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

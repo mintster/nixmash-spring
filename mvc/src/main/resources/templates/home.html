@@ -1,81 +1,98 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-<title>NixMash Spring Home Page</title>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title>NixMash Spring Home Page</title>
 </head>
 <body>
-	<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
-	<div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
+<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
+<div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
+<div th:if="${currentUser == null}" class="container">
+    <div class="row social-button-row">
+        <div class="col-lg-7">
+            <form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" name="scope" value="email,user_posts,user_photos,user_friends"/>
+                <button type="submit" class="btn btn-facebook">
+                    <i class="fa fa-facebook"></i> | <span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
+                </button>
+            </form>
+            <form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-twitter">
+                    <i class="fa fa-twitter"></i> | <span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
+                </button>
+            </form>
+            <form id="gl_signin" th:action="@{/signin/google}" method="POST">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" name="scope"
+                       value="https://www.googleapis.com/auth/plus.login
+						   					https://www.googleapis.com/auth/plus.me"/>
+                <button type="submit" class="btn btn-google">
+                    <i class="fa fa-google"></i> |
+                    <span th:text="#{label.google.sign.in.button}">[Sign In with Google]</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
-	<div th:if="${currentUser == null}" class="container">
-		<div class="row social-button-row">
-			<div class="col-lg-7">
-				<form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-					<input type="hidden" name="scope" value="email,user_posts,user_photos,user_friends" />
-					<button type="submit" class="btn btn-facebook">
-						<i class="fa fa-facebook"></i> | <span th:text="#{label.facebook.sign.in.button}">[Sign In with Facebook]</span>
-					</button>
-				</form>
-				<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-					<button type="submit" class="btn btn-twitter">
-						<i class="fa fa-twitter"></i> | <span th:text="#{label.twitter.sign.in.button}">[Sign In with Twitter]</span>
-					</button>
-				</form>
-				<form id="gl_signin" th:action="@{/signin/google}" method="POST">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-					<input type="hidden" name="scope"
-						   value="https://www.googleapis.com/auth/plus.login
-						   					https://www.googleapis.com/auth/plus.me" />
-					<button type="submit" class="btn btn-google">
-						<i class="fa fa-google"></i> |
-							<span th:text="#{label.google.sign.in.button}">[Sign In with Google]</span>
-					</button>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<div th:if="${connectionWelcomeMessage}" class="container">
-		<div th:with="provider=${currentUserConnection.providerId},
+<div th:if="${connectionWelcomeMessage}" class="container">
+    <div th:with="provider=${currentUserConnection.providerId},
 				capProvider=${#strings.capitalize(currentUserConnection.providerId)}">
-			<div class="row welcome-row">
-				<div class="col-lg-12">
-					Thank you for creating a Site Account with <span th:text="${capProvider}">[provider]</span>.
-					In the future, please use the <span th:class="|btn-sm btn-${provider}|">
+        <div class="row welcome-row">
+            <div class="col-lg-12">
+                Thank you for creating a Site Account with <span th:text="${capProvider}">[provider]</span>.
+                In the future, please use the <span th:class="|btn-sm btn-${provider}|">
 					<i th:class="|fa fa-${provider}|"></i> | 
 					<span th:text="#{|label.${provider}.sign.in.button|}">[Sign In with Provider]</span>
 					</span> &nbsp;buttons for one-click Sign In!
-				</div>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
+</div>
 
-	<div class="container">
-		<div class="row">
-			<blockquote>
-				<p>
-					As its name implies, this site demonstrates Spring in action with accompanying posts at <a href="http://nixmash.com">NixMash.com.</a> Areas include:
-				</p>
-				<small>Site Administration Module -- <em>Based on <a href="https://github.com/puikinsh/gentelella">Gentelella</a> Bootstrap 3 Admin Template</em></small>
-				<small>Spring Social -- <em>Twitter, Facebook and Google OAuth Login</em></small> <small>Hibernate and Spring JPA -- <em>Contacts</em></small> <small>Spring Security -- <em>Contact
-						View restricted to Logged-in Users</em></small> <small>Spring Solr -- <em>Products</em>
-				</small> <small>Javascript with Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em>
-				</small> <small>Thymeleaf with Spring</small>
-			</blockquote>
-		</div>
-		<button id="codButton" class="btn btn-default btn-xs" name="codButton" onclick="codDialog()" type="button" th:text="#{js.cod.button}">[CLICK]</button>
-		<button id="secretButton" class="btn btn-default btn-xs" name="secretButton" onclick="secretDialog()" type="button" th:text="#{js.secret.button}">[CLICK]</button>
-		<select id="multiselect-badgeboy" multiple="multiple">
-		</select>
+<div class="container">
+    <div class="row">
+        <blockquote>
+            <p>
+                As its name implies, this site demonstrates Spring in action with accompanying posts at <a
+                    href="http://nixmash.com">NixMash.com.</a> Examples include:
+            </p>
+            <small>File Upload -- <em>User Profile Image Uploading</em></small>
+            <small>Site Administration Module -- <em>Based on <a href="https://github.com/puikinsh/gentelella">Gentelella</a>
+                Bootstrap 3 Admin Template</em></small>
+            <small>Spring Social -- <em>Twitter, Facebook and Google OAuth Login</em></small>
+            <small>Hibernate and Spring JPA -- <em>Contacts</em></small>
+            <small>Spring Security -- <em>Contact
+                View restricted to Logged-in Users</em></small>
+            <small>Spring Solr -- <em>Products</em>
+            </small>
+            <small>Javascript with Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em>
+            </small>
+            <small>Thymeleaf with Spring</small>
+        </blockquote>
+    </div>
 
-		<div id="badges"></div>
+    <div id="spring-version" th:text="${springVersion}">[SPRING VERSION]</div>
 
-		<nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
-	</div>
-	<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
-	<div th:include="fragments/js :: functions" th:remove="tag">Functions</div>
+    <div class="js-buttons">
+        <button id="codButton" class="btn btn-default btn-xs" name="codButton" onclick="codDialog()" type="button"
+                th:text="#{js.cod.button}">[CLICK]
+        </button>
+        <button id="secretButton" class="btn btn-default btn-xs" name="secretButton" onclick="secretDialog()"
+                type="button" th:text="#{js.secret.button}">[CLICK]
+        </button>
+        <select id="multiselect-badgeboy" multiple="multiple">
+        </select>
+    </div>
+
+    <div id="badges"></div>
+
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+</div>
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/js :: functions" th:remove="tag">Functions</div>
 </body>
 </html>

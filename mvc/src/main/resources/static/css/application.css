@@ -7,6 +7,15 @@
 	max-width: 550px;	
 }
 
+blockquote small {
+	color: #716561;
+}
+
+#spring-version {
+	display: block;
+	margin:  0 auto 20px auto;
+	font-style: 16px;
+}
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="BODY, ROWS AND COLUMNS ----------------------------/ "*/
@@ -337,9 +346,6 @@ ul.featurelist li:before {
 }
 
 /*</editor-fold>*/
-blockquote small {
-	color: #716561;
-}
 
 /*/<editor-fold> desc="SOCIAL ELEMENTS ----------------------------/ "*/
 

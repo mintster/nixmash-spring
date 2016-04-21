@@ -10,7 +10,7 @@ import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.mvc.controller.GlobalController;
 
-public class SignInUtil {
+public class SignInUtils {
 
 	public static void authorizeUser(User user) {
 

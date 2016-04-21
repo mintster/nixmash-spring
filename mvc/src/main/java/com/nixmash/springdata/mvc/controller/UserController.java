@@ -22,12 +22,13 @@ import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
-import com.nixmash.springdata.mvc.common.WebUI;
+import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
-import com.nixmash.springdata.mvc.security.SignInUtil;
+import com.nixmash.springdata.mvc.security.SignInUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.io.IOException;
 import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -124,7 +127,7 @@ public class UserController {
 		userDTO.setSignInProvider(SignInProvider.SITE);
 		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
 		User user = userService.create(userDTO);
-		SignInUtil.authorizeUser(user);
+		SignInUtils.authorizeUser(user);
 		return "redirect:/";
 	}
 
@@ -142,12 +145,51 @@ public class UserController {
 			socialUserDTO = createSocialUserDTO(request, connection);
 			
 			ConnectionData connectionData =  connection.createData();
-			SignInUtil.setUserConnection(request, connectionData);
+			SignInUtils.setUserConnection(request, connectionData);
 			
 			model.addAttribute(MODEL_ATTRIBUTE_SOCIALUSER, socialUserDTO);
 			return SIGNUP_VIEW;
 		}
 	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
+			WebRequest request, RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			return SIGNUP_VIEW;
+		}
+
+		UserDTO userDTO = createUserDTO(socialUserDTO);
+		User user = userService.create(userDTO);
+
+		providerSignInUtils.doPostSignUp(userDTO.getUsername(), request);
+		UserConnection userConnection = userService.getUserConnectionByUserId(userDTO.getUsername());
+		if (userConnection.getImageUrl() != null) {
+			try {
+				webUI.processProfileImage(userConnection.getImageUrl(), user.getUserKey());
+				userService.updateHasAvatar(user.getId(), true);
+			} catch (IOException e) {
+				logger.error("ImageUrl IOException for username: {0}", user.getUsername());
+			}
+		}
+		SignInUtils.authorizeUser(user);
+
+		redirectAttributes.addFlashAttribute("connectionWelcomeMessage", true);
+		return "redirect:/?ico";
+	}
+
+	private UserDTO createUserDTO(SocialUserDTO socialUserDTO) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUsername(socialUserDTO.getUsername().toLowerCase());
+		userDTO.setFirstName(socialUserDTO.getFirstName());
+		userDTO.setLastName(socialUserDTO.getLastName());
+		userDTO.setEmail(socialUserDTO.getEmail());
+		userDTO.setSignInProvider(socialUserDTO.getSignInProvider());
+		userDTO.setPassword(UUID.randomUUID().toString());
+		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
+		return userDTO;
+	}
+
 
 	private SocialUserDTO createSocialUserDTO(WebRequest request, Connection<?> connection) {
 		SocialUserDTO dto = new SocialUserDTO();
@@ -160,35 +202,12 @@ public class UserController {
 
 			ConnectionKey providerKey = connection.getKey();
 			dto.setSignInProvider(SignInProvider.valueOf(providerKey.getProviderId().toUpperCase()));
-			
+
 		}
 
 		return dto;
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
-			WebRequest request, RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
-			return SIGNUP_VIEW;
-		}
-
-		UserDTO userDTO = new UserDTO();
-		userDTO.setUsername(socialUserDTO.getUsername());
-		userDTO.setFirstName(socialUserDTO.getFirstName());
-		userDTO.setLastName(socialUserDTO.getLastName());
-		userDTO.setEmail(socialUserDTO.getEmail());
-		userDTO.setSignInProvider(socialUserDTO.getSignInProvider());
-		userDTO.setPassword(UUID.randomUUID().toString());
-		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
-
-		User user = userService.create(userDTO);
-		SignInUtil.authorizeUser(user);
-
-		providerSignInUtils.doPostSignUp(socialUserDTO.getUsername(), request);
-		redirectAttributes.addFlashAttribute("connectionWelcomeMessage", true);
-		return "redirect:/";
-	}
 
 	@PreAuthorize("@userService.canAccessUser(principal, #username)")
 	@RequestMapping(value = "/{username}", method = GET)

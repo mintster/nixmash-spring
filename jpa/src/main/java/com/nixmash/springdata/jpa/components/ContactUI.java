@@ -1,5 +1,7 @@
-package com.nixmash.springdata.jpa.common;
+package com.nixmash.springdata.jpa.components;
 
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.common.ContactUtils;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.jpa.service.UserService;

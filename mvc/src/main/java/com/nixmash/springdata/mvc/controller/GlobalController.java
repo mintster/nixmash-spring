@@ -3,7 +3,7 @@ package com.nixmash.springdata.mvc.controller;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
-import com.nixmash.springdata.mvc.common.WebUI;
+import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +49,24 @@ public class GlobalController {
 			currentUser = (CurrentUser) authentication.getPrincipal();
 		}
 		return currentUser;
+	}
+
+	/**
+	 * Determines if the CurrentUser is "user".
+	 * For enabling or disabling certain user account functions
+	 *
+	 * @param authentication
+	 * @return TRUE is username=="user", otherwise FALSE
+     */
+	@ModelAttribute("isDemoUser")
+	public Boolean isDemoUser(Authentication authentication) {
+		Boolean isDemoUser = false;
+		if (authentication != null) {
+			if (authentication.getName().equals("user")) {
+				isDemoUser = true;
+			}
+		}
+		return isDemoUser;
 	}
 
 	@ModelAttribute("currentUserConnection")

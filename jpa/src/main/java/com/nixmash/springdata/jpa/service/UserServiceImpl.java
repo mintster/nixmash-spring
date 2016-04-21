@@ -193,11 +193,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId);
         user.setHasAvatar(hasAvatar);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
-
         CurrentUser currentUser = new CurrentUser(user);
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(currentUser, user.getPassword(), user.getAuthorities()));
+
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(
+                        currentUser,
+                        user.getPassword(),
+                        user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return user;
     }

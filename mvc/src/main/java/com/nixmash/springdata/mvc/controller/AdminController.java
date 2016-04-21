@@ -7,7 +7,7 @@ import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.service.UserService;
-import com.nixmash.springdata.mvc.common.WebUI;
+import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
