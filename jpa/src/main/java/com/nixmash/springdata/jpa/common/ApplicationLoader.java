@@ -28,10 +28,10 @@ public class ApplicationLoader implements CommandLineRunner {
 
         sb = sb.length() == 0 ? sb.append("No Options Specified") : sb;
         logger.info(String.format("App launched with following arguments: %s", sb.toString()));
-        
+
         PropertySource<?> ps = new SimpleCommandLinePropertySource(args);
         String appUrl = (String) ps.getProperty("appurl");
-        
+
         logger.info(String.format("Command-line appurl is %s", appUrl));
         
         String applicationPropertyUrl = environment.getProperty("spring.social.application.url");

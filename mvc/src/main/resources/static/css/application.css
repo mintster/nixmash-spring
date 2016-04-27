@@ -407,7 +407,7 @@ form#fb_signin, form#tw_signin, form#gl_signin {
 /*/<editor-fold> desc="USER PROFILE ----------------------------/ "*/
 
 #profile-area {
-	margin: 60px auto;
+	margin: 30px auto 60px auto;
 	display: inline-block;
 }
 

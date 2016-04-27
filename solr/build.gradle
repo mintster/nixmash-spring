@@ -1,17 +1,4 @@
 
-springBoot { 
-	mainClass = 'com.nixmash.springdata.solr.SolrLauncher' 
-	}
-
-jar {
-	baseName = 'springdata-solr'
-	version = '0.0.1-SNAPSHOT'
-}
-
-jar {
-	manifest { attributes 'Main-Class': 'com.nixmash.springdata.solr.SolrLauncher' }
-}
-
 sourceSets {
 	main {
 		java.srcDirs = [
@@ -21,6 +8,19 @@ sourceSets {
 		resources.srcDir('src/main/resources')
 	}
 	test { java.srcDir('src/test/java') }
+}
+
+springBoot {
+	mainClass = 'com.nixmash.springdata.solr.SolrLauncher'
+}
+
+jar {
+	baseName = 'springdata-solr'
+	version = '0.0.1-SNAPSHOT'
+}
+
+jar {
+	manifest { attributes 'Main-Class': 'com.nixmash.springdata.solr.SolrLauncher' }
 }
 
 dependencies {

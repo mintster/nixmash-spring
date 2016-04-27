@@ -76,8 +76,8 @@
                             <input type="submit" value="Log out" class="btn btn-default"/>
                         </form>
 
-                        <img class="navbar-profilepic pull-right" th:if="${param.ico != null}" th:src="@{|${currentUser.getProfileIconUrl()}?${new java.util.Date().getTime()}|}" width="32" height="32"/>
-                        <img class="navbar-profilepic pull-right" th:unless="${param.ico != null}" th:src="@{|${currentUser.getProfileIconUrl()}|}" width="32" height="32"/>
+                        <img class="navbar-profilepic pull-right"
+                             th:src="@{|${currentUser.getProfileIconUrl()}?${new java.util.Date().getTime()}|}" width="32" height="32"/>
 
                         <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right"
                            th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>

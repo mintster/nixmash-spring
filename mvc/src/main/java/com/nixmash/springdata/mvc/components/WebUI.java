@@ -61,7 +61,8 @@ public class WebUI {
 
 	// region MultiFile Upload and Image Functions
 
-	public void processProfileImage(ProfileImageDTO profileImageDTO, String userKey) throws IOException {
+	public void processProfileImage(ProfileImageDTO profileImageDTO, String userKey)
+			throws IOException {
 
 		// Reduce original image size. Thumbnailator will not modify
 		// image if less than 600x600
@@ -88,7 +89,8 @@ public class WebUI {
 	}
 
 
-	public void processProfileImage(String providerImageUrl, String userKey) throws IOException {
+	public void processProfileImage(String providerImageUrl, String userKey)
+																														throws IOException {
 
 		// Reduce original image size. Thumbnailator will not modify
 		// image if less than 600x600

@@ -1,0 +1,35 @@
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.nixmash.springdata.mail.MailLauncher'
+	}
+}
+
+sourceSets {
+	main {
+		java.srcDirs = ['src/main/java', 'src/main/resources']
+		resources.srcDir('src/main/resources')
+	}
+	test {
+		java.srcDir('src/test/java')
+	}
+}
+
+configurations {
+	compile.exclude module: 'org.slf4j'
+}
+
+springBoot {
+	mainClass = 'com.nixmash.springdata.mail.MailLauncher'
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+
+bootRun {
+	addResources = false
+	systemProperty 'spring.profiles.active', 'dev'
+	main = 'com.nixmash.springdata.mail.MailLauncher'
+}

@@ -6,13 +6,22 @@
 </head>
 <body>
 
-<script type="text/javascript">
+<script th:inline="javascript">
+    /*<![CDATA[*/
 
     $(document).ready(function () {
 
+        var currentUsername = [[${currentUser.user.username}]];
+
         $('#updateImage').on('click', function () {
-            $('#updateImageForm').css('display', 'inline-block');
-        });
+                    if (currentUsername != "user") {
+                        $('#updateImageForm').css('display', 'inline-block');
+                    }
+                    else
+                        showDialog([[#{js.profile.user.locked.title}]],
+                                [[#{js.profile.user.locked.message}]])
+                }
+        );
 
         $('#cancelImageUpdate').on('click', function () {
             $('#updateImageForm').css('display', 'none');
@@ -20,6 +29,8 @@
 
 
     });
+
+    /*]]>*/
 </script>
 
 <nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
@@ -95,9 +106,10 @@
                         </tr>
                     </table>
 
-                        <form method="POST" th:object="${profileImageDTO}" enctype="multipart/form-data"
-                              th:action="@{/users/upload}">
-                            <div class="profile-pic-upload-form" id="updateImageForm" th:style="${#fields.hasGlobalErrors() ? 'display: inline;' : 'display: none;'}">
+                    <form method="POST" th:object="${profileImageDTO}" enctype="multipart/form-data"
+                          th:action="@{/users/upload}">
+                        <div class="profile-pic-upload-form" id="updateImageForm"
+                             th:style="${#fields.hasGlobalErrors() ? 'display: inline;' : 'display: none;'}">
                             <div th:if="${#fields.hasGlobalErrors()}"
                                  class="has-error alert alert-dismissible alert-danger">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
@@ -107,13 +119,13 @@
                             <h3 th:text="#{user.subheading.new.image}">[Select New Image]</h3>
                             <div><input type="file" name="file" size="60"/></div>
                             <div><input type="submit" value="Upload" class="btn btn-success"/>
-                            <input th:type="submit" class="btn btn-success"
-                                   name="deleteImage"
-                                   th:value="Remove"  />
+                                <input th:type="submit" class="btn btn-success"
+                                       name="deleteImage"
+                                       th:value="Remove"/>
                                 <a id="cancelImageUpdate" class="btn btn-primary">Cancel</a>
-                                </div>
                             </div>
-                        </form>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

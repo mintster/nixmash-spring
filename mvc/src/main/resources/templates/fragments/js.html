@@ -35,24 +35,6 @@
         }
 
 
-        function showDialog(title, result) {
-
-            BootstrapDialog.show({
-                type: BootstrapDialog.TYPE_PRIMARY,
-                title: title,
-                message: result,
-                draggable: true,
-                buttons: [{
-                    label: 'Close',
-                    cssClass: 'btn-info',
-                    action: function (dialogItself) {
-                        dialogItself.close();
-                    }
-                }]
-            })
-
-        }
-
         $(document).ready(function () {
 
             var badgeBoy = [[#{js.badgeboy.button}]];

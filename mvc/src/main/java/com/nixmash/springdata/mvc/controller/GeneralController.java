@@ -29,7 +29,7 @@ public class GeneralController {
     private static final Logger logger = LoggerFactory.getLogger(GeneralController.class);
 
     public static final String HOME_VIEW = "home";
-    public static final String ERROR_403_VIEW = "errors/403";
+    public static final String ERROR_403_VIEW = "errors/custom";
 
     @Autowired
     WebUI webUI;

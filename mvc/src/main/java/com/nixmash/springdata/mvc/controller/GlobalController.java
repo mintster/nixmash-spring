@@ -2,25 +2,23 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
+import com.nixmash.springdata.jpa.exceptions.ResourceNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class GlobalController {
@@ -80,10 +78,9 @@ public class GlobalController {
 		return applicationSettings;
 	}
 
-	@ExceptionHandler(NoSuchElementException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public String handleNoSuchElementException(NoSuchElementException e) {
-		return e.getMessage();
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public String handleResourceNotFoundException() {
+		return "errors/404";
 	}
 
 	@ExceptionHandler(ContactNotFoundException.class)

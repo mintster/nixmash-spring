@@ -107,8 +107,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean canAccessUser(CurrentUser currentUser, String username) {
-        logger.debug("Checking if user={} has access to user={}",
-                currentUser, username);
+        logger.info("Checking if user={} has access to user={}", currentUser, username);
         return currentUser != null
                 && (currentUser.getUser().hasAuthority(Role.ROLE_ADMIN) ||
                 currentUser.getUsername().equals(username));

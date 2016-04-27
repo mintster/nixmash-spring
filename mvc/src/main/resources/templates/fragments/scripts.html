@@ -1,10 +1,32 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
 <div id="scripts">
     <script th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/bootstrap-dialog.js}"></script>
     <script th:src="@{/js/bootstrap-multiselect.js}"></script>
 
+
+    <script th:inline="javascript">
+
+        function showDialog(title, result) {
+
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_PRIMARY,
+                title: title,
+                message: result,
+                draggable: true,
+                buttons: [{
+                    label: 'Close',
+                    cssClass: 'btn-info',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            })
+
+        }
+
+    </script>
 </div>
 </html>
 

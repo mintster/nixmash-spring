@@ -29,7 +29,6 @@ public class ProfileImageValidator  implements Validator {
     public void validate(Object target, Errors errors) {
         logger.info("Validating {}", target.toString());
         ProfileImageDTO profileImage = (ProfileImageDTO) target;
-        validateFileSize(errors, profileImage);
         validateFileType(errors, profileImage);
         validateForMinMaxFileSize(errors, profileImage);
 
@@ -48,16 +47,13 @@ public class ProfileImageValidator  implements Validator {
 
         try (InputStream input = profileImage.getFile().getInputStream()) {
             try {
-                ImageIO.read(input).toString();
+                ImageIO.read(input);
             } catch (Exception e) {
                 errors.reject("file.not.an.image");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void validateFileSize(Errors errors, ProfileImageDTO profileImage) {
     }
 
 }

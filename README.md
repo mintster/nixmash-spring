@@ -45,10 +45,16 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.2.9 -- Site Administration (In Progress)##
 
+- Profile Image Uploading
 - Gentelella Bootstrap 3 Admin Template [Github](https://github.com/puikinsh/gentelella)
 - User Administration and Role Creation, Role Assignment, Role Deletion and removal from User Assignments
 - Locked Authentication property to prevent removal and update of essential roles like ADMIN and USER
 - Dandelion Datatables in Administration
+- [Post: Exim4 Configuration Notes for Developers](http://nixmash.com/linux/exim4-configuration-notes-for-developers/)
+- [Post: Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/)
+- [Post: Profile Image Uploads: Thymeleaf Tricks](http://nixmash.com/java/profile-image-uploads-thymeleaf-tricks/)
+- [Post: Profile Image Uploads: The Spring Parts](http://nixmash.com/java/profile-image-uploads-the-spring-parts/)
+- [Post: Profile Image Uploads: Intro](http://nixmash.com/java/profile-image-uploads-intro/)
 - [Post: Tracking Down a Bundle NullPointerException in Dandelion](http://nixmash.com/java/tracking-down-a-bundle-nullpointerexception-in-dandelion/)
 - [Post: Using JavaScript with Dandelion Datatables](http://nixmash.com/java/using-javascript-with-dandelion-datatables/)
 - [Post: Applying User Role Locking](http://nixmash.com/java/role-locking-in-nixmash-spring-administration/)

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title>NixMash Spring 404 Page</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('error')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1>Page Not Found!</h1>
+
+                <p class="lead">404, 404!</p>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">[sponsor image]</div>
+        </div>
+    </div>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">[scripts]</div>
+</body>
+</html>

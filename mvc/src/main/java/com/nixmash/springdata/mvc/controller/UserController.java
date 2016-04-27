@@ -49,7 +49,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import java.io.IOException;
 import java.util.UUID;
 
@@ -163,7 +162,8 @@ public class UserController {
 		User user = userService.create(userDTO);
 
 		providerSignInUtils.doPostSignUp(userDTO.getUsername(), request);
-		UserConnection userConnection = userService.getUserConnectionByUserId(userDTO.getUsername());
+		UserConnection userConnection =
+				userService.getUserConnectionByUserId(userDTO.getUsername());
 		if (userConnection.getImageUrl() != null) {
 			try {
 				webUI.processProfileImage(userConnection.getImageUrl(), user.getUserKey());
@@ -175,7 +175,7 @@ public class UserController {
 		SignInUtils.authorizeUser(user);
 
 		redirectAttributes.addFlashAttribute("connectionWelcomeMessage", true);
-		return "redirect:/?ico";
+		return "redirect:/";
 	}
 
 	private UserDTO createUserDTO(SocialUserDTO socialUserDTO) {
@@ -211,7 +211,8 @@ public class UserController {
 
 	@PreAuthorize("@userService.canAccessUser(principal, #username)")
 	@RequestMapping(value = "/{username}", method = GET)
-	public String profilePage(@PathVariable("username") String username, Model model, WebRequest request)
+	public String profilePage(@PathVariable("username") String username,
+							  Model model, WebRequest request)
 			throws UsernameNotFoundException {
 		logger.info("Showing user page for user: {}", username);
 		ProfileImageDTO profileImageDTO = new ProfileImageDTO();

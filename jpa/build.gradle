@@ -18,6 +18,10 @@ configurations {
     compile.exclude module: 'org.slf4j'
 }
 
+springBoot {
+    mainClass = 'com.nixmash.springdata.jpa.Launcher'
+}
+
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-social-twitter")
 	compile("org.springframework.boot:spring-boot-starter-social-facebook")

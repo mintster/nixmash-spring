@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] IGNORED_RESOURCE_LIST = new String[] {"/fonts/**", "/webjars/**", "/dashboard/**", "/dandelion-assets/**", "/dandelion/**", "/files/**" };
 	private static final String[] PERMITALL_RESOURCE_LIST = new String[] {"/auth/**", "/signin/**", "/signup/**", "/",
-			"/register/**", "/contacts", "/json/**", "/products/**",  "/errors/**", "/admin/**", "/users/**" };
+			"/register/**", "/contacts", "/json/**", "/products/**",  "/errors/**", "/users/**" };
 	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/admin/**" };
 
 	@Autowired
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers(PERMITALL_RESOURCE_LIST).permitAll()
-//				.antMatchers(ADMIN_RESOURCE_LIST).hasAuthority("ROLE_ADMIN")
+				.antMatchers(ADMIN_RESOURCE_LIST).hasAuthority("ROLE_ADMIN")
 				.anyRequest()
 				.authenticated()
 			.and()
@@ -99,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMe()
 			.and()
 				.exceptionHandling()
-				.accessDeniedPage("/errors/403")
+				.accessDeniedPage("/403")
 		   .and()
 				.apply(new SpringSocialConfigurer()
 				.postLoginUrl("/")
