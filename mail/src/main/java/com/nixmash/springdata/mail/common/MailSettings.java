@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "mail")
 public class MailSettings {
 
-
 	private String serverHost;
 	private Integer serverPort;
 	private String serverUsername;
@@ -18,10 +17,18 @@ public class MailSettings {
 	private Boolean smtpAuth;
 	private Boolean smtpStartTlsEnable;
 
+	private String contactTo;
+
+	public String getContactTo() {
+		return contactTo;
+	}
+	public void setContactTo(String contactTo) {
+		this.contactTo = contactTo;
+	}
+
 	public String getServerUsername() {
 		return serverUsername;
 	}
-
 	public void setServerUsername(String serverUsername) {
 		this.serverUsername = serverUsername;
 	}
@@ -29,7 +36,6 @@ public class MailSettings {
 	public String getServerPassword() {
 		return serverPassword;
 	}
-
 	public void setServerPassword(String serverPassword) {
 		this.serverPassword = serverPassword;
 	}
@@ -37,7 +43,6 @@ public class MailSettings {
 	public Boolean getSmtpAuth() {
 		return smtpAuth;
 	}
-
 	public void setSmtpAuth(Boolean smtpAuth) {
 		this.smtpAuth = smtpAuth;
 	}
@@ -45,7 +50,6 @@ public class MailSettings {
 	public Boolean getSmtpStartTlsEnable() {
 		return smtpStartTlsEnable;
 	}
-
 	public void setSmtpStartTlsEnable(Boolean smtpStartTlsEnable) {
 		this.smtpStartTlsEnable = smtpStartTlsEnable;
 	}
@@ -53,7 +57,6 @@ public class MailSettings {
 	public Integer getServerPort() {
 		return serverPort;
 	}
-
 	public void setServerPort(Integer serverPort) {
 		this.serverPort = serverPort;
 	}
@@ -61,7 +64,6 @@ public class MailSettings {
 	public String getServerHost() {
 		return serverHost;
 	}
-
 	public void setServerHost(String serverHost) {
 		this.serverHost = serverHost;
 	}
