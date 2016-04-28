@@ -23,8 +23,7 @@ public class MailUI {
         mailDemo();
     }
 
-    public void mailDemo() {
-        System.out.println("\n\n\nCooking with Spring Mail Juice!");
+    private void mailDemo() {
         mailService.sendContactMail(createContactMailDTO());
     }
 
