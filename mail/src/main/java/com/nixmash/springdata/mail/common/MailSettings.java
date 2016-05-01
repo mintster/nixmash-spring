@@ -18,6 +18,8 @@ public class MailSettings {
 	private Boolean smtpStartTlsEnable;
 
 	private String contactTo;
+	private String contactCC;
+	private Boolean sendContactCC;
 
 	public String getContactTo() {
 		return contactTo;
@@ -66,5 +68,19 @@ public class MailSettings {
 	}
 	public void setServerHost(String serverHost) {
 		this.serverHost = serverHost;
+	}
+
+	public String getContactCC() {
+		return contactCC;
+	}
+	public void setContactCC(String contactCC) {
+		this.contactCC = contactCC;
+	}
+
+	public Boolean getSendContactCC() {
+		return sendContactCC;
+	}
+	public void setSendContactCC(Boolean sendContactCC) {
+		this.sendContactCC = sendContactCC;
 	}
 }

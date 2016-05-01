@@ -1,4 +1,4 @@
-package com.nixmash.springdata.mail.common;
+package com.nixmash.springdata.jpa.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,16 +8,18 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApplicationLoader implements CommandLineRunner {
+public class JpaLoader implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(JpaLoader.class);
 
     @Autowired
     Environment environment;
 
     @Override
     public void run(String... args) throws Exception {
-        String applicationVersion = environment.getProperty("nixmash.spring.mail.version");
-        logger.info(String.format("NixMash Spring Mail Application Version is %s", applicationVersion));
+
+        String activeProfile = environment.getActiveProfiles()[0];
+        logger.info(String.format("Current JPA Active Profile: %s", activeProfile));
+
     }
 }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title th:text="#{mail.contact.page.title}"></title>
+</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
+
+<!--/*@thymesVar id="currentUser" type="com.nixmash.springdata.jpa.model.CurrentUser"*/-->
+<!--/*@thymesVar id="currentUserConnection" type="com.nixmash.springdata.jpa.model.UserConnection"*/-->
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="#{mail.contact.page.header}">[fullname]</h1>
+                <p class="lead" th:text="#{mail.contact.page.subheader}">[All Contacts]</p>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+        </div>
+    </div>
+
+</div>
+<div class="container bs-docs-container big-font-container">
+    <div class="row row-centered">
+        <div class="bs-docs-section col-lg-7 col-centered">
+            <div id="message-holder">
+                <div th:if="${feedbackMessage}"
+                     th:class="'messageblock hidden'"
+                     th:text="${feedbackMessage}"></div>
+            </div>
+
+            <div id="form-table">
+                <!--/*@thymesVar id="mailDTO" type="com.nixmash.springdata.mail.dto.MailDTO"*/-->
+                <form method="POST" th:object="${mailDTO}" th:action="@{${#httpServletRequest.getRequestURI()}}">
+
+                    <div th:if="${#fields.hasGlobalErrors()}"
+                         class="has-error alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <label class="control-label" th:each="err : ${#fields.globalErrors()}"
+                               th:text="${err}">...</label>
+                    </div>
+
+                    <table class="table">
+                        <tr th:classappend="${#fields.hasErrors('from')} ? 'has-error'">
+                            <td>
+                                <div class="control-group" th:classappend="${#fields.hasErrors('from')} ? 'error'">
+                                    <label class="control-label">Your Email:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="controls">
+                                    <input type="text" class="form-control" th:field="*{from}"/>
+                                    <label class="control-label" th:errors="*{from}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:classappend="${#fields.hasErrors('fromName')} ? 'has-error'">
+                            <td>
+                                <div class="control-group" th:classappend="${#fields.hasErrors('fromName')} ? 'error'">
+                                    <label class="control-label">Your Name:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="controls">
+                                    <input type="text" class="form-control" th:field="*{fromName}"/>
+                                    <label class="control-label" th:errors="*{fromName}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:classappend="${#fields.hasErrors('body')} ? 'has-error'">
+                            <td></td>
+                            <td>
+                                <div class="controls">
+                                    <textarea name="body" placeholder="Please enter your message" th:field="*{body}" rows="5" class="mail-body"></textarea>
+                                    <label class="control-label" th:errors="*{body}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="Send" class="btn btn-primary"/></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+
+</div>
+<div th:include=" fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+</body>
+</html>

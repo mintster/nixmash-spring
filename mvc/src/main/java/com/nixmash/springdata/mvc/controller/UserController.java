@@ -27,7 +27,6 @@ import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.components.WebUI;
-import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 import com.nixmash.springdata.mvc.security.SignInUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,21 +61,27 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Controller
 public class UserController {
 
+	// region Constants
+
 	public static final String MODEL_ATTRIBUTE_CURRENTUSER = "currentUser";
 	private static final String MODEL_ATTRIBUTE_SOCIALUSER = "socialUserDTO";
 	public static final String USER_PROFILE_VIEW = "users/profile";
 	public static final String SIGNUP_VIEW = "signup";
 	public static final String SIGNIN_VIEW = "signin";
 	public static final String REGISTER_VIEW = "register";
-
 	public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
 
+	// endregion
+
+	// region Private Classes
+
 	private final UserService userService;
-	private final CurrentUserDetailsService currentUserDetailsService;
 	private final UserCreateFormValidator userCreateFormValidator;
 	private final SocialUserFormValidator socialUserFormValidator;
 	private final ProviderSignInUtils providerSignInUtils;
 	private WebUI webUI;
+
+	// endregion
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -85,13 +90,11 @@ public class UserController {
 
 	@Autowired
 	public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator,
-			SocialUserFormValidator socialUserFormValidator, ProviderSignInUtils providerSignInUtils,
-			CurrentUserDetailsService currentUserDetailsService, WebUI webUI) {
+			SocialUserFormValidator socialUserFormValidator, ProviderSignInUtils providerSignInUtils, WebUI webUI) {
 		this.userService = userService;
 		this.userCreateFormValidator = userCreateFormValidator;
 		this.socialUserFormValidator = socialUserFormValidator;
 		this.providerSignInUtils = providerSignInUtils;
-		this.currentUserDetailsService = currentUserDetailsService;
 		this.webUI = webUI;
 	}
 

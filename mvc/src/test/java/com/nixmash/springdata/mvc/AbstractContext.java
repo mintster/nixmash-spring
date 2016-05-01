@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
-import com.nixmash.springdata.mvc.config.Application;
+import com.nixmash.springdata.mvc.common.Application;
 import com.nixmash.springdata.solr.enums.SolrConfigProfile;
 
 @SuppressWarnings("deprecation")

@@ -13,6 +13,7 @@ configurations { providedRuntime }
 dependencies {
 	compile project(':jpa')
 	compile project(':solr')
+	compile project(':mail')
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
@@ -63,7 +64,7 @@ bootRun {
 	systemProperty 'server.port', '9000'
 	systemProperty 'spring.profiles.active', 'mysql,dev'
 	args "--appurl=http://localhost:9000"
-	main = 'com.nixmash.springdata.mvc.config.Application'
+	main = 'com.nixmash.springdata.mvc.common.Application'
 }
 
 

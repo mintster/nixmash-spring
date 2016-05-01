@@ -1,4 +1,4 @@
-package com.nixmash.springdata.jpa.common;
+package com.nixmash.springdata.mvc.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +10,9 @@ import org.springframework.core.env.SimpleCommandLinePropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApplicationLoader implements CommandLineRunner {
+public class MvcLoader implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(MvcLoader.class);
 
     @Autowired
     Environment environment;
@@ -23,8 +23,6 @@ public class ApplicationLoader implements CommandLineRunner {
         for (String option : args) {
             sb.append(" ").append(option);
         }
-        String activeProfile = environment.getActiveProfiles()[0];
-        logger.info(String.format("Current JPA Active Profile: %s", activeProfile));
 
         sb = sb.length() == 0 ? sb.append("No Options Specified") : sb;
         logger.info(String.format("App launched with following arguments: %s", sb.toString()));
@@ -33,9 +31,9 @@ public class ApplicationLoader implements CommandLineRunner {
         String appUrl = (String) ps.getProperty("appurl");
 
         logger.info(String.format("Command-line appurl is %s", appUrl));
-        
+
         String applicationPropertyUrl = environment.getProperty("spring.social.application.url");
         logger.info(String.format("Current Spring Social ApplicationUrl is %s", applicationPropertyUrl));
-        
+
     }
 }

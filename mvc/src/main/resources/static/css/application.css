@@ -441,3 +441,13 @@ form#fb_signin, form#tw_signin, form#gl_signin {
 }
 
 /*</editor-fold>*/
+
+/*/<editor-fold> desc="MAIL ----------------------------/ "*/
+
+textarea.mail-body {
+	word-break: keep-all;
+	resize: none;
+	width: 100%;
+}
+/*</editor-fold>*/
+

@@ -49,6 +49,10 @@ public class MailServiceImpl implements MailService{
                     message.setFrom(mailDTO.getFrom());
                     message.addTo(mailSettings.getContactTo());
 
+                    if (mailSettings.getSendContactCC()) {
+                        message.addCc(mailSettings.getContactCC());
+                    }
+
                     String subject = environment.getProperty(CONTACT_EMAIL_SUBJECT);
                     message.setSubject(MessageFormat.format(subject, mailDTO.getFromName()));
 

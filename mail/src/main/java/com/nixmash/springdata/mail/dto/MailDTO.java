@@ -1,18 +1,34 @@
 package com.nixmash.springdata.mail.dto;
 
+import com.nixmash.springdata.jpa.model.validators.ExtendedEmailValidator;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * Created by daveburke on 4/28/16.
- */
+import javax.persistence.Basic;
+
 public class MailDTO {
 
+    private static final int MAX_LENGTH_EMAIL_ADDRESS = 65;
+    private static final int MAX_LENGTH_FROM_NAME = 60;
+    private static final int MAX_LENGTH_EMAIL_BODY = 1000;
+
+    @Basic
+    @ExtendedEmailValidator
+    @Length(max = MAX_LENGTH_EMAIL_ADDRESS)
     private String from;
+
+    @NotEmpty
+    @Length(max = MAX_LENGTH_FROM_NAME)
     private String fromName;
+
+    @NotEmpty
+    @Length(max = MAX_LENGTH_EMAIL_BODY)
+    private String body;
+
     private String to;
     private String cc;
     private String bcc;
     private String subject;
-    private String body;
     private String templateName;
 
     public static enum Type {

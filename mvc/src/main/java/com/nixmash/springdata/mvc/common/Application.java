@@ -1,4 +1,4 @@
-package com.nixmash.springdata.mvc.config;
+package com.nixmash.springdata.mvc.common;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
