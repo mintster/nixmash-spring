@@ -13,9 +13,15 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
+import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.apache.velocity.app.VelocityEngine;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.StringWriter;
 import java.text.MessageFormat;
+import java.util.Hashtable;
+import java.util.Map;
 
 @Service("mailService")
 public class MailServiceImpl implements MailService{
@@ -25,6 +31,7 @@ public class MailServiceImpl implements MailService{
 
     final private MailSender mailSender;
     final private MailSettings mailSettings;
+    final private VelocityEngine velocityEngine;
 
     @Autowired
     Environment environment;
@@ -34,9 +41,10 @@ public class MailServiceImpl implements MailService{
 
 
     @Autowired
-    public MailServiceImpl(MailSender mailSender, MailSettings mailSettings) {
+    public MailServiceImpl(MailSender mailSender, MailSettings mailSettings, VelocityEngine velocityEngine) {
         this.mailSender = mailSender;
         this.mailSettings = mailSettings;
+        this.velocityEngine = velocityEngine;
     }
 
     @Override
@@ -59,7 +67,19 @@ public class MailServiceImpl implements MailService{
                     String body = mailDTO.getBody();
                     switch (mailType) {
                         case HTML:
-                            message.setText(body, true);
+                            StringWriter w = new StringWriter();
+                            Map<String,Object> model = new Hashtable<String,Object>();
+                            model.put("message", mailDTO);
+                            try
+                            {
+                                VelocityEngineUtils.mergeTemplate(velocityEngine, "contact.vm", "UTF-8", model, w );
+                                message.setText(w.toString(), true);
+                            }
+                            catch (Exception e )
+                            {
+                                System.out.println("Problem merging template : " + e );
+                            }
+
                             break;
                         default:
                             message.setText(body);

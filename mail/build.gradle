@@ -24,7 +24,8 @@ springBoot {
 
 dependencies {
 	compile project(':jpa')
-	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile 'org.springframework.boot:spring-boot-starter-mail'
+	compile 'org.apache.velocity:velocity:1.7'
 }
 
 

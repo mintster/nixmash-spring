@@ -1,0 +1,14 @@
+<html>
+<body>
+<h3>Hi Dave, you have a new comment!</h3>
+<p>
+    From ${message.fromName}
+</p>
+<h3>
+    Comment
+</h3>
+<p>
+    ${message.body}
+</p>
+</body>
+</html>

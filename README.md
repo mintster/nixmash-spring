@@ -46,11 +46,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services (In Progress)##
 
 - Email Services with Contact Form page
+- Mail Spring Boot Module
 - Profile Image Uploading
 - Gentelella Bootstrap 3 Admin Template [Github](https://github.com/puikinsh/gentelella)
 - User Administration and Role Creation, Role Assignment, Role Deletion and removal from User Assignments
 - Locked Authentication property to prevent removal and update of essential roles like ADMIN and USER
 - Dandelion Datatables in Administration
+- [Post: A Spring MVC Contact Form](http://nixmash.com/java/a-spring-mvc-contact-form/)
 - [Post: Getting Started with Spring Email Services](http://nixmash.com/java/getting-started-with-spring-email-services/)
 - [Post: Exim4 Configuration Notes for Developers](http://nixmash.com/linux/exim4-configuration-notes-for-developers/)
 - [Post: Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/)
