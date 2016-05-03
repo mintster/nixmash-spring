@@ -54,6 +54,9 @@ public class MailServiceImpl implements MailService{
             mailSender.send(new MimeMessagePreparator() {
                 public void prepare(MimeMessage mimeMessage)
                         throws MessagingException {
+
+                    // region build mimeMessage
+
                     MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
                     message.setFrom(mailDTO.getFrom());
                     message.addTo(mailSettings.getContactTo());
@@ -69,6 +72,8 @@ public class MailServiceImpl implements MailService{
                     String greeting = environment.getProperty(CONTACT_EMAIL_GREETING);
                     String applicationPropertyUrl = environment.getProperty("spring.social.application.url");
                     String siteName = environment.getProperty("mail.contact.site.name");
+
+                    // endregion
 
                     switch (mailType) {
                         case HTML:
