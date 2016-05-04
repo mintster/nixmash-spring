@@ -22,8 +22,8 @@ public class MailController {
 
     private static final Logger logger = LoggerFactory.getLogger(MailController.class);
 
-    private static final String MAIL_CONTACT_VIEW = "users/contact";
-    private static final String EMAIL_SENT_MESSAGE_KEY = "mail.contact.sent";
+    public static final String MAIL_CONTACT_VIEW = "users/contact";
+    public static final String EMAIL_SENT_MESSAGE_KEY = "mail.contact.sent";
 
     private WebUI webUI;
     private MailService mailService;
@@ -47,21 +47,12 @@ public class MailController {
         if (result.hasErrors()) {
             logger.info("Email Errors for email from: {}", mailDTO.getFrom());
             return MAIL_CONTACT_VIEW;
-
         } else {
             logger.info("Sending email from: {}", mailDTO.getFrom());
             mailService.sendContactMail(mailDTO);
             webUI.addFeedbackMessage(attributes, EMAIL_SENT_MESSAGE_KEY);
             return "redirect:/users/contact";
         }
-    }
-
-    private MailDTO createTmpDTO() {
-        MailDTO mailDTO = new MailDTO();
-        mailDTO.setFrom("tmpDude@aol.com");
-        mailDTO.setFromName("Temp Dude");
-        mailDTO.setBody("This is a message from a temporary contact");
-        return  mailDTO;
     }
 
 }

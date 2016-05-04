@@ -37,5 +37,4 @@ public class MailSender extends JavaMailSenderImpl {
         return properties;
         }
 
-
 }

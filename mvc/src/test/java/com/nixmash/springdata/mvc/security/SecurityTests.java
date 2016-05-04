@@ -4,7 +4,6 @@ import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.controller.UserController;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -88,22 +87,9 @@ public class SecurityTests extends AbstractContext {
 
 	// endregion
 
-	// region H2 Console
-
-	@Test
-	@Ignore("ignoring h2 console for the moment")
-	public void userCannotAccessConsole() throws Exception {
-		RequestBuilder request = get("/h2-console").with(user(keith));
-
-		mvc.perform(request).andExpect(status().is5xxServerError());
-	}
-
-	// endregion
-
 	// region User Profiles
 
 	@Test
-	@Ignore("Must figure out the 500 rather than expected 403")
 	public void userCannotAccessAnotherProfile() throws Exception {
 		RequestBuilder request = get("/{username}", "user").with(user(keith)).with(csrf());
 		mvc.perform(request).andExpect(status().isForbidden());
@@ -191,7 +177,6 @@ public class SecurityTests extends AbstractContext {
 
 	private static ResultMatcher invalidRegistration() {
 		return result -> {
-
 			status().isOk().match(result);
 			view().name("register").match(result);
 		};

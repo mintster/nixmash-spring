@@ -90,7 +90,7 @@ public class MailServiceImpl implements MailService{
                             }
                             catch (Exception e )
                             {
-                                System.out.println("Problem merging template : " + e );
+                                logger.error("Problem merging template : " + e );
                             }
 
                             break;
@@ -98,7 +98,9 @@ public class MailServiceImpl implements MailService{
                             message.setText(body);
                             break;
                     }
+                    logger.info(String.format("Email sent successfully from: %s", mailDTO.getFrom()));
                 }
+
             });
         } catch (MailSendException e) {
             logger.error("Contact Email Exception: " + e.getMessage());
