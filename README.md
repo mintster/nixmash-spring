@@ -13,7 +13,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services (In Progress)](#v029----site-administration-start-profile-image-uploads-email-services-in-progress)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella) Bootstrap 3 Template*
+- **[v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services](#v029----site-administration-start-profile-image-uploads-email-services)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella) Bootstrap 3 Template. Velocity Java Template Engine for Email formatting*
 - **[v0.2.8 -- Spring Social ](#v028----spring-social)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
 - **[v0.2.7 -- Solr MVC](#v027----solr-mvc)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
 - **[v0.2.6 -- Solr Query Samplings](#v026----solr-query-samplings)** : *Solr Annotated, Criteria, Method Name Queries, Facet Queries*
@@ -43,7 +43,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services (In Progress)##
+##v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services##
 
 - Email Services with Contact Form page
 - Mail Spring Boot Module
@@ -53,6 +53,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - User Administration and Role Creation, Role Assignment, Role Deletion and removal from User Assignments
 - Locked Authentication property to prevent removal and update of essential roles like ADMIN and USER
 - Dandelion Datatables in Administration
+- [Post: SendMail, Velocity and Spring MVC Contact Form JUnit Highlights](http://nixmash.com/java/sendmail-velocity-and-spring-mvc-contact-form-junit-highlights/)
 - [Post: The Spring Dependency Project’s Application.Properties File](http://nixmash.com/java/the-spring-dependency-projects-application-properties-file/)
 - [Post: Apache Velocity Email Templates with Spring](http://nixmash.com/java/apache-velocity-email-templates-with-spring/)
 - [Post: A Spring MVC Contact Form](http://nixmash.com/java/a-spring-mvc-contact-form/)
@@ -455,11 +456,11 @@ The application supports an H2 Profile (default) and a MySQL Profile. To run JPA
 
 ##Installation - Database Configuration##
 
-To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.` External properties in `/home/daveburke/...external.properties.` Change in JPA `common/ApplicationSettings.` Example of `external.properties` is found in `/install.`
+To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.`
 
 ##Installation - External Property File Settings##
 
-The JPA Project demonstrates using an external Property File. To Configure Location of Properties File, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class`.
+The JPA Project demonstrates using an external Property File. To Configure Location of Properties File, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class`. An example of `external.properties` is found in the `/install/samples` folder.
 
 ```java
 @Component
@@ -467,12 +468,23 @@ The JPA Project demonstrates using an external Property File. To Configure Locat
 @ConfigurationProperties(prefix="external")
 public class ApplicationSettings {
 ```
+##Installation - Email Services##
+
+The `Mail` Module contains the mail functionality. Like the JPA project above, an External `mail.properties` file defines SMTP HostName and other mail server properties. That file pathname is defined in the `Mail` Module `MailSettings.java` Class. An example of `mail.properties` is found in the `/install/samples` folder.
+
+```java
+@Component
+@PropertySource("file:/home/daveburke/web/nixmashspring/mail.properties")
+@ConfigurationProperties(prefix = "mail")
+public class MailSettings {
+```
+
 
 ##Installation - Solr##
 
 Configure Solr as normally on your development machine. Documents are included in `/dev/solr/docs` and scripts to populate the Solr Url and Embedded Servers located in `/dev/solr`. Script name: `refreshSolr.sh`. It contains additional installation instructions.
 
-The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in an external `solr.properties` file. Same configuration as **external.properties** file just discussed. Set `solr.properties` file location in **Solr** project `common/SolrSettings.java` `@PropertySource` value. 
+The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in an external `solr.properties` file. Same configuration as **external.properties** and **mail.properties** files discussed above. Set `solr.properties` file location in **Solr** project `common/SolrSettings.java` `@PropertySource` value.
 
 ##References##
 
@@ -493,3 +505,5 @@ Petri Kainulainen also served as a great reference on Solr in **Version 0.2.3.**
 Spring Framework contributor Christoph Strobl's Spring Data Solr Showcase(https://github.com/christophstrobl/spring-data-solr-showcase) served as the basis of Solr Autocomplete found in **Version 0.2.7.**
 
 The [Social Showcase for Spring Boot Sample Project](https://github.com/spring-projects/spring-social-samples/tree/master/spring-social-showcase-boot) was helpful in becoming oriented with Spring Social in **Version 0.2.8.** Petri Kainulainen remains my Go-To Spring Guru, here for Spring Social in his [4-Part Tutorial](http://www.petrikainulainen.net/spring-social-tutorial/).
+
+The Administrative Dashboard introduced in **Version 0.2.9** is based on the [Gentelella Bootstrap Dashboard](https://github.com/puikinsh/gentelella) on GitHub.

@@ -30,7 +30,8 @@ public class MailTests extends MailContext {
     @Before
     public void setUp() {
         mockMailSender = mock(MailSender.class);
-        mockMailService = new MailServiceImpl(mockMailSender, mailSettings, velocityEngine);
+        mockMailService =
+                new MailServiceImpl(mockMailSender, mailSettings, velocityEngine);
         mailDTO = MailTestUtils.testMailDTO();
     }
 

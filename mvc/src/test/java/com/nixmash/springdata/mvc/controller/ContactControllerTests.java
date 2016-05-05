@@ -234,6 +234,7 @@ public class ContactControllerTests extends AbstractContext {
         Contact contact = ContactTestUtils.newContact();
         BindingResult result = bindAndValidate(mockRequest, contact);
 
+
         RedirectAttributes attributes = new RedirectAttributesModelMap();
         initMessageSourceForFeedbackMessage(ContactController.FEEDBACK_MESSAGE_KEY_CONTACT_ADDED);
 
