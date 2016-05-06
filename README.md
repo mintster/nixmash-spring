@@ -13,6 +13,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
+- **[v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus](#v030----spring-boot-134-navbar-submenus)** : *"Demos" menu with Spring JPA and Solr Submenus, Spring Boot 1.3.4*
 - **[v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services](#v029----site-administration-start-profile-image-uploads-email-services)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella) Bootstrap 3 Template. Velocity Java Template Engine for Email formatting*
 - **[v0.2.8 -- Spring Social ](#v028----spring-social)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
 - **[v0.2.7 -- Solr MVC](#v027----solr-mvc)** : *Web Solr Search, Autocomplete, Web Solr Facet, Solr Location Searching with Google Maps, Highlighting*
@@ -42,6 +43,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.3 -- DAO Implementation](#v003----dao-implementation)**
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
+
+##v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus##
+
+- Bootstrap3 NavBar Submenus
+- Upgrade to Spring Boot 1.3.4, primarily to re-activate DevTools which had a bug in 1.3.3 stopping MySql services on app shutdown
 
 ##v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services##
 
@@ -479,12 +485,15 @@ The `Mail` Module contains the mail functionality. Like the JPA project above, a
 public class MailSettings {
 ```
 
-
 ##Installation - Solr##
 
 Configure Solr as normally on your development machine. Documents are included in `/dev/solr/docs` and scripts to populate the Solr Url and Embedded Servers located in `/dev/solr`. Script name: `refreshSolr.sh`. It contains additional installation instructions.
 
 The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in an external `solr.properties` file. Same configuration as **external.properties** and **mail.properties** files discussed above. Set `solr.properties` file location in **Solr** project `common/SolrSettings.java` `@PropertySource` value.
+
+##Installation - File Uploads##
+
+You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhosty:9000` you could create a soft-link to the `/files` location. See [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2.
 
 ##References##
 

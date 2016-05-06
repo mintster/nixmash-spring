@@ -49,18 +49,7 @@ dependencies {
 	testCompile project(':mail').sourceSets.test.output
 }
 
-
-task production << {
-	//    bootRun.systemProperty 'spring.profiles.active', 'mysql'
-}
-
-//configurations { springLoaded }
-//dependencies {
-//    springLoaded("org.springframework:springloaded:1.2.4.RELEASE")
-//}
-
 bootRun {
-
 	systemProperty 'server.port', '9000'
 	systemProperty 'spring.profiles.active', 'mysql,dev'
 	args "--appurl=http://localhost:9000"
