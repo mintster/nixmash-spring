@@ -24,6 +24,17 @@ public class ApplicationSettings {
 	private String profileIconPath;
 	private String profileIconUrlRoot;
 
+	private String googleAnalyticsTrackingId;
+	private Boolean addGoogleAnalytics;
+
+	public Boolean getAddGoogleAnalytics() {
+		return addGoogleAnalytics;
+	}
+
+	public void setAddGoogleAnalytics(Boolean addGoogleAnalytics) {
+		this.addGoogleAnalytics = addGoogleAnalytics;
+	}
+
 	public String getGoogleAppId() {
 		return googleAppId;
 	}
@@ -120,6 +131,14 @@ public class ApplicationSettings {
 
 	public void setProfileIconPath(String profileIconPath) {
 		this.profileIconPath = profileIconPath;
+	}
+
+	public String getGoogleAnalyticsTrackingId() {
+		return googleAnalyticsTrackingId;
+	}
+
+	public void setGoogleAnalyticsTrackingId(String googleAnalyticsTrackingId) {
+		this.googleAnalyticsTrackingId = googleAnalyticsTrackingId;
 	}
 
 }

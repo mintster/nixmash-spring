@@ -24,7 +24,6 @@ public interface UserConnectionRepository extends Repository<UserConnection, Str
 
     UserConnection findByUserId(String userId) throws DataAccessException;
 
-
 }
 
 

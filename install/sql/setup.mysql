@@ -183,7 +183,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `version` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of users
@@ -269,3 +269,24 @@ CREATE TABLE `userconnection` (
 
 CREATE UNIQUE INDEX UserConnectionProviderUser ON UserConnection(providerId, providerUserId);
  
+-- ----------------------------
+-- Table structure for site_options
+-- ----------------------------
+DROP TABLE IF EXISTS `site_options`;
+CREATE TABLE `site_options`
+(
+  `option_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `option_name` VARCHAR(50) NOT NULL,
+  `option_value` TEXT,
+  PRIMARY KEY (`option_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+CREATE UNIQUE INDEX SiteOptionsOptionId ON site_options (option_id);
+
+INSERT INTO `site_options` VALUES ('1', 'siteName', 'My Site');
+INSERT INTO `site_options` VALUES ('2', 'siteDescription', 'My Site Description');
+INSERT INTO `site_options` VALUES ('3', 'addGoogleAnalytics', 'false');
+INSERT INTO `site_options` VALUES ('4', 'googleAnalyticsTrackingId', 'UA-XXXXXX-7');
+
+
+

@@ -28,6 +28,21 @@
         }
 
     </script>
+
+    <div th:if="${appSettings.getAddGoogleAnalytics()}" th:remove="tag">
+        <!-- Google Analytics -->
+        <script th:inline="javascript">
+            window.ga = window.ga || function () {
+                        (ga.q = ga.q || []).push(arguments)
+                    };
+            ga.l = +new Date;
+            ga('create', [[${appSettings.getGoogleAnalyticsTrackingId()}]], 'auto');
+            ga('send', 'pageview');
+        </script>
+        <!--<script async src='https://www.google-analytics.com/analytics.js'></script>-->
+        <!-- End Google Analytics -->
+    </div>
+
 </div>
 </html>
 
