@@ -15,7 +15,7 @@ public interface SiteOptionRepository extends Repository<SiteOption, Long> {
 
     Collection<SiteOption> findAll() throws DataAccessException;
 
-    SiteOption findById(Long id) throws DataAccessException;
+    SiteOption findByOptionId(Long id) throws DataAccessException;
 
     SiteOption save(SiteOption siteOption) throws DataAccessException;
 

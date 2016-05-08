@@ -44,6 +44,7 @@ allprojects {
 		compile 'org.apache.tomcat:tomcat-dbcp:8.0.8'
 		compile 'com.google.guava:guava-gwt:18.0'
 		compile 'org.apache.commons:commons-lang3:3.4'
+		compile 'commons-beanutils:commons-beanutils:1.9.2'
 		compile 'org.hibernate:hibernate-validator'
 		compile 'javax.el:javax.el-api:3.0.1-b04'
 		compile 'org.jadira.usertype:usertype.extended:3.2.0.GA'
