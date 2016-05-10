@@ -1,6 +1,5 @@
 package com.nixmash.springdata.jpa.model;
 
-import com.nixmash.springdata.jpa.Launcher;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
@@ -29,7 +28,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApplicationConfig.class, Launcher.class })
+@ContextConfiguration(classes = ApplicationConfig.class )
 @ActiveProfiles(DataConfigProfile.H2)
 public class SiteOptionTests {
 
@@ -57,7 +56,7 @@ public class SiteOptionTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Retained as reference for logic used to populate SiteOption Class Properties")
     public void canPopulateSiteOptionsFromKeyValueData() throws
             IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 

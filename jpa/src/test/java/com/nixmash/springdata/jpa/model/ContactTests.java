@@ -20,7 +20,7 @@ import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 @ContextConfiguration(classes = ApplicationConfig.class)
 @Transactional
 @ActiveProfiles(DataConfigProfile.H2)
-public class ContactTest {
+public class ContactTests {
 
 	private static final String EMAIL = "foo.bar@bar.com";
 	private static final String FIRST_NAME = "Foo";

@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class SiteOption implements Serializable {
 
     private static final long serialVersionUID = 6690621866489266673L;
+    public static final int MAX_LENGTH_PROPERTYNAME = 50;
 
     @Id
     @Column(name = "option_id", unique = true, nullable = false)
@@ -45,5 +46,10 @@ public class SiteOption implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public void update(final String optionName, final String optionValue) {
+        this.name = optionName;
+        this.value= optionValue;
     }
 }

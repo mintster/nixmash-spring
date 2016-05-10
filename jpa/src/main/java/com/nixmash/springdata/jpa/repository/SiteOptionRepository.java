@@ -11,11 +11,9 @@ import java.util.Collection;
  */
 public interface SiteOptionRepository extends Repository<SiteOption, Long> {
 
-    SiteOption findByName(String optionName) throws DataAccessException;
+    SiteOption findByNameIgnoreCase(String optionName) throws DataAccessException;
 
     Collection<SiteOption> findAll() throws DataAccessException;
-
-    SiteOption findByOptionId(Long id) throws DataAccessException;
 
     SiteOption save(SiteOption siteOption) throws DataAccessException;
 
