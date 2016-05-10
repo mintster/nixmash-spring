@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.config.db;
 import com.nixmash.springdata.jpa.model.auditors.AuditingDateTimeProvider;
 import com.nixmash.springdata.jpa.model.auditors.DateTimeService;
 import com.nixmash.springdata.jpa.model.auditors.UsernameAuditorAware;
+import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Dialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,11 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
+
+import static java.lang.Boolean.TRUE;
+import static org.hibernate.cfg.AvailableSettings.*;
+import static org.hibernate.cfg.AvailableSettings.USE_SQL_COMMENTS;
+import static org.hibernate.jpa.AvailableSettings.NAMING_STRATEGY;
 
 @Configuration
 @EnableJpaAuditing(dateTimeProviderRef = "dateTimeProvider")
@@ -70,7 +76,7 @@ public abstract class JpaCommonConfig {
         logger.debug("\n\n************ {} ************\n\n",
                 getDatabaseDialect().getCanonicalName());
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setDatabasePlatform(getDatabaseDialect().getName());
         vendorAdapter.setShowSql(true);
 
@@ -89,7 +95,15 @@ public abstract class JpaCommonConfig {
     protected abstract Class<? extends Dialect> getDatabaseDialect();
 
     protected Properties getJpaProperties() {
-        return null;
+        Properties properties = new Properties();
+        properties.setProperty(HBM2DDL_AUTO, getHbm2ddl());
+        properties.setProperty(GENERATE_STATISTICS, TRUE.toString());
+        properties.setProperty(SHOW_SQL, getShowSql());
+        properties.setProperty(FORMAT_SQL, TRUE.toString());
+        properties.setProperty(USE_SQL_COMMENTS, TRUE.toString());
+        properties.setProperty(CONNECTION_CHAR_SET, getHibernateCharSet());
+        properties.setProperty(NAMING_STRATEGY, ImprovedNamingStrategy.class.getName());
+        return properties;
     }
 
     // region Get Properties from datasource .properties file

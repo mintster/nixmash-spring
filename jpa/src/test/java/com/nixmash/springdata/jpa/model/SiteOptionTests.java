@@ -1,10 +1,13 @@
 package com.nixmash.springdata.jpa.model;
 
+import com.nixmash.springdata.jpa.Launcher;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.repository.SiteOptionRepository;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ApplicationConfig.class)
+@ContextConfiguration(classes = {ApplicationConfig.class, Launcher.class })
 @ActiveProfiles(DataConfigProfile.H2)
 public class SiteOptionTests {
 
@@ -39,21 +42,22 @@ public class SiteOptionTests {
     @Autowired
     SiteOptions siteOptions;
 
-//    @Before
-//    public void setup() {
-//        contextLoads();
-//    }
-//
-//    @Test
-//    public void contextLoads() {
-//    }
-
-//    @Test
-//    public void siteOptionsIsPopulatedFromContext() {
-//        assertNotNull(siteOptions.getGoogleAnalyticsTrackingId());
-//    }
+    @Before
+    public void setup() {
+        contextLoads();
+    }
 
     @Test
+    public void contextLoads() {
+    }
+
+    @Test
+    public void siteOptionsIsPopulatedFromContext() {
+        assertNotNull(siteOptions.getGoogleAnalyticsTrackingId());
+    }
+
+    @Test
+    @Ignore
     public void canPopulateSiteOptionsFromKeyValueData() throws
             IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 

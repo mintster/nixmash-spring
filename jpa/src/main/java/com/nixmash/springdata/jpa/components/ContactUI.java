@@ -32,7 +32,8 @@ public class ContactUI {
     }
 
     private void beanScopeDemo() {
-        System.out.println("Initialized SiteOptions Bean Property: " + siteOptions.getGoogleAnalyticsTrackingId());
+        System.out.println("Initialized SiteOptions Bean Property: " +
+                siteOptions.getGoogleAnalyticsTrackingId());
     }
 
     public void randomDemo() {

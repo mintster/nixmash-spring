@@ -1,20 +1,7 @@
 package com.nixmash.springdata.jpa.config.db;
 
-import static java.lang.Boolean.TRUE;
-import static org.hibernate.cfg.AvailableSettings.FORMAT_SQL;
-import static org.hibernate.cfg.AvailableSettings.GENERATE_STATISTICS;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_AUTO;
-import static org.hibernate.cfg.AvailableSettings.SHOW_SQL;
-import static org.hibernate.cfg.AvailableSettings.USE_SQL_COMMENTS;
-import static org.hibernate.jpa.AvailableSettings.NAMING_STRATEGY;
-
-import java.sql.SQLException;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
+import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.HSQLDialect;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +12,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import com.nixmash.springdata.jpa.enums.DataConfigProfile;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @Configuration
 @PropertySource("classpath:/META-INF/spring/h2database.properties")
@@ -51,20 +39,6 @@ public class H2Config extends JpaCommonConfig {
         dataSource.setMaxTotal(-1);
         return dataSource;
     }
-
-    @Override
-    protected Properties getJpaProperties() {
-        Properties properties = new Properties();
-        properties.setProperty(HBM2DDL_AUTO, getHbm2ddl());
-        properties.setProperty(GENERATE_STATISTICS, TRUE.toString());
-        properties.setProperty(SHOW_SQL, getShowSql());
-        properties.setProperty(FORMAT_SQL, TRUE.toString());
-        properties.setProperty(USE_SQL_COMMENTS, TRUE.toString());
-        properties.setProperty(CONNECTION_CHAR_SET, getHibernateCharSet());
-        properties.setProperty(NAMING_STRATEGY, ImprovedNamingStrategy.class.getName());
-        return properties;
-    }
-
 
     @Override
     protected Class<? extends Dialect> getDatabaseDialect() {

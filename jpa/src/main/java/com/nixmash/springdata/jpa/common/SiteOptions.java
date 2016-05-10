@@ -3,8 +3,6 @@ package com.nixmash.springdata.jpa.common;
 import com.nixmash.springdata.jpa.model.SiteOption;
 import com.nixmash.springdata.jpa.repository.SiteOptionRepository;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -17,11 +15,36 @@ import java.util.Hashtable;
 import java.util.Map;
 
 @Component
-@DependsOn("siteOptionRepository")
+@DependsOn("databasePopulator")
 public class SiteOptions {
 
-    private static final Logger logger = LoggerFactory.getLogger(SiteOptions.class);
+    private SiteOptionRepository siteOptionRepository;
 
+    @Autowired
+    public SiteOptions(SiteOptionRepository siteOptionRepository) {
+        this.siteOptionRepository = siteOptionRepository;
+    }
+
+    @PostConstruct
+    public void init() throws
+            IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+
+        Collection<SiteOption> siteOptionKeyValues = siteOptionRepository.findAll();
+
+        Map<String, Object> options = new Hashtable<>();
+        for (SiteOption siteOption : siteOptionKeyValues) {
+            options.put(siteOption.getName(), siteOption.getValue());
+        }
+        for (String key : options.keySet()) {
+            for (Field f : this.getClass().getDeclaredFields()) {
+                if (f.getName().toUpperCase().equals(key.toUpperCase())) {
+                    setSiteOptionProperty(key, options.get(key));
+                }
+            }
+        }
+    }
+
+    // region Properties
 
     private String siteName;
     private String siteDescription;
@@ -31,18 +54,19 @@ public class SiteOptions {
 
     private Integer integerProperty;
 
-    SiteOptionRepository siteOptionRepository;
+    // endregion
 
-    @Autowired
-    public SiteOptions(SiteOptionRepository siteOptionRepository) {
-        this.siteOptionRepository = siteOptionRepository;
-    }
+    // region Constructor and Beans
+
+
+    // endregion
 
     // region Getter Setters
 
     public Integer getIntegerProperty() {
         return integerProperty;
     }
+
     public void setIntegerProperty(Integer integerProperty) {
         this.integerProperty = integerProperty;
     }
@@ -50,6 +74,7 @@ public class SiteOptions {
     public String getSiteName() {
         return siteName;
     }
+
     public void setSiteName(String siteName) {
         this.siteName = siteName;
     }
@@ -57,6 +82,7 @@ public class SiteOptions {
     public String getSiteDescription() {
         return siteDescription;
     }
+
     public void setSiteDescription(String siteDescription) {
         this.siteDescription = siteDescription;
     }
@@ -64,6 +90,7 @@ public class SiteOptions {
     public Boolean getAddGoogleAnalytics() {
         return addGoogleAnalytics;
     }
+
     public void setAddGoogleAnalytics(Boolean addGoogleAnalytics) {
         this.addGoogleAnalytics = addGoogleAnalytics;
     }
@@ -71,6 +98,7 @@ public class SiteOptions {
     public String getGoogleAnalyticsTrackingId() {
         return googleAnalyticsTrackingId;
     }
+
     public void setGoogleAnalyticsTrackingId(String googleAnalyticsTrackingId) {
         this.googleAnalyticsTrackingId = googleAnalyticsTrackingId;
     }
@@ -79,8 +107,8 @@ public class SiteOptions {
 
     // region Constants
 
-    public static final String OPTION_VALUE_TYPE_BOOLEAN= "Boolean";
-    public static final String OPTION_VALUE_TYPE_INTEGER= "Integer";
+    public static final String OPTION_VALUE_TYPE_BOOLEAN = "Boolean";
+    public static final String OPTION_VALUE_TYPE_INTEGER = "Integer";
 
     // endregion
 
@@ -99,6 +127,8 @@ public class SiteOptions {
 
 
     // endregion
+
+    // region Utils
 
     public void setSiteOptionProperty(String property, Object value)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
@@ -119,20 +149,6 @@ public class SiteOptions {
         }
     }
 
-    @PostConstruct
-    public void init() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Collection<SiteOption> siteOptionKeyValues = siteOptionRepository.findAll();
-        Map<String, Object> options = new Hashtable<>();
-        for (SiteOption siteOption : siteOptionKeyValues) {
-            options.put(siteOption.getName(), siteOption.getValue());
-        }
+    // endregion
 
-        for (String key : options.keySet()) {
-            for (Field f : this.getClass().getDeclaredFields()) {
-                if (f.getName().toUpperCase().equals(key.toUpperCase())) {
-                    setSiteOptionProperty(key, options.get(key));
-                }
-            }
-        }
-    }
 }

@@ -13,7 +13,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.3.1 -- SiteOptions Properties, Spring Cache, Google Analytics HTML](#v031----siteoptions-properties-spring-cache-google-analytics-html)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
+- **[v0.3.1 -- SiteOptions Properties, Spring Cache, Google Analytics HTML (In Progress)](#v031----siteoptions-properties-spring-cache-google-analytics-html-in-progress)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
 - **[v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus](#v030----spring-boot-134-navbar-submenus)** : *"Demos" menu with Spring JPA and Solr Submenus, Spring Boot 1.3.4*
 - **[v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services](#v029----site-administration-start-profile-image-uploads-email-services)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella) Bootstrap 3 Template. Velocity Java Template Engine for Email formatting*
 - **[v0.2.8 -- Spring Social ](#v028----spring-social)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
@@ -45,9 +45,12 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.3.1 -- SiteOptions Properties, Spring Cache, Google Analytics HTML##
+##v0.3.1 -- SiteOptions Properties, Spring Cache, Google Analytics HTML (In Progress)##
 
 - "SiteOptions" Class Bean with properties generated from Apache Commons BeanUtils reflection
+- Demonstrating @PostConstruct and @DependsOn in SiteOptions Bean
+- Upgrade to Spring Boot 1.3.5
+- [Post: Using @PostConstruct and @DependsOn in Spring](http://nixmash.com/java/using-postconstruct-and-dependson-in-spring/)
 - [Post: Working With a Key-Value DataSource in Spring](http://nixmash.com/java/working-with-a-key-value-datasource-in-spring/)
 
 [[back to top](#nixmash-spring)]
