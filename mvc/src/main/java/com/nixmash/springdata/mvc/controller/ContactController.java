@@ -45,9 +45,6 @@ public class ContactController {
 
 	protected static final String FEEDBACK_MESSAGE_KEY_CONTACT_ADDED = "feedback.message.contact.added";
 	protected static final String FEEDBACK_MESSAGE_KEY_CONTACT_UPDATED = "feedback.message.contact.updated";
-	protected static final String FEEDBACK_MESSAGE_KEY_CONTACT_DELETED = "feedback.message.contact.deleted";
-
-	public static final String FLASH_MESSAGE_KEY_ERROR = "errorMessage";
 
 	protected static final String CONTACT_VIEW = "contacts/view";
 	protected static final String CONTACT_LIST_VIEW = "contacts/list";

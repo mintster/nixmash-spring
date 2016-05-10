@@ -11,6 +11,15 @@ public class SiteServiceImpl implements SiteService{
 
     private static final Logger logger = LoggerFactory.getLogger(SiteServiceImpl.class);
 
+//    SiteOptions siteOptions;
+//    SiteOptionRepository siteOptionRepository;
+//
+//    @Autowired
+//    public SiteServiceImpl(SiteOptions siteOptions, SiteOptionRepository siteOptionRepository) {
+//        this.siteOptions = siteOptions;
+//        this.siteOptionRepository = siteOptionRepository;
+//    }
+
 
 }
 

@@ -30,4 +30,28 @@ public class ApplicationConfig {
         return new CurrentTimeDateTimeService();
     }
 
+//    @Autowired
+//    SiteOptionRepository siteOptionRepository;
+//
+//    @Bean(name="siteOptionsBean")
+//    @DependsOn("siteOptionRepository")
+//    public SiteOptions siteOptions() throws
+//            IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+//        SiteOptions bean = new SiteOptions();
+//        Collection<SiteOption> siteOptionKeyValues = siteOptionRepository.findAll();
+//        Map<String,Object> options = new Hashtable<>();
+//        for (SiteOption siteOption : siteOptionKeyValues) {
+//            options.put(siteOption.getName(), siteOption.getValue());
+//        }
+//
+//        for (String key : options.keySet()) {
+//            for (Field f : bean.getClass().getDeclaredFields()) {
+//                if (f.getName().toUpperCase().equals(key.toUpperCase())) {
+//                    bean.setSiteOptionProperty(key, options.get(key));
+//                }
+//            }
+//        }
+//        return bean;
+//
+//    }
 }
