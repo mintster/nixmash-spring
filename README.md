@@ -5,7 +5,7 @@ This project demonstrates Spring Data JPA, Spring Data Solr, Spring Web MVC, Spr
 
 A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 
-![Home Page in v0.3.1](http://nixmash.com/x/pics/github/spring-home-0.3.1.png)
+![Home Page in  Release 0.3.1](http://nixmash.com/x/pics/github/spring-home-0.3.1.png)
 
 ##Implemented##
 
