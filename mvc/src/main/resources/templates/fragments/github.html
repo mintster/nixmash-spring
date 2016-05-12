@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="github">
+    <!--/*@thymesVar id="gitHubStats" type="com.nixmash.springdata.jpa.dto.GitHubDTO"*/-->
+
+        <span class="github-btn github-watchers github-btn-large" id="github-btn"><a class="gh-btn" id="gh-btn"
+                                                                                  th:href="|#{github.buttons.project.url}/subscription|"
+                                                                                  target="_blank"
+                                                                                  aria-label="Subscribe on GitHub"><span
+                class="gh-ico"></span> <span class="gh-text" id="gh-text">Watchers</span></a> <a class="gh-count"
+                                                                                             id="gh-count"
+                                                                                             th:href="|#{github.buttons.project.url}/network|"
+                                                                                             target="_blank"
+                                                                                             aria-label="Watchers on GitHub"
+                                                                                             style="display: block;"
+                                                                                             th:text="${gitHubStats.getSubscribers()}">[0]</a></span>
+
+
+        <span class="github-btn github-stargazers github-btn-large" id="github-btn"><a class="gh-btn" id="gh-btn"
+                                                                                       th:href="#{github.buttons.project.url}"
+                                                                                       target="_blank"
+                                                                                       aria-label="GitHub Stars"><span
+                class="gh-ico"></span> <span class="gh-text" id="gh-text">Stars</span></a> <a class="gh-count"
+                                                                                              id="gh-count"
+                                                                                              th:href="|#{github.buttons.project.url}/stargazers|"
+                                                                                              target="_blank"
+                                                                                              aria-label="GitHub Stargazers"
+                                                                                              style="display: block;"
+                                                                                              th:text="${gitHubStats.getStars()}">[0]</a></span>
+
+    <span class="github-btn github-forks github-btn-large" id="github-btn"><a class="gh-btn" id="gh-btn"
+                                                                              th:href="|#{github.buttons.project.url}/fork|"
+                                                                              target="_blank"
+                                                                              aria-label="Fork on GitHub"><span
+            class="gh-ico"></span> <span class="gh-text" id="gh-text">Forks</span></a> <a class="gh-count"
+                                                                                         id="gh-count"
+                                                                                         th:href="|#{github.buttons.project.url}/network|"
+                                                                                         target="_blank"
+                                                                                         aria-label="Forks on GitHub"
+                                                                                         style="display: block;"
+                                                                                         th:text="${gitHubStats.getForks()}">[0]</a></span>
+
+    <span class="github-btn github-me github-btn-large" id="github-btn"><a class="gh-btn" id="gh-btn"
+                                                                           th:href="#{github.buttons.user.url}"
+                                                                           target="_blank"
+                                                                           aria-label="Follow me on GitHub"><span
+            class="gh-ico"></span> <span class="gh-text" id="gh-text" th:text="#{github.buttons.follow}">[Follow me on GitHub]</span></a> <a
+            class="gh-count" id="gh-count" th:href="|#{github.buttons.user.url}/followers|"
+            target="_blank"
+            aria-label="Followers on GitHub" style="display: block;"
+            th:text="${gitHubStats.getFollowers()}">[0]</a></span>
+</div>
+</body>
+</html>

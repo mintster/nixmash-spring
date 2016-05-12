@@ -4,10 +4,12 @@
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
     <title>NixMash Spring Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/github.css}"/>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('home')">Navbar</nav>
 <div th:replace="fragments/jumbotron :: .jumbotron">Home Page Jumbotron</div>
+
 <div th:if="${currentUser == null}" class="container">
     <div class="row social-button-row">
         <div class="col-lg-7">
@@ -60,19 +62,18 @@
                 As its name implies, this site demonstrates Spring in action with accompanying posts at <a
                     href="http://nixmash.com">NixMash.com.</a> Examples include:
             </p>
+            <small>JSON Data Retrieval with Spring RestTemplates, MVC and Thymeleaf -- <em>Home Page GitHub Buttons</em></small>
             <small>Email Services -- <em>Contact Form</em></small>
             <small>File Upload -- <em>User Profile Image Uploading</em></small>
             <small>Site Administration Module -- <em>Based on <a href="https://github.com/puikinsh/gentelella">Gentelella</a>
                 Bootstrap 3 Admin Template</em></small>
             <small>Spring Social -- <em>Twitter, Facebook and Google OAuth Login</em></small>
             <small>Hibernate and Spring JPA -- <em>Contacts</em></small>
-            <small>Spring Security -- <em>Contact
-                View restricted to Logged-in Users</em></small>
-            <small>Spring Solr -- <em>Products</em>
-            </small>
+            <small>Spring Security -- <em>Contact View restricted to Logged-in Users</em></small>
+            <small>Spring Solr -- <em>Products</em></small>
             <small>Javascript with Spring MVC -- <em>Buttons below, Solr Search Autocomplete and elsewhere</em>
             </small>
-            <small>Thymeleaf with Spring</small>
+            <small>Thymeleaf and Bootstrap 3 with Spring</small>
         </blockquote>
     </div>
 

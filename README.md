@@ -5,7 +5,7 @@ This project demonstrates Spring Data JPA, Spring Data Solr, Spring Web MVC, Spr
 
 A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 
-![Home Page in v0.2.9](http://nixmash.com/x/pics/github/spring-home-0.2.9.png)
+![Home Page in v0.3.1](http://nixmash.com/x/pics/github/spring-home-0.3.1.png)
 
 ##Implemented##
 
@@ -47,9 +47,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.3.1 -- SiteOptions Properties, Spring Cache, Google Analytics HTML (In Progress)##
 
+- GitHub Repository Statistics with Spring RestTemplate, MVC and Thymeleaf
 - "SiteOptions" Class Bean with properties generated from Apache Commons BeanUtils reflection
 - Demonstrating @PostConstruct and @DependsOn in SiteOptions Bean
 - Upgrade to Spring Boot 1.3.5
+- *DATA SCHEMA UPDATE!* Added Site_Options table. See /install/mysql.setup for update scripts
 - [Post: Using @PostConstruct and @DependsOn in Spring](http://nixmash.com/java/using-postconstruct-and-dependson-in-spring/)
 - [Post: Working With a Key-Value DataSource in Spring](http://nixmash.com/java/working-with-a-key-value-datasource-in-spring/)
 

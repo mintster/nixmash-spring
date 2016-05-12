@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div class="jumbotron">
     <div class="container">
@@ -7,8 +7,19 @@
         <p th:utext="#{home.subtitle}">[Jumbotron Subtitle]</p>
 
         <p>
-            <a class="btn btn-primary btn-lg" href="https://github.com/mintster/spring-data" role="button" th:text="#{home.button.github}">[View on GitHub]</a>
+            <a class="btn btn-primary btn-lg" href="https://github.com/mintster/spring-data" role="button"
+               th:text="#{home.button.github}">[View on GitHub]</a>
         </p>
+
+        <div class="row">
+            <div class="col-lg-12"><br/><br/></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div th:replace="fragments/github :: github">[GitHub Buttons]</div>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>
