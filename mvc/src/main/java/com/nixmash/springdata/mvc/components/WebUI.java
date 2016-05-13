@@ -142,8 +142,12 @@ public class WebUI {
         String gitHubRepoUrl = environment.getProperty("github.repo.url");
         String gitHubUserUrl = environment.getProperty("github.user.url");
 
+        // Load Repository JSON elements into GitHubDTO Object
+
         RestTemplate restTemplate = new RestTemplate();
         GitHubDTO gitHubDTO = restTemplate.getForObject(gitHubRepoUrl, GitHubDTO.class);
+
+        // Load User Followers count from GitHub User JSON Endpoint and add to GitHubDTO
 
         HttpEntity<String> stringUserEntity = restTemplate.getForEntity(gitHubUserUrl, String.class);
         ObjectMapper mapper = new ObjectMapper();
@@ -151,7 +155,7 @@ public class WebUI {
             ObjectNode node = mapper.readValue(stringUserEntity.getBody(), ObjectNode.class);
             gitHubDTO.setFollowers(node.get("followers").intValue());
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.error("Error adding follower count from GitHub API to GitHubDTO object");
         }
         return gitHubDTO;
     }
