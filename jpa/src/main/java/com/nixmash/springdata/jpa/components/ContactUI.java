@@ -3,10 +3,14 @@ package com.nixmash.springdata.jpa.components;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.common.ContactUtils;
 import com.nixmash.springdata.jpa.common.SiteOptions;
+import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
+import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.service.ContactService;
+import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +23,13 @@ public class ContactUI {
     private UserService userService;
 
     @Autowired
+    private SiteService siteService;
+
+    @Autowired
     private ApplicationSettings applicationSettings;
+
+    @Autowired
+    DefaultListableBeanFactory beanFactory;
 
     @Autowired
     private SiteOptions siteOptions;
@@ -34,6 +44,15 @@ public class ContactUI {
     private void beanScopeDemo() {
         System.out.println("Initialized SiteOptions Bean Property: " +
                 siteOptions.getGoogleAnalyticsTrackingId());
+
+        SiteOptionDTO siteOptionDTO = new SiteOptionDTO("siteName", "Updated Site Name");
+        try {
+            siteService.update(siteOptionDTO);
+            siteService.update(new SiteOptionDTO("integerProperty", "8"));
+        } catch (SiteOptionNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("New SiteOptions values: " + siteOptions.getSiteName() + " -- " + siteOptions.getIntegerProperty());
     }
 
     public void randomDemo() {

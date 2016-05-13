@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.common.SiteOptions;
+import com.nixmash.springdata.jpa.components.ApplicationContextUI;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
@@ -10,6 +11,8 @@ import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,6 +34,9 @@ public class SiteServiceTests {
 
     @Autowired
     SiteOptions siteOptions;
+
+    @Autowired
+    DefaultListableBeanFactory beanFactory;
 
     @Test
     public void findSiteOptionByCaseInsensitivePropertyName() throws NotFoundException, SiteOptionNotFoundException {
@@ -55,7 +61,18 @@ public class SiteServiceTests {
         SiteOption found = siteService.findOptionByName(VALID_PROPERTY_NAME);
         assertEquals(found.getValue(), "Updated Site Name");
 
-        System.out.println(siteOptions.getSiteName());
+        System.out.println("SiteOptions.getSiteName: " + siteOptions.getSiteName());
+
+        ApplicationContext context = ApplicationContextUI.getApplicationContext();
+        beanFactory.destroySingleton("siteOptions");
+
+        SiteOptions contextSiteOptions = context.getBean(SiteOptions.class);
+        System.out.println("ContextSiteOptions.getSiteName: " + contextSiteOptions.getSiteName());
+
+        SiteOptions contextBean = (SiteOptions) context.getBean("siteOptions");
+        beanFactory.destroySingleton("siteOptions");
+        System.out.println("Compare beans    " + siteOptions + "=="   + contextBean);
+
     }
 
     @Test
