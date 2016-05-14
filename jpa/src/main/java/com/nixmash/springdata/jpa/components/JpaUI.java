@@ -14,7 +14,9 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ContactUI {
+public class JpaUI {
+
+    // region  Beans
 
     @Autowired
     private ContactService contactService;
@@ -34,6 +36,8 @@ public class ContactUI {
     @Autowired
     private SiteOptions siteOptions;
 
+    // endregion
+
     public void init() {
 //		propertiesDemo();
 //		entityDemo();
@@ -46,8 +50,8 @@ public class ContactUI {
                 siteOptions.getGoogleAnalyticsTrackingId());
 
         try {
-            siteService.update(new SiteOptionDTO("siteName", "My Site Name"));
-            siteService.update(new SiteOptionDTO("integerProperty", "1"));
+            siteService.update(new SiteOptionDTO("siteName", "My Updated Site Name"));
+            siteService.update(new SiteOptionDTO("integerProperty", "8"));
         } catch (SiteOptionNotFoundException e) {
             e.printStackTrace();
         }

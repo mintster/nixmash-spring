@@ -4,6 +4,7 @@ import com.github.dandelion.core.web.DandelionFilter;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
+import com.nixmash.springdata.mvc.security.WithAdminUserDetails;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +33,7 @@ public class AdminControllerTests extends AbstractContext {
 
     private AdminController mockAdminController;
     private UserService mockUserService;
-    protected DandelionFilter dandelionFilter;
+    private DandelionFilter dandelionFilter;
 
     @Autowired
     protected WebApplicationContext wac;

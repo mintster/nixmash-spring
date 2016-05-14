@@ -1,4 +1,4 @@
-package com.nixmash.springdata.mvc.controller;
+package com.nixmash.springdata.mvc.security;
 
 import org.springframework.security.test.context.support.WithUserDetails;
 
