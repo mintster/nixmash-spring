@@ -37,8 +37,8 @@ public class AdminController {
     // region View Constants
 
     private static final String ADMIN_MOCKUP_VIEW = "admin/mockup";
-    private static final String ADMIN_HOME_VIEW = "admin/dashboard";
-    private static final String ADMIN_USERS_VIEW = "admin/security/users";
+    public static final String ADMIN_HOME_VIEW = "admin/dashboard";
+    public static final String ADMIN_USERS_VIEW = "admin/security/users";
     private static final String ADMIN_ROLES_VIEW = "admin/security/roles";
     private static final String ADMIN_USERFORM_VIEW = "admin/security/userform";
     private static final String PARAMETER_USER_ID = "id";

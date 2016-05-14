@@ -15,10 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
@@ -57,16 +54,7 @@ public class SiteServiceTests {
         siteService.update(new SiteOptionDTO(SITE_PROPERTY_NAME, "Updated Site Name"));
         siteService.update(new SiteOptionDTO(INTEGER_PROPERTY_NAME, "8"));
 
-        SiteOption found = siteService.findOptionByName(SITE_PROPERTY_NAME);
-        assertEquals(found.getValue(), "Updated Site Name");
-
-        found = siteService.findOptionByName(INTEGER_PROPERTY_NAME);
-        assertTrue(found.getValue().equals("8"));
-
-        System.out.println("SiteOptions Properties: " + siteOptions.getSiteName() + " -- " + siteOptions.getIntegerProperty());
         assert(siteOptions.getSiteName().equals("Updated Site Name"));
-
-        assertThat(siteOptions.getIntegerProperty(), instanceOf(Integer.class));
         assert(siteOptions.getIntegerProperty().equals(8));
 
     }
