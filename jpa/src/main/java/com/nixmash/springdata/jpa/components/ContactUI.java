@@ -45,9 +45,8 @@ public class ContactUI {
         System.out.println("Initialized SiteOptions Bean Property: " +
                 siteOptions.getGoogleAnalyticsTrackingId());
 
-        SiteOptionDTO siteOptionDTO = new SiteOptionDTO("siteName", "Updated Site Name");
         try {
-            siteService.update(siteOptionDTO);
+            siteService.update(new SiteOptionDTO("siteName", "Updated Site Name"));
             siteService.update(new SiteOptionDTO("integerProperty", "8"));
         } catch (SiteOptionNotFoundException e) {
             e.printStackTrace();

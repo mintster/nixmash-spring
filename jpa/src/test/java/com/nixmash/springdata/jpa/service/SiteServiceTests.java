@@ -1,7 +1,6 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.common.SiteOptions;
-import com.nixmash.springdata.jpa.components.ApplicationContextUI;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
@@ -11,14 +10,15 @@ import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
@@ -26,7 +26,8 @@ import static org.junit.Assert.assertEquals;
 @ActiveProfiles(DataConfigProfile.H2)
 public class SiteServiceTests {
 
-    private static final String VALID_PROPERTY_NAME = "SiteName";
+    private static final String SITE_PROPERTY_NAME = "siteName";
+    private static final String INTEGER_PROPERTY_NAME = "integerProperty";
     private static final String INVALID_PROPERTY_NAME = "SchmiteName";
 
     @Autowired
@@ -35,17 +36,14 @@ public class SiteServiceTests {
     @Autowired
     SiteOptions siteOptions;
 
-    @Autowired
-    DefaultListableBeanFactory beanFactory;
-
     @Test
     public void findSiteOptionByCaseInsensitivePropertyName() throws NotFoundException, SiteOptionNotFoundException {
         SiteOption siteOption;
 
-        siteOption = siteService.findOptionByName(VALID_PROPERTY_NAME);
+        siteOption = siteService.findOptionByName(SITE_PROPERTY_NAME);
         assertEquals(siteOption.getValue(), "My Site");
 
-        siteOption = siteService.findOptionByName(VALID_PROPERTY_NAME.toLowerCase());
+        siteOption = siteService.findOptionByName(SITE_PROPERTY_NAME.toLowerCase());
         assertEquals(siteOption.getValue(), "My Site");
     }
 
@@ -55,23 +53,21 @@ public class SiteServiceTests {
     }
 
     @Test
-    public void siteOptionUpdateNotReflectedInSiteOptionsComponent() throws SiteOptionNotFoundException {
-        SiteOptionDTO siteOptionDTO = new SiteOptionDTO(VALID_PROPERTY_NAME, "Updated Site Name");
-        siteService.update(siteOptionDTO);
-        SiteOption found = siteService.findOptionByName(VALID_PROPERTY_NAME);
+    public void siteOptionUpdated_UpdatesSiteOptionsBean() throws SiteOptionNotFoundException {
+        siteService.update(new SiteOptionDTO(SITE_PROPERTY_NAME, "Updated Site Name"));
+        siteService.update(new SiteOptionDTO(INTEGER_PROPERTY_NAME, "8"));
+
+        SiteOption found = siteService.findOptionByName(SITE_PROPERTY_NAME);
         assertEquals(found.getValue(), "Updated Site Name");
 
-        System.out.println("SiteOptions.getSiteName: " + siteOptions.getSiteName());
+        found = siteService.findOptionByName(INTEGER_PROPERTY_NAME);
+        assertTrue(found.getValue().equals("8"));
 
-        ApplicationContext context = ApplicationContextUI.getApplicationContext();
-        beanFactory.destroySingleton("siteOptions");
+        System.out.println("SiteOptions Properties: " + siteOptions.getSiteName() + " -- " + siteOptions.getIntegerProperty());
+        assert(siteOptions.getSiteName().equals("Updated Site Name"));
 
-        SiteOptions contextSiteOptions = context.getBean(SiteOptions.class);
-        System.out.println("ContextSiteOptions.getSiteName: " + contextSiteOptions.getSiteName());
-
-        SiteOptions contextBean = (SiteOptions) context.getBean("siteOptions");
-        beanFactory.destroySingleton("siteOptions");
-        System.out.println("Compare beans    " + siteOptions + "=="   + contextBean);
+        assertThat(siteOptions.getIntegerProperty(), instanceOf(Integer.class));
+        assert(siteOptions.getIntegerProperty().equals(8));
 
     }
 
