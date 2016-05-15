@@ -74,5 +74,5 @@ INSERT INTO contact_hobby_ids (contact_id,hobby_id) VALUES ('6','1'),('6','2'),(
 INSERT INTO site_options(option_id, option_name, option_value) VALUES ('1', 'siteName','My Site');
 INSERT INTO site_options(option_id, option_name, option_value) VALUES ('2', 'siteDescription','My Site Description');
 INSERT INTO site_options(option_id, option_name, option_value) VALUES ('3', 'addGoogleAnalytics','false');
-INSERT INTO site_options(option_id, option_name, option_value) VALUES ('4', 'googleAnalyticsTrackingId','UA-XXXXXX-8');
+INSERT INTO site_options(option_id, option_name, option_value) VALUES ('4', 'googleAnalyticsTrackingId','UA-XXXXXX-7');
 INSERT INTO site_options(option_id, option_name, option_value) VALUES ('5', 'integerProperty','1');

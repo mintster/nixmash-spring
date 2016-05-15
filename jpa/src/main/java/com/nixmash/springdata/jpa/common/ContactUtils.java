@@ -3,10 +3,7 @@ package com.nixmash.springdata.jpa.common;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
-import com.nixmash.springdata.jpa.model.Contact;
-import com.nixmash.springdata.jpa.model.Hobby;
-import com.nixmash.springdata.jpa.model.User;
-import com.nixmash.springdata.jpa.model.UserConnection;
+import com.nixmash.springdata.jpa.model.*;
 
 import java.util.Collection;
 import java.util.List;

@@ -4,8 +4,9 @@ import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.common.ContactUtils;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
+import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
-import com.nixmash.springdata.jpa.model.Contact;
+import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
@@ -38,10 +39,9 @@ public class JpaUI {
 
     // endregion
 
+    private Boolean reset = true;
+
     public void init() {
-//		propertiesDemo();
-//		entityDemo();
-//		randomDemo();
         beanScopeDemo();
     }
 
@@ -49,86 +49,59 @@ public class JpaUI {
         System.out.println("Initialized SiteOptions Bean Property: " +
                 siteOptions.getGoogleAnalyticsTrackingId());
 
+        String siteName = reset ? "My Site Name" : "My Updated Site Name";
+        String integerPropety = reset ? "1" : "8";
+
         try {
-            siteService.update(new SiteOptionDTO("siteName", "My Updated Site Name"));
-            siteService.update(new SiteOptionDTO("integerProperty", "8"));
+            siteService.update(new SiteOptionDTO("siteName", siteName));
+            siteService.update(new SiteOptionDTO("integerProperty", integerPropety));
         } catch (SiteOptionNotFoundException e) {
             e.printStackTrace();
         }
         System.out.println("New SiteOptions values: " + siteOptions.getSiteName() + " -- " + siteOptions.getIntegerProperty());
     }
 
-    public void randomDemo() {
-        System.out.println(ContactUtils.randomNegativeId());
-        System.out.println(ContactUtils.randomNegativeId());
-        System.out.println(ContactUtils.randomNegativeId());
-        System.out.println(ContactUtils.randomNegativeId());
-        System.out.println(ContactUtils.randomNegativeId());
-        System.out.println(ContactUtils.randomNegativeId());
-        System.out.println(ContactUtils.randomNegativeId());
-        System.out.println(ContactUtils.randomNegativeId());
-    }
-
-    public void propertiesDemo() {
-        ContactUtils.printProperty("ApplicationSettings.getIsDemoSite()",
-                applicationSettings.getIsDemoSite().toString());
-    }
-
-    public void AddContact() {
-
-        Contact contact = new Contact();
-
-        // Contact contact = new Contact();
-        // contact.setFirstName("Michael");
-        // contact.setLastName("Jackson");
-        // java.util.Date utilDate = new java.util.Date();
-        // contact.setBirthDate(new java.sql.Date(utilDate.getTime()));
-        // ContactPhone contactPhone =
-        // new ContactPhone("Home", "1111111111");
-        // contact.addContactPhone(contactPhone);
-        // contactPhone = new ContactPhone("Mobile", "2222222222");
-        // contact.addContactPhone(contactPhone);
-        // contactService.save(contact);
-    }
+    // region early JPA Entity demos, not recently used
 
     public void entityDemo() {
 
-//		UserConnection userConnection = userService.getUserConnectionByUserId("daver");
-//		ContactUtils.listUserConnection("My User Connection", userConnection);
+		UserConnection userConnection = userService.getUserConnectionByUserId("daver");
+		ContactUtils.listUserConnection("My User Connection", userConnection);
         ContactUtils.listUsersWithDetail(userService.getUsersByAuthorityId(1L));
-        // SpringUtils.listUser("USER BY EMAIL",
-        // userService.getByEmail("user@aol.com").get());
-        // try {
-        // SpringUtils.listContact("CONTACT BY EMAIL",
-        // contactService.findContactById(1L));
-        // } catch (ContactNotFoundException e) {
-        // e.printStackTrace();
-        // }
+         ContactUtils.listUser("USER BY EMAIL",
+         userService.getByEmail("user@aol.com").get());
+         try {
+         ContactUtils.listContact("CONTACT BY EMAIL",
+         contactService.findContactById(1L));
+         } catch (ContactNotFoundException e) {
+         e.printStackTrace();
+         }
 
-//		 ContactUtils.listContacts("ENTITIES FIND ALL", contactService.findAll());
-        // SpringUtils.listContacts("ENTITIES FIND BY FIRST NAME",
-        // contactService.findByFirstName("Barry"));
-        // SpringUtils.listContacts("ENTITIES FIND BY FIRST AND LAST NAME",
-        // contactService.findByFirstNameAndLastName("Tad", "Grant"));
-        //
-        // SpringUtils.listContact("SINGLE CONTACT: ",
-        // contactService.getContactByEmail("Nam.nulla@pedenonummyut.edu"));
-        // SpringUtils.listContactsWithDetail(contactService.getContactsWithDetail());
-        //
-        // SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
-        //
-        // SpringUtils.listContacts("FIND BY FIRST NAME",
-        // contactService.findByFirstName("Summer"));
-        //
-        // SpringUtils.listContactWithDetail(contactService.getContactByIdWithDetail(1L));
+		 ContactUtils.listContacts("ENTITIES FIND ALL", contactService.findAll());
+         ContactUtils.listContacts("ENTITIES FIND BY FIRST NAME",
+         contactService.findByFirstName("Barry"));
+         ContactUtils.listContacts("ENTITIES FIND BY FIRST AND LAST NAME",
+         contactService.findByFirstNameAndLastName("Tad", "Grant"));
+        
+         ContactUtils.listContact("SINGLE CONTACT: ",
+         contactService.getContactByEmail("Nam.nulla@pedenonummyut.edu"));
+         ContactUtils.listContactsWithDetail(contactService.getContactsWithDetail());
+        
+         ContactUtils.listContactWithDetail(contactService.getContactByIdWithDetail(2L));
+        
+         ContactUtils.listContacts("FIND BY FIRST NAME",
+         contactService.findByFirstName("Summer"));
+        
+         ContactUtils.listContactWithDetail(contactService.getContactByIdWithDetail(1L));
+         ContactUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L));
 
-        // SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L));
-
-        // try {
-        // contactService.update(SpringUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L)));
-        // } catch (NotFoundException e) {
-        // e.printStackTrace();
-        // }
+        try {
+            contactService.update(ContactUtils.contactToContactDTO(contactService.getContactByIdWithDetail(2L)));
+        } catch (ContactNotFoundException e) {
+            e.printStackTrace();
+        }
     }
+
+    // endregion
 
 }

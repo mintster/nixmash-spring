@@ -30,7 +30,9 @@ public class SiteServiceImpl implements SiteService{
 
     @Override
     public SiteOption update(SiteOptionDTO siteOptionDTO) throws SiteOptionNotFoundException {
-        logger.info("Updating siteOption property {} with value: {}", siteOptionDTO.getName(), siteOptionDTO.getValue());
+        logger.info("Updating siteOption property {} with value: {}",
+                siteOptionDTO.getName(), siteOptionDTO.getValue());
+
         SiteOption found = findOptionByName(siteOptionDTO.getName());
         found.update(siteOptionDTO.getName(), siteOptionDTO.getValue());
 
