@@ -47,7 +47,7 @@ public class ApplicationConfig {
 //        for (String key : options.keySet()) {
 //            for (Field f : bean.getClass().getDeclaredFields()) {
 //                if (f.getName().toUpperCase().equals(key.toUpperCase())) {
-//                    bean.setSiteOptionProperty(key, options.get(key));
+//                    bean.setSiteOptionProperty(key, options.with(key));
 //                }
 //            }
 //        }

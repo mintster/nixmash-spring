@@ -1,7 +1,9 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.common.UserUtils;
 import com.nixmash.springdata.jpa.dto.RoleDTO;
+import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -36,17 +36,18 @@ public class AdminController {
 
     // region View Constants
 
+    private static final String PARAMETER_USER_ID = "id";
+
     private static final String ADMIN_MOCKUP_VIEW = "admin/mockup";
     public static final String ADMIN_HOME_VIEW = "admin/dashboard";
     public static final String ADMIN_USERS_VIEW = "admin/security/users";
     private static final String ADMIN_ROLES_VIEW = "admin/security/roles";
     private static final String ADMIN_USERFORM_VIEW = "admin/security/userform";
-    private static final String PARAMETER_USER_ID = "id";
+    public static final String ADMIN_SITESETTINGS_VIEW = "admin/site/settings";
 
     // endregion
 
     // region Feedback Message Constants
-
     private static final String FEEDBACK_MESSAGE_KEY_USER_UPDATED = "feedback.message.user.updated";
     private static final String FEEDBACK_MESSAGE_KEY_USER_ADDED = "feedback.message.user.added";
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_ADDED = "feedback.message.role.added";
@@ -54,17 +55,21 @@ public class AdminController {
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_ERROR = "feedback.message.role.error";
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED = "feedback.message.role.islocked";
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_DELETED = "feedback.message.role.deleted";
+    private static final String FEEDBACK_SITE_SETTINGS_UPDATED = "feedback.message.sitesettings.updated";
+
 
     // endregion
 
 
     private final UserService userService;
     private final WebUI webUI;
+    private final SiteOptions siteOptions;
 
     @Autowired
-    public AdminController(UserService userService, WebUI webUI) {
+    public AdminController(UserService userService, WebUI webUI, SiteOptions siteOptions) {
         this.userService = userService;
         this.webUI = webUI;
+        this.siteOptions = siteOptions;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -231,6 +236,49 @@ public class AdminController {
         mav.addObject("newRole", new Authority());
         mav.setViewName(ADMIN_ROLES_VIEW);
         return mav;
+    }
+
+    // endregion
+
+    // region Site Settings
+
+    @RequestMapping(value = "/site/settings", method = GET)
+    public ModelAndView siteSettings(Model model) {
+        ModelAndView mav = new ModelAndView();
+        SiteOptionMapDTO siteOptionMapDTO = SiteOptionMapDTO.with(
+                siteOptions.getSiteName(),
+                siteOptions.getSiteDescription(),
+                siteOptions.getAddGoogleAnalytics(),
+                siteOptions.getGoogleAnalyticsTrackingId())
+            .build();
+        mav.addObject("siteOptionMapDTO", siteOptionMapDTO);
+        mav.setViewName(ADMIN_SITESETTINGS_VIEW);
+        return mav;
+    }
+
+    @RequestMapping(value = "/site/settings", method = RequestMethod.POST)
+    public String siteSettings(@Valid SiteOptionMapDTO siteOptionMapDTO,
+                          BindingResult result,
+                          RedirectAttributes attributes) {
+        if (hasSiteSettingsErrors(result)) {
+            return ADMIN_SITESETTINGS_VIEW;
+        } else {
+            webUI.addFeedbackMessage(attributes, FEEDBACK_SITE_SETTINGS_UPDATED);
+            return "redirect:/admin/site/settings";
+        }
+    }
+
+    // endregion
+
+
+    // region Utility Methods
+
+    private Boolean hasSiteSettingsErrors(BindingResult result) {
+        for (FieldError error : result.getFieldErrors()) {
+            if (!error.getField().equals("integerProperty"))
+                return true;
+        }
+        return false;
     }
 
     // endregion

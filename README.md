@@ -52,6 +52,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Demonstrating @PostConstruct and @DependsOn in SiteOptions Bean
 - Upgrade to Spring Boot 1.3.5
 - *DATA SCHEMA UPDATE!* Added Site_Options table. See /install/mysql.setup for update scripts
+- [Post: Using Spring Security 4.x Testing Features](http://nixmash.com/java/using-spring-security-4-x-testing-features/)
 - [Post: Updating Spring Component Properties at Runtime](http://nixmash.com/java/updating-spring-component-properties-at-runtime/)
 - [Post: NixMash Spring Administration Area](http://nixmash.com/java/nixmash-spring-administration-area/)
 - [Post: Displaying GitHub Stats with Spring RestTemplate and Thymeleaf](http://nixmash.com/java/displaying-github-stats-with-spring-resttemplate-and-thymeleaf/)

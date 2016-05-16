@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
+    <div th:include="admin/fragments/js :: functions('/admin/users')" th:remove="tag">Functions</div>
+    <title>NixMash Spring Administration - List Users</title>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div th:include="admin/fragments/sidebar :: sidebar" th:remove="tag">Sidebar</div>
+        </div>
+    </div>
+
+    <!-- top navigation -->
+    <div class="top_nav">
+        <div th:include="admin/fragments/topnav :: topnav" th:remove="tag">Top Navigation Area</div>
+    </div>
+    <!-- /top navigation -->
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <br/>
+        <div class="">
+            <!-- main body -->
+            <div th:include="admin/fragments/security/users :: body" th:remove="tag">Main Body</div>
+            <!-- /main body -->
+        </div>
+
+        <!-- footer content -->
+        <footer th:replace="admin/fragments/footer :: footer">Footer</footer>
+        <!-- /footer content -->
+
+    </div>
+    <!-- /page content -->
+</div>
+
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+<div th:include="admin/fragments/notifications :: notifications" th:remove="tag">Notifications</div>
+<div th:include="admin/fragments/scripts :: scripts" th:remove="tag">Javascript Libraries</div>
+
+</body>
+
+</html>

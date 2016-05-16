@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.model;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
+import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.repository.SiteOptionRepository;
@@ -22,8 +23,6 @@ import static org.junit.Assert.assertEquals;
 @ActiveProfiles(DataConfigProfile.H2)
 public class SiteOptionTests {
 
-    // region Beans
-
     // region Constants
 
     private static final String MY_SITE_NAME = "My Site";
@@ -31,8 +30,9 @@ public class SiteOptionTests {
     private static final Integer INTEGER_PROPERTY = 1;
     private static final Integer UPDATED_INTEGER_PROPERTY = 8;
 
-
     // endregion
+
+    // region Beans
 
     @Autowired
     protected ApplicationContext context;
@@ -48,17 +48,22 @@ public class SiteOptionTests {
 
     // endregion
 
+    // region Private Properties
+
+    private SiteOptionMapDTO siteOptionMapDTO;
+    // endregion
+
     @Test
     public void siteOptionsIsPopulatedFromContext() throws Exception {
         assertEquals(siteOptions.getAddGoogleAnalytics(), false);
-        assertEquals(siteOptions.getIntegerProperty(), (Integer)1);
+        assertEquals(siteOptions.getIntegerProperty(), (Integer) 1);
         assertEquals(siteOptions.getGoogleAnalyticsTrackingId(), "UA-XXXXXX-7");
         assertEquals(siteOptions.getSiteName(), "My Site");
         assertEquals(siteOptions.getSiteDescription(), "My Site Description");
     }
 
     @Test
-    public void SiteOptionsPropertyIsUpdatedAtRuntime() {
+    public void siteOptionsPropertyIsUpdatedAtRuntime() {
 
         assertEquals(siteOptions.getSiteName(), MY_SITE_NAME);
         assertEquals(siteOptions.getIntegerProperty(), INTEGER_PROPERTY);
@@ -76,4 +81,12 @@ public class SiteOptionTests {
         assertEquals(siteOptions.getSiteName(), MY_UPDATED_SITE_NAME);
         assertEquals(siteOptions.getIntegerProperty(), UPDATED_INTEGER_PROPERTY);
     }
+
+    @Test
+    public void siteOptionDtoCreatedFromSiteOptionMapDTO() {
+        SiteOptionDTO siteOptionDTO = SiteOptionDTO.with("siteName", "My Fabulous Site").build();
+        assertEquals(siteOptionDTO.getName(), "siteName");
+        assertEquals(siteOptionDTO.getValue(), "My Fabulous Site");
+    }
+
 }

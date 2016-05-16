@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.ResourceNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
@@ -37,6 +38,9 @@ public class GlobalController {
 
 	@Autowired
 	private ApplicationSettings applicationSettings;
+
+	@Autowired
+	private SiteOptions siteOptions;
 
 	@ModelAttribute("currentUser")
 	public CurrentUser getCurrentUser(Authentication authentication) {
@@ -76,6 +80,11 @@ public class GlobalController {
 	@ModelAttribute("appSettings")
 	public ApplicationSettings getApplicationSettings() {
 		return applicationSettings;
+	}
+
+	@ModelAttribute("siteOptions")
+	public SiteOptions getSiteOptions() {
+		return siteOptions;
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)

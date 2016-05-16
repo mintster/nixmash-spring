@@ -56,11 +56,6 @@ public class SiteOptions {
 
     // endregion
 
-    // region Constructor and Beans
-
-
-    // endregion
-
     // region Getter Setters
 
     public Integer getIntegerProperty() {
