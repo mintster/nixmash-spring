@@ -1,14 +1,18 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.common.ISiteOption;
 import com.nixmash.springdata.jpa.common.SiteOptions;
-import com.nixmash.springdata.jpa.utils.UserUtils;
 import com.nixmash.springdata.jpa.dto.RoleDTO;
+import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
 import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
+import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
+import com.nixmash.springdata.jpa.utils.UserUtils;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +30,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -60,16 +66,17 @@ public class AdminController {
 
     // endregion
 
-
+    private final SiteService siteService;
     private final UserService userService;
     private final WebUI webUI;
     private final SiteOptions siteOptions;
 
     @Autowired
-    public AdminController(UserService userService, WebUI webUI, SiteOptions siteOptions) {
+    public AdminController(UserService userService, WebUI webUI, SiteOptions siteOptions, SiteService siteService) {
         this.userService = userService;
         this.webUI = webUI;
         this.siteOptions = siteOptions;
+        this.siteService = siteService;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -194,7 +201,6 @@ public class AdminController {
             return "redirect:/admin/roles";
         } else {
             Authority authority = userService.getAuthorityById(roleDTO.getId());
-            List<User> usersInRole;
 
             if (authority.isLocked()) {
                 webUI.addFeedbackMessage(attributes,
@@ -245,13 +251,7 @@ public class AdminController {
     @RequestMapping(value = "/site/settings", method = GET)
     public ModelAndView siteSettings(Model model) {
         ModelAndView mav = new ModelAndView();
-        SiteOptionMapDTO siteOptionMapDTO = SiteOptionMapDTO.with(
-                siteOptions.getSiteName(),
-                siteOptions.getSiteDescription(),
-                siteOptions.getAddGoogleAnalytics(),
-                siteOptions.getGoogleAnalyticsTrackingId())
-            .build();
-        mav.addObject("siteOptionMapDTO", siteOptionMapDTO);
+        mav.addObject("siteOptionMapDTO", getGeneralSettings());
         mav.setViewName(ADMIN_SITESETTINGS_VIEW);
         return mav;
     }
@@ -259,10 +259,11 @@ public class AdminController {
     @RequestMapping(value = "/site/settings", method = RequestMethod.POST)
     public String siteSettings(@Valid SiteOptionMapDTO siteOptionMapDTO,
                           BindingResult result,
-                          RedirectAttributes attributes) {
+                          RedirectAttributes attributes) throws SiteOptionNotFoundException {
         if (hasSiteSettingsErrors(result)) {
             return ADMIN_SITESETTINGS_VIEW;
         } else {
+            updateGeneralSiteSettings(siteOptionMapDTO);
             webUI.addFeedbackMessage(attributes, FEEDBACK_SITE_SETTINGS_UPDATED);
             return "redirect:/admin/site/settings";
         }
@@ -272,6 +273,34 @@ public class AdminController {
 
 
     // region Utility Methods
+
+    SiteOptionMapDTO getGeneralSettings()
+    {
+        return SiteOptionMapDTO.with(
+                siteOptions.getSiteName(),
+                siteOptions.getSiteDescription(),
+                siteOptions.getAddGoogleAnalytics(),
+                siteOptions.getGoogleAnalyticsTrackingId())
+                .build();
+    }
+
+    void updateGeneralSiteSettings(SiteOptionMapDTO siteOptionMapDTO)
+            throws SiteOptionNotFoundException {
+
+        siteService.update(SiteOptionDTO.with(
+                ISiteOption.SITE_NAME, siteOptionMapDTO.getSiteName())
+                .build());
+        siteService.update(SiteOptionDTO.with(
+                ISiteOption.SITE_DESCRIPTION, siteOptionMapDTO.getSiteDescription())
+                .build());
+        siteService.update(SiteOptionDTO.with(
+                ISiteOption.ADD_GOOGLE_ANALYTICS, siteOptionMapDTO.getAddGoogleAnalytics())
+                .build());
+        siteService.update(SiteOptionDTO.with(
+                ISiteOption.GOOGLE_ANALYTICS_TRACKING_ID, siteOptionMapDTO.getGoogleAnalyticsTrackingId())
+                .build());
+    }
+
 
     private Boolean hasSiteSettingsErrors(BindingResult result) {
         for (FieldError error : result.getFieldErrors()) {

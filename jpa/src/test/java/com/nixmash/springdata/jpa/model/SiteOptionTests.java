@@ -31,9 +31,12 @@ public class SiteOptionTests {
 
     // region Constants
 
-    private static final String MY_SITE_NAME = "My Site";
+    public static final String DEFAULT_SITE_NAME = "My Site";
+    public static final String DEFAULT_SITE_DESCRIPTION = "My Site Description";
+    public static final String DEFAULT_TRACKING_ID = "UA-XXXXXX-7";
+    public static final Integer DEFAULT_INTEGER_PROPERTY = 1;
+
     private static final String MY_UPDATED_SITE_NAME = "My Updated Site Name";
-    private static final Integer INTEGER_PROPERTY = 1;
     private static final Integer UPDATED_INTEGER_PROPERTY = 8;
 
     // endregion
@@ -71,8 +74,8 @@ public class SiteOptionTests {
     @Test
     public void siteOptionsPropertyIsUpdatedAtRuntime() {
 
-        assertEquals(siteOptions.getSiteName(), MY_SITE_NAME);
-        assertEquals(siteOptions.getIntegerProperty(), INTEGER_PROPERTY);
+        assertEquals(siteOptions.getSiteName(), DEFAULT_SITE_NAME);
+        assertEquals(siteOptions.getIntegerProperty(), DEFAULT_INTEGER_PROPERTY);
 
         try {
 

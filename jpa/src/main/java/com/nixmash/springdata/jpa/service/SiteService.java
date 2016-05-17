@@ -14,4 +14,5 @@ public interface SiteService {
 
     @Transactional(readOnly = true)
     SiteOption findOptionByName(String name) throws SiteOptionNotFoundException;
+
 }
