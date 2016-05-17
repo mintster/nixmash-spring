@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.common;
 
+import com.nixmash.springdata.jpa.annotations.Base;
 import com.nixmash.springdata.jpa.model.SiteOption;
 import com.nixmash.springdata.jpa.repository.SiteOptionRepository;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 @Component
 @DependsOn("databasePopulator")
-public class SiteOptions {
+public class SiteOptions implements ISiteOption {
 
     private SiteOptionRepository siteOptionRepository;
 
@@ -46,12 +47,19 @@ public class SiteOptions {
 
     // region Properties
 
+    @Base(SITE_NAME)
     private String siteName;
+
+    @Base(SITE_DESCRIPTION)
     private String siteDescription;
 
+    @Base(ADD_GOOGLE_ANALYTICS)
     private Boolean addGoogleAnalytics;
+
+    @Base(GOOGLE_ANALYTICS_TRACKING_ID)
     private String googleAnalyticsTrackingId;
 
+    @Base(INTEGER_PROPERTY)
     private Integer integerProperty;
 
     // endregion

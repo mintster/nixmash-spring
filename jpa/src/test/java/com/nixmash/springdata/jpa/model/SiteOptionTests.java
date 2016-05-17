@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.model;
 
+import com.nixmash.springdata.jpa.common.ISiteOption;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
@@ -15,8 +16,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
@@ -70,8 +76,8 @@ public class SiteOptionTests {
 
         try {
 
-            siteService.update(new SiteOptionDTO("siteName", MY_UPDATED_SITE_NAME));
-            siteService.update(new SiteOptionDTO("integerProperty",
+            siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, MY_UPDATED_SITE_NAME));
+            siteService.update(new SiteOptionDTO(ISiteOption.INTEGER_PROPERTY,
                     UPDATED_INTEGER_PROPERTY.toString()));
 
         } catch (SiteOptionNotFoundException e) {
@@ -84,9 +90,37 @@ public class SiteOptionTests {
 
     @Test
     public void siteOptionDtoCreatedFromSiteOptionMapDTO() {
-        SiteOptionDTO siteOptionDTO = SiteOptionDTO.with("siteName", "My Fabulous Site").build();
-        assertEquals(siteOptionDTO.getName(), "siteName");
+        SiteOptionDTO siteOptionDTO = SiteOptionDTO.with(ISiteOption.SITE_NAME, "My Fabulous Site").build();
+        assertEquals(siteOptionDTO.getName(), ISiteOption.SITE_NAME);
         assertEquals(siteOptionDTO.getValue(), "My Fabulous Site");
+    }
+
+    @Test
+    public void SiteOptionMapDtoValidationTests() {
+
+        SiteOptionMapDTO siteOptionMapDTO = SiteOptionMapDTO.with(
+                null,
+                siteOptions.getSiteDescription(),
+                siteOptions.getAddGoogleAnalytics(),
+                siteOptions.getGoogleAnalyticsTrackingId())
+                .build();
+
+        Errors errors = new BeanPropertyBindingResult(siteOptionMapDTO, "siteOptionMapDTO");
+        ValidationUtils.invokeValidator(new SiteOptionMapDtoValidator(), siteOptionMapDTO, errors);
+        assertTrue(errors.hasFieldErrors("siteName"));
+        assertEquals("EMPTY", errors.getFieldError("siteName").getCode());
+
+    }
+
+    private static class SiteOptionMapDtoValidator implements Validator {
+
+        public boolean supports(Class clazz) {
+            return SiteOptionMapDTO.class.isAssignableFrom(clazz);
+        }
+
+        public void validate(Object obj, Errors errors) {
+            ValidationUtils.rejectIfEmpty(errors, "siteName", "EMPTY", "You must enter a site name!");
+        }
     }
 
 }

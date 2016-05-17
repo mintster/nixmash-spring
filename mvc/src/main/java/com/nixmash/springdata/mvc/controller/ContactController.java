@@ -2,7 +2,7 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.nixmash.springdata.jpa.common.ContactUtils;
+import com.nixmash.springdata.jpa.utils.ContactUtils;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;

@@ -1,7 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.SiteOptions;
-import com.nixmash.springdata.jpa.common.UserUtils;
+import com.nixmash.springdata.jpa.utils.UserUtils;
 import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;

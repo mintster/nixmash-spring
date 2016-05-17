@@ -1,4 +1,4 @@
-package com.nixmash.springdata.jpa.common;
+package com.nixmash.springdata.jpa.utils;
 
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.User;

@@ -1,9 +1,9 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.nixmash.springdata.jpa.common.ISiteOption;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
-import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.model.SiteOption;
@@ -64,26 +64,12 @@ public class SiteServiceTests {
     public void updateSiteOptionWithSiteOptionDTO() throws SiteOptionNotFoundException {
 
         SiteOptionDTO siteOptionDTO;
-        siteOptionDTO = SiteOptionDTO.with("siteName", "My Fabulous Site").build();
+        siteOptionDTO = SiteOptionDTO.with(ISiteOption.SITE_NAME, "My Fabulous Site").build();
         siteService.update(siteOptionDTO);
         assert(siteOptions.getSiteName().equals("My Fabulous Site"));
 
-        siteOptionDTO = SiteOptionDTO.with("siteName", null).build();
+        siteOptionDTO = SiteOptionDTO.with(ISiteOption.SITE_NAME, null).build();
         siteService.update(siteOptionDTO);
-//        assert(siteOptions.getSiteName().equals("My Fabulous Site"));
     }
 
-    @Test
-    public void SiteOptionMapDtoValidationTests() {
-
-        // siteName can be set to null? More to come...
-
-        SiteOptionMapDTO siteOptionMapDTO = SiteOptionMapDTO.with(
-                null,
-                siteOptions.getSiteDescription(),
-                siteOptions.getAddGoogleAnalytics(),
-                siteOptions.getGoogleAnalyticsTrackingId())
-                .build();
-
-    }
 }
