@@ -13,6 +13,11 @@ span.pad-right {
     padding-right: 5px;
 }
 
+.x_title small.h2_subtitle {
+    margin-left: 10px;
+    vertical-align: -webkit-baseline-middle;
+}
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="SIDEBAR ----------------------------/ "*/
@@ -67,3 +72,7 @@ input#authority {
     margin-right: 0px;
 }
 /*</editor-fold>*/
+
+tr.border-bottom-row {
+    border-bottom: solid #ddd 1px;
+}

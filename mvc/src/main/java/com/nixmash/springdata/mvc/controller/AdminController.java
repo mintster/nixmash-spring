@@ -251,7 +251,7 @@ public class AdminController {
     @RequestMapping(value = "/site/settings", method = GET)
     public ModelAndView siteSettings(Model model) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("siteOptionMapDTO", getGeneralSettings());
+        mav.addObject("siteOptionMapDTO", getGeneralSiteSettings());
         mav.setViewName(ADMIN_SITESETTINGS_VIEW);
         return mav;
     }
@@ -274,7 +274,7 @@ public class AdminController {
 
     // region Utility Methods
 
-    SiteOptionMapDTO getGeneralSettings()
+    SiteOptionMapDTO getGeneralSiteSettings()
     {
         return SiteOptionMapDTO.with(
                 siteOptions.getSiteName(),

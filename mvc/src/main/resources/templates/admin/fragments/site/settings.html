@@ -1,25 +1,117 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml">
-<body>
-<div th:fragment="body">
+<body th:fragment="body">
 <div class="row">
     <div class="col-md-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Settings
-                    <small>General Site Settings</small>
+                <h2 th:text="#{admin.site.settings.title}">[General Site Settings]
                 </h2>
+                <small th:text="#{admin.site.settings.subtitle}" class="h2_subtitle">[Update General Site Settings]</small>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content  fill-body">
-                <div class="fill-body-message">
-                    <p>Future location for some task...</p>
+                <div class="fill-body-table">
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
+                    </div>
+                    <div class="row row-centered">
+                        <div class="bs-docs-section col-lg-9 col-centered">
+
+                            <!--/*@thymesVar id="siteOptionMapDTO" type="com.nixmash.springdata.jpa.dto.SiteOptionMapDTO"*/-->
+
+                            <form th:object="${siteOptionMapDTO}" method="post"
+                                  th:action="@{${#httpServletRequest.getRequestURI()}}"
+                                  class="form-horizontal" id="user-form">
+
+                                <div th:if="${#fields.hasGlobalErrors()}"
+                                     class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <label class="control-label" th:each="err : ${#fields.globalErrors()}"
+                                           th:text="${err}">...</label>
+                                </div>
+
+                                <table class="table table-striped">
+                                    <tr th:classappend="${#fields.hasErrors('siteName')} ? 'has-error'">
+                                        <td>
+                                            <div class="control-group"
+                                                 th:classappend="${#fields.hasErrors('siteName')} ? 'error'">
+                                                <label class="control-label">Site Name</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" th:field="*{siteName}"/>
+                                                <label class="control-label" th:errors="*{siteName}">[error]</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr th:classappend="${#fields.hasErrors('siteDescription')} ? 'has-error'">
+                                        <td>
+                                            <div class="control-group"
+                                                 th:classappend="${#fields.hasErrors('siteDescription')} ? 'error'">
+                                                <label class="control-label">Site Description</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="controls">
+                                                <input type="text" class="form-control"
+                                                       th:field="*{siteDescription}"/>
+                                                <label class="control-label"
+                                                       th:errors="*{siteDescription}">[error]</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group">
+                                                <label class="control-label">Enable Google Analytics</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="addGoogleAnalytics" id="optionsRadiosInline1"
+                                                       value="true" th:checked="*{addGoogleAnalytics}"/>Yes
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="addGoogleAnalytics" id="optionsRadiosInline2"
+                                                       value="false" th:checked="*{addGoogleAnalytics} == false"/>No
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-bottom-row" th:classappend="${#fields.hasErrors('googleAnalyticsTrackingId')} ? 'has-error'">
+                                        <td>
+                                            <div class="control-group"
+                                                 th:classappend="${#fields.hasErrors('googleAnalyticsTrackingId')} ? 'error'">
+                                                <label class="control-label">Google Analytics Tracking Id</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="controls">
+                                                <input type="text" class="form-control"
+                                                       th:field="*{googleAnalyticsTrackingId}"/>
+                                                <label class="control-label" th:errors="*{googleAnalyticsTrackingId}">[error]</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="col-lg-12 button-col-align-right">
+                                    <input type="submit" class="btn btn-primary" th:value="Update"/>
+                                    <input type="button"
+                                           th:onclick="'window.location.href=\'' + @{|/admin/|} + '\''"
+                                           class="btn btn-success" value="Cancel"/>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>
