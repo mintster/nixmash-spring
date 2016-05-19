@@ -13,7 +13,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics HTML (In Progress)](#v031----siteoptions-properties-github-buttons-google-analytics-html-in-progress)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
+- **[v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics](#v031----siteoptions-properties-github-buttons-google-analytics)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
 - **[v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus](#v030----spring-boot-134-navbar-submenus)** : *"Demos" menu with Spring JPA and Solr Submenus, Spring Boot 1.3.4*
 - **[v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services](#v029----site-administration-start-profile-image-uploads-email-services)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella) Bootstrap 3 Template. Velocity Java Template Engine for Email formatting*
 - **[v0.2.8 -- Spring Social ](#v028----spring-social)** : *Integrated Facebook and Twitter Authentication with existing site Spring Security Accounts*
@@ -45,13 +45,16 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics HTML (In Progress)##
+##v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics##
 
+- Configurable Google Analytics script and robots.txt file
 - GitHub Repository Statistics with Spring RestTemplate, MVC and Thymeleaf. HTML and CSS from Mark Otto's [GitHub Buttons](https://github.com/mdo/github-buttons)
 - "SiteOptions" Class Bean with properties generated from Apache Commons BeanUtils reflection
 - Demonstrating @PostConstruct and @DependsOn in SiteOptions Bean
 - Upgrade to Spring Boot 1.3.5
 - *DATA SCHEMA UPDATE!* Added Site_Options table. See /install/mysql.setup for update scripts
+- [Post: Serving Up a robots.txt File with Spring MVC](http://nixmash.com/java/serving-up-a-robots-txt-file-with-spring-mvc/)
+- [Post: Serving Up Google Analytics Tracking in Spring and Thymeleaf](http://nixmash.com/java/serving-up-google-analytics-tracking-in-spring-and-thymeleaf/)
 - [Post: Using Spring Security 4.x Testing Features](http://nixmash.com/java/using-spring-security-4-x-testing-features/)
 - [Post: Updating Spring Component Properties at Runtime](http://nixmash.com/java/updating-spring-component-properties-at-runtime/)
 - [Post: NixMash Spring Administration Area](http://nixmash.com/java/nixmash-spring-administration-area/)
