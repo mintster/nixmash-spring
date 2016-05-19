@@ -69,7 +69,7 @@ public class SiteOptionMapDTO implements Serializable{
 
     // endregion
 
-    public static Builder with(
+    public static Builder withGeneralSettings(
                                            String siteName,
                                            String siteDescription,
                                            Boolean addGoogleAnalytics,

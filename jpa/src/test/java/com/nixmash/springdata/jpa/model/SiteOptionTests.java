@@ -101,7 +101,7 @@ public class SiteOptionTests {
     @Test
     public void SiteOptionMapDtoValidationTests() {
 
-        SiteOptionMapDTO siteOptionMapDTO = SiteOptionMapDTO.with(
+        SiteOptionMapDTO siteOptionMapDTO = SiteOptionMapDTO.withGeneralSettings(
                 null,
                 siteOptions.getSiteDescription(),
                 siteOptions.getAddGoogleAnalytics(),

@@ -78,7 +78,7 @@ public class AdminControllerTests extends AbstractContext {
                 .addFilters(dandelionFilter)
                 .build();
 
-        siteOptionMapDTO = SiteOptionMapDTO.with(
+        siteOptionMapDTO = SiteOptionMapDTO.withGeneralSettings(
                 siteOptions.getSiteName(),
                 siteOptions.getSiteDescription(),
                 siteOptions.getAddGoogleAnalytics(),

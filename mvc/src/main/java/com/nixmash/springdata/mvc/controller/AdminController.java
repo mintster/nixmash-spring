@@ -276,7 +276,7 @@ public class AdminController {
 
     SiteOptionMapDTO getGeneralSiteSettings()
     {
-        return SiteOptionMapDTO.with(
+        return SiteOptionMapDTO.withGeneralSettings(
                 siteOptions.getSiteName(),
                 siteOptions.getSiteDescription(),
                 siteOptions.getAddGoogleAnalytics(),
