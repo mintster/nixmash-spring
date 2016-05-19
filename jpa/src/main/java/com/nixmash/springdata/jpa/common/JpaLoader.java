@@ -21,7 +21,8 @@ public class JpaLoader implements CommandLineRunner {
         String activeProfile = environment.getActiveProfiles()[0];
         logger.info(String.format("Current JPA Active Profile: %s", activeProfile));
 
-        String jpaProperty = environment.getProperty("spring.data.title2");
-        logger.info(String.format("JPA Local Property: %s", jpaProperty));
+        String applicationVersion = environment.getProperty("nixmash.spring.jpa.version");
+        logger.info(String.format("NixMash Spring JPA Application Version: %s", applicationVersion));
+
     }
 }

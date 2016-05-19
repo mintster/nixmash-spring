@@ -1,0 +1,36 @@
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.nixmash.springdata.jsoup.JsoupLauncher'
+	}
+}
+
+sourceSets {
+	main {
+		java.srcDirs = ['src/main/java', 'src/main/resources']
+		resources.srcDir('src/main/resources')
+	}
+	test {
+		java.srcDir('src/test/java')
+	}
+}
+
+configurations {
+	compile.exclude module: 'org.slf4j'
+}
+
+springBoot {
+	mainClass = 'com.nixmash.springdata.jsoup.JsoupLauncher'
+}
+
+dependencies {
+	compile project(':mail')
+	compile project(':jpa')
+	compile 'org.jsoup:jsoup:1.9.2'
+}
+
+
+bootRun {
+	addResources = false
+	systemProperty 'spring.profiles.active', 'h2'
+	main = 'com.nixmash.springdata.jsoup.JsoupLauncher'
+}
