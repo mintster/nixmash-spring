@@ -1,6 +1,10 @@
-package com.nixmash.springdata.jsoup.common;
+package com.nixmash.springdata.jsoup.parsers;
 
 import com.google.common.base.Preconditions;
+import com.nixmash.springdata.jsoup.annotations.AttributeValue;
+import com.nixmash.springdata.jsoup.annotations.HtmlValue;
+import com.nixmash.springdata.jsoup.annotations.Selector;
+import com.nixmash.springdata.jsoup.annotations.TextValue;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,14 +22,13 @@ public class JSoupHtmlParser<T> {
     public JSoupHtmlParser( final Class<T> classModel) {
         this.classModel = classModel;
     }
-    private final static String STRING = "<html><body><div class='myclass' myname='dopey'>mytext</div></body></html>";
-//    private final static String HOST = "http://jabbawonk/x/jsoup.html";
+    private final static String STRING = "<html><body><div class='myclass' myname='sneezy'>27</div></body></html>";
 
     // Main method that will translate HTML to object
-    public T parse() {
+    public T parse(String url) {
         try {
-//            final Document doc = Jsoup.connect(HOST).get();
-            final Document doc = Jsoup.parse(STRING);
+            final Document doc = Jsoup.connect(url).get();
+//            final Document doc = Jsoup.parse(STRING);
             T model = this.classModel.newInstance();
 
             for (Method m : this.classModel.getMethods()) {
@@ -47,7 +50,7 @@ public class JSoupHtmlParser<T> {
         return null;
     }
 
-    // Use Spring's ConversionService to convert the selected value from String to the type of the parameter in the setter method
+    // Use Spring's ConversionService to convert the selected value to the type of the parameter in the setter method
     private static final ConversionService conversion = new DefaultConversionService();
 
     private Object convertValue(final String value, final Method m) {

@@ -1,6 +1,6 @@
 jar {
     manifest {
-        attributes 'Main-Class': 'com.nixmash.springdata.jpa.Launcher'
+        attributes 'Main-Class': 'com.nixmash.springdata.jpa.JpaLauncher'
     }
 }
 
@@ -19,7 +19,7 @@ configurations {
 }
 
 springBoot {
-    mainClass = 'com.nixmash.springdata.jpa.Launcher'
+    mainClass = 'com.nixmash.springdata.jpa.JpaLauncher'
 }
 
 dependencies {
@@ -43,7 +43,7 @@ task production << {
 bootRun {
     addResources = false
     systemProperty 'spring.profiles.active', 'mysql'
-    main = 'com.nixmash.springdata.jpa.Launcher'
+    main = 'com.nixmash.springdata.jpa.JpaLauncher'
 }
 
 task rmTestdb(type: Exec) {

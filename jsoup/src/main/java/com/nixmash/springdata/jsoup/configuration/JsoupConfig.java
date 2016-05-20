@@ -1,8 +1,8 @@
 package com.nixmash.springdata.jsoup.configuration;
 
-import com.nixmash.springdata.jsoup.common.JSoupHtmlParser;
-import com.nixmash.springdata.jsoup.common.ParsedDTO;
-import com.nixmash.springdata.jsoup.common.ParsedDTOParser;
+import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.dto.ParsedDTO;
+import com.nixmash.springdata.jsoup.parsers.ParsedDTOParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 public class JsoupConfig {
 
     @Bean
-    public JSoupHtmlParser<ParsedDTO> getParsedDTOParser() {
+    public JSoupHtmlParser<ParsedDTO> parsedDTOParser() {
         return new ParsedDTOParser(ParsedDTO.class);
     }
 }

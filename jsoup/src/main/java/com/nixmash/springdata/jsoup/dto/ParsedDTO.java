@@ -1,4 +1,7 @@
-package com.nixmash.springdata.jsoup.common;
+package com.nixmash.springdata.jsoup.dto;
+
+import com.nixmash.springdata.jsoup.annotations.AttributeValue;
+import com.nixmash.springdata.jsoup.annotations.Selector;
 
 /**
  * Created by daveburke on 5/19/16.

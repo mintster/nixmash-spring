@@ -8,7 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.core.SpringVersion;
 
 @SpringBootApplication
-public class Launcher {
+public class JpaLauncher {
 
 	public static void main(String[] args) {
 

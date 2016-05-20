@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-@Service("jsoupService")
+@Service
 public class JsoupServiceImpl implements JsoupService {
 
     final private VelocityEngine velocityEngine;

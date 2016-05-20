@@ -1,4 +1,4 @@
-package com.nixmash.springdata.jsoup.common;
+package com.nixmash.springdata.jsoup.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

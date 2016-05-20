@@ -1,9 +1,10 @@
 package com.nixmash.springdata.jsoup.components;
 
-import com.nixmash.springdata.jsoup.common.JSoupHtmlParser;
-import com.nixmash.springdata.jsoup.common.ParsedDTO;
+import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.dto.ParsedDTO;
 import com.nixmash.springdata.mail.service.JsoupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +13,10 @@ public class JsoupUI {
     JsoupService jsoupService;
 
     @Autowired
-    JSoupHtmlParser<ParsedDTO> jSoupHtmlParser;
+    @Qualifier("parsedDTOParser")
+    JSoupHtmlParser<ParsedDTO> parsedDTOParser;
+
+    String url = "http://jabbawonk/x/jsoup.html";
 
     @Autowired
     public JsoupUI(JsoupService jsoupService) {
@@ -20,7 +24,7 @@ public class JsoupUI {
     }
 
     public void init() {
-//        jsoupDemo();
+        jsoupDemo();
         parseIt();
     }
 
@@ -29,7 +33,7 @@ public class JsoupUI {
     }
 
     private void parseIt() {
-        ParsedDTO parsedDTO = jSoupHtmlParser.parse();
+        ParsedDTO parsedDTO = parsedDTOParser.parse(url);
         System.out.println(parsedDTO.getContents());
     }
 }
