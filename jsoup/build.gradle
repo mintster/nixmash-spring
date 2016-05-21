@@ -23,7 +23,6 @@ springBoot {
 }
 
 dependencies {
-	compile project(':mail')
 	compile project(':jpa')
 	compile 'org.jsoup:jsoup:1.9.2'
 }

@@ -1,16 +1,19 @@
 package com.nixmash.springdata.jsoup.components;
 
-import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
 import com.nixmash.springdata.jsoup.dto.ParsedDTO;
-import com.nixmash.springdata.mail.service.JsoupService;
+import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.utils.JsoupUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.IOException;
+
 @Component
 public class JsoupUI {
-
-    JsoupService jsoupService;
 
     @Autowired
     @Qualifier("parsedDTOParser")
@@ -18,18 +21,20 @@ public class JsoupUI {
 
     String url = "http://jabbawonk/x/jsoup.html";
 
-    @Autowired
-    public JsoupUI(JsoupService jsoupService) {
-        this.jsoupService = jsoupService;
-    }
-
     public void init() {
-        jsoupDemo();
         parseIt();
+        jsoupLocalHtml();
     }
 
-    private void jsoupDemo() {
-        System.out.println(jsoupService.getDemoJsoupHTML());
+    private void jsoupLocalHtml()  {
+        File in = JsoupUtil.getFile("/html/jsoup.html");
+        Document doc = null;
+        try {
+            doc = Jsoup.parse(in, null, "http://example.com");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(doc.toString());
     }
 
     private void parseIt() {

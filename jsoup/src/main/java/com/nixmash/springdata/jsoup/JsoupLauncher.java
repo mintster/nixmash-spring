@@ -13,7 +13,6 @@ public class JsoupLauncher {
 
 		ApplicationContext ctx = new
 				AnnotationConfigApplicationContext("com.nixmash.springdata.jsoup",
-																										"com.nixmash.springdata.mail",
 																										"com.nixmash.springdata.jpa");
 
 		JsoupUI ui = ctx.getBean(JsoupUI.class);

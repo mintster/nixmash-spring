@@ -26,6 +26,5 @@ public class JsoupParserTests extends JsoupContext {
         System.out.println(parsedDTO.getContents());
     }
 
-
 }
 
