@@ -25,10 +25,10 @@ public class JSoupHtmlParser<T> {
     private final static String STRING = "<html><body><div class='myclass' myname='sneezy'>27</div></body></html>";
 
     // Main method that will translate HTML to object
-    public T parse(String url) {
+    public T parse(String html) {
         try {
-            final Document doc = Jsoup.connect(url).get();
-//            final Document doc = Jsoup.parse(STRING);
+//            final Document doc = Jsoup.connect(url).get();
+            final Document doc = Jsoup.parse(html);
             T model = this.classModel.newInstance();
 
             for (Method m : this.classModel.getMethods()) {

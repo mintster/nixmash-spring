@@ -10,7 +10,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes= { JsoupLauncher.class, JpaLauncher.class },
+        classes= { JsoupLauncher.class, JpaLauncher.class, JsoupTestConfig.class },
         loader=AnnotationConfigContextLoader.class)
 @ActiveProfiles("h2")
 public class JsoupContext {
