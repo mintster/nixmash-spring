@@ -53,6 +53,16 @@ public class JsoupTests extends JsoupContext {
      */
 
     @Test
+    public void parseMetaTagByProperty() {
+        assertEquals("http://facebook.image", testDTO.getFacebookImage());
+    }
+
+    @Test
+    public void parseMetaTagByName() {
+        assertEquals("http://twitter.image", testDTO.getTwitterImage());
+    }
+
+    @Test
     public void parseMyClassAttribute() {
         assertEquals("grouchy", testDTO.getMyClassAttribute());
     }

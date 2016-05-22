@@ -7,6 +7,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,25 +19,44 @@ import java.io.IOException;
 @Component
 public class JsoupUI {
 
+    private static final Logger logger = LoggerFactory.getLogger(JsoupUI.class);
+
     @Autowired
     @Qualifier("pagePreviewParser")
     JSoupHtmlParser<PagePreviewDTO> pagePreviewParser;
 
-    File in;
-    String html;
-    Document doc;
+    private String page;
+    private String readme;
+    private Document doc;
 
     public void init() {
-        in = JsoupUtil.getFile("/html/github.html");
+        Long setupStart = System.currentTimeMillis();
+        File in = JsoupUtil.getFile("/html/github.html");
         try {
             doc = Jsoup.parse(in, null, "http://example.com");
-            html = doc.outerHtml();
+            page = doc.outerHtml();
+            readme = doc.getElementById("readme").data();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        displayTitleElement();
-        displayImages();
+        Long setupEnd = System.currentTimeMillis();
+        logger.info("Jsoup Time: " + (setupEnd - setupStart));
+
+        Long parserStart = System.currentTimeMillis();
+        displayPagePreviewDTO();
+        Long parserEnd = System.currentTimeMillis();
+        logger.info("Parser Time: " + (parserEnd - parserStart));
+
     }
+
+    private void displayPagePreviewDTO() {
+        PagePreviewDTO pagePreviewDTO = pagePreviewParser.parse(page);
+        System.out.println("Title: " + pagePreviewDTO.getTitle());
+        System.out.println("Twitter Image: " + pagePreviewDTO.getTwitterImage());
+        System.out.println("Facebook Image: " + pagePreviewDTO.getFacebookImage());
+    }
+
+    // region non-used demos
 
     private void displayImports() {
         Elements imports = doc.select("link[href]");
@@ -43,7 +64,6 @@ public class JsoupUI {
         for (Element link : imports) {
             print(" * %s <%s> (%s)", link.tagName(), link.attr("abs:href"), link.attr("rel"));
         }
-
     }
 
     private void displayLInks() {
@@ -69,11 +89,6 @@ public class JsoupUI {
 
     }
 
-    private void displayTitleElement() {
-        PagePreviewDTO pagePreviewDTO = pagePreviewParser.parse(html);
-        System.out.println(pagePreviewDTO.getTitle());
-    }
-
     private static void print(String msg, Object... args) {
         System.out.println(String.format(msg, args));
     }
@@ -84,5 +99,7 @@ public class JsoupUI {
         else
             return s;
     }
+
+    // endregion
 
 }

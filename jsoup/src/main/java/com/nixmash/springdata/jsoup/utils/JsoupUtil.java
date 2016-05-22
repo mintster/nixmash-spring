@@ -20,6 +20,7 @@ public class JsoupUtil {
         }
     }
 
+
     /**
      * Create a new absolute URL, from a provided existing absolute URL and a relative URL component.
      * @param baseUrl the existing absolute base URL

@@ -1,21 +1,35 @@
 package com.nixmash.springdata.jsoup.dto;
 
-import com.nixmash.springdata.jsoup.annotations.AttributeValue;
-import com.nixmash.springdata.jsoup.annotations.HtmlValue;
-import com.nixmash.springdata.jsoup.annotations.Selector;
-import com.nixmash.springdata.jsoup.annotations.TextValue;
+import com.nixmash.springdata.jsoup.annotations.*;
 
 /**
  * Created by daveburke on 5/19/16.
  */
 public class TestDTO {
 
-    private String myClassText;
-    private String myClassAttribute;
-    private String myClassHtml;
-    private String myIdText;
+    @Selector(".myclass")
+    @TextValue
+    public String myClassText;
 
-    // region getters
+    @Selector(".myclass")
+    @AttributeValue(name="myattr")
+    public String myClassAttribute;
+
+    @Selector(".myclass")
+    @HtmlValue
+    public String myClassHtml;
+
+    @Selector("#myid")
+    @TextValue
+    public String myIdText;
+
+    @MetaName("twitter:image:src")
+    public String twitterImage;
+
+    @MetaProperty("og:image")
+    public String facebookImage;
+
+    // region getters setters
 
     public String getMyClassAttribute() {
         return myClassAttribute;
@@ -33,31 +47,37 @@ public class TestDTO {
         return myClassText;
     }
 
-    // endregion
-
-    @Selector(".myclass")
-    @AttributeValue(name="myattr")
     public void setMyClassAttribute(String myClassAttribute) {
         this.myClassAttribute = myClassAttribute;
     }
 
-    @Selector(".myclass")
-    @HtmlValue
     public void setMyClassHtml(String myClassHtml) {
         this.myClassHtml = myClassHtml;
     }
 
-    @Selector("#myid")
-    @TextValue
     public void setMyIdText(String myIdText) {
         this.myIdText = myIdText;
     }
 
-    @Selector(".myclass")
-    @TextValue
     public void setMyClassText(String myClassText) {
         this.myClassText = myClassText;
     }
 
+    public String getTwitterImage() {
+        return twitterImage;
+    }
+
+    public void setTwitterImage(String twitterImage) {
+        this.twitterImage = twitterImage;
+    }
+
+    public String getFacebookImage() {
+        return facebookImage;
+    }
+
+    public void setFacebookImage(String facebookImage) {
+        this.facebookImage = facebookImage;
+    }
+    // endregion
 
 }

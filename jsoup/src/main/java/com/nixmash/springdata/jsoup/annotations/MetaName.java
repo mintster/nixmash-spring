@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AttributeValue {
-    String name();
+public @interface MetaName {
+    String value();
 }
