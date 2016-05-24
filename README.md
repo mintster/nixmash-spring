@@ -13,7 +13,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 
-- **[v0.3.2 -- Jsoup Play (In Progress)](#v032----json-play-in-progress)** : *Jsoup Annotations Framework, Generic Type as Beans*
+- **[v0.3.2 -- Jsoup Play (In Progress)](#v032----jsoup-play-in-progress)** : *Jsoup Annotations Framework, Generic Type as Beans*
 - **[v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics](#v031----siteoptions-properties-github-buttons-google-analytics)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
 - **[v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus](#v030----spring-boot-134-navbar-submenus)** : *"Demos" menu with Spring JPA and Solr Submenus, Spring Boot 1.3.4*
 - **[v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services](#v029----site-administration-start-profile-image-uploads-email-services)** : *Administrative Dashboard based on [Gentella Admin](https://github.com/puikinsh/gentelella) Bootstrap 3 Template. Velocity Java Template Engine for Email formatting*

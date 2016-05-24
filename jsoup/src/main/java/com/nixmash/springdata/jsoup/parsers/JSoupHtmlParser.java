@@ -1,47 +1,101 @@
 package com.nixmash.springdata.jsoup.parsers;
 
 import com.nixmash.springdata.jsoup.annotations.*;
-import org.jsoup.Jsoup;
+import com.nixmash.springdata.jsoup.dto.JsoupImage;
+import com.nixmash.springdata.jsoup.dto.JsoupLink;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.nixmash.springdata.jsoup.utils.JsoupUtil.attrIntToNull;
+import static com.nixmash.springdata.jsoup.utils.JsoupUtil.trim;
 
 public class JSoupHtmlParser<T> {
 
     private final Class<T> classModel;
+    private Document doc;
 
     // Pass in the class Java bean that will contain the mapped data from the HTML source
-    public JSoupHtmlParser( final Class<T> classModel) {
+    public JSoupHtmlParser(final Class<T> classModel) {
         this.classModel = classModel;
     }
 
     // Main method that will translate HTML to object
-    public T parse(String html) {
+    public T parse(Document doc) {
         try {
-            final Document doc = Jsoup.parse(html);
+            this.doc = doc;
             T model = this.classModel.newInstance();
 
             for (Field f : this.classModel.getDeclaredFields()) {
                 String value = null;
 
+                // selections and meta keys
+
                 if (f.isAnnotationPresent(Selector.class)) {
-                    value = parseSelector(doc, f);
+                    value = parseSelector(f);
                 }
 
                 if (f.isAnnotationPresent(MetaName.class)) {
-                    value = parseMetaName(doc, f);
+                    value = parseMetaName(f);
                 }
 
                 if (f.isAnnotationPresent(MetaProperty.class)) {
-                    value = parseMetaProperty(doc, f);
+                    value = parseMetaProperty(f);
                 }
 
                 if (value != null)
                     f.set(model, value);
 
+                // images
+
+                if (f.isAnnotationPresent(ImageSelector.class)) {
+                    Type genericFieldType = f.getGenericType();
+
+                    Boolean isMultiple = false;
+
+                    if(genericFieldType instanceof ParameterizedType){
+                        isMultiple = true;
+                    }
+
+                    if (isMultiple) {
+                        List<JsoupImage> images = parseMultipleImages(f);
+                        if (images != null)
+                            f.set(model, images);
+                    } else {
+                        JsoupImage image = parseImage(f);
+                        if (image != null)
+                            f.set(model, image);
+                    }
+                }
+
+                if (f.isAnnotationPresent(LinkSelector.class)) {
+                    Type genericFieldType = f.getGenericType();
+
+                    Boolean isMultiple = false;
+
+                    if(genericFieldType instanceof ParameterizedType){
+                        isMultiple = true;
+                    }
+
+                    if (isMultiple) {
+                        List<JsoupLink> links = parseMultipleLinks(f);
+                        if (links != null)
+                            f.set(model, links);
+                    } else {
+                        JsoupLink link = parseLink(f);
+                        if (link != null)
+                            f.set(model, link);
+                    }
+                }
+
             }
+
 
             return model;
         } catch (Exception e) {
@@ -50,7 +104,95 @@ public class JSoupHtmlParser<T> {
         return null;
     }
 
-    private String parseMetaProperty(Document doc, Field f) {
+    private List<JsoupLink> parseMultipleLinks(Field f) {
+        List<JsoupLink> links = new ArrayList<>();
+        Elements section;
+        Elements elements;
+
+        String css = f.getAnnotation(LinkSelector.class).value();
+        if (css.length() > 0) {
+            section = doc.select(css);
+            if (section == null)
+                return null;
+            elements = section.first().select("a[href]");
+        }
+        else
+        {
+            elements = doc.select("a[href]");
+        }
+
+        for (Element element : elements) {
+            if (element.tagName().equals("a")) {
+                links.add(createJsoupLink(element));
+            }
+        }
+        return links;
+
+    }
+
+    private JsoupLink parseLink(Field f) {
+        String css = f.getAnnotation(LinkSelector.class).value();
+        String selector = String.format("a[href]%s", css);
+        Element element = doc.select(selector).first();
+        if (element != null) {
+            return createJsoupLink(element);
+        }
+        return null;
+    }
+
+    private JsoupLink createJsoupLink(Element element) {
+        JsoupLink link = new JsoupLink();
+        link.setHref(element.attr("abs:href"));
+        link.setText(trim(element.text(), 120));
+        return link;
+    }
+
+    private JsoupImage parseImage(Field f) {
+        String css = f.getAnnotation(ImageSelector.class).value();
+        String selector = String.format("img%s", css);
+        Element media = doc.select(selector).first();
+        if (media != null) {
+            return createImageElement(media);
+        }
+        return null;
+    }
+
+    private List<JsoupImage> parseMultipleImages(Field f) {
+        List<JsoupImage> images = new ArrayList<>();
+        Elements section;
+        Elements elements;
+
+        String css = f.getAnnotation(ImageSelector.class).value();
+        if (css.length() > 0) {
+            section = doc.select(css);
+            if (section == null)
+                return null;
+            elements = section.first().select("[src]");
+        }
+        else
+        {
+            elements = doc.select("[src]");
+        }
+
+        for (Element src : elements) {
+            if (src.tagName().equals("img")) {
+                images.add(createImageElement(src));
+            }
+        }
+        return images;
+    }
+
+
+    private JsoupImage createImageElement(Element media) {
+        JsoupImage img = new JsoupImage();
+        img.setSrc(media.attr("abs:src"));
+        img.setAlt(trim(media.attr("alt"), 60));
+        img.setHeight(attrIntToNull(media.attr("height")));
+        img.setWidth(attrIntToNull(media.attr("width")));
+        return img;
+    }
+
+    private String parseMetaProperty(Field f) {
         String tagproperty = f.getAnnotation(MetaProperty.class).value();
 
         String selector = String.format("meta[property=%s]", tagproperty);
@@ -61,7 +203,7 @@ public class JSoupHtmlParser<T> {
         return null;
     }
 
-    private String parseMetaName(Document doc, Field f) {
+    private String parseMetaName(Field f) {
         String tagname = f.getAnnotation(MetaName.class).value();
 
         String selector = String.format("meta[name=%s]", tagname);
@@ -72,7 +214,7 @@ public class JSoupHtmlParser<T> {
         return null;
     }
 
-    private String parseSelector(final Document doc, Field f) {
+    private String parseSelector(Field f) {
         String selector = f.getAnnotation(Selector.class).value();
 
         Elements elems = doc.select(selector);
@@ -87,8 +229,7 @@ public class JSoupHtmlParser<T> {
                 return elem.html();
             } else if (f.isAnnotationPresent(AttributeValue.class)) {
                 return elem.attr(f.getAnnotation(AttributeValue.class).name());
-            }
-            else
+            } else
                 return elem.text();
         }
 

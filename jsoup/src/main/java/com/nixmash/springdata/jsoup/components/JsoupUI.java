@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 
+import static com.nixmash.springdata.jsoup.utils.JsoupUtil.trim;
+
 @Component
 public class JsoupUI {
 
@@ -25,35 +27,33 @@ public class JsoupUI {
     @Qualifier("pagePreviewParser")
     JSoupHtmlParser<PagePreviewDTO> pagePreviewParser;
 
-    private String page;
-    private String readme;
     private Document doc;
 
     public void init() {
-        Long setupStart = System.currentTimeMillis();
         File in = JsoupUtil.getFile("/html/github.html");
         try {
             doc = Jsoup.parse(in, null, "http://example.com");
-            page = doc.outerHtml();
-            readme = doc.getElementById("readme").data();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Long setupEnd = System.currentTimeMillis();
-        logger.info("Jsoup Time: " + (setupEnd - setupStart));
-
-        Long parserStart = System.currentTimeMillis();
         displayPagePreviewDTO();
-        Long parserEnd = System.currentTimeMillis();
-        logger.info("Parser Time: " + (parserEnd - parserStart));
-
+//        displayImages();
+//        displayImports();
+//        displayLInks();
     }
 
     private void displayPagePreviewDTO() {
-        PagePreviewDTO pagePreviewDTO = pagePreviewParser.parse(page);
+        PagePreviewDTO pagePreviewDTO = pagePreviewParser.parse(doc);
         System.out.println("Title: " + pagePreviewDTO.getTitle());
         System.out.println("Twitter Image: " + pagePreviewDTO.getTwitterImage());
         System.out.println("Facebook Image: " + pagePreviewDTO.getFacebookImage());
+
+        System.out.println(pagePreviewDTO.getImages().get(5).src);
+        System.out.println(pagePreviewDTO.getAvatar().src);
+
+        System.out.println(pagePreviewDTO.getLinks().get(51).href);
+        System.out.println(pagePreviewDTO.getLink().href);
+
     }
 
     // region non-used demos
@@ -82,7 +82,7 @@ public class JsoupUI {
             if (src.tagName().equals("img"))
                 print(" * %s: <%s> %sx%s (%s)",
                         src.tagName(), src.attr("abs:src"), src.attr("width"), src.attr("height"),
-                        trim(src.attr("alt"), 20));
+                        trim(src.attr("alt"), 60));
             else
                 print(" * %s: <%s>", src.tagName(), src.attr("abs:src"));
         }
@@ -93,12 +93,6 @@ public class JsoupUI {
         System.out.println(String.format(msg, args));
     }
 
-    private static String trim(String s, int width) {
-        if (s.length() > width)
-            return s.substring(0, width - 1) + ".";
-        else
-            return s;
-    }
 
     // endregion
 

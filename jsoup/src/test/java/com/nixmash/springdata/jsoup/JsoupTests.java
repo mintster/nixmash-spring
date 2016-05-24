@@ -1,5 +1,7 @@
 package com.nixmash.springdata.jsoup;
 
+import com.nixmash.springdata.jsoup.dto.JsoupImage;
+import com.nixmash.springdata.jsoup.dto.JsoupLink;
 import com.nixmash.springdata.jsoup.dto.TestDTO;
 import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
 import com.nixmash.springdata.jsoup.utils.JsoupTestUtil;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class JsoupTests extends JsoupContext {
@@ -33,7 +36,7 @@ public class JsoupTests extends JsoupContext {
     public void setup() throws IOException {
         File in = JsoupTestUtil.getFile("/html/testdto.html");
         doc = Jsoup.parse(in, null, "http://example.com");
-        testDTO = testDTOParser.parse(doc.outerHtml());
+        testDTO = testDTOParser.parse(doc);
     }
 
     @Test
@@ -82,6 +85,50 @@ public class JsoupTests extends JsoupContext {
         assertEquals("This is my id text", testDTO.getMyIdText());
     }
 
-    // endregion
+    @Test
+    public void parseImages() {
+
+        // # of images in content area one less than full testdto.html page
+
+        assertEquals(testDTO.getTestImagesInContentArea().size(), 2);
+        assertEquals(testDTO.getTestImagesInPage().size(), 3);
+
+        // attributes of first image in List<JsoupImage>
+
+        JsoupImage img = testDTO.getTestImagesInContentArea().get(0);
+        assertEquals("http://example.com/one.png", img.getSrc());
+        assertEquals("one", img.getAlt());
+        assertTrue(img.getHeight().equals(40));
+
+        // empty image height-width attributes are null
+
+        assertTrue(testDTO.getTestImagesInContentArea().get(1).getHeight() == null);
+
+        // retrieving image with class=myimage
+
+        assertEquals(testDTO.getTestImage().getSrc(),"http://example.com/two.png");
+
+    }
+
+    @Test
+    public void parseLinks() {
+
+        // # of links in content area one less than full testdto.html page
+
+        assertEquals(testDTO.getTestLinksInContentArea().size(), 2);
+        assertEquals(testDTO.getTestLinksInPage().size(), 3);
+
+        // attributes of first link in List<JsoupLink>
+
+        JsoupLink link = testDTO.getTestLinksInContentArea().get(0);
+        assertEquals("http://example.com/one.html", link.getHref());
+        assertEquals("First Link", link.getText());
+
+        // retrieving link with class=mylink
+
+        assertEquals(testDTO.getTestLink().getHref(),"http://example.com/two.html");
+        
+    }
+        // endregion
 
 }
