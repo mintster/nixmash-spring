@@ -1,7 +1,7 @@
 package com.nixmash.springdata.jsoup;
 
 import com.nixmash.springdata.jsoup.dto.TestDTO;
-import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
 import com.nixmash.springdata.jsoup.parsers.TestDTOParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

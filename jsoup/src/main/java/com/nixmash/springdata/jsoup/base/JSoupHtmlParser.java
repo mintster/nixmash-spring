@@ -1,8 +1,6 @@
-package com.nixmash.springdata.jsoup.parsers;
+package com.nixmash.springdata.jsoup.base;
 
 import com.nixmash.springdata.jsoup.annotations.*;
-import com.nixmash.springdata.jsoup.dto.JsoupImage;
-import com.nixmash.springdata.jsoup.dto.JsoupLink;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

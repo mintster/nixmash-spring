@@ -1,7 +1,7 @@
 package com.nixmash.springdata.jsoup.configuration;
 
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
-import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
 import com.nixmash.springdata.jsoup.parsers.PagePreviewParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,3 +16,7 @@ public class JsoupConfig {
         return new PagePreviewParser(PagePreviewDTO.class);
     }
 }
+
+
+
+

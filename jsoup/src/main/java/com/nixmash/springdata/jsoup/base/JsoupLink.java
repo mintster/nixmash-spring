@@ -1,4 +1,4 @@
-package com.nixmash.springdata.jsoup.dto;
+package com.nixmash.springdata.jsoup.base;
 
 /**
  * Created by daveburke on 5/22/16.
@@ -8,7 +8,6 @@ public class JsoupLink {
 
     public String href;
     public String text;
-
 
     // region getter setters
 
@@ -28,10 +27,18 @@ public class JsoupLink {
         this.text = text;
     }
 
-
     // endregion
 
-//    for (Element link : links) {
-//        print(" * a: <%s>  (%s)", link.attr("abs:href"), trim(link.text(), 35));
-//    }
+
+    //region toString()
+
+    @Override
+    public String toString() {
+        return "JsoupLink{" +
+                "href='" + href + '\'' +
+                ", text='" + text + '\'' +
+                '}';
+    }
+
+    //endregion
 }

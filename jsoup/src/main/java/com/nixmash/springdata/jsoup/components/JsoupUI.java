@@ -1,7 +1,8 @@
 package com.nixmash.springdata.jsoup.components;
 
+import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JsoupImage;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
-import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
 import com.nixmash.springdata.jsoup.utils.JsoupUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,7 +16,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import static com.nixmash.springdata.jsoup.utils.JsoupUtil.attrIntToNull;
+import static com.nixmash.springdata.jsoup.utils.JsoupUtil.getBaseUri;
 import static com.nixmash.springdata.jsoup.utils.JsoupUtil.trim;
 
 @Component
@@ -32,27 +37,32 @@ public class JsoupUI {
     public void init() {
         File in = JsoupUtil.getFile("/html/github.html");
         try {
-            doc = Jsoup.parse(in, null, "http://example.com");
+            String linkUrl = "http://mysite.com/some/path";
+            doc = Jsoup.parse(in, null, getBaseUri(linkUrl));
         } catch (IOException e) {
             e.printStackTrace();
         }
         displayPagePreviewDTO();
-//        displayImages();
-//        displayImports();
-//        displayLInks();
+
     }
 
     private void displayPagePreviewDTO() {
+
         PagePreviewDTO pagePreviewDTO = pagePreviewParser.parse(doc);
+
         System.out.println("Title: " + pagePreviewDTO.getTitle());
         System.out.println("Twitter Image: " + pagePreviewDTO.getTwitterImage());
         System.out.println("Facebook Image: " + pagePreviewDTO.getFacebookImage());
 
-        System.out.println(pagePreviewDTO.getImages().get(5).src);
-        System.out.println(pagePreviewDTO.getAvatar().src);
+        System.out.println("First Image in Readme content: " +
+                pagePreviewDTO.getImages().get(0).src);
 
-        System.out.println(pagePreviewDTO.getLinks().get(51).href);
-        System.out.println(pagePreviewDTO.getLink().href);
+        System.out.println("Avatar Image: " + pagePreviewDTO.getAvatar().src);
+
+        System.out.println("First Link in Readme content: " +
+                pagePreviewDTO.getLinks().get(0).href);
+
+        System.out.println("Link with 'mylink' class: " + pagePreviewDTO.getLink().href);
 
     }
 
@@ -64,6 +74,24 @@ public class JsoupUI {
         for (Element link : imports) {
             print(" * %s <%s> (%s)", link.tagName(), link.attr("abs:href"), link.attr("rel"));
         }
+    }
+
+    private List<JsoupImage> getImages(Document doc) {
+        List<JsoupImage> images = new ArrayList<>();
+        Elements elements;
+            elements = doc.select("[src]");
+
+        for (Element media : elements) {
+            if (media.tagName().equals("img")) {
+                JsoupImage img = new JsoupImage();
+                img.setSrc(media.attr("abs:src"));
+                img.setAlt(trim(media.attr("alt"), 60));
+                img.setHeight(attrIntToNull(media.attr("height")));
+                img.setWidth(attrIntToNull(media.attr("width")));
+                images.add(img);
+            }
+        }
+        return images;
     }
 
     private void displayLInks() {

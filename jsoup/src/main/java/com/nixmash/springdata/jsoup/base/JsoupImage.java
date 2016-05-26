@@ -1,4 +1,4 @@
-package com.nixmash.springdata.jsoup.dto;
+package com.nixmash.springdata.jsoup.base;
 
 /**
  * Created by daveburke on 5/22/16.

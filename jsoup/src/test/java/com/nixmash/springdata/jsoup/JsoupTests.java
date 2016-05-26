@@ -1,9 +1,9 @@
 package com.nixmash.springdata.jsoup;
 
-import com.nixmash.springdata.jsoup.dto.JsoupImage;
-import com.nixmash.springdata.jsoup.dto.JsoupLink;
+import com.nixmash.springdata.jsoup.base.JsoupImage;
+import com.nixmash.springdata.jsoup.base.JsoupLink;
 import com.nixmash.springdata.jsoup.dto.TestDTO;
-import com.nixmash.springdata.jsoup.parsers.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
 import com.nixmash.springdata.jsoup.utils.JsoupTestUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

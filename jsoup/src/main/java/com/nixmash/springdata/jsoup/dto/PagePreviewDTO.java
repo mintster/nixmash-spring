@@ -1,12 +1,12 @@
 package com.nixmash.springdata.jsoup.dto;
 
 import com.nixmash.springdata.jsoup.annotations.*;
+import com.nixmash.springdata.jsoup.base.JsoupImage;
+import com.nixmash.springdata.jsoup.base.JsoupLink;
 
 import java.util.List;
 
-/**
- * Created by daveburke on 5/19/16.
- */
+
 @SuppressWarnings("WeakerAccess")
 public class PagePreviewDTO {
 
