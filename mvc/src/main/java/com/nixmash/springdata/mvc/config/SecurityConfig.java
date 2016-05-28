@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] IGNORED_RESOURCE_LIST = new String[] {"/fonts/**", "/webjars/**", "/dashboard/**",
 			"/dandelion-assets/**", "/dandelion/**", "/files/**" , "/robots.txt" };
 	private static final String[] PERMITALL_RESOURCE_LIST = new String[] {"/auth/**", "/signin/**", "/signup/**", "/",
-			"/register/**", "/contacts", "/json/**", "/products/**",  "/errors/**", "/users/**" };
+			"/register/**", "/contacts", "/json/**", "/products/**",  "/errors/**", "/users/**", "/posts/**" };
 	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/admin/**" };
 
 	@Autowired

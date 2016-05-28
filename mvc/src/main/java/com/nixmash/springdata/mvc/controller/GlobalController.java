@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class GlobalController {
+public class  GlobalController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GlobalController.class);
 

@@ -60,12 +60,16 @@
                             </li>
                         </ul>
                     </li>
+                    <li th:class="${activeTab == 'posts'} ? 'active' : null"><a href="/posts"
+                                                                                th:href="@{/posts}" th:text="#{posts.navbar.linktext}">[Posts]</a></li>
+
+                    <li th:class="${activeTab == 'contact'} ? 'active' : null"><a href="/users/contact"
+                                                                                  th:href="@{/users/contact}" th:text="#{mail.contact.navbar.linktext}">[Contact]</a></li>
+
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="/admin" th:href="@{/admin}"><span th:text="#{navbar.admin}"
                                                                    th:remove="tag">[Admin]</span></a>
                     </li>
-                    <li th:class="${activeTab == 'contact'} ? 'active' : null"><a href="/users/contact"
-                                                                                                      th:href="@{/users/contact}" th:text="#{mail.contact.navbar.linktext}">[Contact]</a></li>
                 </ul>
 
                 <div th:unless="${activeTab == 'error'}" th:remove="tag">
