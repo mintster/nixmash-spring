@@ -3,6 +3,7 @@ package com.nixmash.springdata.jsoup.components;
 import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
 import com.nixmash.springdata.jsoup.base.JsoupImage;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
+import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.jsoup.utils.JsoupUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,14 +28,32 @@ import static com.nixmash.springdata.jsoup.utils.JsoupUtil.trim;
 public class JsoupUI {
 
     private static final Logger logger = LoggerFactory.getLogger(JsoupUI.class);
+    private static final String REPO_URL = "https://github.com/mintster/spring-data";
 
+    
     @Autowired
     @Qualifier("pagePreviewParser")
     JSoupHtmlParser<PagePreviewDTO> pagePreviewParser;
 
+    JsoupService jsoupService;
+
+    @Autowired
+    public JsoupUI(JsoupService jsoupService) {
+        this.jsoupService = jsoupService;
+    }
+
     private Document doc;
 
     public void init() {
+        pagePreviewDTOFromFile();
+        pagePreviewDTOFromUrl();
+    }
+
+    private void pagePreviewDTOFromUrl() {
+        printPagePreviewDTO(jsoupService.getPagePreview(REPO_URL));
+    }
+
+    private void pagePreviewDTOFromFile() {
         File in = JsoupUtil.getFile("/html/github.html");
         try {
             String linkUrl = "http://mysite.com/some/path";
@@ -42,28 +61,16 @@ public class JsoupUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        displayPagePreviewDTO();
-
+        printPagePreviewDTO(pagePreviewParser.parse(doc));
     }
 
-    private void displayPagePreviewDTO() {
-
-        PagePreviewDTO pagePreviewDTO = pagePreviewParser.parse(doc);
-
+    private void printPagePreviewDTO(PagePreviewDTO pagePreviewDTO) {
         System.out.println("Title: " + pagePreviewDTO.getTitle());
         System.out.println("Twitter Image: " + pagePreviewDTO.getTwitterImage());
         System.out.println("Facebook Image: " + pagePreviewDTO.getFacebookImage());
-
-        System.out.println("First Image in Readme content: " +
-                pagePreviewDTO.getImages().get(0).src);
-
-        System.out.println("Avatar Image: " + pagePreviewDTO.getAvatar().src);
-
-        System.out.println("First Link in Readme content: " +
-                pagePreviewDTO.getLinks().get(0).href);
-
-        System.out.println("Link with 'mylink' class: " + pagePreviewDTO.getLink().href);
-
+        System.out.println("First Image in Document: " +  pagePreviewDTO.getImages().get(0).src);
+        System.out.println("First Link in Dpcument: " + pagePreviewDTO.getLinks().get(0).href);
+        System.out.println("\n\n");
     }
 
     // region non-used demos

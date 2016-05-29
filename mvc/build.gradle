@@ -14,13 +14,13 @@ dependencies {
 	compile project(':jpa')
 	compile project(':solr')
 	compile project(':mail')
+	compile project(':jsoup')
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	compile 'org.springframework.boot:spring-boot-starter-social-twitter'
 	compile 'org.springframework.boot:spring-boot-starter-social-facebook'
 	compile 'org.springframework.social:spring-social-security:1.1.4.RELEASE'
-	compile 'org.springframework.boot:spring-boot-starter-security'
 	compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	compile 'org.springframework.social:spring-social-google:1.0.0.RELEASE'
 	

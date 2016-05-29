@@ -19,16 +19,10 @@ public class PagePreviewDTO {
     @MetaProperty("og:image")
     public String facebookImage;
 
-    @ImageSelector("#readme")
+    @ImageSelector
     public List<JsoupImage> images;
 
-    @ImageSelector(".avatar")
-    public JsoupImage avatar;
-
-    @LinkSelector(".mylink")
-    public JsoupLink link;
-
-    @LinkSelector("#readme")
+    @LinkSelector
     public List<JsoupLink> links;
 
 
@@ -58,29 +52,12 @@ public class PagePreviewDTO {
         this.title = title;
     }
 
-
     public List<JsoupImage> getImages() {
         return images;
     }
 
     public void setImages(List<JsoupImage> images) {
         this.images = images;
-    }
-
-    public JsoupImage getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(JsoupImage avatar) {
-        this.avatar = avatar;
-    }
-
-    public JsoupLink getLink() {
-        return link;
-    }
-
-    public void setLink(JsoupLink link) {
-        this.link = link;
     }
 
     public List<JsoupLink> getLinks() {

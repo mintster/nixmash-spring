@@ -1,9 +1,12 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <div th:fragment="contactOfTheDay">
     <div th:text="#{js.cod.message(|${cod.firstName} ${cod.lastName}|)}" class="cod-name">[CONTACT NAME]</div>
-    <div th:text="#{js.cod.hobbies(|${cod.firstName}|)}" class="cod-hobbies"></div> <ul class="cod-hobbylist"> <li th:each="hobby : ${cod.hobbies}" th:text="${hobby.hobbyTitle}">[HOBBIES]</li> </ul>
+    <div th:text="#{js.cod.hobbies(|${cod.firstName}|)}" class="cod-hobbies"></div>
+    <ul class="cod-hobbylist">
+        <li th:each="hobby : ${cod.hobbies}" th:text="${hobby.hobbyTitle}">[HOBBIES]</li>
+    </ul>
 </div>
 
 <div th:fragment="functions">
@@ -43,25 +46,25 @@
 
                 $('#multiselect-badgeboy')
                         .multiselect({
-                    includeSelectAllOption: true,
-                    buttonClass: 'btn btn-default btn-xs btn-badgeboy',
-                    enableHTML: true,
-                    checkboxName: 'badgeboxes[]',
-                    buttonText: function (options, select) {
-                        if (options.length === 0) {
-                            return badgeBoy;
-                        }
-                        else {
-                            if (options.length > 0)
-                                return badgeBoy + "<span class=\'badge\'>" + options.length + "</span>";
-                        }
-                    },
-                    onDropdownHidden: function (event) {
-                        var selectedBadgeValues = $('select#multiselect-badgeboy').val();
-                        updateBadges(selectedBadgeValues);
-                    }
+                            includeSelectAllOption: true,
+                            buttonClass: 'btn btn-default btn-xs btn-badgeboy',
+                            enableHTML: true,
+                            checkboxName: 'badgeboxes[]',
+                            buttonText: function (options, select) {
+                                if (options.length === 0) {
+                                    return badgeBoy;
+                                }
+                                else {
+                                    if (options.length > 0)
+                                        return badgeBoy + "<span class=\'badge\'>" + options.length + "</span>";
+                                }
+                            },
+                            onDropdownHidden: function (event) {
+                                var selectedBadgeValues = $('select#multiselect-badgeboy').val();
+                                updateBadges(selectedBadgeValues);
+                            }
 
-                })
+                        })
                         .multiselect('dataprovider', data);
 
             });
@@ -85,6 +88,11 @@
                     }
                 });
             }
+
+            $.getJSON('/json/posts/map', null, function (data) {
+                $("#keyvalue").html(data["key"]);
+            });
+
         });
 
         /*]]>*/

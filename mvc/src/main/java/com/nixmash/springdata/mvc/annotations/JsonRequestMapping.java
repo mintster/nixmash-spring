@@ -31,3 +31,4 @@ public @interface JsonRequestMapping {
     @AliasFor(annotation = RequestMapping.class, attribute = "produces")
     String[] produces() default {};
 }
+
