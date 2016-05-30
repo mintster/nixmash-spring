@@ -50,6 +50,14 @@ public class JSoupHtmlParser<T> {
                 if (value != null)
                     f.set(model, value);
 
+                // twitter container
+
+                if (f.isAnnotationPresent(TwitterSelector.class)) {
+                    JsoupTwitter jsoupTwitter= parseTwitter();
+                    if (jsoupTwitter!= null)
+                        f.set(model, jsoupTwitter);
+                }
+
                 // images
 
                 if (f.isAnnotationPresent(ImageSelector.class)) {
@@ -57,7 +65,7 @@ public class JSoupHtmlParser<T> {
 
                     Boolean isMultiple = false;
 
-                    if(genericFieldType instanceof ParameterizedType){
+                    if (genericFieldType instanceof ParameterizedType) {
                         isMultiple = true;
                     }
 
@@ -77,7 +85,7 @@ public class JSoupHtmlParser<T> {
 
                     Boolean isMultiple = false;
 
-                    if(genericFieldType instanceof ParameterizedType){
+                    if (genericFieldType instanceof ParameterizedType) {
                         isMultiple = true;
                     }
 
@@ -113,9 +121,7 @@ public class JSoupHtmlParser<T> {
             if (section == null)
                 return null;
             elements = section.first().select("a[href]");
-        }
-        else
-        {
+        } else {
             elements = doc.select("a[href]");
         }
 
@@ -145,6 +151,32 @@ public class JSoupHtmlParser<T> {
         return link;
     }
 
+
+    private JsoupTwitter parseTwitter() {
+
+        if (doc.select("meta[name=twitter:card]").first() != null) {
+            return new JsoupTwitter(
+                    twitterContent("card"),
+                    twitterContent("creator"),
+                    twitterContent("url"),
+                    twitterContent("title"),
+                    twitterContent("description"),
+                    twitterContent("image")
+            );
+        } else
+            return null;
+    }
+
+    private String twitterContent(String tagName) {
+        String selector = String.format("meta[name=twitter:%s]", tagName);
+        String content = null;
+        Element element = doc.select(selector).first();
+        if (element != null) {
+            content = element.attr("content");
+        }
+        return content;
+    }
+
     private JsoupImage parseImage(Field f) {
         String css = f.getAnnotation(ImageSelector.class).value();
         String selector = String.format("img%s", css);
@@ -166,9 +198,7 @@ public class JSoupHtmlParser<T> {
             if (section == null)
                 return null;
             elements = section.first().select("[src]");
-        }
-        else
-        {
+        } else {
             elements = doc.select("[src]");
         }
 

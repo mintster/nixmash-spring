@@ -54,7 +54,7 @@ public class JsoupUI {
     }
 
     private void pagePreviewDTOFromFile() {
-        File in = JsoupUtil.getFile("/html/github.html");
+        File in = JsoupUtil.getFile("/html/notwitter.html");
         try {
             String linkUrl = "http://mysite.com/some/path";
             doc = Jsoup.parse(in, null, getBaseUri(linkUrl));
@@ -66,10 +66,12 @@ public class JsoupUI {
 
     private void printPagePreviewDTO(PagePreviewDTO pagePreviewDTO) {
         System.out.println("Title: " + pagePreviewDTO.getTitle());
-        System.out.println("Twitter Image: " + pagePreviewDTO.getTwitterImage());
-        System.out.println("Facebook Image: " + pagePreviewDTO.getFacebookImage());
-        System.out.println("First Image in Document: " +  pagePreviewDTO.getImages().get(0).src);
-        System.out.println("First Link in Dpcument: " + pagePreviewDTO.getLinks().get(0).href);
+        if (pagePreviewDTO.getTwitterDTO() != null)
+        {
+            System.out.println(pagePreviewDTO.getTwitterDTO().toString());
+        }
+        System.out.println("Description: " + pagePreviewDTO.getDescription());
+        System.out.println("Keywords: " + pagePreviewDTO.getKeywords());
         System.out.println("\n\n");
     }
 

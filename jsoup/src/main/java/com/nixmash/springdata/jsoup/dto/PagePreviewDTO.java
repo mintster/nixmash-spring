@@ -1,8 +1,11 @@
 package com.nixmash.springdata.jsoup.dto;
 
-import com.nixmash.springdata.jsoup.annotations.*;
+import com.nixmash.springdata.jsoup.annotations.ImageSelector;
+import com.nixmash.springdata.jsoup.annotations.MetaName;
+import com.nixmash.springdata.jsoup.annotations.Selector;
+import com.nixmash.springdata.jsoup.annotations.TwitterSelector;
 import com.nixmash.springdata.jsoup.base.JsoupImage;
-import com.nixmash.springdata.jsoup.base.JsoupLink;
+import com.nixmash.springdata.jsoup.base.JsoupTwitter;
 
 import java.util.List;
 
@@ -13,36 +16,19 @@ public class PagePreviewDTO {
     @Selector("title")
     public String title;
 
-    @MetaName("twitter:image:src")
-    public String twitterImage;
+    @MetaName("keywords")
+    public String keywords;
 
-    @MetaProperty("og:image")
-    public String facebookImage;
+    @MetaName("description")
+    public String description;
+
+    @TwitterSelector
+    public JsoupTwitter twitterDTO;
 
     @ImageSelector
     public List<JsoupImage> images;
 
-    @LinkSelector
-    public List<JsoupLink> links;
-
-
     // region getters setters
-
-    public String getFacebookImage() {
-        return facebookImage;
-    }
-
-    public void setFacebookImage(String facebookImage) {
-        this.facebookImage = facebookImage;
-    }
-
-    public String getTwitterImage() {
-        return twitterImage;
-    }
-
-    public void setTwitterImage(String twitterImage) {
-        this.twitterImage = twitterImage;
-    }
 
     public String getTitle() {
         return title;
@@ -60,12 +46,28 @@ public class PagePreviewDTO {
         this.images = images;
     }
 
-    public List<JsoupLink> getLinks() {
-        return links;
+    public JsoupTwitter getTwitterDTO() {
+        return twitterDTO;
     }
 
-    public void setLinks(List<JsoupLink> links) {
-        this.links = links;
+    public void setTwitterDTO(JsoupTwitter twitterDTO) {
+        this.twitterDTO = twitterDTO;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     // endregion

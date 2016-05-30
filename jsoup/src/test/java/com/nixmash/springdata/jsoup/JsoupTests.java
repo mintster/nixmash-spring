@@ -20,6 +20,7 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -62,7 +63,7 @@ public class JsoupTests extends JsoupContext {
 
     @Test
     public void parseMetaTagByName() {
-        assertEquals("http://twitter.image", testDTO.getTwitterImage());
+        assertEquals("one, two, three", testDTO.getMetaKeywords());
     }
 
     @Test
@@ -83,6 +84,11 @@ public class JsoupTests extends JsoupContext {
     @Test
     public void parseIdText() {
         assertEquals("This is my id text", testDTO.getMyIdText());
+    }
+
+    @Test
+    public void parseDescriptionWhichShouldBeNull() {
+        assertNull(testDTO.getDescription());
     }
 
     @Test

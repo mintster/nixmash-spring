@@ -3,6 +3,7 @@ package com.nixmash.springdata.jsoup.dto;
 import com.nixmash.springdata.jsoup.annotations.*;
 import com.nixmash.springdata.jsoup.base.JsoupImage;
 import com.nixmash.springdata.jsoup.base.JsoupLink;
+import com.nixmash.springdata.jsoup.base.JsoupTwitter;
 
 import java.util.List;
 
@@ -28,8 +29,11 @@ public class TestDTO {
     @TextValue
     public String myIdText;
 
-    @MetaName("twitter:image:src")
-    public String twitterImage;
+    @MetaName("keywords")
+    public String metaKeywords;
+
+    @MetaName("description")
+    public String description;
 
     @MetaProperty("og:image")
     public String facebookImage;
@@ -51,6 +55,9 @@ public class TestDTO {
 
     @LinkSelector(".mylink")
     public JsoupLink testLink;
+
+    @TwitterSelector
+    public JsoupTwitter twitterDTO;
 
     // region getters setters
 
@@ -86,12 +93,12 @@ public class TestDTO {
         this.myClassText = myClassText;
     }
 
-    public String getTwitterImage() {
-        return twitterImage;
+    public String getMetaKeywords() {
+        return metaKeywords;
     }
 
-    public void setTwitterImage(String twitterImage) {
-        this.twitterImage = twitterImage;
+    public void setMetaKeywords(String metaKeywords) {
+        this.metaKeywords = metaKeywords;
     }
 
     public String getFacebookImage() {
@@ -148,6 +155,22 @@ public class TestDTO {
 
     public void setTestLink(JsoupLink testLink) {
         this.testLink = testLink;
+    }
+
+    public JsoupTwitter getTwitterDTO() {
+        return twitterDTO;
+    }
+
+    public void setTwitterDTO(JsoupTwitter twitterDTO) {
+        this.twitterDTO = twitterDTO;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     // endregion
