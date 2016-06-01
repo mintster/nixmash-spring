@@ -3,7 +3,7 @@ package com.nixmash.springdata.jsoup;
 import com.nixmash.springdata.jsoup.base.JsoupImage;
 import com.nixmash.springdata.jsoup.base.JsoupLink;
 import com.nixmash.springdata.jsoup.dto.TestDTO;
-import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JsoupHtmlParser;
 import com.nixmash.springdata.jsoup.utils.JsoupTestUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,7 +31,7 @@ public class JsoupTests extends JsoupContext {
 
     @Autowired
     @Qualifier("testDTOParser")
-    JSoupHtmlParser<TestDTO> testDTOParser;
+    JsoupHtmlParser<TestDTO> testDTOParser;
 
     @Before
     public void setup() throws IOException {

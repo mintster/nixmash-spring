@@ -1,7 +1,7 @@
 package com.nixmash.springdata.jsoup.utils;
 
 import com.nixmash.springdata.jsoup.JsoupContext;
-import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JsoupHtmlParser;
 import com.nixmash.springdata.jsoup.dto.TestDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,7 +28,7 @@ public class JsoupTwitterTests extends JsoupContext {
 
     @Autowired
     @Qualifier("testDTOParser")
-    JSoupHtmlParser<TestDTO> testDTOParser;
+    JsoupHtmlParser<TestDTO> testDTOParser;
 
     @Before
     public void setup() throws IOException {

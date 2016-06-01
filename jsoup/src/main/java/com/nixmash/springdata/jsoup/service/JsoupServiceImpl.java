@@ -1,6 +1,6 @@
 package com.nixmash.springdata.jsoup.service;
 
-import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JsoupHtmlParser;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +19,7 @@ public class JsoupServiceImpl implements JsoupService {
 
     @Autowired
     @Qualifier("pagePreviewParser")
-    JSoupHtmlParser<PagePreviewDTO> pagePreviewParser;
+    JsoupHtmlParser<PagePreviewDTO> pagePreviewParser;
 
     @Override
     public PagePreviewDTO getPagePreview(String url) {

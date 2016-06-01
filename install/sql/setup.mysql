@@ -290,3 +290,31 @@ INSERT INTO `site_options` VALUES ('4', 'googleAnalyticsTrackingId', 'UA-XXXXXX-
 INSERT INTO `site_options` VALUES ('5', 'integerProperty', '1');
 
 
+
+-- ----------------------------
+-- Table structure for posts
+-- ----------------------------
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE `posts` (
+  `post_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `post_title` varchar(200) NOT NULL,
+  `post_name` varchar(200) NOT NULL,
+  `post_link` varchar(255) DEFAULT NULL,
+  `post_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_type` varchar(20) NOT NULL DEFAULT 'LINK',
+  `display_type` varchar(20) NOT NULL DEFAULT 'LINK',
+  `is_published` tinyint(1) NOT NULL DEFAULT '0',
+  `post_content` text NOT NULL,
+  `post_source` varchar(20) NOT NULL DEFAULT 'OTHER',
+  `click_count` int(11) NOT NULL DEFAULT '0',
+  `likes_count` int(11) NOT NULL DEFAULT '0',
+  `value_rating` int(11) NOT NULL DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`post_id`),
+  UNIQUE KEY `posts_post_id_uindex` (`post_id`),
+  KEY `posts_users_user_id_fk` (`user_id`),
+  CONSTRAINT `posts_users_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+

@@ -14,13 +14,13 @@ import java.util.List;
 import static com.nixmash.springdata.jsoup.utils.JsoupUtil.attrIntToNull;
 import static com.nixmash.springdata.jsoup.utils.JsoupUtil.trim;
 
-public class JSoupHtmlParser<T> {
+public class JsoupHtmlParser<T> {
 
     private final Class<T> classModel;
     private Document doc;
 
     // Pass in the class Java bean that will contain the mapped data from the HTML source
-    public JSoupHtmlParser(final Class<T> classModel) {
+    public JsoupHtmlParser(final Class<T> classModel) {
         this.classModel = classModel;
     }
 

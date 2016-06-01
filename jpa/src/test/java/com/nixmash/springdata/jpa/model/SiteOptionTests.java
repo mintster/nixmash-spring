@@ -72,23 +72,19 @@ public class SiteOptionTests {
     }
 
     @Test
-    public void siteOptionsPropertyIsUpdatedAtRuntime() {
+    public void siteOptionsPropertyIsUpdatedAtRuntime() throws SiteOptionNotFoundException {
 
         assertEquals(siteOptions.getSiteName(), DEFAULT_SITE_NAME);
         assertEquals(siteOptions.getIntegerProperty(), DEFAULT_INTEGER_PROPERTY);
 
-        try {
-
-            siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, MY_UPDATED_SITE_NAME));
-            siteService.update(new SiteOptionDTO(ISiteOption.INTEGER_PROPERTY,
-                    UPDATED_INTEGER_PROPERTY.toString()));
-
-        } catch (SiteOptionNotFoundException e) {
-            e.printStackTrace();
-        }
+        siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, MY_UPDATED_SITE_NAME));
+        siteService.update(new SiteOptionDTO(ISiteOption.INTEGER_PROPERTY,
+                UPDATED_INTEGER_PROPERTY.toString()));
 
         assertEquals(siteOptions.getSiteName(), MY_UPDATED_SITE_NAME);
         assertEquals(siteOptions.getIntegerProperty(), UPDATED_INTEGER_PROPERTY);
+
+        siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, DEFAULT_SITE_NAME));
     }
 
     @Test

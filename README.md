@@ -1,17 +1,19 @@
 NixMash Spring
 ==========================
 
-NixMash Spring is a Web Bootstrap 3 application that demonstrates the Spring Framework. Some of the technologies covered in NixMash Spring are:
+NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and supporting technologies. Implemented in project:
 
-*Spring Boot, Spring Data JPA, Spring Solr, Spring Web MVC, Spring Security, Spring Social, Hibernate, Mockito, Json, Gradle, Spring Mail, Jsoup, Multi-Profile Configurations, JPA Auditing, Webjars, Dandelion, Velocity Templating, @PreAuthorize Method Security, Custom Validators, @Controller Advice, Custom Exception Handling and Thymeleaf*
+*Spring Boot, Spring Data JPA, Spring Solr, Spring Web MVC, Spring Security, Spring Social, Hibernate, Mockito, Json, Gradle, Spring Mail, Jsoup, Multi-Profile Configurations, JPA Auditing, Webjars, Dandelion, Velocity Templating, @PreAuthorize Method Security, Custom Validators, @Controller Advice, Custom Exception Handling, Site Administration Dashboard and Thymeleaf*
 
-The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is our goal for the application.
+The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
 
-Accompanying nearly every new application feature is an accompanying blog post at [NixMash.com](http://nixmash.com) explaining the feature in detail. All NixMash Spring feature posts are listed below in their accompanying implementation version.
+Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining the feature in detail. All NixMash Spring blog posts are listed below with their implementation version.
 
-See the [Installation](#installation) section below on how to configure application settings to run NixMash Spring. Once configured you can run the Web Application with
+See the [Installation](#installation) section below on how to configure application settings to run the NixMash Spring Web App. Once configured you can run the Web Application with
 
 `$ gradle mvc:bootRun`
+
+The supporting projects (JPA, Mail, Solr and Jsoup) can also be executed with `$ gradle bootRun`.
 
 A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 

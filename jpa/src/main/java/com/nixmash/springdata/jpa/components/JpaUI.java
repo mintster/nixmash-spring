@@ -51,15 +51,16 @@ public class JpaUI {
                 siteOptions.getGoogleAnalyticsTrackingId());
 
         String siteName = reset ? "My Site" : "My Updated Site Name";
-        String integerPropety = reset ? "1" : "8";
+        String integerProperty = reset ? "1" : "8";
 
         try {
             siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, siteName));
-            siteService.update(new SiteOptionDTO(ISiteOption.INTEGER_PROPERTY, integerPropety));
+            siteService.update(new SiteOptionDTO(ISiteOption.INTEGER_PROPERTY, integerProperty));
         } catch (SiteOptionNotFoundException e) {
             e.printStackTrace();
         }
         System.out.println("New SiteOptions values: " + siteOptions.getSiteName() + " -- " + siteOptions.getIntegerProperty());
+        System.out.println("GoogleAnalyticsId: " + siteOptions.getGoogleAnalyticsTrackingId());
     }
 
     // region early JPA Entity demos, not recently used

@@ -13,7 +13,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  * Created by daveburke on 5/27/16.
  */
 @Controller
-@RequestMapping("/posts")
+@RequestMapping(value = "/posts")
 public class PostsController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostsController.class);

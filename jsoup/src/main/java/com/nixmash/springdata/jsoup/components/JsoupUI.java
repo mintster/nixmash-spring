@@ -1,6 +1,6 @@
 package com.nixmash.springdata.jsoup.components;
 
-import com.nixmash.springdata.jsoup.base.JSoupHtmlParser;
+import com.nixmash.springdata.jsoup.base.JsoupHtmlParser;
 import com.nixmash.springdata.jsoup.base.JsoupImage;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import com.nixmash.springdata.jsoup.service.JsoupService;
@@ -33,9 +33,9 @@ public class JsoupUI {
     
     @Autowired
     @Qualifier("pagePreviewParser")
-    JSoupHtmlParser<PagePreviewDTO> pagePreviewParser;
+    JsoupHtmlParser<PagePreviewDTO> pagePreviewParser;
 
-    JsoupService jsoupService;
+    private JsoupService jsoupService;
 
     @Autowired
     public JsoupUI(JsoupService jsoupService) {

@@ -17,11 +17,14 @@ import java.util.Map;
 @JsonRequestMapping(value = "/json/posts")
 public class PostsRestController {
 
+
+    // region Key-Value Json demo for NixMash Post "Variations on JSON Key-Value Pairs in Spring MVC"  http://goo.gl/0hhnZg
+
     private String key = "key";
-    private String value = "some value";
+    private String value = "Json Key-Value Demo";
 
     /*
-    *           Returns:  {  "key" : "some value"  }
+    *           Returns:  {  "key" : "Json Key-Value Demo"  }
      */
     @RequestMapping(value = "/map", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> returnMap() {
@@ -31,7 +34,7 @@ public class PostsRestController {
     }
 
     /*
-    *           Returns:  {  "key" : "some value"  }
+    *           Returns:  {  "key" : "Json Key-Value Demo"  }
      */
     @RequestMapping(value = "/simpleentry")
     public SimpleEntry<String, String> returnSimpleEntry() {
@@ -39,7 +42,7 @@ public class PostsRestController {
     }
 
     /*
-    *           Returns:  {  "key" : "some value"  }
+    *           Returns:  {  "key" : "Json Key-Value Demo"  }
      */
     @RequestMapping(value = "/singleton")
     public Map<String, String> returnSingletonMapFromCollection() {
@@ -50,12 +53,14 @@ public class PostsRestController {
     *           Returns:
     *           {
     *                    "key" : "key",
-    *                     "value" : "some value"
+    *                     "value" : "Json Key-Value Demo"
     *           }
      */
     @RequestMapping(value = "/pair")
     public Pair<String, String> returnPair() {
         return new Pair<>(key, value);
     }
+
+    // endregion
 
 }
