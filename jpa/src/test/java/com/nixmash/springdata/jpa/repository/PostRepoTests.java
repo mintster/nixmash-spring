@@ -1,8 +1,11 @@
-package com.nixmash.springdata.jpa.model;
+package com.nixmash.springdata.jpa.repository;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
+import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
-import com.nixmash.springdata.jpa.repository.PostRepository;
+import com.nixmash.springdata.jpa.enums.PostDisplayType;
+import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.model.Post;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by daveburke on 5/31/16.
@@ -19,7 +21,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
 @ActiveProfiles(DataConfigProfile.H2)
-public class PostTests {
+public class PostRepoTests {
 
     @Autowired
     PostRepository postRepository;
@@ -38,9 +40,22 @@ public class PostTests {
 
     @Test
     public void addPost() {
-        Post post = Post.getBuilder(1L, "New Title", "new-title", "http://some.link", "New post content!").build();
+        Post post = Post.getBuilder(1L, "New Title", "new-title", "http://some.link", "New post content!", PostType.NOTE, PostDisplayType.NOTE).build();
         Post saved = postRepository.save(post);
         assertNotNull(saved);
-        System.out.println(saved.toString());
+        assertEquals(saved.getPostType(), PostType.NOTE);
+
+        // postSource is domain of url passed to builder
+        assertEquals(saved.getPostSource(), "some.link");
     }
+
+    @Test
+    public void nullPostLinkEnteredAndResultsInPostSourceAsNA() {
+        Post post = Post.getBuilder(1L, "New Title", "new-title", null, "New post content!", PostType.NOTE, PostDisplayType.NOTE).build();
+        Post saved = postRepository.save(post);
+        assertNotNull(saved);
+        assertNull(saved.getPostLink());
+        assertEquals(saved.getPostSource(), "NA");
+    }
+
 }

@@ -1,9 +1,10 @@
-package com.nixmash.springdata.jpa.model;
+package com.nixmash.springdata.jpa.utils;
 
 import com.nixmash.springdata.jpa.TestUtil;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.dto.ContactPhoneDTO;
 import com.nixmash.springdata.jpa.dto.HobbyDTO;
+import com.nixmash.springdata.jpa.model.Contact;
 
 import java.time.ZonedDateTime;
 import java.util.Date;

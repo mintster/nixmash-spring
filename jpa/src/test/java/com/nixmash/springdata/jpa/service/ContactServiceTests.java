@@ -8,7 +8,7 @@ import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.ContactPhone;
-import com.nixmash.springdata.jpa.model.ContactTestUtils;
+import com.nixmash.springdata.jpa.utils.ContactTestUtils;
 import com.nixmash.springdata.jpa.model.Hobby;
 import javassist.NotFoundException;
 import org.junit.Test;

@@ -3,7 +3,7 @@ package com.nixmash.springdata.mvc.controller;
 import com.nixmash.springdata.jpa.dto.ContactDTO;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
-import com.nixmash.springdata.jpa.model.ContactTestUtils;
+import com.nixmash.springdata.jpa.utils.ContactTestUtils;
 import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.mvc.AbstractContext;

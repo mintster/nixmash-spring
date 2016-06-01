@@ -1,88 +1,47 @@
-package com.nixmash.springdata.jpa.model;
+package com.nixmash.springdata.jpa.dto;
 
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.utils.PostUtils;
-import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-import static javax.persistence.AccessType.FIELD;
-import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * Created by daveburke on 5/31/16.
- */
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = "posts")
-@Access(value = FIELD)
-public class Post implements Serializable {
+public class PostDTO implements Serializable {
 
     private static final long serialVersionUID = 3533657789336113957L;
 
-    public static final int MAX_POST_TITLE_LENGTH = 20;
-    public static final int MAX_POST_NAME_LENGTH = 20;
-
-    // region properties
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "post_id", nullable = false)
     private Long postId;
-
-    @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "post_title", nullable = false, length = MAX_POST_TITLE_LENGTH)
+    @NotEmpty
+    @Length(max= Post.MAX_POST_TITLE_LENGTH)
     private String postTitle;
 
-    @Column(name = "post_name", nullable = false, length = MAX_POST_NAME_LENGTH)
+    @NotEmpty
+    @Length(max= Post.MAX_POST_NAME_LENGTH)
     private String postName;
 
-    @Column(name = "post_link")
     private String postLink;
 
     private ZonedDateTime postDate;
 
     private ZonedDateTime postModified;
 
-    @Column(name = "post_type", nullable = false, length = 20)
-    @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    @Column(name = "display_type", nullable = false, length = 20)
-    @Enumerated(EnumType.STRING)
     private PostDisplayType displayType;
-
-    @Column(name = "is_published", nullable = false)
     private Boolean isPublished = false;
-
-    @Column(name = "post_content", nullable = false, columnDefinition = "TEXT")
     private String postContent;
-
-    @Column(name = "post_source", nullable = false, length = 20)
     private String postSource = "NA";
-
-    @Column(name = "click_count", nullable = false)
     private int clickCount = 0;
-
-    @Column(name = "likes_count", nullable = false)
     private int likesCount = 0;
-
-    @Column(name = "value_rating", nullable = false)
     private int valueRating = 0;
-
-    @Version
-    @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private int version = 0;
-
-    // endregion
 
     public Long getPostId() {
         return postId;
@@ -124,9 +83,6 @@ public class Post implements Serializable {
         this.postLink = postLink;
     }
 
-    @Column(name = "post_date", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-    @CreatedDate
     public ZonedDateTime getPostDate() {
         return postDate;
     }
@@ -135,9 +91,6 @@ public class Post implements Serializable {
         this.postDate = postDate;
     }
 
-    @Column(name = "post_modified", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-    @LastModifiedDate
     public ZonedDateTime getPostModified() {
         return postModified;
     }
@@ -218,7 +171,6 @@ public class Post implements Serializable {
         this.version = version;
     }
 
-    @Transient
     public boolean isNew() {
         return (this.postId == null);
     }
@@ -246,15 +198,15 @@ public class Post implements Serializable {
     }
 
     public static Builder getBuilder(Long userId, String postTitle, String postName, String postLink, String postContent, PostType postType, PostDisplayType displayType) {
-        return new Post.Builder(userId, postTitle, postName, postLink, postContent, postType, displayType);
+        return new PostDTO.Builder(userId, postTitle, postName, postLink, postContent, postType, displayType);
     }
 
     public static class Builder {
 
-        private Post built;
+        private PostDTO built;
 
         public Builder(Long userId, String postTitle, String postName, String postLink, String postContent, PostType postType, PostDisplayType displayType) {
-            built = new Post();
+            built = new PostDTO();
             built.userId = userId;
             built.postTitle = postTitle;
             built.postName = postName;
@@ -263,15 +215,9 @@ public class Post implements Serializable {
             built.postType = postType;
             built.displayType = displayType;
             built.postSource = PostUtils.getPostSource(postLink);
-        }
+          }
 
-        public Builder postSource(String postSource) {
-            built.postSource = postSource;
-            return this;
-        }
-
-
-        public Post build() {
+        public PostDTO build() {
             return built;
         }
     }

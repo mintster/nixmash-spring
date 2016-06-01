@@ -150,7 +150,7 @@ CREATE TABLE posts (
   display_type varchar(20) NOT NULL DEFAULT 'LINK',
   is_published tinyint(1) NOT NULL DEFAULT '0',
   post_content text NOT NULL,
-  post_source varchar(20) NOT NULL DEFAULT 'OTHER',
+  post_source varchar(50) NOT NULL DEFAULT 'NA',
   click_count int(11) NOT NULL DEFAULT '0',
   likes_count int(11) NOT NULL DEFAULT '0',
   value_rating int(11) NOT NULL DEFAULT '0',
