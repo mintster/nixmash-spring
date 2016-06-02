@@ -67,6 +67,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Jsoup Annotations: Examples](http://nixmash.com/java/jsoup-annotations-examples/)
 - [Post: Configuring a Generic Type Class as a Spring Bean](http://nixmash.com/java/configuring-a-generic-type-class-as-a-spring-bean/)
 - [Post: Variations on JSON Key-Value Pairs in Spring MVC](http://nixmash.com/java/variations-on-json-key-value-pairs-in-spring-mvc/)
+- [Post: Dysfunctional @Enumerated Annotations in Hibernate](http://nixmash.com/java/dysfunctional-enumerated-annotations-in-hibernate/)
 
 [[back to top](#nixmash-spring)]
 

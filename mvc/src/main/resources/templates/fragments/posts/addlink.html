@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="addlink">
+   <h3>We're in with the addLink Fragment!</h3>
+   <div style="display: block; height: 60px;"/>
+   <form>
+      <table>
+         <tr>
+            <td></td>
+            <td>
+               <div class="form-actions pull-right special-select">
+                  <select name="formtype" class="selectpicker" data-style="btn-primary" title="Select a Post Type...">
+                     <option value="link" th:text="#{add.post.button.link}">[link]</option>
+                     <option value="link" th:text="#{add.post.button.link.summary}">[link with summary]</option>
+                     <option value="link" th:text="#{add.post.button.link.feature}">[featured link]</option>
+                     <option value="link" th:text="#{add.post.button.note}">[note]</option>
+                     <option value="link" th:text="#{add.post.button.nixmash.post}">[nixmash spring post link]</option>
+                  </select>
+
+                  <button type="submit" class="btn btn-success">Submit</button>
+               </div>
+            </td>
+         </tr>
+      </table>
+
+   </form>
+</div>
+</body>
+</html>

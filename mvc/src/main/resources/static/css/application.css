@@ -39,7 +39,7 @@ body {
 	margin-right: -4px;
 }
 
-col-right {
+.col-right {
 	display: inline-block;
 	float: right;
 	text-align: right;
@@ -47,6 +47,9 @@ col-right {
 	margin-right: -4px;
 }
 
+.bs-docs-section {
+	padding-left: 15px;
+}
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="PAGE HEADER AND SPONSOR REGION ----------------------------/ "*/
@@ -469,3 +472,18 @@ nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
 
 /*</editor-fold>*/
 
+/*/<editor-fold> desc="SELECT DROPDOWN ----------------------------/ "*/
+
+/*.bootstrap-select > select.selectpicker .btn-primary:focus, .bootstrap-select > select.selectpicker .btn-primary:hover, .bootstrap-select > select.selectpicker .btn-primary:active*/
+ .special-select  .btn-primary:focus, .special-select .btn-primary:active
+{
+	background-color: #dd4814 !important;
+	border-color: #dd4814 !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.special-select .bootstrap-select .dropdown-toggle:focus {
+	outline: none;
+}
+/*</editor-fold>*/

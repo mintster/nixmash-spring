@@ -7,5 +7,10 @@ public enum PostDisplayType {
     LINK,
     LINK_SUMMARY,
     LINK_LARGE_IMAGE,
-    NOTE
+    NOTE,
+    NIXMASH_POST
 }
+
+
+
+

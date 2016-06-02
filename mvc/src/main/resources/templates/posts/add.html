@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title th:text="#{posts.add.page.title}">[Add NixMash Spring Post]</title>
+
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="#{posts.add.page.header}">[Add Post]</h1>
+
+                <p class="lead" th:text="#{posts.add.page.subheader}">[All
+                    Links]</p>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
+                Image
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="bs-docs-section">
+            <div id="message-holder">
+                <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
+                     th:text="${feedbackMessage}"></div>
+            </div>
+
+            <div th:unless="${hasPost}">
+                <form th:object="${postLink}" action="/posts/add.html" th:action="@{/posts/add}" method="get"
+                      class="form-horizontal" id="search-product-form">
+                    <table class="table table-striped">
+                        <tr th:classappend="${#fields.hasErrors('link')} ? 'has-error'">
+                            <td class="col-sm-1">
+                                <div class="control-group"
+                                     th:classappend="${#fields.hasErrors('link')} ? 'error'">
+                                    <label class="control-label">Source Url</label>
+                                </div>
+                            </td>
+                            <td class="col-sm-2">
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="linkField" name="link" size="30"
+                                           maxlength="120"/>
+                                </div>
+                                <div class="controls" th:if="${#fields.hasErrors('link')}">
+                                    <h4>
+                                        <span class="label label-danger" th:errors="*{link}">[Errors]</span>
+                                    </h4>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="form-actions pull-right">
+                                    <button type="submit" class="btn btn-primary" name="formtype" value="note"
+                                            th:text="#{add.post.button.note}"></button>
+                                    <button type="submit" class="btn btn-success" name="formtype" value="link"
+                                            th:text="#{add.post.button.link}"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div th:if="${hasPost == 'note'}" th:include="fragments/posts/addnote :: addnote" th:remove="tag">Add Note
+            </div>
+            <div th:if="${hasPost == 'link'}" th:include="fragments/posts/addlink :: addlink" th:remove="tag">Add Link
+            </div>
+
+        </div>
+    </div>
+
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+</body>
+</html>
+
+
+
