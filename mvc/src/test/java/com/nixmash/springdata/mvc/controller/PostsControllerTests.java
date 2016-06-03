@@ -121,6 +121,7 @@ public class PostsControllerTests extends AbstractContext {
                 .param(postType.name().toLowerCase(), "true")
                 .param("postTitle", "my title")
                 .param("postName", "my-title")
+                .param("displayType", postType.name().toUpperCase())
                 .param("postContent", "My Post Content");
     }
 }

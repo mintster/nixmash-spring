@@ -151,6 +151,7 @@ CREATE TABLE posts (
   is_published tinyint(1) NOT NULL DEFAULT '0',
   post_content text NOT NULL,
   post_source varchar(50) NOT NULL DEFAULT 'NA',
+  post_image varchar(200) DEFAULT NULL,
   click_count int(11) NOT NULL DEFAULT '0',
   likes_count int(11) NOT NULL DEFAULT '0',
   value_rating int(11) NOT NULL DEFAULT '0',

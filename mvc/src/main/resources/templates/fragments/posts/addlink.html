@@ -19,15 +19,9 @@
 
                     <table class="table table-striped">
                         <tr><td colspan="2" class="page-preview">
-                                <div th:if="${pagePreview.getTwitterDTO()}" th:with="twitter=${pagePreview.getTwitterDTO()}">
-                                    <p><img th:src="${twitter.getTwitterImage()}" alt="" class="thumbnail"> </img></p>
-                                        <p><strong th:text="${twitter.getTwitterTitle()}"></strong></p>
-                                        <p th:text="${twitter.getTwitterDescription()}"></p>
-                                </div>
-                                <div th:unless="${pagePreview.getTwitterDTO()}">
-                                    <p><strong th:text="${pagePreview.getTitle()}"></strong> </p>
-                                    <p th:if="${pagePreview.getDescription()}" th:text="${pagePreview.getDescription()}"></p>
-                                </div>
+                                    <p th:if="*{postImage}"><img th:src="*{postImage}" alt="" class="thumbnail" /></p>
+                                        <h3><a th:href="*{postLink}" th:text="*{postTitle}" target="_blank">[Post Title]</a></h3>
+                                        <p th:text="*{postContent}">[Post Description]</p>
                         </td>
                         </tr>
                         <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
@@ -36,7 +30,7 @@
                                     <label class="control-label">Title</label>
                                 </div>
                             </td>
-                            <td class="col-sm-2">
+                            <td class="col-sm-5">
                                 <div class="controls">
                                     <input type="text" class="form-control" th:field="*{postTitle}"  />
                                     <label class="control-label" th:errors="*{postTitle}">[error]</label>
@@ -63,7 +57,7 @@
                                 <div class="form-actions pull-right special-select">
                                     <select th:field="*{displayType}" name="displayType" class="selectpicker" data-style="btn-primary"
                                             title="Select Link Display Type...">
-                                        <option value="LINK" th:text="#{add.post.button.link}">[link]</option>
+                                        <option value="LINK" th:text="#{add.post.button.link.text}">[link]</option>
                                         <option value="LINK_SUMMARY"  th:text="#{add.post.button.link.summary}">[link with
                                             summary]
                                         </option>
@@ -85,7 +79,7 @@
                             </td>
                         </tr>
                     </table>
-
+                    <input type="hidden" name="postImage" th:value="*{postImage}" />
                 </form>
             </div>
         </div>

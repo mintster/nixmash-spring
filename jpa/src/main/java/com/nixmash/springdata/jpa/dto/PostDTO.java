@@ -30,6 +30,8 @@ public class PostDTO implements Serializable {
 
     private String postLink;
 
+    private String postImage;
+
     private ZonedDateTime postDate;
 
     private ZonedDateTime postModified;
@@ -45,6 +47,8 @@ public class PostDTO implements Serializable {
     private int likesCount = 0;
     private int valueRating = 0;
     private int version = 0;
+
+    private Boolean hasImages = false;
 
     public Long getPostId() {
         return postId;
@@ -142,6 +146,14 @@ public class PostDTO implements Serializable {
         this.postSource = postSource;
     }
 
+    public String getPostImage() {
+        return postImage;
+    }
+
+    public void setPostImage(String postImage) {
+        this.postImage = postImage;
+    }
+
     public int getClickCount() {
         return clickCount;
     }
@@ -176,6 +188,22 @@ public class PostDTO implements Serializable {
 
     public boolean isNew() {
         return (this.postId == null);
+    }
+
+    public Boolean getHasImages() {
+        return hasImages;
+    }
+
+    public void setHasImages(Boolean hasImages) {
+        this.hasImages = hasImages;
+    }
+
+    public Boolean getPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(Boolean published) {
+        isPublished = published;
     }
 
     @Override
@@ -219,6 +247,11 @@ public class PostDTO implements Serializable {
             built.displayType = displayType;
             built.postSource = PostUtils.getPostSource(postLink);
           }
+
+        public Builder postImage(String postImage) {
+            built.postImage = postImage;
+            return this;
+        }
 
         public PostDTO build() {
             return built;

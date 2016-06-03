@@ -2,6 +2,7 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -56,10 +57,11 @@ public class PostsController {
     public String displayAddPostForm(@RequestParam(value = "formtype") String formType,
                                      PostLink postLink, BindingResult result, Model model, HttpServletRequest request) {
         PostType postType = PostType.valueOf(formType.toUpperCase());
-        String showPost = null;
+        String showPost;
 
         if (postType.equals(PostType.NOTE)) {
             showPost = "note";
+            model.addAttribute("postDTO", new PostDTO());
         } else {
             if (StringUtils.isEmpty(postLink.getLink())) {
                 result.rejectValue("link", "post.link.is.empty");
@@ -73,12 +75,55 @@ public class PostsController {
                     showPost = "link";
                     request.getSession().setAttribute("pagePreview", pagePreview);
                     model.addAttribute("pagePreview", pagePreview);
+                    model.addAttribute("postDTO", postDtoFromPagePreview(pagePreview,postLink.getLink()));
                 }
             }
         }
-        model.addAttribute("postDTO", new PostDTO());
+
         model.addAttribute("showPost", showPost);
         return POSTS_ADD_VIEW;
+    }
+
+    private PostDTO postDtoFromPagePreview(PagePreviewDTO page, String sourceLink) {
+
+        Boolean hasTwitter = page.getTwitterDTO() != null;
+        String postTitle = hasTwitter ? page.getTwitterDTO().getTwitterTitle() : page.getTitle();
+        String postDescription = hasTwitter ? page.getTwitterDTO().getTwitterDescription() : page.getDescription();
+        String imageUrl = getPagePreviewImage(page, sourceLink);
+
+        // TODO: Add logic for determining if PostDTO hasImages for display of slideshow
+
+        return PostDTO.getBuilder(null,
+                postTitle,
+                null,
+                sourceLink,
+                postDescription,
+                null,
+                null)
+                .postImage(imageUrl)
+                .build();
+    }
+
+    private String getPagePreviewImage(PagePreviewDTO page, String sourceLink) {
+        String postSource = PostUtils.getPostSource(sourceLink);
+        String imageUrl = null;
+
+        // anticipating other special providers -- single case for now
+
+        switch (postSource.toLowerCase()) {
+            case "stackoverflow.com":
+                imageUrl = "/images/stackoverflow.png";
+                break;
+            default:
+                break;
+        }
+
+        if (imageUrl == null) {
+            if (page.getImages().size() > 0)
+                imageUrl = page.getImages().get(0).getSrc();
+        }
+
+        return imageUrl;
     }
 
     @RequestMapping(value = "/add", method = GET)

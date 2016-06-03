@@ -307,7 +307,8 @@ CREATE TABLE `posts` (
   `display_type` varchar(20) NOT NULL DEFAULT 'LINK',
   `is_published` tinyint(1) NOT NULL DEFAULT '0',
   `post_content` text NOT NULL,
-  `post_source` varchar(20) NOT NULL DEFAULT 'OTHER',
+  `post_source` varchar(50) NOT NULL DEFAULT 'NA',
+  `post_image` varchar(200) DEFAULT NULL,
   `click_count` int(11) NOT NULL DEFAULT '0',
   `likes_count` int(11) NOT NULL DEFAULT '0',
   `value_rating` int(11) NOT NULL DEFAULT '0',
@@ -316,5 +317,5 @@ CREATE TABLE `posts` (
   UNIQUE KEY `posts_post_id_uindex` (`post_id`),
   KEY `posts_users_user_id_fk` (`user_id`),
   CONSTRAINT `posts_users_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 

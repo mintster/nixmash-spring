@@ -13,11 +13,12 @@
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="#{posts.add.page.header}">[Add Post]</h1>
+                <h1 th:unless="${showPost}" th:text="#{posts.add.page.header}">[Add Post]</h1>
+                <h1 th:if="${showPost == 'note'}" class="lead" th:text="#{posts.add.note.page.header}">[Add Note]</h1>
+                <h1 th:if="${showPost == 'link'}" class="lead" th:text="#{posts.add.link.page.header}">[Add a Link]</h1>
 
                 <p th:unless="${showPost}" class="lead" th:text="#{posts.add.page.subheader}">[All Links]</p>
-                <p th:if="${showPost == 'note'}" class="lead" th:text="#{posts.add.note.page.subheader}">[All Links]</p>
-                <p th:if="${showPost == 'link'}" class="lead" th:text="#{posts.add.link.page.subheader}">[All Links]</p>
+
             </div>
             <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
                 Image
@@ -45,7 +46,7 @@
                                     <label class="control-label">Source Url</label>
                                 </div>
                             </td>
-                            <td class="col-sm-2">
+                            <td class="col-sm-5">
                                 <div class="controls">
                                     <input type="text" class="form-control" id="linkField" name="link" size="30"
                                            maxlength="120"/>

@@ -451,6 +451,7 @@ textarea.mail-body {
 	word-break: keep-all;
 	resize: none;
 	width: 100%;
+	padding: 12px;
 }
 /*</editor-fold>*/
 
@@ -508,5 +509,19 @@ button.btn.btn-success {
 	max-height: 120px;
 	float: right;
 	margin-left: 20px;
+}
+
+.table td.page-preview {
+	padding: 10px 10px 0 20px;
+}
+
+.page-preview a {
+	font-weight: bold;
+}
+.page-preview h3 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-size: 16px;
+	line-height: 1.5;
 }
 /*</editor-fold>*/

@@ -28,6 +28,7 @@ public class Post implements Serializable {
 
     public static final int MAX_POST_TITLE_LENGTH = 200;
     public static final int MAX_POST_NAME_LENGTH = 200;
+    public static final int MAX_POST_IMAGE_LENGTH = 200;
 
     // region properties
 
@@ -47,6 +48,9 @@ public class Post implements Serializable {
 
     @Column(name = "post_link")
     private String postLink;
+
+    @Column(name = "post_image", length = MAX_POST_NAME_LENGTH)
+    private String postImage;
 
     private ZonedDateTime postDate;
 
@@ -186,6 +190,14 @@ public class Post implements Serializable {
         this.postSource = postSource;
     }
 
+    public String getPostImage() {
+        return postImage;
+    }
+
+    public void setPostImage(String postImage) {
+        this.postImage = postImage;
+    }
+
     public int getClickCount() {
         return clickCount;
     }
@@ -221,6 +233,11 @@ public class Post implements Serializable {
     @Transient
     public boolean isNew() {
         return (this.postId == null);
+    }
+
+    @Transient
+    public boolean hasImages() {
+        return (this.postImage != null);
     }
 
     @Override
@@ -267,6 +284,11 @@ public class Post implements Serializable {
 
         public Builder postSource(String postSource) {
             built.postSource = postSource;
+            return this;
+        }
+
+        public Builder postImage(String postImage) {
+            built.postImage = postImage;
             return this;
         }
 
