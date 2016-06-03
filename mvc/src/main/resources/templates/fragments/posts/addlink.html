@@ -2,29 +2,94 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="addlink">
-   <h3>We're in with the addLink Fragment!</h3>
-   <div style="display: block; height: 60px;"/>
-   <form>
-      <table>
-         <tr>
-            <td></td>
-            <td>
-               <div class="form-actions pull-right special-select">
-                  <select name="formtype" class="selectpicker" data-style="btn-primary" title="Select a Post Type...">
-                     <option value="link" th:text="#{add.post.button.link}">[link]</option>
-                     <option value="link" th:text="#{add.post.button.link.summary}">[link with summary]</option>
-                     <option value="link" th:text="#{add.post.button.link.feature}">[featured link]</option>
-                     <option value="link" th:text="#{add.post.button.note}">[note]</option>
-                     <option value="link" th:text="#{add.post.button.nixmash.post}">[nixmash spring post link]</option>
-                  </select>
+    <!--/*@thymesVar id="pagePreview" type="com.nixmash.springdata.jsoup.dto.PagePreviewDTO"*/-->
+    <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+    <div class="container bs-docs-container big-font-container">
+        <div class="row row-centered">
+            <div class="bs-docs-section col-lg-9 col-centered">
+                <form th:object="${postDTO}" method="post" th:action="@{${#httpServletRequest.getRequestURI()}}"
+                      class="form-horizontal" id="link-add-form">
 
-                  <button type="submit" class="btn btn-success">Submit</button>
-               </div>
-            </td>
-         </tr>
-      </table>
+                    <div th:if="${#fields.hasGlobalErrors()}"
+                         class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <label class="control-label" th:each="err : ${#fields.globalErrors()}"
+                               th:text="${err}">...</label>
+                    </div>
 
-   </form>
+                    <table class="table table-striped">
+                        <tr><td colspan="2" class="page-preview">
+                                <div th:if="${pagePreview.getTwitterDTO()}" th:with="twitter=${pagePreview.getTwitterDTO()}">
+                                    <p><img th:src="${twitter.getTwitterImage()}" alt="" class="thumbnail"> </img></p>
+                                        <p><strong th:text="${twitter.getTwitterTitle()}"></strong></p>
+                                        <p th:text="${twitter.getTwitterDescription()}"></p>
+                                </div>
+                                <div th:unless="${pagePreview.getTwitterDTO()}">
+                                    <p><strong th:text="${pagePreview.getTitle()}"></strong> </p>
+                                    <p th:if="${pagePreview.getDescription()}" th:text="${pagePreview.getDescription()}"></p>
+                                </div>
+                        </td>
+                        </tr>
+                        <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
+                            <td class="col-sm-1">
+                                <div class="control-group" th:classappend="${#fields.hasErrors('postTitle')} ? 'error'">
+                                    <label class="control-label">Title</label>
+                                </div>
+                            </td>
+                            <td class="col-sm-2">
+                                <div class="controls">
+                                    <input type="text" class="form-control" th:field="*{postTitle}"  />
+                                    <label class="control-label" th:errors="*{postTitle}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:classappend="${#fields.hasErrors('postContent')} ? 'has-error'">
+                            <td>
+                                <div class="control-group"
+                                     th:classappend="${#fields.hasErrors('postContent')} ? 'error'">
+                                    <label class="control-label">Description</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="controls">
+                                    <textarea name="postContent" th:field="*{postContent}" rows="5" class="mail-body"></textarea>
+                                    <label class="control-label" th:errors="*{postContent}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="form-actions pull-right special-select">
+                                    <select th:field="*{displayType}" name="displayType" class="selectpicker" data-style="btn-primary"
+                                            title="Select Link Display Type...">
+                                        <option value="LINK" th:text="#{add.post.button.link}">[link]</option>
+                                        <option value="LINK_SUMMARY"  th:text="#{add.post.button.link.summary}">[link with
+                                            summary]
+                                        </option>
+                                        <option value="LINK_LARGE_IMAGE"  th:text="#{add.post.button.link.feature}">[featured
+                                            link]
+                                        </option>
+                                        <option value="NIXMASH_POST"  th:text="#{add.post.button.nixmash.post}">[nixmash
+                                            spring post link]
+                                        </option>
+                                    </select>
+
+                                    <button type="submit" class="btn btn-success" name="link" value="true">Submit
+                                    </button>
+                                </div>
+                                <div class="pull-right"
+                                     th:classappend="${#fields.hasErrors('displayType')} ? 'has-error pad-right'">
+                                    <label class="control-label" th:errors="*{displayType}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

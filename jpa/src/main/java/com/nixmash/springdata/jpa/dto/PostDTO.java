@@ -7,6 +7,7 @@ import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
@@ -23,7 +24,8 @@ public class PostDTO implements Serializable {
     private String postTitle;
 
     @NotEmpty
-    @Length(max= Post.MAX_POST_NAME_LENGTH)
+    private String postContent;
+
     private String postName;
 
     private String postLink;
@@ -34,9 +36,10 @@ public class PostDTO implements Serializable {
 
     private PostType postType;
 
+    @NotNull
     private PostDisplayType displayType;
-    private Boolean isPublished = false;
-    private String postContent;
+
+    private Boolean isPublished = true;
     private String postSource = "NA";
     private int clickCount = 0;
     private int likesCount = 0;

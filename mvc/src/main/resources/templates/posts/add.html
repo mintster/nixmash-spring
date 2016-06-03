@@ -15,8 +15,9 @@
             <div class="col-lg-8 col-md-7 col-sm-6">
                 <h1 th:text="#{posts.add.page.header}">[Add Post]</h1>
 
-                <p class="lead" th:text="#{posts.add.page.subheader}">[All
-                    Links]</p>
+                <p th:unless="${showPost}" class="lead" th:text="#{posts.add.page.subheader}">[All Links]</p>
+                <p th:if="${showPost == 'note'}" class="lead" th:text="#{posts.add.note.page.subheader}">[All Links]</p>
+                <p th:if="${showPost == 'link'}" class="lead" th:text="#{posts.add.link.page.subheader}">[All Links]</p>
             </div>
             <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
                 Image
@@ -33,7 +34,7 @@
                      th:text="${feedbackMessage}"></div>
             </div>
 
-            <div th:unless="${hasPost}">
+            <div th:unless="${showPost}">
                 <form th:object="${postLink}" action="/posts/add.html" th:action="@{/posts/add}" method="get"
                       class="form-horizontal" id="search-product-form">
                     <table class="table table-striped">
@@ -60,19 +61,19 @@
                             <td></td>
                             <td>
                                 <div class="form-actions pull-right">
-                                    <button type="submit" class="btn btn-primary" name="formtype" value="note"
-                                            th:text="#{add.post.button.note}"></button>
                                     <button type="submit" class="btn btn-success" name="formtype" value="link"
                                             th:text="#{add.post.button.link}"></button>
+                                    <button type="submit" class="btn btn-primary" name="formtype" value="note"
+                                            th:text="#{add.post.button.note}"></button>
                                 </div>
                             </td>
                         </tr>
                     </table>
                 </form>
             </div>
-            <div th:if="${hasPost == 'note'}" th:include="fragments/posts/addnote :: addnote" th:remove="tag">Add Note
+            <div th:if="${showPost == 'note'}" th:include="fragments/posts/addnote :: addnote" th:remove="tag">Add Note
             </div>
-            <div th:if="${hasPost == 'link'}" th:include="fragments/posts/addlink :: addlink" th:remove="tag">Add Link
+            <div th:if="${showPost == 'link'}" th:include="fragments/posts/addlink :: addlink" th:remove="tag">Add Link
             </div>
 
         </div>

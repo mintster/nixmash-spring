@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,6 +18,9 @@ public class JsoupServiceImpl implements JsoupService {
 
     private static final Logger logger = LoggerFactory.getLogger(JsoupServiceImpl.class);
 
+    @Value("${jsoup.connect.useragent}")
+    private String userAgent;
+
     @Autowired
     @Qualifier("pagePreviewParser")
     JsoupHtmlParser<PagePreviewDTO> pagePreviewParser;
@@ -25,7 +29,11 @@ public class JsoupServiceImpl implements JsoupService {
     public PagePreviewDTO getPagePreview(String url) {
         PagePreviewDTO pagePreviewDTO;
         try {
-            Document doc =  Jsoup.connect(url).get();
+            Document doc =  Jsoup.connect(url)
+                    .userAgent(userAgent)
+                    .timeout(100000)
+                    .ignoreHttpErrors(true)
+                    .get();
             pagePreviewDTO = pagePreviewParser.parse(doc);
         } catch (IOException e) {
             logger.error(String.format("Jsoup IOException for url [%s] : %s", url, e.getMessage()));

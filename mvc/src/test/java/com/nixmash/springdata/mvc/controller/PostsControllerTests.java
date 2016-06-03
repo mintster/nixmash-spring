@@ -1,5 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -9,14 +10,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static com.nixmash.springdata.mvc.controller.PostsController.POSTS_ADD_VIEW;
 import static com.nixmash.springdata.mvc.controller.PostsController.POSTS_LIST_VIEW;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Created by daveburke on 5/27/16.
@@ -85,7 +87,7 @@ public class PostsControllerTests extends AbstractContext {
                 .param("formtype", "link")
                 .param("link", GOOD_URL))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("hasPost", "link"))
+                    .andExpect(model().attribute("showPost", "link"))
                 .andExpect(view().name(POSTS_ADD_VIEW));
     }
 
@@ -94,7 +96,31 @@ public class PostsControllerTests extends AbstractContext {
         this.mockMvc.perform(get("/posts/add")
                 .param("formtype", "note"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("hasPost", "note"))
+                .andExpect(model().attribute("showPost", "note"))
                 .andExpect(view().name(POSTS_ADD_VIEW));
+    }
+
+    @Test
+    public void submitNewNoteForm() throws Exception {
+        mockMvc.perform(postRequest(PostType.NOTE))
+                .andExpect(model().attributeHasNoErrors())
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
+                .andExpect(redirectedUrl("/posts"));
+    }
+
+    @Test
+    public void submitNewLinkForm() throws Exception {
+        mockMvc.perform(postRequest(PostType.LINK))
+                .andExpect(model().attributeHasNoErrors())
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
+                .andExpect(redirectedUrl("/posts"));
+    }
+
+    private RequestBuilder postRequest(PostType postType) {
+        return post("/posts/add")
+                .param(postType.name().toLowerCase(), "true")
+                .param("postTitle", "my title")
+                .param("postName", "my-title")
+                .param("postContent", "My Post Content");
     }
 }

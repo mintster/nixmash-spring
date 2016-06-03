@@ -487,3 +487,26 @@ nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
 	outline: none;
 }
 /*</editor-fold>*/
+
+/*/<editor-fold> desc="POSTS----------------------------/ "*/
+
+.pull-right.has-error.pad-right {
+	padding-right: 8px;
+}
+
+.page-preview {
+	padding-right: 10px;
+	font-size: small;
+}
+
+button.btn.btn-success {
+	float: right;
+	margin-left: 6px;
+}
+
+.page-preview img.thumbnail {
+	max-height: 120px;
+	float: right;
+	margin-left: 20px;
+}
+/*</editor-fold>*/

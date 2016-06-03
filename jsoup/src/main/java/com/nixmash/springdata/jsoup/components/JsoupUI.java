@@ -29,6 +29,7 @@ public class JsoupUI {
 
     private static final Logger logger = LoggerFactory.getLogger(JsoupUI.class);
     private static final String REPO_URL = "https://github.com/mintster/spring-data";
+    private static final String STACKOVERFLOW_URL = "http://stackoverflow.com/questions/1963245/multiple-submit-buttons-on-html-form-designate-one-button-as-default";
 
     
     @Autowired
@@ -50,7 +51,7 @@ public class JsoupUI {
     }
 
     private void pagePreviewDTOFromUrl() {
-        printPagePreviewDTO(jsoupService.getPagePreview(REPO_URL));
+        printPagePreviewDTO(jsoupService.getPagePreview(STACKOVERFLOW_URL));
     }
 
     private void pagePreviewDTOFromFile() {

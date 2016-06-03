@@ -2,7 +2,35 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="addnote">
-   <h3>Adding a note is coming...</h3>
+   <div class="container bs-docs-container big-font-container">
+      <div class="row row-centered">
+         <div class="bs-docs-section col-lg-9 col-centered">
+            <form method="post" action="/posts/add.html"
+                  th:action="@{${#httpServletRequest.getRequestURI()}}"
+                  class="form-horizontal" id="link-add-form">
+
+               <div th:if="${#fields.hasGlobalErrors()}"
+                    class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <label class="control-label" th:each="err : ${#fields.globalErrors()}"
+                         th:text="${err}">...</label>
+               </div>
+
+               <table class="table table-striped">
+                  <tr>
+                     <td></td>
+                     <td>
+                        <div class="form-actions pull-right">
+                           <button type="submit" class="btn btn-success" name="note">Submit</button>
+                        </div>
+                     </td>
+                  </tr>
+               </table>
+
+            </form>
+         </div>
+      </div>
+   </div>
 </div>
 </body>
 </html>
