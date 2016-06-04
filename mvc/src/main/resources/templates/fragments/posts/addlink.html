@@ -18,11 +18,13 @@
                     </div>
 
                     <table class="table table-striped">
-                        <tr><td colspan="2" class="page-preview">
-                                    <p th:if="*{postImage}"><img th:src="*{postImage}" alt="" class="thumbnail" /></p>
-                                        <h3><a th:href="*{postLink}" th:text="*{postTitle}" target="_blank">[Post Title]</a></h3>
-                                        <p th:text="*{postContent}">[Post Description]</p>
-                        </td>
+                        <tr>
+                            <td colspan="2" class="page-preview">
+                                <p th:if="*{postImage}"><img th:src="*{postImage}" alt="" class="thumbnail"/></p>
+                                <h3><a th:href="*{postLink}" th:text="*{postTitle}" target="_blank">[Post Title]</a>
+                                </h3>
+                                <p th:text="*{postContent}">[Post Description]</p>
+                            </td>
                         </tr>
                         <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
                             <td class="col-sm-1">
@@ -32,7 +34,7 @@
                             </td>
                             <td class="col-sm-5">
                                 <div class="controls">
-                                    <input type="text" class="form-control" th:field="*{postTitle}"  />
+                                    <input type="text" class="form-control" th:field="*{postTitle}"/>
                                     <label class="control-label" th:errors="*{postTitle}">[error]</label>
                                 </div>
                             </td>
@@ -46,25 +48,64 @@
                             </td>
                             <td>
                                 <div class="controls">
-                                    <textarea name="postContent" th:field="*{postContent}" rows="5" class="mail-body"></textarea>
+                                    <textarea name="postContent" th:field="*{postContent}" rows="5"
+                                              class="mail-body"></textarea>
                                     <label class="control-label" th:errors="*{postContent}">[error]</label>
                                 </div>
                             </td>
                         </tr>
                         <tr>
+                            <td colspan="2" class="td-carousel">
+                                <div class="pagepreveiw-images" data-example-id="simple-carousel">
+                                    <div id="pagepreview-carousel" class="carousel slide"
+                                         data-ride="carousel">
+                                        <!-- Indicators -->
+
+                                        <div class="carousel-inner" role="listbox">
+                                            <div class="item active">
+                                                <img src="http://nixmash.com/x/blog/2016/enum0601b.png"/>
+                                            </div>
+                                            <div class="item">
+                                                <img src="http://nixmash.com/x/blog/2016/enum0601c.png"/>
+                                            </div>
+                                            <div class="item">
+                                                <img src="http://nixmash.com/x/blog/2016/enum0601a.png"/>
+                                            </div>
+                                        </div>
+
+                                        <!-- Controls -->
+                                        <a class="left carousel-control" href="#pagepreview-carousel" role="button"
+                                           data-slide="prev">
+                                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="right carousel-control" href="#pagepreview-carousel" role="button"
+                                           data-slide="next">
+                                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="tr-button-row">
                             <td></td>
                             <td>
                                 <div class="form-actions pull-right special-select">
-                                    <select th:field="*{displayType}" name="displayType" class="selectpicker" data-style="btn-primary"
+                                    <select th:field="*{displayType}" name="displayType" class="selectpicker"
+                                            data-style="btn-primary"
                                             title="Select Link Display Type...">
                                         <option value="LINK" th:text="#{add.post.button.link.text}">[link]</option>
-                                        <option value="LINK_SUMMARY"  th:text="#{add.post.button.link.summary}">[link with
+                                        <option value="LINK_SUMMARY" th:text="#{add.post.button.link.summary}">[link
+                                            with
                                             summary]
                                         </option>
-                                        <option value="LINK_LARGE_IMAGE"  th:text="#{add.post.button.link.feature}">[featured
+                                        <option value="LINK_LARGE_IMAGE" th:text="#{add.post.button.link.feature}">
+                                            [featured
                                             link]
                                         </option>
-                                        <option value="NIXMASH_POST"  th:text="#{add.post.button.nixmash.post}">[nixmash
+                                        <option value="NIXMASH_POST" th:text="#{add.post.button.nixmash.post}">[nixmash
                                             spring post link]
                                         </option>
                                     </select>
@@ -78,8 +119,11 @@
                                 </div>
                             </td>
                         </tr>
+
                     </table>
-                    <input type="hidden" name="postImage" th:value="*{postImage}" />
+                    <input type="hidden" name="postImage" th:value="*{postImage}"/>
+                    <input type="hidden" name="hasImages" th:value="*{hasImages}"/>
+                    <input type="hidden" id="imageIndex" name="imageIndex" value="0"/>
                 </form>
             </div>
         </div>

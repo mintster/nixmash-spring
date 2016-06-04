@@ -1,147 +1,148 @@
 /*/<editor-fold> desc="HOME PAGE ----------------------------/ "*/
 .jumbotron {
-	padding: 40px 0;
+    padding: 40px 0;
 }
 
 .jumbotron p {
-	max-width: 550px;	
+    max-width: 550px;
 }
 
 blockquote small {
-	color: #716561;
+    color: #716561;
 }
 
 #spring-version {
-	display: block;
-	margin:  0 auto 20px auto;
-	font-style: 16px;
+    display: block;
+    margin: 0 auto 20px auto;
+    font-style: 16px;
 }
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="BODY, ROWS AND COLUMNS ----------------------------/ "*/
 body {
-	padding-top: 50px;
+    padding-top: 50px;
 }
 
 .row-centered {
-	text-align: center;
+    text-align: center;
 }
 
 .row-right {
-	text-align: right;
+    text-align: right;
 }
 
 .col-centered {
-	display: inline-block;
-	float: none;
-	text-align: left;
-	/* inline-block space fix */
-	margin-right: -4px;
+    display: inline-block;
+    float: none;
+    text-align: left;
+    /* inline-block space fix */
+    margin-right: -4px;
 }
 
 .col-right {
-	display: inline-block;
-	float: right;
-	text-align: right;
-	/* inline-block space fix */
-	margin-right: -4px;
+    display: inline-block;
+    float: right;
+    text-align: right;
+    /* inline-block space fix */
+    margin-right: -4px;
 }
 
 .bs-docs-section {
-	padding-left: 15px;
+    padding-left: 15px;
 }
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="PAGE HEADER AND SPONSOR REGION ----------------------------/ "*/
 .page-header h1 {
-	font-size: 4em;
+    font-size: 4em;
 }
 
 .page-header {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 #sponsor {
-	text-align: right;
+    text-align: right;
 }
 
 #sponsor img {
-	max-width: 175px;
+    max-width: 175px;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="TABLE-FORMS ----------------------------/ "*/
 #form-table, #grid-table {
-	font-size: 125%;
+    font-size: 125%;
 }
 
 #form-table .heading {
-	width: 240px;
-	text-align: right;
+    width: 240px;
+    text-align: right;
 }
 
 #form-table table {
-	margin: 30px 0;
+    margin: 30px 0;
 }
 
 #form-table table.table-condensed td {
-	padding: 2px 10px;
+    padding: 2px 10px;
 }
 
 #form-table table, #form-table table td, #form-table table tr {
-	border: none;
+    border: none;
 }
 
 #form-table td.td-label {
-	text-align: right;
-	font-weight: bold;
-	padding-right: 12px;
-	width: 250px;
+    text-align: right;
+    font-weight: bold;
+    padding-right: 12px;
+    width: 250px;
 }
 
 @media screen and (max-width: 970px) {
-	.page-header h1 {
-		font-size: 3em;
-	}
+    .page-header h1 {
+        font-size: 3em;
+    }
 }
 
 td span.hobby {
-	display: inline;
-	padding: 0 8px;
-	border-left: solid 1px black;
+    display: inline;
+    padding: 0 8px;
+    border-left: solid 1px black;
 }
 
 td span.hobby:first-child {
-	border-left: none;
-	padding-left: 0;
+    border-left: none;
+    padding-left: 0;
 }
 
 td.td-label .heading h2 {
-	margin-top: 0;
-	padding-right: 8px;
+    margin-top: 0;
+    padding-right: 8px;
 }
 
 td.hobbies span {
-	margin-top: 6px;
-	display: inline-block;
+    margin-top: 6px;
+    display: inline-block;
 }
 
 #form-table table.table-condensed td.hobbies {
-	padding-left: 0;
+    padding-left: 0;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="NAVBAR ----------------------------/ "*/
 .margin-5 {
-	margin-left: 5px;
-	margin-right: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
-.glyphicon-home:before, .glyphicon-th-list:before, .glyphicon-search:before
-	{
-	padding-right: 3px;
+.glyphicon-home:before, .glyphicon-th-list:before, .glyphicon-search:before {
+    padding-right: 3px;
 }
 
 img.navbar-profilepic {
@@ -150,42 +151,43 @@ img.navbar-profilepic {
     margin-left: -8px;
     margin-right: 10px;
 }
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
 #secInfo {
-	font-size: smaller;
-	display: block;
-	margin-bottom: 50px;
+    font-size: smaller;
+    display: block;
+    margin-bottom: 50px;
 }
 
 #secInfo h3 {
-	font-size: 16px;
+    font-size: 16px;
 }
 
 #secInfo p.secLine {
-	line-height: 2px;
-	color: #aaa;
-	margin-top: -4px;
+    line-height: 2px;
+    color: #aaa;
+    margin-top: -4px;
 }
 
 .secItem {
-	padding-top: 2px;
+    padding-top: 2px;
 }
 
 #secInfo p.secNote {
-	line-height: 1.2;
-	font-style: italic;
-	margin-top: 10px;
+    line-height: 1.2;
+    font-style: italic;
+    margin-top: 10px;
 }
 
 .secLabel {
-	font-weight: bold;
-	margin-right: 4px;
+    font-weight: bold;
+    margin-right: 4px;
 }
 
 .secField {
-	
+
 }
 
 .secItemSocial {
@@ -194,158 +196,161 @@ img.navbar-profilepic {
 }
 
 .secItemSocial .secLabel {
-	vertical-align: super;
+    vertical-align: super;
 }
+
 .github-footer {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 .github-footer a img, .github-footer a:focus, .github-footer img {
-	border: none;
+    border: none;
 }
 
 .github-footer a.github-version {
-	display: inline-block;
-	margin-left: 6px;
+    display: inline-block;
+    margin-left: 6px;
 }
 
 .btn-secinfo-social {
-	width: 80px !important;
+    width: 80px !important;
 }
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="BOOTSTRAP FORMS ----------------------------/ "*/
 h2.form-title {
-	margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .col-align-right, .button-col-align-right {
-	display: inline-block;
-	float: none;
-	text-align: right;
+    display: inline-block;
+    float: none;
+    text-align: right;
 }
 
 .button-col-align-right {
-	padding-right: 6px !important;
+    padding-right: 6px !important;
 }
 
 .input-button-right {
-	width: 80%;
-	float: left;
+    width: 80%;
+    float: left;
 }
 
 .row-delete-button {
-	
+
 }
 
 ul.hobbyList {
-	padding-left: 0px;
+    padding-left: 0px;
 }
 
 ul.hobbyList li {
-	list-style: none;
-	display: inline-block;
-	padding-right: 8px;
+    list-style: none;
+    display: inline-block;
+    padding-right: 8px;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="DEMO SITE NOTES ----------------------------/ "*/
 .demo-login-note, .demo-registration-note, .form-disabled-note {
-	font-style: italic;
-	display: block;
-	margin: 15px 0;
-	color: #333;
+    font-style: italic;
+    display: block;
+    margin: 15px 0;
+    color: #333;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="JAVASCRIPT----------------------------/ "*/
 .cod-name {
-	display: inline-block;
-	margin-bottom: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
 }
 
 .cod-hobbies {
-	float: left;
-	margin-right: 4px;
+    float: left;
+    margin-right: 4px;
 }
 
 ul.cod-hobbylist {
-	padding-left: 0px;
+    padding-left: 0px;
 }
 
 ul.cod-hobbylist li {
-	list-style: none;
-	display: inline-block;
-	padding-right: 4px;
+    list-style: none;
+    display: inline-block;
+    padding-right: 4px;
 }
 
 ul.cod-hobbylist li:after {
-	content: ", ";
+    content: ", ";
 }
 
 ul.cod-hobbylist li:last-child:after {
-	content: "";
+    content: "";
 }
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="MULTI-ITEM DISPLAY----------------------------/ "*/
 ul.catlist {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 ul.catlist li {
-	display: inline;
+    display: inline;
 }
 
 ul.catlist li a:after {
-	content: ",";
+    content: ",";
 }
 
 ul.catlist li:last-child a:after {
-	content: "";
+    content: "";
 }
 
 ul.featurelist {
-	list-style: none;
-	margin: 0;
-	padding-left: 1em;
-	padding-top: 0.1em;
-	padding: .1em 0 .5em 1em;
+    list-style: none;
+    margin: 0;
+    padding-left: 1em;
+    padding-top: 0.1em;
+    padding: .1em 0 .5em 1em;
 }
 
 ul.featurelist li:before {
-	content: "\e005";
-	font-family: 'Glyphicons Halflings';
-	font-size: 9px;
-	float: left;
-	margin-top: 7px;
-	margin-left: -18px;
-	color: #dd4814;
+    content: "\e005";
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    float: left;
+    margin-top: 7px;
+    margin-left: -18px;
+    color: #dd4814;
 }
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="MULTI-SELECT DROPDOWNS ----------------------------/ "*/
 .btn-badgeboy {
-	
+
 }
 
 .btn-badgeboy b.caret {
-	display: none;
+    display: none;
 }
 
-.btn-xs .badge, .btn-group-xs>.btn .badge {
-	margin-left: 5px;
+.btn-xs .badge, .btn-group-xs > .btn .badge {
+    margin-left: 5px;
 }
 
 #badges {
-	display: block;
-	margin-top: 9px;
-	font-style: italic;
+    display: block;
+    margin-top: 9px;
+    font-style: italic;
 }
 
 /*</editor-fold>*/
@@ -354,46 +359,47 @@ ul.featurelist li:before {
 
 /* GOOGLE MAPS ---------------------------------------------- */
 #form-table tr.locationRow td {
-	padding-top: 15px;
+    padding-top: 15px;
 }
 
 /* HIGHLIGHTING ---------------------------------------------- */
 td a b {
-	background-color: Yellow;
+    background-color: Yellow;
 }
 
 /* SOCIAL BUTTONS ---------------------------------------------- */
 .welcome-row {
-	font-size: 18px;
+    font-size: 18px;
     padding-bottom: 2em;
 }
+
 .social-button-row {
-	padding-bottom: 3.0em;
+    padding-bottom: 3.0em;
 }
 
 .login-social-button-row {
-	padding-bottom: 3.0em;
-	padding-top: 40px;
+    padding-bottom: 3.0em;
+    padding-top: 40px;
 }
 
 .social-button-row-flushright {
-	float: right;
+    float: right;
 }
 
 i.fa-twitter {
-	margin-right: 2px;
+    margin-right: 2px;
 }
 
 i.fa-facebook {
-	margin-right: 4px;
+    margin-right: 4px;
 }
 
 i.fa-google {
-	margin-right: 2px;
+    margin-right: 2px;
 }
 
 .btn-facebook-login {
-	margin-left: 40px;
+    margin-left: 40px;
 }
 
 .btn-facebook, .btn-twitter, .btn-google {
@@ -401,8 +407,8 @@ i.fa-google {
 }
 
 form#fb_signin, form#tw_signin, form#gl_signin {
-	display: inline-block;
-	margin-right: 4px;
+    display: inline-block;
+    margin-right: 4px;
 }
 
 /*</editor-fold>*/
@@ -410,37 +416,37 @@ form#fb_signin, form#tw_signin, form#gl_signin {
 /*/<editor-fold> desc="USER PROFILE ----------------------------/ "*/
 
 #profile-area {
-	margin: 30px auto 60px auto;
-	display: inline-block;
+    margin: 30px auto 60px auto;
+    display: inline-block;
 }
 
 .profile-pic {
-	float: left;
-	max-width: 30%;
+    float: left;
+    max-width: 30%;
 }
 
 .profile-pic img {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 .profile-pic-button {
-	display: block;
-	margin: 30px auto 0px auto;
-	text-align: center;
+    display: block;
+    margin: 30px auto 0px auto;
+    text-align: center;
 }
 
 .profile-pic-upload-form {
-	max-width: 60%;
-	float: right;
+    max-width: 60%;
+    float: right;
 }
 
 .profile-pic-upload-form div, .profile-pic-upload-form h3 {
-	margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 #form-table table.table-profile {
-	max-width: 70%;
-	margin: 0 auto 20px auto;
+    max-width: 70%;
+    margin: 0 auto 20px auto;
 }
 
 /*</editor-fold>*/
@@ -448,80 +454,144 @@ form#fb_signin, form#tw_signin, form#gl_signin {
 /*/<editor-fold> desc="MAIL ----------------------------/ "*/
 
 textarea.mail-body {
-	word-break: keep-all;
-	resize: none;
-	width: 100%;
-	padding: 12px;
+    word-break: keep-all;
+    resize: none;
+    width: 100%;
+    padding: 12px;
 }
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="SUBMENUS----------------------------/ "*/
 
-.marginBottom-0 {margin-bottom:0;}
-
-.dropdown-submenu{position:relative;}
-.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
-.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
-.dropdown-submenu:hover>a:after{border-left-color:#555;}
-.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-
-nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
-	background-color: #dd4814;
-	border-color: #dd4814;
+.marginBottom-0 {
+    margin-bottom: 0;
 }
 
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #cccccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover > a:after {
+    border-left-color: #555;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: #dd4814;
+    border-color: #dd4814;
+}
 
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="SELECT DROPDOWN ----------------------------/ "*/
 
 /*.bootstrap-select > select.selectpicker .btn-primary:focus, .bootstrap-select > select.selectpicker .btn-primary:hover, .bootstrap-select > select.selectpicker .btn-primary:active*/
- .special-select  .btn-primary:focus, .special-select .btn-primary:active
-{
-	background-color: #dd4814 !important;
-	border-color: #dd4814 !important;
-	outline: none !important;
-	box-shadow: none !important;
+.special-select .btn-primary:focus, .special-select .btn-primary:active {
+    background-color: #dd4814 !important;
+    border-color: #dd4814 !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .special-select .bootstrap-select .dropdown-toggle:focus {
-	outline: none;
+    outline: none;
 }
+
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="POSTS----------------------------/ "*/
 
 .pull-right.has-error.pad-right {
-	padding-right: 8px;
+    padding-right: 8px;
 }
 
 .page-preview {
-	padding-right: 10px;
-	font-size: small;
+    padding-right: 10px;
+    font-size: small;
 }
 
 button.btn.btn-success {
-	float: right;
-	margin-left: 6px;
+    float: right;
+    margin-left: 6px;
 }
 
 .page-preview img.thumbnail {
-	max-height: 120px;
-	float: right;
-	margin-left: 20px;
+    max-height: 120px;
+    float: right;
+    margin-left: 20px;
 }
 
 .table td.page-preview {
-	padding: 10px 10px 0 20px;
+    padding: 10px 10px 0 20px;
 }
 
 .page-preview a {
-	font-weight: bold;
+    font-weight: bold;
 }
+
 .page-preview h3 {
-	margin-top: 0;
-	margin-bottom: 10px;
-	font-size: 16px;
-	line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
 }
+
+.pagepreveiw-images {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    position: relative;
+}
+.carousel-inner .item img {
+    display: inline-block;
+    max-width: 600px;
+    max-height: 400px;
+}
+.table tbody tr td.td-carousel {
+    padding: 20px;
+}
+.table tbody tr.tr-button-row td {
+}
+.carousel-control.left, .carousel-control.right
+{
+    background-color: #fff !important;
+    background-image: none;
+}
+
 /*</editor-fold>*/

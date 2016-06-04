@@ -4,7 +4,6 @@
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
     <title th:text="#{posts.add.page.title}">[Add NixMash Spring Post]</title>
-
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
@@ -86,6 +85,20 @@
 
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    $('.carousel').carousel({
+        interval: false
+    })
+
+    $('#pagepreview-carousel').on('slide.bs.carousel', function () {
+        var imageIndex = $('#pagepreview-carousel .active').index('#pagepreview-carousel .item');
+        $('#imageIndex').val(imageIndex + 1);
+    })
+    /*]]>*/
+</script>
 
 </body>
 </html>

@@ -253,6 +253,11 @@ public class PostDTO implements Serializable {
             return this;
         }
 
+        public Builder hasImages(Boolean hasImages) {
+            built.hasImages = hasImages;
+            return this;
+        }
+
         public PostDTO build() {
             return built;
         }

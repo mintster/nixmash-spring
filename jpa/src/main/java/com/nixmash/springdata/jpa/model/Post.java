@@ -236,7 +236,7 @@ public class Post implements Serializable {
     }
 
     @Transient
-    public boolean hasImages() {
+    public boolean hasImage() {
         return (this.postImage != null);
     }
 

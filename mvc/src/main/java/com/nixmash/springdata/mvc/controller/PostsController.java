@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -75,7 +77,7 @@ public class PostsController {
                     showPost = "link";
                     request.getSession().setAttribute("pagePreview", pagePreview);
                     model.addAttribute("pagePreview", pagePreview);
-                    model.addAttribute("postDTO", postDtoFromPagePreview(pagePreview,postLink.getLink()));
+                    model.addAttribute("postDTO", postDtoFromPagePreview(pagePreview, postLink.getLink()));
                 }
             }
         }
@@ -89,8 +91,7 @@ public class PostsController {
         Boolean hasTwitter = page.getTwitterDTO() != null;
         String postTitle = hasTwitter ? page.getTwitterDTO().getTwitterTitle() : page.getTitle();
         String postDescription = hasTwitter ? page.getTwitterDTO().getTwitterDescription() : page.getDescription();
-        String imageUrl = getPagePreviewImage(page, sourceLink);
-
+        PostDTO tmpDTO = getPagePreviewImage(page, sourceLink);
         // TODO: Add logic for determining if PostDTO hasImages for display of slideshow
 
         return PostDTO.getBuilder(null,
@@ -100,30 +101,53 @@ public class PostsController {
                 postDescription,
                 null,
                 null)
-                .postImage(imageUrl)
+                .postImage(tmpDTO.getPostImage())
+                .hasImages(tmpDTO.getHasImages())
                 .build();
     }
 
-    private String getPagePreviewImage(PagePreviewDTO page, String sourceLink) {
+    private PostDTO getPagePreviewImage(PagePreviewDTO page, String sourceLink) {
+        return getPagePreviewImage(page, sourceLink, null);
+    }
+
+    private PostDTO getPagePreviewImage(PagePreviewDTO page, String sourceLink, Integer imageIndex) {
         String postSource = PostUtils.getPostSource(sourceLink);
+        PostDTO tmpDTO = new PostDTO();
         String imageUrl = null;
+        Boolean hasImages = true;
+
+        if (imageIndex == null) {
+
+            if (page.twitterDTO.getTwitterImage() != null) {
+                imageUrl = page.getTwitterDTO().getTwitterImage();
+            } else {
+                if (page.getImages().size() > 0) {
+                    imageUrl = page.getImages().get(0).getSrc();
+                }
+                else
+                    hasImages = false;
+            }
+        }
+        else
+        {
+            imageUrl = page.getImages().get(imageIndex).getSrc();
+        }
 
         // anticipating other special providers -- single case for now
 
         switch (postSource.toLowerCase()) {
             case "stackoverflow.com":
                 imageUrl = "/images/stackoverflow.png";
+                hasImages = false;
                 break;
             default:
                 break;
         }
 
-        if (imageUrl == null) {
-            if (page.getImages().size() > 0)
-                imageUrl = page.getImages().get(0).getSrc();
-        }
+        tmpDTO.setPostImage(imageUrl);
+        tmpDTO.setHasImages(hasImages);
 
-        return imageUrl;
+        return tmpDTO;
     }
 
     @RequestMapping(value = "/add", method = GET)
@@ -141,13 +165,19 @@ public class PostsController {
 
 
     @RequestMapping(value = "/add", method = POST, params = {"link"})
-    public String createLink(@Valid PostDTO postDTO, BindingResult result, SessionStatus status,
+    public String createLink(@Valid PostDTO postDTO, Integer imageIndex, BindingResult result, SessionStatus status,
                              RedirectAttributes attributes, Model model, HttpServletRequest request) {
+        PagePreviewDTO pagePreview = (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
         if (result.hasErrors()) {
-            model.addAttribute("pagePreview", request.getSession().getAttribute("pagePreview"));
+            model.addAttribute("pagePreview", pagePreview);
             model.addAttribute("showPost", "link");
             return POSTS_ADD_VIEW;
         } else {
+            if (postDTO.getHasImages()) {
+                if (postDTO.getDisplayType() != PostDisplayType.LINK) {
+                    postDTO.setPostImage(pagePreview.getImages().get(imageIndex).src);
+                }
+            }
             webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
             return "redirect:/posts";
         }
