@@ -92,7 +92,6 @@ public class PostsController {
         String postTitle = hasTwitter ? page.getTwitterDTO().getTwitterTitle() : page.getTitle();
         String postDescription = hasTwitter ? page.getTwitterDTO().getTwitterDescription() : page.getDescription();
         PostDTO tmpDTO = getPagePreviewImage(page, sourceLink);
-        // TODO: Add logic for determining if PostDTO hasImages for display of slideshow
 
         return PostDTO.getBuilder(null,
                 postTitle,
@@ -118,26 +117,36 @@ public class PostsController {
 
         if (imageIndex == null) {
 
-            if (page.twitterDTO.getTwitterImage() != null) {
+            // populating the postDTO image contents for addLink form
+
+            if (page.twitterDTO != null) {
                 imageUrl = page.getTwitterDTO().getTwitterImage();
             } else {
-                if (page.getImages().size() > 0) {
-                    imageUrl = page.getImages().get(0).getSrc();
-                }
-                else
+                if (page.getImages().size() > 1) {
+                    imageUrl = page.getImages().get(1).getSrc();
+                } else
                     hasImages = false;
             }
-        }
-        else
-        {
+        } else {
+            // determining the final postDTO selected image from addLink form carousel index
+
             imageUrl = page.getImages().get(imageIndex).getSrc();
         }
 
-        // anticipating other special providers -- single case for now
+        // At some future point may require a database lookup approach
+        // if getNoImageSources(postSource) != null, imageUrl = "/images...{postSource}.png"
 
         switch (postSource.toLowerCase()) {
             case "stackoverflow.com":
-                imageUrl = "/images/stackoverflow.png";
+                imageUrl = "/images/posts/stackoverflow.png";
+                hasImages = false;
+                break;
+            case "spring.io":
+                imageUrl = "/images/posts/spring.png";
+                hasImages = false;
+                break;
+            case "github.com":
+                imageUrl = "/images/posts/github.png";
                 hasImages = false;
                 break;
             default:
@@ -172,12 +181,15 @@ public class PostsController {
             model.addAttribute("pagePreview", pagePreview);
             model.addAttribute("showPost", "link");
             return POSTS_ADD_VIEW;
-        } else {
+        }
+        else {
+
             if (postDTO.getHasImages()) {
                 if (postDTO.getDisplayType() != PostDisplayType.LINK) {
                     postDTO.setPostImage(pagePreview.getImages().get(imageIndex).src);
                 }
             }
+
             webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
             return "redirect:/posts";
         }

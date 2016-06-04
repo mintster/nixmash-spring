@@ -54,22 +54,17 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr th:if="*{hasImages}">
                             <td colspan="2" class="td-carousel">
                                 <div class="pagepreveiw-images" data-example-id="simple-carousel">
                                     <div id="pagepreview-carousel" class="carousel slide"
                                          data-ride="carousel">
-                                        <!-- Indicators -->
 
+                                        <!-- Indicators -->
                                         <div class="carousel-inner" role="listbox">
-                                            <div class="item active">
-                                                <img src="http://nixmash.com/x/blog/2016/enum0601b.png"/>
-                                            </div>
-                                            <div class="item">
-                                                <img src="http://nixmash.com/x/blog/2016/enum0601c.png"/>
-                                            </div>
-                                            <div class="item">
-                                                <img src="http://nixmash.com/x/blog/2016/enum0601a.png"/>
+                                            <div th:each="imageUrl, row : ${pagePreview.getImages()}" class="item"
+                                                 th:classappend="${row.index == 1 }? 'active'">
+                                                <img th:src="${imageUrl.getSrc()}"/>
                                             </div>
                                         </div>
 
@@ -94,18 +89,20 @@
                             <td>
                                 <div class="form-actions pull-right special-select">
                                     <select th:field="*{displayType}" name="displayType" class="selectpicker"
-                                            data-style="btn-primary"
-                                            title="Select Link Display Type...">
-                                        <option value="LINK" th:text="#{add.post.button.link.text}">[link]</option>
-                                        <option value="LINK_SUMMARY" th:text="#{add.post.button.link.summary}">[link
+                                            data-style="btn-primary">
+                                        <option value="LINK_SUMMARY" th:text="#{add.post.button.link.summary}"
+                                                th:disabled="!*{postImage}">[link
                                             with
                                             summary]
                                         </option>
-                                        <option value="LINK_LARGE_IMAGE" th:text="#{add.post.button.link.feature}">
+                                        <option value="LINK" th:text="#{add.post.button.link.text}">[link]</option>
+                                        <option value="LINK_LARGE_IMAGE" th:text="#{add.post.button.link.feature}"
+                                                th:disabled="!*{hasImages}">
                                             [featured
                                             link]
                                         </option>
-                                        <option value="NIXMASH_POST" th:text="#{add.post.button.nixmash.post}">[nixmash
+                                        <option value="NIXMASH_POST" th:text="#{add.post.button.nixmash.post}"
+                                                th:disabled="!*{hasImages}">[nixmash
                                             spring post link]
                                         </option>
                                     </select>

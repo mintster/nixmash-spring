@@ -47,13 +47,14 @@ public class PostUtils {
     }
 
     public static String createSlug(String title) {
-        Slugify slugify = null;
+        Slugify slugify;
         String slug = null;
         try {
             slugify = new Slugify();
+            slug =  slugify.slugify(title);
         } catch (IOException e) {
             logger.error(String.format("IOException for title: %s -- Exception: %s",title, e.getMessage()));
         }
-       return slugify.slugify(title);
+       return slug;
     }
 }

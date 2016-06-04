@@ -590,8 +590,8 @@ button.btn.btn-success {
 }
 .carousel-control.left, .carousel-control.right
 {
-    background-color: #fff !important;
     background-image: none;
+    background-color: transparent;
 }
 
 /*</editor-fold>*/
