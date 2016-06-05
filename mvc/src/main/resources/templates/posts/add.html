@@ -86,21 +86,33 @@
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
 
-<script th:inline="javascript">
+<script th:inline="javascript" th:if="${showPost == 'link'}">
     /*<![CDATA[*/
 
     $('.carousel').carousel({
         interval: false
-    })
+    });
 
-    $('#pagepreview-carousel').on('slide.bs.carousel', function () {
-        var imageIndex = $('#pagepreview-carousel .active').index('#pagepreview-carousel .item');
-        $('#imageIndex').val(imageIndex + 1);
-    })
+    $('#pagepreview-carousel').on('slide.bs.carousel', function (e) {
+                var imageIndex = $('#pagepreview-carousel .active').index('#pagepreview-carousel .item');
+                var imageCount = [[${pagePreview.getImages().size() - 1 }]];
+                if (e.direction == "left") {
+                    if (imageIndex == imageCount)
+                        $('#imageIndex').val(0);
+                    else
+                        $('#imageIndex').val(imageIndex + 1);
+                }
+                else {
+                    if (imageIndex == 0)
+                        $('#imageIndex').val(imageCount);
+                    else
+                        $('#imageIndex').val(imageIndex - 1);
+                }
+            }
+    );
 
     /*]]>*/
 </script>
-
 </body>
 </html>
 

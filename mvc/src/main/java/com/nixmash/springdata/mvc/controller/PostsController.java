@@ -86,19 +86,26 @@ public class PostsController {
         return POSTS_ADD_VIEW;
     }
 
-    private PostDTO postDtoFromPagePreview(PagePreviewDTO page, String sourceLink) {
+    private PostDTO postDtoFromPagePreview(PagePreviewDTO page, String postLink) {
 
         Boolean hasTwitter = page.getTwitterDTO() != null;
         String postTitle = hasTwitter ? page.getTwitterDTO().getTwitterTitle() : page.getTitle();
         String postDescription = hasTwitter ? page.getTwitterDTO().getTwitterDescription() : page.getDescription();
-        PostDTO tmpDTO = getPagePreviewImage(page, sourceLink);
+        PostDTO tmpDTO = getPagePreviewImage(page, postLink);
+
+        // If twitter metatags missing title and description but have card metatag
+
+        if (postTitle == null)
+            postTitle = page.getTitle();
+        if (postDescription == null)
+            postDescription = page.getDescription();
 
         return PostDTO.getBuilder(null,
                 postTitle,
                 null,
-                sourceLink,
+                postLink,
                 postDescription,
-                null,
+                PostType.LINK,
                 null)
                 .postImage(tmpDTO.getPostImage())
                 .hasImages(tmpDTO.getHasImages())
