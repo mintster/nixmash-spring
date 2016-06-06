@@ -31,12 +31,16 @@ public class JsoupServiceImpl implements JsoupService {
         try {
             Document doc =  Jsoup.connect(url)
                     .userAgent(userAgent)
-                    .timeout(100000)
+                    .timeout(12000)
+                    .referrer("http://www.google.com")
+                    .followRedirects(true)
                     .ignoreHttpErrors(true)
+                    .ignoreContentType(true)
+                    .validateTLSCertificates(false)
                     .get();
             pagePreviewDTO = pagePreviewParser.parse(doc);
         } catch (IOException e) {
-            logger.error(String.format("Jsoup IOException for url [%s] : %s", url, e.getMessage()));
+            logger.info(String.format("Jsoup IOException for url [%s] : %s", url, e.getMessage()));
             return null;
         }
         return pagePreviewDTO;

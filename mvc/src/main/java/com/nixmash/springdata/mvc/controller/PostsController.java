@@ -3,6 +3,8 @@ package com.nixmash.springdata.mvc.controller;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import com.nixmash.springdata.jsoup.service.JsoupService;
@@ -36,24 +38,44 @@ public class PostsController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostsController.class);
 
+    // region constants
+
     protected static final String POSTS_LIST_VIEW = "posts/list";
     public static final String POSTS_ADD_VIEW = "posts/add";
     private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
     private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
 
+    // endregion
+
+    // region beans
+
     WebUI webUI;
     JsoupService jsoupService;
+    PostService postService;
+
+    // endregion
+
+    // region constructor
 
     @Autowired
-    public PostsController(WebUI webUI, JsoupService jsoupService) {
+    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService) {
         this.webUI = webUI;
         this.jsoupService = jsoupService;
+        this.postService = postService;
     }
+
+    // endregion
+
+    // region /posts get
 
     @RequestMapping(value = "", method = GET)
     public String home() {
         return POSTS_LIST_VIEW;
     }
+
+    // endregion
+
+    // region /add get() methods
 
     @RequestMapping(value = "/add", method = GET, params = {"formtype"})
     public String displayAddPostForm(@RequestParam(value = "formtype") String formType,
@@ -85,6 +107,58 @@ public class PostsController {
         model.addAttribute("showPost", showPost);
         return POSTS_ADD_VIEW;
     }
+
+    @RequestMapping(value = "/add", method = GET)
+    public String addPost(Model model) {
+        model.addAttribute("postLink", new PostLink());
+        return POSTS_ADD_VIEW;
+    }
+
+    // endregion
+
+    // region /add {post} methods
+
+    @RequestMapping(value = "/add", method = POST, params = {"note"})
+    public String createNote(@Valid PostDTO postDTO, BindingResult result, SessionStatus status,
+                             RedirectAttributes attributes, Model model) {
+        webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOTE_ADDED);
+        return "redirect:/posts";
+    }
+
+
+    @RequestMapping(value = "/add", method = POST, params = {"link"})
+    public String createLink(@Valid PostDTO postDTO, BindingResult result, CurrentUser currentUser,
+                             RedirectAttributes attributes, Model model, HttpServletRequest request) {
+        PagePreviewDTO pagePreview = (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
+        if (result.hasErrors()) {
+            model.addAttribute("pagePreview", pagePreview);
+            model.addAttribute("showPost", "link");
+            return POSTS_ADD_VIEW;
+        } else {
+            if (postDTO.getHasImages()) {
+                if (postDTO.getDisplayType() != PostDisplayType.LINK) {
+                    postDTO.setPostImage(pagePreview.getImages().get(postDTO.getImageIndex()).src);
+                }
+            }
+
+            // create and save Post ----------------------------------------------------- */
+            // UserId is "1" when in development, otherwise CurrentUser.getUserId()
+
+            postDTO.setPostSource(postDTO.getPostLink());
+            postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
+            postDTO.setUserId(1L);
+//            postDTO.setUserId(currentUser.getId());
+
+            postService.add(postDTO);
+
+            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
+            return "redirect:/posts";
+        }
+    }
+
+    // endregion
+
+    // region postDTO Utilities
 
     private PostDTO postDtoFromPagePreview(PagePreviewDTO page, String postLink) {
 
@@ -134,13 +208,17 @@ public class PostsController {
                 } else
                     hasImages = false;
             }
+            // if twitter image url missing or page contains single image
+            if (StringUtils.isEmpty(imageUrl)) {
+                hasImages = false;
+            }
         } else {
-            // determining the final postDTO selected image from addLink form carousel index
+            // determining the final postDTO from addLink form carousel index
 
             imageUrl = page.getImages().get(imageIndex).getSrc();
         }
 
-        // At some future point may require a database lookup approach
+        // At some future point may require a database lookup approach:
         // if getNoImageSources(postSource) != null, imageUrl = "/images...{postSource}.png"
 
         switch (postSource.toLowerCase()) {
@@ -166,40 +244,6 @@ public class PostsController {
         return tmpDTO;
     }
 
-    @RequestMapping(value = "/add", method = GET)
-    public String addPost(Model model) {
-        model.addAttribute("postLink", new PostLink());
-        return POSTS_ADD_VIEW;
-    }
-
-    @RequestMapping(value = "/add", method = POST, params = {"note"})
-    public String createNote(@Valid PostDTO postDTO, BindingResult result, SessionStatus status,
-                             RedirectAttributes attributes) {
-        webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOTE_ADDED);
-        return "redirect:/posts";
-    }
-
-
-    @RequestMapping(value = "/add", method = POST, params = {"link"})
-    public String createLink(@Valid PostDTO postDTO, Integer imageIndex, BindingResult result, SessionStatus status,
-                             RedirectAttributes attributes, Model model, HttpServletRequest request) {
-        PagePreviewDTO pagePreview = (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
-        if (result.hasErrors()) {
-            model.addAttribute("pagePreview", pagePreview);
-            model.addAttribute("showPost", "link");
-            return POSTS_ADD_VIEW;
-        }
-        else {
-
-            if (postDTO.getHasImages()) {
-                if (postDTO.getDisplayType() != PostDisplayType.LINK) {
-                    postDTO.setPostImage(pagePreview.getImages().get(imageIndex).src);
-                }
-            }
-
-            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
-            return "redirect:/posts";
-        }
-    }
+    // endregion
 
 }

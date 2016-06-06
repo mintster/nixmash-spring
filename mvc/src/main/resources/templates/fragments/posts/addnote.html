@@ -5,7 +5,7 @@
    <div class="container bs-docs-container big-font-container">
       <div class="row row-centered">
          <div class="bs-docs-section col-lg-9 col-centered">
-            <form method="post" action="/posts/add.html"
+            <form th:object="${postDTO}" method="post" action="/posts/add.html"
                   th:action="@{${#httpServletRequest.getRequestURI()}}"
                   class="form-horizontal" id="link-add-form">
 

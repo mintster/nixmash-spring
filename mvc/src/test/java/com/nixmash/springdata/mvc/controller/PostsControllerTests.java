@@ -1,9 +1,12 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
+import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,13 +15,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static com.nixmash.springdata.mvc.controller.PostsController.POSTS_ADD_VIEW;
 import static com.nixmash.springdata.mvc.controller.PostsController.POSTS_LIST_VIEW;
+import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
  * Created by daveburke on 5/27/16.
@@ -29,7 +35,6 @@ public class PostsControllerTests extends AbstractContext {
     private PostsController mockPostsController;
     private static final String GOOD_URL = "http://nixmash.com/java/dysfunctional-enumerated-annotations-in-hibernate/";
 
-
     private MockMvc mockMvc;
 
     @Autowired
@@ -38,10 +43,24 @@ public class PostsControllerTests extends AbstractContext {
     @Autowired
     JsoupService jsoupService;
 
+    @Autowired
+    PostService postService;
+
+    @Autowired
+    private CurrentUserDetailsService currentUserDetailsService;
+
+    private CurrentUser admin;
+
+    @Autowired
+    protected WebApplicationContext wac;
+
     @Before
     public void setUp() {
-        mockPostsController = new PostsController(webUI, jsoupService);
-        mockMvc = MockMvcBuilders.standaloneSetup(mockPostsController).build();
+
+        mockMvc =  webAppContextSetup(wac)
+                .apply(springSecurity())
+                .build();
+        mockPostsController = new PostsController(webUI, jsoupService, postService);
     }
 
     @Test
@@ -103,7 +122,7 @@ public class PostsControllerTests extends AbstractContext {
     @Test
     public void submitNewNoteForm() throws Exception {
         mockMvc.perform(postRequest(PostType.NOTE))
-                .andExpect(model().attributeHasNoErrors())
+                .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts"));
     }
@@ -111,7 +130,7 @@ public class PostsControllerTests extends AbstractContext {
     @Test
     public void submitNewLinkForm() throws Exception {
         mockMvc.perform(postRequest(PostType.LINK))
-                .andExpect(model().attributeHasNoErrors())
+                .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts"));
     }
@@ -120,8 +139,11 @@ public class PostsControllerTests extends AbstractContext {
         return post("/posts/add")
                 .param(postType.name().toLowerCase(), "true")
                 .param("postTitle", "my title")
-                .param("postName", "my-title")
+                .param("postLink", "http://some.link/some/path")
+                .param("postDescription", "my description")
+                .param("postType", postType.name().toUpperCase())
                 .param("displayType", postType.name().toUpperCase())
-                .param("postContent", "My Post Content");
+                .param("postContent", "My Post Content")
+                .with(csrf());
     }
 }

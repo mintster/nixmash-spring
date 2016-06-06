@@ -49,6 +49,18 @@ public class PostDTO implements Serializable {
     private int version = 0;
 
     private Boolean hasImages = false;
+    private int imageIndex = 1;
+
+    // region getter setters
+
+
+    public int getImageIndex() {
+        return imageIndex;
+    }
+
+    public void setImageIndex(int imageIndex) {
+        this.imageIndex = imageIndex;
+    }
 
     public Long getPostId() {
         return postId;
@@ -205,6 +217,8 @@ public class PostDTO implements Serializable {
     public void setPublished(Boolean published) {
         isPublished = published;
     }
+
+    // endregion
 
     @Override
     public String toString() {
