@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.model;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.utils.PostUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -65,7 +66,7 @@ public class Post implements Serializable {
     private PostDisplayType displayType;
 
     @Column(name = "is_published", nullable = false)
-    private Boolean isPublished = false;
+    private Boolean isPublished = true;
 
     @Column(name = "post_content", nullable = false, columnDefinition = "TEXT")
     private String postContent;
@@ -279,7 +280,7 @@ public class Post implements Serializable {
             built.postContent = postContent;
             built.postType = postType;
             built.displayType = displayType;
-            built.postSource = PostUtils.getPostSource(postLink);
+            built.postSource = PostUtils.createPostSource(postLink);
         }
 
         public Builder postSource(String postSource) {
@@ -288,6 +289,8 @@ public class Post implements Serializable {
         }
 
         public Builder postImage(String postImage) {
+            if (StringUtils.isEmpty(postImage))
+                postImage = null;
             built.postImage = postImage;
             return this;
         }

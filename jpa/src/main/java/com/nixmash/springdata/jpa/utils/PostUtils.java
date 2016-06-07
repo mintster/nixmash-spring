@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.utils;
 import com.github.slugify.Slugify;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.model.Post;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,13 +29,14 @@ public class PostUtils {
                 dto.getPostType(),
                 dto.getDisplayType())
                 .postSource(dto.getPostSource())
+                .postImage(dto.getPostImage())
                 .build();
     }
 
-    public static String getPostSource(String url) {
-        String domain = "NA";
-        if (url == null)
-            return domain;
+    public static String createPostSource(String url) {
+        String domain = null;
+        if (StringUtils.isEmpty(url))
+            return null;
         else {
             try {
                 URL linkURL = new URL(url);

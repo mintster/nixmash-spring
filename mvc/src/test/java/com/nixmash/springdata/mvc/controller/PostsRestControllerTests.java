@@ -29,9 +29,14 @@ public class PostsRestControllerTests extends AbstractContext {
     }
 
     @Test
-    public void homePageTest() throws Exception {
+    public void keyValueJson() throws Exception {
         mockMvc.perform(get("/json/posts/map"))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    public void postsInHtmlContentType() throws Exception {
+        mockMvc.perform(get("/json/posts"))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
+    }
 }

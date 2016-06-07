@@ -23,6 +23,7 @@ import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -60,12 +61,13 @@ public class PostsControllerTests extends AbstractContext {
         mockMvc =  webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
-        mockPostsController = new PostsController(webUI, jsoupService, postService);
+//        mockPostsController = new PostsController(webUI, jsoupService, postService);
     }
 
     @Test
     public void homePageTest() throws Exception {
         mockMvc.perform(get("/posts"))
+                .andDo(print())
                 .andExpect(view().name(POSTS_LIST_VIEW));
     }
 

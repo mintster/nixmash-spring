@@ -75,7 +75,7 @@ public class PostsController {
 
     // endregion
 
-    // region /add get() methods
+    // region /add {get} methods
 
     @RequestMapping(value = "/add", method = GET, params = {"formtype"})
     public String displayAddPostForm(@RequestParam(value = "formtype") String formType,
@@ -139,12 +139,14 @@ public class PostsController {
                 if (postDTO.getDisplayType() != PostDisplayType.LINK) {
                     postDTO.setPostImage(pagePreview.getImages().get(postDTO.getImageIndex()).src);
                 }
+                else
+                    postDTO.setPostImage(null);
             }
 
             // create and save Post ----------------------------------------------------- */
             // UserId is "1" when in development, otherwise CurrentUser.getUserId()
 
-            postDTO.setPostSource(postDTO.getPostLink());
+            postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
             postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
             postDTO.setUserId(1L);
 //            postDTO.setUserId(currentUser.getId());
@@ -191,7 +193,7 @@ public class PostsController {
     }
 
     private PostDTO getPagePreviewImage(PagePreviewDTO page, String sourceLink, Integer imageIndex) {
-        String postSource = PostUtils.getPostSource(sourceLink);
+        String postSource = PostUtils.createPostSource(sourceLink);
         PostDTO tmpDTO = new PostDTO();
         String imageUrl = null;
         Boolean hasImages = true;
@@ -211,6 +213,7 @@ public class PostsController {
             // if twitter image url missing or page contains single image
             if (StringUtils.isEmpty(imageUrl)) {
                 hasImages = false;
+                imageUrl = null;
             }
         } else {
             // determining the final postDTO from addLink form carousel index
@@ -227,6 +230,7 @@ public class PostsController {
                 hasImages = false;
                 break;
             case "spring.io":
+            case "docs.spring.io":
                 imageUrl = "/images/posts/spring.png";
                 hasImages = false;
                 break;

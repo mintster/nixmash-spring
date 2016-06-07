@@ -259,7 +259,7 @@ public class PostDTO implements Serializable {
             built.postContent = postContent;
             built.postType = postType;
             built.displayType = displayType;
-            built.postSource = PostUtils.getPostSource(postLink);
+            built.postSource = PostUtils.createPostSource(postLink);
           }
 
         public Builder postImage(String postImage) {

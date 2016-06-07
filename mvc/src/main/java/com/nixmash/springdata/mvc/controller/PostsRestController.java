@@ -17,8 +17,15 @@ import java.util.Map;
 @JsonRequestMapping(value = "/json/posts")
 public class PostsRestController {
 
+    @RequestMapping(value="",  produces = "text/html;charset=UTF-8")
+    public String posts()
+    {
+        return "<div>output</div>";
+    }
 
-    // region Key-Value Json demo for NixMash Post "Variations on JSON Key-Value Pairs in Spring MVC"  http://goo.gl/0hhnZg
+    // region Key-Value Json
+    //
+    // --- demo for NixMash Post "Variations on JSON Key-Value Pairs in Spring MVC"  http://goo.gl/0hhnZg
 
     private String key = "key";
     private String value = "Json Key-Value Demo";
