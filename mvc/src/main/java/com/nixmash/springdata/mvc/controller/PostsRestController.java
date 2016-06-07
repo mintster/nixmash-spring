@@ -1,26 +1,57 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.Pair;
+import com.nixmash.springdata.mail.service.TemplateService;
 import com.nixmash.springdata.mvc.annotations.JsonRequestMapping;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
-@SuppressWarnings("WeakerAccess")
 
 @RestController
 @JsonRequestMapping(value = "/json/posts")
 public class PostsRestController {
 
-    @RequestMapping(value="",  produces = "text/html;charset=UTF-8")
-    public String posts()
-    {
-        return "<div>output</div>";
+    PostService postService;
+    TemplateService templateService;
+
+    @Autowired
+    public PostsRestController(PostService postService, TemplateService templateService) {
+        this.postService = postService;
+        this.templateService = templateService;
+    }
+
+
+    @RequestMapping(value = "/page/{pageNumber}", produces = "text/html;charset=UTF-8")
+    public String getPosts(@PathVariable Integer pageNumber, HttpServletRequest request) {
+        Slice<Post> posts = postService.getPosts(pageNumber, 3);
+        String result = StringUtils.EMPTY;
+        for (Post post : posts) {
+            result += templateService.createPostHtml(post);
+        }
+        WebUtils.setSessionAttribute(request, "posts", posts);
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/more")
+    public String getHasNext(HttpServletRequest request) {
+        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "posts");
+        if (posts != null)
+            return Boolean.toString(posts.hasNext());
+        else
+            return "true";
     }
 
     // region Key-Value Json

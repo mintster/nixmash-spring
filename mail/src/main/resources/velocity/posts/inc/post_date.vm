@@ -1,0 +1,1 @@
+<span>Posted on </span><abbr title="${post.postDate}">${postCreated}</abbr>

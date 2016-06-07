@@ -27,14 +27,19 @@
 </div>
 <div class="container bs-docs-container">
     <div class="row">
-        <div class="bs-docs-section col-lg-8 col-md-7 col-sm-6">
+        <div class="bs-docs-section">
             <div id="message-holder">
                 <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
                      th:text="${feedbackMessage}"></div>
             </div>
 
             <div id="grid-table">
-                <div id="posts"></div>
+                <div id="posts" class="col-lg-9 col-lg-offset-2"></div>
+                <div id="post-button-row" class="post-button col-lg-9 col-lg-offset-2">
+                    <button id="morePosts" class="btn btn-primary btn-lg" name="morePosts" onclick="morePosts()"
+                            type="button">More Posts
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -49,24 +54,28 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
 
-    $.get( "/json/posts", function( data ) {
-        $( "#posts" ).html( data );
+    var pageIndex = 0;
+
+    $.get("/json/posts/page/0", function (data) {
+        $("#posts").html(data);
+        pageIndex++;
+    }).success(function() {
+        $('.post:odd').addClass("odd");
     });
 
-//    $.ajax({
-//        dataType: "html",
-//        url: "/json/posts",
-//        headers: {
-//            'Accept': 'text/html',
-//            'Content-Type': 'text/html'
-//        },
-//        success: function (data) {
-//            $('#posts').html(data);
-//        },
-//        error: function (data, status, er) {
-//            alert("error: " + data + " | " + status + " | " + er);
-//        }
-//    });
+    function morePosts() {
+        $.get("/json/posts/page/" + pageIndex, function (data) {
+            $("#posts").append(data);
+            pageIndex++;
+        }).success(function() {
+            $('.post:odd').addClass("odd")
+            var backToTop = "<a href='/posts'>Back to top</a>";
+            $.get("/json/posts/more", function (data) {
+                if (data == "false")
+                    $("#post-button-row").html(backToTop);
+            })
+        });
+    }
 
     /*]]>*/
 </script>

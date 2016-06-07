@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.Map;
 
+@SuppressWarnings("Convert2Lambda")
 @Service("mailService")
 public class MailServiceImpl implements MailService{
 

@@ -29,23 +29,37 @@ public class JsoupServiceImpl implements JsoupService {
 
     @Override
     public PagePreviewDTO getPagePreview(String url) {
-        PagePreviewDTO pagePreviewDTO;
+        PagePreviewDTO pagePreviewDTO = null;
+        Document doc;
+        Boolean tryWithoutCertValidation = false;
         try {
-            Document doc =  Jsoup.connect(url)
-                    .userAgent(userAgent)
-                    .timeout(12000)
-                    .referrer("http://www.google.com")
-                    .followRedirects(true)
-                    .ignoreHttpErrors(true)
-                    .ignoreContentType(true)
-                    .validateTLSCertificates(false)
-                    .get();
+            doc =  getDocument(url, true);
             pagePreviewDTO = pagePreviewParser.parse(doc);
         } catch (IOException e) {
-            logger.info(String.format("Jsoup IOException for url [%s] : %s", url, e.getMessage()));
-            return null;
+            logger.info(String.format("Jsoup IOException [validCert = TRUE]  url [%s] : %s", url, e.getMessage()));
+            tryWithoutCertValidation = true;
+        }
+        if (tryWithoutCertValidation) {
+            try {
+                doc = getDocument(url, false);
+                pagePreviewDTO = pagePreviewParser.parse(doc);
+            } catch (IOException e) {
+                logger.info(String.format("Jsoup IOException [validCert = FALSE]  url [%s] : %s", url, e.getMessage()));
+                return null;
+            }
         }
         return pagePreviewDTO;
     }
 
+    private Document getDocument(String url, Boolean validateCert) throws IOException {
+        return  Jsoup.connect(url)
+                .userAgent(userAgent)
+                .timeout(12000)
+                .referrer("http://www.google.com")
+                .followRedirects(true)
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
+                .validateTLSCertificates(validateCert)
+                .get();
+    }
 }

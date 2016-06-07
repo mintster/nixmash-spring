@@ -236,11 +236,6 @@ public class Post implements Serializable {
         return (this.postId == null);
     }
 
-    @Transient
-    public boolean hasImage() {
-        return (this.postImage != null);
-    }
-
     @Override
     public String toString() {
         return "Post{" +

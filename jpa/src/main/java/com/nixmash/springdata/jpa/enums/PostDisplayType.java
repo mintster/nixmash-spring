@@ -6,7 +6,7 @@ package com.nixmash.springdata.jpa.enums;
 public enum PostDisplayType {
     LINK,
     LINK_SUMMARY,
-    LINK_LARGE_IMAGE,
+    LINK_FEATURE,
     NOTE,
     NIXMASH_POST
 }

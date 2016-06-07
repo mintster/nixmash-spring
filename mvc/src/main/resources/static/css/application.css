@@ -535,7 +535,7 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 
 /*</editor-fold>*/
 
-/*/<editor-fold> desc="POSTS----------------------------/ "*/
+/*/<editor-fold> desc="POST AND LINK ENTRY FORMS----------------------------/ "*/
 
 .pull-right.has-error.pad-right {
     padding-right: 8px;
@@ -593,5 +593,78 @@ button.btn.btn-success {
     background-image: none;
     background-color: transparent;
 }
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="POST DISPLAY----------------------------/ "*/
+
+.post-button {
+    display: inline-block;
+    padding: 30px 15px;
+}
+
+#posts {
+    float: none
+}
+
+#posts .post {
+    margin-bottom: 30px;
+    float: none;
+    display: inline-block;
+    width: 100%;
+    padding: 15px;
+}
+#posts .post.odd {
+    background-color: #f6f6f6;
+}
+
+#posts .post h3 {
+    line-height: 1.3;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+#posts .post .post-content {
+
+}
+
+#posts .post.link-summary img {
+    max-height: 120px;
+    float: right;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+#posts .post.link-feature img, #posts .post.nixmash-post img.nixmash-feature-img {
+    max-width: 800px;
+    margin: 20px auto 10px auto;
+}
+
+
+#posts .post .post-date {
+    padding-top: 12px;
+    font-size: smaller;
+    font-style: italic;
+}
+
+#posts .post abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+#posts .post.nixmash-post.odd, #posts .post.nixmash-post {
+    background-color: #ddd;
+}
+
+#posts .post.nixmash-post .nixmash-tag {
+    float: right;
+}
+#posts .post.nixmash-post .nixmash-tag a:focus {
+    border: none;
+}
+
+#posts .post.nixmash-post .nixmash-tag img {
+    border: none;
+}
+
 
 /*</editor-fold>*/
