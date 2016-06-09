@@ -16,6 +16,7 @@ import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.jpa.utils.ContactUtils;
 import com.nixmash.springdata.jpa.utils.PostUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,11 @@ public class JpaUI {
     private Boolean reset = true;
 
     public void init() {
-        addPostDemo();
+        displayRandomUserIdString();
+    }
+
+    private void displayRandomUserIdString() {
+        System.out.println(RandomStringUtils.randomAlphanumeric(16));
     }
 
     private void addPostDemo() {

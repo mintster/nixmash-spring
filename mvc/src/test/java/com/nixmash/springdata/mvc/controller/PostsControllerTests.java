@@ -1,12 +1,11 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.enums.PostType;
-import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
-import com.nixmash.springdata.mvc.security.CurrentUserDetailsService;
+import com.nixmash.springdata.mvc.security.WithAdminUser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,11 +45,6 @@ public class PostsControllerTests extends AbstractContext {
 
     @Autowired
     PostService postService;
-
-    @Autowired
-    private CurrentUserDetailsService currentUserDetailsService;
-
-    private CurrentUser admin;
 
     @Autowired
     protected WebApplicationContext wac;
@@ -122,6 +116,7 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    @WithAdminUser
     public void submitNewNoteForm() throws Exception {
         mockMvc.perform(postRequest(PostType.NOTE))
                 .andExpect(model().hasNoErrors())
@@ -131,6 +126,15 @@ public class PostsControllerTests extends AbstractContext {
 
     @Test
     public void submitNewLinkForm() throws Exception {
+        mockMvc.perform(postRequest(PostType.LINK))
+                .andExpect(model().hasNoErrors())
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
+                .andExpect(redirectedUrl("/posts/add"));
+    }
+
+    @Test
+    @WithAdminUser
+    public void submitNewLinkWithAdminForm() throws Exception {
         mockMvc.perform(postRequest(PostType.LINK))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))

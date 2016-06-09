@@ -71,8 +71,7 @@ public class UserDTO {
     }
 
     public String getPassword() {
-        return "something";
-        //return password;
+        return password;
     }
 
     public void setPassword(String password) {
@@ -80,8 +79,7 @@ public class UserDTO {
     }
 
     public String getRepeatedPassword() {
-        return "something";
-        //  return repeatedPassword;
+          return repeatedPassword;
     }
 
     public void setRepeatedPassword(String repeatedPassword) {

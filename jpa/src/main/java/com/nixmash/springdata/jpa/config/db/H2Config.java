@@ -50,7 +50,8 @@ public class H2Config extends JpaCommonConfig {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.setContinueOnError(true);
         populator.setIgnoreFailedDrops(true);
-        populator.addScripts(new ClassPathResource("/db/h2schema.sql"), new ClassPathResource("/db/h2data.sql"));
+        populator.addScripts(new ClassPathResource("/db/h2schema.sql"),
+                new ClassPathResource("/db/h2data.sql"));
         try {
             populator.populate(dataSource.getConnection());
         } catch (SQLException ignored) {

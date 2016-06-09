@@ -535,7 +535,32 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 
 /*</editor-fold>*/
 
-/*/<editor-fold> desc="POST AND LINK ENTRY FORMS----------------------------/ "*/
+/*/<editor-fold> desc="POST ENTRY FORM----------------------------/ "*/
+
+.in-progress {
+    font-size: x-large;
+    font-style: italic;
+    margin-bottom: 150px;
+}
+
+.in-progress a.btn.btn-large.btn-primary {
+    font-size: large;
+    font-style: normal;
+    margin-top: 40px;
+}
+
+.in-progress p {
+    padding-bottom: 20px;
+}
+
+.in-progress p.intro {
+    font-weight:bold;
+}
+
+/*</editor-fold>*/
+
+
+/*/<editor-fold> desc="LINK ENTRY FORMS----------------------------/ "*/
 
 .pull-right.has-error.pad-right {
     padding-right: 8px;
@@ -598,13 +623,21 @@ button.btn.btn-success {
 
 /*/<editor-fold> desc="POST DISPLAY----------------------------/ "*/
 
-.post-button {
+#more-posts-button-row {
     display: inline-block;
-    padding: 30px 15px;
+    padding: 0 15px 60px 30px;
+}
+
+.sidebar-add-button-row {
+    padding-top: 20px;
+}
+
+.sidebar-add-button-row a {
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 #posts {
-    float: none
 }
 
 #posts .post {
@@ -614,6 +647,11 @@ button.btn.btn-success {
     width: 100%;
     padding: 15px;
 }
+
+#posts .post:first-child {
+    padding-top: 0;
+}
+
 #posts .post.odd {
     background-color: #f6f6f6;
 }
@@ -632,7 +670,7 @@ button.btn.btn-success {
     max-height: 120px;
     float: right;
     margin-left: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 #posts .post.link-feature img, #posts .post.nixmash-post img.nixmash-feature-img {
@@ -666,5 +704,20 @@ button.btn.btn-success {
     border: none;
 }
 
+pre code {
+    white-space: pre;
+    margin-top: -15px;
+}
+
+.post pre {
+    margin-top: 30px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+.post samp {
+    background-color: #f6f6f6;
+    padding: 2px 3px;
+}
 
 /*</editor-fold>*/

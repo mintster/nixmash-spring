@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc.controller;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -44,6 +45,7 @@ public class PostsController {
     public static final String POSTS_ADD_VIEW = "posts/add";
     private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
     private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
+    private static final String FEEDBACK_LINK_DEMO_THANKS = "feedback.post.link.demo.added";
 
     // endregion
 
@@ -135,29 +137,39 @@ public class PostsController {
             model.addAttribute("showPost", "link");
             return POSTS_ADD_VIEW;
         } else {
-            if (postDTO.getHasImages()) {
-                if (postDTO.getDisplayType() != PostDisplayType.LINK) {
-                    postDTO.setPostImage(pagePreview.getImages().get(postDTO.getImageIndex()).src);
+            if (canPost(currentUser)) {
+
+                if (postDTO.getHasImages()) {
+                    if (postDTO.getDisplayType() != PostDisplayType.LINK) {
+                        postDTO.setPostImage(pagePreview.getImages().get(postDTO.getImageIndex()).src);
+                    } else
+                        postDTO.setPostImage(null);
                 }
-                else
-                    postDTO.setPostImage(null);
+
+                postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
+                postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
+                postDTO.setUserId(currentUser.getId());
+
+                postService.add(postDTO);
+
+                webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
+                return "redirect:/posts";
+            } else {
+                webUI.addFeedbackMessage(attributes, FEEDBACK_LINK_DEMO_THANKS);
+                return "redirect:/posts/add";
             }
 
-            // create and save Post ----------------------------------------------------- */
-            // UserId is "1" when in development, otherwise CurrentUser.getUserId()
-
-            postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
-            postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
-            postDTO.setUserId(1L);
-//            postDTO.setUserId(currentUser.getId());
-
-            postService.add(postDTO);
-
-            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
-            return "redirect:/posts";
         }
     }
 
+    private Boolean canPost(CurrentUser currentUser) {
+        Boolean canPost = false;
+        if (currentUser != null) {
+            if (currentUser.getUser().hasAuthority(Role.ROLE_POST))
+                canPost = true;
+        }
+        return canPost;
+    }
     // endregion
 
     // region postDTO Utilities

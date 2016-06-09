@@ -3,6 +3,10 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/highlight/github.css}"/>
+    <script th:src="@{/js/highlight.pack.js}"></script>
+
     <title th:text="#{posts.list.page.title}">[NixMash Spring
         Posts]</title>
 </head>
@@ -33,10 +37,16 @@
                      th:text="${feedbackMessage}"></div>
             </div>
 
+            <div class="sidebar col-lg-2">
+                <div class="sidebar-add-button-row">
+                    <a href="/posts/add" class="btn btn-primary btn-lg btn-add-post">Add Post</a>
+                </div>
+            </div>
             <div id="grid-table">
-                <div id="posts" class="col-lg-9 col-lg-offset-2"></div>
-                <div id="post-button-row" class="post-button col-lg-9 col-lg-offset-2">
-                    <button id="morePosts" class="btn btn-primary btn-lg" name="morePosts" onclick="morePosts()"
+                <div id="posts" class="col-lg-9"></div>
+                <div id="more-posts-button-row" class="col-lg-9 col-lg-offset-2">
+                    <button id="morePosts" style="display: none;" class="btn btn-primary btn-lg" name="morePosts"
+                            onclick="morePosts()"
                             type="button">More Posts
                     </button>
                 </div>
@@ -59,23 +69,34 @@
     $.get("/json/posts/page/0", function (data) {
         $("#posts").html(data);
         pageIndex++;
-    }).success(function() {
+    }).success(function () {
         $('.post:odd').addClass("odd");
+        $('#morePosts').css('display', 'inline-block');
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
     });
 
     function morePosts() {
         $.get("/json/posts/page/" + pageIndex, function (data) {
             $("#posts").append(data);
             pageIndex++;
-        }).success(function() {
+        }).success(function () {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
             $('.post:odd').addClass("odd")
             var backToTop = "<a href='/posts'>Back to top</a>";
             $.get("/json/posts/more", function (data) {
                 if (data == "false")
-                    $("#post-button-row").html(backToTop);
+                    $("#more-posts-button-row").html(backToTop);
             })
         });
     }
+
+    $('pre code').each(function (i, block) {
+        hljs.highlightBlock(block);
+    });
 
     /*]]>*/
 </script>

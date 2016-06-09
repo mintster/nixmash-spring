@@ -31,7 +31,7 @@
         <div class="bs-docs-section">
             <div id="message-holder">
                 <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
-                     th:text="${feedbackMessage}"></div>
+                     th:utext="${feedbackMessage}"></div>
             </div>
 
             <div th:unless="${showPost}">
@@ -75,7 +75,6 @@
             </div>
             <div th:if="${showPost == 'link'}" th:include="fragments/posts/addlink :: addlink" th:remove="tag">Add Link
             </div>
-
         </div>
     </div>
 
