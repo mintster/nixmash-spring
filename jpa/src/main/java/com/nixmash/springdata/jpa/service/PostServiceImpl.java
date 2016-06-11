@@ -27,7 +27,6 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public Post add(PostDTO postDTO) {
-
         Post post =  postRepository.save(PostUtils.postDtoToPost(postDTO));
         return post;
     }

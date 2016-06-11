@@ -73,6 +73,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: NixMash Spring Posts: Introduction](http://nixmash.com/java/nixmash-spring-posts-introduction/)
 - [Post: NixMash Spring Posts: Using Jsoup To Create Page Previews](http://nixmash.com/java/nixmash-spring-posts-using-jsoup-to-create-page-preview/)
 - [Post: A Bootstrap Carousel with Spring MVC and Thymeleaf](http://nixmash.com/java/a-bootstrap-carousel-with-spring-mvc-and-thymeleaf/)
+- [Post: Displaying NixMash Spring Posts with Spring MVC and Velocity](http://nixmash.com/java/displaying-nixmash-spring-posts-with-spring-mvc-and-velocity/)
 
 ![v0.3.2 Posts Stream](http://nixmash.com/x/pics/github/spring-data-0.3.2.png)
 

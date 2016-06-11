@@ -45,7 +45,9 @@ public class TemplateServiceImpl implements TemplateService {
         {
             String displayType = post.getDisplayType().name().toLowerCase();
             String template = String.format("posts/%s.vm", displayType);
-            html  = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, template, "UTF-8", model);
+
+            html  = VelocityEngineUtils
+                    .mergeTemplateIntoString(velocityEngine, template, "UTF-8", model);
         }
         catch (Exception e )
         {
