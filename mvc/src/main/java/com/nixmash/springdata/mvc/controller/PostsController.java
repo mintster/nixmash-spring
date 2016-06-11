@@ -99,9 +99,10 @@ public class PostsController {
                     return POSTS_ADD_VIEW;
                 } else {
                     showPost = "link";
-                    request.getSession().setAttribute("pagePreview", pagePreview);
+                    WebUtils.setSessionAttribute(request, "pagePreview", pagePreview);
                     model.addAttribute("pagePreview", pagePreview);
-                    model.addAttribute("postDTO", postDtoFromPagePreview(pagePreview, postLink.getLink()));
+                    model.addAttribute("postDTO",
+                            postDtoFromPagePreview(pagePreview, postLink.getLink()));
                 }
             }
         }
@@ -129,9 +130,12 @@ public class PostsController {
 
 
     @RequestMapping(value = "/add", method = POST, params = {"link"})
-    public String createLink(@Valid PostDTO postDTO, BindingResult result, CurrentUser currentUser,
-                             RedirectAttributes attributes, Model model, HttpServletRequest request) {
-        PagePreviewDTO pagePreview = (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
+    public String createLink(@Valid PostDTO postDTO, BindingResult result,
+                             CurrentUser currentUser, RedirectAttributes attributes, Model model,
+                             HttpServletRequest request) {
+        PagePreviewDTO pagePreview =
+                (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
+
         if (result.hasErrors()) {
             model.addAttribute("pagePreview", pagePreview);
             model.addAttribute("showPost", "link");
@@ -141,7 +145,8 @@ public class PostsController {
 
                 if (postDTO.getHasImages()) {
                     if (postDTO.getDisplayType() != PostDisplayType.LINK) {
-                        postDTO.setPostImage(pagePreview.getImages().get(postDTO.getImageIndex()).src);
+                        postDTO.setPostImage(
+                                pagePreview.getImages().get(postDTO.getImageIndex()).src);
                     } else
                         postDTO.setPostImage(null);
                 }
@@ -223,6 +228,7 @@ public class PostsController {
                     hasImages = false;
             }
             // if twitter image url missing or page contains single image
+
             if (StringUtils.isEmpty(imageUrl)) {
                 hasImages = false;
                 imageUrl = null;

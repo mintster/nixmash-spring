@@ -62,12 +62,19 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 - Jsoup Annotations Framework
 - Classes with Generic Types as Beans
+- Link Entry and Post Display initial release, multiple display options using Velocity templates
+- *DATA SCHEMA UPDATE!* Added Posts table. See /install/mysql.setup for update scripts
 - [Post: Application and Testing Context with Multi-Project Dependencies in Spring](http://nixmash.com/java/application-and-testing-context-for-multi-project-dependencies-in-spring/)
 - [Post: Jsoup Annotations: Introduction](http://nixmash.com/java/jsoup-annotations-introduction/)
 - [Post: Jsoup Annotations: Examples](http://nixmash.com/java/jsoup-annotations-examples/)
 - [Post: Configuring a Generic Type Class as a Spring Bean](http://nixmash.com/java/configuring-a-generic-type-class-as-a-spring-bean/)
 - [Post: Variations on JSON Key-Value Pairs in Spring MVC](http://nixmash.com/java/variations-on-json-key-value-pairs-in-spring-mvc/)
 - [Post: Dysfunctional @Enumerated Annotations in Hibernate](http://nixmash.com/java/dysfunctional-enumerated-annotations-in-hibernate/)
+- [Post: NixMash Spring Posts: Introduction](http://nixmash.com/java/nixmash-spring-posts-introduction/)
+- [Post: NixMash Spring Posts: Using Jsoup To Create Page Previews](http://nixmash.com/java/nixmash-spring-posts-using-jsoup-to-create-page-preview/)
+- [Post: A Bootstrap Carousel with Spring MVC and Thymeleaf](http://nixmash.com/java/a-bootstrap-carousel-with-spring-mvc-and-thymeleaf/)
+
+![v0.3.2 Posts Stream](http://nixmash.com/x/pics/github/spring-data-0.3.2.png)
 
 [[back to top](#nixmash-spring)]
 

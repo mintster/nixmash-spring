@@ -2,8 +2,6 @@
     <h3><a target="_blank" href="${post.postLink}">${post.postTitle}</a>
     </h3>
     <div class="post-content">${post.postContent}</div>
-    <img class="nixmash-feature-img" alt="" src="${post.postImage}"/>
-
     <div class="post-date">
         #parse("posts/inc/post_date.vm")
     </div>

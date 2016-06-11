@@ -554,11 +554,10 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 }
 
 .in-progress p.intro {
-    font-weight:bold;
+    font-weight: bold;
 }
 
 /*</editor-fold>*/
-
 
 /*/<editor-fold> desc="LINK ENTRY FORMS----------------------------/ "*/
 
@@ -603,18 +602,21 @@ button.btn.btn-success {
     text-align: center;
     position: relative;
 }
+
 .carousel-inner .item img {
     display: inline-block;
     max-width: 600px;
     max-height: 400px;
 }
+
 .table tbody tr td.td-carousel {
     padding: 20px;
 }
+
 .table tbody tr.tr-button-row td {
 }
-.carousel-control.left, .carousel-control.right
-{
+
+.carousel-control.left, .carousel-control.right {
     background-image: none;
     background-color: transparent;
 }
@@ -626,6 +628,12 @@ button.btn.btn-success {
 #more-posts-button-row {
     display: inline-block;
     padding: 0 15px 60px 30px;
+}
+
+@media (max-width: 1200px) {
+    .sidebar  {
+        display: none;
+    }
 }
 
 .sidebar-add-button-row {
@@ -674,10 +682,9 @@ button.btn.btn-success {
 }
 
 #posts .post.link-feature img, #posts .post.nixmash-post img.nixmash-feature-img {
-    max-width: 800px;
+    max-width: 100%;
     margin: 20px auto 10px auto;
 }
-
 
 #posts .post .post-date {
     padding-top: 12px;
@@ -696,6 +703,7 @@ button.btn.btn-success {
 #posts .post.nixmash-post .nixmash-tag {
     float: right;
 }
+
 #posts .post.nixmash-post .nixmash-tag a:focus {
     border: none;
 }

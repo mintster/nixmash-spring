@@ -71,6 +71,7 @@
                     </table>
                 </form>
             </div>
+
             <div th:if="${showPost == 'note'}" th:include="fragments/posts/addnote :: addnote" th:remove="tag">Add Note
             </div>
             <div th:if="${showPost == 'link'}" th:include="fragments/posts/addlink :: addlink" th:remove="tag">Add Link
@@ -93,8 +94,10 @@
     });
 
     $('#pagepreview-carousel').on('slide.bs.carousel', function (e) {
-                var imageIndex = $('#pagepreview-carousel .active').index('#pagepreview-carousel .item');
+                var imageIndex = $('#pagepreview-carousel').find('.active')
+                        .index('#pagepreview-carousel .item');
                 var imageCount = [[${pagePreview.getImages().size() - 1 }]];
+
                 if (e.direction == "left") {
                     if (imageIndex == imageCount)
                         $('#imageIndex').val(0);
