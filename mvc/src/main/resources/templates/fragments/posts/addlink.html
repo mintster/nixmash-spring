@@ -23,7 +23,7 @@
                                 <p th:if="*{postImage}"><img th:src="*{postImage}" alt="" class="thumbnail"/></p>
                                 <h3><a th:href="*{postLink}" th:text="*{postTitle}" target="_blank">[Post Title]</a>
                                 </h3>
-                                <p th:text="*{postContent}">[Post Description]</p>
+                                <p th:utext="*{postContent}">[Post Description]</p>
                             </td>
                         </tr>
                         <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
@@ -49,7 +49,7 @@
                             <td>
                                 <div class="controls">
                                     <textarea name="postContent" th:field="*{postContent}" rows="5"
-                                              class="mail-body"></textarea>
+                                              class="mail-body" id="summernote"></textarea>
                                     <label class="control-label" th:errors="*{postContent}">[error]</label>
                                 </div>
                             </td>

@@ -1,0 +1,40 @@
+/*/<editor-fold> desc="Editor ----------------------------/ "*/
+
+.note-editor.note-frame .note-editing-area .note-codable
+{
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 1.8;
+    font-family: inherit;
+}
+
+
+.fa-j:before {
+    font-family: Arial; /* your font family here! */
+    font-weight: bold;
+    content: 'J';
+}
+
+.fa-js:before {
+    font-family: Arial; /* your font family here! */
+    font-weight: bold;
+    content: 'JS';
+}
+
+.fa-html:before {
+    font-family: Arial; /* your font family here! */
+    font-weight: bold;
+    content: 'html';
+}
+
+.fa-css:before {
+    font-family: Arial; /* your font family here! */
+    font-weight: bold;
+    content: 'css';
+}
+
+.note-toolbar.panel-heading .btn-sm, .note-toolbar.panel-heading .btn-group-sm>.btn {
+    padding: 2px 8px;
+}
+
+/*</editor-fold>*/

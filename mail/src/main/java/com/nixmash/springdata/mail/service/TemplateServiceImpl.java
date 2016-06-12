@@ -41,6 +41,7 @@ public class TemplateServiceImpl implements TemplateService {
         Map<String,Object> model = new Hashtable<>();
         model.put("post", post);
         model.put("postCreated", postCreated);
+
         try
         {
             String displayType = post.getDisplayType().name().toLowerCase();

@@ -154,6 +154,7 @@ public class PostsController {
                 postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
                 postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
                 postDTO.setUserId(currentUser.getId());
+                postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
 
                 postService.add(postDTO);
 
@@ -193,11 +194,15 @@ public class PostsController {
         if (postDescription == null)
             postDescription = page.getDescription();
 
+        String postDescriptionHtml = null;
+        if (StringUtils.isNotEmpty(postDescription))
+            postDescriptionHtml =  String.format("<p>%s</p>", postDescription);
+
         return PostDTO.getBuilder(null,
                 postTitle,
                 null,
                 postLink,
-                postDescription,
+                postDescriptionHtml,
                 PostType.LINK,
                 null)
                 .postImage(tmpDTO.getPostImage())
@@ -221,6 +226,10 @@ public class PostsController {
 
             if (page.twitterDTO != null) {
                 imageUrl = page.getTwitterDTO().getTwitterImage();
+                if (imageUrl != null) {
+                    if (!StringUtils.startsWithIgnoreCase(imageUrl, "http"))
+                        imageUrl = null;
+                }
             } else {
                 if (page.getImages().size() > 1) {
                     imageUrl = page.getImages().get(1).getSrc();
@@ -266,6 +275,16 @@ public class PostsController {
         return tmpDTO;
     }
 
+    private String cleanContentTailHtml(String content) {
+        String[] tags = {"<p>\n</p>", "<p></p>", "<p><br></p>", "<br>"};
+        String result = content;
+        for (String t :
+                tags) {
+            result = StringUtils.removeEnd(result, t);
+        }
+        return result;
+
+    }
     // endregion
 
 }

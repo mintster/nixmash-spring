@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by daveburke on 6/1/16.
@@ -17,7 +19,7 @@ import java.net.URL;
 public class PostUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(PostUtils.class);
-
+    private static final Pattern REMOVE_TAGS = Pattern.compile("<.+?>");
 
     public static Post postDtoToPost(PostDTO dto) {
 
@@ -58,5 +60,13 @@ public class PostUtils {
             logger.error(String.format("IOException for title: %s -- Exception: %s",title, e.getMessage()));
         }
        return slug;
+    }
+
+    public static String removeTags(String string) {
+        if (string == null || string.length() == 0) {
+            return string;
+        }
+        Matcher m = REMOVE_TAGS.matcher(string);
+        return m.replaceAll("");
     }
 }

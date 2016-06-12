@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml">
+      xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
     <title th:text="#{posts.add.page.title}">[Add NixMash Spring Post]</title>
@@ -86,6 +86,13 @@
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
 
+<div th:if="${showPost == 'link'}" th:remove="tag">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editor.css}"/>
+
+</div>
+
 <script th:inline="javascript" th:if="${showPost == 'link'}">
     /*<![CDATA[*/
 
@@ -113,6 +120,88 @@
             }
     );
 
+    $(document).ready(function () {
+
+        if (!String.format) {
+            String.format = function(format) {
+                var args = Array.prototype.slice.call(arguments, 1);
+                return format.replace(/{(\d+)}/g, function(match, number) {
+                    return typeof args[number] != 'undefined'
+                            ? args[number]
+                            : match
+                            ;
+                });
+            };
+        }
+
+
+        function makeButton(language, abbrev) {
+            var ui = $.summernote.ui;
+            var button = ui.button({
+                contents: String.format('<i class="fa fa-{0}"/>', abbrev),
+                tooltip: 'add code block',
+                click: function () {
+                    addCodeBlock(language)
+                }
+            });
+
+            return button.render();
+        }
+
+        var JavaButton = function (context) { return makeButton("java", "j"); };
+        var JavaScriptButton= function (context) { return makeButton("javascript", "js"); };
+        var HtmlButton = function (context) { return makeButton("html", "html"); };
+        var CssButton = function (context) { return makeButton("css", "css"); };
+
+        function addCodeBlock(language) {
+            var node = document.createElement('pre');
+            var $editor = $('#summernote');
+            $editor.summernote('insertNode', node);
+
+            var code = document.createElement('code');
+            document.body.appendChild(code);
+            code.className = language;
+            code.textContent = language.toUpperCase();
+            $editor.summernote('insertNode', code);
+
+        }
+
+
+        $('#summernote').summernote({
+            minHeight: 200,
+            toolbar: [
+                ['first', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'clear', 'strikethrough']],
+                ['insert', ['link']],
+                ['para', ['paragraph', 'ul', 'ol']],
+                ['misc', ['codeview', 'undo']],
+                ['codebuttons', ['java', 'js', 'html', 'css']]
+            ],
+            buttons: {
+                java: JavaButton,
+                js: JavaScriptButton,
+                html: HtmlButton,
+                css: CssButton
+            }
+        });
+
+
+    });
+
+    /*
+     Paragraph style
+     style: format selected block
+     ol: toggle ordered list
+     ul: toggle unordered list
+     paragraph: dropdown for paragraph align
+     height: set line height
+     Misc
+     fullscreen: toggle fullscreen editing mode
+     codeview: toggle wysiwyg and html editing mode
+     undo: undo
+     redo: redo
+     help: open help dialog
+     */
     /*]]>*/
 </script>
 </body>
