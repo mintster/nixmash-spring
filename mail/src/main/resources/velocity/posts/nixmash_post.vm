@@ -1,9 +1,8 @@
 <div class="post nixmash-post">
-    <h3><a target="_blank" href="${post.postLink}">${post.postTitle}</a>
-    </h3>
+    <h3>${post.postTitle}</a></h3>
     <div class="post-content">${post.postContent}</div>
-    <div class="post-date">
-        #parse("posts/inc/post_date.vm")
+    <div class="post-footer">
+        #parse("posts/inc/footer.vm")
     </div>
     <div class="nixmash-tag"><a href="http://nixmash.com" target="_blank">
         <img src="/images/posts/nixmashtag.png" alt=""/></a></div>

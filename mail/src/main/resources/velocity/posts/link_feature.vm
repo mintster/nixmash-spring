@@ -1,11 +1,11 @@
 <div class="post link-feature">
-    <h3><a target="_blank" href="${post.postLink}">${post.postTitle}</a>
+    <h3>${post.postTitle}</a></h3>
     </h3>
     <div class="post-content">${post.postContent}</div>
-    <img alt="" src="${post.postImage}"/>
+    <img alt="" src="${post.postImage}"  class="feature-image"/>
 
-    <div class="post-date">
-        #parse("posts/inc/post_date.vm")
+    <div class="post-footer">
+        #parse("posts/inc/footer.vm")
     </div>
 
 </div>

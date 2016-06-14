@@ -1,11 +1,15 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.Pair;
+import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.mail.service.TemplateService;
 import com.nixmash.springdata.mvc.annotations.JsonRequestMapping;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
@@ -15,13 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
 @JsonRequestMapping(value = "/json/posts")
 public class PostsRestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PostsRestController.class);
 
     PostService postService;
     TemplateService templateService;
@@ -34,10 +42,11 @@ public class PostsRestController {
 
 
     @RequestMapping(value = "/page/{pageNumber}", produces = "text/html;charset=UTF-8")
-    public String getPosts(@PathVariable Integer pageNumber, HttpServletRequest request) {
-        Slice<Post> posts = postService.getPosts(pageNumber, 3);
+    public String getPosts(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
+        Slice<Post> posts = postService.getPosts(pageNumber, 10);
         String result = StringUtils.EMPTY;
         for (Post post : posts) {
+            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
             result += templateService.createPostHtml(post);
         }
         WebUtils.setSessionAttribute(request, "posts", posts);

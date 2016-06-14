@@ -4,7 +4,9 @@ import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.enums.Role;
+import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
@@ -46,6 +49,8 @@ public class PostsController {
     private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
     private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
     private static final String FEEDBACK_LINK_DEMO_THANKS = "feedback.post.link.demo.added";
+    public static final String POSTS_PERMALINK_VIEW = "posts/post";
+    public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
 
     // endregion
 
@@ -77,6 +82,22 @@ public class PostsController {
 
     // endregion
 
+    // region /post get
+
+    @RequestMapping(value = "/post/{postName}", method = GET)
+    public String post(@PathVariable("postName") String postName, Model model,
+                       RedirectAttributes attributes) {
+        Post post = postService.getPost(postName);
+        if (post == null) {
+            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOT_FOUND);
+            return "redirect:/posts";
+        }
+        model.addAttribute("post", post);
+        return POSTS_PERMALINK_VIEW;
+    }
+
+    // endregion
+    
     // region /add {get} methods
 
     @RequestMapping(value = "/add", method = GET, params = {"formtype"})
@@ -132,7 +153,7 @@ public class PostsController {
     @RequestMapping(value = "/add", method = POST, params = {"link"})
     public String createLink(@Valid PostDTO postDTO, BindingResult result,
                              CurrentUser currentUser, RedirectAttributes attributes, Model model,
-                             HttpServletRequest request) {
+                             HttpServletRequest request) throws DuplicatePostNameException {
         PagePreviewDTO pagePreview =
                 (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
 
@@ -156,6 +177,7 @@ public class PostsController {
                 postDTO.setUserId(currentUser.getId());
                 postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
 
+                request.setAttribute("postTitle", postDTO.getPostTitle());
                 postService.add(postDTO);
 
                 webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);

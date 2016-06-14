@@ -11,4 +11,5 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 
     Post findByPostId(Long postId) throws DataAccessException;
 
+    Post findByPostNameIgnoreCase(String postName) throws DataAccessException;
 }

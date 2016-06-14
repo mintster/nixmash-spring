@@ -8,6 +8,7 @@ import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
+import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.service.ContactService;
@@ -59,7 +60,7 @@ public class JpaUI {
         System.out.println(RandomStringUtils.randomAlphanumeric(16));
     }
 
-    private void addPostDemo() {
+    private void addPostDemo() throws DuplicatePostNameException {
         String title = "Best way to create SEO friendly URI string";
         PostDTO postDTO = PostDTO.getBuilder(
                 1L,

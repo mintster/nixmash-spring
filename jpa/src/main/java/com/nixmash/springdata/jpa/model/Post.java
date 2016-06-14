@@ -89,6 +89,28 @@ public class Post implements Serializable {
 
     // endregion
 
+    // region Transient properties
+
+    @Transient
+    public boolean isNew() {
+        return (this.postId == null);
+    }
+
+    @Transient
+    public boolean isOwner = false;
+
+    // endregion
+
+    //region Getter Setters
+
+    public boolean getIsOwner() {
+        return isOwner;
+    }
+
+    public void setIsOwner(boolean owner) {
+        isOwner = owner;
+    }
+
     public Long getPostId() {
         return postId;
     }
@@ -230,11 +252,7 @@ public class Post implements Serializable {
     public void setVersion(int version) {
         this.version = version;
     }
-
-    @Transient
-    public boolean isNew() {
-        return (this.postId == null);
-    }
+    //endregion
 
     @Override
     public String toString() {

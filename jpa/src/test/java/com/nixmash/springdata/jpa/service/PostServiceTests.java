@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.service;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
+import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.utils.PostTestUtils;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class PostServiceTests {
     PostService postService;
 
     @Test
-    public void addPostDTO() {
+    public void addPostDTO() throws DuplicatePostNameException {
         PostDTO postDTO = PostTestUtils.createPostDTO();
         Post post = postService.add(postDTO);
         assertNotNull(post);

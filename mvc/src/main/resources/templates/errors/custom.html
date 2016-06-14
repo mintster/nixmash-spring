@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <div th:include="fragments/error-head :: head" th:remove="tag">Global Header</div>
     <title>NixMash Spring Home Page</title>
 </head>
 <body>
@@ -13,7 +13,7 @@
             <div class="col-lg-8 col-md-7 col-sm-6">
                 <h1 th:text="${errortitle}">[error title]</h1>
 
-                <p class="lead" th:text="${errorbody}">[error body]</p>
+                <p class="lead" th:utext="${errorbody}">[error body]</p>
             </div>
             <div th:replace="fragments/sponsor :: [id='sponsor']">[sponsor image]</div>
         </div>

@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc.controller;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
+import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.ResourceNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -32,6 +33,7 @@ public class  GlobalController {
 	private static final String LOCATION_ERROR_MESSAGE_KEY = "product.map.page.feedback.error";
 	public static final String LOCATION_ERROR_ATTRIBUTE = "mappingError";
 	public static final String SESSION_USER_CONNECTION = "MY_USER_CONNECTION";
+	private static final String DUPLICATE_POSTNAME_ERROR_MESSAGE_KEY = "post.duplicate.name.feedback.error";
 
 	@Autowired
 	WebUI webUI;
@@ -110,6 +112,18 @@ public class  GlobalController {
 		String msg = webUI.getMessage(LOCATION_ERROR_MESSAGE_KEY, location);
 		mav.addObject(LOCATION_ERROR_ATTRIBUTE, msg);
 		mav.setViewName(PRODUCT_MAP_VIEW);
+		return mav;
+	}
+
+	@ExceptionHandler(DuplicatePostNameException.class)
+	public ModelAndView handleDuplicatePostNameException(
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String postTitle = (String) request.getAttribute("postTitle");
+		mav.addObject("errortitle", "Duplicate Post Name");
+		mav.addObject("errorbody", String.format("\"%s\" exists.<br /> " +
+				"Please rename your post title and try again.", postTitle));
+		mav.setViewName(ERROR_CUSTOM_VIEW);
 		return mav;
 	}
 

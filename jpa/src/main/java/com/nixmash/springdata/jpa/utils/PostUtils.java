@@ -2,6 +2,7 @@ package com.nixmash.springdata.jpa.utils;
 
 import com.github.slugify.Slugify;
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -68,5 +69,12 @@ public class PostUtils {
         }
         Matcher m = REMOVE_TAGS.matcher(string);
         return m.replaceAll("");
+    }
+
+    public static Boolean isPostOwner(CurrentUser currentUser, Long userId) {
+        if (currentUser == null) {
+            return false;
+        }
+        return currentUser.getId().equals(userId);
     }
 }

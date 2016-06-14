@@ -49,7 +49,7 @@ INSERT INTO user_authorities (user_id, authority_id) VALUES (6, 2);
 
 
 INSERT INTO contacts (first_name, last_name, birth_date, email, created_by_user, creation_time, modified_by_user, modification_time, version)
-VALUES ('Summer', 'Glassiness', '1968-08-05', 'vitae@egestasadui.net', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
+VALUES ('Summer', 'Glass', '1968-08-05', 'vitae@egestasadui.net', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
 ('Mikayla', 'Church', '1975-04-03', 'lobortis.Class@aliquam.org', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
 ('Shaine', 'Brooks', '1971-08-24', 'vel.pede@metusVivamuseuismod.edu', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),
 ('Robin', 'Sullivan', '1961-09-09', 'purus.gravida@necleo.edu', 'admin', '2015-09-10 19:18:38.335', 'admin', '2015-09-10 19:18:38.335', 0),

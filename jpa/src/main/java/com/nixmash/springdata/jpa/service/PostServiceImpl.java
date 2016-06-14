@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -24,11 +25,24 @@ public class PostServiceImpl implements PostService{
         this.postRepository = postRepository;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = DuplicatePostNameException.class)
     @Override
-    public Post add(PostDTO postDTO) {
-        Post post =  postRepository.save(PostUtils.postDtoToPost(postDTO));
+    public Post add(PostDTO postDTO) throws DuplicatePostNameException {
+        Post post;
+        try {
+            post =  postRepository.save(PostUtils.postDtoToPost(postDTO));
+        } catch (Exception e) {
+            throw new DuplicatePostNameException("Duplicate Post Name for Post Title: " +
+                    postDTO.getPostTitle());
+        }
+
         return post;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Post getPost(String postName) {
+        return postRepository.findByPostNameIgnoreCase(postName);
     }
 
     @Transactional(readOnly = true)

@@ -16,13 +16,11 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
 
-import static com.nixmash.springdata.mvc.controller.PostsController.POSTS_ADD_VIEW;
-import static com.nixmash.springdata.mvc.controller.PostsController.POSTS_LIST_VIEW;
+import static com.nixmash.springdata.mvc.controller.PostsController.*;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -61,9 +59,23 @@ public class PostsControllerTests extends AbstractContext {
     @Test
     public void homePageTest() throws Exception {
         mockMvc.perform(get("/posts"))
-                .andDo(print())
                 .andExpect(view().name(POSTS_LIST_VIEW));
     }
+
+    @Test
+    public void postDisplayPage() throws Exception {
+        mockMvc.perform(get("/posts/post/javascript-bootstrap"))
+                .andExpect(model().attributeExists("post"))
+                .andExpect(view().name(POSTS_PERMALINK_VIEW));
+    }
+
+    @Test
+    public void notFoundPostRedirectsToPostsListWithFeedback() throws Exception {
+        mockMvc.perform(get("/posts/post/bad-title"))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
+                .andExpect(redirectedUrl("/posts"));
+    }
+
 
     @Test
     public void loadAddPostPage() throws Exception {

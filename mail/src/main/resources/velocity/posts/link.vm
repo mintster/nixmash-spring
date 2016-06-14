@@ -1,10 +1,9 @@
 <div class="post link">
-    <h3><a target="_blank" href="${post.postLink}">${post.postTitle}</a>
-    </h3>
+    <h3>${post.postTitle}</a></h3>
     <div class="post-content">${post.postContent}</div>
 
-    <div class="post-date">
-        #parse("posts/inc/post_date.vm")
+    <div class="post-footer">
+        #parse("posts/inc/footer.vm")
     </div>
 
 </div>

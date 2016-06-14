@@ -1,17 +1,16 @@
 
     package com.nixmash.springdata.jpa.exceptions;
 
-    public class ContactNotFoundException extends Exception {
+    public class DuplicatePostNameException extends Exception {
 
-        private static final long serialVersionUID = -8060531120470573530L;
-
+        private static final long serialVersionUID = -4658463190108406055L;
         private String msg;
 
-        public ContactNotFoundException() {
+        public DuplicatePostNameException() {
             super();
         }
 
-        public ContactNotFoundException(String msg) {
+        public DuplicatePostNameException(String msg) {
             this.msg = System.currentTimeMillis()
                     + ": " + msg;
         }

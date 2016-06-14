@@ -159,8 +159,11 @@ CREATE TABLE posts (
   likes_count int(11) NOT NULL DEFAULT '0',
   value_rating int(11) NOT NULL DEFAULT '0',
   version int(11) NOT NULL DEFAULT '0',
+  UNIQUE KEY `posts_post_id_uindex` (`post_id`),
+  UNIQUE KEY `posts_post_name_pk` (`post_name`),
   PRIMARY KEY (post_id),
-  CONSTRAINT posts_users_user_id_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
+  CONSTRAINT posts_users_user_id_fk FOREIGN KEY (user_id) REFERENCES users (user_id),
+
 );
 ------------------------------------------------------------
 -- Posts
