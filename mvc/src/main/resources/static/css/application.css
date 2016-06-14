@@ -17,8 +17,10 @@ blockquote small {
     font-style: 16px;
 }
 
+.js-buttons .btn {
+    margin-bottom: 5px;
+}
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="BODY, ROWS AND COLUMNS ----------------------------/ "*/
 body {
     padding-top: 50px;
@@ -53,7 +55,6 @@ body {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="PAGE HEADER AND SPONSOR REGION ----------------------------/ "*/
 .page-header h1 {
     font-size: 4em;
@@ -63,16 +64,33 @@ body {
     border-bottom: none;
 }
 
-#sponsor {
+@media (max-width: 768px) {
+    .page-header {
+        margin: 10px 0 0 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 993px) {
+    .sponsor img {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sponsor img{
+       display: none;
+    }
+}
+
+.sponsor {
     text-align: right;
 }
 
-#sponsor img {
+.sponsor img {
     max-width: 175px;
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="TABLE-FORMS ----------------------------/ "*/
 #form-table, #grid-table {
     font-size: 125%;
@@ -134,7 +152,6 @@ td.hobbies span {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="NAVBAR ----------------------------/ "*/
 .margin-5 {
     margin-left: 5px;
@@ -153,7 +170,6 @@ img.navbar-profilepic {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
 #secInfo {
     font-size: smaller;
@@ -217,7 +233,6 @@ img.navbar-profilepic {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="BOOTSTRAP FORMS ----------------------------/ "*/
 h2.form-title {
     margin-bottom: 40px;
@@ -253,7 +268,6 @@ ul.hobbyList li {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="DEMO SITE NOTES ----------------------------/ "*/
 .demo-login-note, .demo-registration-note, .form-disabled-note {
     font-style: italic;
@@ -263,7 +277,6 @@ ul.hobbyList li {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="JAVASCRIPT----------------------------/ "*/
 .cod-name {
     display: inline-block;
@@ -294,7 +307,6 @@ ul.cod-hobbylist li:last-child:after {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="MULTI-ITEM DISPLAY----------------------------/ "*/
 ul.catlist {
     list-style: none;
@@ -333,7 +345,6 @@ ul.featurelist li:before {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="MULTI-SELECT DROPDOWNS ----------------------------/ "*/
 .btn-badgeboy {
 
@@ -354,9 +365,7 @@ ul.featurelist li:before {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="SOCIAL ELEMENTS ----------------------------/ "*/
-
 /* GOOGLE MAPS ---------------------------------------------- */
 #form-table tr.locationRow td {
     padding-top: 15px;
@@ -412,9 +421,7 @@ form#fb_signin, form#tw_signin, form#gl_signin {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="USER PROFILE ----------------------------/ "*/
-
 #profile-area {
     margin: 30px auto 60px auto;
     display: inline-block;
@@ -450,9 +457,7 @@ form#fb_signin, form#tw_signin, form#gl_signin {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="MAIL ----------------------------/ "*/
-
 textarea.mail-body {
     word-break: keep-all;
     resize: none;
@@ -461,9 +466,7 @@ textarea.mail-body {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="SUBMENUS----------------------------/ "*/
-
 .marginBottom-0 {
     margin-bottom: 0;
 }
@@ -518,9 +521,7 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="SELECT DROPDOWN ----------------------------/ "*/
-
 /*.bootstrap-select > select.selectpicker .btn-primary:focus, .bootstrap-select > select.selectpicker .btn-primary:hover, .bootstrap-select > select.selectpicker .btn-primary:active*/
 .special-select .btn-primary:focus, .special-select .btn-primary:active {
     background-color: #dd4814 !important;
@@ -534,9 +535,7 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="POST ENTRY FORM----------------------------/ "*/
-
 .in-progress {
     font-size: x-large;
     font-style: italic;
@@ -558,9 +557,7 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="LINK ENTRY FORMS----------------------------/ "*/
-
 .pull-right.has-error.pad-right {
     padding-right: 8px;
 }
@@ -622,16 +619,14 @@ button.btn.btn-success {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="POST DISPLAY----------------------------/ "*/
-
 #more-posts-button-row {
     display: inline-block;
     padding: 0 15px 60px 30px;
 }
 
 @media (max-width: 1200px) {
-    .sidebar  {
+    .sidebar {
         display: none;
     }
 }

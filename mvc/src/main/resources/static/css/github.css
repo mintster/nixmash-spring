@@ -106,6 +106,7 @@ div.github {
     font-size: 16px;
     line-height: 22px;
     border-radius: 4px;
+    margin-bottom: 10px;
 }
 .github-btn-large .gh-ico {
     width: 20px;

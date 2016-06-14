@@ -135,6 +135,11 @@
         }
 
 
+        var JavaButton = function (context) { return makeButton("java", "j"); };
+        var JavaScriptButton= function (context) { return makeButton("javascript", "js"); };
+        var HtmlButton = function (context) { return makeButton("html", "html"); };
+        var CssButton = function (context) { return makeButton("css", "css"); };
+
         function makeButton(language, abbrev) {
             var ui = $.summernote.ui;
             var button = ui.button({
@@ -147,11 +152,6 @@
 
             return button.render();
         }
-
-        var JavaButton = function (context) { return makeButton("java", "j"); };
-        var JavaScriptButton= function (context) { return makeButton("javascript", "js"); };
-        var HtmlButton = function (context) { return makeButton("html", "html"); };
-        var CssButton = function (context) { return makeButton("css", "css"); };
 
         function addCodeBlock(language) {
             var node = document.createElement('pre');
@@ -188,20 +188,6 @@
 
     });
 
-    /*
-     Paragraph style
-     style: format selected block
-     ol: toggle ordered list
-     ul: toggle unordered list
-     paragraph: dropdown for paragraph align
-     height: set line height
-     Misc
-     fullscreen: toggle fullscreen editing mode
-     codeview: toggle wysiwyg and html editing mode
-     undo: undo
-     redo: redo
-     help: open help dialog
-     */
     /*]]>*/
 </script>
 </body>
