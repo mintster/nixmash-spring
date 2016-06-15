@@ -5,6 +5,7 @@ import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
+import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
@@ -29,6 +30,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Date;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -51,6 +53,7 @@ public class PostsController {
     private static final String FEEDBACK_LINK_DEMO_THANKS = "feedback.post.link.demo.added";
     public static final String POSTS_PERMALINK_VIEW = "posts/post";
     public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
+    public static final String POSTS_UPDATE_VIEW = "posts/update";
 
     // endregion
 
@@ -86,16 +89,32 @@ public class PostsController {
 
     @RequestMapping(value = "/post/{postName}", method = GET)
     public String post(@PathVariable("postName") String postName, Model model,
-                       RedirectAttributes attributes) {
+                       CurrentUser currentUser, RedirectAttributes attributes) throws PostNotFoundException {
         Post post = postService.getPost(postName);
         if (post == null) {
             webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOT_FOUND);
             return "redirect:/posts";
         }
+        Date postCreated = Date.from(post.getPostDate().toInstant());
+        post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
+
         model.addAttribute("post", post);
+        model.addAttribute("postCreated", postCreated);
         return POSTS_PERMALINK_VIEW;
     }
 
+    // endregion
+
+    // region /update {get}
+
+    @RequestMapping(value = "/update/{postId}", method = GET)
+    public String updatePost(@PathVariable("postId") Long postId,
+                                     Model model, CurrentUser currentUser, RedirectAttributes attributes) throws PostNotFoundException {
+        Post post = postService.getPostById(postId);
+        model.addAttribute("postDTO", PostDTO.getBuilder(post.getPostId(), post.getPostTitle(), null, null, post.getPostContent(), null, null).build());
+        return POSTS_UPDATE_VIEW;    
+    }
+    
     // endregion
     
     // region /add {get} methods
@@ -149,7 +168,6 @@ public class PostsController {
         return "redirect:/posts";
     }
 
-
     @RequestMapping(value = "/add", method = POST, params = {"link"})
     public String createLink(@Valid PostDTO postDTO, BindingResult result,
                              CurrentUser currentUser, RedirectAttributes attributes, Model model,
@@ -157,36 +175,46 @@ public class PostsController {
         PagePreviewDTO pagePreview =
                 (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
 
-        if (result.hasErrors()) {
+        if (!isDuplicatePost(postDTO)) {
+            if (result.hasErrors()) {
+                model.addAttribute("pagePreview", pagePreview);
+                model.addAttribute("showPost", "link");
+                if (result.hasFieldErrors("postTitle")) {
+                    postDTO.setPostTitle(pagePreview.getTitle());
+                }
+                model.addAttribute("postDTO", postDTO);
+                return POSTS_ADD_VIEW;
+            } else {
+                if (canPost(currentUser)) {
+
+                    if (postDTO.getHasImages()) {
+                        if (postDTO.getDisplayType() != PostDisplayType.LINK) {
+                            postDTO.setPostImage(
+                                    pagePreview.getImages().get(postDTO.getImageIndex()).src);
+                        } else
+                            postDTO.setPostImage(null);
+                    }
+
+                    postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
+                    postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
+                    postDTO.setUserId(currentUser.getId());
+                    postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+
+                    request.setAttribute("postTitle", postDTO.getPostTitle());
+                    postService.add(postDTO);
+
+                    webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
+                    return "redirect:/posts";
+                } else {
+                    webUI.addFeedbackMessage(attributes, FEEDBACK_LINK_DEMO_THANKS);
+                    return "redirect:/posts/add";
+                }
+            }
+        } else {
+            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "not found");
             model.addAttribute("pagePreview", pagePreview);
             model.addAttribute("showPost", "link");
             return POSTS_ADD_VIEW;
-        } else {
-            if (canPost(currentUser)) {
-
-                if (postDTO.getHasImages()) {
-                    if (postDTO.getDisplayType() != PostDisplayType.LINK) {
-                        postDTO.setPostImage(
-                                pagePreview.getImages().get(postDTO.getImageIndex()).src);
-                    } else
-                        postDTO.setPostImage(null);
-                }
-
-                postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
-                postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
-                postDTO.setUserId(currentUser.getId());
-                postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
-
-                request.setAttribute("postTitle", postDTO.getPostTitle());
-                postService.add(postDTO);
-
-                webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
-                return "redirect:/posts";
-            } else {
-                webUI.addFeedbackMessage(attributes, FEEDBACK_LINK_DEMO_THANKS);
-                return "redirect:/posts/add";
-            }
-
         }
     }
 
@@ -218,7 +246,7 @@ public class PostsController {
 
         String postDescriptionHtml = null;
         if (StringUtils.isNotEmpty(postDescription))
-            postDescriptionHtml =  String.format("<p>%s</p>", postDescription);
+            postDescriptionHtml = String.format("<p>%s</p>", postDescription);
 
         return PostDTO.getBuilder(null,
                 postTitle,
@@ -307,6 +335,25 @@ public class PostsController {
         return result;
 
     }
+
+
+    private Boolean isDuplicatePost(PostDTO postDTO) {
+        Boolean isDuplicate = false;
+        if (StringUtils.isNotEmpty(postDTO.getPostTitle())) {
+            String slug = PostUtils.createSlug(postDTO.getPostTitle());
+            Post found = null;
+            try {
+                found = postService.getPost(slug);
+            } catch (PostNotFoundException e) {
+                logger.error("No post found for post name: " + slug);
+            }
+            if (found != null) {
+                isDuplicate = true;
+            }
+        }
+        return isDuplicate;
+    }
+
     // endregion
 
 }

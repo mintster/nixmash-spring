@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="updatepost">
+    <!--/*@thymesVar id="pagePreview" type="com.nixmash.springdata.jsoup.dto.PagePreviewDTO"*/-->
+    <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+    <div class="container bs-docs-container big-font-container">
+        <div class="row row-centered">
+            <div class="bs-docs-section col-lg-9 col-centered">
+                <form th:object="${postDTO}" method="post" th:action="@{${#httpServletRequest.getRequestURI()}}"
+                      class="form-horizontal" id="link-add-form">
+
+                    <div th:if="${#fields.hasGlobalErrors()}"
+                         class="has-error alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <label class="control-label" th:each="err : ${#fields.globalErrors()}"
+                               th:text="${err}">...</label>
+                    </div>
+
+                    <table class="table table-striped">
+                        <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
+                            <td class="col-sm-1">
+                                <div class="control-group" th:classappend="${#fields.hasErrors('postTitle')} ? 'error'">
+                                    <label class="control-label">Title</label>
+                                </div>
+                            </td>
+                            <td class="col-sm-5">
+                                <div class="controls">
+                                    <input type="text" class="form-control" th:field="*{postTitle}"/>
+                                    <label class="control-label" th:errors="*{postTitle}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:classappend="${#fields.hasErrors('postContent')} ? 'has-error'">
+                            <td>
+                                <div class="control-group"
+                                     th:classappend="${#fields.hasErrors('postContent')} ? 'error'">
+                                    <label class="control-label">Description</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="controls">
+                                    <textarea name="postContent" th:field="*{postContent}" rows="5"
+                                              class="mail-body" id="summernote"></textarea>
+                                    <label class="control-label" th:errors="*{postContent}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="tr-button-row">
+                            <td></td>
+                            <td>
+                                <div class="form-actions pull-right special-select">
+                                    <button type="submit" class="btn btn-success" name="link" value="true">Update
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input type="hidden" name="postId" th:value="*{postId}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

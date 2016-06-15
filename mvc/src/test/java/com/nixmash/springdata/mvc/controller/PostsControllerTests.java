@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.AbstractContext;
@@ -18,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static com.nixmash.springdata.mvc.controller.PostsController.*;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -76,12 +78,29 @@ public class PostsControllerTests extends AbstractContext {
                 .andExpect(redirectedUrl("/posts"));
     }
 
-
     @Test
     public void loadAddPostPage() throws Exception {
         mockMvc.perform(get("/posts/add"))
                 .andExpect(model().attributeExists("postLink"))
                 .andExpect(view().name(POSTS_ADD_VIEW));
+    }
+
+    @Test
+    public void loadUpdatePostPage() throws Exception {
+        mockMvc.perform(get("/posts/update/1"))
+                .andExpect(model().attributeExists("postDTO"))
+                .andExpect(view().name(POSTS_UPDATE_VIEW));
+    }
+
+    @Test(expected = PostNotFoundException.class)
+    public void badPostIdOnPostUpdate_ThrowsPostNotFoundException() throws Exception {
+
+        when(postService.getPostById(-1L))
+                .thenThrow(new PostNotFoundException());
+
+        mockMvc.perform(get("/posts/update/-1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("errors/custom"));
     }
 
     @Test

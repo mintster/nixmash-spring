@@ -2,29 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-    <title>NixMash Spring Error Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/highlight/github.css}"/>
+    <script th:src="@{/js/highlight.pack.js}"></script>
+
+    <title th:text="|#{post.page.title.prefix(${post.postTitle})}|">[Page Title]</title>
 </head>
 <body>
-<nav th:replace="fragments/navbar :: navbar('error')">Navbar</nav>
+<nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
+
 <!--/*@thymesVar id="post" type="com.nixmash.springdata.jpa.model.Post"*/-->
+<!--/*@thymesVar id="postCreated" type="java.util.Date"*/-->
 
 <div class="container">
     <div class="page-header" id="banner">
-        <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="${post.postTitle}">[post title]</h1>
-            </div>
+        <div class="row post-header-row">
             <div th:replace="fragments/sponsor :: [id='sponsor']">[sponsor image]</div>
+            <div class="col-lg-12">
+                <h1 th:text="${post.postTitle}" class="post-title">[post title]</h1>
+            </div>
         </div>
     </div>
 </div>
 <div class="container bs-docs-container">
-    <div class="row">
-        <div class="container">
-            <p>yousa!</p>
+    <div class="row row-centered">
+        <div class="bs-docs-section col-lg-9 col-centered">
+            <div id="post-body" th:utext="${post.postContent}">
+            </div>
+            <div id="post-footer">
+                <div id="post-date" th:text="|Posted ${#dates.format(postCreated, 'MMMM dd, yyyy hh:mm a z')}|">
+                    [post date]
+                </div>
+                <div class="edit-link" th:if="${post.isOwner}">
+                   <a th:href="@{|/posts/update/${post.postId}|}">[Edit]</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">[scripts]</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    $('pre code').each(function (i, block) {
+        hljs.highlightBlock(block);
+    });
+
+    /*]]>*/
+</script>
+
 </body>
 </html>

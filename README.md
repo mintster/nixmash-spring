@@ -60,8 +60,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.3.3 -- Post WYSIWYG editing, tagging, sharing, permalinks, likes (in progress)##
 
-- WYWIWYG Editor for Posts and Link Descriptions
+- WYSIWYG Editor for Posts and Link Descriptions
+- Post Permalink Display Page
+- Post Update with WYSIWYG Editing
 - [Post: Customizing the Summernote Editor](http://nixmash.com/java/customizing-the-summernote-editor/)
+- [Post: More User Friendly Exceptions with Spring Global Errors](http://nixmash.com/java/more-user-friendly-exceptions-with-spring-global-errors/)
 
 [[back to top](#nixmash-spring)]
 

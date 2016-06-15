@@ -52,5 +52,4 @@ public class SocialSignInAdapter implements SignInAdapter {
     }
 
 
-
 }

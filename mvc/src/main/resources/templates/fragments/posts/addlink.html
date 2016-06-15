@@ -11,7 +11,7 @@
                       class="form-horizontal" id="link-add-form">
 
                     <div th:if="${#fields.hasGlobalErrors()}"
-                         class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
+                         class="has-error alert alert-dismissible alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <label class="control-label" th:each="err : ${#fields.globalErrors()}"
                                th:text="${err}">...</label>

@@ -123,9 +123,9 @@
     $(document).ready(function () {
 
         if (!String.format) {
-            String.format = function(format) {
+            String.format = function (format) {
                 var args = Array.prototype.slice.call(arguments, 1);
-                return format.replace(/{(\d+)}/g, function(match, number) {
+                return format.replace(/{(\d+)}/g, function (match, number) {
                     return typeof args[number] != 'undefined'
                             ? args[number]
                             : match
@@ -134,62 +134,14 @@
             };
         }
 
-
-        var JavaButton = function (context) { return makeButton("java", "j"); };
-        var JavaScriptButton= function (context) { return makeButton("javascript", "js"); };
-        var HtmlButton = function (context) { return makeButton("html", "html"); };
-        var CssButton = function (context) { return makeButton("css", "css"); };
-
-        function makeButton(language, abbrev) {
-            var ui = $.summernote.ui;
-            var button = ui.button({
-                contents: String.format('<i class="fa fa-{0}"/>', abbrev),
-                tooltip: 'add code block',
-                click: function () {
-                    addCodeBlock(language)
-                }
-            });
-
-            return button.render();
-        }
-
-        function addCodeBlock(language) {
-            var node = document.createElement('pre');
-            var $editor = $('#summernote');
-            $editor.summernote('insertNode', node);
-
-            var code = document.createElement('code');
-            document.body.appendChild(code);
-            code.className = language;
-            code.textContent = language.toUpperCase();
-            $editor.summernote('insertNode', code);
-
-        }
-
-
-        $('#summernote').summernote({
-            minHeight: 200,
-            toolbar: [
-                ['first', ['style']],
-                ['style', ['bold', 'italic', 'underline', 'clear', 'strikethrough']],
-                ['insert', ['link']],
-                ['para', ['paragraph', 'ul', 'ol']],
-                ['misc', ['codeview', 'undo']],
-                ['codebuttons', ['java', 'js', 'html', 'css']]
-            ],
-            buttons: {
-                java: JavaButton,
-                js: JavaScriptButton,
-                html: HtmlButton,
-                css: CssButton
-            }
-        });
-
-
     });
 
     /*]]>*/
 </script>
+
+<div th:if="${showPost == 'link'}" th:include="fragments/js :: summernote"
+     th:remove="tag">[Summernote Javascript]</div>
+
 </body>
 </html>
 

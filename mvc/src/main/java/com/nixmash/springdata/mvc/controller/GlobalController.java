@@ -4,6 +4,7 @@ import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
+import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.ResourceNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -123,6 +124,16 @@ public class  GlobalController {
 		mav.addObject("errortitle", "Duplicate Post Name");
 		mav.addObject("errorbody", String.format("\"%s\" exists.<br /> " +
 				"Please rename your post title and try again.", postTitle));
+		mav.setViewName(ERROR_CUSTOM_VIEW);
+		return mav;
+	}
+
+	@ExceptionHandler(PostNotFoundException.class)
+	public ModelAndView handlePostNotFoundException (
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("errortitle", "Post Not Found");
+		mav.addObject("errorbody", "No post retrieved for your ID or Post Name");
 		mav.setViewName(ERROR_CUSTOM_VIEW);
 		return mav;
 	}

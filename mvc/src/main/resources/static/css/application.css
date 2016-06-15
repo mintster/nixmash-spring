@@ -123,6 +123,8 @@ body {
 @media screen and (max-width: 970px) {
     .page-header h1 {
         font-size: 3em;
+        margin-top: 30px;
+        margin-bottom: 20px;
     }
 }
 
@@ -619,7 +621,7 @@ button.btn.btn-success {
 }
 
 /*</editor-fold>*/
-/*/<editor-fold> desc="POST DISPLAY----------------------------/ "*/
+/*/<editor-fold> desc="POST DISPLAY IN STREAM----------------------------/ "*/
 #more-posts-button-row {
     display: inline-block;
     padding: 0 15px 60px 30px;
@@ -713,7 +715,7 @@ button.btn.btn-success {
 }
 
 pre code {
-    white-space: pre;
+    white-space: pre-wrap;
     margin-top: -15px;
 }
 
@@ -760,6 +762,37 @@ pre code {
 }
 .post .perma-link:hover {
     background-image: url('/images/permalink-hover.png');
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
+
+.post-header-row div#sponsor {
+    float: right;
+    display: block;
+    margin-bottom: 30px;
+}
+
+h1.post-title {
+    font-size: 36px;
+}
+
+#post-body {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+#post-body p {
+    margin-bottom: 20px;
+}
+
+#post-body .hljs {
+    background: transparent;
+}
+
+#post-body pre {
+    margin: 30px auto;
 }
 
 /*</editor-fold>*/
