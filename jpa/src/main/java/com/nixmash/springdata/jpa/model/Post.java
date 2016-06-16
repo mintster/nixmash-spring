@@ -71,7 +71,7 @@ public class Post implements Serializable {
     @Column(name = "post_content", nullable = false, columnDefinition = "TEXT")
     private String postContent;
 
-    @Column(name = "post_source", nullable = false, length = 20)
+    @Column(name = "post_source", length = 50)
     private String postSource = "NA";
 
     @Column(name = "click_count", nullable = false)

@@ -2,6 +2,7 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.AbstractContext;
@@ -52,7 +53,7 @@ public class PostsControllerTests extends AbstractContext {
     @Before
     public void setUp() {
 
-        mockMvc =  webAppContextSetup(wac)
+        mockMvc = webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
 //        mockPostsController = new PostsController(webUI, jsoupService, postService);
@@ -71,11 +72,15 @@ public class PostsControllerTests extends AbstractContext {
                 .andExpect(view().name(POSTS_PERMALINK_VIEW));
     }
 
-    @Test
-    public void notFoundPostRedirectsToPostsListWithFeedback() throws Exception {
-        mockMvc.perform(get("/posts/post/bad-title"))
-                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
-                .andExpect(redirectedUrl("/posts"));
+    @Test(expected = PostNotFoundException.class)
+    public void notFoundPostName_ThrowsPostNotFoundException() throws Exception {
+        String badName = "bad-name";
+        when(postService.getPost(badName))
+                .thenThrow(new PostNotFoundException());
+
+        mockMvc.perform(get("/posts/" + badName))
+                .andExpect(status().isOk())
+                .andExpect(view().name("errors/custom"));
     }
 
     @Test
@@ -101,6 +106,35 @@ public class PostsControllerTests extends AbstractContext {
         mockMvc.perform(get("/posts/update/-1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("errors/custom"));
+    }
+
+    @Test
+    public void updatePostWithMissingTitle_ReturnsToPage() throws Exception {
+        RequestBuilder request = post("/posts/update")
+                .param("postContent", "postContent").with(csrf());
+
+        mockMvc.perform(request)
+                .andExpect(model().attributeHasFieldErrors("postDTO", "postTitle"))
+                .andExpect(view().name(POSTS_UPDATE_VIEW));
+    }
+
+    @Test
+    public void updatePostWithValidData_RedirectsToPermalinkPage() throws Exception {
+
+        Post post = postService.getPostById(1L);
+        RequestBuilder request = post("/posts/update")
+                .param("postId", "1")
+                .param("displayType", String.valueOf(post.getDisplayType()))
+                .param("postContent", post.getPostContent())
+                .param("postTitle", post.getPostTitle())
+                .with(csrf());
+
+        // TODO: Modify redirectedUrl with updated PostName after changing PostTitle
+
+        mockMvc.perform(request)
+                .andExpect(model().hasNoErrors())
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
+                .andExpect(redirectedUrl("/posts/post/" + post.getPostName()));
     }
 
     @Test
@@ -133,7 +167,7 @@ public class PostsControllerTests extends AbstractContext {
                 .param("formtype", "link")
                 .param("link", GOOD_URL))
                 .andExpect(status().isOk())
-                    .andExpect(model().attribute("showPost", "link"))
+                .andExpect(model().attribute("showPost", "link"))
                 .andExpect(view().name(POSTS_ADD_VIEW));
     }
 

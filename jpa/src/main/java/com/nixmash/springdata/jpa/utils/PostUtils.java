@@ -56,11 +56,11 @@ public class PostUtils {
         String slug = null;
         try {
             slugify = new Slugify();
-            slug =  slugify.slugify(title);
+            slug = slugify.slugify(title);
         } catch (IOException e) {
-            logger.error(String.format("IOException for title: %s -- Exception: %s",title, e.getMessage()));
+            logger.error(String.format("IOException for title: %s -- Exception: %s", title, e.getMessage()));
         }
-       return slug;
+        return slug;
     }
 
     public static String removeTags(String string) {
@@ -76,5 +76,28 @@ public class PostUtils {
             return false;
         }
         return currentUser.getId().equals(userId);
+    }
+
+    public static String formatPostContent(Post post) {
+        String content = post.getPostContent();
+        String imageHtml = "<img alt=\"\" src=\"%s\"  class=\"%s-image\"/>\n";
+        switch (post.getDisplayType()) {
+            case LINK_SUMMARY:
+                String thumbnail = String.format(imageHtml, post.getPostImage(), "thumbnail");
+                content = StringUtils.prependIfMissing(thumbnail, content);
+                break;
+            case LINK_FEATURE:
+                String feature = String.format(imageHtml, post.getPostImage(), "feature");
+                content = StringUtils.appendIfMissing(feature, content);
+                break;
+            case NIXMASH_POST:
+                String nixMashHtml = "<div class=\"nixmash-tag\"><a href=\"http://nixmash.com\" target=\"_blank\">\n" +
+                        "<img src=\"/images/posts/nixmashtag.png\" alt=\"\"/></a></div>";
+                content = StringUtils.appendIfMissing(nixMashHtml, content);
+                break;
+            case LINK:
+                break;
+        }
+        return content;
     }
 }

@@ -46,14 +46,11 @@ public class PostServiceImpl implements PostService{
     @Transactional(readOnly = true)
     @Override
     public Post getPostById(Long ID) throws PostNotFoundException {
-
         Post found = postRepository.findByPostId(ID);
-
         if (found == null) {
             logger.info("No post found with id: {}", ID);
             throw new PostNotFoundException("No post found with id: " + ID);
         }
-
         return found;
     }
 

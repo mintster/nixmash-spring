@@ -38,6 +38,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 /**
  * Created by daveburke on 5/27/16.
  */
+@SuppressWarnings("Duplicates")
 @Controller
 @RequestMapping(value = "/posts")
 public class PostsController {
@@ -54,6 +55,7 @@ public class PostsController {
     public static final String POSTS_PERMALINK_VIEW = "posts/post";
     public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
     public static final String POSTS_UPDATE_VIEW = "posts/update";
+    public static final String FEEDBACK_POST_UPDATED = "feedback.post.updated";
 
     // endregion
 
@@ -91,13 +93,9 @@ public class PostsController {
     public String post(@PathVariable("postName") String postName, Model model,
                        CurrentUser currentUser, RedirectAttributes attributes) throws PostNotFoundException {
         Post post = postService.getPost(postName);
-        if (post == null) {
-            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOT_FOUND);
-            return "redirect:/posts";
-        }
         Date postCreated = Date.from(post.getPostDate().toInstant());
         post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
-
+        post.setPostContent(PostUtils.formatPostContent(post));
         model.addAttribute("post", post);
         model.addAttribute("postCreated", postCreated);
         return POSTS_PERMALINK_VIEW;
@@ -105,18 +103,35 @@ public class PostsController {
 
     // endregion
 
-    // region /update {get}
+    // region /update {get / post}
 
+    //    @PreAuthorize("@postService.canUpdatePost(principal, #postId)")
     @RequestMapping(value = "/update/{postId}", method = GET)
     public String updatePost(@PathVariable("postId") Long postId,
-                                     Model model, CurrentUser currentUser, RedirectAttributes attributes) throws PostNotFoundException {
+                             Model model) throws PostNotFoundException {
         Post post = postService.getPostById(postId);
-        model.addAttribute("postDTO", PostDTO.getBuilder(post.getPostId(), post.getPostTitle(), null, null, post.getPostContent(), null, null).build());
-        return POSTS_UPDATE_VIEW;    
+        model.addAttribute("postDTO", PostDTO.getUpdateFields(post.getPostId(), post.getPostTitle(), post.getPostContent(), post.getDisplayType()).build());
+        return POSTS_UPDATE_VIEW;
     }
-    
+
+    @RequestMapping(value = "/update", method = POST)
+    public String updatePost(@Valid PostDTO postDTO, BindingResult result, Model model,
+                             CurrentUser currentUser, RedirectAttributes attributes) throws PostNotFoundException {
+            if (result.hasErrors()) {
+                model.addAttribute("postDTO", postDTO);
+                return POSTS_UPDATE_VIEW;
+            } else {
+
+                // TODO: Add Update Post logic in JPA Service/Repo
+
+                Post post = postService.getPostById(postDTO.getPostId());
+                webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
+                return "redirect:/posts/post/" + post.getPostName();
+            }
+    }
+
     // endregion
-    
+
     // region /add {get} methods
 
     @RequestMapping(value = "/add", method = GET, params = {"formtype"})
@@ -211,7 +226,7 @@ public class PostsController {
                 }
             }
         } else {
-            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "not found");
+            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
             model.addAttribute("pagePreview", pagePreview);
             model.addAttribute("showPost", "link");
             return POSTS_ADD_VIEW;

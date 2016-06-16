@@ -1,7 +1,6 @@
 package com.nixmash.springdata.jpa.repository;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
-import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
@@ -50,12 +49,12 @@ public class PostRepoTests {
     }
 
     @Test
-    public void nullPostLinkEnteredAndResultsInPostSourceAsNA() {
-        Post post = Post.getBuilder(1L, "New Title", "new-title", null, "New post content!", PostType.NOTE, PostDisplayType.NOTE).build();
+    public void nullPostLinkEnteredAndResultsInPostSourceAsNull() {
+        Post post = Post.getBuilder(1L, "Nuther New Title", "nuther-new-title", null, "New post content!", PostType.NOTE, PostDisplayType.NOTE).build();
         Post saved = postRepository.save(post);
         assertNotNull(saved);
         assertNull(saved.getPostLink());
-        assertEquals(saved.getPostSource(), "NA");
+        assertEquals(saved.getPostSource(), null);
     }
 
 }

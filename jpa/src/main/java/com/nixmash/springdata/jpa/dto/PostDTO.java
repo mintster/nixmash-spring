@@ -246,6 +246,10 @@ public class PostDTO implements Serializable {
         return new PostDTO.Builder(userId, postTitle, postName, postLink, postContent, postType, displayType);
     }
 
+    public static Builder getUpdateFields(Long postId, String postTitle, String postContent, PostDisplayType displayType) {
+        return new PostDTO.Builder(postId, postTitle,  postContent, displayType);
+    }
+
     public static class Builder {
 
         private PostDTO built;
@@ -261,6 +265,14 @@ public class PostDTO implements Serializable {
             built.displayType = displayType;
             built.postSource = PostUtils.createPostSource(postLink);
           }
+
+        public Builder(Long postId, String postTitle, String postContent, PostDisplayType displayType) {
+            built = new PostDTO();
+            built.postId = postId;
+            built.postTitle = postTitle;
+            built.postContent = postContent;
+            built.displayType = displayType;
+        }
 
         public Builder postImage(String postImage) {
             built.postImage = postImage;

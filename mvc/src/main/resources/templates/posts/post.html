@@ -26,6 +26,10 @@
 <div class="container bs-docs-container">
     <div class="row row-centered">
         <div class="bs-docs-section col-lg-9 col-centered">
+            <div id="message-holder">
+                <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
+                     th:utext="${feedbackMessage}"></div>
+            </div>
             <div id="post-body" th:utext="${post.postContent}">
             </div>
             <div id="post-footer">
@@ -40,6 +44,7 @@
     </div>
 </div>
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">[scripts]</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
 
 <script th:inline="javascript">
     /*<![CDATA[*/

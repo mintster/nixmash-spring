@@ -7,7 +7,7 @@
     <div class="container bs-docs-container big-font-container">
         <div class="row row-centered">
             <div class="bs-docs-section col-lg-9 col-centered">
-                <form th:object="${postDTO}" method="post" th:action="@{${#httpServletRequest.getRequestURI()}}"
+                <form th:object="${postDTO}" method="post" th:action="@{/posts/update}"
                       class="form-horizontal" id="link-add-form">
 
                     <div th:if="${#fields.hasGlobalErrors()}"
@@ -58,6 +58,7 @@
                     </table>
 
                     <input type="hidden" name="postId" th:value="*{postId}"/>
+                    <input type="hidden" name="displayType" th:value="*{displayType}"/>
                 </form>
             </div>
         </div>
