@@ -36,6 +36,21 @@ public class PostUtils {
                 .build();
     }
 
+    public static PostDTO postToPostDTO(Post post) {
+
+        return PostDTO.getBuilder(post.getUserId(),
+                post.getPostTitle(),
+                post.getPostName(),
+                post.getPostLink(),
+                post.getPostContent(),
+                post.getPostType(),
+                post.getDisplayType())
+                .postSource(post.getPostSource())
+                .postImage(post.getPostImage())
+                .postId(post.getPostId())
+                .build();
+    }
+
     public static String createPostSource(String url) {
         String domain = null;
         if (StringUtils.isEmpty(url))

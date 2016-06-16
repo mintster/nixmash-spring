@@ -4,6 +4,7 @@ import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
+import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -121,20 +122,22 @@ public class PostsControllerTests extends AbstractContext {
     @Test
     public void updatePostWithValidData_RedirectsToPermalinkPage() throws Exception {
 
+        String newTitle = "New Title for updatePostWithValidData_RedirectsToPermalinkPage Test";
+
         Post post = postService.getPostById(1L);
         RequestBuilder request = post("/posts/update")
                 .param("postId", "1")
                 .param("displayType", String.valueOf(post.getDisplayType()))
                 .param("postContent", post.getPostContent())
-                .param("postTitle", post.getPostTitle())
+                .param("postTitle", newTitle)
                 .with(csrf());
-
-        // TODO: Modify redirectedUrl with updated PostName after changing PostTitle
 
         mockMvc.perform(request)
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
-                .andExpect(redirectedUrl("/posts/post/" + post.getPostName()));
+                .andExpect(redirectedUrl("/posts/post/" + PostUtils.createSlug(newTitle)));
+
+        assert(post.getPostTitle().equals(newTitle));
     }
 
     @Test

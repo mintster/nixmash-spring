@@ -4,8 +4,10 @@ import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
+import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.utils.PostTestUtils;
+import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,17 @@ public class PostServiceTests {
         PostDTO postDTO = PostTestUtils.createPostDTO();
         Post post = postService.add(postDTO);
         assertNotNull(post);
+    }
+
+    @Test
+    public void updatePostDTO() throws PostNotFoundException {
+        Post post = postService.getPostById(1L);
+        PostDTO postDTO = PostUtils.postToPostDTO(post);
+        String newTitle = "New Title 897";
+        postDTO.setPostTitle(newTitle);
+        Post update = postService.update(postDTO);
+        assertEquals(update.getPostTitle(), newTitle);
+        assertEquals(update.getPostName(), PostUtils.createSlug(newTitle));
     }
 
     @Test

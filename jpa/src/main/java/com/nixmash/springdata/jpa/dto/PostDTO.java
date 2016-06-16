@@ -284,6 +284,16 @@ public class PostDTO implements Serializable {
             return this;
         }
 
+        public Builder postSource(String postSource) {
+            built.postSource = postSource;
+            return this;
+        }
+
+        public Builder postId(Long postId) {
+            built.postId = postId;
+            return this;
+        }
+
         public PostDTO build() {
             return built;
         }

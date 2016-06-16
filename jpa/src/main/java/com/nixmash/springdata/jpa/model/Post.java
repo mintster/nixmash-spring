@@ -254,6 +254,12 @@ public class Post implements Serializable {
     }
     //endregion
 
+    public void update(String postTitle, String postContent) {
+        this.postTitle = postTitle;
+        this.postContent = postContent;
+        this.postName = PostUtils.createSlug(postTitle);
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -313,4 +319,5 @@ public class Post implements Serializable {
             return built;
         }
     }
+
 }

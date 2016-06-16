@@ -30,6 +30,10 @@ public class PostServiceImpl implements PostService{
         this.postRepository = postRepository;
     }
 
+
+
+    //region Add / UpdatePost
+
     @Override
     public Post add(PostDTO postDTO) throws DuplicatePostNameException {
         Post post;
@@ -42,6 +46,20 @@ public class PostServiceImpl implements PostService{
 
         return post;
     }
+
+    @Transactional(rollbackFor = PostNotFoundException.class)
+    @Override
+    public Post update(PostDTO postDTO) throws PostNotFoundException {
+
+        Post post = postRepository.findByPostId(postDTO.getPostId());
+        post.update(postDTO.getPostTitle(), postDTO.getPostContent());
+        return post;
+    }
+
+        //endregion
+
+
+    //region Get Posts
 
     @Transactional(readOnly = true)
     @Override
@@ -74,7 +92,14 @@ public class PostServiceImpl implements PostService{
         return postRepository.findAll(pageRequest);
     }
 
+    //endregion
+
+
+    //region Utility methods
+
     public Sort sortByPostDateDesc() {
         return new Sort(Sort.Direction.DESC, "postDate");
     }
+
+    //endregion
 }

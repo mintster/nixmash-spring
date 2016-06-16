@@ -121,10 +121,7 @@ public class PostsController {
                 model.addAttribute("postDTO", postDTO);
                 return POSTS_UPDATE_VIEW;
             } else {
-
-                // TODO: Add Update Post logic in JPA Service/Repo
-
-                Post post = postService.getPostById(postDTO.getPostId());
+                Post post = postService.update(postDTO);
                 webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
                 return "redirect:/posts/post/" + post.getPostName();
             }
