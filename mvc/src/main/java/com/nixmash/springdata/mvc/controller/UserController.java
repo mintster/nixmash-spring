@@ -193,7 +193,6 @@ public class UserController {
 		return userDTO;
 	}
 
-
 	private SocialUserDTO createSocialUserDTO(WebRequest request, Connection<?> connection) {
 		SocialUserDTO dto = new SocialUserDTO();
 
@@ -211,8 +210,8 @@ public class UserController {
 		return dto;
 	}
 
-
-	@PreAuthorize("@userService.canAccessUser(principal, #username)")
+//	@PreAuthorize("@userService.canAccessUser(principal, #username)")
+	@PreAuthorize("#username == authentication.name")
 	@RequestMapping(value = "/{username}", method = GET)
 	public String profilePage(@PathVariable("username") String username,
 							  Model model, WebRequest request)

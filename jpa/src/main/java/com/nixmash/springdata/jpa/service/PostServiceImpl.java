@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.service;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
+import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +32,6 @@ public class PostServiceImpl implements PostService{
     public PostServiceImpl(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
-
-
 
     //region Add / UpdatePost
 
@@ -94,6 +95,33 @@ public class PostServiceImpl implements PostService{
 
     //endregion
 
+
+    // region Security Support
+
+
+    @Override
+    public boolean canUpdatePost(Authentication authentication, Long postId) {
+
+        if (authentication instanceof AnonymousAuthenticationToken)
+            return false;
+
+        CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
+
+        Post post = null;
+        try {
+            post = getPostById(postId);
+        } catch (PostNotFoundException e) {
+            logger.error("Post not found for PostId {} ", postId);
+            return false;
+        }
+
+        Long postUserId = post.getUserId();
+        logger.info("Checking if user={} can update post '{}'", currentUser.getUsername(), post.getPostTitle());
+        return currentUser.getId().equals(postUserId);
+    }
+
+
+    // endregion
 
     //region Utility methods
 

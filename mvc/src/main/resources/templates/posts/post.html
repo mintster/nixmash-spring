@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="container bs-docs-container">
-    <div class="row row-centered">
+    <div class="row row-centered" id="post">
         <div class="bs-docs-section col-lg-9 col-centered">
             <div id="message-holder">
                 <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
@@ -42,6 +42,7 @@
             </div>
         </div>
     </div>
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
 </div>
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">[scripts]</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>

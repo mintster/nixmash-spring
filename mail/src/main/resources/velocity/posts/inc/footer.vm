@@ -1,5 +1,5 @@
 <a target="_blank" href="${post.postLink}" class="remote-link" title="Go to External Site"></a>
-<a target="_blank" href="/posts/post/${post.postName}" class="perma-link" title="Post Permalink"></a>
+<a href="/posts/post/${post.postName}" class="perma-link" title="Post Permalink"></a>
 <div class="post-date"><span>Posted on </span><abbr title="${post.postDate}">${postCreated}</abbr>
 </div>
 <div class="post-tags"><span></span></div>

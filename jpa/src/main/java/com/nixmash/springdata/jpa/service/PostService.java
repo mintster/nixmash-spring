@@ -5,6 +5,7 @@ import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -22,4 +23,6 @@ public interface PostService {
     Post update(PostDTO postDTO) throws PostNotFoundException;
 
     Post getPostById(Long postId) throws PostNotFoundException;
+
+    boolean canUpdatePost(Authentication authentication, Long postId);
 }

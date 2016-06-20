@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -61,9 +62,9 @@ public class PostsController {
 
     // region beans
 
-    WebUI webUI;
-    JsoupService jsoupService;
-    PostService postService;
+    private final WebUI webUI;
+    private final JsoupService jsoupService;
+    private final PostService postService;
 
     // endregion
 
@@ -91,7 +92,9 @@ public class PostsController {
 
     @RequestMapping(value = "/post/{postName}", method = GET)
     public String post(@PathVariable("postName") String postName, Model model,
-                       CurrentUser currentUser, RedirectAttributes attributes) throws PostNotFoundException {
+                       CurrentUser currentUser, RedirectAttributes attributes)
+            throws PostNotFoundException {
+
         Post post = postService.getPost(postName);
         Date postCreated = Date.from(post.getPostDate().toInstant());
         post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
@@ -105,18 +108,24 @@ public class PostsController {
 
     // region /update {get / post}
 
-    //    @PreAuthorize("@postService.canUpdatePost(principal, #postId)")
+    //@PreAuthorize("@postServiceImpl.getPostById(#postId).getUserId().equals(#currentUser.getId())")
+    @PreAuthorize("@postServiceImpl.canUpdatePost(authentication, #postId)")
     @RequestMapping(value = "/update/{postId}", method = GET)
     public String updatePost(@PathVariable("postId") Long postId,
                              Model model) throws PostNotFoundException {
         Post post = postService.getPostById(postId);
-        model.addAttribute("postDTO", PostDTO.getUpdateFields(post.getPostId(), post.getPostTitle(), post.getPostContent(), post.getDisplayType()).build());
+        model.addAttribute("postDTO", PostDTO.getUpdateFields(post.getPostId(),
+                post.getPostTitle(),
+                post.getPostContent(),
+                post.getDisplayType())
+                .build());
+
         return POSTS_UPDATE_VIEW;
     }
 
     @RequestMapping(value = "/update", method = POST)
     public String updatePost(@Valid PostDTO postDTO, BindingResult result, Model model,
-                             CurrentUser currentUser, RedirectAttributes attributes) throws PostNotFoundException {
+                             RedirectAttributes attributes) throws PostNotFoundException {
             if (result.hasErrors()) {
                 model.addAttribute("postDTO", postDTO);
                 return POSTS_UPDATE_VIEW;

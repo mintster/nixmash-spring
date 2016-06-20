@@ -20,6 +20,7 @@ blockquote small {
 .js-buttons .btn {
     margin-bottom: 5px;
 }
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="BODY, ROWS AND COLUMNS ----------------------------/ "*/
 body {
@@ -77,8 +78,8 @@ body {
 }
 
 @media (max-width: 768px) {
-    .sponsor img{
-       display: none;
+    .sponsor img {
+        display: none;
     }
 }
 
@@ -679,7 +680,7 @@ button.btn.btn-success {
     margin-bottom: 20px;
 }
 
-#posts img.feature-image{
+#posts img.feature-image {
     max-width: 100%;
     margin: 20px auto 10px auto;
 }
@@ -750,9 +751,11 @@ pre code {
 
 .post .remote-link img.icon-link, .post .perma-link img.icon-link {
 }
+
 .post .remote-link {
     background-image: url('/images/remotelink.png');
 }
+
 .post .remote-link:hover {
     background-image: url('/images/remotelink-hover.png');
 }
@@ -760,12 +763,12 @@ pre code {
 .post .perma-link {
     background-image: url('/images/permalink.png');
 }
+
 .post .perma-link:hover {
     background-image: url('/images/permalink-hover.png');
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
 
 .post-header-row div#sponsor {
@@ -793,6 +796,43 @@ h1.post-title {
 
 #post-body pre {
     margin: 30px auto;
+    clear: both;
+    white-space: pre-wrap;
+    white-space: moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+#post-footer .edit-link {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+#post .nixmash-tag {
+    width: 100%;
+    margin: 45px 0 20px 0;
+}
+
+#post-body img.thumbnail-image {
+    max-height: 120px;
+    float: right;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#post #post-footer {
+    clear: both;
+}
+
+#post {
+    padding-bottom: 60px;
+}
+
+#post-body img.feature-image {
+    max-width: 100%;
+    height: auto;
+    margin-right: auto;
 }
 
 /*</editor-fold>*/
