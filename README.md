@@ -66,6 +66,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Customizing the Summernote Editor](http://nixmash.com/java/customizing-the-summernote-editor/)
 - [Post: More User Friendly Exceptions with Spring Global Errors](http://nixmash.com/java/more-user-friendly-exceptions-with-spring-global-errors/)
 - [Post: NixMash Spring Post Permalinks and Editing Highlights](http://nixmash.com/java/nixmash-spring-post-permalinks-and-editing-highlights/)
+- [Post: Spring Method Expression-Based Access Control](http://nixmash.com/java/spring-method-expression-based-access-control/)
 
 [[back to top](#nixmash-spring)]
 

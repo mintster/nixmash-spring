@@ -108,8 +108,7 @@ public class PostsController {
 
     // region /update {get / post}
 
-    //@PreAuthorize("@postServiceImpl.getPostById(#postId).getUserId().equals(#currentUser.getId())")
-    @PreAuthorize("@postServiceImpl.canUpdatePost(authentication, #postId)")
+    @PreAuthorize("@postService.canUpdatePost(authentication, #postId)")
     @RequestMapping(value = "/update/{postId}", method = GET)
     public String updatePost(@PathVariable("postId") Long postId,
                              Model model) throws PostNotFoundException {
@@ -119,7 +118,6 @@ public class PostsController {
                 post.getPostContent(),
                 post.getDisplayType())
                 .build());
-
         return POSTS_UPDATE_VIEW;
     }
 

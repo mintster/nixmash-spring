@@ -13,9 +13,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -92,10 +95,31 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
-    public void loadUpdatePostPage() throws Exception {
-        mockMvc.perform(get("/posts/update/1"))
+    @WithUserDetails(value = "keith")
+    public void getUpdatePostPage_Author_Loads() throws Exception {
+
+        // h2 posts have keith userId (3)
+        mockMvc.perform(get("/posts/update/3"))
                 .andExpect(model().attributeExists("postDTO"))
                 .andExpect(view().name(POSTS_UPDATE_VIEW));
+    }
+
+    @Test
+    @WithAdminUser
+    public void getUpdatePost_NonAuthor_403() throws Exception {
+
+        mockMvc.perform(get("/posts/update/3"))
+                .andExpect(status().isForbidden())
+                .andExpect(forwardedUrl("/403"));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void getUpdatePost_Anonymous_login() throws Exception {
+
+        mockMvc.perform(get("/posts/update/3"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/signin"));
     }
 
     @Test(expected = PostNotFoundException.class)
@@ -137,7 +161,7 @@ public class PostsControllerTests extends AbstractContext {
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts/post/" + PostUtils.createSlug(newTitle)));
 
-        assert(post.getPostTitle().equals(newTitle));
+        assert (post.getPostTitle().equals(newTitle));
     }
 
     @Test
@@ -219,5 +243,12 @@ public class PostsControllerTests extends AbstractContext {
                 .param("displayType", postType.name().toUpperCase())
                 .param("postContent", "My Post Content")
                 .with(csrf());
+    }
+
+    private static ResultMatcher loginPage() {
+        return result -> {
+            status().isFound().match(result);
+            redirectedUrl("http://localhost/signin").match(result);
+        };
     }
 }

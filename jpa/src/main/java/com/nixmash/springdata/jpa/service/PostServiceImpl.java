@@ -21,7 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by daveburke on 6/1/16.
  */
-@Service
+@Service("postService")
+@Transactional
 public class PostServiceImpl implements PostService{
 
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);

@@ -210,15 +210,16 @@ public class UserController {
 		return dto;
 	}
 
-//	@PreAuthorize("@userService.canAccessUser(principal, #username)")
 	@PreAuthorize("#username == authentication.name")
 	@RequestMapping(value = "/{username}", method = GET)
 	public String profilePage(@PathVariable("username") String username,
 							  Model model, WebRequest request)
 			throws UsernameNotFoundException {
+
 		logger.info("Showing user page for user: {}", username);
 		ProfileImageDTO profileImageDTO = new ProfileImageDTO();
 		model.addAttribute("profileImageDTO", profileImageDTO);
+
 		return USER_PROFILE_VIEW;
 	}
 
