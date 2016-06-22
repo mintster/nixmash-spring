@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static com.nixmash.springdata.jpa.utils.PostTestUtils.*;
 import static com.nixmash.springdata.jpa.utils.PostUtils.postDtoToPost;
@@ -104,5 +105,11 @@ public class PostServiceTests {
         for (Post post: posts) {
             System.out.println(post.getPostTitle());
         }
+    }
+
+    @Test
+    public void findAllWithDetails() {
+        List<Post> posts = postService.getPostsWithDetail();
+        assertNotNull(posts);
     }
 }

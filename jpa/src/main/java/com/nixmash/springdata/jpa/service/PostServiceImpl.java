@@ -1,11 +1,14 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.Tag;
 import com.nixmash.springdata.jpa.repository.PostRepository;
+import com.nixmash.springdata.jpa.repository.TagRepository;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by daveburke on 6/1/16.
  */
@@ -28,14 +33,17 @@ public class PostServiceImpl implements PostService{
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
     private PostRepository postRepository;
+    private TagRepository tagRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository) {
         this.postRepository = postRepository;
+        this.tagRepository = tagRepository;
     }
 
     //region Add / UpdatePost
 
+    @Transactional(rollbackFor = DuplicatePostNameException .class)
     @Override
     public Post add(PostDTO postDTO) throws DuplicatePostNameException {
         Post post;
@@ -94,8 +102,29 @@ public class PostServiceImpl implements PostService{
         return postRepository.findAll(pageRequest);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getPostsWithDetail() {
+        return postRepository.findAllWithDetail();
+    }
+
     //endregion
 
+
+    // region Tags Processing
+
+    @Transactional
+    private void saveTagsToDataBase(PostDTO postDTO) {
+        for (TagDTO tagDTO : postDTO.getTags()) {
+            Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
+            if (tag == null) {
+                tag = new Tag(tagDTO.getTagValue());
+                tagRepository.save(tag);
+            }
+        }
+    }
+
+    // endregion
 
     // region Security Support
 

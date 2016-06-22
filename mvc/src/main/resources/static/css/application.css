@@ -768,6 +768,10 @@ pre code {
     background-image: url('/images/permalink-hover.png');
 }
 
+.post code.html.hljs.xml {
+    margin-top: 0;
+}
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
 
@@ -804,9 +808,16 @@ h1.post-title {
     word-wrap: break-word;
 }
 
-#post-footer .edit-link {
+#post-footer .footer-links {
     display: inline-block;
     margin-top: 5px;
+}
+
+#post-footer .footer-links div {
+    display: inline-block;
+}
+
+#post-footer .edit-link {
 }
 
 #post .nixmash-tag {

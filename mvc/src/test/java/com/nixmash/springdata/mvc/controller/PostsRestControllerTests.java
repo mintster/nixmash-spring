@@ -13,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -29,6 +30,13 @@ public class PostsRestControllerTests extends AbstractContext {
         mockMvc =  webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
+    }
+
+    @Test
+    public void getTags() throws Exception {
+        mockMvc.perform(get("/json/posts/tags"))
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test

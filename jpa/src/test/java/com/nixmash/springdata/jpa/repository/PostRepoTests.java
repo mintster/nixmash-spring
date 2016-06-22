@@ -5,12 +5,20 @@ import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.Tag;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -24,6 +32,16 @@ public class PostRepoTests {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    TagRepository tagRepository;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Before
+    public void setUp() {
+    }
 
     @Test
     public void nonextistentPostFromRepository() {
@@ -55,6 +73,58 @@ public class PostRepoTests {
         assertNotNull(saved);
         assertNull(saved.getPostLink());
         assertEquals(saved.getPostSource(), null);
+    }
+
+    @Test
+    public void savePostWithTags() {
+        Post post = Post.getBuilder(1L,
+                "Post With Tags",
+                "post-with-tags",
+                null,
+                "New post with tags!",
+                PostType.NOTE,
+                PostDisplayType.NOTE)
+                .build();
+
+        Tag tag1 = new Tag("third tag");
+        tag1 = tagRepository.save(tag1);
+
+        Tag tag2 = new Tag("fourth tag");
+        tag2 = tagRepository.save(tag2);
+
+        Post saved = postRepository.save(post);
+
+        saved.setTags(new HashSet<>());
+        saved.getTags().add(tag1);
+        saved.getTags().add(tag2);
+        assertEquals(saved.getTags().size(), 2);
+
+        // TODO: Alternative to resaving Post
+
+        postRepository.save(saved);
+
+        List<Post> posts= postRepository.findAllWithDetail();
+        Optional<Post> found = posts.stream()
+                .filter(p -> p.getPostId().equals(saved.getPostId())).findFirst();
+
+        if (found.isPresent()) {
+            assertEquals(found.get().getTags().size(), 2);
+        }
+    }
+
+    @Test
+    public void addTags() {
+
+        Integer startTagCount = tagRepository.findAll().size();
+
+        Tag tag = new Tag("tag one");
+        tagRepository.save(tag);
+
+        tag = new Tag("tag two ");
+        tagRepository.save(tag);
+
+        List<Tag> found = tagRepository.findAll();
+        assertEquals(found.size(), startTagCount + 2);
     }
 
 }

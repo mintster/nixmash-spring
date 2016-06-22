@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by daveburke on 6/1/16.
  */
@@ -23,6 +25,9 @@ public interface PostService {
     Post update(PostDTO postDTO) throws PostNotFoundException;
 
     Post getPostById(Long postId) throws PostNotFoundException;
+
+    @Transactional(readOnly = true)
+    List<Post> getPostsWithDetail();
 
     boolean canUpdatePost(Authentication authentication, Long postId);
 }

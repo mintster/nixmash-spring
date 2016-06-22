@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -86,6 +87,16 @@ public class Post implements Serializable {
     @Version
     @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private int version = 0;
+
+    @ManyToMany
+    @JoinTable(name = "post_tag_ids",
+            joinColumns = @JoinColumn(name = "post_id",
+                    referencedColumnName = "post_id",
+                    nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "tag_id",
+                    referencedColumnName = "tag_id",
+                    nullable = false))
+    public Set<Tag> tags;
 
     // endregion
 
@@ -252,6 +263,15 @@ public class Post implements Serializable {
     public void setVersion(int version) {
         this.version = version;
     }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
     //endregion
 
     public void update(String postTitle, String postContent) {
@@ -314,10 +334,8 @@ public class Post implements Serializable {
             return this;
         }
 
-
         public Post build() {
             return built;
         }
     }
-
 }

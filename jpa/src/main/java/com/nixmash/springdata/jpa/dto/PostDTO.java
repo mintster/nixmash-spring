@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 
 public class PostDTO implements Serializable {
@@ -18,6 +19,7 @@ public class PostDTO implements Serializable {
 
     private Long postId;
     private Long userId;
+    private Set<TagDTO> tags;
 
     @NotEmpty
     @Length(max= Post.MAX_POST_TITLE_LENGTH)
@@ -53,6 +55,14 @@ public class PostDTO implements Serializable {
 
     // region getter setters
 
+
+    public Set<TagDTO> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<TagDTO> tags) {
+        this.tags = tags;
+    }
 
     public int getImageIndex() {
         return imageIndex;

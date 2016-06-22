@@ -20,9 +20,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -63,7 +61,16 @@ public class PostsRestController {
             return "true";
     }
 
+    @RequestMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Pair<Integer, String>> getTags() {
+        List<Pair<Integer, String>> tags = new ArrayList<>();
+        tags.add(new Pair<>(1, "tag one"));
+        tags.add(new Pair<>(8, "tag eight"));
+        return tags;
+    }
+
     // region Key-Value Json
+
     //
     // --- demo for NixMash Post "Variations on JSON Key-Value Pairs in Spring MVC"  http://goo.gl/0hhnZg
 

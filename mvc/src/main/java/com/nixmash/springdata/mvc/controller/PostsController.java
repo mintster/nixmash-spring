@@ -128,6 +128,7 @@ public class PostsController {
                 model.addAttribute("postDTO", postDTO);
                 return POSTS_UPDATE_VIEW;
             } else {
+                postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
                 Post post = postService.update(postDTO);
                 webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
                 return "redirect:/posts/post/" + post.getPostName();
@@ -345,7 +346,7 @@ public class PostsController {
     }
 
     private String cleanContentTailHtml(String content) {
-        String[] tags = {"<p>\n</p>", "<p></p>", "<p><br></p>", "<br>"};
+        String[] tags = {"<p>\r\n</p>", "<p></p>", "<p><br></p>", "<br>"};
         String result = content;
         for (String t :
                 tags) {

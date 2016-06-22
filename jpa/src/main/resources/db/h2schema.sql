@@ -159,16 +159,27 @@ CREATE TABLE posts (
   likes_count int(11) NOT NULL DEFAULT '0',
   value_rating int(11) NOT NULL DEFAULT '0',
   version int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `posts_post_id_uindex` (`post_id`),
-  UNIQUE KEY `posts_post_name_pk` (`post_name`),
+  UNIQUE KEY posts_post_id_uindex (post_id),
+  UNIQUE KEY posts_post_name_pk (post_name),
   PRIMARY KEY (post_id),
   CONSTRAINT posts_users_user_id_fk FOREIGN KEY (user_id) REFERENCES users (user_id),
 
 );
-------------------------------------------------------------
--- Posts
-------------------------------------------------------------
 
--- INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (1, 1, 'Post One Title', 'post-one-title', 'http://nixmash.com/something', '2016-05-31 13:27:47', '2016-05-31 13:28:01', 'LINK', 'LINK', 1, 'Post One Content', 'nixmash.com', null, 0, 0, 0, 0);
--- INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (2, 1, 'Post Two Title', 'post-two-title', 'http://stackoverflow.com/something', '2016-05-31 13:30:45', '2016-05-31 13:30:47', 'LINK', 'LINK', 1, 'Post Two Content', 'stackoverflow.com', null, 0, 0, 0, 0);
+CREATE TABLE tags
+(
+  tag_id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  tag_value VARCHAR(50) NOT NULL,
+  PRIMARY KEY (tag_id)
+);
 
+
+CREATE TABLE post_tag_ids
+(
+  post_tag_id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  post_id BIGINT(20) NOT NULL,
+  tag_id BIGINT(20) NOT NULL,
+  PRIMARY KEY (post_tag_id),
+  CONSTRAINT fk_posts_post_id FOREIGN KEY (post_id) REFERENCES posts (post_id),
+  CONSTRAINT fk_tags_tag_id FOREIGN KEY (tag_id) REFERENCES tags (tag_id)
+);
