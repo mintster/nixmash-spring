@@ -2,6 +2,7 @@ package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
@@ -100,9 +101,9 @@ public class PostServiceTests {
         ZonedDateTime secondPostDate = posts.getContent().get(1).getPostDate();
 
         // firstPostDate is higher (more recent) than secondPostDate with [sort: postDate: DESC]
-        assertTrue(firstPostDate.compareTo(secondPostDate) >  0);
+        assertTrue(firstPostDate.compareTo(secondPostDate) > 0);
 
-        for (Post post: posts) {
+        for (Post post : posts) {
             System.out.println(post.getPostTitle());
         }
     }
@@ -111,5 +112,29 @@ public class PostServiceTests {
     public void findAllWithDetails() {
         List<Post> posts = postService.getPostsWithDetail();
         assertNotNull(posts);
+    }
+
+    @Test
+    public void addPostWithTags() throws DuplicatePostNameException, PostNotFoundException {
+        PostDTO postDTO = PostTestUtils.createPostDTO();
+        postDTO.getTags().add(new TagDTO("addPostWithTags1"));
+        postDTO.getTags().add(new TagDTO("addPostWithTags2"));
+        Post post = postService.add(postDTO);
+        assertEquals(post.getTags().size(), 2);
+
+        Post retrieved = postService.getPostById(post.getPostId());
+        assertEquals(retrieved.getTags().size(), 2);
+    }
+
+    @Test
+    public void updatePostWithTags() throws DuplicatePostNameException, PostNotFoundException {
+        Post post = postService.getPostById(5L);
+        PostDTO postDTO = PostUtils.postToPostDTO(post);
+        postDTO.getTags().add(new TagDTO("updatePostWithTags1"));
+        Post updated = postService.update(postDTO);
+        assertEquals(updated.getTags().size(), 1);
+
+        Post retrieved = postService.getPostById(5L);
+        assertEquals(retrieved.getTags().size(), 1);
     }
 }

@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ import java.util.List;
  */
 @Service("postService")
 @Transactional
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
@@ -43,15 +44,27 @@ public class PostServiceImpl implements PostService{
 
     //region Add / UpdatePost
 
-    @Transactional(rollbackFor = DuplicatePostNameException .class)
+    @Transactional(rollbackFor = DuplicatePostNameException.class)
     @Override
     public Post add(PostDTO postDTO) throws DuplicatePostNameException {
         Post post;
         try {
-            post =  postRepository.save(PostUtils.postDtoToPost(postDTO));
+            post = postRepository.save(PostUtils.postDtoToPost(postDTO));
+
         } catch (Exception e) {
             throw new DuplicatePostNameException("Duplicate Post Name for Post Title: " +
                     postDTO.getPostTitle());
+        }
+
+
+        if (postDTO.getTags() != null) {
+
+            saveNewTagsToDataBase(postDTO);
+            post.setTags(new HashSet<>());
+            for (TagDTO tagDTO : postDTO.getTags()) {
+                Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
+                post.getTags().add(tag);
+            }
         }
 
         return post;
@@ -63,10 +76,23 @@ public class PostServiceImpl implements PostService{
 
         Post post = postRepository.findByPostId(postDTO.getPostId());
         post.update(postDTO.getPostTitle(), postDTO.getPostContent());
+
+        if (postDTO.getTags() != null) {
+
+            saveNewTagsToDataBase(postDTO);
+            post.getTags().clear();
+            for (TagDTO tagDTO : postDTO.getTags()) {
+                Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
+
+                if (!post.getTags().contains(tag))
+                    post.getTags().add(tag);
+            }
+        }
+
         return post;
     }
 
-        //endregion
+    //endregion
 
 
     //region Get Posts
@@ -85,7 +111,7 @@ public class PostServiceImpl implements PostService{
     @Transactional(readOnly = true)
     @Override
     public Post getPost(String postName) throws PostNotFoundException {
-        Post found =  postRepository.findByPostNameIgnoreCase(postName);
+        Post found = postRepository.findByPostNameIgnoreCase(postName);
         if (found == null) {
             logger.info("No post found with id: {}", postName);
             throw new PostNotFoundException("No post found with id: " + postName);
@@ -114,7 +140,7 @@ public class PostServiceImpl implements PostService{
     // region Tags Processing
 
     @Transactional
-    private void saveTagsToDataBase(PostDTO postDTO) {
+    private void saveNewTagsToDataBase(PostDTO postDTO) {
         for (TagDTO tagDTO : postDTO.getTags()) {
             Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
             if (tag == null) {

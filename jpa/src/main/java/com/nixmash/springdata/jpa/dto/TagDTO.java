@@ -12,6 +12,14 @@ public class TagDTO implements Serializable {
     private Integer tagId = -1;
     private String tagValue;
 
+    public TagDTO() {
+    }
+
+    public TagDTO(String tagValue) {
+        this.tagValue= tagValue;
+    }
+
+
     public Integer getTagId() {
         return tagId;
     }
