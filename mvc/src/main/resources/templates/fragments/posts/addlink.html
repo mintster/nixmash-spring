@@ -84,10 +84,20 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr class="tr-tag-row">
-                            <td>Tags:</td>
-                            <td></td>
+                        <tr class="tr-tag-row" th:classappend="${#fields.hasErrors('tags')} ? 'has-error'">
+                            <td class="col-sm-1">
+                                <div class="control-group" th:classappend="${#fields.hasErrors('tags')} ? 'error'">
+                                    <label class="control-label">Tags</label>
+                                </div>
+                            </td>
+                            <td class="col-sm-5">
+                                <div class="controls">
+                                    <select id="tag-select" multiple="multiple" data-role="tagsinput" th:field="*{tags}"></select>
+                                    <label class="control-label" th:errors="*{tags}">[error]</label>
+                                </div>
+                            </td>
                         </tr>
+
                         <tr class="tr-button-row">
                             <td></td>
                             <td>
@@ -126,7 +136,7 @@
                     <input type="hidden" name="postLink" th:value="*{postLink}"/>
                     <input type="hidden" name="postType" th:value="*{postType}"/>
                     <input type="hidden" name="hasImages" th:value="*{hasImages}"/>
-                    <input type="hidden" id="imageIndex" name="imageIndex" value="1"  />
+                    <input type="hidden" id="imageIndex" name="imageIndex" value="1"/>
                 </form>
             </div>
         </div>

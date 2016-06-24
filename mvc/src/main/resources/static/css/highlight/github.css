@@ -5,6 +5,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 */
 
 .hljs {
+  margin-top: auto;
   display: block;
   overflow-x: auto;
   padding: 0.5em;

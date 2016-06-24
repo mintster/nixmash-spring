@@ -622,6 +622,15 @@ button.btn.btn-success {
 }
 
 /*</editor-fold>*/
+
+span.tag.label {
+    padding: 5px;
+    font-size: small;
+}
+.bootstrap-tagsinput {
+    width:100%;
+}
+
 /*/<editor-fold> desc="POST DISPLAY IN STREAM----------------------------/ "*/
 #more-posts-button-row {
     display: inline-block;
