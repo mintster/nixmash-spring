@@ -43,6 +43,7 @@ INSERT INTO user_authorities (user_id, authority_id) VALUES (1, 1);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (1, 3);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (2, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (3, 2);
+INSERT INTO user_authorities (user_id, authority_id) VALUES (3, 3);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (4, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (5, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (6, 2);
@@ -91,3 +92,13 @@ INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date
 INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (3, 3, 'Jsoup Parsing and Traversing Document and URL - JAVATIPS.INFO', 'jsoup-parsing-and-traversing-document-and-url-javatips-info', 'http://javatips.info/jsoup-parsing-and-traversing-document-and-url.html', '2016-06-06 15:31:38', '2016-06-06 15:31:38', 'LINK', 'LINK', 1, 'Prerequisites Development environment...', 'javatips.info', null, 0, 0, 0, 0);
 INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (4, 3, 'Content Negotiation using Spring MVC', 'content-negotiation-using-spring-mvc', 'https://spring.io/blog/2013/05/`/content-negotiation-using-spring-mvc', '2016-06-06 15:32:28', '2016-06-06 15:32:28', 'LINK', 'LINK_SUMMARY', 1, '<p>There are two ways to generate output using Spring MVC...</p>', 'spring.io', '/images/posts/spring.png', 0, 0, 0, 0);
 INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (5, 3, 'Variations on JSON Key-Value Pairs in Spring MVC', 'variations-on-json-key-value-pairs-in-spring-mvc', 'http://nixmash.com/java/variations-on-json-key-value-pairs-in-spring-mvc/', '2016-06-06 15:34:09', '2016-06-06 15:34:09', 'LINK', 'NIXMASH_POST', 1, 'The topic of this post is pretty lightweight. A bit of a lark, really...', 'nixmash.com', 'http://nixmash.com/x/blog/2016/jsonpair0528c.png', 0, 0, 0, 0);
+
+INSERT INTO tags (tag_id, tag_value) VALUES (1, 'h2tagone');
+INSERT INTO tags (tag_id, tag_value) VALUES (2, 'h2tagtwo');
+INSERT INTO tags (tag_id, tag_value) VALUES (3, 'h2tagthree');
+INSERT INTO tags (tag_id, tag_value) VALUES (4, 'h2tagfour');
+
+INSERT INTO post_tag_ids (post_id, tag_id) VALUES (1, 1);
+INSERT INTO post_tag_ids (post_id, tag_id) VALUES (1, 2);
+INSERT INTO post_tag_ids (post_id, tag_id) VALUES (1, 3);
+INSERT INTO post_tag_ids (post_id, tag_id) VALUES (2, 4);

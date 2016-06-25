@@ -119,7 +119,7 @@ public class PostsController {
                 post.getPostTitle(),
                 post.getPostContent(),
                 post.getDisplayType())
-                .tags(postService.getTagDTOs())
+                .tags(PostUtils.tagsToTagDTOs(post.getTags()))
                 .build());
         return POSTS_UPDATE_VIEW;
     }

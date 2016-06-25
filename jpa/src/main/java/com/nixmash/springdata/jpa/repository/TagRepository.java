@@ -1,16 +1,13 @@
 package com.nixmash.springdata.jpa.repository;
 
-import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.model.Tag;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import java.util.Set;
 
 public interface TagRepository extends CrudRepository<Tag, Long> {
 
     Tag findByTagValueIgnoreCase(String tagValue);
 
-    List<Tag> findAll();
-
+    Set<Tag> findAll();
 }

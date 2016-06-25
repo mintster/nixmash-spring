@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.*;
 
 /**
@@ -41,6 +43,10 @@ public class PostServiceImpl implements PostService {
         this.tagRepository = tagRepository;
     }
 
+
+    @PersistenceContext
+    private EntityManager em;
+
     //region Add / UpdatePost
 
     @Transactional(rollbackFor = DuplicatePostNameException.class)
@@ -55,10 +61,10 @@ public class PostServiceImpl implements PostService {
                     postDTO.getPostTitle());
         }
 
-
         if (postDTO.getTags() != null) {
 
             saveNewTagsToDataBase(postDTO);
+
             post.setTags(new HashSet<>());
             for (TagDTO tagDTO : postDTO.getTags()) {
                 Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
@@ -76,9 +82,8 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findByPostId(postDTO.getPostId());
         post.update(postDTO.getPostTitle(), postDTO.getPostContent());
 
-        if (postDTO.getTags() != null) {
-
             saveNewTagsToDataBase(postDTO);
+
             post.getTags().clear();
             for (TagDTO tagDTO : postDTO.getTags()) {
                 Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
@@ -86,13 +91,11 @@ public class PostServiceImpl implements PostService {
                 if (!post.getTags().contains(tag))
                     post.getTags().add(tag);
             }
-        }
 
         return post;
     }
 
     //endregion
-
 
     //region Get Posts
 
@@ -135,7 +138,6 @@ public class PostServiceImpl implements PostService {
 
     //endregion
 
-
     // region Tags
 
     @Transactional
@@ -152,12 +154,14 @@ public class PostServiceImpl implements PostService {
     @Transactional(readOnly = true)
     @Override
     public Set<TagDTO> getTagDTOs() {
-        List<Tag> tags = tagRepository.findAll();
-        Set<TagDTO> tagDTOs = new LinkedHashSet<>();
-        for (Tag tag : tags) {
-            tagDTOs.add(new TagDTO(tag.getTagId(), tag.getTagValue()));
-        }
-        return tagDTOs;
+        Set<Tag> tags = tagRepository.findAll();
+        return PostUtils.tagsToTagDTOs(tags);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Set<TagDTO> getTagDTOs(Long postId) {
+        return null;
     }
 
     // endregion
@@ -182,10 +186,8 @@ public class PostServiceImpl implements PostService {
         }
 
         Long postUserId = post.getUserId();
-        logger.info("Checking if user={} can update post '{}'", currentUser.getUsername(), post.getPostTitle());
         return currentUser.getId().equals(postUserId);
     }
-
 
     // endregion
 

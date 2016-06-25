@@ -9,6 +9,7 @@ import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.security.WithAdminUser;
+import com.nixmash.springdata.mvc.security.WithPostUser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static com.nixmash.springdata.mvc.controller.PostsController.*;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -60,7 +62,6 @@ public class PostsControllerTests extends AbstractContext {
         mockMvc = webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
-//        mockPostsController = new PostsController(webUI, jsoupService, postService);
     }
 
     @Test
@@ -95,10 +96,11 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
-    @WithUserDetails(value = "keith")
+    @WithPostUser
     public void getUpdatePostPage_Author_Loads() throws Exception {
 
-        // h2 posts have keith userId (3)
+        // h2 posts have keith userId (3) who is also in the ROLE_POST group and can create posts
+
         mockMvc.perform(get("/posts/update/3"))
                 .andExpect(model().attributeExists("postDTO"))
                 .andExpect(view().name(POSTS_UPDATE_VIEW));
@@ -154,6 +156,7 @@ public class PostsControllerTests extends AbstractContext {
                 .param("displayType", String.valueOf(post.getDisplayType()))
                 .param("postContent", post.getPostContent())
                 .param("postTitle", newTitle)
+                .param("tags", "updatePostWithValidData1, updatePostWithValidData2")
                 .with(csrf());
 
         mockMvc.perform(request)
@@ -208,17 +211,52 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
-    @WithAdminUser
+    @WithPostUser
     public void submitNewNoteForm() throws Exception {
-        mockMvc.perform(postRequest(PostType.NOTE))
+        mockMvc.perform(postRequest(PostType.NOTE, "submitNewNote"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts"));
     }
 
     @Test
-    public void submitNewLinkForm() throws Exception {
-        mockMvc.perform(postRequest(PostType.LINK))
+    @WithPostUser
+    public void newLinkPostAddsTwoNewTags() throws Exception {
+        int tagStartCount = postService.getTagDTOs().size();
+        mockMvc.perform(postRequest(PostType.LINK, "addsTwoTags"));
+        int tagEndCount = postService.getTagDTOs().size();
+        assertEquals(tagStartCount + 2, tagEndCount);
+    }
+
+    @Test
+    @WithPostUser
+    public void removingTagFromPostDecreasesItsTagCount() throws Exception {
+        Post post = postService.getPostById(1L);
+        int postTagStartCount = post.getTags().size();
+
+        // tag size of Post 1L is 3. We are assigning a new tag, so the postTagEndCount
+        // should be 2 less
+
+        mockMvc.perform(post("/posts/update")
+                .param("postId", "1")
+                .param("displayType", String.valueOf(post.getDisplayType()))
+                .param("postContent", post.getPostContent())
+                .param("postTitle", post.getPostTitle())
+                .param("tags", "removingTag1")
+                .with(csrf()));
+
+        int postTagEndCount = post.getTags().size();
+        assertEquals(postTagEndCount, postTagStartCount - 2);
+
+        Post verifyPost = postService.getPostById(1L);
+        assertEquals(verifyPost.getTags().size(), postTagEndCount);
+
+    }
+
+    @Test
+    @WithUserDetails(value = "erwin")
+    public void submitNewLinkFormAsNonAdmin() throws Exception {
+        mockMvc.perform(postRequest(PostType.LINK, "postsAdd"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts/add"));
@@ -226,22 +264,23 @@ public class PostsControllerTests extends AbstractContext {
 
     @Test
     @WithAdminUser
-    public void submitNewLinkWithAdminForm() throws Exception {
-        mockMvc.perform(postRequest(PostType.LINK))
+    public void submitNewLinkAsNonOwnerAdmin() throws Exception {
+        mockMvc.perform(postRequest(PostType.LINK, "submitNewLink"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts"));
     }
 
-    private RequestBuilder postRequest(PostType postType) {
+    private RequestBuilder postRequest(PostType postType, String s) {
         return post("/posts/add")
                 .param(postType.name().toLowerCase(), "true")
-                .param("postTitle", "my title")
+                .param("postTitle", "my title " + s)
                 .param("postLink", "http://some.link/some/path")
                 .param("postDescription", "my description")
                 .param("postType", postType.name().toUpperCase())
                 .param("displayType", postType.name().toUpperCase())
                 .param("postContent", "My Post Content")
+                .param("tags", String.format("req%s, req%s%s", s, s,1))
                 .with(csrf());
     }
 

@@ -35,4 +35,6 @@ public interface PostService {
     Set<TagDTO> getTagDTOs();
 
     boolean canUpdatePost(Authentication authentication, Long postId);
+
+    Set<TagDTO> getTagDTOs(Long postId);
 }

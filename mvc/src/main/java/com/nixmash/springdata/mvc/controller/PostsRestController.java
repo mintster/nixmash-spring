@@ -63,7 +63,7 @@ public class PostsRestController {
     }
 
     @RequestMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Set<TagDTO> getTagDTOs() {
+    public Set<TagDTO> getAllTagDTOs() {
        return postService.getTagDTOs();
     }
 

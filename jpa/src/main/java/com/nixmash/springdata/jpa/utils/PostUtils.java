@@ -2,8 +2,10 @@ package com.nixmash.springdata.jpa.utils;
 
 import com.github.slugify.Slugify;
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -118,4 +122,13 @@ public class PostUtils {
         }
         return content;
     }
+
+    public static Set<TagDTO> tagsToTagDTOs(Set<Tag> tags) {
+        Set<TagDTO> tagDTOs = new LinkedHashSet<>();
+        for (Tag tag : tags) {
+            tagDTOs.add(new TagDTO(tag.getTagId(), tag.getTagValue()));
+        }
+        return tagDTOs;
+    }
+
 }

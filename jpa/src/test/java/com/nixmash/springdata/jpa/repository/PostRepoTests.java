@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -123,7 +124,7 @@ public class PostRepoTests {
         tag = new Tag("tag two ");
         tagRepository.save(tag);
 
-        List<Tag> found = tagRepository.findAll();
+        Set<Tag> found = tagRepository.findAll();
         assertEquals(found.size(), startTagCount + 2);
     }
 

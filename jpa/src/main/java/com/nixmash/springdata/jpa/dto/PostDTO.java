@@ -20,6 +20,8 @@ public class PostDTO implements Serializable {
 
     private Long postId;
     private Long userId;
+
+    @NotEmpty
     private Set<TagDTO> tags =new HashSet<TagDTO>();
 
     @NotEmpty
