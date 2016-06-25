@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by daveburke on 6/1/16.
@@ -28,6 +30,9 @@ public interface PostService {
 
     @Transactional(readOnly = true)
     List<Post> getPostsWithDetail();
+
+    @Transactional(readOnly = true)
+    Set<TagDTO> getTagDTOs();
 
     boolean canUpdatePost(Authentication authentication, Long postId);
 }

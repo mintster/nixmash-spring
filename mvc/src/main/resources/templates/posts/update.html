@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-tagsinput.css}"/>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
     <title th:text="#{posts.update.page.title}">[Add NixMash Spring Post]</title>
 </head>
@@ -45,6 +46,14 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/editor.css}"/>
 
 <div th:include="fragments/js :: summernote" th:remove="tag">[Summernote Javascript]</div>
+<script th:src="@{/js/bootstrap-tagsinput.js}"></script>
+
+<script type="text/javascript">
+
+    $('#tag-select').tagsinput({
+        tagClass: 'label label-default'
+    });
+</script>
 
 </body>
 </html>

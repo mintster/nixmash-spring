@@ -113,10 +113,13 @@ public class PostsController {
     public String updatePost(@PathVariable("postId") Long postId,
                              Model model) throws PostNotFoundException {
         Post post = postService.getPostById(postId);
+
+        // TODO: Filter getTagDTOs() by Post!
         model.addAttribute("postDTO", PostDTO.getUpdateFields(post.getPostId(),
                 post.getPostTitle(),
                 post.getPostContent(),
                 post.getDisplayType())
+                .tags(postService.getTagDTOs())
                 .build());
         return POSTS_UPDATE_VIEW;
     }

@@ -1,5 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
@@ -19,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 
 
 @RestController
@@ -62,11 +63,8 @@ public class PostsRestController {
     }
 
     @RequestMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Pair<Integer, String>> getTags() {
-        List<Pair<Integer, String>> tags = new ArrayList<>();
-        tags.add(new Pair<>(1, "tag one"));
-        tags.add(new Pair<>(8, "tag eight"));
-        return tags;
+    public Set<TagDTO> getTagDTOs() {
+       return postService.getTagDTOs();
     }
 
     // region Key-Value Json

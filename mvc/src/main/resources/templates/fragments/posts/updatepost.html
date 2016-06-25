@@ -2,20 +2,17 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="updatepost">
+
     <!--/*@thymesVar id="pagePreview" type="com.nixmash.springdata.jsoup.dto.PagePreviewDTO"*/-->
     <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+
     <div class="container bs-docs-container big-font-container">
         <div class="row row-centered">
             <div class="bs-docs-section col-lg-9 col-centered">
                 <form th:object="${postDTO}" method="post" th:action="@{/posts/update}"
                       class="form-horizontal" id="link-add-form">
 
-                    <div th:if="${#fields.hasGlobalErrors()}"
-                         class="has-error alert alert-dismissible alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <label class="control-label" th:each="err : ${#fields.globalErrors()}"
-                               th:text="${err}">...</label>
-                    </div>
+                    <div th:include="fragments/formutils :: global-errors" th:remove="tag">[Global Errors]</div>
 
                     <table class="table table-striped">
                         <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
@@ -43,6 +40,22 @@
                                     <textarea name="postContent" th:field="*{postContent}" rows="5"
                                               class="mail-body" id="summernote"></textarea>
                                     <label class="control-label" th:errors="*{postContent}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="tr-tag-row" th:classappend="${#fields.hasErrors('tags')} ? 'has-error'">
+                            <td class="col-sm-1">
+                                <div class="control-group" th:classappend="${#fields.hasErrors('tags')} ? 'error'">
+                                    <label class="control-label">Tags</label>
+                                </div>
+                            </td>
+                            <td class="col-sm-5">
+                                <div class="controls">
+                                    <select id="tag-select" multiple="multiple" data-role="tagsinput" name="tags">
+                                        <option th:each="tag : *{tags}" th:text="${tag.getTagValue()}"
+                                                th:value="${tag.getTagValue()}"/>
+                                    </select>
+                                    <label class="control-label" th:errors="*{tags}">[error]</label>
                                 </div>
                             </td>
                         </tr>

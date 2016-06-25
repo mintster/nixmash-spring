@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<div th:fragment="global-errors">
+    <div th:if="${#fields.hasGlobalErrors()}"
+         class="has-error alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <label class="control-label" th:each="err : ${#fields.globalErrors()}"
+               th:text="${err}">...</label>
+    </div>
+</div>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,8 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by daveburke on 6/1/16.
@@ -137,7 +136,7 @@ public class PostServiceImpl implements PostService {
     //endregion
 
 
-    // region Tags Processing
+    // region Tags
 
     @Transactional
     private void saveNewTagsToDataBase(PostDTO postDTO) {
@@ -148,6 +147,17 @@ public class PostServiceImpl implements PostService {
                 tagRepository.save(tag);
             }
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Set<TagDTO> getTagDTOs() {
+        List<Tag> tags = tagRepository.findAll();
+        Set<TagDTO> tagDTOs = new LinkedHashSet<>();
+        for (Tag tag : tags) {
+            tagDTOs.add(new TagDTO(tag.getTagId(), tag.getTagValue()));
+        }
+        return tagDTOs;
     }
 
     // endregion

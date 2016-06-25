@@ -310,6 +310,11 @@ public class PostDTO implements Serializable {
             built.postId = postId;
             return this;
         }
+        
+        public Builder tags(Set<TagDTO> tagDTOs) {
+            built.tags= tagDTOs;
+            return this;
+        }
 
         public PostDTO build() {
             return built;

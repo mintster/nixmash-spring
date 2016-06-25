@@ -88,7 +88,7 @@ public class Post implements Serializable {
     @Column(name = "version", nullable = false, insertable = true, updatable = true)
     private int version = 0;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "post_tag_ids",
             joinColumns = @JoinColumn(name = "post_id",
                     referencedColumnName = "post_id",
