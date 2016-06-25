@@ -2,4 +2,8 @@
 <a target="_blank" href="/posts/post/${post.postName}" class="perma-link" title="Post Permalink"></a>
 <div class="post-date"><span>Posted on </span><abbr title="${post.postDate}">${postCreated}</abbr>
 </div>
-<div class="post-tags"><span></span></div>
+<div class="post-tags">
+    #foreach ( ${tag} in ${post.tags})
+          <span class="taglink"><a href="/posts/tag/${tag.tagValue}" class="big label label-default">${tag.tagValue}</a></span>
+    #end
+</div>

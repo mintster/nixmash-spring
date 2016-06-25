@@ -4,6 +4,7 @@ import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
+import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
@@ -23,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by daveburke on 6/1/16.
@@ -136,9 +139,29 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAllWithDetail();
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Page<Post> getPostsByTagId(long tagId, int pageNumber, int pageSize) {
+        PageRequest pageRequest =
+                new PageRequest(pageNumber, pageSize, sortByPostDateDesc());
+        return postRepository.findByTagId(tagId, pageRequest);
+    }
+
     //endregion
 
     // region Tags
+
+    @Transactional(readOnly = true)
+    @Override
+    public Tag getTag(String tagValue) throws TagNotFoundException {
+        Tag found = tagRepository.findByTagValueIgnoreCase(tagValue);
+        if (found == null) {
+            logger.info("No tag found with id: {}", tagValue);
+            throw new TagNotFoundException("No tag found with id: " + tagValue);
+        }
+
+        return found;
+    }
 
     @Transactional
     private void saveNewTagsToDataBase(PostDTO postDTO) {

@@ -21,9 +21,6 @@ public class CurrentTimeDateTimeService implements DateTimeService {
     @Override
     public ZonedDateTime getCurrentDateAndTime() {
         ZonedDateTime currentDateAndTime =  ZonedDateTime.now();
-
-        logger.info("Returning current date and time: {}", currentDateAndTime);
-
         return currentDateAndTime;
     }
 }

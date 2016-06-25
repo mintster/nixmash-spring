@@ -4,7 +4,9 @@ import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
+import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,4 +39,7 @@ public interface PostService {
     boolean canUpdatePost(Authentication authentication, Long postId);
 
     Set<TagDTO> getTagDTOs(Long postId);
+    Tag getTag(String tagValue) throws TagNotFoundException;
+
+    Page<Post> getPostsByTagId(long tagId, int pageNumber, int pageSize);
 }

@@ -102,10 +102,15 @@ public class PostServiceTests {
 
         // firstPostDate is higher (more recent) than secondPostDate with [sort: postDate: DESC]
         assertTrue(firstPostDate.compareTo(secondPostDate) > 0);
+    }
 
-        for (Post post : posts) {
-            System.out.println(post.getPostTitle());
-        }
+    @Test
+    public void findPostsByTagId() {
+        Slice<Post> posts = postService.getPostsByTagId(1, 0, 3);
+
+       // posts are retrieved for tagId #1 as all 5 H2 posts have tagId #1
+        assertEquals(posts.getSize(), 3);
+
     }
 
     @Test

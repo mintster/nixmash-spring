@@ -623,6 +623,8 @@ button.btn.btn-success {
 
 /*</editor-fold>*/
 
+/*/<editor-fold> desc="TAG DISPLAY----------------------------/ "*/
+
 span.tag.label {
     padding: 5px;
     font-size: small;
@@ -630,6 +632,12 @@ span.tag.label {
 .bootstrap-tagsinput {
     width:100%;
 }
+
+.post-tags {
+    float: right;
+}
+
+/*</editor-fold>*/
 
 /*/<editor-fold> desc="POST DISPLAY IN STREAM----------------------------/ "*/
 #more-posts-button-row {

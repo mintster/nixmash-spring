@@ -6,8 +6,10 @@ import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
+import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.Tag;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
@@ -57,6 +59,7 @@ public class PostsController {
     public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
     public static final String POSTS_UPDATE_VIEW = "posts/update";
     public static final String FEEDBACK_POST_UPDATED = "feedback.post.updated";
+    private static final String POSTS_TAGS_VIEW = "posts/tags";
 
     // endregion
 
@@ -84,6 +87,13 @@ public class PostsController {
     @RequestMapping(value = "", method = GET)
     public String home() {
         return POSTS_LIST_VIEW;
+    }
+
+    @RequestMapping(value = "/tag/{tagValue}", method = GET)
+    public String tags(@PathVariable("tagValue") String tagValue, Model model) throws TagNotFoundException {
+        Tag tag = postService.getTag(tagValue);
+        model.addAttribute("tag", tag);
+        return POSTS_TAGS_VIEW;
     }
 
     // endregion

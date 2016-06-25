@@ -39,6 +39,7 @@ public class PostsRestController {
         this.templateService = templateService;
     }
 
+    // region get all Posts
 
     @RequestMapping(value = "/page/{pageNumber}", produces = "text/html;charset=UTF-8")
     public String getPosts(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
@@ -50,6 +51,35 @@ public class PostsRestController {
         }
         WebUtils.setSessionAttribute(request, "posts", posts);
         return result;
+    }
+
+    // endregion
+
+// region get Posts by Tag
+
+    @RequestMapping(value = "/tag/{tagid}/page/{pageNumber}", produces = "text/html;charset=UTF-8")
+    public String getPostsByTagId(@PathVariable long tagid, @PathVariable int pageNumber, HttpServletRequest request, CurrentUser currentUser) {
+        Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, 10);
+        String result = StringUtils.EMPTY;
+        for (Post post : posts) {
+            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
+            result += templateService.createPostHtml(post);
+        }
+        WebUtils.setSessionAttribute(request, "taggedposts", posts);
+        return result;
+    }
+
+    // endregion
+
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/tag/{tagid}/more")
+    public String getHasNext(@PathVariable int tagid, HttpServletRequest request) {
+        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "taggedposts");
+        if (posts != null)
+            return Boolean.toString(posts.hasNext());
+        else
+            return "true";
     }
 
     @SuppressWarnings("unchecked")
@@ -64,7 +94,7 @@ public class PostsRestController {
 
     @RequestMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
     public Set<TagDTO> getAllTagDTOs() {
-       return postService.getTagDTOs();
+        return postService.getTagDTOs();
     }
 
     // region Key-Value Json
