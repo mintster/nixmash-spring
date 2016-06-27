@@ -2,6 +2,8 @@ package com.nixmash.springdata.mail.service;
 
 import com.nixmash.springdata.jpa.model.Post;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.tools.generic.EscapeTool;
+import org.apache.velocity.tools.generic.MathTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,22 +40,27 @@ public class TemplateServiceImpl implements TemplateService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
         String postCreated = post.getPostDate().format(formatter);
 
-        Map<String,Object> model = new Hashtable<>();
+        Map<String, Object> model = modelWithTools();
         model.put("post", post);
         model.put("postCreated", postCreated);
 
-        try
-        {
+        try {
             String displayType = post.getDisplayType().name().toLowerCase();
             String template = String.format("posts/%s.vm", displayType);
 
-            html  = VelocityEngineUtils
+            html = VelocityEngineUtils
                     .mergeTemplateIntoString(velocityEngine, template, "UTF-8", model);
-        }
-        catch (Exception e )
-        {
+        } catch (Exception e) {
             logger.error("Problem merging post template : " + e.getMessage());
         }
         return html;
     }
+
+    private Map<String, Object> modelWithTools() {
+        Map<String, Object> model = new Hashtable<>();
+        model.put("esc", new EscapeTool());
+        model.put("math", new MathTool());
+        return model;
+    }
+
 }

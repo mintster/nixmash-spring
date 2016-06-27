@@ -45,6 +45,9 @@
                         <a th:href="@{|/posts/update/${post.postId}|}" th:text="#{post.permalink.edit}">[Edit]</a>
                     </div>
                 </div>
+                <div class="post-tags" th:each="tag : ${post.tags }">
+                    <span class="taglink"><a th:href="@{|/posts/tag/${#strings.toLowerCase(tag.tagValue)}|}" th:text="${tag.tagValue}" class="big label label-default">[TAG]</a></span>
+                </div>
             </div>
         </div>
     </div>

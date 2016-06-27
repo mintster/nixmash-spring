@@ -33,6 +33,8 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -90,8 +92,8 @@ public class PostsController {
     }
 
     @RequestMapping(value = "/tag/{tagValue}", method = GET)
-    public String tags(@PathVariable("tagValue") String tagValue, Model model) throws TagNotFoundException {
-        Tag tag = postService.getTag(tagValue);
+    public String tags(@PathVariable("tagValue") String tagValue, Model model) throws TagNotFoundException, UnsupportedEncodingException {
+        Tag tag = postService.getTag(URLDecoder.decode(tagValue, "UTF-8"));
         model.addAttribute("tag", tag);
         return POSTS_TAGS_VIEW;
     }

@@ -1,5 +1,9 @@
 package com.nixmash.springdata.mail;
 
+import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
+import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.service.PostService;
+import com.nixmash.springdata.mail.service.TemplateService;
 import org.apache.velocity.app.VelocityEngine;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +29,12 @@ public class VelocityTests extends MailContext {
     @Autowired
     private VelocityEngine velocityEngine;
 
+    @Autowired
+    PostService postService;
+
+    @Autowired
+    TemplateService templateService;
+
     @Test
     public void testContactTemplateContents() throws MessagingException, IOException {
         String siteName = environment.getProperty("mail.contact.site.name");
@@ -34,5 +44,16 @@ public class VelocityTests extends MailContext {
                 VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "contact.vm", "UTF-8", model);
         assertThat(result, containsString(siteName));
     }
+
+    @Test
+    public void postTagWithSpaceIsEncoded() throws PostNotFoundException {
+
+        // H2Post contains the tag "h2 Tag With Spaces"
+
+        Post post = postService.getPostById(5L);
+        assertThat(templateService.createPostHtml(post), containsString("h2+tag+with+spaces"));
+
+    }
+
 
 }

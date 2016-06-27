@@ -4,6 +4,9 @@
 </div>
 <div class="post-tags">
     #foreach ( ${tag} in ${post.tags})
-          <span class="taglink"><a href="/posts/tag/${tag.tagValue}" class="big label label-default">${tag.tagValue}</a></span>
+        #set ($url = $esc.url($tag.tagValue.toLowerCase()))
+          <span class="taglink">
+              <a href="/posts/tag/$url" class="big label label-default">${tag.tagValue}</a>
+          </span>
     #end
 </div>

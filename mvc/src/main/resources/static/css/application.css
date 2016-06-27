@@ -722,6 +722,8 @@ span.tag.label {
 
 #posts .post.nixmash-post .nixmash-tag {
     float: right;
+    display: inline-block;
+    margin-top: 15px;
 }
 
 #posts .post.nixmash-post .nixmash-tag a:focus {
@@ -861,6 +863,12 @@ h1.post-title {
     max-width: 100%;
     height: auto;
     margin-right: auto;
+}
+
+#post span.taglink a.label {
+    font-size: medium;
+    padding: 8px;
+    margin-left: 6px;
 }
 
 /*</editor-fold>*/
