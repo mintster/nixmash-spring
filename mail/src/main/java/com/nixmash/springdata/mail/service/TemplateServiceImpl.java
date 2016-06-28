@@ -41,6 +41,7 @@ public class TemplateServiceImpl implements TemplateService {
         String postCreated = post.getPostDate().format(formatter);
 
         Map<String, Object> model = modelWithTools();
+
         model.put("post", post);
         model.put("postCreated", postCreated);
 

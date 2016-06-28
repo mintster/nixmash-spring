@@ -83,7 +83,7 @@
                         <img class="navbar-profilepic pull-right"
                              th:src="@{|${currentUser.getProfileIconUrl()}?${new java.util.Date().getTime()}|}" width="32" height="32"/>
 
-                        <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right"
+                        <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right navbar-welcome"
                            th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
 
                     </div>

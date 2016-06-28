@@ -92,7 +92,8 @@ public class PostsController {
     }
 
     @RequestMapping(value = "/tag/{tagValue}", method = GET)
-    public String tags(@PathVariable("tagValue") String tagValue, Model model) throws TagNotFoundException, UnsupportedEncodingException {
+    public String tags(@PathVariable("tagValue") String tagValue, Model model)
+                                        throws TagNotFoundException, UnsupportedEncodingException {
         Tag tag = postService.getTag(URLDecoder.decode(tagValue, "UTF-8"));
         model.addAttribute("tag", tag);
         return POSTS_TAGS_VIEW;

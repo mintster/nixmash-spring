@@ -57,8 +57,12 @@ public class PostsRestController {
 
 // region get Posts by Tag
 
-    @RequestMapping(value = "/tag/{tagid}/page/{pageNumber}", produces = "text/html;charset=UTF-8")
-    public String getPostsByTagId(@PathVariable long tagid, @PathVariable int pageNumber, HttpServletRequest request, CurrentUser currentUser) {
+    @RequestMapping(value = "/tag/{tagid}/page/{pageNumber}",
+            produces = "text/html;charset=UTF-8")
+    public String getPostsByTagId(@PathVariable long tagid,
+                                  @PathVariable int pageNumber,
+                                  HttpServletRequest request,
+                                  CurrentUser currentUser) {
         Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, 10);
         String result = StringUtils.EMPTY;
         for (Post post : posts) {

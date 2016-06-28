@@ -24,7 +24,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.3.3 -- Post WYSIWYG editing, tagging, sharing, permalinks, likes (in progress)](#v033----post-wysiwyg-editing-tagging-sharing-permalinks-likes-in-progress)**
+- **[v0.3.3 -- Post WYSIWYG editing, tagging, permalinks (in progress)](#v033----post-wysiwyg-editing-tagging-permalinks-in-progress)**
 - **[v0.3.2 -- Initial Posts Feature Release](#v032----initial-posts-feature-release)** : *Jsoup Annotations Framework, Generic Type as Beans*
 - **[v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics](#v031----siteoptions-properties-github-buttons-google-analytics)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
 - **[v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus](#v030----spring-boot-134-navbar-submenus)** : *"Demos" menu with Spring JPA and Solr Submenus, Spring Boot 1.3.4*
@@ -58,15 +58,19 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.3.3 -- Post WYSIWYG editing, tagging, sharing, permalinks, likes (in progress)##
+##v0.3.3 -- Post WYSIWYG editing, tagging, permalinks (in progress)##
 
 - WYSIWYG Editor for Posts and Link Descriptions
 - Post Permalink Display Page
 - Post Update with WYSIWYG Editing
+- Tag creation, post display by tag
 - [Post: Customizing the Summernote Editor](http://nixmash.com/java/customizing-the-summernote-editor/)
 - [Post: More User Friendly Exceptions with Spring Global Errors](http://nixmash.com/java/more-user-friendly-exceptions-with-spring-global-errors/)
 - [Post: NixMash Spring Post Permalinks and Editing Highlights](http://nixmash.com/java/nixmash-spring-post-permalinks-and-editing-highlights/)
 - [Post: Spring Method Expression-Based Access Control](http://nixmash.com/java/spring-method-expression-based-access-control/)
+- [Post: Configuring Velocity Tools With Spring Boot](http://nixmash.com/java/configuring-velocity-tools-with-spring-boot/)
+- [Post: Using IntelliJ JPA GUI Tools to Create a @ManyToMany](http://nixmash.com/java/using-intellij-jpa-gui-tools-to-create-a-manytomany/)
+- [Post: Post Display by Tag with Spring MVC](http://nixmash.com/java/post-display-by-tag-with-spring-mvc/)
 
 [[back to top](#nixmash-spring)]
 

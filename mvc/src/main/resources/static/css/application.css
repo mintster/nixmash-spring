@@ -172,6 +172,12 @@ img.navbar-profilepic {
     margin-right: 10px;
 }
 
+@media (max-width: 1200px) {
+    .navbar-welcome{
+        display: none;
+    }
+}
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
 #secInfo {
