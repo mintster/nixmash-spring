@@ -31,6 +31,9 @@ public interface PostService {
     Post getPostById(Long postId) throws PostNotFoundException;
 
     @Transactional(readOnly = true)
+    List<Post> getAllPosts();
+
+    @Transactional(readOnly = true)
     List<Post> getPostsWithDetail();
 
     @Transactional(readOnly = true)

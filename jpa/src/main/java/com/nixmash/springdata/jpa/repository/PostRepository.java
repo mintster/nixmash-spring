@@ -4,6 +4,7 @@ import com.nixmash.springdata.jpa.model.Post;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -24,4 +25,5 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Query("select distinct p from Post p left join p.tags t where t.tagId = ?1")
     Page<Post> findByTagId(long tagId, Pageable pageable);
 
+    List<Post> findAll(Sort sort);
 }

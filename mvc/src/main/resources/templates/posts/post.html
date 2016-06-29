@@ -37,16 +37,16 @@
                 <div id="post-date" th:text="|Posted ${#dates.format(postCreated, 'MMMM dd, yyyy hh:mm a z')}|">
                     [post date]
                 </div>
+                <div class="post-tags">
+                    <span class="taglink"  th:each="tag : ${post.tags }"><a th:href="@{|/posts/tag/${#strings.toLowerCase(tag.tagValue)}|}" th:text="${tag.tagValue}" class="big label label-default">[TAG]</a></span>
+                </div>
                 <div class="footer-links">
                     <div class="source-link" th:if="${post.postType.name() == 'LINK'}">
-                        <a th:href="${post.postLink}" th:text="#{post.permalink.view.source}" target="_blank">[View Source]</a>
+                        <a th:href="${post.postLink}" th:text="|Source: ${post.postSource}|" target="_blank">[Post Source]</a>
                     </div>
                     <div class="edit-link" th:if="${post.isOwner}">
                         <a th:href="@{|/posts/update/${post.postId}|}" th:text="#{post.permalink.edit}">[Edit]</a>
                     </div>
-                </div>
-                <div class="post-tags" th:each="tag : ${post.tags }">
-                    <span class="taglink"><a th:href="@{|/posts/tag/${#strings.toLowerCase(tag.tagValue)}|}" th:text="${tag.tagValue}" class="big label label-default">[TAG]</a></span>
                 </div>
             </div>
         </div>

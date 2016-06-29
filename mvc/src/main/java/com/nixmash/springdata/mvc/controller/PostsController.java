@@ -27,7 +27,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
@@ -62,6 +61,7 @@ public class PostsController {
     public static final String POSTS_UPDATE_VIEW = "posts/update";
     public static final String FEEDBACK_POST_UPDATED = "feedback.post.updated";
     private static final String POSTS_TAGS_VIEW = "posts/tags";
+    private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
 
     // endregion
 
@@ -127,7 +127,6 @@ public class PostsController {
                              Model model) throws PostNotFoundException {
         Post post = postService.getPostById(postId);
 
-        // TODO: Filter getTagDTOs() by Post!
         model.addAttribute("postDTO", PostDTO.getUpdateFields(post.getPostId(),
                 post.getPostTitle(),
                 post.getPostContent(),
@@ -198,14 +197,40 @@ public class PostsController {
     // region /add {post} methods
 
     @RequestMapping(value = "/add", method = POST, params = {"note"})
-    public String createNote(@Valid PostDTO postDTO, BindingResult result, SessionStatus status,
-                             RedirectAttributes attributes, Model model) {
-        webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOTE_ADDED);
-        return "redirect:/posts";
+    public String createNotePost(@Valid PostDTO postDTO, BindingResult result,
+                             CurrentUser currentUser, RedirectAttributes attributes, Model model,
+                             HttpServletRequest request) throws DuplicatePostNameException {
+        if (!isDuplicatePost(postDTO)) {
+            if (result.hasErrors()) {
+                model.addAttribute("showPost", "note");
+                model.addAttribute("postDTO", postDTO);
+                return POSTS_ADD_VIEW;
+            } else {
+                if (canPost(currentUser)) {
+
+                    postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
+                    postDTO.setUserId(currentUser.getId());
+                    postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+
+                    request.setAttribute("postTitle", postDTO.getPostTitle());
+                    postService.add(postDTO);
+
+                    webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOTE_ADDED);
+                    return "redirect:/posts";
+                } else {
+                    webUI.addFeedbackMessage(attributes, FEEDBACK_NOTE_DEMO_THANKS);
+                    return "redirect:/posts/add";
+                }
+            }
+        } else {
+            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
+            model.addAttribute("showPost", "note");
+            return POSTS_ADD_VIEW;
+        }
     }
 
     @RequestMapping(value = "/add", method = POST, params = {"link"})
-    public String createLink(@Valid PostDTO postDTO, BindingResult result,
+    public String createLinkPost(@Valid PostDTO postDTO, BindingResult result,
                              CurrentUser currentUser, RedirectAttributes attributes, Model model,
                              HttpServletRequest request) throws DuplicatePostNameException {
         PagePreviewDTO pagePreview =

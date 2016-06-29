@@ -263,7 +263,7 @@ public class PostDTO implements Serializable {
                                           String postTitle,
                                           String postContent,
                                           PostDisplayType displayType) {
-        return new PostDTO.Builder(postId, postTitle,  postContent, displayType);
+        return new PostDTO.Builder(postId, postTitle, postContent, displayType);
     }
 
     public static class Builder {

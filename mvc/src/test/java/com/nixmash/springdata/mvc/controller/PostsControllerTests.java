@@ -58,7 +58,6 @@ public class PostsControllerTests extends AbstractContext {
 
     @Before
     public void setUp() {
-
         mockMvc = webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
@@ -167,6 +166,30 @@ public class PostsControllerTests extends AbstractContext {
         assert (post.getPostTitle().equals(newTitle));
     }
 
+
+    @Test
+    public void updateNoteWithValidData_RedirectsToPermalinkPage() throws Exception {
+
+        String newTitle = "New Title for Note";
+
+        Post post = postService.getPostById(6L);
+        RequestBuilder request = post("/posts/update")
+                .param("postId", "6")
+                .param("displayType", String.valueOf(post.getDisplayType()))
+                .param("postContent", post.getPostContent())
+                .param("postTitle", newTitle)
+                .param("tags", "updateNote1")
+                .with(csrf());
+
+        mockMvc.perform(request)
+                .andExpect(model().hasNoErrors())
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
+                .andExpect(redirectedUrl("/posts/post/" + PostUtils.createSlug(newTitle)));
+
+        assert (post.getPostTitle().equals(newTitle));
+        assert (post.getPostName().equals(PostUtils.createSlug(newTitle)));
+    }
+
     @Test
     public void throwErrorOnEmptyPostLink() throws Exception {
 
@@ -211,12 +234,12 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
-    @WithPostUser
-    public void submitNewNoteForm() throws Exception {
+    @WithUserDetails(value = "erwin")
+    public void submitNewNoteFormAsNonPostUser() throws Exception {
         mockMvc.perform(postRequest(PostType.NOTE, "submitNewNote"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
-                .andExpect(redirectedUrl("/posts"));
+                .andExpect(redirectedUrl("/posts/add"));
     }
 
     @Test
@@ -226,6 +249,24 @@ public class PostsControllerTests extends AbstractContext {
         mockMvc.perform(postRequest(PostType.LINK, "addsTwoTags"));
         int tagEndCount = postService.getTagDTOs().size();
         assertEquals(tagStartCount + 2, tagEndCount);
+    }
+
+    @Test
+    @WithPostUser
+    public void addNewLinkWithPostUserAddsNewPostRecord() throws Exception {
+        int postStartCount = postService.getAllPosts().size();
+        mockMvc.perform(postRequest(PostType.LINK, "addsOneLink"));
+        int postEndCount = postService.getAllPosts().size();
+        assertEquals(postStartCount + 1, postEndCount);
+    }
+
+    @Test
+    @WithPostUser
+    public void addNewNoteWithPostUserAddsNewPostRecord() throws Exception {
+        int postStartCount = postService.getAllPosts().size();
+        mockMvc.perform(postRequest(PostType.NOTE, "addsOneNote"));
+        int postEndCount = postService.getAllPosts().size();
+        assertEquals(postStartCount + 1, postEndCount);
     }
 
     @Test
@@ -255,7 +296,7 @@ public class PostsControllerTests extends AbstractContext {
 
     @Test
     @WithUserDetails(value = "erwin")
-    public void submitNewLinkFormAsNonAdmin() throws Exception {
+    public void submitNewLinkFormAsNonPostUser() throws Exception {
         mockMvc.perform(postRequest(PostType.LINK, "postsAdd"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
@@ -264,7 +305,7 @@ public class PostsControllerTests extends AbstractContext {
 
     @Test
     @WithAdminUser
-    public void submitNewLinkAsNonOwnerAdmin() throws Exception {
+    public void submitNewLinkAsAdminRedirectsToPostsWithNoEntry() throws Exception {
         mockMvc.perform(postRequest(PostType.LINK, "submitNewLink"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))

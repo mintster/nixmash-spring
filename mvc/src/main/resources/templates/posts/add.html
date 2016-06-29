@@ -87,7 +87,7 @@
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
 
-<div th:if="${showPost == 'link'}" th:remove="tag">
+<div th:if="${showPost}" th:remove="tag">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet"/>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/editor.css}"/>

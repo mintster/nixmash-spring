@@ -135,6 +135,12 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
+    public List<Post> getAllPosts() {
+        return postRepository.findAll(sortByPostDateDesc());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<Post> getPostsWithDetail() {
         return postRepository.findAllWithDetail();
     }

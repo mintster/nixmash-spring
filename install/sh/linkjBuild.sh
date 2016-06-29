@@ -11,24 +11,23 @@
 # Variables ------------------------------------------------------------- */
 
 # $BUILDPATH - /static folder in IDE build directory for soft link
-# $STORAGEPATH - physical location of file storage area
+# $FILEPATH - physical location of file storage area
 # $LINKNAME - name of soft link to storage area. Same name as storage root
 
 # Set Variables ------------------------------------------------- */
 
 BUILDPATH="/ubuntuland/projects/nixmash-spring/mvc/build/classes/main/static"
-STORAGEPATH="/ubuntuland/sites/nixmashspring/files"
-LINKNAME="files"
-
+FILEPATH="/ubuntuland/sites/nixmashspring/files"
+FILEPATHNAME="files"
 
 if [ "$1" != "" ]; then
      if [[ "$1" = "--create" ]]
 	then
-	   ln -s $STORAGEPATH $BUILDPATH 
+	   ln -s $FILEPATH $BUILDPATH
 	   echo "SOFTLINK TO PHYSICAL FILES LOCATION CREATED"
 	elif [[ "$1" = "--rm" ]]
 	then
-	   rm $BUILDPATH/$LINKNAME
+	   rm $BUILDPATH/$FILEPATHNAME
 	   echo "SOFTLINK TO PHYSICAL FILES LOCATION REMOVED"
      fi
 else

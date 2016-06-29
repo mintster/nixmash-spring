@@ -9,6 +9,7 @@ import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.utils.PostTestUtils;
 import com.nixmash.springdata.jpa.utils.PostUtils;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.List;
 import static com.nixmash.springdata.jpa.utils.PostTestUtils.*;
 import static com.nixmash.springdata.jpa.utils.PostUtils.postDtoToPost;
 import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -101,6 +103,17 @@ public class PostServiceTests {
         ZonedDateTime secondPostDate = posts.getContent().get(1).getPostDate();
 
         // firstPostDate is higher (more recent) than secondPostDate with [sort: postDate: DESC]
+        assertTrue(firstPostDate.compareTo(secondPostDate) > 0);
+    }
+
+    @Test
+    public void getAllPostsIsGreaterThanPagedTotal() {
+        List<Post> posts = postService.getAllPosts();
+        assertThat(posts.size(), Matchers.greaterThan(3));
+        ZonedDateTime firstPostDate = posts.get(0).getPostDate();
+        ZonedDateTime secondPostDate = posts.get(1).getPostDate();
+
+      // firstPostDate is higher (more recent) than secondPostDate with [sort: postDate: DESC]
         assertTrue(firstPostDate.compareTo(secondPostDate) > 0);
     }
 

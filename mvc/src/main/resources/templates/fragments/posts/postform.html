@@ -1,0 +1,84 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<div th:fragment="title-editor">
+    <!--/*@thymesVar id="pagePreview" type="com.nixmash.springdata.jsoup.dto.PagePreviewDTO"*/-->
+    <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+    <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
+        <td class="col-sm-1">
+            <div class="control-group" th:classappend="${#fields.hasErrors('postTitle')} ? 'error'">
+                <label class="control-label">Title</label>
+            </div>
+        </td>
+        <td class="col-sm-5">
+            <div class="controls">
+                <input type="text" class="form-control" th:field="*{postTitle}"/>
+                <label class="control-label" th:errors="*{postTitle}">[error]</label>
+            </div>
+        </td>
+    </tr>
+    <tr th:classappend="${#fields.hasErrors('postContent')} ? 'has-error'">
+        <td>
+            <div class="control-group"
+                 th:classappend="${#fields.hasErrors('postContent')} ? 'error'">
+                <label class="control-label">Description</label>
+            </div>
+        </td>
+        <td>
+            <div class="controls">
+                                    <textarea name="postContent" th:field="*{postContent}" rows="5"
+                                              class="mail-body" id="summernote"></textarea>
+                <label class="control-label" th:errors="*{postContent}">[error]</label>
+            </div>
+        </td>
+    </tr>
+</div>
+
+<div th:fragment="tags">
+    <tr class="tr-tag-row" th:classappend="${#fields.hasErrors('tags')} ? 'has-error'">
+        <td class="col-sm-1">
+            <div class="control-group" th:classappend="${#fields.hasErrors('tags')} ? 'error'">
+                <label class="control-label">Tags</label>
+            </div>
+        </td>
+        <td class="col-sm-5">
+            <div class="controls">
+                <select id="tag-select" multiple="multiple" data-role="tagsinput" th:field="*{tags}"></select>
+                <label class="control-label" th:errors="*{tags}">[error]</label>
+            </div>
+        </td>
+    </tr>
+</div>
+
+<div th:fragment="carousel">
+    <tr th:if="*{hasImages}">
+        <td colspan="2" class="td-carousel">
+            <div class="pagepreveiw-images" data-example-id="simple-carousel">
+                <div id="pagepreview-carousel" class="carousel slide"
+                     data-ride="carousel">
+
+                    <!-- Indicators -->
+                    <div class="carousel-inner" role="listbox">
+                        <div th:each="imageUrl, row : ${pagePreview.getImages()}" class="item"
+                             th:classappend="${row.index == 1 }? 'active'">
+                            <img th:src="${imageUrl.getSrc()}"/>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#pagepreview-carousel" role="button"
+                       data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#pagepreview-carousel" role="button"
+                       data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+
+                </div>
+            </div>
+        </td>
+    </tr>
+</div>
+</html>

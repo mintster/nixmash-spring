@@ -628,7 +628,6 @@ button.btn.btn-success {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="TAG DISPLAY----------------------------/ "*/
 
 span.tag.label {
@@ -639,12 +638,17 @@ span.tag.label {
     width:100%;
 }
 
-.post-tags {
+#post .post-tags {
+    max-width: 100%;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.post .post-tags {
     float: right;
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="POST DISPLAY IN STREAM----------------------------/ "*/
 #more-posts-button-row {
     display: inline-block;
@@ -714,7 +718,6 @@ span.tag.label {
     float: none;
     display: inline-block;
     color: #666;
-    padding-left: 4px;
     vertical-align: top;
 }
 
@@ -764,37 +767,18 @@ pre code {
 }
 
 .post .remote-link, .post .perma-link {
-    float: left;
     display: block;
-    margin-right: 5px;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: 16px;
-    height: 16px;
+    font-variant: small-caps;
 }
 
 .post .remote-link img.icon-link, .post .perma-link img.icon-link {
 }
-
-.post .remote-link {
-    background-image: url('/images/remotelink.png');
-}
-
-.post .remote-link:hover {
-    background-image: url('/images/remotelink-hover.png');
-}
-
-.post .perma-link {
-    background-image: url('/images/permalink.png');
-}
-
-.post .perma-link:hover {
-    background-image: url('/images/permalink-hover.png');
-}
-
 .post code.html.hljs.xml {
     margin-top: 0;
+}
+
+.post.note p {
+    padding-bottom: 12px;
 }
 
 /*</editor-fold>*/
@@ -842,7 +826,10 @@ h1.post-title {
     display: inline-block;
 }
 
-#post-footer .edit-link {
+#post-footer .footer-links div.edit-link {
+    display: block;
+    float: none;
+    margin-top: 5px;
 }
 
 #post .nixmash-tag {
@@ -875,6 +862,12 @@ h1.post-title {
     font-size: medium;
     padding: 8px;
     margin-left: 6px;
+}
+
+#post-footer .source-link {
+    font-size: larger;
+    font-style: italic;
+    margin-top: 20px;
 }
 
 /*</editor-fold>*/

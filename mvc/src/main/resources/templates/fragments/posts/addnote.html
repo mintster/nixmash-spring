@@ -2,25 +2,36 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="addnote">
+    <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+
     <div class="container bs-docs-container big-font-container">
         <div class="row row-centered">
             <div class="bs-docs-section col-lg-9 col-centered">
-                <form th:object="${postDTO}" method="post" action="/posts/add.html"
-                      th:action="@{${#httpServletRequest.getRequestURI()}}"
+                <form th:object="${postDTO}" method="post" th:action="@{${#httpServletRequest.getRequestURI()}}"
                       class="form-horizontal" id="link-add-form">
 
-                    <div th:if="${#fields.hasGlobalErrors()}"
-                         class="has-error col-lg-offset-3 alert alert-dismissible alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <label class="control-label" th:each="err : ${#fields.globalErrors()}"
-                               th:text="${err}">...</label>
-                    </div>
+                    <div th:include="fragments/formutils :: global-errors" th:remove="tag">[Global Errors]</div>
 
-                    <div class="in-progress"><p class="intro">In Progress...</p>
-                        <p>Thank you for demoing adding a post. We're currently working on adding links which you are welcome to demo!  To add a link return to the "Add Post" page, enter a Source Url and click "Add a Link."</p>
-                        <p><a href="/posts/add" class="btn btn-large btn-primary">Return to Add Post</a> </p>
-                    </div>
-
+                    <table class="table table-striped">
+                        <div th:include="fragments/posts/postform :: title-editor" th:remove="tag">[Title Editor Rows]
+                        </div>
+                        <div th:include="fragments/posts/postform :: tags" th:remove="tag">[Tags]</div>
+                        <tr class="tr-button-row">
+                            <td></td>
+                            <td>
+                                <div class="form-actions pull-right">
+                                    <button type="submit" class="btn btn-success" name="note" value="true">Submit
+                                    </button>
+                                </div>
+                                <div class="pull-right"
+                                     th:classappend="${#fields.hasErrors('displayType')} ? 'has-error pad-right'">
+                                    <label class="control-label" th:errors="*{displayType}">[error]</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" name="displayType" value="NOTE"/>
+                    <input type="hidden" name="postType" th:value="NOTE"/>
                 </form>
             </div>
         </div>
