@@ -24,6 +24,16 @@ public class ApplicationSettings {
 	private String profileIconPath;
 	private String profileIconUrlRoot;
 
+	private String editorImagePlacemarker;
+
+	public String getEditorImagePlacemarker() {
+		return editorImagePlacemarker;
+	}
+
+	public void setEditorImagePlacemarker(String editorImagePlacemarker) {
+		this.editorImagePlacemarker = editorImagePlacemarker;
+	}
+
 	public String getGoogleAppId() {
 		return googleAppId;
 	}

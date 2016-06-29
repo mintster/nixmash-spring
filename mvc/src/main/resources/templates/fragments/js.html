@@ -124,6 +124,7 @@
             var JavaScriptButton= function (context) { return makeButton("javascript", "js"); };
             var HtmlButton = function (context) { return makeButton("html", "html"); };
             var CssButton = function (context) { return makeButton("css", "css"); };
+            var ImageButton = function (context) { return makeImageButton(); };
 
             function makeButton(language, abbrev) {
                 var ui = $.summernote.ui;
@@ -132,6 +133,19 @@
                     tooltip: 'add code block',
                     click: function () {
                         addCodeBlock(language)
+                    }
+                });
+
+                return button.render();
+            }
+
+            function makeImageButton() {
+                var ui = $.summernote.ui;
+                var button = ui.button({
+                    contents: '<i class="fa fa-image"/>',
+                    tooltip: 'add image',
+                    click: function () {
+                        addImageHtml()
                     }
                 });
 
@@ -152,6 +166,15 @@
             }
 
 
+            function addImageHtml() {
+                var node = document.createElement('img');
+                document.body.appendChild(node);
+                node.setAttribute("src",  [[${appSettings.getEditorImagePlacemarker()}]]);
+                node.setAttribute("alt", "");
+                var $editor = $('#summernote');
+                $editor.summernote('insertNode', node);
+            }
+
             $('#summernote').summernote({
                 minHeight: 200,
                 toolbar: [
@@ -160,13 +183,14 @@
                     ['insert', ['link']],
                     ['para', ['paragraph', 'ul', 'ol']],
                     ['misc', ['codeview', 'undo']],
-                    ['codebuttons', ['java', 'js', 'html', 'css']]
+                    ['codebuttons', ['java', 'js', 'html', 'css', 'image']]
                 ],
                 buttons: {
                     java: JavaButton,
                     js: JavaScriptButton,
                     html: HtmlButton,
-                    css: CssButton
+                    css: CssButton,
+                    image: ImageButton
                 }
             });
 
