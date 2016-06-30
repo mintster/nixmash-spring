@@ -41,6 +41,9 @@ public interface PostService {
 
     boolean canUpdatePost(Authentication authentication, Long postId);
 
+    @Transactional(readOnly = true)
+    List<String> getTagValues();
+
     Set<TagDTO> getTagDTOs(Long postId);
     Tag getTag(String tagValue) throws TagNotFoundException;
 

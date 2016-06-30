@@ -13,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -129,6 +131,14 @@ public class PostUtils {
             tagDTOs.add(new TagDTO(tag.getTagId(), tag.getTagValue()));
         }
         return tagDTOs;
+    }
+
+    public static List<String> tagsToTagValues(Set<Tag> tags) {
+        List<String> tagValues = new ArrayList<>();
+        for (Tag tag : tags) {
+            tagValues.add(tag.getTagValue());
+        }
+        return tagValues;
     }
 
 }

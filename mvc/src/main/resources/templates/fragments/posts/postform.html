@@ -42,7 +42,7 @@
         </td>
         <td class="col-sm-5">
             <div class="controls">
-                <select id="tag-select" multiple="multiple" data-role="tagsinput" th:field="*{tags}"></select>
+                <select id="tag-select" multiple="multiple" data-role="typeahead" th:field="*{tags}"></select>
                 <label class="control-label" th:errors="*{tags}">[error]</label>
             </div>
         </td>

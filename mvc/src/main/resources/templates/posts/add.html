@@ -143,12 +143,21 @@
 <div th:if="${showPost}" th:remove="tag">
     <div th:include="fragments/js :: summernote" th:remove="tag">[Summernote Javascript]</div>
 
+    <script th:src="@{/js/bootstrap3-typeahead.js}"></script>
     <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
 
     <script type="text/javascript">
+
         $('#tag-select').tagsinput({
-            tagClass: 'label label-default'
+            tagClass: 'label label-default',
+            typeahead: {
+                source: function(query) {
+                    return $.get('/json/posts/tagvalues');
+                }
+
+            }
         });
+
     </script>
 
 </div>

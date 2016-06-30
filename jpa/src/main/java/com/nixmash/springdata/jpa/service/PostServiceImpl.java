@@ -189,6 +189,14 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
+    public List<String> getTagValues() {
+        Set<Tag> tags = tagRepository.findAll();
+        return PostUtils.tagsToTagValues(tags);
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
     public Set<TagDTO> getTagDTOs(Long postId) {
         return null;
     }
