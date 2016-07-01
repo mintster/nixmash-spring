@@ -17,6 +17,7 @@ public class ApplicationSettings {
 	private String facebookAppSecret;
 	private String googleAppId;
 	private String googleAppSecret;
+	private String googleMapKey;
 
 	private String profileImagePath;
 	private String profileImageUrlRoot;
@@ -32,6 +33,14 @@ public class ApplicationSettings {
 
 	public void setEditorImagePlacemarker(String editorImagePlacemarker) {
 		this.editorImagePlacemarker = editorImagePlacemarker;
+	}
+
+	public String getGoogleMapKey() {
+		return googleMapKey;
+	}
+
+	public void setGoogleMapKey(String googleMapKey) {
+		this.googleMapKey = googleMapKey;
 	}
 
 	public String getGoogleAppId() {

@@ -3,7 +3,8 @@
 
 <div th:fragment="functions">
 
-	<script src="http://maps.googleapis.com/maps/api/js"></script>
+	<script th:src="|http://maps.googleapis.com/maps/api/js?key=${appSettings.googleMapKey}|">
+	</script>
 	
 	
 	<script th:inline="text">

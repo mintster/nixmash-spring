@@ -46,9 +46,8 @@
 
 	<div th:if="${mappingError == null}">
 		<script th:src="@{/js/multimap.js}"></script>
-		<script
-			src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false&amp;key=AIzaSyAN40J-X2vlp7NX9iD_T396Mp2ysTp67P0&amp;callback=renderGoogleMap"></script>
-		<script src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+		<script th:src="|http://maps.googleapis.com/maps/api/js?key=${appSettings.googleMapKey}&amp;callback=renderGoogleMap|"></script>
+		<script th:src="@{/js/infobox.js}"></script>
 	</div>
 </body>
 </html>
