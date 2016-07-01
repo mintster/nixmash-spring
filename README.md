@@ -3,7 +3,7 @@ NixMash Spring
 
 NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and supporting technologies. Implemented in project:
 
-*Spring Boot, Spring Data JPA, Spring Solr, Spring Web MVC, Spring Security, Spring Social, Hibernate, Mockito, Json, Gradle, Spring Mail, Jsoup, Multi-Profile Configurations, JPA Auditing, Webjars, Dandelion, Velocity Templating, @PreAuthorize Method Security, Custom Validators, @Controller Advice, Custom Exception Handling, Site Administration Dashboard and Thymeleaf*
+*Spring Boot, Spring Data JPA, Spring Solr, Spring Web MVC, Spring Security, Spring Social, Hibernate, Mockito, Json, Gradle, Spring Mail, Jsoup, Multi-Profile Configurations, JPA Auditing, Webjars, Dandelion, Velocity Templating, @PreAuthorize Method Security, Custom Validators, @Controller Advice, Custom Exception Handling, Tagging with Typeahead, Bootstrap3, Site Administration Dashboard and Thymeleaf*
 
 The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
 
