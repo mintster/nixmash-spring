@@ -75,6 +75,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: MissingKeyMapError Fix and Other Google Map Revisitations](http://nixmash.com/java/missingkeymaperror-fix-and-other-google-map-revisitations/)
 - [Post: Tags With Typeahead in Bootstrap 3](http://nixmash.com/java/tags-with-typeahead-in-bootstrap-3/)
 
+![v0.3.3 Post Update Form](http://nixmash.com/x/pics/github/spring-data-0.3.3.png)
+
 [[back to top](#nixmash-spring)]
 
 ##v0.3.2 -- Initial Posts Feature Release##
