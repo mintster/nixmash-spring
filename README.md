@@ -24,6 +24,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
+- **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display (In Progress)](#v034----post-tag-cloud-sharing-likes-rss-title-display-in-progress)**
 - **[v0.3.3 -- Post WYSIWYG editing, tagging, permalinks](#v033----post-wysiwyg-editing-tagging-permalinks)**
 - **[v0.3.2 -- Initial Posts Feature Release](#v032----initial-posts-feature-release)** : *Jsoup Annotations Framework, Generic Type as Beans*
 - **[v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics](#v031----siteoptions-properties-github-buttons-google-analytics)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
@@ -57,6 +58,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.3 -- DAO Implementation](#v003----dao-implementation)**
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
+
+##v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display (In Progress)##
+
+- Demo Post Messages to all users NOT in ROLE_POSTS group
+- [Post: Displaying Content in Thymeleaf When User NOT in a Role](http://nixmash.com/java/displaying-content-in-thymeleaf-when-user-not-in-a-role/)
+
+[[back to top](#nixmash-spring)]
 
 ##v0.3.3 -- Post WYSIWYG editing, tagging, permalinks##
 
