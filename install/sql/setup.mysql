@@ -32,6 +32,7 @@ CREATE TABLE `authorities` (
 -- ----------------------------
 INSERT INTO `authorities` VALUES ('1', 'ROLE_ADMIN','1');
 INSERT INTO `authorities` VALUES ('2', 'ROLE_USER','1');
+INSERT INTO `authorities` VALUES ('3', 'ROLE_POSTS','1');
 
 -- ----------------------------
 -- Table structure for contacts
@@ -211,6 +212,7 @@ CREATE TABLE `user_authorities` (
 -- ----------------------------
 INSERT INTO `user_authorities` VALUES ('1', '1');
 INSERT INTO `user_authorities` VALUES ('1', '2');
+INSERT INTO `user_authorities` VALUES ('1', '3');
 INSERT INTO `user_authorities` VALUES ('2', '2');
 INSERT INTO `user_authorities` VALUES ('7', '2');
 INSERT INTO `user_authorities` VALUES ('8', '2');

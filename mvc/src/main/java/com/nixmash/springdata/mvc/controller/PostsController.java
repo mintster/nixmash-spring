@@ -282,7 +282,7 @@ public class PostsController {
     private Boolean canPost(CurrentUser currentUser) {
         Boolean canPost = false;
         if (currentUser != null) {
-            if (currentUser.getUser().hasAuthority(Role.ROLE_POST))
+            if (currentUser.getUser().hasAuthority(Role.ROLE_POSTS))
                 canPost = true;
         }
         return canPost;

@@ -98,7 +98,7 @@ public class PostsControllerTests extends AbstractContext {
     @WithPostUser
     public void getUpdatePostPage_Author_Loads() throws Exception {
 
-        // h2 posts have keith userId (3) who is also in the ROLE_POST group and can create posts
+        // h2 posts have keith userId (3) who is also in the ROLE_POSTS group and can create posts
 
         mockMvc.perform(get("/posts/update/3"))
                 .andExpect(model().attributeExists("postDTO"))

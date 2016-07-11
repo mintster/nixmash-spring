@@ -429,6 +429,13 @@ form#fb_signin, form#tw_signin, form#gl_signin {
     margin-right: 4px;
 }
 
+@media (max-width: 768px) {
+    .btn-facebook span, .btn-twitter span, .btn-google span
+    {
+        display: none;
+    }
+}
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="USER PROFILE ----------------------------/ "*/
 #profile-area {
@@ -565,6 +572,10 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
     font-weight: bold;
 }
 
+.demo-mode-note {
+    display: inline-block;
+    margin-bottom: 25px;
+}
 /*</editor-fold>*/
 /*/<editor-fold> desc="LINK ENTRY FORMS----------------------------/ "*/
 .pull-right.has-error.pad-right {
@@ -682,7 +693,6 @@ span.tag.label {
 }
 
 #posts .post:first-child {
-    padding-top: 0;
 }
 
 #posts .post.odd {
@@ -846,6 +856,7 @@ h1.post-title {
 
 #post #post-footer {
     clear: both;
+    margin-top: 30px;
 }
 
 #post {

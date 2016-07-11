@@ -32,7 +32,7 @@ INSERT INTO users (user_id, email, username, password, first_name, last_name, en
 
 INSERT INTO authorities (authority_id, authority, is_locked) VALUES (1, 'ROLE_ADMIN', true);
 INSERT INTO authorities (authority_id, authority, is_locked) VALUES (2, 'ROLE_USER', true);
-INSERT INTO authorities (authority_id, authority, is_locked) VALUES (3, 'ROLE_POST', true);
+INSERT INTO authorities (authority_id, authority, is_locked) VALUES (3, 'ROLE_POSTS', true);
 
 ------------------------------------------------------------
 -- User_Authorities

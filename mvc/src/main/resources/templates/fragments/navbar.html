@@ -1,5 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="navbar(activeTab)">
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -10,47 +10,58 @@
                         class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
                         class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" th:text="#{navbar.brand}">[NixMash Spring]</a>
+                <a class="navbar-brand" th:text="#{navbar.brand}" th:href="@{/}">[NixMash Spring]</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
-                    <li th:class="${activeTab == 'home' || activeTab == 'error'}? 'active' : null"><a href="/"
-                                                                                                      th:href="@{/}"><span
-                            class="glyphicon glyphicon-home"></span><span th:text="#{navbar.home}"
-                                                                          th:remove="tag">[Home]</span></a></li>
+                    <!--<li th:class="${activeTab == 'home' || activeTab == 'error'}? 'active' : null"><a href="/"-->
+                                                                                                      <!--th:href="@{/}"><span-->
+                            <!--class="glyphicon glyphicon-home"></span><span th:text="#{navbar.home}"-->
+                                                                          <!--th:remove="tag">[Home]</span></a></li>-->
                     <li th:class="${activeTab == 'demos'}? 'active dropdown' : 'dropdown'"><a href="#"
-                                                                                                 class="dropdown-toggle"
-                                                                                                 data-toggle="dropdown"
-                                                                                                 role="button"
-                                                                                                 aria-expanded="false"><span
+                                                                                              class="dropdown-toggle"
+                                                                                              data-toggle="dropdown"
+                                                                                              role="button"
+                                                                                              aria-expanded="false"><span
                             th:text="#{navbar.demos}" th:remove="tag">[Demos]</span> <span
                             class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" th:text="#{navbar.demos.spring.jpa}">[Spring JPA]</a>
+                            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle"
+                                                                     data-toggle="dropdown"
+                                                                     th:text="#{navbar.demos.spring.jpa}">[Spring
+                                JPA]</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/contacts" th:href="@{/contacts}"><span
-                                            class="glyphicon glyphicon-th-list"></span><span th:text="#{navbar.contacts.view}"
-                                                                                             th:remove="tag">[Contacts]</span>
+                                            class="glyphicon glyphicon-th-list"></span><span
+                                            th:text="#{navbar.contacts.view}"
+                                            th:remove="tag">[Contacts]</span>
                                     </a></li>
                                     <li><a href="/contacts/search" th:href="@{/contacts/search}"><span
-                                            class="glyphicon glyphicon-search"></span><span th:text="#{navbar.contacts.search}"
-                                                                                            th:remove="tag">[Search]</span></a>
+                                            class="glyphicon glyphicon-search"></span><span
+                                            th:text="#{navbar.contacts.search}"
+                                            th:remove="tag">[Search]</span></a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" th:text="#{navbar.demos.spring.solr}">[Spring Solr]</a>
+                            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle"
+                                                                     data-toggle="dropdown"
+                                                                     th:text="#{navbar.demos.spring.solr}">[Spring
+                                Solr]</a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/products" th:href="@{/products}"><span
-                                            class="glyphicon glyphicon-th-list"></span><span th:text="#{navbar.products.view}"
-                                                                                             th:remove="tag">[Products]</span>
+                                            class="glyphicon glyphicon-th-list"></span><span
+                                            th:text="#{navbar.products.view}"
+                                            th:remove="tag">[Products]</span>
                                     </a></li>
                                     <li><a href="/products/search" th:href="@{/products/search}"><span
-                                            class="glyphicon glyphicon-search"></span><span th:text="#{navbar.products.search}"
-                                                                                            th:remove="tag">[Search Products]</span></a>
+                                            class="glyphicon glyphicon-search"></span><span
+                                            th:text="#{navbar.products.search}"
+                                            th:remove="tag">[Search Products]</span></a>
                                     </li>
                                     <li><a href="/products/search" th:href="@{/products/categories}"><span
                                             class="glyphicon glyphicon-list-alt"></span>&nbsp;<span
-                                            th:text="#{navbar.products.categories}" th:remove="tag">[Product Categories]</span></a>
+                                            th:text="#{navbar.products.categories}"
+                                            th:remove="tag">[Product Categories]</span></a>
                                     </li>
                                     <li><a href="/products/map" th:href="@{/products/map}"><span
                                             class="glyphicon glyphicon-map-marker"></span>&nbsp;<span
@@ -60,11 +71,24 @@
                             </li>
                         </ul>
                     </li>
-                    <li th:class="${activeTab == 'posts'} ? 'active' : null"><a href="/posts"
-                                                                                th:href="@{/posts}" th:text="#{posts.navbar.post.text}">[Posts]</a></li>
+                    <li th:class="${activeTab == 'posts'} ? 'active' : null"><a href="#" class="dropdown-toggle"
+                                                                                data-toggle="dropdown"
+                                                                                th:text="#{posts.navbar.post.text}">[Posts] <span
+                            class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/posts"
+                                   th:href="@{/posts}"
+                                   th:text="#{posts.navbar.post.recent}">[Recent Posts]</a></li>
+                            <li><a href="/posts/add" th:href="@{/posts/add}"><span th:text="#{navbar.posts.add}"
+                                                                                     th:remove="tag">[Add Post]</span>
+                            </a></li>
+                        </ul>
+                    </li>
 
                     <li th:class="${activeTab == 'contact'} ? 'active' : null"><a href="/users/contact"
-                                                                                  th:href="@{/users/contact}" th:text="#{mail.contact.navbar.linktext}">[Contact]</a></li>
+                                                                                  th:href="@{/users/contact}"
+                                                                                  th:text="#{mail.contact.navbar.linktext}">[Contact]</a>
+                    </li>
 
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="/admin" th:href="@{/admin}"><span th:text="#{navbar.admin}"
@@ -81,7 +105,8 @@
                         </form>
 
                         <img class="navbar-profilepic pull-right"
-                             th:src="@{|${currentUser.getProfileIconUrl()}?${new java.util.Date().getTime()}|}" width="32" height="32"/>
+                             th:src="@{|${currentUser.getProfileIconUrl()}?${new java.util.Date().getTime()}|}"
+                             width="32" height="32"/>
 
                         <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right navbar-welcome"
                            th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>

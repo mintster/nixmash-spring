@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-tagsinput.css}"/>
@@ -36,6 +37,15 @@
             </div>
 
             <div th:unless="${showPost}">
+
+                <div sec:authorize="!hasRole('ROLE_POSTS')" class="alert alert-dismissible alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4>Please Note</h4>
+                    <p>You are adding a post or link in <strong>DEMO MODE</strong>.
+                        It will not be saved or displayed
+                    </p>
+                </div>
+
                 <form th:object="${postLink}" action="/posts/add.html" th:action="@{/posts/add}" method="get"
                       class="form-horizontal" id="search-product-form">
                     <table class="table table-striped">
@@ -151,7 +161,7 @@
         $('#tag-select').tagsinput({
             tagClass: 'label label-default',
             typeahead: {
-                source: function(query) {
+                source: function (query) {
                     return $.get('/json/posts/tagvalues');
                 }
 

@@ -91,20 +91,20 @@
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 					<input type="hidden" name="scope" value="email,user_posts,user_photos,user_friends"></input>
 					<button type="submit" class="btn btn-facebook btn-facebook-login">
-						<i class="fa fa-facebook"></i> | <span th:text="#{label.facebook.sign.in.sm-button}">[Facebook]</span>
+						<i class="fa fa-facebook"></i><span> | </span><span th:text="#{label.facebook.sign.in.sm-button}">[Facebook]</span>
 					</button>
 				</form>
 				<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
 					<button type="submit" class="btn btn-twitter">
-						<i class="fa fa-twitter"></i> | <span th:text="#{label.twitter.sign.in.sm-button}">[Twitter]</span>
+						<i class="fa fa-twitter"></i><span> | </span><span th:text="#{label.twitter.sign.in.sm-button}">[Twitter]</span>
 					</button>
 				</form>
 				<form id="gl_signin" th:action="@{/signin/google}" method="POST">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
 					<input type="hidden" name="scope" value="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read"></input>
 					<button type="submit" class="btn btn-google">
-						<i class="fa fa-google"></i> | <span th:text="#{label.google.sign.in.sm-button}">[Google]</span>
+						<i class="fa fa-google"></i><span> | </span><span th:text="#{label.google.sign.in.sm-button}">[Google]</span>
 					</button>
 				</form>
 			</div>
