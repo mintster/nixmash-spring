@@ -37,11 +37,14 @@
                      th:text="${feedbackMessage}"></div>
             </div>
 
-            <div class="sidebar col-lg-2">
-                <div class="sidebar-add-button-row">
-                    <a href="/posts/add" class="btn btn-primary btn-lg btn-add-post">Add Post</a>
-                </div>
+            <div class="col-lg-3 col-md-3 col-sm-4" id="leftCol">
+                <ul class="list-group" id="sidebar">
+                    <a href="./posts" class="list-group-item active">All Posts<i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <a href="./search" class="list-group-item">Search <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <a href="./tags" class="list-group-item">NixMashup Tag Cloud <i class="glyphicon glyphicon-chevron-right"></i></a>
+                </ul>
             </div>
+
             <div id="grid-table">
                 <div id="posts" class="col-lg-9"></div>
                 <div id="more-posts-button-row" class="col-lg-9 col-lg-offset-2">
@@ -99,6 +102,27 @@
     });
 
     /*]]>*/
+</script>
+
+
+<script type="application/javascript">
+
+    /* activate sidebar */
+    $('#sidebar').affix({
+        offset: {
+            top: 235
+        }
+    });
+
+    /* activate scrollspy menu */
+    var $body   = $(document.body);
+    var navHeight = $('.navbar').outerHeight(true) + 20;
+
+    $body.scrollspy({
+        target: '#leftCol',
+        offset: navHeight
+    });
+
 </script>
 
 </body>

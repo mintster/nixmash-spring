@@ -791,6 +791,10 @@ pre code {
     padding-bottom: 12px;
 }
 
+#posts .post-content img {
+    max-width: 100%;
+}
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
 
@@ -879,6 +883,55 @@ h1.post-title {
     font-size: larger;
     font-style: italic;
     margin-top: 20px;
+}
+
+/*</editor-fold>*/
+/*/<editor-fold> desc="SIDEBAR NAVIGATION----------------------------/ "*/
+
+
+/* Sidenav for Docs
+-------------------------------------------------- */
+
+.affix-top,.affix{
+    position: static;
+}
+
+#leftCol {
+    margin-top: 30px;
+}
+
+@media (min-width: 979px) {
+    #sidebar.affix-top {
+        position: static;
+        width:245px;
+    }
+
+    #sidebar.affix {
+        position: fixed;
+        top:100px;
+        width:245px;
+    }
+
+    #sidebar a i.glyphicon.glyphicon-chevron-right {
+        float: right;
+        margin-top: 2px;
+        margin-right: -6px;
+        opacity: .25;
+    }
+
+    #sidebar a.active i.glyphicon.glyphicon-chevron-right {
+        opacity: 1 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #sidebar a i.glyphicon.glyphicon-chevron-right {
+        display: none;
+    }
+
+    #leftCol {
+        margin-top: 0px;
+    }
 }
 
 /*</editor-fold>*/
