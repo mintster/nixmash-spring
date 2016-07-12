@@ -153,6 +153,11 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByTagId(tagId, pageRequest);
     }
 
+    @Override
+    public List<Post> getPostsByTagId(long tagId) {
+        return postRepository.findAllByTagId(tagId);
+    }
+
     //endregion
 
     // region Tags

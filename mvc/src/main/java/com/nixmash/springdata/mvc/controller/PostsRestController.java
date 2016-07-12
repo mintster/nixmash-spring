@@ -29,6 +29,7 @@ import java.util.AbstractMap.SimpleEntry;
 public class PostsRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostsRestController.class);
+    private static final String TITLE_TEMPLATE = "title";
 
     PostService postService;
     TemplateService templateService;
@@ -38,6 +39,63 @@ public class PostsRestController {
         this.postService = postService;
         this.templateService = templateService;
     }
+
+    // region get  Post Titles
+
+    @RequestMapping(value = "/titles/{pageNumber}", produces = "text/html;charset=UTF-8")
+    public String getPostTitles(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
+        Slice<Post> posts = postService.getPosts(pageNumber, 10);
+        String result = StringUtils.EMPTY;
+        for (Post post : posts) {
+            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
+            result += templateService.createPostHtml(post, TITLE_TEMPLATE);
+        }
+        WebUtils.setSessionAttribute(request, "posttitles", posts);
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/titles/more")
+    public String getTitleHasNext(HttpServletRequest request) {
+        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "posttitles");
+        if (posts != null)
+            return Boolean.toString(posts.hasNext());
+        else
+            return "true";
+    }
+
+    // endregion
+
+    // region get Posts by Tag
+
+    @RequestMapping(value = "/titles/tag/{tagid}/page/{pageNumber}",
+            produces = "text/html;charset=UTF-8")
+    public String getPostTitlesByTagId(@PathVariable long tagid,
+                                  @PathVariable int pageNumber,
+                                  HttpServletRequest request,
+                                  CurrentUser currentUser) {
+        Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, 10);
+        String result = StringUtils.EMPTY;
+        for (Post post : posts) {
+            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
+            result += templateService.createPostHtml(post, TITLE_TEMPLATE);
+        }
+        WebUtils.setSessionAttribute(request, "taggedposttitles", posts);
+        return result;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/titles/tag/{tagid}/more")
+    public String getTagTitlesHasNext(@PathVariable int tagid, HttpServletRequest request) {
+        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "taggedposttitles");
+        if (posts != null)
+            return Boolean.toString(posts.hasNext());
+        else
+            return "true";
+    }
+
+    // endregion
 
     // region get all Posts
 
@@ -51,6 +109,16 @@ public class PostsRestController {
         }
         WebUtils.setSessionAttribute(request, "posts", posts);
         return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/more")
+    public String getHasNext(HttpServletRequest request) {
+        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "posts");
+        if (posts != null)
+            return Boolean.toString(posts.hasNext());
+        else
+            return "true";
     }
 
     // endregion
@@ -73,8 +141,6 @@ public class PostsRestController {
         return result;
     }
 
-    // endregion
-
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/tag/{tagid}/more")
@@ -86,15 +152,7 @@ public class PostsRestController {
             return "true";
     }
 
-    @SuppressWarnings("unchecked")
-    @RequestMapping(value = "/more")
-    public String getHasNext(HttpServletRequest request) {
-        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "posts");
-        if (posts != null)
-            return Boolean.toString(posts.hasNext());
-        else
-            return "true";
-    }
+    // endregion
 
     @RequestMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
     public Set<TagDTO> getAllTagDTOs() {

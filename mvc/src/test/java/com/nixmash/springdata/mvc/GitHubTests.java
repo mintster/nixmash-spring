@@ -67,7 +67,7 @@ public class GitHubTests extends AbstractContext {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.readValue(stringUserEntity.getBody(), ObjectNode.class);
         gitHubDTO.setFollowers(node.get("followers").intValue());
+        assertThat(gitHubDTO.getFollowers(), greaterThan(-1));
 
-        System.out.println(gitHubDTO.toString());
     }
 }

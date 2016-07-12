@@ -34,7 +34,6 @@ public class  GlobalController {
 	private static final String LOCATION_ERROR_MESSAGE_KEY = "product.map.page.feedback.error";
 	public static final String LOCATION_ERROR_ATTRIBUTE = "mappingError";
 	public static final String SESSION_USER_CONNECTION = "MY_USER_CONNECTION";
-	private static final String DUPLICATE_POSTNAME_ERROR_MESSAGE_KEY = "post.duplicate.name.feedback.error";
 
 	@Autowired
 	WebUI webUI;

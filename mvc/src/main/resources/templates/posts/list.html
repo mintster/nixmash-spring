@@ -22,9 +22,7 @@
                 <p class="lead" th:text="#{posts.list.page.subheader}">[All
                     Links]</p>
             </div>
-            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
-                Image
-            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
 
         </div>
     </div>
@@ -32,28 +30,11 @@
 <div class="container bs-docs-container">
     <div class="row">
         <div class="bs-docs-section">
-            <div id="message-holder">
-                <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
-                     th:text="${feedbackMessage}"></div>
-            </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-4" id="leftCol">
-                <ul class="list-group" id="sidebar">
-                    <a href="./posts" class="list-group-item active">All Posts<i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <a href="./search" class="list-group-item">Search <i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <a href="./tags" class="list-group-item">NixMashup Tag Cloud <i class="glyphicon glyphicon-chevron-right"></i></a>
-                </ul>
-            </div>
+            <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
-            <div id="grid-table">
-                <div id="posts" class="col-lg-9"></div>
-                <div id="more-posts-button-row" class="col-lg-9 col-lg-offset-2">
-                    <button id="morePosts" style="display: none;" class="btn btn-primary btn-lg" name="morePosts"
-                            onclick="morePosts()"
-                            type="button">More Posts
-                    </button>
-                </div>
-            </div>
+            <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Post List</div>
+            <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>
 
         </div>
     </div>
@@ -103,7 +84,6 @@
 
     /*]]>*/
 </script>
-
 
 <script type="application/javascript">
 

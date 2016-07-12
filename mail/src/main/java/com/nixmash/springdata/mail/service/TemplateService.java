@@ -6,5 +6,7 @@ public interface TemplateService {
 
     String getRobotsTxt();
 
+    String createPostHtml(Post post, String template);
+
     String createPostHtml(Post post);
 }

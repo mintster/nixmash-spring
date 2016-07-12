@@ -7,24 +7,21 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/highlight/github.css}"/>
     <script th:src="@{/js/highlight.pack.js}"></script>
 
-    <title th:utext="#{posts.tags.page.title(${tag.tagValue})}">[NixMash Spring
-        Posts by Tag]</title>
+    <title th:text="#{posts.list.page.title}">[NixMash Spring
+        Posts]</title>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
-<!--/*@thymesVar id="tag" type="com.nixmash.springdata.jpa.model.Tag"*/-->
 
 <div class="container">
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="${tag.tagValue}">[Post by Tag]</h1>
+                <h1 th:text="#{posts.titles.page.header}">[Post Titles]</h1>
 
-                <p class="lead" th:utext="#{posts.tags.page.subheader(${tag.tagValue})}">[All
-                    Posts for Tag]</p>
+                <p class="lead" th:text="#{posts.titles.page.subheader}">[All Post Titles]</p>
             </div>
-            <div th:replace="fragments/sponsor :: [id='sponsor']">[Sponsor Image]
-            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
 
         </div>
     </div>
@@ -32,10 +29,11 @@
 <div class="container bs-docs-container">
     <div class="row">
         <div class="bs-docs-section">
+
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
-            <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Post List</div>
-            <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>
+            <div th:include="fragments/posts/sidebar :: sidebar('titles')" th:remove="tag">Sidebar Menu</div>
+            <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post Title List</div>
 
         </div>
     </div>
@@ -50,12 +48,8 @@
     /*<![CDATA[*/
 
     var pageIndex = 0;
-    var tagId =  [[${tag.tagId}]];
-    var tagName =  [[${tag.tagValue}]];
-    var showMore = [[${showmore}]];
-    var backToTop = "<a href='/posts/tag/" + tagName + "'>Back to top</a>";
 
-    $.get("/json/posts/tag/" + tagId + "/page/0", function (data) {
+    $.get("/json/posts/titles/0", function (data) {
         $("#posts").html(data);
         pageIndex++;
     }).success(function () {
@@ -64,20 +58,19 @@
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
-        if (!showMore)
-            $("#more-posts-button-row").css('display', 'none');
     });
 
     function morePosts() {
-        $.get("/json/posts/tag/" + tagId + "/page/" + pageIndex, function (data) {
+        $.get("/json/posts/titles/" + pageIndex, function (data) {
             $("#posts").append(data);
             pageIndex++;
         }).success(function () {
             $('pre code').each(function(i, block) {
                 hljs.highlightBlock(block);
             });
-            $('.post:odd').addClass("odd");
-            $.get("/json/posts/tag/" + tagId + "/more", function (data) {
+            $('.post:odd').addClass("odd")
+            var backToTop = "<a href='/posts/titles'>Back to top</a>";
+            $.get("/json/posts/titles/more", function (data) {
                 if (data == "false")
                     $("#more-posts-button-row").html(backToTop);
             })
@@ -89,6 +82,26 @@
     });
 
     /*]]>*/
+</script>
+
+<script type="application/javascript">
+
+    /* activate sidebar */
+    $('#sidebar').affix({
+        offset: {
+            top: 235
+        }
+    });
+
+    /* activate scrollspy menu */
+    var $body   = $(document.body);
+    var navHeight = $('.navbar').outerHeight(true) + 20;
+
+    $body.scrollspy({
+        target: '#leftCol',
+        offset: navHeight
+    });
+
 </script>
 
 </body>

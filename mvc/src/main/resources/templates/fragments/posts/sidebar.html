@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="sidebar(activeTab)">
+
+    <div class="col-lg-3 col-md-3 col-sm-4" id="leftCol">
+        <ul class="list-group" id="sidebar">
+
+            <a th:href="@{/posts}" class="list-group-item"
+               th:classappend="${activeTab == 'posts'} ? 'active'"
+               th:text="#{posts.sidebar.menu.recent}">[Recent Posts]<i class="glyphicon glyphicon-chevron-right"></i></a>
+
+            <a th:href="@{/posts/titles}" class="list-group-item"
+               th:classappend="${activeTab == 'titles'} ? 'active'"
+               th:text="#{posts.sidebar.menu.titles}">[Post Titles]<i class="glyphicon glyphicon-chevron-right"></i></a>
+
+            <a th:href="@{/posts/feed}" class="list-group-item" target="_blank"
+               th:text="#{posts.sidebar.menu.rss}">[Post RSS Feed]<i class="glyphicon glyphicon-chevron-right"></i></a>
+
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

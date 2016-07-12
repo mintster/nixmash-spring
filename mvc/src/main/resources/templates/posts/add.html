@@ -31,10 +31,8 @@
 <div class="container bs-docs-container">
     <div class="row">
         <div class="bs-docs-section">
-            <div id="message-holder">
-                <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
-                     th:utext="${feedbackMessage}"></div>
-            </div>
+
+            <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
             <div th:unless="${showPost}">
 

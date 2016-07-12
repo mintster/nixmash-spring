@@ -73,12 +73,15 @@
                     </li>
                     <li th:class="${activeTab == 'posts'} ? 'active' : null"><a href="#" class="dropdown-toggle"
                                                                                 data-toggle="dropdown"
-                                                                                th:text="#{posts.navbar.post.text}">[Posts] <span
+                                                                                th:text="#{navbar.posts}">[Posts] <span
                             class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/posts"
                                    th:href="@{/posts}"
-                                   th:text="#{posts.navbar.post.recent}">[Recent Posts]</a></li>
+                                   th:text="#{navbar.posts.recent}">[Recent Posts]</a></li>
+                            <li><a href="/posts/titles"
+                                   th:href="@{/posts/titles}"
+                                   th:text="#{navbar.posts.titles}">[Post Titles]</a></li>
                             <li><a href="/posts/add" th:href="@{/posts/add}"><span th:text="#{navbar.posts.add}"
                                                                                      th:remove="tag">[Add Post]</span>
                             </a></li>

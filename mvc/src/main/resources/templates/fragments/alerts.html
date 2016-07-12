@@ -1,5 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <div id="alerts">
     <script th:src="@{/js/handlebars-v3.0.3.js}"></script>
     <script th:src="@{/js/contact.js}"></script>
@@ -11,6 +11,14 @@
         </div>
     </script>
 </div>
+
+<div id="feedback">
+    <div id="message-holder">
+        <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
+             th:utext="${feedbackMessage}"></div>
+    </div>
+</div>
+
 </html>
 
 

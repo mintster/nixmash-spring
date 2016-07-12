@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<div th:fragment="postlist">
+    <div id="grid-table">
+        <div id="posts" class="col-lg-9"></div>
+        <div id="more-posts-button-row" class="col-lg-9 col-lg-offset-3">
+            <button id="morePosts" style="display: none;" class="btn btn-primary btn-lg" name="morePosts"
+                    onclick="morePosts()"
+                    type="button">More Posts
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

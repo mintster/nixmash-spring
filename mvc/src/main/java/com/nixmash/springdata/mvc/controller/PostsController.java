@@ -59,9 +59,11 @@ public class PostsController {
     public static final String POSTS_PERMALINK_VIEW = "posts/post";
     public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
     public static final String POSTS_UPDATE_VIEW = "posts/update";
+    public static final String POSTS_TITLES_VIEW = "posts/titles";
     public static final String FEEDBACK_POST_UPDATED = "feedback.post.updated";
     private static final String POSTS_TAGS_VIEW = "posts/tags";
     private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
+    private static final String POSTS_TAGTITLES_VIEW = "posts/tagtitles";
 
     // endregion
 
@@ -91,12 +93,29 @@ public class PostsController {
         return POSTS_LIST_VIEW;
     }
 
+    @RequestMapping(value = "/titles", method = GET)
+    public String titles() {
+        return POSTS_TITLES_VIEW;
+    }
+
     @RequestMapping(value = "/tag/{tagValue}", method = GET)
     public String tags(@PathVariable("tagValue") String tagValue, Model model)
                                         throws TagNotFoundException, UnsupportedEncodingException {
         Tag tag = postService.getTag(URLDecoder.decode(tagValue, "UTF-8"));
+       boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > 10;
         model.addAttribute("tag", tag);
+        model.addAttribute("showmore", showMore);
         return POSTS_TAGS_VIEW;
+    }
+
+    @RequestMapping(value = "/titles/tag/{tagValue}", method = GET)
+    public String tagTitles(@PathVariable("tagValue") String tagValue, Model model)
+            throws TagNotFoundException, UnsupportedEncodingException {
+        Tag tag = postService.getTag(URLDecoder.decode(tagValue, "UTF-8"));
+        boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > 10;
+        model.addAttribute("tag", tag);
+        model.addAttribute("showmore", showMore);
+        return POSTS_TAGTITLES_VIEW;
     }
 
     // endregion

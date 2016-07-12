@@ -25,5 +25,8 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Query("select distinct p from Post p left join p.tags t where t.tagId = ?1")
     Page<Post> findByTagId(long tagId, Pageable pageable);
 
+    @Query("select distinct p from Post p left join p.tags t where t.tagId = ?1")
+    List<Post> findAllByTagId(long tagId);
+
     List<Post> findAll(Sort sort);
 }

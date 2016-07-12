@@ -34,7 +34,7 @@
         <div class="bs-docs-section">
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
-            <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Post List</div>
+            <div th:include="fragments/posts/sidebar :: sidebar('titles')" th:remove="tag">Post List</div>
             <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>
 
         </div>
@@ -50,18 +50,18 @@
     /*<![CDATA[*/
 
     var pageIndex = 0;
-    var tagId =  [[${tag.tagId}]];
-    var tagName =  [[${tag.tagValue}]];
+    var tagId = [[${tag.tagId}]];
+    var tagName = [[${tag.tagValue}]];
     var showMore = [[${showmore}]];
     var backToTop = "<a href='/posts/tag/" + tagName + "'>Back to top</a>";
 
-    $.get("/json/posts/tag/" + tagId + "/page/0", function (data) {
+    $.get("/json/posts/titles/tag/" + tagId + "/page/0", function (data) {
         $("#posts").html(data);
         pageIndex++;
     }).success(function () {
         $('.post:odd').addClass("odd");
         $('#morePosts').css('display', 'inline-block');
-        $('pre code').each(function(i, block) {
+        $('pre code').each(function (i, block) {
             hljs.highlightBlock(block);
         });
         if (!showMore)
@@ -69,11 +69,11 @@
     });
 
     function morePosts() {
-        $.get("/json/posts/tag/" + tagId + "/page/" + pageIndex, function (data) {
+        $.get("/json/posts/titles/tag/" + tagId + "/page/" + pageIndex, function (data) {
             $("#posts").append(data);
             pageIndex++;
         }).success(function () {
-            $('pre code').each(function(i, block) {
+            $('pre code').each(function (i, block) {
                 hljs.highlightBlock(block);
             });
             $('.post:odd').addClass("odd");

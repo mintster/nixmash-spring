@@ -663,7 +663,7 @@ span.tag.label {
 /*/<editor-fold> desc="POST DISPLAY IN STREAM----------------------------/ "*/
 #more-posts-button-row {
     display: inline-block;
-    padding: 0 15px 60px 30px;
+    padding: 0 15px 60px 15px;
 }
 
 @media (max-width: 1200px) {
@@ -682,6 +682,7 @@ span.tag.label {
 }
 
 #posts {
+    margin-bottom: 25px;
 }
 
 #posts .post {
@@ -795,6 +796,12 @@ pre code {
     max-width: 100%;
 }
 
+#posts .title .post-date {
+    margin-top: 6px;
+}
+#posts .title h3 {
+    margin-bottom: 3px;
+}
 /*</editor-fold>*/
 /*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
 

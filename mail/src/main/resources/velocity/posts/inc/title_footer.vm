@@ -1,0 +1,10 @@
+<div class="post-tags">
+    #foreach ( ${tag} in ${post.tags})
+        #set ($url = $esc.url($tag.tagValue.toLowerCase()))
+          <span class="taglink">
+              <a href="/posts/titles/tag/$url" class="big label label-default">${tag.tagValue}</a>
+          </span>
+    #end
+</div>
+<div class="post-date"><span>Posted on </span><abbr title="${post.postDate}">${postCreated}</abbr>
+</div>

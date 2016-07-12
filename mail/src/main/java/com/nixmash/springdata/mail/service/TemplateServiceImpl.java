@@ -35,7 +35,7 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
-    public String createPostHtml(Post post) {
+    public String createPostHtml(Post post, String templateName) {
         String html = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
         String postCreated = post.getPostDate().format(formatter);
@@ -46,7 +46,7 @@ public class TemplateServiceImpl implements TemplateService {
         model.put("postCreated", postCreated);
 
         try {
-            String displayType = post.getDisplayType().name().toLowerCase();
+            String displayType = templateName == null ? post.getDisplayType().name().toLowerCase(): templateName;
             String template = String.format("posts/%s.vm", displayType);
 
             html = VelocityEngineUtils
@@ -55,6 +55,11 @@ public class TemplateServiceImpl implements TemplateService {
             logger.error("Problem merging post template : " + e.getMessage());
         }
         return html;
+    }
+
+    @Override
+    public String createPostHtml(Post post) {
+        return createPostHtml(post, null);
     }
 
     private Map<String, Object> modelWithTools() {

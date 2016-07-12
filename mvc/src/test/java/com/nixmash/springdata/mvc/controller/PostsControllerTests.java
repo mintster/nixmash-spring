@@ -234,6 +234,14 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    public void titlesPageLoadsTitleView() throws Exception {
+        this.mockMvc.perform(get("/posts/titles"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(POSTS_TITLES_VIEW));
+
+    }
+
+    @Test
     @WithUserDetails(value = "erwin")
     public void submitNewNoteFormAsNonPostUser() throws Exception {
         mockMvc.perform(postRequest(PostType.NOTE, "submitNewNote"))

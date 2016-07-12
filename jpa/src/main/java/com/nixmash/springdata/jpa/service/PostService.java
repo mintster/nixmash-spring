@@ -48,4 +48,6 @@ public interface PostService {
     Tag getTag(String tagValue) throws TagNotFoundException;
 
     Page<Post> getPostsByTagId(long tagId, int pageNumber, int pageSize);
+
+    List<Post> getPostsByTagId(long tagId);
 }
