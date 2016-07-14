@@ -23,11 +23,35 @@
         </ul>
 
         <div id="tagcloud">
-            <div class="well">
-                Look, I'm in a well!
+            <div class="well  well-sm">
+               <div id="sidebartags"></div>
             </div>
         </div>
     </div>
 </div>
+
+<script th:fragment="javascript" th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    /* activate sidebar */
+    $('#sidebar').affix({
+        offset: {
+            top: 235
+        }
+    });
+
+    /* activate sidebar */
+    $('#tagcloud').affix({
+        offset: {
+            top: 235
+        }
+    });
+
+    /*]]>*/
+
+</script>
+
+
 </body>
 </html>

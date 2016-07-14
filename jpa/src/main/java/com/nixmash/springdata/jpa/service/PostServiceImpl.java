@@ -87,15 +87,15 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findByPostId(postDTO.getPostId());
         post.update(postDTO.getPostTitle(), postDTO.getPostContent());
 
-            saveNewTagsToDataBase(postDTO);
+        saveNewTagsToDataBase(postDTO);
 
-            post.getTags().clear();
-            for (TagDTO tagDTO : postDTO.getTags()) {
-                Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
+        post.getTags().clear();
+        for (TagDTO tagDTO : postDTO.getTags()) {
+            Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
 
-                if (!post.getTags().contains(tag))
-                    post.getTags().add(tag);
-            }
+            if (!post.getTags().contains(tag))
+                post.getTags().add(tag);
+        }
 
         return post;
     }
@@ -154,6 +154,7 @@ public class PostServiceImpl implements PostService {
             return Optional.of(post);
         }
     }
+
     @Transactional(readOnly = true)
     @Override
     public List<Post> getPostsWithDetail() {
@@ -226,8 +227,12 @@ public class PostServiceImpl implements PostService {
     public List<TagDTO> getTagCloud() {
         List<Tag> tagcloud = em.createNamedQuery("getTagCloud", Tag.class)
                 .getResultList();
-//        tagcloud.stream().forEach(t -> t.setTagCount(t.getPosts().size()));
-        List<TagDTO> tagDTOs = tagcloud.stream().map(TagDTO::new).collect(Collectors.toList());
+        List<TagDTO> tagDTOs = tagcloud
+                .stream()
+                .filter(t -> t.getPosts().size() > 0)
+                .limit(50)
+                .map(TagDTO::new)
+                .collect(Collectors.toList());
         return tagDTOs;
     }
     // endregion

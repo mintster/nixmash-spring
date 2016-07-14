@@ -948,4 +948,51 @@ h1.post-title {
 }
 
 /*</editor-fold>*/
+/*/<editor-fold> desc="TAG CLOUD----------------------------/ "*/
+
+ul.taglist {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    line-height: 1.2;
+}
+
+ul.taglist li {
+    display: inline-block;
+}
+
+ul.taglist li a {
+    display: inline-block;
+    margin-right: 9px;
+    padding: 2px 0;
+}
+
+ul.taglist li a.minTag {
+    font-size: 12px;
+}
+
+ul.taglist li a.smallTag {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+ul.taglist li a.mediumTag {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+ul.taglist li a.largeTag {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+ul.taglist li a.maxTag {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: .8;
+}
+
+
+/*</editor-fold>*/
+
 

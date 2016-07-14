@@ -68,6 +68,10 @@
             $("#more-posts-button-row").css('display', 'none');
     });
 
+    $.get("/json/posts/tagcloud", function (data) {
+        $("#sidebartags").html(data);
+    });
+
     function morePosts() {
         $.get("/json/posts/titles/tag/" + tagId + "/page/" + pageIndex, function (data) {
             $("#posts").append(data);
@@ -91,23 +95,7 @@
     /*]]>*/
 </script>
 
-<script type="application/javascript">
-
-    /* activate sidebar */
-    $('#sidebar').affix({
-        offset: {
-            top: 235
-        }
-    });
-
-    /* activate sidebar */
-    $('#tagcloud').affix({
-        offset: {
-            top: 235
-        }
-    });
-
-</script>
+<script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
 
 </body>
 </html>

@@ -1,9 +1,9 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
-import com.nixmash.springdata.jpa.model.Tag;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.Pair;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -32,13 +32,18 @@ public class PostsRestController {
     private static final Logger logger = LoggerFactory.getLogger(PostsRestController.class);
     private static final String TITLE_TEMPLATE = "title";
 
-    PostService postService;
-    TemplateService templateService;
+    private PostService postService;
+    private TemplateService templateService;
+    private ApplicationSettings applicationSettings;
+
+    private int minTagCount = 0;
+    private int maxTagCount = 0;
 
     @Autowired
-    public PostsRestController(PostService postService, TemplateService templateService) {
+    public PostsRestController(PostService postService, TemplateService templateService, ApplicationSettings applicationSettings) {
         this.postService = postService;
         this.templateService = templateService;
+        this.applicationSettings = applicationSettings;
     }
 
     // region get  Post Titles
@@ -72,9 +77,9 @@ public class PostsRestController {
     @RequestMapping(value = "/titles/tag/{tagid}/page/{pageNumber}",
             produces = "text/html;charset=UTF-8")
     public String getPostTitlesByTagId(@PathVariable long tagid,
-                                  @PathVariable int pageNumber,
-                                  HttpServletRequest request,
-                                  CurrentUser currentUser) {
+                                       @PathVariable int pageNumber,
+                                       HttpServletRequest request,
+                                       CurrentUser currentUser) {
         Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, 10);
         String result = StringUtils.EMPTY;
         for (Post post : posts) {
@@ -167,9 +172,52 @@ public class PostsRestController {
         return postService.getTagValues();
     }
 
-    @RequestMapping(value = "/tagcloud", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TagDTO> getTagCloud() {
-        return postService.getTagCloud();
+    @RequestMapping(value = "/tagcloud", produces = "text/html;charset=UTF-8")
+    public String getTagCloud() {
+
+        List<TagDTO> tags = postService.getTagCloud();
+        maxTagCount = tags.stream().mapToInt(TagDTO::getTagCount).max().orElse(0);
+        minTagCount = tags.stream().mapToInt(TagDTO::getTagCount).min().orElse(0);
+
+        StringBuilder tagHtml = new StringBuilder();
+        tagHtml.append("<ul class='taglist'>");
+        for (TagDTO tag : tags) {
+            tagHtml.append(tagHtml(tag));
+        }
+        tagHtml.append("</ul>");
+        return tagHtml.toString();
+    }
+
+    private String tagHtml(TagDTO tag) {
+        String tagPattern = "<li><a href='%s/posts/tag/%s' class='%s'>%s</a></li>";
+        String cssClass = getCssTag(tag.getTagCount());
+        String tagLowerCase = tag.getTagValue().toLowerCase();
+
+        return String.format(tagPattern,
+                applicationSettings.getBaseUrl(), tagLowerCase, cssClass, tag.getTagValue());
+    }
+
+    // endregion
+
+
+    // region Tag Cloud
+
+    private String getCssTag(int tagCount) {
+
+        String cssClass = "smallTag";
+        int diff = maxTagCount - minTagCount;
+        int distribution = diff / 5;
+
+        if (tagCount == maxTagCount)
+            cssClass = "maxTag";
+        else if (tagCount == minTagCount)
+            cssClass = "minTag";
+        else if (tagCount > (minTagCount + (distribution * 1.75)))
+            cssClass = "largeTag";
+        else if (tagCount > (minTagCount + distribution))
+            cssClass = "mediumTag";
+
+        return cssClass;
     }
 
     // endregion

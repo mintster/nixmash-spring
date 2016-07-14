@@ -39,7 +39,7 @@ public final class RssPostFeedView extends AbstractRssFeedView {
     @Override
     protected Channel newFeed() {
         Channel channel = new Channel("rss_2.0");
-        channel.setLink(applicationSettings.getRssBaseUrl() + "/posts/feed/");
+        channel.setLink(applicationSettings.getBaseUrl() + "/posts/feed/");
         channel.setTitle(applicationSettings.getRssChannelTitle());
         channel.setDescription(applicationSettings.getRssChannelDescription());
         postService.getOneMostRecent()
@@ -58,7 +58,7 @@ public final class RssPostFeedView extends AbstractRssFeedView {
 
     private Item createItem(Post post) {
         Item item = new Item();
-        item.setLink(applicationSettings.getRssBaseUrl() + "/posts/post/" + post.getPostName());
+        item.setLink(applicationSettings.getBaseUrl() + "/posts/post/" + post.getPostName());
         item.setTitle(post.getPostTitle());
         item.setDescription(createDescription(post));
         item.setPubDate(getPostDate(post));

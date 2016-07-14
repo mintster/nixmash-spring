@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class ApplicationSettings {
 
 	private Boolean isDemoSite;
+	private String baseUrl;
 
 	//region Social Properties
 
@@ -37,7 +38,6 @@ public class ApplicationSettings {
 
 	//region RSS Properties
 
-	private String rssBaseUrl;
 	private String rssChannelTitle;
 	private String rssChannelDescription;
 
@@ -147,12 +147,12 @@ public class ApplicationSettings {
 		this.profileIconPath = profileIconPath;
 	}
 
-	public String getRssBaseUrl() {
-		return rssBaseUrl;
+	public String getBaseUrl() {
+		return baseUrl;
 	}
 
-	public void setRssBaseUrl(String rssBaseUrl) {
-		this.rssBaseUrl = rssBaseUrl;
+	public void setBaseUrl(String baseUrl) {
+		this.baseUrl = baseUrl;
 	}
 
 	public String getRssChannelTitle() {

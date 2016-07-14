@@ -61,6 +61,10 @@
         });
     });
 
+    $.get("/json/posts/tagcloud", function (data) {
+        $("#sidebartags").html(data);
+    });
+
     function morePosts() {
         $.get("/json/posts/page/" + pageIndex, function (data) {
             $("#posts").append(data);
@@ -85,23 +89,8 @@
     /*]]>*/
 </script>
 
-<script type="application/javascript">
+<script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
 
-    /* activate sidebar */
-    $('#sidebar').affix({
-        offset: {
-            top: 235
-        }
-    });
-
-    /* activate sidebar */
-    $('#tagcloud').affix({
-        offset: {
-            top: 235
-        }
-    });
-
-</script>
 
 </body>
 </html>
