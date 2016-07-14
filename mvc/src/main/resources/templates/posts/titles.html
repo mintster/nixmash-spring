@@ -93,13 +93,11 @@
         }
     });
 
-    /* activate scrollspy menu */
-    var $body   = $(document.body);
-    var navHeight = $('.navbar').outerHeight(true) + 20;
-
-    $body.scrollspy({
-        target: '#leftCol',
-        offset: navHeight
+    /* activate sidebar */
+    $('#tagcloud').affix({
+        offset: {
+            top: 235
+        }
     });
 
 </script>

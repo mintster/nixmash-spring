@@ -8,18 +8,26 @@
 
             <a th:href="@{/posts}" class="list-group-item"
                th:classappend="${activeTab == 'posts'} ? 'active'"
-               th:text="#{posts.sidebar.menu.recent}">[Recent Posts]<i class="glyphicon glyphicon-chevron-right"></i></a>
+               th:text="#{posts.sidebar.menu.recent}">[Recent Posts]
+                <i class="glyphicon glyphicon-chevron-right"></i></a>
 
             <a th:href="@{/posts/titles}" class="list-group-item"
                th:classappend="${activeTab == 'titles'} ? 'active'"
-               th:text="#{posts.sidebar.menu.titles}">[Post Titles]<i class="glyphicon glyphicon-chevron-right"></i></a>
+               th:text="#{posts.sidebar.menu.titles}">[Post Titles]
+                <i class="glyphicon glyphicon-chevron-right"></i></a>
 
             <a th:href="@{/posts/feed}" class="list-group-item" target="_blank"
-               th:text="#{posts.sidebar.menu.rss}">[Post RSS Feed]<i class="glyphicon glyphicon-chevron-right"></i></a>
+               th:text="#{posts.sidebar.menu.rss}">[Post RSS Feed]
+                <i class="glyphicon glyphicon-chevron-right"></i></a>
 
         </ul>
-    </div>
 
+        <div id="tagcloud">
+            <div class="well">
+                Look, I'm in a well!
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

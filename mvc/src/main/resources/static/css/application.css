@@ -899,24 +899,33 @@ h1.post-title {
 /* Sidenav for Docs
 -------------------------------------------------- */
 
+#leftCol {
+    margin-top: 0;
+}
+
 .affix-top,.affix{
     position: static;
 }
 
-#leftCol {
+#leftCol, #tagcloud {
     margin-top: 30px;
 }
 
 @media (min-width: 979px) {
-    #sidebar.affix-top {
+    #sidebar.affix-top, #tagcloud.affix-top {
         position: static;
         width:245px;
     }
 
-    #sidebar.affix {
+    #sidebar.affix, #tagcloud.affix {
         position: fixed;
         top:100px;
         width:245px;
+    }
+
+    #tagcloud.affix
+    {
+      top: 224px;
     }
 
     #sidebar a i.glyphicon.glyphicon-chevron-right {
@@ -936,9 +945,6 @@ h1.post-title {
         display: none;
     }
 
-    #leftCol {
-        margin-top: 0px;
-    }
 }
 
 /*</editor-fold>*/

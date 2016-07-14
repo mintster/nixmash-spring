@@ -26,6 +26,7 @@ import static com.nixmash.springdata.jpa.utils.PostTestUtils.*;
 import static com.nixmash.springdata.jpa.utils.PostUtils.postDtoToPost;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -113,7 +114,7 @@ public class PostServiceTests {
         ZonedDateTime firstPostDate = posts.get(0).getPostDate();
         ZonedDateTime secondPostDate = posts.get(1).getPostDate();
 
-      // firstPostDate is higher (more recent) than secondPostDate with [sort: postDate: DESC]
+        // firstPostDate is higher (more recent) than secondPostDate with [sort: postDate: DESC]
         assertTrue(firstPostDate.compareTo(secondPostDate) > 0);
     }
 
@@ -121,7 +122,7 @@ public class PostServiceTests {
     public void findPostsByTagId() {
         Slice<Post> posts = postService.getPostsByTagId(1, 0, 3);
 
-       // posts are retrieved for tagId #1 as all 5 H2 posts have tagId #1
+        // posts are retrieved for tagId #1 as all 5 H2 posts have tagId #1
         assertEquals(posts.getSize(), 3);
 
     }
@@ -154,5 +155,12 @@ public class PostServiceTests {
 
         Post retrieved = postService.getPostById(5L);
         assertEquals(retrieved.getTags().size(), 1);
+    }
+
+    @Test
+    public void getTagCloud_TagListNotNull() throws Exception {
+        List<TagDTO> tagcloud = postService.getTagCloud();
+        assertThat(tagcloud.get(0).getTagCount(), greaterThan(0));
+        assertNotNull(tagcloud);
     }
 }

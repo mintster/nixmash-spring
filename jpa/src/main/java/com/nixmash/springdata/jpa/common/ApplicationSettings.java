@@ -11,6 +11,8 @@ public class ApplicationSettings {
 
 	private Boolean isDemoSite;
 
+	//region Social Properties
+
 	private String twitterAppId;
 	private String twitterAppSecret;
 	private String facebookAppId;
@@ -19,6 +21,10 @@ public class ApplicationSettings {
 	private String googleAppSecret;
 	private String googleMapKey;
 
+	//endregion
+
+	// region User Profile Image Properties
+
 	private String profileImagePath;
 	private String profileImageUrlRoot;
 
@@ -26,6 +32,16 @@ public class ApplicationSettings {
 	private String profileIconUrlRoot;
 
 	private String editorImagePlacemarker;
+
+	// endregion
+
+	//region RSS Properties
+
+	private String rssBaseUrl;
+	private String rssChannelTitle;
+	private String rssChannelDescription;
+
+	//endregion
 
 	public String getEditorImagePlacemarker() {
 		return editorImagePlacemarker;
@@ -131,4 +147,27 @@ public class ApplicationSettings {
 		this.profileIconPath = profileIconPath;
 	}
 
+	public String getRssBaseUrl() {
+		return rssBaseUrl;
+	}
+
+	public void setRssBaseUrl(String rssBaseUrl) {
+		this.rssBaseUrl = rssBaseUrl;
+	}
+
+	public String getRssChannelTitle() {
+		return rssChannelTitle;
+	}
+
+	public void setRssChannelTitle(String rssChannelTitle) {
+		this.rssChannelTitle = rssChannelTitle;
+	}
+
+	public String getRssChannelDescription() {
+		return rssChannelDescription;
+	}
+
+	public void setRssChannelDescription(String rssChannelDescription) {
+		this.rssChannelDescription = rssChannelDescription;
+	}
 }

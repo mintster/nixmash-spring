@@ -93,6 +93,11 @@ public class PostsController {
         return POSTS_LIST_VIEW;
     }
 
+    @RequestMapping(value = "/feed", produces = "application/*")
+    public String feed() {
+        return "rssPostFeedView";
+    }
+
     @RequestMapping(value = "/titles", method = GET)
     public String titles() {
         return POSTS_TITLES_VIEW;

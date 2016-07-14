@@ -238,7 +238,13 @@ public class PostsControllerTests extends AbstractContext {
         this.mockMvc.perform(get("/posts/titles"))
                 .andExpect(status().isOk())
                 .andExpect(view().name(POSTS_TITLES_VIEW));
+    }
 
+    @Test
+    public void postsFeedLoads() throws Exception {
+        this.mockMvc.perform(get("/posts/feed"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/rss+xml"));
     }
 
     @Test

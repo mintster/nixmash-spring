@@ -1,5 +1,7 @@
 package com.nixmash.springdata.jpa.dto;
 
+import com.nixmash.springdata.jpa.model.Tag;
+
 import java.io.Serializable;
 
 /**
@@ -11,12 +13,13 @@ public class TagDTO implements Serializable {
 
     private long tagId = -1;
     private String tagValue;
+    private int tagCount = 0;
 
     public TagDTO() {
     }
 
     public TagDTO(String tagValue) {
-        this.tagValue= tagValue;
+        this.tagValue = tagValue;
     }
 
 
@@ -36,10 +39,23 @@ public class TagDTO implements Serializable {
         this.tagValue = tagValue;
     }
 
+    public int getTagCount() {
+        return tagCount;
+    }
+
+    public void setTagCount(int tagCount) {
+        this.tagCount = tagCount;
+    }
+
     public TagDTO(long tagId, String tagValue) {
         this.tagId = tagId;
         this.tagValue = tagValue;
     }
 
+    public TagDTO(Tag tag) {
+        this.tagId = tag.getTagId();
+        this.tagValue = tag.getTagValue();
+        this.tagCount = tag.getPosts().size();
+    }
 }
 

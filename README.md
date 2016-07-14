@@ -3,7 +3,7 @@ NixMash Spring
 
 NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and supporting technologies. Implemented in project:
 
-*Spring Boot, Spring Data JPA, Spring Solr, Spring Web MVC, Spring Security, Spring Social, Hibernate, Mockito, Json, Gradle, Spring Mail, Jsoup, Multi-Profile Configurations, JPA Auditing, Webjars, Dandelion, Velocity Templating, @PreAuthorize Method Security, Custom Validators, @Controller Advice, Custom Exception Handling, Tagging with Typeahead, Bootstrap3, Site Administration Dashboard and Thymeleaf*
+*Spring Boot, Spring Data JPA, Spring Solr, Spring Web MVC, Spring Security, Spring Social, Hibernate, Mockito, Json, Gradle, Spring Mail, Jsoup, Multi-Profile Configurations, JPA Auditing, Webjars, Dandelion, Velocity Templating, @PreAuthorize Method Security, REST Templates, RSS View Resolver, Custom Validators, @Controller Advice, Custom Exception Handling, Tagging with Typeahead, Bootstrap3, Site Administration Dashboard and Thymeleaf*
 
 The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
 
@@ -62,7 +62,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display (In Progress)##
 
 - Demo Post Messages to all users NOT in ROLE_POSTS group
+- Affixed Sidebar Menu in Posts
+- Post Title Display, also tags on Post Title Page display new Titles for Tag page
+- RSS subscription using Spring `AbstractRssFeedView` superclass for RSS Feed views
 - [Post: Displaying Content in Thymeleaf When User NOT in a Role](http://nixmash.com/java/displaying-content-in-thymeleaf-when-user-not-in-a-role/)
+- [Post: Affixed Sidebar Content in Bootstrap 3](http://nixmash.com/java/affixed-sidebar-content-in-bootstrap-3/)
 
 [[back to top](#nixmash-spring)]
 

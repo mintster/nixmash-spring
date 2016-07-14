@@ -8,6 +8,14 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "tags")
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "getTagCloud",
+                query = "select count(*) as `tagCount`, t.tag_value, t.tag_id from tags t, posts p" +
+                        " inner join post_tag_ids pt on p.post_id = pt.post_id where pt.tag_id = t.tag_id " +
+                        "group by t.tag_value order by t.tag_value",
+                resultClass = Tag.class)
+})
 public class Tag implements Serializable {
 
     private static final long serialVersionUID = -5531381747015731447L;
@@ -15,12 +23,13 @@ public class Tag implements Serializable {
     private long tagId;
     private String tagValue;
     private Set<Post> posts;
+    private int tagCount = 0;
 
     public Tag() {
     }
 
     public Tag(String tagValue) {
-        this.tagValue= tagValue;
+        this.tagValue = tagValue;
     }
 
     @Id
@@ -53,13 +62,22 @@ public class Tag implements Serializable {
         this.posts = posts;
     }
 
+    @Transient
+    public int getTagCount() {
+        return tagCount;
+    }
+
+    public void setTagCount(int tagCount) {
+        this.tagCount = tagCount;
+    }
+
     @Override
     public String toString() {
-          return getTagValue();
+        return getTagValue();
     }
 
     public void update(final String tagValue) {
-        this.tagValue= tagValue;
+        this.tagValue = tagValue;
     }
 
     public static Builder getBuilder(Long tagId, String tagValue) {
@@ -73,7 +91,7 @@ public class Tag implements Serializable {
         public Builder(Long tagId, String tagValue) {
             built = new Tag();
             built.tagId = tagId;
-            built.tagValue= tagValue;
+            built.tagValue = tagValue;
         }
 
         public Tag build() {

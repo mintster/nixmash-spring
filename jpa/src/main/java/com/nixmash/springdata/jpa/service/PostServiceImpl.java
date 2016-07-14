@@ -26,7 +26,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by daveburke on 6/1/16.
@@ -139,6 +141,19 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll(sortByPostDateDesc());
     }
 
+    @Override
+    public Optional<Post> getOneMostRecent() {
+        logger.debug("Getting most recent post");
+        Page<Post> posts = postRepository.findAll(new PageRequest(0, 1, sortByPostDateDesc()));
+        if (posts.getContent().isEmpty()) {
+            logger.debug("No documents");
+            return Optional.empty();
+        } else {
+            Post post = posts.getContent().get(0);
+            logger.trace("Returning {}", post);
+            return Optional.of(post);
+        }
+    }
     @Transactional(readOnly = true)
     @Override
     public List<Post> getPostsWithDetail() {
@@ -206,6 +221,15 @@ public class PostServiceImpl implements PostService {
         return null;
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<TagDTO> getTagCloud() {
+        List<Tag> tagcloud = em.createNamedQuery("getTagCloud", Tag.class)
+                .getResultList();
+//        tagcloud.stream().forEach(t -> t.setTagCount(t.getPosts().size()));
+        List<TagDTO> tagDTOs = tagcloud.stream().map(TagDTO::new).collect(Collectors.toList());
+        return tagDTOs;
+    }
     // endregion
 
     // region Security Support

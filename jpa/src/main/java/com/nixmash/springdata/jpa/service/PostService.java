@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -33,11 +34,16 @@ public interface PostService {
     @Transactional(readOnly = true)
     List<Post> getAllPosts();
 
+    Optional<Post> getOneMostRecent();
+
     @Transactional(readOnly = true)
     List<Post> getPostsWithDetail();
 
     @Transactional(readOnly = true)
     Set<TagDTO> getTagDTOs();
+
+    @Transactional(readOnly = true)
+    List<TagDTO> getTagCloud();
 
     boolean canUpdatePost(Authentication authentication, Long postId);
 

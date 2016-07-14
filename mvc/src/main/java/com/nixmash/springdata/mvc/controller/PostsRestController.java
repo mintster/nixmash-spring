@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc.controller;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.Tag;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.Pair;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -20,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.*;
 
 
 @RestController
@@ -123,7 +124,7 @@ public class PostsRestController {
 
     // endregion
 
-// region get Posts by Tag
+    // region get Posts by Tag
 
     @RequestMapping(value = "/tag/{tagid}/page/{pageNumber}",
             produces = "text/html;charset=UTF-8")
@@ -154,6 +155,8 @@ public class PostsRestController {
 
     // endregion
 
+    // region get Tags
+
     @RequestMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
     public Set<TagDTO> getAllTagDTOs() {
         return postService.getTagDTOs();
@@ -164,6 +167,12 @@ public class PostsRestController {
         return postService.getTagValues();
     }
 
+    @RequestMapping(value = "/tagcloud", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TagDTO> getTagCloud() {
+        return postService.getTagCloud();
+    }
+
+    // endregion
 
     // region Key-Value Json
 

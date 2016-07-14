@@ -97,6 +97,7 @@ public abstract class JpaCommonConfig {
     protected Properties getJpaProperties() {
         Properties properties = new Properties();
         properties.setProperty(HBM2DDL_AUTO, getHbm2ddl());
+        properties.setProperty(HBM2DDL_IMPORT_FILES_SQL_EXTRACTOR, getH2SqlExtractor());
         properties.setProperty(GENERATE_STATISTICS, TRUE.toString());
         properties.setProperty(SHOW_SQL, getShowSql());
         properties.setProperty(FORMAT_SQL, TRUE.toString());
@@ -152,13 +153,16 @@ public abstract class JpaCommonConfig {
         return environment.getProperty("hibernate.showsql", "TRUE");
     }
 
-
     public String getHibernateCharSet() {
         return environment.getProperty("database.hibernateCharSet", "UTF-8");
     }
 
     public String getDatabaseValidationQuery() {
         return environment.getProperty("database.validation.query", UNDEFINED);
+    }
+
+    public String getH2SqlExtractor() {
+        return environment.getProperty("hibernate.hbm2ddl.import_files_sql_extractor",UNDEFINED);
     }
 
     // endregion
