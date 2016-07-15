@@ -61,12 +61,16 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display (In Progress)##
 
-- Demo Post Messages to all users NOT in ROLE_POSTS group
+- Tagcloud
+- Display of Message to all users NOT in ROLE_POSTS group on Add Post page
 - Affixed Sidebar Menu in Posts
 - Post Title Display, also tags on Post Title Page display new Titles for Tag page
 - RSS subscription using Spring `AbstractRssFeedView` superclass for RSS Feed views
 - [Post: Displaying Content in Thymeleaf When User NOT in a Role](http://nixmash.com/java/displaying-content-in-thymeleaf-when-user-not-in-a-role/)
 - [Post: Affixed Sidebar Content in Bootstrap 3](http://nixmash.com/java/affixed-sidebar-content-in-bootstrap-3/)
+- [Post: RSS Feeds with Spring Boot](http://nixmash.com/java/rss-feeds-with-spring-boot/)
+- [Post: Native Sql Queries in Spring JPA](http://nixmash.com/java/native-sql-queries-in-spring-jpa/)
+- [Post: The Making of a Tag Cloud in Spring](http://nixmash.com/java/the-making-of-a-tag-cloud-in-spring/)
 
 [[back to top](#nixmash-spring)]
 
