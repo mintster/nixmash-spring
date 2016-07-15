@@ -48,7 +48,6 @@ public class PostServiceImpl implements PostService {
         this.tagRepository = tagRepository;
     }
 
-
     @PersistenceContext
     private EntityManager em;
 
@@ -222,6 +221,7 @@ public class PostServiceImpl implements PostService {
         return null;
     }
 
+
     @Transactional(readOnly = true)
     @Override
     public List<TagDTO> getTagCloud() {
@@ -235,6 +235,7 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
         return tagDTOs;
     }
+
     // endregion
 
     // region Security Support
