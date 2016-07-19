@@ -1,6 +1,8 @@
 package com.nixmash.springdata.mail.service;
 
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.model.Post;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.tools.generic.EscapeTool;
 import org.apache.velocity.tools.generic.MathTool;
@@ -25,6 +27,9 @@ public class TemplateServiceImpl implements TemplateService {
     Environment environment;
 
     @Autowired
+    ApplicationSettings applicationSettings;
+
+    @Autowired
     public TemplateServiceImpl(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
@@ -44,6 +49,8 @@ public class TemplateServiceImpl implements TemplateService {
 
         model.put("post", post);
         model.put("postCreated", postCreated);
+        model.put("shareSiteName", StringUtils.deleteWhitespace(applicationSettings.getSiteName()));
+        model.put("shareUrl", String.format("%s/posts/post/%s", applicationSettings.getBaseUrl(), post.getPostName()));
 
         try {
             String displayType = templateName == null ? post.getDisplayType().name().toLowerCase(): templateName;

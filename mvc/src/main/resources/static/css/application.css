@@ -994,5 +994,36 @@ ul.taglist li a.maxTag {
 
 
 /*</editor-fold>*/
+/*/<editor-fold> desc="SHARE LINKS----------------------------/ "*/
+
+.post-footer .share-links {
+    margin-top: 4px;
+    margin-bottom: 6px;
+}
+#post-footer .share-links:before {
+    clear: both;
+}
+#post-footer .share-links {
+    margin-top: 15px;
+}
+
+img.share-img-sm:hover, img.share-img-lg:hover {
+    opacity: 1;
+}
+
+img.share-img-sm {
+    max-width: 26px;
+    opacity: .6;
+}
+img.share-img-lg {
+    max-width: 35px;
+    opacity: .6;
+    margin-right: 3px;
+}
+a.share {
+
+}
+
+/*</editor-fold>*/
 
 

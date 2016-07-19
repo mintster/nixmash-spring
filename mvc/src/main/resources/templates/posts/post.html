@@ -40,6 +40,27 @@
                 <div class="post-tags">
                     <span class="taglink"  th:each="tag : ${post.tags }"><a th:href="@{|/posts/tag/${#strings.toLowerCase(tag.tagValue)}|}" th:text="${tag.tagValue}" class="big label label-default">[TAG]</a></span>
                 </div>
+                <div class="share-links">
+                    <a class="share share_email"
+                       th:href="|mailto:?subject=${post.postTitle}&amp;body=%20${shareUrl}|">
+                        <img src="/images/share/email.png" title="Email" class="share-img-lg" alt="Email this to someone" /></a>
+                    <a class="share share-twitter"
+                       th:href="|http://twitter.com/share?url=${shareUrl}/&amp;text=${post.postTitle}+via+%40${shareSiteName}|"
+                       target="_blank">
+                        <img src="/images/share/twitter.png" title="Twitter" class="share-img-lg" alt="Tweet about this on Twitter" /></a>
+                    <a  class="share share-linkedin"
+                        th:href="|http://www.linkedin.com/shareArticle?mini=true&amp;url=${shareUrl}|"
+                        target="_blank">
+                        <img src="/images/share/linkedin.png" title="LinkedIn" class="share-img-lg" alt="Share on LinkedIn" /></a>
+                    <a class="share share-google"
+                       th:href="|https://plus.google.com/share?url=${shareUrl}|"
+                       target="_blank">
+                        <img src="/images/share/google.png" title="Google+" class="share-img-lg" alt="Share on Google+" /></a>
+                    <a class="share share-facebook"
+                       th:href="|http://www.facebook.com/sharer.php?u=${shareUrl}|"
+                       target="_blank">
+                        <img src="/images/share/facebook.png" title="Facebook" class="share-img-lg" alt="Share on Facebook" /></a>
+                </div>
                 <div class="footer-links">
                     <div class="source-link" th:if="${post.postType.name() == 'LINK'}">
                         <a th:href="${post.postLink}" th:text="|Source: ${post.postSource}|" target="_blank">[Post Source]</a>

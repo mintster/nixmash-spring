@@ -1,5 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
@@ -72,16 +73,18 @@ public class PostsController {
     private final WebUI webUI;
     private final JsoupService jsoupService;
     private final PostService postService;
+    private final ApplicationSettings applicationSettings;
 
     // endregion
 
     // region constructor
 
     @Autowired
-    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService) {
+    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService,  ApplicationSettings applicationSettings) {
         this.webUI = webUI;
         this.jsoupService = jsoupService;
         this.postService = postService;
+        this.applicationSettings = applicationSettings;
     }
 
     // endregion
@@ -138,6 +141,8 @@ public class PostsController {
         post.setPostContent(PostUtils.formatPostContent(post));
         model.addAttribute("post", post);
         model.addAttribute("postCreated", postCreated);
+        model.addAttribute("shareSiteName", StringUtils.deleteWhitespace(applicationSettings.getSiteName()));
+        model.addAttribute("shareUrl", String.format("%s/posts/post/%s", applicationSettings.getBaseUrl(), post.getPostName()));
         return POSTS_PERMALINK_VIEW;
     }
 

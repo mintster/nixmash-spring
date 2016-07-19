@@ -11,6 +11,7 @@ public class ApplicationSettings {
 
 	private Boolean isDemoSite;
 	private String baseUrl;
+	private String siteName;
 
 	//region Social Properties
 
@@ -169,5 +170,13 @@ public class ApplicationSettings {
 
 	public void setRssChannelDescription(String rssChannelDescription) {
 		this.rssChannelDescription = rssChannelDescription;
+	}
+
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
 	}
 }

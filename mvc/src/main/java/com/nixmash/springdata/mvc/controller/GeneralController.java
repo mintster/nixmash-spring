@@ -70,7 +70,6 @@ public class GeneralController {
         mav.addObject("errorbody", "You are not authorized to view this page.");
         mav.setViewName(ERROR_403_VIEW);
         return mav;
-
     }
 
     @RequestMapping(value = "/json/badges/update", method = RequestMethod.POST)
