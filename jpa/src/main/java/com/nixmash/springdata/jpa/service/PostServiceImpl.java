@@ -8,6 +8,7 @@ import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
+import com.nixmash.springdata.jpa.repository.LikeRepository;
 import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.repository.TagRepository;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -24,10 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -41,11 +39,13 @@ public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
     private TagRepository tagRepository;
+    private LikeRepository likeRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository) {
+    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository, LikeRepository likeRepository) {
         this.postRepository = postRepository;
         this.tagRepository = tagRepository;
+        this.likeRepository = likeRepository;
     }
 
     @PersistenceContext
@@ -171,6 +171,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPostsByTagId(long tagId) {
         return postRepository.findAllByTagId(tagId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getPostsByUserLikes(Long userId) {
+        List<Post> posts = em.createNamedQuery("Post.getByPostIds", Post.class)
+                .setParameter("postIds", likeRepository.findLikedPostIds(userId))
+                .getResultList();
+        return posts;
     }
 
     //endregion

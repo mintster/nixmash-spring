@@ -33,6 +33,18 @@
 
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
+            <div class="like-button">
+                <i class="fa fa-thumbs-up"></i>
+                <button class="btn-like" onclick="likePost(50);">Like</button>
+                <span id="output-50">10</span>
+            </div>
+
+            <div class="like-button">
+                <i class="fa fa-thumbs-up"></i>
+                <button class="btn-like" onclick="likePost(100);">Like</button>
+                <span id="output-100">10</span>
+            </div>
+
             <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Post List</div>
             <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>
 
@@ -48,6 +60,22 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
 
+    function likePost(postId) {
+        var currentUser = [[${currentUser}]];
+
+        if (currentUser) {
+            $.getJSON('/json/posts/post/like/' + postId, postId, function (data) {
+                $('#output-' + postId).html(function (i, val) {
+                    return val * 1 + data
+                });
+            });
+        }
+        else {
+            showDialog("Please Login", "You must be logged-in to like posts.");
+        }
+    }
+
+
     var pageIndex = 0;
 
     $.get("/json/posts/page/0", function (data) {
@@ -56,7 +84,7 @@
     }).success(function () {
         $('.post:odd').addClass("odd");
         $('#morePosts').css('display', 'inline-block');
-        $('pre code').each(function(i, block) {
+        $('pre code').each(function (i, block) {
             hljs.highlightBlock(block);
         });
     });
@@ -70,7 +98,7 @@
             $("#posts").append(data);
             pageIndex++;
         }).success(function () {
-            $('pre code').each(function(i, block) {
+            $('pre code').each(function (i, block) {
                 hljs.highlightBlock(block);
             });
             $('.post:odd').addClass("odd")
@@ -89,7 +117,9 @@
     /*]]>*/
 </script>
 
-<script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
+<script th:replace="fragments/posts/sidebar :: javascript">Post
+Sidebar
+Scripts</script>
 
 
 </body>

@@ -183,3 +183,13 @@ CREATE TABLE post_tag_ids
   CONSTRAINT fk_posts_post_id FOREIGN KEY (post_id) REFERENCES posts (post_id),
   CONSTRAINT fk_tags_tag_id FOREIGN KEY (tag_id) REFERENCES tags (tag_id)
 );
+
+CREATE TABLE user_likes (
+  like_id bigint(20) NOT NULL AUTO_INCREMENT,
+  user_id bigint(20) DEFAULT NULL,
+  item_id bigint(20) DEFAULT NULL,
+  content_type_id int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (like_id),
+  UNIQUE KEY like_ids_index (like_id),
+  CONSTRAINT fk_likes_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
+);

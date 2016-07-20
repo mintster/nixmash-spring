@@ -163,4 +163,19 @@ public class PostServiceTests {
         assertThat(tagcloud.get(0).getTagCount(), greaterThan(0));
         assertNotNull(tagcloud);
     }
+
+    @Test
+    public void getPostsByUserLikes() {
+        // userId 3 "keith" has 3 likes, userId 2 "user" has 2 likes
+        List<Post> posts = postService.getPostsByUserLikes(3L);
+        assertNotNull(posts);
+    }
+
+    @Test
+    public void getLikedPostsForUserWithNoLikes_NotNull() {
+        // no likes for userId = 4 in H2 data
+        List<Post> posts = postService.getPostsByUserLikes(4L);
+        assertNotNull(posts);
+        assertEquals(posts.size(), 0);
+    }
 }

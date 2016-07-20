@@ -17,13 +17,12 @@ import java.util.Set;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * Created by daveburke on 5/31/16.
- */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "posts")
 @Access(value = FIELD)
+@NamedQuery(name = "Post.getByPostIds",
+        query = "SELECT p FROM Post p WHERE p.postId IN :postIds")
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 3533657789336113957L;

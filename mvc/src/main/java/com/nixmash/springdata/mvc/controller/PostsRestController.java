@@ -160,6 +160,14 @@ public class PostsRestController {
 
     // endregion
 
+    // region Likes
+
+    @RequestMapping(value = "/post/like/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public int likePost(@PathVariable("postId") int postId) {
+        return -1;
+    }
+    // endregion
+
     // region get Tags
 
     @RequestMapping(value = "/tags", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -199,7 +207,6 @@ public class PostsRestController {
     }
 
     // endregion
-
 
     // region Tag Cloud
 

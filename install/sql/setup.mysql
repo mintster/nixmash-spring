@@ -349,3 +349,22 @@ CREATE TABLE `post_tag_ids` (
   CONSTRAINT `fk_tags_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
+
+-- ----------------------------
+-- Table structure for user_likes
+-- ----------------------------
+
+DROP TABLE IF EXISTS `user_likes`;
+CREATE TABLE `user_likes` (
+  `like_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `item_id` bigint(20) NOT NULL,
+  `content_type` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`like_id`),
+  UNIQUE KEY `like_ids_index` (`like_id`),
+  KEY `like_user_id_index` (`user_id`),
+  KEY `like_item_id_index` (`item_id`),
+  KEY `like_content_type_index` (`content_type`),
+  CONSTRAINT `fk_likes_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+

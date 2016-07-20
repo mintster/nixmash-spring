@@ -141,8 +141,10 @@ public class PostsController {
         post.setPostContent(PostUtils.formatPostContent(post));
         model.addAttribute("post", post);
         model.addAttribute("postCreated", postCreated);
-        model.addAttribute("shareSiteName", StringUtils.deleteWhitespace(applicationSettings.getSiteName()));
-        model.addAttribute("shareUrl", String.format("%s/posts/post/%s", applicationSettings.getBaseUrl(), post.getPostName()));
+        model.addAttribute("shareSiteName",
+                StringUtils.deleteWhitespace(applicationSettings.getSiteName()));
+        model.addAttribute("shareUrl",
+                String.format("%s/posts/post/%s", applicationSettings.getBaseUrl(), post.getPostName()));
         return POSTS_PERMALINK_VIEW;
     }
 

@@ -29,6 +29,9 @@ public interface PostService {
     @Transactional
     Post update(PostDTO postDTO) throws PostNotFoundException;
 
+    @Transactional(readOnly = true)
+    List<Post> getPostsByUserLikes(Long userId);
+
     Post getPostById(Long postId) throws PostNotFoundException;
 
     @Transactional(readOnly = true)
