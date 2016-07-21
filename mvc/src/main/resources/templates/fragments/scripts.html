@@ -27,6 +27,21 @@
 
         }
 
+        function likePost(postId) {
+            var currentUser = [[${currentUser}]];
+
+            if (currentUser) {
+                $.getJSON('/json/posts/post/like/' + postId, postId, function (data) {
+                    $('#output-' + postId).html(function (i, val) {
+                        return val * 1 + data
+                    });
+                });
+            }
+            else {
+                showDialog("Please Login", "You must be logged-in to like posts.");
+            }
+        }
+
     </script>
 
 </div>

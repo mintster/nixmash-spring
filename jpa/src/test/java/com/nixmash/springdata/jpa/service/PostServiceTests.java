@@ -7,6 +7,7 @@ import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.repository.LikeRepository;
 import com.nixmash.springdata.jpa.utils.PostTestUtils;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.hamcrest.Matchers;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.nixmash.springdata.jpa.utils.PostTestUtils.*;
 import static com.nixmash.springdata.jpa.utils.PostUtils.postDtoToPost;
@@ -38,6 +40,9 @@ public class PostServiceTests {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    LikeRepository likeRepository;
 
     @Test
     public void addPostDTO() throws DuplicatePostNameException {
@@ -177,5 +182,49 @@ public class PostServiceTests {
         List<Post> posts = postService.getPostsByUserLikes(4L);
         assertNotNull(posts);
         assertEquals(posts.size(), 0);
+    }
+
+    @Test
+    public void addLikedPost_UserWithNoLikes_ReturnsPlusOne()
+            throws PostNotFoundException {
+
+        //  H2DATA:  no likes for any posts for userId 4 ------------------------------------ */
+
+        // get initial LikeCount for postId 3
+        int likeCount = postService.getPostById(3L).getLikesCount();
+
+        // new Like for postId from userId 4. Should return increment value 1
+        int increment = postService.addPostLike(4L, 3L);
+        assertEquals(increment, 1);
+
+        // LikeCount for postId 3 should increment by 1
+        int updatedLikeCount = postService.getPostById(3L).getLikesCount();
+        assertEquals(updatedLikeCount, likeCount + 1);
+
+        // confirm like added to user_likes table
+        Optional<Long> likeId = likeRepository.findPostLikeIdByUserId(4L, 3L);
+        assert(likeId.isPresent());
+    }
+
+    @Test
+    public void addLikedPost_UserPreviouslyLikedPost_ReturnsMinusOne()
+            throws PostNotFoundException {
+
+        //  H2DATA: userId  3 has pre-existing Like for postId 3 ------------------------------------ */
+
+        // initial Like count for postId 3
+        int likeCount = postService.getPostById(3L).getLikesCount();
+
+        // addPostLike(userId, postId) should return -1 which removes existing Post Like
+        int increment = postService.addPostLike(3L, 3L);
+        assertEquals(increment, -1);
+
+        // postId 3 should have one less LikeCount
+        int updatedLikeCount = postService.getPostById(3L).getLikesCount();
+        assertEquals(updatedLikeCount, likeCount - 1);
+
+        // pre-existing like removes record from user_likes table: should NOT be present
+        Optional<Long> likeId = likeRepository.findPostLikeIdByUserId(3L, 3L);
+        assert(!likeId.isPresent());
     }
 }

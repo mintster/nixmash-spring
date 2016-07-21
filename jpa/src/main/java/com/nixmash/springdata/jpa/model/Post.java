@@ -279,6 +279,10 @@ public class Post implements Serializable {
         this.postName = PostUtils.createSlug(postTitle);
     }
 
+    public void updateLikes(int likeIncrement) {
+        this.likesCount = this.likesCount + likeIncrement;
+    }
+
     @Override
     public String toString() {
         return "Post{" +

@@ -53,6 +53,15 @@ public class Like {
         this.contentTypeId = contentTypeId;
     }
 
+    public Like() {
+    }
+
+    public Like(long userId, long itemId, int contentTypeId) {
+        this.userId = userId;
+        this.itemId = itemId;
+        this.contentTypeId = contentTypeId;
+    }
+
     @Override
     public String toString() {
         return "Like{" +

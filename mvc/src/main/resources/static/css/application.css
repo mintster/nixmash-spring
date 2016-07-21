@@ -996,17 +996,23 @@ ul.taglist li a.maxTag {
 /*</editor-fold>*/
 /*/<editor-fold> desc="SHARE LINKS----------------------------/ "*/
 
-.post-footer .share-links {
-    margin-top: 4px;
-    margin-bottom: 6px;
-}
-#post-footer .share-links:before {
+#post-footer .share-like-row:before {
     clear: both;
+    width: 100%;
 }
-#post-footer .share-links {
+#post-footer .share-like-row {
     margin-top: 15px;
 }
 
+.post-footer .share-like-row{
+    margin-top: 4px;
+    margin-bottom: 6px;
+}
+
+.post-footer .share-links, #post-footer .share-links {
+    display: inline-block;
+    margin-right: 6px;
+}
 img.share-img-sm:hover, img.share-img-lg:hover {
     opacity: 1;
 }
@@ -1027,17 +1033,22 @@ a.share {
 /*</editor-fold>*/
 /*/<editor-fold> desc="LIKE BUTTONS----------------------------/ "*/
 
-.like-button {
+.post-footer .like-button, #post-footer .like-button {
     background-color: #7c7c7c;
     display: inline-block;
     opacity: .6;
     height: 26px;
-    padding: 2px 6px;
+    padding: 0 3px 0 8px;
+    vertical-align: bottom;
 }
-.like-button:hover {
+#post-footer .like-button {
+    height: 35px;
+    padding: inherit;
+}
+.post-footer .like-button:hover, #post-footer .like-button:hover  {
     opacity: 1;
 }
-.like-button .btn-like {
+.post-footer .like-button .btn-like, #post-footer .like-button .btn-like {
     margin-right: 6px;
     float: none;
     background-color: transparent;
@@ -1045,7 +1056,12 @@ a.share {
     color: #fff;
     font-weight: bold;
     outline: none;
-    margin-left: -2px;
+    margin-left: -5px;
+    font-size: 14px;
+}
+#post-footer .like-button .btn-like {
+    font-size: 18px;
+    padding: 5px 8px;
 }
 .like-button .btn-like:focus, .like-button .btn-like:active {
     border: none;
@@ -1055,7 +1071,28 @@ a.share {
     display: inline-block;
     float: none;
 }
-
+#post-footer .like-button i {
+    font-size: 18px;
+    padding-left: 6px;
+}
+.post-footer .like-button span.like-count, #post-footer .like-button span.like-count {
+    display: inline-block;
+    float: none;
+    background-color: #f6f6f6;
+    height: 19px;
+    vertical-align: text-top;
+    padding: 0 5px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+#post-footer .like-button span.like-count {
+    vertical-align: baseline;
+    padding: 4px 7px 5px 7px;
+    height: 26px;
+    margin-right: 5px;
+    margin-bottom: 2px;
+}
 /*</editor-fold>*/
 
 

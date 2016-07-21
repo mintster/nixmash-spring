@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
@@ -48,5 +49,23 @@ public class PostsRestControllerTests extends AbstractContext {
     public void postsInHtmlContentType() throws Exception {
         mockMvc.perform(get("/json/posts/page/1"))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
+    }
+
+    @Test
+    @WithUserDetails(value = "erwin", userDetailsServiceBeanName = "currentUserDetailsService")
+    public void newLikedPostReturnsPlusOne() throws Exception {
+        // no pre-existing post likes for Erwin
+        mockMvc.perform(get("/json/posts/post/like/3"))
+                .andExpect(content().string("1"))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithUserDetails(value = "keith", userDetailsServiceBeanName = "currentUserDetailsService")
+    public void existingLikedPostClickReturnsMinusOne() throws Exception {
+        // pre-existing postId 3 like for Keith
+        mockMvc.perform(get("/json/posts/post/like/3"))
+                .andExpect(content().string("-1"))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 }

@@ -40,6 +40,7 @@
                 <div class="post-tags">
                     <span class="taglink"  th:each="tag : ${post.tags }"><a th:href="@{|/posts/tag/${#strings.toLowerCase(tag.tagValue)}|}" th:text="${tag.tagValue}" class="big label label-default">[TAG]</a></span>
                 </div>
+                <div class="share-like-row">
                 <div class="share-links">
                     <a class="share share_email"
                        th:href="|mailto:?subject=${post.postTitle}&amp;body=%20${shareUrl}|">
@@ -60,6 +61,12 @@
                        th:href="|http://www.facebook.com/sharer.php?u=${shareUrl}|"
                        target="_blank">
                         <img src="/images/share/facebook.png" title="Facebook" class="share-img-lg" alt="Share on Facebook" /></a>
+                </div>
+                <div class="like-button">
+                    <i class="fa fa-thumbs-up"></i>
+                    <button class="btn-like" th:onclick="|likePost(${post.postId});|">Like</button>
+                    <span class="like-count" th:id="|output-${post.postId}|" th:text="${post.likesCount}">[LIKE COUNT]</span>
+                </div>
                 </div>
                 <div class="footer-links">
                     <div class="source-link" th:if="${post.postType.name() == 'LINK'}">

@@ -2,10 +2,12 @@ package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
+import com.nixmash.springdata.jpa.enums.ContentType;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.model.Like;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
 import com.nixmash.springdata.jpa.repository.LikeRepository;
@@ -25,7 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -101,6 +106,36 @@ public class PostServiceImpl implements PostService {
 
     //endregion
 
+    // region Likes
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getPostsByUserLikes(Long userId) {
+        List<Post> posts = em.createNamedQuery("Post.getByPostIds", Post.class)
+                .setParameter("postIds", likeRepository.findLikedPostIds(userId))
+                .getResultList();
+        return posts;
+    }
+
+    @Transactional
+    @Override
+    public int addPostLike(long userId, long postId) {
+        int incrementValue = 1;
+        Post post = postRepository.findByPostId(postId);
+        Optional<Long> likeId = likeRepository.findPostLikeIdByUserId(userId, postId);
+        if (likeId.isPresent()) {
+            incrementValue = -1;
+            likeRepository.delete(likeId.get());
+        } else {
+            Like like = new Like(userId, postId, ContentType.POST);
+            likeRepository.save(like);
+        }
+        post.updateLikes(incrementValue);
+        return incrementValue;
+    }
+
+    // endregion
+
     //region Get Posts
 
     @Transactional(readOnly = true)
@@ -171,15 +206,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPostsByTagId(long tagId) {
         return postRepository.findAllByTagId(tagId);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Post> getPostsByUserLikes(Long userId) {
-        List<Post> posts = em.createNamedQuery("Post.getByPostIds", Post.class)
-                .setParameter("postIds", likeRepository.findLikedPostIds(userId))
-                .getResultList();
-        return posts;
     }
 
     //endregion

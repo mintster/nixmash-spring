@@ -32,6 +32,9 @@ public interface PostService {
     @Transactional(readOnly = true)
     List<Post> getPostsByUserLikes(Long userId);
 
+    @Transactional
+    int addPostLike(long userId, long postId);
+
     Post getPostById(Long postId) throws PostNotFoundException;
 
     @Transactional(readOnly = true)

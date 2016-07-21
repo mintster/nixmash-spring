@@ -33,18 +33,6 @@
 
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
-            <div class="like-button">
-                <i class="fa fa-thumbs-up"></i>
-                <button class="btn-like" onclick="likePost(50);">Like</button>
-                <span id="output-50">10</span>
-            </div>
-
-            <div class="like-button">
-                <i class="fa fa-thumbs-up"></i>
-                <button class="btn-like" onclick="likePost(100);">Like</button>
-                <span id="output-100">10</span>
-            </div>
-
             <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Post List</div>
             <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>
 
@@ -59,22 +47,6 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-
-    function likePost(postId) {
-        var currentUser = [[${currentUser}]];
-
-        if (currentUser) {
-            $.getJSON('/json/posts/post/like/' + postId, postId, function (data) {
-                $('#output-' + postId).html(function (i, val) {
-                    return val * 1 + data
-                });
-            });
-        }
-        else {
-            showDialog("Please Login", "You must be logged-in to like posts.");
-        }
-    }
-
 
     var pageIndex = 0;
 

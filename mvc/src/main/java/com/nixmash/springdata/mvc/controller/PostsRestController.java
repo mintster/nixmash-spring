@@ -163,9 +163,10 @@ public class PostsRestController {
     // region Likes
 
     @RequestMapping(value = "/post/like/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public int likePost(@PathVariable("postId") int postId) {
-        return -1;
+    public int likePost(@PathVariable("postId") int postId, CurrentUser currentUser) {
+        return postService.addPostLike(currentUser.getId(), postId);
     }
+
     // endregion
 
     // region get Tags
