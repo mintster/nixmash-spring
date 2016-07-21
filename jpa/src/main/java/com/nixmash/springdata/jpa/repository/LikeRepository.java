@@ -15,5 +15,4 @@ public interface LikeRepository extends CrudRepository<Like, Long> {
 
     @Query("select l.itemId from Like l where l.contentTypeId = 1 and l.userId = ?1")
     List<Long> findLikedPostIds(long userId);
-
 }

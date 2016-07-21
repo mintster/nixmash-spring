@@ -11,7 +11,6 @@ public class Like {
     private long likeId;
     private long userId;
     private long itemId;
-
     private int contentTypeId;
 
     @Id
@@ -25,7 +24,7 @@ public class Like {
     }
 
     @Basic
-    @Column(name = "user_id", nullable = false, insertable= false, updatable =  false)
+    @Column(name = "user_id", nullable = false)
     public long getUserId() {
         return userId;
     }

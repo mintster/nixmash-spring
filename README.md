@@ -72,6 +72,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Native Sql Queries in Spring JPA](http://nixmash.com/java/native-sql-queries-in-spring-jpa/)
 - [Post: The Making of a Tag Cloud in Spring](http://nixmash.com/java/the-making-of-a-tag-cloud-in-spring/)
 - [Post: Share Buttons with Spring, Velocity and Thymeleaf](http://nixmash.com/java/share-buttons-with-spring-velocity-and-thymeleaf/)
+- [Post: Spring JPA @NamedQuery With a Secondary Table Select-In](http://nixmash.com/java/spring-jpa-namedquery-with-a-secondary-table-select-in/)
 
 [[back to top](#nixmash-spring)]
 

@@ -31,6 +31,4 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long>, 
 
     List<Post> findAll(Sort sort);
 
-    List<Post> getByPostIds(long postId);
-
 }
