@@ -65,6 +65,7 @@ public class PostsController {
     private static final String POSTS_TAGS_VIEW = "posts/tags";
     private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
     private static final String POSTS_TAGTITLES_VIEW = "posts/tagtitles";
+    public static final String POSTS_LIKES_VIEW = "posts/likes";
 
     // endregion
 
@@ -114,6 +115,13 @@ public class PostsController {
         model.addAttribute("tag", tag);
         model.addAttribute("showmore", showMore);
         return POSTS_TAGS_VIEW;
+    }
+
+    @RequestMapping(value = "/likes/{userId}", method = GET)
+    public String tags(@PathVariable("userId") long userId, CurrentUser currentUser, Model model) {
+       boolean showMore = postService.getPostsByUserLikes(userId).size() > 2;
+        model.addAttribute("showmore", showMore);
+        return POSTS_LIKES_VIEW;
     }
 
     @RequestMapping(value = "/titles/tag/{tagValue}", method = GET)

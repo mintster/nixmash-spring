@@ -5,7 +5,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -14,7 +13,7 @@ import java.util.List;
 /**
  * Created by daveburke on 5/31/16.
  */
-public interface PostRepository extends PagingAndSortingRepository<Post, Long>, JpaSpecificationExecutor {
+public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 
     Post findByPostId(Long postId) throws DataAccessException;
 

@@ -923,11 +923,6 @@ h1.post-title {
         width:245px;
     }
 
-    #tagcloud.affix
-    {
-      top: 224px;
-    }
-
     #sidebar a i.glyphicon.glyphicon-chevron-right {
         float: right;
         margin-top: 2px;

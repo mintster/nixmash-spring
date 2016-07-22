@@ -3,6 +3,15 @@
 <body>
 <div th:fragment="sidebar(activeTab)">
 
+    <div  th:with="top=${currentUser == null} ? 224px :  266px" th:remove="tag">
+        <style type="text/css" th:inline="text">
+            #tagcloud.affix
+            {
+                top: [[${top}]];
+            }
+        </style>
+    </div>
+
     <div class="col-lg-3 col-md-3 col-sm-4" id="leftCol">
         <ul class="list-group" id="sidebar">
 
@@ -20,6 +29,11 @@
                th:text="#{posts.sidebar.menu.rss}">[Post RSS Feed]
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
+            <a th:if="${currentUser != null}" th:href="@{|/posts/likes/${currentUser.user.id}|}" class="list-group-item"
+               target="_blank"
+               th:text="#{posts.sidebar.menu.likes}">[Your Liked Posts]
+                <i class="glyphicon glyphicon-chevron-right"></i></a>
+
         </ul>
 
         <div id="tagcloud">
@@ -27,7 +41,6 @@
                 <div id="sidebartags"></div>
             </div>
         </div>
-
 
     </div>
 </div>
@@ -53,7 +66,6 @@
     /*]]>*/
 
 </script>
-
 
 </body>
 </html>

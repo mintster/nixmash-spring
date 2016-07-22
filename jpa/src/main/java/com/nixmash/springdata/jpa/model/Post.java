@@ -21,15 +21,17 @@ import static javax.persistence.GenerationType.IDENTITY;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "posts")
 @Access(value = FIELD)
-@NamedQuery(name = "Post.getByPostIds",
-        query = "SELECT p FROM Post p WHERE p.postId IN :postIds")
+@NamedQueries({
+        @NamedQuery(name = "Post.getByPostIds",
+                query = "SELECT p FROM Post p " +
+                        "WHERE p.postId IN :postIds ORDER BY p.postDate DESC"),
+})
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 3533657789336113957L;
 
     public static final int MAX_POST_TITLE_LENGTH = 200;
     public static final int MAX_POST_NAME_LENGTH = 200;
-    public static final int MAX_POST_IMAGE_LENGTH = 200;
 
     // region properties
 

@@ -227,4 +227,18 @@ public class PostServiceTests {
         Optional<Long> likeId = likeRepository.findPostLikeIdByUserId(3L, 3L);
         assert(!likeId.isPresent());
     }
+
+    @Test
+    public void pagedLikedPostsTest() {
+        List<Post> posts = postService.getPagedLikedPosts(0, 2, 3);
+        // list contains 2 posts
+        assertEquals(posts.size(), 2);
+
+        ZonedDateTime firstPostDate = posts.get(0).getPostDate();
+        ZonedDateTime secondPostDate = posts.get(1).getPostDate();
+
+        // first PostDate is higher (more recent) than second PostDate [sort: postDate: DESC]
+        assertTrue(firstPostDate.compareTo(secondPostDate) > 0);
+
+    }
 }

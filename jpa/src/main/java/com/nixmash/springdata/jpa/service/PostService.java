@@ -32,6 +32,9 @@ public interface PostService {
     @Transactional(readOnly = true)
     List<Post> getPostsByUserLikes(Long userId);
 
+    @Transactional(readOnly = true)
+    List<Post> getPagedLikedPosts(int pageNumber, int pageSize, long userId);
+
     @Transactional
     int addPostLike(long userId, long postId);
 

@@ -326,6 +326,15 @@ public class PostsControllerTests extends AbstractContext {
                 .andExpect(redirectedUrl("/posts"));
     }
 
+    @Test
+    @WithUserDetails(value = "keith")
+    public void userLikedPosts_LoadsLikesView() throws Exception {
+        this.mockMvc.perform(get("/posts/likes/3"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(POSTS_LIKES_VIEW));
+    }
+
+
     private RequestBuilder postRequest(PostType postType, String s) {
         return post("/posts/add")
                 .param(postType.name().toLowerCase(), "true")

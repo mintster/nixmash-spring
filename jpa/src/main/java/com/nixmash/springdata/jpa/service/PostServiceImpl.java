@@ -117,6 +117,17 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getPagedLikedPosts(int pageNumber, int pageSize, long userId) {
+        List<Post> posts = em.createNamedQuery("Post.getByPostIds", Post.class)
+                .setParameter("postIds", likeRepository.findLikedPostIds(userId))
+                .setFirstResult(pageNumber * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
+        return posts;
+    }
+
     @Transactional
     @Override
     public int addPostLike(long userId, long postId) {

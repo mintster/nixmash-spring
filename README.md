@@ -86,6 +86,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Share Buttons with Spring, Velocity and Thymeleaf](http://nixmash.com/java/share-buttons-with-spring-velocity-and-thymeleaf/)
 - [Post: Spring JPA @NamedQuery With a Secondary Table Select-In](http://nixmash.com/java/spring-jpa-namedquery-with-a-secondary-table-select-in/)
 - [Post: Like Buttons From Scratch with Spring](http://nixmash.com/java/like-buttons-from-scratch-with-spring/)
+- [Post: Pagination and Sorting Spring JPA @NamedQueries](http://nixmash.com/java/pagination-and-sorting-spring-jpa-namedqueries/)
+- [Post: Conditional CSS Value Assignment with Thymeleaf](http://nixmash.com/java/conditional-css-value-assignment-with-thymeleaf/)
 
 [[back to top](#nixmash-spring)]
 
