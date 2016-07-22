@@ -11,8 +11,8 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and support
 | *Multi-Profile Configurations* | *JPA Auditing* | *Webjars* | *Dandelion* |
 | *Velocity Templating* | *@PreAuthorize Method Security* | *REST Templates* | *RSS View Resolver* |
 | *Custom Validators* | *@Controller Advice* | *Custom Exception Handling* | *Tagging with Typeahead* |
-| *JPA @NamedQueries* | *@JPA @NamedNativeQueries* | *Bootstrap3* | *Responsive Admin Dashboard* |
-| *RSS w/ AbstractRSSView* | *Thymeleaf* | | |
+| *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
+| *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* | |
 
 The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
 
@@ -85,6 +85,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: The Making of a Tag Cloud in Spring](http://nixmash.com/java/the-making-of-a-tag-cloud-in-spring/)
 - [Post: Share Buttons with Spring, Velocity and Thymeleaf](http://nixmash.com/java/share-buttons-with-spring-velocity-and-thymeleaf/)
 - [Post: Spring JPA @NamedQuery With a Secondary Table Select-In](http://nixmash.com/java/spring-jpa-namedquery-with-a-secondary-table-select-in/)
+- [Post: Like Buttons From Scratch with Spring](http://nixmash.com/java/like-buttons-from-scratch-with-spring/)
 
 [[back to top](#nixmash-spring)]
 
