@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.*;
 
+import static com.nixmash.springdata.mvc.controller.PostsController.POST_PAGING_SIZE;
+import static com.nixmash.springdata.mvc.controller.PostsController.TITLE_PAGING_SIZE;
+
 
 @RestController
 @JsonRequestMapping(value = "/json/posts")
@@ -31,6 +34,11 @@ public class PostsRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostsRestController.class);
     private static final String TITLE_TEMPLATE = "title";
+    private static final String SESSION_ATTRIBUTE_POSTS = "posts";
+    private static final String SESSION_ATTRIBUTE_TAGPOSTTITLES = "tagposttitles";
+    private static final String SESSION_ATTRIBUTE_POSTTITLES = "posttitles";
+    private static final String SESSION_ATTRIBUTE_TAGGEDPOSTS = "taggedposts";
+    private static final String SESSION_ATTRIBUTE_LIKEDPOSTS = "likedposts";
 
     private PostService postService;
     private TemplateService templateService;
@@ -46,33 +54,24 @@ public class PostsRestController {
         this.applicationSettings = applicationSettings;
     }
 
-    // region get  Post Titles
+    // region Post Titles
 
-    @RequestMapping(value = "/titles/{pageNumber}", produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/titles/page/{pageNumber}", produces = "text/html;charset=UTF-8")
     public String getPostTitles(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
-        Slice<Post> posts = postService.getPosts(pageNumber, 10);
-        String result = StringUtils.EMPTY;
-        for (Post post : posts) {
-            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
-            result += templateService.createPostHtml(post, TITLE_TEMPLATE);
-        }
-        WebUtils.setSessionAttribute(request, "posttitles", posts);
+        Slice<Post> posts = postService.getPosts(pageNumber, TITLE_PAGING_SIZE);
+        String result = populatePostStream(posts.getContent(), currentUser, TITLE_TEMPLATE);
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTTITLES, posts.getContent());
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/titles/more")
     public String getTitleHasNext(HttpServletRequest request) {
-        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "posttitles");
-        if (posts != null)
-            return Boolean.toString(posts.hasNext());
-        else
-            return "true";
+        return hasNext(request, SESSION_ATTRIBUTE_POSTTITLES, TITLE_PAGING_SIZE);
     }
 
     // endregion
 
-    // region get Posts by Tag
+    // region Posts by Tag
 
     @RequestMapping(value = "/titles/tag/{tagid}/page/{pageNumber}",
             produces = "text/html;charset=UTF-8")
@@ -80,56 +79,39 @@ public class PostsRestController {
                                        @PathVariable int pageNumber,
                                        HttpServletRequest request,
                                        CurrentUser currentUser) {
-        Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, 10);
-        String result = StringUtils.EMPTY;
-        for (Post post : posts) {
-            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
-            result += templateService.createPostHtml(post, TITLE_TEMPLATE);
-        }
-        WebUtils.setSessionAttribute(request, "taggedposttitles", posts);
+        Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, TITLE_PAGING_SIZE);
+        String result = populatePostStream(posts.getContent(), currentUser, TITLE_TEMPLATE);
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_TAGPOSTTITLES, posts.getContent());
         return result;
     }
 
 
-    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/titles/tag/{tagid}/more")
     public String getTagTitlesHasNext(@PathVariable int tagid, HttpServletRequest request) {
-        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "taggedposttitles");
-        if (posts != null)
-            return Boolean.toString(posts.hasNext());
-        else
-            return "true";
+        return hasNext(request, SESSION_ATTRIBUTE_TAGPOSTTITLES, TITLE_PAGING_SIZE);
     }
 
     // endregion
 
-    // region get all Posts
+    // region Posts
 
     @RequestMapping(value = "/page/{pageNumber}", produces = "text/html;charset=UTF-8")
     public String getPosts(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
-        Slice<Post> posts = postService.getPosts(pageNumber, 10);
-        String result = StringUtils.EMPTY;
-        for (Post post : posts) {
-            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
-            result += templateService.createPostHtml(post);
-        }
-        WebUtils.setSessionAttribute(request, "posts", posts);
+        Slice<Post> posts = postService.getPosts(pageNumber, POST_PAGING_SIZE);
+        String result = populatePostStream(posts.getContent(), currentUser);
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTS, posts.getContent());
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+
     @RequestMapping(value = "/more")
     public String getHasNext(HttpServletRequest request) {
-        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "posts");
-        if (posts != null)
-            return Boolean.toString(posts.hasNext());
-        else
-            return "true";
+        return hasNext(request, SESSION_ATTRIBUTE_POSTS, POST_PAGING_SIZE);
     }
 
     // endregion
 
-    // region get Posts by Tag
+    // region Posts by Tag
 
     @RequestMapping(value = "/tag/{tagid}/page/{pageNumber}",
             produces = "text/html;charset=UTF-8")
@@ -137,25 +119,15 @@ public class PostsRestController {
                                   @PathVariable int pageNumber,
                                   HttpServletRequest request,
                                   CurrentUser currentUser) {
-        Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, 10);
-        String result = StringUtils.EMPTY;
-        for (Post post : posts) {
-            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
-            result += templateService.createPostHtml(post);
-        }
-        WebUtils.setSessionAttribute(request, "taggedposts", posts);
+        Slice<Post> posts = postService.getPostsByTagId(tagid, pageNumber, POST_PAGING_SIZE);
+        String result = populatePostStream(posts.getContent(), currentUser);
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_TAGGEDPOSTS, posts.getContent());
         return result;
     }
 
-
-    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/tag/{tagid}/more")
     public String getHasNext(@PathVariable int tagid, HttpServletRequest request) {
-        Slice<Post> posts = (Slice<Post>) WebUtils.getSessionAttribute(request, "taggedposts");
-        if (posts != null)
-            return Boolean.toString(posts.hasNext());
-        else
-            return "true";
+        return hasNext(request, SESSION_ATTRIBUTE_TAGGEDPOSTS, POST_PAGING_SIZE);
     }
 
     // endregion
@@ -165,6 +137,49 @@ public class PostsRestController {
     @RequestMapping(value = "/post/like/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public int likePost(@PathVariable("postId") int postId, CurrentUser currentUser) {
         return postService.addPostLike(currentUser.getId(), postId);
+    }
+
+    @RequestMapping(value = "/likes/{userId}/page/{pageNumber}",
+            produces = "text/html;charset=UTF-8")
+    public String getPostsByLikes(@PathVariable long userId,
+                                  @PathVariable int pageNumber,
+                                  HttpServletRequest request,
+                                  CurrentUser currentUser) {
+        List<Post> posts = postService.getPagedLikedPosts(userId, pageNumber, POST_PAGING_SIZE);
+        String result = populatePostStream(posts, currentUser);
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_LIKEDPOSTS, posts);
+        return result;
+    }
+
+    @RequestMapping(value = "/likes/{userId}/more")
+    public String getHasNextLike(@PathVariable int userId, HttpServletRequest request) {
+        return hasNext(request, SESSION_ATTRIBUTE_LIKEDPOSTS, POST_PAGING_SIZE);
+    }
+
+    // endregion
+
+    // region Shared Utils
+
+    @SuppressWarnings("unchecked")
+    private String hasNext(HttpServletRequest request, String attribute, int pagingSize) {
+        List<Post> posts = (List<Post>) WebUtils.getSessionAttribute(request, attribute);
+        if (posts != null)
+            return Boolean.toString(posts.size() >= pagingSize);
+        else
+            return "true";
+    }
+
+    private String populatePostStream(List<Post> posts, CurrentUser currentUser) {
+        return populatePostStream(posts, currentUser, null);
+    }
+
+    private String populatePostStream(List<Post> posts, CurrentUser currentUser, String format) {
+        String result = StringUtils.EMPTY;
+        for (Post post : posts) {
+            post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
+            result += templateService.createPostHtml(post, format);
+        }
+        return result;
     }
 
     // endregion

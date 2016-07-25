@@ -12,11 +12,11 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and support
 | *Velocity Templating* | *@PreAuthorize Method Security* | *REST Templates* | *RSS View Resolver* |
 | *Custom Validators* | *@Controller Advice* | *Custom Exception Handling* | *Tagging with Typeahead* |
 | *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
-| *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* | |
+| *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 
 The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
 
-Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining the feature in detail. All NixMash Spring blog posts are listed below with their implementation version.
+Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining the feature in detail. All NixMash Spring blog posts are listed below with their implementation version. The daily changelist is [located here.](http://nixmashspring.daveburkevt.com/x/html/changelist.html)
 
 See the [Installation](#installation) section below on how to configure application settings to run the NixMash Spring Web App. Once configured you can run the Web Application with
 
@@ -88,6 +88,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Like Buttons From Scratch with Spring](http://nixmash.com/java/like-buttons-from-scratch-with-spring/)
 - [Post: Pagination and Sorting Spring JPA @NamedQueries](http://nixmash.com/java/pagination-and-sorting-spring-jpa-namedqueries/)
 - [Post: Conditional CSS Value Assignment with Thymeleaf](http://nixmash.com/java/conditional-css-value-assignment-with-thymeleaf/)
+- [Post: JavaScript Consolidation with Thymeleaf and Spring MVC](http://nixmash.com/java/javascript-consolidation-with-thymeleaf-and-spring-mvc/
 
 [[back to top](#nixmash-spring)]
 

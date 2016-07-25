@@ -14,19 +14,12 @@
 <nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
 
 <div class="container">
-    <div class="page-header" id="banner">
-        <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="#{posts.list.page.header}">[Links]</h1>
-
-                <p class="lead" th:text="#{posts.list.page.subheader}">[All
-                    Links]</p>
-            </div>
-            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
-
+    <div th:with="heading=#{posts.list.page.header}, subheading=#{posts.list.page.subheader}" th:remove="tag">
+        <div th:replace="fragments/banner :: banner(${heading}, ${subheading})">
         </div>
     </div>
 </div>
+
 <div class="container bs-docs-container">
     <div class="row">
         <div class="bs-docs-section">
@@ -49,49 +42,16 @@
     /*<![CDATA[*/
 
     var pageIndex = 0;
-
-    $.get("/json/posts/page/0", function (data) {
-        $("#posts").html(data);
-        pageIndex++;
-    }).success(function () {
-        $('.post:odd').addClass("odd");
-        $('#morePosts').css('display', 'inline-block');
-        $('pre code').each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
-    });
-
-    $.get("/json/posts/tagcloud", function (data) {
-        $("#sidebartags").html(data);
-    });
-
-    function morePosts() {
-        $.get("/json/posts/page/" + pageIndex, function (data) {
-            $("#posts").append(data);
-            pageIndex++;
-        }).success(function () {
-            $('pre code').each(function (i, block) {
-                hljs.highlightBlock(block);
-            });
-            $('.post:odd').addClass("odd")
-            var backToTop = "<a href='/posts'>Back to top</a>";
-            $.get("/json/posts/more", function (data) {
-                if (data == "false")
-                    $("#more-posts-button-row").html(backToTop);
-            })
-        });
-    }
-
-    $('pre code').each(function (i, block) {
-        hljs.highlightBlock(block);
-    });
+    var showMore = [[${showmore}]];
+    var backToTop = "<a href='/posts/'>Back to top</a>";
+    var baseUrl = "/json/posts/page/";
+    var moreUrl = "/json/posts/more";
 
     /*]]>*/
 </script>
 
-<script th:replace="fragments/posts/sidebar :: javascript">Post
-Sidebar
-Scripts</script>
+<script th:replace="fragments/posts/postjs :: stream">Post Stream Scripts</script>
+<script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
 
 
 </body>

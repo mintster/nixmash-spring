@@ -15,6 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,6 +50,37 @@ public class PostsRestControllerTests extends AbstractContext {
     public void postsInHtmlContentType() throws Exception {
         mockMvc.perform(get("/json/posts/page/1"))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
+    }
+
+    @Test
+    @WithUserDetails(value = "keith", userDetailsServiceBeanName = "currentUserDetailsService")
+    public void postPathsforAuthenticatedUsers() throws Exception {
+
+        // liked posts
+        mockMvc.perform(get("/json/posts/likes/3/page/2"))
+                .andExpect(status().isOk());
+    }
+
+        @Test
+    @WithAnonymousUser
+    public void postPathsforAnonymousUsers() throws Exception {
+
+        // all posts
+        mockMvc.perform(get("/json/posts/page/2"))
+                .andExpect(status().isOk());
+
+        // titles only
+        mockMvc.perform(get("/json/posts/titles/page/2"))
+                .andExpect(status().isOk());
+
+        // by tag
+        mockMvc.perform(get("/json/posts/tag/1/page/2"))
+                .andExpect(status().isOk());
+
+        // by tag titles
+        mockMvc.perform(get("/json/posts/titles/tag/1/page/2"))
+                .andExpect(status().isOk());
+
     }
 
     @Test

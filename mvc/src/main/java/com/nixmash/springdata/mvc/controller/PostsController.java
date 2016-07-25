@@ -66,6 +66,8 @@ public class PostsController {
     private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
     private static final String POSTS_TAGTITLES_VIEW = "posts/tagtitles";
     public static final String POSTS_LIKES_VIEW = "posts/likes";
+    public static final int POST_PAGING_SIZE = 10;
+    public static final int TITLE_PAGING_SIZE = 10;
 
     // endregion
 
@@ -93,7 +95,9 @@ public class PostsController {
     // region /posts get
 
     @RequestMapping(value = "", method = GET)
-    public String home() {
+    public String home(Model model) {
+        boolean showMore = postService.getAllPosts().size() > POST_PAGING_SIZE;
+        model.addAttribute("showmore", showMore);
         return POSTS_LIST_VIEW;
     }
 
@@ -103,7 +107,9 @@ public class PostsController {
     }
 
     @RequestMapping(value = "/titles", method = GET)
-    public String titles() {
+    public String titles(Model model) {
+        boolean showMore = postService.getAllPosts().size() > TITLE_PAGING_SIZE;
+        model.addAttribute("showmore", showMore);
         return POSTS_TITLES_VIEW;
     }
 
@@ -111,15 +117,15 @@ public class PostsController {
     public String tags(@PathVariable("tagValue") String tagValue, Model model)
                                         throws TagNotFoundException, UnsupportedEncodingException {
         Tag tag = postService.getTag(URLDecoder.decode(tagValue, "UTF-8"));
-       boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > 10;
+       boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > POST_PAGING_SIZE;
         model.addAttribute("tag", tag);
         model.addAttribute("showmore", showMore);
         return POSTS_TAGS_VIEW;
     }
 
     @RequestMapping(value = "/likes/{userId}", method = GET)
-    public String tags(@PathVariable("userId") long userId, CurrentUser currentUser, Model model) {
-       boolean showMore = postService.getPostsByUserLikes(userId).size() > 2;
+    public String tags(@PathVariable("userId") long userId, Model model) {
+       boolean showMore = postService.getPostsByUserLikes(userId).size() > POST_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_LIKES_VIEW;
     }
@@ -128,7 +134,7 @@ public class PostsController {
     public String tagTitles(@PathVariable("tagValue") String tagValue, Model model)
             throws TagNotFoundException, UnsupportedEncodingException {
         Tag tag = postService.getTag(URLDecoder.decode(tagValue, "UTF-8"));
-        boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > 10;
+        boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > TITLE_PAGING_SIZE;
         model.addAttribute("tag", tag);
         model.addAttribute("showmore", showMore);
         return POSTS_TAGTITLES_VIEW;
@@ -139,8 +145,7 @@ public class PostsController {
     // region /post get
 
     @RequestMapping(value = "/post/{postName}", method = GET)
-    public String post(@PathVariable("postName") String postName, Model model,
-                       CurrentUser currentUser, RedirectAttributes attributes)
+    public String post(@PathVariable("postName") String postName, Model model, CurrentUser currentUser)
             throws PostNotFoundException {
 
         Post post = postService.getPost(postName);

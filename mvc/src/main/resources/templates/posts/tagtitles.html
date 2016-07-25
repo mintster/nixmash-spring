@@ -3,29 +3,17 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
-
     <link rel="stylesheet" type="text/css" th:href="@{/css/highlight/github.css}"/>
     <script th:src="@{/js/highlight.pack.js}"></script>
-
-    <title th:utext="#{posts.tags.page.title(${tag.tagValue})}">[NixMash Spring
-        Posts by Tag]</title>
+    <title th:utext="#{posts.tags.page.title(${tag.tagValue})}">[NixMash Spring Posts by Tag]</title>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
 <!--/*@thymesVar id="tag" type="com.nixmash.springdata.jpa.model.Tag"*/-->
 
 <div class="container">
-    <div class="page-header" id="banner">
-        <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:text="${tag.tagValue}">[Post by Tag]</h1>
-
-                <p class="lead" th:utext="#{posts.tags.page.subheader(${tag.tagValue})}">[All
-                    Posts for Tag]</p>
-            </div>
-            <div th:replace="fragments/sponsor :: [id='sponsor']">[Sponsor Image]
-            </div>
-
+    <div th:with="heading=${tag.tagValue}, subheading=#{posts.tags.page.subheader(${tag.tagValue})}" th:remove="tag">
+        <div th:replace="fragments/banner :: banner(${heading}, ${subheading})">
         </div>
     </div>
 </div>
@@ -33,10 +21,8 @@
     <div class="row">
         <div class="bs-docs-section">
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
-
             <div th:include="fragments/posts/sidebar :: sidebar('titles')" th:remove="tag">Post List</div>
             <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>
-
         </div>
     </div>
 
@@ -49,53 +35,18 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
 
-    var pageIndex = 0;
     var tagId = [[${tag.tagId}]];
     var tagName = [[${tag.tagValue}]];
     var showMore = [[${showmore}]];
-    var backToTop = "<a href='/posts/tag/" + tagName + "'>Back to top</a>";
-
-    $.get("/json/posts/titles/tag/" + tagId + "/page/0", function (data) {
-        $("#posts").html(data);
-        pageIndex++;
-    }).success(function () {
-        $('.post:odd').addClass("odd");
-        $('#morePosts').css('display', 'inline-block');
-        $('pre code').each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
-        if (!showMore)
-            $("#more-posts-button-row").css('display', 'none');
-    });
-
-    $.get("/json/posts/tagcloud", function (data) {
-        $("#sidebartags").html(data);
-    });
-
-    function morePosts() {
-        $.get("/json/posts/titles/tag/" + tagId + "/page/" + pageIndex, function (data) {
-            $("#posts").append(data);
-            pageIndex++;
-        }).success(function () {
-            $('pre code').each(function (i, block) {
-                hljs.highlightBlock(block);
-            });
-            $('.post:odd').addClass("odd");
-            $.get("/json/posts/tag/" + tagId + "/more", function (data) {
-                if (data == "false")
-                    $("#more-posts-button-row").html(backToTop);
-            })
-        });
-    }
-
-    $('pre code').each(function (i, block) {
-        hljs.highlightBlock(block);
-    });
+    var backToTop = "<a href='/posts/titles/tag/" + tagName + "'>Back to top</a>";
+    var baseUrl = "/json/posts/titles/tag/" + tagId + "/page/";
+    var moreUrl = "/json/posts/titles/tag/" + tagId + "/more";
 
     /*]]>*/
 </script>
 
-<script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
+<script th:replace="fragments/posts/postjs :: stream">[Post Stream Scripts]</script>
+<script th:replace="fragments/posts/sidebar :: javascript">[Post Sidebar Scripts]</script>
 
 </body>
 </html>

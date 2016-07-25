@@ -25,13 +25,13 @@
                th:text="#{posts.sidebar.menu.titles}">[Post Titles]
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
-            <a th:href="@{/posts/feed}" class="list-group-item" target="_blank"
-               th:text="#{posts.sidebar.menu.rss}">[Post RSS Feed]
+            <a th:if="${currentUser != null}" th:href="@{|/posts/likes/${currentUser.user.id}|}" class="list-group-item"
+               th:classappend="${activeTab == 'likes'} ? 'active'"
+               th:text="#{posts.sidebar.menu.likes}">[Your Liked Posts]
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
-            <a th:if="${currentUser != null}" th:href="@{|/posts/likes/${currentUser.user.id}|}" class="list-group-item"
-               target="_blank"
-               th:text="#{posts.sidebar.menu.likes}">[Your Liked Posts]
+            <a th:href="@{/posts/feed}" class="list-group-item" target="_blank"
+               th:text="#{posts.sidebar.menu.rss}">[Post RSS Feed]
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
         </ul>

@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="banner(heading, subheading)" class="page-header" id="banner">
+    <div class="row">
+        <div class="col-lg-8 col-md-7 col-sm-6">
+            <h1 th:text="${heading}">[Heading]</h1>
+            <p class="lead" th:utext="${subheading}">[Subheading]</p>
+        </div>
+        <div th:replace="fragments/sponsor :: [id='sponsor']">[Sponsor Image]
+        </div>
+    </div>
+</div>
+</body>
+</html>

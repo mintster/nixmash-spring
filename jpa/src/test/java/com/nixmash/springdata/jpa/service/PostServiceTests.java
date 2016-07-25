@@ -230,7 +230,7 @@ public class PostServiceTests {
 
     @Test
     public void pagedLikedPostsTest() {
-        List<Post> posts = postService.getPagedLikedPosts(0, 2, 3);
+        List<Post> posts = postService.getPagedLikedPosts(3, 0, 2);
         // list contains 2 posts
         assertEquals(posts.size(), 2);
 

@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+
+<script th:fragment="stream" th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    var pageIndex = 0;
+
+    $.get(baseUrl + "0", function (data) {
+        $("#posts").html(data);
+        pageIndex++;
+    }).success(function () {
+        $('.post:odd').addClass("odd");
+        $('#morePosts').css('display', 'inline-block');
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+        if (!showMore)
+            $("#more-posts-button-row").css('display', 'none');
+    });
+
+    $.get("/json/posts/tagcloud", function (data) {
+        $("#sidebartags").html(data);
+    });
+
+    function morePosts() {
+        $.get(baseUrl + pageIndex, function (data) {
+            $("#posts").append(data);
+            pageIndex++;
+        }).success(function () {
+            $('pre code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
+            $('.post:odd').addClass("odd")
+            $.get(moreUrl, function (data) {
+                if (data == "false")
+                    $("#more-posts-button-row").html(backToTop);
+            })
+        });
+    }
+
+    $('pre code').each(function (i, block) {
+        hljs.highlightBlock(block);
+    });
+
+    /*]]>*/
+
+</script>
+
+</body>
+</html>

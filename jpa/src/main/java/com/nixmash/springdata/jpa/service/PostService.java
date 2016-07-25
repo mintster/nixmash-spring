@@ -33,7 +33,7 @@ public interface PostService {
     List<Post> getPostsByUserLikes(Long userId);
 
     @Transactional(readOnly = true)
-    List<Post> getPagedLikedPosts(int pageNumber, int pageSize, long userId);
+    List<Post> getPagedLikedPosts(long userId, int pageNumber, int pageSize);
 
     @Transactional
     int addPostLike(long userId, long postId);
@@ -60,6 +60,7 @@ public interface PostService {
     List<String> getTagValues();
 
     Set<TagDTO> getTagDTOs(Long postId);
+
     Tag getTag(String tagValue) throws TagNotFoundException;
 
     Page<Post> getPostsByTagId(long tagId, int pageNumber, int pageSize);
