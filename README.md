@@ -33,7 +33,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display (In Progress)](#v034----post-tag-cloud-sharing-likes-rss-title-display-in-progress)**
+- **[v0.3.5 - Posts A-Z, Multimedia posts, Flashcard Q&A, User Profile updates (in progress)](#v035---posts-a-z-multimedia-posts-flashcard-qa-user-profile-updates-in-progress)**
+- **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display](#v034----post-tag-cloud-sharing-likes-rss-title-display)**
 - **[v0.3.3 -- Post WYSIWYG editing, tagging, permalinks](#v033----post-wysiwyg-editing-tagging-permalinks)**
 - **[v0.3.2 -- Initial Posts Feature Release](#v032----initial-posts-feature-release)** : *Jsoup Annotations Framework, Generic Type as Beans*
 - **[v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics](#v031----siteoptions-properties-github-buttons-google-analytics)** : *Key-Value to Class Properties, Admin entry of Google Analytics Tracking Id*
@@ -68,7 +69,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display (In Progress)##
+##v0.3.5 - Posts A-Z, Multimedia posts, Flashcard Q&A, User Profile updates (in progress)
+
+- *V0.3.5 Development to begin soon...*
+
+[[back to top](#nixmash-spring)]
+
+##v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display##
 
 - Like Buttons
 - Sharing Bookmarks
@@ -88,7 +95,9 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Like Buttons From Scratch with Spring](http://nixmash.com/java/like-buttons-from-scratch-with-spring/)
 - [Post: Pagination and Sorting Spring JPA @NamedQueries](http://nixmash.com/java/pagination-and-sorting-spring-jpa-namedqueries/)
 - [Post: Conditional CSS Value Assignment with Thymeleaf](http://nixmash.com/java/conditional-css-value-assignment-with-thymeleaf/)
-- [Post: JavaScript Consolidation with Thymeleaf and Spring MVC](http://nixmash.com/java/javascript-consolidation-with-thymeleaf-and-spring-mvc/
+- [Post: JavaScript Consolidation with Thymeleaf and Spring MVC](http://nixmash.com/java/javascript-consolidation-with-thymeleaf-and-spring-mvc/)
+
+![v0.3.4 Liked Posts](http://nixmash.com/x/pics/github/spring-data-0.3.4.png)
 
 [[back to top](#nixmash-spring)]
 
