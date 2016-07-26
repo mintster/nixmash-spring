@@ -22,38 +22,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 @Component
 public class JpaUI {
 
     // region  Beans
 
-    @Autowired
-    private PostService postService;
-
-    @Autowired
-    private ContactService contactService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private SiteService siteService;
-
-    @Autowired
-    private ApplicationSettings applicationSettings;
-
-    @Autowired
-    DefaultListableBeanFactory beanfactory;
-
-    @Autowired
-    private SiteOptions siteOptions;
+    private final PostService postService;
+    private final ContactService contactService;
+    private final UserService userService;
+    private final SiteService siteService;
+    private final ApplicationSettings applicationSettings;
+    final DefaultListableBeanFactory beanfactory;
+    private final SiteOptions siteOptions;
 
     // endregion
 
-    private Boolean reset = true;
+    @Autowired
+    public JpaUI(ContactService contactService, PostService postService, SiteOptions siteOptions, UserService userService, ApplicationSettings applicationSettings, DefaultListableBeanFactory beanfactory, SiteService siteService) {
+        this.contactService = contactService;
+        this.postService = postService;
+        this.siteOptions = siteOptions;
+        this.userService = userService;
+        this.applicationSettings = applicationSettings;
+        this.beanfactory = beanfactory;
+        this.siteService = siteService;
+    }
 
     public void init() {
-        displayRandomUserIdString();
+        generateAlphabet();
+    }
+
+    private void generateAlphabet() {
+
+        char[] alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        String activeAlphas = "3ABCR";
+
+        Map<Character, Object> alphaLinks = new Hashtable<>();
+        for (char c: alphabet) {
+            alphaLinks.put(c, activeAlphas.indexOf(c) > 0);
+        }
+        for (Map.Entry<Character, Object> alphaLink : alphaLinks.entrySet()) {
+            System.out.println(alphaLink);
+        }
+
     }
 
     private void displayRandomUserIdString() {
@@ -80,6 +94,7 @@ public class JpaUI {
         System.out.println("Initialized SiteOptions Bean Property: " +
                 siteOptions.getGoogleAnalyticsTrackingId());
 
+        Boolean reset = true;
         String siteName = reset ? "My Site" : "My Updated Site Name";
         String integerProperty = reset ? "1" : "8";
 
