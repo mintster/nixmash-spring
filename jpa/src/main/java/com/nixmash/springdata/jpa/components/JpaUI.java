@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.components;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.common.ISiteOption;
 import com.nixmash.springdata.jpa.common.SiteOptions;
+import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
@@ -22,8 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JpaUI {
@@ -58,14 +59,17 @@ public class JpaUI {
     private void generateAlphabet() {
 
         char[] alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-        String activeAlphas = "3ABCR";
 
-        Map<Character, Object> alphaLinks = new Hashtable<>();
+        // SELECT GROUP_CONCAT(distinct(upper(substr(post_title,1,1))) SEPARATOR '') FROM posts
+        String activeAlphas = "JACVMWB1TSHG";
+
+        List<AlphabetDTO> alphaLinks = new ArrayList<>();
         for (char c: alphabet) {
-            alphaLinks.put(c, activeAlphas.indexOf(c) > 0);
+            alphaLinks.add(new AlphabetDTO(String.valueOf(c), activeAlphas.indexOf(c) > 0));
         }
-        for (Map.Entry<Character, Object> alphaLink : alphaLinks.entrySet()) {
-            System.out.println(alphaLink);
+
+        for (AlphabetDTO alphaLink : alphaLinks) {
+            System.out.println(alphaLink.getAlphaCharacter() + " " + alphaLink.getActive());
         }
 
     }
