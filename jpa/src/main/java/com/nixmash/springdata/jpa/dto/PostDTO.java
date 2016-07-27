@@ -4,6 +4,7 @@ import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.utils.PostUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -13,10 +14,13 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.apache.commons.lang3.StringUtils.substring;
+
 
 public class PostDTO implements Serializable {
 
     private static final long serialVersionUID = 3533657789336113957L;
+    public static final String ALPHACODE_09 = "09";
 
     private Long postId;
     private Long userId;
@@ -55,6 +59,7 @@ public class PostDTO implements Serializable {
 
     private Boolean hasImages = false;
     private int imageIndex = 1;
+    private String alphaKey;
 
     // region getter setters
 
@@ -231,6 +236,14 @@ public class PostDTO implements Serializable {
         isPublished = published;
     }
 
+    public String getAlphaKey() {
+        return alphaKey;
+    }
+
+    public void setAlphaKey(String alphaKey) {
+        this.alphaKey = alphaKey;
+    }
+
     // endregion
 
     @Override
@@ -266,6 +279,29 @@ public class PostDTO implements Serializable {
         return new PostDTO.Builder(postId, postTitle, postContent, displayType);
     }
 
+
+    public  static PostDTO buildAlphaTitles(Post post) {
+        return populateAlphas(post, true);
+
+    }
+
+    public  static PostDTO buildAlphaNumericTitles(Post post) {
+        return populateAlphas(post, false);
+    }
+
+    private static PostDTO populateAlphas(Post post, Boolean isAlphabetic) {
+        PostDTO built = new PostDTO();
+        String postTitle = post.getPostTitle();
+        String alphaKey = StringUtils.upperCase(substring(postTitle, 0, 1));
+        if (!isAlphabetic) {
+            alphaKey = ALPHACODE_09;
+        }
+
+        built.postTitle = postTitle;
+        built.postName = post.getPostName();
+        built.alphaKey = alphaKey;
+        return built;
+    }
     public static class Builder {
 
         private PostDTO built;

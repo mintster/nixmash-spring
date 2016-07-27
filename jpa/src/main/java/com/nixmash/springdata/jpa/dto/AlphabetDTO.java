@@ -11,6 +11,8 @@ public class AlphabetDTO implements Serializable {
     private String alphaCharacter;
     private Boolean isActive;
 
+    public AlphabetDTO() {}
+
     public AlphabetDTO(String alphaCharacter, Boolean isActive) {
         this.alphaCharacter = alphaCharacter;
         this.isActive = isActive;

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.hamcrest.Matchers.isA;
 import static org.junit.Assert.*;
 
 /**
@@ -128,4 +129,8 @@ public class PostRepoTests {
         assertEquals(found.size(), startTagCount + 2);
     }
 
+    @Test
+    public void alphaLinksStringShouldBeAString() {
+        assertThat(postRepository.getAlphaLinkString(), isA(String.class));
+    }
 }

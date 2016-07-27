@@ -1,5 +1,7 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.google.common.collect.Lists;
+import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.ContentType;
@@ -27,10 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -281,6 +280,54 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
         return tagDTOs;
     }
+
+    // endregion
+
+    // region Posts A-Z
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<AlphabetDTO> getAlphaLInks() {
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        String activeAlphas = postRepository.getAlphaLinkString();
+
+        List<AlphabetDTO> alphaLinks = new ArrayList<>();
+        for (char c : alphabet)
+            alphaLinks.add(new AlphabetDTO(String.valueOf(c), activeAlphas.indexOf(c) > 0));
+
+        alphaLinks.add(new AlphabetDTO("0-9", activeAlphas.matches(".*\\d+.*")));
+
+        Collections.sort(alphaLinks, (o1, o2) ->
+                o1.getAlphaCharacter().compareTo(o2.getAlphaCharacter()));
+
+        return alphaLinks;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<PostDTO> getAlphaPosts() {
+        List<Post> posts = Lists.newArrayList(postRepository.findAll());
+
+        List<PostDTO> postDTOs = posts
+                .stream()
+                .filter(p -> Character.isDigit(p.getPostTitle().charAt(0)))
+                .map(PostDTO::buildAlphaNumericTitles)
+                .sorted(byfirstLetter)
+                .collect(Collectors.toList());
+
+        postDTOs.addAll(
+                posts
+                .stream()
+                .filter(p -> Character.isAlphabetic(p.getPostTitle().charAt(0)))
+                .map(PostDTO::buildAlphaTitles)
+                .sorted(byfirstLetter)
+                .collect(Collectors.toList()));
+
+        return postDTOs;
+    }
+
+    Comparator<PostDTO> byfirstLetter= (e1, e2) -> e1
+            .getPostTitle().compareTo(e2.getPostTitle());
 
     // endregion
 

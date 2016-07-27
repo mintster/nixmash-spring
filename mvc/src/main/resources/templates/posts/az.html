@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/highlight/github.css}"/>
+    <script th:src="@{/js/highlight.pack.js}"></script>
+
+    <title th:text="#{posts.list.page.title}">[Posts A-to-Z]</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
+
+<div class="container">
+    <div th:with="heading=#{posts.az.page.header}, subheading=#{posts.az.page.subheader}" th:remove="tag">
+        <div th:replace="fragments/banner :: banner(${heading}, ${subheading})">
+        </div>
+    </div>
+</div>
+
+<div class="container bs-container">
+    <div class="row">
+        <div class="bs-section">
+
+            <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
+
+            <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Posts Sidebar</div>
+
+            <!--/*@thymesVar id="alphaLink" type="com.nixmash.springdata.jpa.dto.AlphabetDTO"*/-->
+            <div id="grid-table">
+                <div class="col-lg-9">
+                    <div class="container">
+                        <div class="btn-alphalinks">
+                            <div class="btn-group btn-group-sm">
+                                <div th:each="alphaLink : ${alphaLinks}" th:remove="tag">
+                                    <a th:href="|#${alphaLink.alphaCharacter}|"
+                                       class="btn btn-default" th:disabled="!${alphaLink.active}"
+                                       th:text="${alphaLink.alphaCharacter}">[ALPHACHAR]</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+<script th:fragment="stream" th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    $.get("/json/posts/tagcloud", function (data) {
+        $("#sidebartags").html(data);
+    });
+
+    /*]]>*/
+
+</script>
+
+</body>
+</html>
+
+
+

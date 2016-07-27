@@ -335,6 +335,14 @@ public class PostsControllerTests extends AbstractContext {
     }
 
 
+    @Test
+            public void loadPostAtoZView() throws Exception {
+        this.mockMvc.perform(get("/posts/az"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("alphaLinks"))
+                .andExpect(view().name(POSTS_AZ_VIEW));
+    }
+
     private RequestBuilder postRequest(PostType postType, String s) {
         return post("/posts/add")
                 .param(postType.name().toLowerCase(), "true")

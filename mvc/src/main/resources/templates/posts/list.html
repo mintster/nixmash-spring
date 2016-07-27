@@ -20,13 +20,13 @@
     </div>
 </div>
 
-<div class="container bs-docs-container">
+<div class="container bs-container">
     <div class="row">
-        <div class="bs-docs-section">
+        <div class="bs-section">
 
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
-            <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Post List</div>
+            <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Posts Sidebar</div>
             <div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>
 
         </div>

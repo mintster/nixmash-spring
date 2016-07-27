@@ -4,9 +4,9 @@
 <div th:fragment="addlink">
     <!--/*@thymesVar id="pagePreview" type="com.nixmash.springdata.jsoup.dto.PagePreviewDTO"*/-->
     <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
-    <div class="container bs-docs-container big-font-container">
+    <div class="container bs-container big-font-container">
         <div class="row row-centered">
-            <div class="bs-docs-section col-lg-9 col-centered">
+            <div class="bs-section col-lg-9 col-centered">
                 <form th:object="${postDTO}" method="post" th:action="@{${#httpServletRequest.getRequestURI()}}"
                       class="form-horizontal" id="link-add-form">
 

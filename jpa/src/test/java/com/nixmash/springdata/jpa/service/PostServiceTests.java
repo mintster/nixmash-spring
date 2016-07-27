@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
+import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
@@ -24,10 +25,12 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.nixmash.springdata.jpa.dto.PostDTO.ALPHACODE_09;
 import static com.nixmash.springdata.jpa.utils.PostTestUtils.*;
 import static com.nixmash.springdata.jpa.utils.PostUtils.postDtoToPost;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -241,4 +244,56 @@ public class PostServiceTests {
         assertTrue(firstPostDate.compareTo(secondPostDate) > 0);
 
     }
+
+    @Test
+    public void alphaLinksContainsActive() {
+      // AlphabetDTO characters isActive() property set to true by first letter in Post Titles
+        List<AlphabetDTO> alphabetDTOs = postService.getAlphaLInks();
+        assertThat(alphabetDTOs, hasItem(Matchers.<AlphabetDTO>hasProperty("active", equalTo(true))));
+    }
+
+    @Test
+    public void alphaLinksContainsActive0to9() {
+      // AlphabetDTO has an alphaCharacter  of "0-9" and is TRUE from H2 Test Post Titles
+        List<AlphabetDTO> alphabetDTOs = postService.getAlphaLInks();
+        Optional<AlphabetDTO> alphabetDTO = alphabetDTOs
+                        .stream()
+                        .filter(a -> (a.getAlphaCharacter().equals("0-9") && a.getActive().equals(true)))
+                        .findFirst();
+        assert(alphabetDTO.isPresent());
+    }
+
+    @Test
+    public void confirm0to9alphaLinkisFirstRecord() {
+        // Confirm that the first item in the list is "0-9"
+        assertEquals(postService.getAlphaLInks().get(0).getAlphaCharacter(), "0-9");
+    }
+
+    @Test
+    public void alphaPostsStartingWithDigitsHave_09_inAphaKeyField() {
+        List<PostDTO> posts = postService.getAlphaPosts();
+
+        // There are 3 post titles in H2 beginning with digits:  1 - two, 2 - one
+        for (int i = 1; i < 3; i++) {
+            int finalI = i;
+            Optional<PostDTO> postDTO = posts
+                    .stream()
+                    .filter(p -> (p.getPostTitle().substring(0, 1).equals(String.valueOf(finalI))))
+                    .findFirst();
+            assert (postDTO.isPresent());
+            assertEquals(postDTO.get().getAlphaKey(), ALPHACODE_09);
+        }
+    }
+
+    @Test
+    public void alphaPostsHaveAlphaKeyOfStartingLetter() {
+        List<PostDTO> posts = postService.getAlphaPosts();
+            Optional<PostDTO> postDTO = posts
+                    .stream()
+                    .filter(p -> (p.getPostTitle().substring(0, 1).equals("A")))
+                    .findFirst();
+            assert (postDTO.isPresent());
+            assertEquals(postDTO.get().getAlphaKey(), "A");
+    }
+
 }

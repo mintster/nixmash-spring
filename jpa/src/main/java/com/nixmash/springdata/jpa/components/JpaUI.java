@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -58,16 +57,7 @@ public class JpaUI {
 
     private void generateAlphabet() {
 
-        char[] alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-
-        // SELECT GROUP_CONCAT(distinct(upper(substr(post_title,1,1))) SEPARATOR '') FROM posts
-        String activeAlphas = "JACVMWB1TSHG";
-
-        List<AlphabetDTO> alphaLinks = new ArrayList<>();
-        for (char c: alphabet) {
-            alphaLinks.add(new AlphabetDTO(String.valueOf(c), activeAlphas.indexOf(c) > 0));
-        }
-
+        List<AlphabetDTO> alphaLinks = postService.getAlphaLInks();
         for (AlphabetDTO alphaLink : alphaLinks) {
             System.out.println(alphaLink.getAlphaCharacter() + " " + alphaLink.getActive());
         }

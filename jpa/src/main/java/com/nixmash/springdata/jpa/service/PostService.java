@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
@@ -53,6 +54,12 @@ public interface PostService {
 
     @Transactional(readOnly = true)
     List<TagDTO> getTagCloud();
+
+    @Transactional(readOnly = true)
+    List<AlphabetDTO> getAlphaLInks();
+
+    @Transactional(readOnly = true)
+    List<PostDTO> getAlphaPosts();
 
     boolean canUpdatePost(Authentication authentication, Long postId);
 

@@ -54,18 +54,21 @@ public class PostsController {
 
     protected static final String POSTS_LIST_VIEW = "posts/list";
     public static final String POSTS_ADD_VIEW = "posts/add";
-    private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
-    private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
-    private static final String FEEDBACK_LINK_DEMO_THANKS = "feedback.post.link.demo.added";
     public static final String POSTS_PERMALINK_VIEW = "posts/post";
-    public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
     public static final String POSTS_UPDATE_VIEW = "posts/update";
     public static final String POSTS_TITLES_VIEW = "posts/titles";
     public static final String FEEDBACK_POST_UPDATED = "feedback.post.updated";
     private static final String POSTS_TAGS_VIEW = "posts/tags";
-    private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
     private static final String POSTS_TAGTITLES_VIEW = "posts/tagtitles";
     public static final String POSTS_LIKES_VIEW = "posts/likes";
+    public static final String POSTS_AZ_VIEW = "posts/az";
+
+    private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
+    private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
+    private static final String FEEDBACK_LINK_DEMO_THANKS = "feedback.post.link.demo.added";
+    public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
+    private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
+
     public static final int POST_PAGING_SIZE = 10;
     public static final int TITLE_PAGING_SIZE = 10;
 
@@ -111,6 +114,12 @@ public class PostsController {
         boolean showMore = postService.getAllPosts().size() > TITLE_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_TITLES_VIEW;
+    }
+
+    @RequestMapping(value = "/az", method = GET)
+    public String postsAtoZ(Model model) {
+        model.addAttribute("alphaLinks", postService.getAlphaLInks());
+        return POSTS_AZ_VIEW;
     }
 
     @RequestMapping(value = "/tag/{tagValue}", method = GET)

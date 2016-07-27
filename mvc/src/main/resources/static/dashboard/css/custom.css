@@ -652,7 +652,7 @@ li.current-page a {
 .main_menu_side {
   padding: 0;
 }
-.bs-docs-sidebar .nav>li>a {
+.bs-sidebar .nav>li>a {
   display: block;
   padding: 4px 6px;
 }
