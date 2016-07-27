@@ -289,6 +289,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<AlphabetDTO> getAlphaLInks() {
         char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+
+        // Example: 12AGHJLM
         String activeAlphas = postRepository.getAlphaLinkString();
 
         List<AlphabetDTO> alphaLinks = new ArrayList<>();
@@ -300,6 +302,7 @@ public class PostServiceImpl implements PostService {
         Collections.sort(alphaLinks, (o1, o2) ->
                 o1.getAlphaCharacter().compareTo(o2.getAlphaCharacter()));
 
+        // All AlphabetDTO items returned, full alphabet + "0-9" value and true/false if contain links
         return alphaLinks;
     }
 
@@ -307,6 +310,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDTO> getAlphaPosts() {
         List<Post> posts = Lists.newArrayList(postRepository.findAll());
+
+        // converting all posts to postDTO objects
+        //
+        // 1) post titles starting with a digit assigned "09" alphaKey
+        // 2) postDTO list adds all post titles starting with letter,
+        //      assigned title firstLetter as alphaKey
 
         List<PostDTO> postDTOs = posts
                 .stream()
