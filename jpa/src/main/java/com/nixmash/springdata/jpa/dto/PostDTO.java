@@ -302,6 +302,8 @@ public class PostDTO implements Serializable {
         built.alphaKey = alphaKey;
         return built;
     }
+
+
     public static class Builder {
 
         private PostDTO built;

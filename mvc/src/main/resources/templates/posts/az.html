@@ -10,6 +10,7 @@
     <title th:text="#{posts.list.page.title}">[Posts A-to-Z]</title>
 </head>
 <body>
+<a name="top"></a>
 <nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
 
 <div class="container">
@@ -28,8 +29,13 @@
             <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Posts Sidebar</div>
 
             <!--/*@thymesVar id="alphaLink" type="com.nixmash.springdata.jpa.dto.AlphabetDTO"*/-->
+            <!--/*@thymesVar id="alphaLinks" type="List<com.nixmash.springdata.jpa.dto.AlphabetDTO>"*/-->
+            <!--/*@thymesVar id="alphaPost" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+            <!--/*@thymesVar id="alphaPosts" type="List<com.nixmash.springdata.jpa.dto.PostDTO>"*/-->
+
             <div id="grid-table">
                 <div class="col-lg-9">
+
                     <div class="container">
                         <div class="btn-alphalinks">
                             <div class="btn-group btn-group-sm">
@@ -41,14 +47,44 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="container">
+                        <div class="alphaposts">
+                            <div th:each="alphaLink : ${alphaLinks}" th:remove="tag">
+                                <div th:with="key=${#strings.replace(alphaLink.alphaCharacter, '-','')}">
+                                    <div th:if="${alphaLink.active == true}">
+
+                                        <h2 class="alphaheading"><a th:name="${alphaLink.alphaCharacter}"
+                                                                    th:text="${alphaLink.alphaCharacter}">[Alpha Character]</a></h2>
+
+                                        <div class="alphasection">
+                                            <div th:each="alphaPost : ${alphaPosts}" th:remove="tag">
+                                                <div th:if="${alphaPost.alphaKey == key}">
+                                                    <p>
+                                                        <a th:text="${alphaPost.postTitle}"
+                                                           th:href="|@{/posts/post/}${alphaPost.postName}|" target="_blank">
+                                                            [Post Link]</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <i class="fa fa-caret-square-o-up" aria-hidden="true"></i><a href="#top"
+                                                            class="alpha-back-to-top" th:text="#{posts.az.page.backtotop}">
+                                                            [back to top]</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
 
     <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
 </div>
-
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
 

@@ -77,6 +77,9 @@
                     </div>
                 </div>
             </div>
+            <div class="permalink-close">
+            <a href="javascript:window.open('','_self').close();" class="btn btn-success" th:text="#{posts.permalink.page.close}">Close</a>
+            </div>
         </div>
     </div>
     <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>

@@ -896,6 +896,15 @@ h1.post-title {
     margin-top: 20px;
 }
 
+.permalink-close {
+    display: block;
+    margin-top: 30px;
+}
+
+#post samp {
+    background-color: #f6f6f6;
+    padding: 2px 3px;
+}
 /*</editor-fold>*/
 /*/<editor-fold> desc="SIDEBAR NAVIGATION----------------------------/ "*/
 
@@ -1106,6 +1115,26 @@ a.share {
 
 /*</editor-fold>*/
 /*/<editor-fold> desc="ALPHABET LINKS----------------------------/ "*/
+
+.alphasection i.fa-caret-square-o-up {
+    margin-right: 4px;
+    color: #aea79f;
+}
+
+a.alpha-back-to-top {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+h2.alphaheading {
+
+}
+
+h2.alphaheading a {
+    color: #999;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 @media (max-width: 1200px) {
     .btn-alphalinks {

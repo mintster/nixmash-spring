@@ -340,6 +340,7 @@ public class PostsControllerTests extends AbstractContext {
         this.mockMvc.perform(get("/posts/az"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("alphaLinks"))
+                .andExpect(model().attributeExists("alphaPosts"))
                 .andExpect(view().name(POSTS_AZ_VIEW));
     }
 

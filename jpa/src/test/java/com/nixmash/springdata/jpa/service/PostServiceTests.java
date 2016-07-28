@@ -294,6 +294,7 @@ public class PostServiceTests {
                     .findFirst();
             assert (postDTO.isPresent());
             assertEquals(postDTO.get().getAlphaKey(), "A");
+
     }
 
 }

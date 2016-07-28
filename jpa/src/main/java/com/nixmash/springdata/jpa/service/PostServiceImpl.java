@@ -294,15 +294,19 @@ public class PostServiceImpl implements PostService {
         String activeAlphas = postRepository.getAlphaLinkString();
 
         List<AlphabetDTO> alphaLinks = new ArrayList<>();
+
+        // Iterate over alphabet char Array, set AlphabetDTO.active if char in activeAlphas
         for (char c : alphabet)
             alphaLinks.add(new AlphabetDTO(String.valueOf(c), activeAlphas.indexOf(c) > 0));
 
+        // add AlphabetDTO record for "0-9", set active if any digits in activeAlphas String
         alphaLinks.add(new AlphabetDTO("0-9", activeAlphas.matches(".*\\d+.*")));
 
+        // sort AlphabetDTO List, "0-9" followed by alphabet
         Collections.sort(alphaLinks, (o1, o2) ->
                 o1.getAlphaCharacter().compareTo(o2.getAlphaCharacter()));
 
-        // All AlphabetDTO items returned, full alphabet + "0-9" value and true/false if contain links
+        // All AlphabetDTO items returned with true/false if contain links
         return alphaLinks;
     }
 
@@ -335,7 +339,7 @@ public class PostServiceImpl implements PostService {
         return postDTOs;
     }
 
-    Comparator<PostDTO> byfirstLetter= (e1, e2) -> e1
+    private Comparator<PostDTO> byfirstLetter= (e1, e2) -> e1
             .getPostTitle().compareTo(e2.getPostTitle());
 
     // endregion

@@ -30,7 +30,9 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 
     List<Post> findAll(Sort sort);
 
-    @Query(value = "SELECT GROUP_CONCAT(distinct(upper(substr(post_title,1,1))) SEPARATOR '') FROM posts", nativeQuery = true)
+    @Query(value = "SELECT " +
+            "GROUP_CONCAT(distinct(upper(substr(post_title,1,1))) SEPARATOR '')" +
+            " FROM posts", nativeQuery = true)
     String getAlphaLinkString();
 
 }

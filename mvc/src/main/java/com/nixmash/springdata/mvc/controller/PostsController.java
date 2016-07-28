@@ -118,6 +118,7 @@ public class PostsController {
 
     @RequestMapping(value = "/az", method = GET)
     public String postsAtoZ(Model model) {
+        model.addAttribute("alphaPosts", postService.getAlphaPosts());
         model.addAttribute("alphaLinks", postService.getAlphaLInks());
         return POSTS_AZ_VIEW;
     }

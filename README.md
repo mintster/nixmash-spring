@@ -71,7 +71,9 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.3.5 - Posts A-Z, Multimedia posts, Flashcard Q&A, User Profile updates (in progress)
 
-- *V0.3.5 Development to begin soon...*
+- Posts A-Z page with alphabetic navigation list and grouped posts by first letter of Post Title
+- [Post: Smart Alphabetic Navigation List in Spring and Thymeleaf](http://nixmash.com/java/smart-alphabetic-navigation-list-in-spring-and-thymeleaf/)
+- [Post: Alphabetically Grouped Output with Spring and Thymeleaf](http://nixmash.com/java/alphabetically-grouped-output-with-spring-and-thymeleaf/)
 
 [[back to top](#nixmash-spring)]
 
