@@ -53,11 +53,6 @@ import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-/**
- * Allows users to sign up.
- *
- * @author Rob Winch
- */
 @Controller
 public class UserController {
 

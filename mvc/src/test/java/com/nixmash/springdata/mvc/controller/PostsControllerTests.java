@@ -220,7 +220,7 @@ public class PostsControllerTests extends AbstractContext {
                 .param("formtype", "link")
                 .param("link", GOOD_URL))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("showPost", "link"))
+                .andExpect(model().attribute("postFormType", "link"))
                 .andExpect(view().name(POSTS_ADD_VIEW));
     }
 
@@ -229,7 +229,7 @@ public class PostsControllerTests extends AbstractContext {
         this.mockMvc.perform(get("/posts/add")
                 .param("formtype", "note"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("showPost", "note"))
+                .andExpect(model().attribute("postFormType", "note"))
                 .andExpect(view().name(POSTS_ADD_VIEW));
     }
 

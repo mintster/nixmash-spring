@@ -6,6 +6,7 @@ import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
+import com.nixmash.springdata.jpa.model.Image;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
 import org.springframework.data.domain.Page;
@@ -68,9 +69,20 @@ public interface PostService {
 
     Set<TagDTO> getTagDTOs(Long postId);
 
+    @Transactional(readOnly = true)
+    List<Image> getAllPostImages();
+
+    @Transactional
+    Image addImage(Image image);
+
+    @Transactional(readOnly = true)
+    Image getPostImage(long imageId);
+
     Tag getTag(String tagValue) throws TagNotFoundException;
 
     Page<Post> getPostsByTagId(long tagId, int pageNumber, int pageSize);
 
     List<Post> getPostsByTagId(long tagId);
+
+    void deleteImage(Image image);
 }

@@ -8,11 +8,9 @@ import com.nixmash.springdata.jpa.enums.ContentType;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
-import com.nixmash.springdata.jpa.model.CurrentUser;
-import com.nixmash.springdata.jpa.model.Like;
-import com.nixmash.springdata.jpa.model.Post;
-import com.nixmash.springdata.jpa.model.Tag;
+import com.nixmash.springdata.jpa.model.*;
 import com.nixmash.springdata.jpa.repository.LikeRepository;
+import com.nixmash.springdata.jpa.repository.PostImageRepository;
 import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.repository.TagRepository;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -44,12 +42,14 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
     private TagRepository tagRepository;
     private LikeRepository likeRepository;
+    private PostImageRepository postImageRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository, LikeRepository likeRepository) {
+    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository, LikeRepository likeRepository, PostImageRepository postImageRepository) {
         this.postRepository = postRepository;
         this.tagRepository = tagRepository;
         this.likeRepository = likeRepository;
+        this.postImageRepository = postImageRepository;
     }
 
     @PersistenceContext
@@ -219,6 +219,34 @@ public class PostServiceImpl implements PostService {
     }
 
     //endregion
+
+    // region Post Images
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Image> getAllPostImages() {
+        return Lists.newArrayList(postImageRepository.findAll());
+    }
+
+    @Transactional
+    @Override
+    public Image addImage(Image image) {
+        return postImageRepository.save(image);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Image getPostImage(long imageId) {
+        return postImageRepository.findOne(imageId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteImage(Image image) {
+        postImageRepository.delete(image);
+    }
+
+    // endregion
 
     // region Tags
 

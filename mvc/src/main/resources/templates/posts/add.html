@@ -14,12 +14,10 @@
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1 th:unless="${showPost}" th:text="#{posts.add.page.header}">[Add Post]</h1>
-                <h1 th:if="${showPost == 'note'}" class="lead" th:text="#{posts.add.note.page.header}">[Add Note]</h1>
-                <h1 th:if="${showPost == 'link'}" class="lead" th:text="#{posts.add.link.page.header}">[Add a Link]</h1>
+                <h1 th:unless="${postFormType}" th:text="#{posts.add.page.header}">[Add Post]</h1>
+                <p th:unless="${postFormType}" class="lead" th:text="#{posts.add.page.subheader}">[Add a Post or enter Link Url]</p>
 
-                <p th:unless="${showPost}" class="lead" th:text="#{posts.add.page.subheader}">[All Links]</p>
-
+                <h1 th:if="${postFormType}" th:text="${postheader}">[Add a Post]</h1>
             </div>
             <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor
                 Image
@@ -34,7 +32,7 @@
 
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
-            <div th:unless="${showPost}">
+            <div th:unless="${postFormType}">
 
                 <div sec:authorize="!hasRole('ROLE_POSTS')" class="alert alert-dismissible alert-warning">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -81,9 +79,9 @@
                 </form>
             </div>
 
-            <div th:if="${showPost == 'note'}" th:include="fragments/posts/addnote :: addnote" th:remove="tag">Add Note
+            <div th:if="${postFormType == 'note'}" th:include="fragments/posts/addnote :: addnote" th:remove="tag">Add Note
             </div>
-            <div th:if="${showPost == 'link'}" th:include="fragments/posts/addlink :: addlink" th:remove="tag">Add Link
+            <div th:if="${postFormType == 'link'}" th:include="fragments/posts/addlink :: addlink" th:remove="tag">Add Link
             </div>
         </div>
     </div>
@@ -95,14 +93,14 @@
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
 
-<div th:if="${showPost}" th:remove="tag">
+<div th:if="${postFormType}" th:remove="tag">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet"/>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/editor.css}"/>
 
 </div>
 
-<script th:inline="javascript" th:if="${showPost == 'link'}">
+<script th:inline="javascript" th:if="${postFormType == 'link'}">
     /*<![CDATA[*/
 
     $('.carousel').carousel({
@@ -148,7 +146,7 @@
     /*]]>*/
 </script>
 
-<div th:if="${showPost}" th:remove="tag">
+<div th:if="${postFormType}" th:remove="tag">
     <div th:include="fragments/js :: summernote" th:remove="tag">[Summernote Javascript]</div>
 
     <script th:src="@{/js/bootstrap3-typeahead.js}"></script>

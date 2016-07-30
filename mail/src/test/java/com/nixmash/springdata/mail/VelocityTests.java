@@ -55,5 +55,9 @@ public class VelocityTests extends MailContext {
 
     }
 
-
+    @Test
+    public void fileUploadScriptTest() {
+        String result = templateService.getFileUploadingScript();
+        System.out.println(result);
+    }
 }

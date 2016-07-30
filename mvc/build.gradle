@@ -44,6 +44,7 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-core:2.6.0'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
 	compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
+	compile 'org.imgscalr:imgscalr-lib:4.2'
 
 	//noinspection GroovyAssignabilityCheck
 	testCompile project(':jpa').sourceSets.test.output

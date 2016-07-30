@@ -69,6 +69,12 @@ public class PostsController {
     public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
     private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
 
+    private static final String ADD_POST_HEADER = "posts.add.note.page.header";
+    private static final String ADD_LINK_HEADER = "posts.add.link.page.header";
+    private static final String ADD_PHOTO_HEADER = "posts.add.photo.page.header";
+    private static final String ADD_MULTIPHOTO_HEADER = "posts.add.multiphoto.page.header";
+
+
     public static final int POST_PAGING_SIZE = 10;
     public static final int TITLE_PAGING_SIZE = 10;
 
@@ -94,6 +100,7 @@ public class PostsController {
     }
 
     // endregion
+
 
     // region /posts get
 
@@ -212,12 +219,14 @@ public class PostsController {
     public String displayAddPostForm(@RequestParam(value = "formtype") String formType,
                                      PostLink postLink, BindingResult result, Model model, HttpServletRequest request) {
         PostType postType = PostType.valueOf(formType.toUpperCase());
-        String showPost;
+        String postFormType;
 
         if (postType.equals(PostType.NOTE)) {
-            showPost = "note";
+            postFormType = "note";
             model.addAttribute("postDTO", new PostDTO());
+            model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
         } else {
+            model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
             if (StringUtils.isEmpty(postLink.getLink())) {
                 result.rejectValue("link", "post.link.is.empty");
                 return POSTS_ADD_VIEW;
@@ -227,7 +236,7 @@ public class PostsController {
                     result.rejectValue("link", "post.link.page.not.found");
                     return POSTS_ADD_VIEW;
                 } else {
-                    showPost = "link";
+                    postFormType = "link";
                     WebUtils.setSessionAttribute(request, "pagePreview", pagePreview);
                     model.addAttribute("pagePreview", pagePreview);
                     model.addAttribute("postDTO",
@@ -236,7 +245,7 @@ public class PostsController {
             }
         }
 
-        model.addAttribute("showPost", showPost);
+        model.addAttribute("postFormType", postFormType);
         return POSTS_ADD_VIEW;
     }
 
@@ -254,9 +263,12 @@ public class PostsController {
     public String createNotePost(@Valid PostDTO postDTO, BindingResult result,
                              CurrentUser currentUser, RedirectAttributes attributes, Model model,
                              HttpServletRequest request) throws DuplicatePostNameException {
+
+        model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
+        model.addAttribute("postFormType", "note");
+
         if (!isDuplicatePost(postDTO)) {
             if (result.hasErrors()) {
-                model.addAttribute("showPost", "note");
                 model.addAttribute("postDTO", postDTO);
                 return POSTS_ADD_VIEW;
             } else {
@@ -278,7 +290,6 @@ public class PostsController {
             }
         } else {
             result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
-            model.addAttribute("showPost", "note");
             return POSTS_ADD_VIEW;
         }
     }
@@ -290,10 +301,12 @@ public class PostsController {
         PagePreviewDTO pagePreview =
                 (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
 
+        model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
+        model.addAttribute("postFormType", "link");
+
         if (!isDuplicatePost(postDTO)) {
             if (result.hasErrors()) {
                 model.addAttribute("pagePreview", pagePreview);
-                model.addAttribute("showPost", "link");
                 if (result.hasFieldErrors("postTitle")) {
                     postDTO.setPostTitle(pagePreview.getTitle());
                 }
@@ -328,7 +341,6 @@ public class PostsController {
         } else {
             result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
             model.addAttribute("pagePreview", pagePreview);
-            model.addAttribute("showPost", "link");
             return POSTS_ADD_VIEW;
         }
     }

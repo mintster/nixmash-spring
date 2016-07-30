@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:/META-INF/spring/application.properties")
 public class ApplicationConfig {
 
-
     @Bean
     DateTimeService currentTimeDateTimeService() {
         return new CurrentTimeDateTimeService();

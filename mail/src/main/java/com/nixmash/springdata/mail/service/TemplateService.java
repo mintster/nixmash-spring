@@ -6,6 +6,10 @@ public interface TemplateService {
 
     String getRobotsTxt();
 
+    String getFileUploadingScript();
+
+    String getFileUploadedScript();
+
     String createPostHtml(Post post, String template);
 
     String createPostHtml(Post post);

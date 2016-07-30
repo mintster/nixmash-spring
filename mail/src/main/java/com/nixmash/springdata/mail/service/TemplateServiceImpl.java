@@ -40,6 +40,17 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    public String getFileUploadingScript() {
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "posts/fileuploading.vm", "UTF-8", null);
+    }
+
+    @Override
+    public String getFileUploadedScript() {
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "posts/fileuploaded.vm", "UTF-8", null);
+    }
+
+
+    @Override
     public String createPostHtml(Post post, String templateName) {
         String html = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
@@ -70,6 +81,7 @@ public class TemplateServiceImpl implements TemplateService {
     public String createPostHtml(Post post) {
         return createPostHtml(post, null);
     }
+
 
     private Map<String, Object> modelWithTools() {
         Map<String, Object> model = new Hashtable<>();
