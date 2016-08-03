@@ -51,7 +51,7 @@ public final class RssPostFeedView extends AbstractRssFeedView {
     protected List<Item> buildFeedItems(Map<String, Object> model,
                                         HttpServletRequest httpServletRequest,
                                         HttpServletResponse httpServletResponse) throws Exception {
-        return postService.getPosts(0, NUMBER_OF_ITEMS).getContent().stream()
+        return postService.getPublishedPosts(0, NUMBER_OF_ITEMS).getContent().stream()
                 .map(this::createItem)
                 .collect(Collectors.toList());
     }

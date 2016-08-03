@@ -2,6 +2,7 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.TagDTO;
+import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
@@ -58,7 +59,7 @@ public class PostsRestController {
 
     @RequestMapping(value = "/titles/page/{pageNumber}", produces = "text/html;charset=UTF-8")
     public String getPostTitles(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
-        Slice<Post> posts = postService.getPosts(pageNumber, TITLE_PAGING_SIZE);
+        Slice<Post> posts = postService.getPublishedPosts(pageNumber, TITLE_PAGING_SIZE);
         String result = populatePostStream(posts.getContent(), currentUser, TITLE_TEMPLATE);
         WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTTITLES, posts.getContent());
         return result;
@@ -97,7 +98,7 @@ public class PostsRestController {
 
     @RequestMapping(value = "/page/{pageNumber}", produces = "text/html;charset=UTF-8")
     public String getPosts(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
-        Slice<Post> posts = postService.getPosts(pageNumber, POST_PAGING_SIZE);
+        Slice<Post> posts = postService.getPublishedPosts(pageNumber, POST_PAGING_SIZE);
         String result = populatePostStream(posts.getContent(), currentUser);
         WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTS, posts.getContent());
         return result;
@@ -176,6 +177,9 @@ public class PostsRestController {
     private String populatePostStream(List<Post> posts, CurrentUser currentUser, String format) {
         String result = StringUtils.EMPTY;
         for (Post post : posts) {
+            if (post.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST)) {
+                post.setPostImages(postService.getPostImages(post.getPostId()));
+            }
             post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
             result += templateService.createPostHtml(post, format);
         }

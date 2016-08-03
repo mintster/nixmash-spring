@@ -15,6 +15,7 @@ import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import com.nixmash.springdata.jsoup.service.JsoupService;
+import com.nixmash.springdata.mail.service.TemplateService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.containers.PostLink;
 import org.apache.commons.lang3.StringUtils;
@@ -74,9 +75,13 @@ public class PostsController {
     private static final String ADD_PHOTO_HEADER = "posts.add.photo.page.header";
     private static final String ADD_MULTIPHOTO_HEADER = "posts.add.multiphoto.page.header";
 
+    public static final String POST_PUBLISH = "publish";
+    public static final String POST_DRAFT = "draft";
+
 
     public static final int POST_PAGING_SIZE = 10;
     public static final int TITLE_PAGING_SIZE = 10;
+    private static final String SESSION_ATTRIBUTE_NEWPOST = "activepostdto";
 
     // endregion
 
@@ -86,21 +91,22 @@ public class PostsController {
     private final JsoupService jsoupService;
     private final PostService postService;
     private final ApplicationSettings applicationSettings;
+    private final TemplateService templateService;
 
     // endregion
 
     // region constructor
 
     @Autowired
-    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService,  ApplicationSettings applicationSettings) {
+    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService, ApplicationSettings applicationSettings, TemplateService templateService) {
         this.webUI = webUI;
         this.jsoupService = jsoupService;
         this.postService = postService;
         this.applicationSettings = applicationSettings;
+        this.templateService = templateService;
     }
 
     // endregion
-
 
     // region /posts get
 
@@ -132,9 +138,9 @@ public class PostsController {
 
     @RequestMapping(value = "/tag/{tagValue}", method = GET)
     public String tags(@PathVariable("tagValue") String tagValue, Model model)
-                                        throws TagNotFoundException, UnsupportedEncodingException {
+            throws TagNotFoundException, UnsupportedEncodingException {
         Tag tag = postService.getTag(URLDecoder.decode(tagValue, "UTF-8"));
-       boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > POST_PAGING_SIZE;
+        boolean showMore = postService.getPostsByTagId(tag.getTagId()).size() > POST_PAGING_SIZE;
         model.addAttribute("tag", tag);
         model.addAttribute("showmore", showMore);
         return POSTS_TAGS_VIEW;
@@ -142,7 +148,7 @@ public class PostsController {
 
     @RequestMapping(value = "/likes/{userId}", method = GET)
     public String tags(@PathVariable("userId") long userId, Model model) {
-       boolean showMore = postService.getPostsByUserLikes(userId).size() > POST_PAGING_SIZE;
+        boolean showMore = postService.getPostsByUserLikes(userId).size() > POST_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_LIKES_VIEW;
     }
@@ -188,27 +194,31 @@ public class PostsController {
                              Model model) throws PostNotFoundException {
         Post post = postService.getPostById(postId);
 
-        model.addAttribute("postDTO", PostDTO.getUpdateFields(post.getPostId(),
+        model.addAttribute("postDTO", getUpdatedPostDTO(post));
+        return POSTS_UPDATE_VIEW;
+    }
+
+    public PostDTO getUpdatedPostDTO(Post post) {
+        return PostDTO.getUpdateFields(post.getPostId(),
                 post.getPostTitle(),
                 post.getPostContent(),
                 post.getDisplayType())
                 .tags(PostUtils.tagsToTagDTOs(post.getTags()))
-                .build());
-        return POSTS_UPDATE_VIEW;
+                .build();
     }
 
     @RequestMapping(value = "/update", method = POST)
     public String updatePost(@Valid PostDTO postDTO, BindingResult result, Model model,
                              RedirectAttributes attributes) throws PostNotFoundException {
-            if (result.hasErrors()) {
-                model.addAttribute("postDTO", postDTO);
-                return POSTS_UPDATE_VIEW;
-            } else {
-                postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
-                Post post = postService.update(postDTO);
-                webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
-                return "redirect:/posts/post/" + post.getPostName();
-            }
+        if (result.hasErrors()) {
+            model.addAttribute("postDTO", postDTO);
+            return POSTS_UPDATE_VIEW;
+        } else {
+            postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+            Post post = postService.update(postDTO);
+            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
+            return "redirect:/posts/post/" + post.getPostName();
+        }
     }
 
     // endregion
@@ -220,10 +230,11 @@ public class PostsController {
                                      PostLink postLink, BindingResult result, Model model, HttpServletRequest request) {
         PostType postType = PostType.valueOf(formType.toUpperCase());
         String postFormType;
+        model.addAttribute("postDTO", new PostDTO());
 
-        if (postType.equals(PostType.NOTE)) {
-            postFormType = "note";
-            model.addAttribute("postDTO", new PostDTO());
+        if (postType.equals(PostType.POST)) {
+            postFormType = "post";
+            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, null);
             model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
         } else {
             model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
@@ -249,9 +260,11 @@ public class PostsController {
         return POSTS_ADD_VIEW;
     }
 
+
     @RequestMapping(value = "/add", method = GET)
     public String addPost(Model model) {
         model.addAttribute("postLink", new PostLink());
+        model.addAttribute("postDTO", new PostDTO());
         return POSTS_ADD_VIEW;
     }
 
@@ -259,31 +272,56 @@ public class PostsController {
 
     // region /add {post} methods
 
-    @RequestMapping(value = "/add", method = POST, params = {"note"})
+    @RequestMapping(value = "/add", method = POST, params = {"post"})
     public String createNotePost(@Valid PostDTO postDTO, BindingResult result,
-                             CurrentUser currentUser, RedirectAttributes attributes, Model model,
-                             HttpServletRequest request) throws DuplicatePostNameException {
+                                 CurrentUser currentUser, RedirectAttributes attributes, Model model,
+                                 HttpServletRequest request) throws DuplicatePostNameException, PostNotFoundException {
+
+        String saveAction = request.getParameter("post");
 
         model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
-        model.addAttribute("postFormType", "note");
-
-        if (!isDuplicatePost(postDTO)) {
+        model.addAttribute("postFormType", "post");
+        Post sessionPost = null;
+        Object obj = WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST);
+        if (obj != null) {
+            sessionPost = (Post) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST);
+        }
+        if (!isDuplicatePost(postDTO, sessionPost)) {
             if (result.hasErrors()) {
                 model.addAttribute("postDTO", postDTO);
                 return POSTS_ADD_VIEW;
             } else {
                 if (canPost(currentUser)) {
 
+                    postDTO.setDisplayType(postDTO.getDisplayType());
                     postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
                     postDTO.setUserId(currentUser.getId());
                     postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+                    postDTO.setIsPublished(saveAction.equals(POST_PUBLISH));
 
                     request.setAttribute("postTitle", postDTO.getPostTitle());
-                    postService.add(postDTO);
+                    Post saved;
 
-                    webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOTE_ADDED);
-                    return "redirect:/posts";
+                    if (sessionPost == null)
+                        saved = postService.add(postDTO);
+                    else {
+                        postDTO.setPostId(sessionPost.getPostId());
+                        saved = postService.update(postDTO);
+                    }
+                    model.addAttribute("fileuploading", templateService.getFileUploadingScript());
+                    model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
+                    postDTO.setPostId(saved.getPostId());
+                    WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
+
+                    if (saveAction.equals(POST_PUBLISH)) {
+                        webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOTE_ADDED);
+                        return "redirect:/posts";
+                    } else {
+                        model.addAttribute("postDTO", getUpdatedPostDTO(saved));
+                        return POSTS_ADD_VIEW;
+                    }
                 } else {
+                    model.addAttribute("postDTO", new PostDTO());
                     webUI.addFeedbackMessage(attributes, FEEDBACK_NOTE_DEMO_THANKS);
                     return "redirect:/posts/add";
                 }
@@ -296,15 +334,15 @@ public class PostsController {
 
     @RequestMapping(value = "/add", method = POST, params = {"link"})
     public String createLinkPost(@Valid PostDTO postDTO, BindingResult result,
-                             CurrentUser currentUser, RedirectAttributes attributes, Model model,
-                             HttpServletRequest request) throws DuplicatePostNameException {
+                                 CurrentUser currentUser, RedirectAttributes attributes, Model model,
+                                 HttpServletRequest request) throws DuplicatePostNameException {
         PagePreviewDTO pagePreview =
                 (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
 
         model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
         model.addAttribute("postFormType", "link");
 
-        if (!isDuplicatePost(postDTO)) {
+        if (!isDuplicatePost(postDTO, null)) {
             if (result.hasErrors()) {
                 model.addAttribute("pagePreview", pagePreview);
                 if (result.hasFieldErrors("postTitle")) {
@@ -463,19 +501,22 @@ public class PostsController {
 
     }
 
-
-    private Boolean isDuplicatePost(PostDTO postDTO) {
+    private Boolean isDuplicatePost(PostDTO postDTO, Post sessionPost) {
         Boolean isDuplicate = false;
+
         if (StringUtils.isNotEmpty(postDTO.getPostTitle())) {
             String slug = PostUtils.createSlug(postDTO.getPostTitle());
             Post found = null;
             try {
                 found = postService.getPost(slug);
-            } catch (PostNotFoundException e) {
-                logger.error("No post found for post name: " + slug);
-            }
-            if (found != null) {
-                isDuplicate = true;
+            } catch (PostNotFoundException e) {}
+            if (sessionPost != null) {
+                if (found != null && !(found.getPostId().equals(sessionPost.getPostId()))) {
+                    isDuplicate = true;
+                }
+            } else {
+                if (found != null)
+                    isDuplicate = true;
             }
         }
         return isDuplicate;

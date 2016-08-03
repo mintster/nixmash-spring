@@ -10,6 +10,7 @@ import com.nixmash.springdata.jpa.model.ContactPhone;
 import com.nixmash.springdata.jpa.model.Hobby;
 import com.nixmash.springdata.jpa.model.validators.ContactFormValidator;
 import com.nixmash.springdata.jpa.service.ContactService;
+import com.nixmash.springdata.jpa.utils.SharedUtils;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,7 +153,7 @@ public class ContactController {
 	@RequestMapping(value = "/contact/update/{contactId}", params = { "addContactPhone" }, method = RequestMethod.POST)
 	public String addRow(final Contact contact) {
 		ContactPhone contactPhone = ContactPhone.getBuilder(contact, null, null).build();
-		contactPhone.setContactPhoneId(ContactUtils.randomNegativeId());
+		contactPhone.setContactPhoneId(SharedUtils.randomNegativeId());
 		contact.getContactPhones().add(contactPhone);
 		return CONTACT_FORM_VIEW;
 	}

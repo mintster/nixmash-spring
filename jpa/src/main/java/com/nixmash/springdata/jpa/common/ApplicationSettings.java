@@ -44,6 +44,30 @@ public class ApplicationSettings {
 
 	//endregion
 
+	// region post Uploads
+
+	private String postImagePath;
+	private String postImageUrlRoot;
+
+	// endregion
+
+
+	public String getPostImagePath() {
+		return postImagePath;
+	}
+
+	public void setPostImagePath(String postImagePath) {
+		this.postImagePath = postImagePath;
+	}
+
+	public String getPostImageUrlRoot() {
+		return postImageUrlRoot;
+	}
+
+	public void setPostImageUrlRoot(String postImageUrlRoot) {
+		this.postImageUrlRoot = postImageUrlRoot;
+	}
+
 	public String getEditorImagePlacemarker() {
 		return editorImagePlacemarker;
 	}

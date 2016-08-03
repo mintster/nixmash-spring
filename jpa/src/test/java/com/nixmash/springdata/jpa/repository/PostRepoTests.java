@@ -59,10 +59,10 @@ public class PostRepoTests {
 
     @Test
     public void addPost() {
-        Post post = Post.getBuilder(1L, "New Title", "new-title", "http://some.link", "New post content!", PostType.NOTE, PostDisplayType.NOTE).build();
+        Post post = Post.getBuilder(1L, "New Title", "new-title", "http://some.link", "New post content!", PostType.POST, PostDisplayType.POST).build();
         Post saved = postRepository.save(post);
         assertNotNull(saved);
-        assertEquals(saved.getPostType(), PostType.NOTE);
+        assertEquals(saved.getPostType(), PostType.POST);
 
         // postSource is domain of url passed to builder
         assertEquals(saved.getPostSource(), "some.link");
@@ -70,7 +70,7 @@ public class PostRepoTests {
 
     @Test
     public void nullPostLinkEnteredAndResultsInPostSourceAsNull() {
-        Post post = Post.getBuilder(1L, "Nuther New Title", "nuther-new-title", null, "New post content!", PostType.NOTE, PostDisplayType.NOTE).build();
+        Post post = Post.getBuilder(1L, "Nuther New Title", "nuther-new-title", null, "New post content!", PostType.POST, PostDisplayType.POST).build();
         Post saved = postRepository.save(post);
         assertNotNull(saved);
         assertNull(saved.getPostLink());
@@ -84,8 +84,8 @@ public class PostRepoTests {
                 "post-with-tags",
                 null,
                 "New post with tags!",
-                PostType.NOTE,
-                PostDisplayType.NOTE)
+                PostType.POST,
+                PostDisplayType.POST)
                 .build();
 
         Tag tag1 = new Tag("third tag");

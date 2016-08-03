@@ -63,6 +63,15 @@
                             <td></td>
                             <td>
                                 <div class="form-actions pull-right special-select">
+                                    <select th:unless="${postDTO.postTitle == 'LINK'}" th:field="*{displayType}" name="displayType" class="selectpicker"
+                                            data-style="btn-primary">
+                                        <option value="POST" th:text="#{add.post.option.default}">
+                                            [default post]
+                                        </option>
+                                        <option value="MULTIPHOTO_POST" th:text="#{add.post.option.multiphoto}">
+                                            [multiphoto post]
+                                        </option>
+                                    </select>
                                     <button type="submit" class="btn btn-success" name="link" value="true">Update
                                     </button>
                                 </div>
@@ -71,7 +80,7 @@
                     </table>
 
                     <input type="hidden" name="postId" th:value="*{postId}"/>
-                    <input type="hidden" name="displayType" th:value="*{displayType}"/>
+                    <input th:if="${postDTO.postType == 'LINK'}" type="hidden" name="displayType" th:value="*{displayType}"/>
                 </form>
             </div>
         </div>

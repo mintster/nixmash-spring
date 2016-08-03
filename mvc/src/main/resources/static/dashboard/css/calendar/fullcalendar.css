@@ -94,7 +94,7 @@ Acceptable font-family overrides for individual icons:
 	"Arial", sans-serif
 	"Times New Roman", serif
 
-NOTE: use percentage font sizes or else old IE chokes
+POST: use percentage font sizes or else old IE chokes
 */
 
 .fc-icon:after {

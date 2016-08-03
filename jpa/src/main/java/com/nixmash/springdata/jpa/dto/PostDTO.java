@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.dto;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.utils.PostImage;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.substring;
@@ -60,9 +62,27 @@ public class PostDTO implements Serializable {
     private Boolean hasImages = false;
     private int imageIndex = 1;
     private String alphaKey;
+    private Long temporaryPostId = 1L;
+
+    private List<PostImage> postImages;
 
     // region getter setters
 
+    public Long getTemporaryPostId() {
+        return temporaryPostId;
+    }
+
+    public void setTemporaryPostId(Long temporaryPostId) {
+        this.temporaryPostId = temporaryPostId;
+    }
+
+    public List<PostImage> getPostImages() {
+        return postImages;
+    }
+
+    public void setPostImages(List<PostImage> postImages) {
+        this.postImages = postImages;
+    }
 
     public Set<TagDTO> getTags() {
         return tags;
@@ -228,14 +248,6 @@ public class PostDTO implements Serializable {
         this.hasImages = hasImages;
     }
 
-    public Boolean getPublished() {
-        return isPublished;
-    }
-
-    public void setPublished(Boolean published) {
-        isPublished = published;
-    }
-
     public String getAlphaKey() {
         return alphaKey;
     }
@@ -338,6 +350,11 @@ public class PostDTO implements Serializable {
 
         public Builder hasImages(Boolean hasImages) {
             built.hasImages = hasImages;
+            return this;
+        }
+
+        public Builder isPublished(Boolean isPublished) {
+            built.setIsPublished(isPublished);
             return this;
         }
 

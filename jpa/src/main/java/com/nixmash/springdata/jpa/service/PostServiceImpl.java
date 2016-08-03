@@ -1,10 +1,12 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.google.common.collect.Lists;
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.ContentType;
+import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
@@ -43,13 +45,15 @@ public class PostServiceImpl implements PostService {
     private TagRepository tagRepository;
     private LikeRepository likeRepository;
     private PostImageRepository postImageRepository;
+    private ApplicationSettings applicationSettings;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository, LikeRepository likeRepository, PostImageRepository postImageRepository) {
+    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository, LikeRepository likeRepository, PostImageRepository postImageRepository, ApplicationSettings applicationSettings) {
         this.postRepository = postRepository;
         this.tagRepository = tagRepository;
         this.likeRepository = likeRepository;
         this.postImageRepository = postImageRepository;
+        this.applicationSettings = applicationSettings;
     }
 
     @PersistenceContext
@@ -88,7 +92,7 @@ public class PostServiceImpl implements PostService {
     public Post update(PostDTO postDTO) throws PostNotFoundException {
 
         Post post = postRepository.findByPostId(postDTO.getPostId());
-        post.update(postDTO.getPostTitle(), postDTO.getPostContent());
+        post.update(postDTO.getPostTitle(), postDTO.getPostContent(), postDTO.getIsPublished());
 
         saveNewTagsToDataBase(postDTO);
 
@@ -153,7 +157,7 @@ public class PostServiceImpl implements PostService {
     public Post getPostById(Long ID) throws PostNotFoundException {
         Post found = postRepository.findByPostId(ID);
         if (found == null) {
-            logger.info("No post found with id: {}", ID);
+            logger.debug("No post found with id: {}", ID);
             throw new PostNotFoundException("No post found with id: " + ID);
         }
         return found;
@@ -164,8 +168,11 @@ public class PostServiceImpl implements PostService {
     public Post getPost(String postName) throws PostNotFoundException {
         Post found = postRepository.findByPostNameIgnoreCase(postName);
         if (found == null) {
-            logger.info("No post found with id: {}", postName);
+            logger.debug("No post found with id: {}", postName);
             throw new PostNotFoundException("No post found with id: " + postName);
+        } else {
+            if (found.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST))
+                found.setPostImages(getPostImages(found.getPostId()));
         }
 
         return found;
@@ -181,8 +188,22 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
+    public Page<Post> getPublishedPosts(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest =
+                new PageRequest(pageNumber, pageSize, sortByPostDateDesc());
+        return postRepository.findByIsPublishedTrue(pageRequest);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<Post> getAllPosts() {
         return postRepository.findAll(sortByPostDateDesc());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getAllPublishedPosts() {
+        return postRepository.findByIsPublishedTrue(sortByPostDateDesc());
     }
 
     @Override
@@ -224,25 +245,35 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Image> getAllPostImages() {
+    public List<PostImage> getAllPostImages() {
         return Lists.newArrayList(postImageRepository.findAll());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<PostImage> getPostImages(long postId) {
+        List<PostImage> images = Lists.newArrayList(postImageRepository.findByPostId(postId));
+        for (PostImage image :  images) {
+            image.setUrl(applicationSettings.getPostImageUrlRoot());
+        }
+        return images;
     }
 
     @Transactional
     @Override
-    public Image addImage(Image image) {
+    public PostImage addImage(PostImage image) {
         return postImageRepository.save(image);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Image getPostImage(long imageId) {
+    public PostImage getPostImage(long imageId) {
         return postImageRepository.findOne(imageId);
     }
 
     @Transactional
     @Override
-    public void deleteImage(Image image) {
+    public void deleteImage(PostImage image) {
         postImageRepository.delete(image);
     }
 

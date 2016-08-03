@@ -193,3 +193,17 @@ CREATE TABLE user_likes (
   UNIQUE KEY like_ids_index (like_id),
   CONSTRAINT fk_likes_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+CREATE TABLE post_images (
+  image_id bigint(20) NOT NULL AUTO_INCREMENT,
+  post_id bigint(20) DEFAULT NOT NULL,
+  image_name varchar(255) DEFAULT NULL,
+  thumbnail_filename varchar(255) DEFAULT NULL,
+  filename varchar(255) DEFAULT NULL,
+  content_type varchar(50) DEFAULT NULL,
+  size bigint(20) DEFAULT NULL,
+  thumbnail_size bigint(20) DEFAULT NULL,
+  datetime_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (image_id),
+  UNIQUE KEY post_images_image_id_uindex (image_id)
+);

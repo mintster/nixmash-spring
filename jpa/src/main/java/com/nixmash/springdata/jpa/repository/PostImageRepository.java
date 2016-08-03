@@ -1,11 +1,13 @@
 package com.nixmash.springdata.jpa.repository;
 
-import com.nixmash.springdata.jpa.model.Image;
+import com.nixmash.springdata.jpa.model.PostImage;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface PostImageRepository extends CrudRepository<Image, Long> {
+public interface PostImageRepository extends CrudRepository<PostImage, Long> {
 
-    List<Image> findAll();
+    List<PostImage> findAll();
+
+    List<PostImage> findByPostId(long postId);
 }

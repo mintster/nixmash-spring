@@ -1,15 +1,17 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.nixmash.springdata.jpa.model.Image;
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.model.PostImage;
 import com.nixmash.springdata.jpa.service.PostService;
+import com.nixmash.springdata.jpa.utils.SharedUtils;
 import com.nixmash.springdata.mail.service.TemplateService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -36,39 +40,42 @@ public class PostsUploadController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostsUploadController.class);
 
-    private static final String POSTS_PLAY_VIEW = "posts/play";
+    private static final String POSTS_PLAY_VIEW = "posts/photos";
+    private static final String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif))$)";
+
+    private Pattern pattern;
 
     private final PostService postService;
     private final TemplateService templateService;
-
-    @Value("${file.upload.directory}")
-    private String fileUploadDirectory;
+    private final ApplicationSettings applicationSettings;
 
     @Autowired
-    public PostsUploadController(PostService postService, TemplateService templateService) {
+    public PostsUploadController(PostService postService, TemplateService templateService, ApplicationSettings applicationSettings) {
         this.postService = postService;
         this.templateService = templateService;
+        this.applicationSettings = applicationSettings;
     }
 
-    @RequestMapping(value = "/play", method = GET)
+    @RequestMapping(value = "/photos", method = GET)
     public String play(Model model) {
-//        FileUploadDTO fileUploadDTO = new FileUploadDTO();
-//        model.addAttribute("fileUploadDTO", fileUploadDTO);
+        model.addAttribute("parentId", SharedUtils.randomNegativeId());
         model.addAttribute("fileuploading", templateService.getFileUploadingScript());
         model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
         return POSTS_PLAY_VIEW;
     }
 
 
-    @RequestMapping(value = "/play/upload", method = RequestMethod.GET)
-    public @ResponseBody
-    Map list() {
+    @RequestMapping(value = "/photos/upload/{parentId}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Map list(@PathVariable Long parentId) {
         logger.debug("uploadGet called");
-        List<Image> list = postService.getAllPostImages();
-        for(Image image : list) {
-            image.setUrl("/posts/play/picture/"+image.getId());
-            image.setThumbnailUrl("/posts/play/thumbnail/"+image.getId());
-            image.setDeleteUrl("/posts/play/delete/"+image.getId());
+        List<PostImage> list = postService.getPostImages(parentId);
+        String urlBase = "/posts/photos";
+        for (PostImage image : list) {
+            image.setUrl(urlBase + "/picture/" + image.getId());
+            image.setThumbnailUrl(urlBase + "/thumbnail/" + image.getId());
+            image.setDeleteUrl(urlBase + "/delete/" + image.getId());
             image.setDeleteType("DELETE");
         }
         Map<String, Object> files = new HashMap<>();
@@ -77,39 +84,50 @@ public class PostsUploadController {
         return files;
     }
 
-    @RequestMapping(value = "/play/upload", method = RequestMethod.POST)
-    public @ResponseBody Map upload(MultipartHttpServletRequest request, HttpServletResponse response) {
+
+    @RequestMapping(value = "/photos/upload/{parentId}", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    Map uploadDto(@PathVariable long parentId, MultipartHttpServletRequest request) {
         logger.debug("uploadPost called");
         Iterator<String> itr = request.getFileNames();
         MultipartFile mpf;
-        List<Image> list = new LinkedList<>();
+        List<PostImage> list = new LinkedList<>();
+        pattern = Pattern.compile(IMAGE_PATTERN);
 
         while (itr.hasNext()) {
             mpf = request.getFile(itr.next());
-            logger.debug("Uploading {}", mpf.getOriginalFilename());
+            String filename = mpf.getOriginalFilename();
+            logger.debug("Uploading {}", filename);
 
             String newFilenameBase = UUID.randomUUID().toString();
-            String originalFileExtension = mpf.getOriginalFilename().substring(mpf.getOriginalFilename().lastIndexOf("."));
-            String newFilename = newFilenameBase + originalFileExtension;
-            String storageDirectory = fileUploadDirectory;
+            String fileExtension = FilenameUtils.getExtension(filename).toLowerCase();
+
+            // only png/gif/jpg files accepted
+            if (!isValidImageFile(filename))
+                break;
+
+            String newFilename = String.format("%s.%s", newFilenameBase, fileExtension);
             String contentType = mpf.getContentType();
 
             File temporaryFile = new File(newFilename);
-            File storageFile = new File(storageDirectory + newFilename);
+            File storageFile = new File(applicationSettings.getPostImagePath() + newFilename);
             try {
+
                 mpf.transferTo(temporaryFile);
                 FileUtils.copyFile(new File("/tmp/" + temporaryFile), storageFile);
 
-                BufferedImage thumbnail =  Thumbnails.of(FileUtils.getFile(storageFile))
-                        .forceSize(290, 290)
+                BufferedImage thumbnail = Thumbnails.of(FileUtils.getFile(storageFile))
+                        .size(160, 160)
                         .allowOverwrite(true)
                         .outputFormat("png")
                         .asBufferedImage();
                 String thumbnailFilename = newFilenameBase + "-thumbnail.png";
-                File thumbnailFile = new File(storageDirectory + "/" + thumbnailFilename);
+                File thumbnailFile = new File(applicationSettings.getPostImagePath() + thumbnailFilename);
                 ImageIO.write(thumbnail, "png", thumbnailFile);
 
-                Image image = new Image();
+                PostImage image = new PostImage();
+                image.setPostId(parentId);
                 image.setName(mpf.getOriginalFilename());
                 image.setThumbnailFilename(thumbnailFilename);
                 image.setNewFilename(newFilename);
@@ -118,15 +136,15 @@ public class PostsUploadController {
                 image.setThumbnailSize(thumbnailFile.length());
                 image = postService.addImage(image);
 
-                image.setUrl("/posts/play/picture/"+image.getId());
-                image.setThumbnailUrl("/posts/play/thumbnail/"+image.getId());
-                image.setDeleteUrl("/posts/play/delete/"+image.getId());
+                image.setUrl("/posts/photos/picture/" + image.getId());
+                image.setThumbnailUrl("/posts/photos/thumbnail/" + image.getId());
+                image.setDeleteUrl("/posts/photos/delete/" + image.getId());
                 image.setDeleteType("DELETE");
 
                 list.add(image);
 
-            } catch(IOException e) {
-                logger.error("Could not upload file "+mpf.getOriginalFilename(), e);
+            } catch (IOException e) {
+                logger.error("Could not upload file " + mpf.getOriginalFilename(), e);
             }
 
         }
@@ -136,40 +154,42 @@ public class PostsUploadController {
         return files;
     }
 
-    @RequestMapping(value = "/play/picture/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/photos/picture/{id}", method = RequestMethod.GET)
     public void picture(HttpServletResponse response, @PathVariable Long id) {
-        Image image = postService.getPostImage(id);
-        File imageFile = new File(fileUploadDirectory+"/"+image.getNewFilename());
+        PostImage image = postService.getPostImage(id);
+        File imageFile = new File(applicationSettings.getPostImagePath() + image.getNewFilename());
         response.setContentType(image.getContentType());
         response.setContentLength(image.getSize().intValue());
         try {
             InputStream is = new FileInputStream(imageFile);
             IOUtils.copy(is, response.getOutputStream());
-        } catch(IOException e) {
-            logger.error("Could not show picture "+id, e);
+        } catch (IOException e) {
+            logger.error("Could not show picture " + id, e);
         }
     }
 
-    @RequestMapping(value = "/play/thumbnail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/photos/thumbnail/{id}", method = RequestMethod.GET)
     public void thumbnail(HttpServletResponse response, @PathVariable Long id) {
-        Image image =postService.getPostImage(id);
-        File imageFile = new File(fileUploadDirectory+"/"+image.getThumbnailFilename());
+        PostImage image = postService.getPostImage(id);
+        File imageFile = new File(applicationSettings.getPostImagePath() + image.getThumbnailFilename());
         response.setContentType(image.getContentType());
         response.setContentLength(image.getThumbnailSize().intValue());
         try {
             InputStream is = new FileInputStream(imageFile);
             IOUtils.copy(is, response.getOutputStream());
-        } catch(IOException e) {
-            logger.error("Could not show thumbnail "+id, e);
+        } catch (IOException e) {
+            logger.error("Could not show thumbnail " + id, e);
         }
     }
 
-    @RequestMapping(value = "/play/delete/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody List delete(@PathVariable Long id) {
-        Image image = postService.getPostImage(id);
-        File imageFile = new File(fileUploadDirectory+"/"+image.getNewFilename());
+    @RequestMapping(value = "/photos/delete/{id}", method = RequestMethod.DELETE)
+    public
+    @ResponseBody
+    List delete(@PathVariable Long id) {
+        PostImage image = postService.getPostImage(id);
+        File imageFile = new File(applicationSettings.getPostImagePath() + image.getNewFilename());
         imageFile.delete();
-        File thumbnailFile = new File(fileUploadDirectory+"/"+image.getThumbnailFilename());
+        File thumbnailFile = new File(applicationSettings.getPostImagePath() + image.getThumbnailFilename());
         thumbnailFile.delete();
         postService.deleteImage(image);
         List<Map<String, Object>> results = new ArrayList<>();
@@ -178,4 +198,10 @@ public class PostsUploadController {
         results.add(success);
         return results;
     }
+
+    private boolean isValidImageFile(final String image) {
+        Matcher matcher = pattern.matcher(image);
+        return matcher.matches();
+    }
+
 }

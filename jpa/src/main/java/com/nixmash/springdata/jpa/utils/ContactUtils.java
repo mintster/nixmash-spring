@@ -150,11 +150,6 @@ public class ContactUtils {
 
 	// region Random IDs
 
-	public static Long randomNegativeId() {
-		Random rand = new Random();
-		return -1 * ((long) rand.nextInt(1000));
-	}
-
 	public static Long randomContactId() {
 		Random rand = new Random();
 		return (long) (rand.nextInt(10) + 1);

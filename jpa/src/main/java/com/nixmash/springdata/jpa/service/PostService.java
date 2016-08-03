@@ -6,7 +6,7 @@ import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
-import com.nixmash.springdata.jpa.model.Image;
+import com.nixmash.springdata.jpa.model.PostImage;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
 import org.springframework.data.domain.Page;
@@ -43,7 +43,13 @@ public interface PostService {
     Post getPostById(Long postId) throws PostNotFoundException;
 
     @Transactional(readOnly = true)
+    Page<Post> getPublishedPosts(Integer pageNumber, Integer pageSize);
+
+    @Transactional(readOnly = true)
     List<Post> getAllPosts();
+
+    @Transactional(readOnly = true)
+    List<Post> getAllPublishedPosts();
 
     Optional<Post> getOneMostRecent();
 
@@ -70,13 +76,16 @@ public interface PostService {
     Set<TagDTO> getTagDTOs(Long postId);
 
     @Transactional(readOnly = true)
-    List<Image> getAllPostImages();
-
-    @Transactional
-    Image addImage(Image image);
+    List<PostImage> getAllPostImages();
 
     @Transactional(readOnly = true)
-    Image getPostImage(long imageId);
+    List<PostImage> getPostImages(long postId);
+
+    @Transactional
+    PostImage addImage(PostImage image);
+
+    @Transactional(readOnly = true)
+    PostImage getPostImage(long imageId);
 
     Tag getTag(String tagValue) throws TagNotFoundException;
 
@@ -84,5 +93,5 @@ public interface PostService {
 
     List<Post> getPostsByTagId(long tagId);
 
-    void deleteImage(Image image);
+    void deleteImage(PostImage image);
 }

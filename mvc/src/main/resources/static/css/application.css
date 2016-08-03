@@ -806,6 +806,18 @@ pre code {
     margin-bottom: 3px;
 }
 
+.post .post-photos {
+
+}
+
+.post img.post-photo-thumbnail {
+    border: #dd4814 2px solid;
+    margin-right: 6px;
+}
+
+.post img.post-photo-thumbnail:hover {
+    border: #000 2px solid;
+}
 /*</editor-fold>*/
 /*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
 
@@ -904,6 +916,16 @@ h1.post-title {
 #post samp {
     background-color: #f6f6f6;
     padding: 2px 3px;
+}
+
+#post img.post-photo-thumbnail {
+    max-width: 240px;
+    border: #ae3910 2px solid;
+    margin-right: 8px;
+}
+
+#post img.post-photo-thumbnail:hover {
+    border: #000 2px solid;
 }
 /*</editor-fold>*/
 /*/<editor-fold> desc="SIDEBAR NAVIGATION----------------------------/ "*/

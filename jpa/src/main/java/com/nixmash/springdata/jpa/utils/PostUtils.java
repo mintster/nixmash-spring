@@ -37,6 +37,7 @@ public class PostUtils {
                 dto.getPostContent(),
                 dto.getPostType(),
                 dto.getDisplayType())
+                .isPublished(dto.getIsPublished())
                 .postSource(dto.getPostSource())
                 .postImage(dto.getPostImage())
                 .build();
@@ -51,6 +52,7 @@ public class PostUtils {
                 post.getPostContent(),
                 post.getPostType(),
                 post.getDisplayType())
+                .isPublished(post.getIsPublished())
                 .postSource(post.getPostSource())
                 .postImage(post.getPostImage())
                 .postId(post.getPostId())

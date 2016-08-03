@@ -8,6 +8,7 @@ import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.PostImage;
 import com.nixmash.springdata.jpa.repository.LikeRepository;
 import com.nixmash.springdata.jpa.utils.PostTestUtils;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -33,6 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,9 +51,27 @@ public class PostServiceTests {
 
     @Test
     public void addPostDTO() throws DuplicatePostNameException {
-        PostDTO postDTO = PostTestUtils.createPostDTO();
+        PostDTO postDTO = PostTestUtils.createPostDTO(1);
         Post post = postService.add(postDTO);
         assertNotNull(post);
+    }
+
+    @Test
+    public void unpublishedPost_ShouldNotBeReturned_InFindAll() throws DuplicatePostNameException {
+        PostDTO postDTO = PostTestUtils.createPostDTO(2);
+        postDTO.setIsPublished(false);
+        Post post = postService.add(postDTO);
+        long postId = post.getPostId();
+        assertThat(postId, greaterThan(1L));
+
+        List<Post> posts = postService.getAllPublishedPosts();
+        Optional<Post> unpublishedPost;
+        unpublishedPost = posts.stream().filter(p -> p.getPostId().equals(post.getPostId())).findFirst();
+        assertFalse(unpublishedPost.isPresent());
+
+        List<Post> allposts = postService.getAllPosts();
+        unpublishedPost = allposts.stream().filter(p -> p.getPostId().equals(post.getPostId())).findFirst();
+        assertTrue(unpublishedPost.isPresent());
     }
 
     @Test
@@ -132,7 +152,6 @@ public class PostServiceTests {
 
         // posts are retrieved for tagId #1 as all 5 H2 posts have tagId #1
         assertEquals(posts.getSize(), 3);
-
     }
 
     @Test
@@ -143,7 +162,7 @@ public class PostServiceTests {
 
     @Test
     public void addPostWithTags() throws DuplicatePostNameException, PostNotFoundException {
-        PostDTO postDTO = PostTestUtils.createPostDTO();
+        PostDTO postDTO = PostTestUtils.createPostDTO(3);
         postDTO.getTags().add(new TagDTO("addPostWithTags1"));
         postDTO.getTags().add(new TagDTO("addPostWithTags2"));
         Post post = postService.add(postDTO);
@@ -206,7 +225,7 @@ public class PostServiceTests {
 
         // confirm like added to user_likes table
         Optional<Long> likeId = likeRepository.findPostLikeIdByUserId(4L, 3L);
-        assert(likeId.isPresent());
+        assert (likeId.isPresent());
     }
 
     @Test
@@ -228,7 +247,7 @@ public class PostServiceTests {
 
         // pre-existing like removes record from user_likes table: should NOT be present
         Optional<Long> likeId = likeRepository.findPostLikeIdByUserId(3L, 3L);
-        assert(!likeId.isPresent());
+        assert (!likeId.isPresent());
     }
 
     @Test
@@ -247,20 +266,20 @@ public class PostServiceTests {
 
     @Test
     public void alphaLinksContainsActive() {
-      // AlphabetDTO characters isActive() property set to true by first letter in Post Titles
+        // AlphabetDTO characters isActive() property set to true by first letter in Post Titles
         List<AlphabetDTO> alphabetDTOs = postService.getAlphaLInks();
         assertThat(alphabetDTOs, hasItem(Matchers.<AlphabetDTO>hasProperty("active", equalTo(true))));
     }
 
     @Test
     public void alphaLinksContainsActive0to9() {
-      // AlphabetDTO has an alphaCharacter  of "0-9" and is TRUE from H2 Test Post Titles
+        // AlphabetDTO has an alphaCharacter  of "0-9" and is TRUE from H2 Test Post Titles
         List<AlphabetDTO> alphabetDTOs = postService.getAlphaLInks();
         Optional<AlphabetDTO> alphabetDTO = alphabetDTOs
-                        .stream()
-                        .filter(a -> (a.getAlphaCharacter().equals("0-9") && a.getActive().equals(true)))
-                        .findFirst();
-        assert(alphabetDTO.isPresent());
+                .stream()
+                .filter(a -> (a.getAlphaCharacter().equals("0-9") && a.getActive().equals(true)))
+                .findFirst();
+        assert (alphabetDTO.isPresent());
     }
 
     @Test
@@ -288,13 +307,24 @@ public class PostServiceTests {
     @Test
     public void alphaPostsHaveAlphaKeyOfStartingLetter() {
         List<PostDTO> posts = postService.getAlphaPosts();
-            Optional<PostDTO> postDTO = posts
-                    .stream()
-                    .filter(p -> (p.getPostTitle().substring(0, 1).equals("A")))
-                    .findFirst();
-            assert (postDTO.isPresent());
-            assertEquals(postDTO.get().getAlphaKey(), "A");
+        Optional<PostDTO> postDTO = posts
+                .stream()
+                .filter(p -> (p.getPostTitle().substring(0, 1).equals("A")))
+                .findFirst();
+        assert (postDTO.isPresent());
+        assertEquals(postDTO.get().getAlphaKey(), "A");
 
     }
 
+    @Test
+    public void postImagesLoad() {
+        List<PostImage> postImages = postService.getPostImages(1L);
+        assertEquals(postImages.size(), 2);
+    }
+
+    @Test
+    public void allPostImagesLoad() {
+        List<PostImage> postImages = postService.getAllPostImages();
+        assertEquals(postImages.size(), 3);
+    }
 }

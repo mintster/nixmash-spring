@@ -1,8 +1,8 @@
-package com.nixmash.springdata.jpa.dto;
+package com.nixmash.springdata.jpa.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class PostAttachmentDTO {
+public class PostImage {
 
     private MultipartFile file;
 

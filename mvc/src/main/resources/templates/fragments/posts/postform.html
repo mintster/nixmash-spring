@@ -34,6 +34,7 @@
 </div>
 
 <div th:fragment="tags">
+    <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
     <tr class="tr-tag-row" th:classappend="${#fields.hasErrors('tags')} ? 'has-error'">
         <td class="col-sm-1">
             <div class="control-group" th:classappend="${#fields.hasErrors('tags')} ? 'error'">
@@ -42,7 +43,11 @@
         </td>
         <td class="col-sm-5">
             <div class="controls">
-                <select id="tag-select" multiple="multiple" data-role="typeahead" th:field="*{tags}"></select>
+                <select th:if="${postDTO.postId == null}" id="tag-select" multiple="multiple" data-role="typeahead" th:field="*{tags}"></select>
+                <select th:unless="${postDTO.postId == null}" id="tag-select" multiple="multiple" data-role="tagsinput" name="tags">
+                    <option th:each="tag : *{tags}" th:text="${tag.getTagValue()}"
+                            th:value="${tag.getTagValue()}"/>
+                </select>
                 <label class="control-label" th:errors="*{tags}">[error]</label>
             </div>
         </td>

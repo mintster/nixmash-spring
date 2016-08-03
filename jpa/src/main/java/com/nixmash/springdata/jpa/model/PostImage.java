@@ -9,8 +9,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "post_images")
-@JsonIgnoreProperties({"id","thumbnailFilename","newFilename","contentType","dateCreated","lastUpdated"})
-public class Image implements Serializable {
+@JsonIgnoreProperties({"id", "postId", "thumbnailFilename", "newFilename", "contentType", "dateCreated", "lastUpdated"})
+public class PostImage implements Serializable {
 
     private static final long serialVersionUID = 5143474574941155184L;
 
@@ -19,29 +19,28 @@ public class Image implements Serializable {
     @Column(name = "image_id", nullable = false)
     private Long id;
 
+    @Column(name = "post_id")
+    private Long postId;
+
     @Column(name = "image_name")
     private String name;
 
-    @Column(name="thumbnail_filename")
+    @Column(name = "thumbnail_filename")
     private String thumbnailFilename;
 
-    @Column(name="filename")
+    @Column(name = "filename")
     private String newFilename;
 
-    @Column(name="content_type")
+    @Column(name = "content_type")
     private String contentType;
     private Long size;
 
-    @Column(name="thumbnail_size")
+    @Column(name = "thumbnail_size")
     private Long thumbnailSize;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datetime_created")
     private Date dateCreated;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "datetime_updated")
-    private Date lastUpdated;
 
     @Transient
     private String url;
@@ -52,193 +51,147 @@ public class Image implements Serializable {
     @Transient
     private String deleteType;
 
-    public Image() {}
+    public PostImage() {
+    }
 
-    /**
-     * @return the id
-     */
+    // region Setters / Getters
+
     public Long getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the thumbnailFilename
-     */
     public String getThumbnailFilename() {
         return thumbnailFilename;
     }
 
-    /**
-     * @param thumbnailFilename the thumbnailFilename to set
-     */
     public void setThumbnailFilename(String thumbnailFilename) {
         this.thumbnailFilename = thumbnailFilename;
     }
 
-    /**
-     * @return the newFilename
-     */
     public String getNewFilename() {
         return newFilename;
     }
 
-    /**
-     * @param newFilename the newFilename to set
-     */
     public void setNewFilename(String newFilename) {
         this.newFilename = newFilename;
     }
 
-    /**
-     * @return the contentType
-     */
     public String getContentType() {
         return contentType;
     }
 
-    /**
-     * @param contentType the contentType to set
-     */
     public void setContentType(String contentType) {
         this.contentType = contentType;
     }
 
-    /**
-     * @return the size
-     */
     public Long getSize() {
         return size;
     }
 
-    /**
-     * @param size the size to set
-     */
     public void setSize(Long size) {
         this.size = size;
     }
 
-    /**
-     * @return the thumbnailSize
-     */
     public Long getThumbnailSize() {
         return thumbnailSize;
     }
 
-    /**
-     * @param thumbnailSize the thumbnailSize to set
-     */
     public void setThumbnailSize(Long thumbnailSize) {
         this.thumbnailSize = thumbnailSize;
     }
 
-    /**
-     * @return the dateCreated
-     */
     public Date getDateCreated() {
         return dateCreated;
     }
 
-    /**
-     * @param dateCreated the dateCreated to set
-     */
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    /**
-     * @return the lastUpdated
-     */
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    /**
-     * @param lastUpdated the lastUpdated to set
-     */
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-    /**
-     * @return the url
-     */
     public String getUrl() {
         return url;
     }
 
-    /**
-     * @param url the url to set
-     */
     public void setUrl(String url) {
         this.url = url;
     }
 
-    /**
-     * @return the thumbnailUrl
-     */
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
 
-    /**
-     * @param thumbnailUrl the thumbnailUrl to set
-     */
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    /**
-     * @return the deleteUrl
-     */
     public String getDeleteUrl() {
         return deleteUrl;
     }
 
-    /**
-     * @param deleteUrl the deleteUrl to set
-     */
     public void setDeleteUrl(String deleteUrl) {
         this.deleteUrl = deleteUrl;
     }
 
-    /**
-     * @return the deleteType
-     */
     public String getDeleteType() {
         return deleteType;
     }
 
-    /**
-     * @param deleteType the deleteType to set
-     */
     public void setDeleteType(String deleteType) {
         this.deleteType = deleteType;
     }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
+    // endregion
+
 
     @Override
     public String toString() {
         return "Image{" + "name=" + name + ", thumbnailFilename=" + thumbnailFilename + ", newFilename=" + newFilename + ", contentType=" + contentType + ", url=" + url + ", thumbnailUrl=" + thumbnailUrl + ", deleteUrl=" + deleteUrl + ", deleteType=" + deleteType + '}';
     }
 
+    public static Builder getBuilder(Long postId, String name, String thumbnailFilename, String newFilename, String contentType, Long size, Long thumbnailSize, Date dateCreated, String url, String thumbnailUrl, String deleteUrl, String deleteType) {
+        return new PostImage.Builder(postId, name, thumbnailFilename, newFilename, contentType, size, thumbnailSize, dateCreated, url, thumbnailUrl, deleteUrl, deleteType);
+    }
+
+    public static class Builder {
+        private PostImage built;
+
+        public Builder(Long postId, String name, String thumbnailFilename, String newFilename, String contentType, Long size, Long thumbnailSize, Date dateCreated, String url, String thumbnailUrl, String deleteUrl, String deleteType) {
+            built.postId = postId;
+            built.name = name;
+            built.thumbnailFilename = thumbnailFilename;
+            built.newFilename = newFilename;
+            built.contentType = contentType;
+            built.size = size;
+            built.thumbnailSize = thumbnailSize;
+            built.dateCreated = dateCreated;
+            built.url = url;
+            built.thumbnailUrl = thumbnailUrl;
+            built.deleteUrl = deleteUrl;
+            built.deleteType = deleteType;
+        }
+
+        public PostImage build() {
+            return built;
+        }
+    }
 }

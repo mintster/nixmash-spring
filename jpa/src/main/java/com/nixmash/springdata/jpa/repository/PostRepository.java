@@ -22,17 +22,20 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 
     Post findByPostNameIgnoreCase(String postName) throws DataAccessException;
 
-    @Query("select distinct p from Post p left join p.tags t where t.tagId = ?1")
+    @Query("select distinct p from Post p left join p.tags t where p.isPublished = true and t.tagId = ?1")
     Page<Post> findByTagId(long tagId, Pageable pageable);
 
-    @Query("select distinct p from Post p left join p.tags t where t.tagId = ?1")
+    @Query("select distinct p from Post p left join p.tags t where p.isPublished = true and t.tagId = ?1")
     List<Post> findAllByTagId(long tagId);
 
     List<Post> findAll(Sort sort);
 
+    List<Post> findByIsPublishedTrue(Sort sort);
+    Page<Post> findByIsPublishedTrue(Pageable pageable);
+
     @Query(value = "SELECT " +
             "GROUP_CONCAT(distinct(upper(substr(post_title,1,1))) SEPARATOR '')" +
-            " FROM posts", nativeQuery = true)
+            " FROM posts WHERE is_published = true", nativeQuery = true)
     String getAlphaLinkString();
 
 }

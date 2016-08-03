@@ -227,9 +227,9 @@ public class PostsControllerTests extends AbstractContext {
     @Test
     public void noteSelectDisplaysNoteForm() throws Exception {
         this.mockMvc.perform(get("/posts/add")
-                .param("formtype", "note"))
+                .param("formtype", "post"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("postFormType", "note"))
+                .andExpect(model().attribute("postFormType", "post"))
                 .andExpect(view().name(POSTS_ADD_VIEW));
     }
 
@@ -250,7 +250,7 @@ public class PostsControllerTests extends AbstractContext {
     @Test
     @WithUserDetails(value = "erwin")
     public void submitNewNoteFormAsNonPostUser() throws Exception {
-        mockMvc.perform(postRequest(PostType.NOTE, "submitNewNote"))
+        mockMvc.perform(postRequest(PostType.POST, "submitNewNote"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts/add"));
@@ -278,9 +278,24 @@ public class PostsControllerTests extends AbstractContext {
     @WithPostUser
     public void addNewNoteWithPostUserAddsNewPostRecord() throws Exception {
         int postStartCount = postService.getAllPosts().size();
-        mockMvc.perform(postRequest(PostType.NOTE, "addsOneNote"));
+        mockMvc.perform(postRequest(PostType.POST, "addsOneNote"));
         int postEndCount = postService.getAllPosts().size();
         assertEquals(postStartCount + 1, postEndCount);
+    }
+
+
+    @Test
+    @WithPostUser
+    public void newPublishedPostRedirectsToPostList() throws Exception {
+        mockMvc.perform(postRequest(PostType.POST, "redirectsToPostList"))
+                .andExpect(redirectedUrl("/posts"));
+    }
+
+    @Test
+    @WithPostUser
+    public void newUnpublishedPostReturnsPostAddView() throws Exception {
+        mockMvc.perform(postRequest(PostType.POST, "returnsPostAddView", false))
+                .andExpect(view().name(POSTS_ADD_VIEW));
     }
 
     @Test
@@ -336,7 +351,7 @@ public class PostsControllerTests extends AbstractContext {
 
 
     @Test
-            public void loadPostAtoZView() throws Exception {
+    public void loadPostAtoZView() throws Exception {
         this.mockMvc.perform(get("/posts/az"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("alphaLinks"))
@@ -345,15 +360,20 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     private RequestBuilder postRequest(PostType postType, String s) {
+        return postRequest(postType, s, true);
+    }
+
+    private RequestBuilder postRequest(PostType postType, String s, Boolean isPublished) {
         return post("/posts/add")
-                .param(postType.name().toLowerCase(), "true")
+                .param(postType.name().toLowerCase(), isPublished ? POST_PUBLISH : POST_DRAFT)
                 .param("postTitle", "my title " + s)
                 .param("postLink", "http://some.link/some/path")
                 .param("postDescription", "my description")
                 .param("postType", postType.name().toUpperCase())
                 .param("displayType", postType.name().toUpperCase())
                 .param("postContent", "My Post Content")
-                .param("tags", String.format("req%s, req%s%s", s, s,1))
+                .param("isPublished", String.valueOf(isPublished))
+                .param("tags", String.format("req%s, req%s%s", s, s, 1))
                 .with(csrf());
     }
 

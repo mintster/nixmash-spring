@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.AccessType.FIELD;
@@ -99,6 +100,9 @@ public class Post implements Serializable {
                     nullable = false))
     public Set<Tag> tags;
 
+    @Transient
+    public List<PostImage> postImages;
+
     // endregion
 
     // region Transient properties
@@ -114,6 +118,15 @@ public class Post implements Serializable {
     // endregion
 
     //region Getter Setters
+
+
+    public List<PostImage> getPostImages() {
+        return postImages;
+    }
+
+    public void setPostImages(List<PostImage> postImages) {
+        this.postImages = postImages;
+    }
 
     public boolean getIsOwner() {
         return isOwner;
@@ -275,10 +288,11 @@ public class Post implements Serializable {
 
     //endregion
 
-    public void update(String postTitle, String postContent) {
+    public void update(String postTitle, String postContent, Boolean isPublished) {
         this.postTitle = postTitle;
         this.postContent = postContent;
         this.postName = PostUtils.createSlug(postTitle);
+        this.isPublished = isPublished;
     }
 
     public void updateLikes(int likeIncrement) {
@@ -325,6 +339,11 @@ public class Post implements Serializable {
             built.postType = postType;
             built.displayType = displayType;
             built.postSource = PostUtils.createPostSource(postLink);
+        }
+
+        public Builder isPublished(Boolean isPublished) {
+            built.setIsPublished(isPublished);
+            return this;
         }
 
         public Builder postSource(String postSource) {

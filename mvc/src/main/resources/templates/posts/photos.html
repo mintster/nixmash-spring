@@ -39,9 +39,11 @@
                      th:utext="${feedbackMessage}"></div>
             </div>
             <div id="play-area">
+                <!--/*@thymesVar id="fileUploadForm" type="com.nixmash.springdata.jpa.utils.FileUploadForm"*/-->
                 <form id="fileupload"  th:action="@{/posts/play/upload}" method="POST" enctype="multipart/form-data">
                     <!-- Redirect browsers with JavaScript disabled to the origin page -->
                     <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                    <input type="hidden" name="parentId" id="parentId" th:value="${parentId}"/>
                     <div class="row fileupload-buttonbar">
                         <div class="col-lg-7">
                             <!-- The fileinput-button span is used to style the file input field as button -->
@@ -86,12 +88,10 @@
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
+                            <li>The maximum file size for uploads in this demo is <strong>2 MB</strong> (default file size is unlimited).</li>
                             <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
-                            <li>Uploaded files will be deleted automatically after <strong>5 minutes</strong> (demo setting).</li>
+                            <li>Uploaded files in demo mode <em>are not saved</em> to the server.</li>
                             <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
-                            <li>Please refer to the <a href="https://github.com/blueimp/jQuery-File-Upload">project website</a> and <a href="https://github.com/blueimp/jQuery-File-Upload/wiki">documentation</a> for more information.</li>
-                            <li>Built with Twitter's <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> CSS framework and Icons from <a href="http://glyphicons.com/">Glyphicons</a>.</li>
                         </ul>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
 <!-- The File Upload user interface plugin -->
 <script src="/js/fileupload/jquery.fileupload-ui.js"></script>
 <!-- The main application script -->
-<script src="/js/fileupload/main.js"></script>
+<script src="/js/fileupload/main.js" th:inline="javascript"></script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/

@@ -354,7 +354,7 @@ CREATE TABLE `post_tag_ids` (
 -- Table structure for user_likes
 -- ----------------------------
 
-DROP TABLE IF EXISTS `user_likes`;
+DROP TABLE IF EXISTS user_likes;
 CREATE TABLE user_likes
 (
   like_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -367,4 +367,24 @@ CREATE INDEX like_content_type_index ON user_likes (content_type_id);
 CREATE UNIQUE INDEX like_ids_index ON user_likes (like_id);
 CREATE INDEX like_item_id_index ON user_likes (item_id);
 CREATE INDEX like_user_id_index ON user_likes (user_id);
+
+-- ----------------------------
+-- Table structure for post_images
+-- ----------------------------
+
+DROP TABLE IF EXISTS post_images;
+CREATE TABLE post_images
+(
+    image_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    post_id BIGINT(20) NOT NULL,
+    image_name VARCHAR(255),
+    thumbnail_filename VARCHAR(255),
+    filename VARCHAR(255),
+    content_type VARCHAR(50),
+    size BIGINT(20),
+    thumbnail_size BIGINT(20),
+    datetime_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+CREATE UNIQUE INDEX post_images_image_id_uindex ON post_images (image_id);
+CREATE INDEX post_images_post_id_index ON post_images (post_id);
 

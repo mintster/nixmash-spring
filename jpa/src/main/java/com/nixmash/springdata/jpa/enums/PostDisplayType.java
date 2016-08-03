@@ -7,8 +7,9 @@ public enum PostDisplayType {
     LINK,
     LINK_SUMMARY,
     LINK_FEATURE,
-    NOTE,
-    NIXMASH_POST
+    POST,
+    NIXMASH_POST,
+    MULTIPHOTO_POST
 }
 
 

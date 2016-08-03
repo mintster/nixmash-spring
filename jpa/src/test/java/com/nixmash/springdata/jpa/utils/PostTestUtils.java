@@ -14,12 +14,16 @@ public class PostTestUtils {
     public static final String POST_NAME = "post-title";
     public static final String POST_LINK = "http://test.link";
     public static final String POST_CONTENT = "Post content.";
-    public static final PostType POST_TYPE = PostType.NOTE;
+    public static final PostType POST_TYPE = PostType.POST;
     public static final PostDisplayType DISPLAY_TYPE = PostDisplayType.LINK;
 
 
-    public static PostDTO createPostDTO() {
+    public static PostDTO createPostDTO(int i) {
         return PostDTO.getBuilder(USER_ID,
-                POST_TITLE, POST_NAME, POST_LINK, POST_CONTENT, POST_TYPE, DISPLAY_TYPE).build();
+                fieldit(POST_TITLE, i), fieldit(POST_NAME, i), POST_LINK, POST_CONTENT, POST_TYPE, DISPLAY_TYPE).build();
+    }
+
+    private static String fieldit(String field, int i) {
+        return String.format("%s-%d", field, i);
     }
 }
