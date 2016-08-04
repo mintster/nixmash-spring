@@ -47,10 +47,28 @@ public class ApplicationSettings {
 	// region post Uploads
 
 	private String postImagePath;
+	private String postDemoImagePath;
 	private String postImageUrlRoot;
+	private String postDemoImageUrlRoot;
 
 	// endregion
 
+
+	public String getPostDemoImagePath() {
+		return postDemoImagePath;
+	}
+
+	public void setPostDemoImagePath(String postDemoImagePath) {
+		this.postDemoImagePath = postDemoImagePath;
+	}
+
+	public String getPostDemoImageUrlRoot() {
+		return postDemoImageUrlRoot;
+	}
+
+	public void setPostDemoImageUrlRoot(String postDemoImageUrlRoot) {
+		this.postDemoImageUrlRoot = postDemoImageUrlRoot;
+	}
 
 	public String getPostImagePath() {
 		return postImagePath;

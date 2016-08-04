@@ -195,6 +195,8 @@ public class PostsController {
         Post post = postService.getPostById(postId);
 
         model.addAttribute("postDTO", getUpdatedPostDTO(post));
+        model.addAttribute("fileuploading", templateService.getFileUploadingScript());
+        model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
         return POSTS_UPDATE_VIEW;
     }
 

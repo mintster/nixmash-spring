@@ -69,6 +69,9 @@
                                             th:remove="tag">[Product Map]</span></a></li>
                                 </ul>
                             </li>
+                            <li><a href="/posts/photos"
+                                   th:href="@{/posts/photos}"
+                                   th:text="#{navbar.demos.uploads}">[Multi-Image Uploads]</a></li>
                         </ul>
                     </li>
                     <li th:class="${activeTab == 'posts'} ? 'active' : null"><a href="#" class="dropdown-toggle"

@@ -84,6 +84,13 @@ public class PostsUploadController {
         return files;
     }
 
+    private String getFileStoragePath(long parentId) {
+        String fileStoragePath = applicationSettings.getPostImagePath();
+        if (parentId < 0) {
+            fileStoragePath = applicationSettings.getPostDemoImagePath();
+        }
+        return fileStoragePath;
+    }
 
     @RequestMapping(value = "/photos/upload/{parentId}", method = RequestMethod.POST)
     public
@@ -94,6 +101,7 @@ public class PostsUploadController {
         MultipartFile mpf;
         List<PostImage> list = new LinkedList<>();
         pattern = Pattern.compile(IMAGE_PATTERN);
+        String fileStoragePath = getFileStoragePath(parentId);
 
         while (itr.hasNext()) {
             mpf = request.getFile(itr.next());
@@ -103,6 +111,10 @@ public class PostsUploadController {
             String newFilenameBase = UUID.randomUUID().toString();
             String fileExtension = FilenameUtils.getExtension(filename).toLowerCase();
 
+            // demo mode files over 1MB are rejected
+            if (parentId < 0 && mpf.getSize() > 1048576)
+                break;
+
             // only png/gif/jpg files accepted
             if (!isValidImageFile(filename))
                 break;
@@ -111,7 +123,7 @@ public class PostsUploadController {
             String contentType = mpf.getContentType();
 
             File temporaryFile = new File(newFilename);
-            File storageFile = new File(applicationSettings.getPostImagePath() + newFilename);
+            File storageFile = new File(fileStoragePath + newFilename);
             try {
 
                 mpf.transferTo(temporaryFile);
@@ -123,7 +135,7 @@ public class PostsUploadController {
                         .outputFormat("png")
                         .asBufferedImage();
                 String thumbnailFilename = newFilenameBase + "-thumbnail.png";
-                File thumbnailFile = new File(applicationSettings.getPostImagePath() + thumbnailFilename);
+                File thumbnailFile = new File(fileStoragePath + thumbnailFilename);
                 ImageIO.write(thumbnail, "png", thumbnailFile);
 
                 PostImage image = new PostImage();
@@ -157,7 +169,8 @@ public class PostsUploadController {
     @RequestMapping(value = "/photos/picture/{id}", method = RequestMethod.GET)
     public void picture(HttpServletResponse response, @PathVariable Long id) {
         PostImage image = postService.getPostImage(id);
-        File imageFile = new File(applicationSettings.getPostImagePath() + image.getNewFilename());
+        String fileStoragePath = getFileStoragePath(image.getPostId());
+        File imageFile = new File(fileStoragePath + image.getNewFilename());
         response.setContentType(image.getContentType());
         response.setContentLength(image.getSize().intValue());
         try {
@@ -171,7 +184,8 @@ public class PostsUploadController {
     @RequestMapping(value = "/photos/thumbnail/{id}", method = RequestMethod.GET)
     public void thumbnail(HttpServletResponse response, @PathVariable Long id) {
         PostImage image = postService.getPostImage(id);
-        File imageFile = new File(applicationSettings.getPostImagePath() + image.getThumbnailFilename());
+        String fileStoragePath = getFileStoragePath(image.getPostId());
+        File imageFile = new File(fileStoragePath + image.getThumbnailFilename());
         response.setContentType(image.getContentType());
         response.setContentLength(image.getThumbnailSize().intValue());
         try {
@@ -187,9 +201,10 @@ public class PostsUploadController {
     @ResponseBody
     List delete(@PathVariable Long id) {
         PostImage image = postService.getPostImage(id);
-        File imageFile = new File(applicationSettings.getPostImagePath() + image.getNewFilename());
+        String fileStoragePath = getFileStoragePath(image.getPostId());
+        File imageFile = new File(fileStoragePath + image.getNewFilename());
         imageFile.delete();
-        File thumbnailFile = new File(applicationSettings.getPostImagePath() + image.getThumbnailFilename());
+        File thumbnailFile = new File(fileStoragePath + image.getThumbnailFilename());
         thumbnailFile.delete();
         postService.deleteImage(image);
         List<Map<String, Object>> results = new ArrayList<>();

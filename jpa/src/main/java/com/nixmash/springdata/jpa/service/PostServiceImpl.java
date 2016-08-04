@@ -377,8 +377,8 @@ public class PostServiceImpl implements PostService {
         // converting all posts to postDTO objects
         //
         // 1) post titles starting with a digit assigned "09" alphaKey
-        // 2) postDTO list adds all post titles starting with letter,
-        //      assigned title firstLetter as alphaKey
+        // 2) postDTO list adds all post titles starting with letter, assigned title firstLetter as alphaKey
+        // 3) for NixMash Spring Demo site, Changelists do not appear in A-Z listing
 
         List<PostDTO> postDTOs = posts
                 .stream()
@@ -390,7 +390,7 @@ public class PostServiceImpl implements PostService {
         postDTOs.addAll(
                 posts
                 .stream()
-                .filter(p -> Character.isAlphabetic(p.getPostTitle().charAt(0)))
+                .filter(p -> Character.isAlphabetic(p.getPostTitle().charAt(0)) && !p.getPostTitle().startsWith("Changelist"))
                 .map(PostDTO::buildAlphaTitles)
                 .sorted(byfirstLetter)
                 .collect(Collectors.toList()));

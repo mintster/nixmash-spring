@@ -74,6 +74,10 @@
                                     </select>
                                     <button type="submit" class="btn btn-success" name="link" value="true">Update
                                     </button>
+                                    <button id="imageUploadButton" class="btn btn-success"
+                                            name="imageUploadButton"
+                                            onclick="toggleImageUploads()"
+                                            type="button">Images</button>
                                 </div>
                             </td>
                         </tr>
@@ -83,6 +87,7 @@
                     <input th:if="${postDTO.postType == 'LINK'}" type="hidden" name="displayType" th:value="*{displayType}"/>
                 </form>
             </div>
+            <div th:replace="fragments/posts/imageupload :: image-upload-html">[Image Upload]</div>
         </div>
     </div>
 </div>

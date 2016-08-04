@@ -33,7 +33,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.3.5 - Posts A-Z, Multimedia posts, Flashcard Q&A, User Profile updates (in progress)](#v035---posts-a-z-multimedia-posts-flashcard-qa-user-profile-updates-in-progress)**
+- **[v0.3.5 - Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates (in progress)](#v035---posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates-in-progress)**
 - **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display](#v034----post-tag-cloud-sharing-likes-rss-title-display)**
 - **[v0.3.3 -- Post WYSIWYG editing, tagging, permalinks](#v033----post-wysiwyg-editing-tagging-permalinks)**
 - **[v0.3.2 -- Initial Posts Feature Release](#v032----initial-posts-feature-release)** : *Jsoup Annotations Framework, Generic Type as Beans*
@@ -69,9 +69,13 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.3.5 - Posts A-Z, Multimedia posts, Flashcard Q&A, User Profile updates (in progress)
+##v0.3.5 - Posts A-Z, MultiPhotoposts, Flashcard Q&A, User Profile updates (in progress)
 
 - Posts A-Z page with alphabetic navigation list and grouped posts by first letter of Post Title
+- Post "Draft/Published" state enabled and added to Add Post form. Only "Published" posts display in streams
+- MultiPhoto Post format
+- Multi-Image uploading with the [Blueimp jQuery-File-Upload plugin](https://blueimp.github.io/jQuery-File-Upload/). Added to Posts and Standalone Demo page
+- Duncan McDougall's [jQuery Lightbox Plugin](https://github.com/duncanmcdougall/Responsive-Lightbox) added to display MultiPost Post images
 - [Post: Smart Alphabetic Navigation List in Spring and Thymeleaf](http://nixmash.com/java/smart-alphabetic-navigation-list-in-spring-and-thymeleaf/)
 - [Post: Alphabetically Grouped Output with Spring and Thymeleaf](http://nixmash.com/java/alphabetically-grouped-output-with-spring-and-thymeleaf/)
 

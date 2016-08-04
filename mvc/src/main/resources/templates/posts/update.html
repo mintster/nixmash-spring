@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-tagsinput.css}"/>
     <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
     <title th:text="#{posts.update.page.title}">[Add NixMash Spring Post]</title>
+    <div th:replace="fragments/posts/imageupload :: image-upload-css">[Image Upload CSS]</div>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
@@ -62,8 +63,22 @@
         }
     });
 
-</script>
+    function toggleImageUploads() {
+        {
+            var e = document.getElementById('imageuploads');
+            if (e.style.display == 'block' || e.style.display == '') {
+                e.style.display = 'none';
+                $('#imageUploadButton').text('Add Images')
+            }
+            else {
+                e.style.display = 'block';
+                $('#imageUploadButton').text('Hide Images')
+            }
+        }
+    }
 
+</script>
+<div th:replace="fragments/posts/imageupload :: image-upload-javascript">[Image Upload Javascript]</div>
 </body>
 </html>
 

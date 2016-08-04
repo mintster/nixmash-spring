@@ -6,7 +6,7 @@
     <script th:src="@{/js/highlight.pack.js}"></script>
 
     <title text="Play Page">[Page Title]</title>
-    <link rel="stylesheet" href="/css/fileupload/blueimp-gallery.min.css"/>
+    <link rel="stylesheet" href="/css/fileupload/blueimp-gallery.css"/>
     <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
     <link rel="stylesheet" href="/css/fileupload/jquery.fileupload.css"/>
     <link rel="stylesheet" href="/css/fileupload/jquery.fileupload-ui.css"/>
@@ -88,10 +88,10 @@
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li>The maximum file size for uploads in this demo is <strong>2 MB</strong> (default file size is unlimited).</li>
-                            <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
-                            <li>Uploaded files in demo mode <em>are not saved</em> to the server.</li>
-                            <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
+                            <li>For this demo the maximum file size for uploads after compression is <strong>1 MB</strong></li>
+                            <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo</li>
+                            <li>Uploaded files in demo mode are deleted from the server periodically</li>
+                            <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>)</li>
                         </ul>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
 <!-- The File Upload user interface plugin -->
 <script src="/js/fileupload/jquery.fileupload-ui.js"></script>
 <!-- The main application script -->
-<script src="/js/fileupload/main.js" th:inline="javascript"></script>
+<script src="/js/fileupload/demo.js" th:inline="javascript"></script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/

@@ -922,13 +922,14 @@ h1.post-title {
     max-width: 240px;
     border: #ae3910 2px solid;
     margin-right: 8px;
+    margin-bottom: 8px;
 }
 
 #post img.post-photo-thumbnail:hover {
     border: #000 2px solid;
 }
 /*</editor-fold>*/
-/*/<editor-fold> desc="SIDEBAR NAVIGATION----------------------------/ "*/
+/*/<editor-fold> desc="POST SIDEBAR NAVIGATION----------------------------/ "*/
 
 /* Sidenav for Docs
 -------------------------------------------------- */
@@ -1136,7 +1137,14 @@ a.share {
 }
 
 /*</editor-fold>*/
-/*/<editor-fold> desc="ALPHABET LINKS----------------------------/ "*/
+/*/<editor-fold> desc="ALPHABET LINKS AND TITLES DISPLAY----------------------------/ "*/
+
+.az-changelist-note {
+    display: inline-block;
+    margin: 50px auto 20px 0;
+    font-style: italic;
+    color: #666;
+}
 
 .alphasection i.fa-caret-square-o-up {
     margin-right: 4px;

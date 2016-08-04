@@ -26,7 +26,7 @@
 
             <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
 
-            <div th:include="fragments/posts/sidebar :: sidebar('posts')" th:remove="tag">Posts Sidebar</div>
+            <div th:include="fragments/posts/sidebar :: sidebar('az')" th:remove="tag">Posts Sidebar</div>
 
             <!--/*@thymesVar id="alphaLink" type="com.nixmash.springdata.jpa.dto.AlphabetDTO"*/-->
             <!--/*@thymesVar id="alphaLinks" type="List<com.nixmash.springdata.jpa.dto.AlphabetDTO>"*/-->
@@ -76,6 +76,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="az-changelist-note">
+                            <strong>Please note:</strong> Changelists do not appear in A-Z listing on the NixMash Spring Demo site
+                        </div>
                     </div>
                 </div>
 
@@ -87,6 +90,7 @@
 </div>
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+<script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
 
 <script th:fragment="stream" th:inline="javascript">
 
