@@ -69,7 +69,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.3.5 - Posts A-Z, MultiPhotoposts, Flashcard Q&A, User Profile updates (in progress)
+##v0.3.5 - Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates (in progress)
 
 - Posts A-Z page with alphabetic navigation list and grouped posts by first letter of Post Title
 - Post "Draft/Published" state enabled and added to Add Post form. Only "Published" posts display in streams
