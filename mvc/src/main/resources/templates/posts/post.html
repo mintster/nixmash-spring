@@ -39,7 +39,8 @@
 
                 <div th:each="image : ${post.postImages }" th:remove="tag">
                     <a th:href="|${image.url}${image.newFilename}|">
-                        <img th:src="|${image.url}${image.newFilename}|"  alt="Click to view the lightbox"  class="post-photo-thumbnail" />
+                        <img th:src="|${image.url}${image.newFilename}|"  alt="Click to view the lightbox"
+                             class="post-photo-thumbnail" />
                     </a>
                 </div>
 

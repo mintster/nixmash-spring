@@ -78,6 +78,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Duncan McDougall's [jQuery Lightbox Plugin](https://github.com/duncanmcdougall/Responsive-Lightbox) added to display MultiPost Post images
 - [Post: Smart Alphabetic Navigation List in Spring and Thymeleaf](http://nixmash.com/java/smart-alphabetic-navigation-list-in-spring-and-thymeleaf/)
 - [Post: Alphabetically Grouped Output with Spring and Thymeleaf](http://nixmash.com/java/alphabetically-grouped-output-with-spring-and-thymeleaf/)
+- [Post: Spring MVC, Thymeleaf, and the BlueImp FileUpload Plugin](http://nixmash.com/java/spring-mvc-thymeleaf-and-the-blueimp-fileupload-plugin/)
+- [Post: The New NixMash Spring MultiPhoto Post Format](http://nixmash.com/java/the-nixmash-spring-multiphoto-post-format/)
 
 [[back to top](#nixmash-spring)]
 

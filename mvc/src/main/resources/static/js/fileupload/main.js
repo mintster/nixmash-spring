@@ -16,6 +16,7 @@ $(function () {
 
     var parentId = document.getElementById('parentId').value;
 
+    //noinspection JSJQueryEfficiency
     $('#fileupload').fileupload({
         url: '/posts/photos/upload/' + parentId,
         disableImageResize: /Android(?!.*Chrome)|Opera/

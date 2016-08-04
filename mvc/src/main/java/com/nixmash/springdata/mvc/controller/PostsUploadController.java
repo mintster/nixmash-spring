@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -32,7 +31,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
 @RequestMapping(value = "/posts")
@@ -50,7 +49,9 @@ public class PostsUploadController {
     private final ApplicationSettings applicationSettings;
 
     @Autowired
-    public PostsUploadController(PostService postService, TemplateService templateService, ApplicationSettings applicationSettings) {
+    public PostsUploadController(PostService postService,
+                                 TemplateService templateService,
+                                 ApplicationSettings applicationSettings) {
         this.postService = postService;
         this.templateService = templateService;
         this.applicationSettings = applicationSettings;
@@ -64,11 +65,8 @@ public class PostsUploadController {
         return POSTS_PLAY_VIEW;
     }
 
-
-    @RequestMapping(value = "/photos/upload/{parentId}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    Map list(@PathVariable Long parentId) {
+    @RequestMapping(value = "/photos/upload/{parentId}", method = GET)
+    public @ResponseBody Map list(@PathVariable Long parentId) {
         logger.debug("uploadGet called");
         List<PostImage> list = postService.getPostImages(parentId);
         String urlBase = "/posts/photos";
@@ -84,18 +82,9 @@ public class PostsUploadController {
         return files;
     }
 
-    private String getFileStoragePath(long parentId) {
-        String fileStoragePath = applicationSettings.getPostImagePath();
-        if (parentId < 0) {
-            fileStoragePath = applicationSettings.getPostDemoImagePath();
-        }
-        return fileStoragePath;
-    }
-
-    @RequestMapping(value = "/photos/upload/{parentId}", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    Map uploadDto(@PathVariable long parentId, MultipartHttpServletRequest request) {
+    @RequestMapping(value = "/photos/upload/{parentId}", method = POST)
+    public @ResponseBody Map uploadDto(@PathVariable long parentId,
+                                       MultipartHttpServletRequest request) {
         logger.debug("uploadPost called");
         Iterator<String> itr = request.getFileNames();
         MultipartFile mpf;
@@ -166,7 +155,7 @@ public class PostsUploadController {
         return files;
     }
 
-    @RequestMapping(value = "/photos/picture/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/photos/picture/{id}", method = GET)
     public void picture(HttpServletResponse response, @PathVariable Long id) {
         PostImage image = postService.getPostImage(id);
         String fileStoragePath = getFileStoragePath(image.getPostId());
@@ -181,7 +170,7 @@ public class PostsUploadController {
         }
     }
 
-    @RequestMapping(value = "/photos/thumbnail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/photos/thumbnail/{id}", method = GET)
     public void thumbnail(HttpServletResponse response, @PathVariable Long id) {
         PostImage image = postService.getPostImage(id);
         String fileStoragePath = getFileStoragePath(image.getPostId());
@@ -196,10 +185,8 @@ public class PostsUploadController {
         }
     }
 
-    @RequestMapping(value = "/photos/delete/{id}", method = RequestMethod.DELETE)
-    public
-    @ResponseBody
-    List delete(@PathVariable Long id) {
+    @RequestMapping(value = "/photos/delete/{id}", method = DELETE)
+    public @ResponseBody List delete(@PathVariable Long id) {
         PostImage image = postService.getPostImage(id);
         String fileStoragePath = getFileStoragePath(image.getPostId());
         File imageFile = new File(fileStoragePath + image.getNewFilename());
@@ -219,4 +206,11 @@ public class PostsUploadController {
         return matcher.matches();
     }
 
+    private String getFileStoragePath(long parentId) {
+        String fileStoragePath = applicationSettings.getPostImagePath();
+        if (parentId < 0) {
+            fileStoragePath = applicationSettings.getPostDemoImagePath();
+        }
+        return fileStoragePath;
+    }
 }
