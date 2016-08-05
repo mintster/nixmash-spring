@@ -183,7 +183,8 @@ CREATE TABLE `users` (
   `provider_id` varchar(25) NOT NULL DEFAULT 'SITE',
   `password` varchar(255) NOT NULL,
   `version` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `users_user_key_uindex` (`user_key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------

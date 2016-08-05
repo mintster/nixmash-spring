@@ -15,9 +15,9 @@
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
                     <!--<li th:class="${activeTab == 'home' || activeTab == 'error'}? 'active' : null"><a href="/"-->
-                                                                                                      <!--th:href="@{/}"><span-->
-                            <!--class="glyphicon glyphicon-home"></span><span th:text="#{navbar.home}"-->
-                                                                          <!--th:remove="tag">[Home]</span></a></li>-->
+                    <!--th:href="@{/}"><span-->
+                    <!--class="glyphicon glyphicon-home"></span><span th:text="#{navbar.home}"-->
+                    <!--th:remove="tag">[Home]</span></a></li>-->
                     <li th:class="${activeTab == 'demos'}? 'active dropdown' : 'dropdown'"><a href="#"
                                                                                               class="dropdown-toggle"
                                                                                               data-toggle="dropdown"
@@ -89,7 +89,7 @@
                                    th:href="@{/posts/az}"
                                    th:text="#{navbar.posts.az}">[Posts A-Z]</a></li>
                             <li><a href="/posts/add" th:href="@{/posts/add}"><span th:text="#{navbar.posts.add}"
-                                                                                     th:remove="tag">[Add Post]</span>
+                                                                                   th:remove="tag">[Add Post]</span>
                             </a></li>
                         </ul>
                     </li>
@@ -108,7 +108,7 @@
                 <div th:unless="${activeTab == 'error'}" th:remove="tag">
                     <!--/*@thymesVar id="currentUserConnection" type="com.nixmash.springdata.jpa.model.UserConnection"*/-->
                     <!--/*@thymesVar id="currentUser" type="com.nixmash.springdata.jpa.model.CurrentUser"*/-->
-                    <div th:if="${currentUser != null}">
+                    <div th:if="${currentUser != null}" th:remove="tag">
                         <form class="navbar-form pull-right" th:action="@{/logout}" method="post">
                             <input type="submit" value="Log out" class="btn btn-default"/>
                         </form>
@@ -117,8 +117,23 @@
                              th:src="@{|${currentUser.getProfileIconUrl()}?${new java.util.Date().getTime()}|}"
                              width="32" height="32"/>
 
-                        <a th:href="@{|/${currentUser.user.username}|}" class="navbar-text pull-right navbar-welcome"
-                           th:utext="#{navbar.welcome(${currentUser.getFullName()})}"> [User FullName] </a>
+                        <!-- TODO: Remove User Nav Menu when in mobile view -->
+                        <ul class="nav navbar-nav navbar-nav-welcome ">
+                            <li><a href="#" class="navbar-text pull-right navbar-welcome dropdown-toggle"
+                                   data-toggle="dropdown" th:utext="#{navbar.welcome(${currentUser.getFullName()})}">[User FullName] <span
+                                    class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a
+                                            th:href="@{|/${currentUser.user.username}|}"
+                                            th:text="#{navbar.user.userprofile}">[Your User Profile]</a>
+                                    </li>
+                                    <li><a
+                                            th:href="@{/users/resetpassword}"
+                                            th:text="#{navbar.user.password}">[Reset Your User Password]</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
 
                     </div>
                     <div th:if="${currentUser == null}" class="navbar-right">

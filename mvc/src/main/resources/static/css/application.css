@@ -178,6 +178,13 @@ img.navbar-profilepic {
     }
 }
 
+a.navbar-text.pull-right.navbar-welcome.dropdown-toggle {
+    margin: 0;
+    margin-right: 15px;
+}
+.navbar-nav-welcome {
+    float: right;
+}
 /*</editor-fold>*/
 /*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
 #secInfo {

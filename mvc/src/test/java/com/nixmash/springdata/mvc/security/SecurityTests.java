@@ -4,7 +4,6 @@ import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.controller.UserController;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -99,13 +98,6 @@ public class SecurityTests extends AbstractContext {
 	@Test
 	public void userCanAccessOwnProfile() throws Exception {
 		RequestBuilder request = get("/{username}", "user").with(user(user)).with(csrf());
-		mvc.perform(request).andExpect(status().isOk()).andExpect(view().name(UserController.USER_PROFILE_VIEW));
-	}
-
-	@Test
-	@Ignore("logic changed: admin no longer sees user profiles")
-	public void adminCanAccessOwnProfile() throws Exception {
-		RequestBuilder request = get("/{username}", "keith").with(user(admin)).with(csrf());
 		mvc.perform(request).andExpect(status().isOk()).andExpect(view().name(UserController.USER_PROFILE_VIEW));
 	}
 

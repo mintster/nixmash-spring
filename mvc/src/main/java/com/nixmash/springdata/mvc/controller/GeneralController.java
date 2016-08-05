@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.joining;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-public class GeneralController {
+public class  GeneralController {
 
     private static final Logger logger = LoggerFactory.getLogger(GeneralController.class);
 

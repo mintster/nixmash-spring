@@ -19,8 +19,10 @@ import com.google.common.collect.Lists;
 import com.nixmash.springdata.jpa.dto.ProfileImageDTO;
 import com.nixmash.springdata.jpa.dto.SocialUserDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.dto.UserPasswordDTO;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
+import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
@@ -43,6 +45,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
@@ -51,7 +54,9 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.UUID;
 
+import static com.nixmash.springdata.mvc.components.WebUI.FLASH_MESSAGE_KEY_FEEDBACK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class UserController {
@@ -65,6 +70,8 @@ public class UserController {
 	public static final String SIGNIN_VIEW = "signin";
 	public static final String REGISTER_VIEW = "register";
 	public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
+	public static final String USER_CHANGEPASSWORD_VIEW = "users/password";
+	private static final String FEEDBACK_MESSAGE_PASSWORD_RESET = "feedback.user.password.reset";
 
 	// endregion
 
@@ -115,7 +122,7 @@ public class UserController {
 			return REGISTER_VIEW;
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = POST)
 	public String register(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result, WebRequest request,
 			RedirectAttributes redirect) {
 		if (result.hasErrors()) {
@@ -149,7 +156,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@RequestMapping(value = "/signup", method = POST)
 	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
 			WebRequest request, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
@@ -217,5 +224,26 @@ public class UserController {
 
 		return USER_PROFILE_VIEW;
 	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/users/resetpassword", method = GET)
+	public String changePassword(CurrentUser currentUser, Model model)  {
+
+		UserPasswordDTO userPasswordDTO = new UserPasswordDTO(currentUser.getId(), UUID.randomUUID().toString());
+		model.addAttribute("userPasswordDTO", userPasswordDTO);
+		return USER_CHANGEPASSWORD_VIEW;
+	}
+
+    @RequestMapping(value = "/users/resetpassword", method = POST)
+    public ModelAndView changePassword(@ModelAttribute("userPasswordDTO") UserPasswordDTO userPasswordDTO)  {
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK, webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET));
+		mav.addObject("userPasswordDTO", userPasswordDTO);
+		mav.setViewName(USER_CHANGEPASSWORD_VIEW);
+		return mav;
+
+    }
+
 
 }

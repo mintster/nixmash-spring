@@ -101,8 +101,6 @@ public class PostRepoTests {
         saved.getTags().add(tag2);
         assertEquals(saved.getTags().size(), 2);
 
-        // TODO: Alternative to resaving Post
-
         postRepository.save(saved);
 
         List<Post> posts= postRepository.findAllWithDetail();
