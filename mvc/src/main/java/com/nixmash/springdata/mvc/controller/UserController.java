@@ -27,6 +27,7 @@ import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
+import com.nixmash.springdata.jpa.model.validators.UserPasswordValidator;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.security.SignInUtils;
@@ -61,187 +62,197 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 public class UserController {
 
-	// region Constants
+    // region Constants
 
-	public static final String MODEL_ATTRIBUTE_CURRENTUSER = "currentUser";
-	private static final String MODEL_ATTRIBUTE_SOCIALUSER = "socialUserDTO";
-	public static final String USER_PROFILE_VIEW = "users/profile";
-	public static final String SIGNUP_VIEW = "signup";
-	public static final String SIGNIN_VIEW = "signin";
-	public static final String REGISTER_VIEW = "register";
-	public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
-	public static final String USER_CHANGEPASSWORD_VIEW = "users/password";
-	private static final String FEEDBACK_MESSAGE_PASSWORD_RESET = "feedback.user.password.reset";
+    public static final String MODEL_ATTRIBUTE_CURRENTUSER = "currentUser";
+    private static final String MODEL_ATTRIBUTE_SOCIALUSER = "socialUserDTO";
+    public static final String USER_PROFILE_VIEW = "users/profile";
+    public static final String SIGNUP_VIEW = "signup";
+    public static final String SIGNIN_VIEW = "signin";
+    public static final String REGISTER_VIEW = "register";
+    public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
+    public static final String USER_CHANGEPASSWORD_VIEW = "users/password";
+    private static final String FEEDBACK_MESSAGE_PASSWORD_RESET = "feedback.user.password.reset";
 
-	// endregion
+    // endregion
 
-	// region Private Classes
+    // region Private Classes
 
-	private final UserService userService;
-	private final UserCreateFormValidator userCreateFormValidator;
-	private final SocialUserFormValidator socialUserFormValidator;
-	private final ProviderSignInUtils providerSignInUtils;
-	private WebUI webUI;
+    private final UserService userService;
+    private final UserCreateFormValidator userCreateFormValidator;
+    private final SocialUserFormValidator socialUserFormValidator;
+    private final UserPasswordValidator userPasswordValidator;
+    private final ProviderSignInUtils providerSignInUtils;
+    private WebUI webUI;
 
-	// endregion
+    // endregion
 
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	@Inject
-	private UsersConnectionRepository usersConnectionRepository;
+    @Inject
+    private UsersConnectionRepository usersConnectionRepository;
 
-	@Autowired
-	public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator,
-			SocialUserFormValidator socialUserFormValidator, ProviderSignInUtils providerSignInUtils, WebUI webUI) {
-		this.userService = userService;
-		this.userCreateFormValidator = userCreateFormValidator;
-		this.socialUserFormValidator = socialUserFormValidator;
-		this.providerSignInUtils = providerSignInUtils;
-		this.webUI = webUI;
-	}
+    @Autowired
+    public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator,
+                          SocialUserFormValidator socialUserFormValidator, UserPasswordValidator userPasswordValidator, ProviderSignInUtils providerSignInUtils, WebUI webUI) {
+        this.userService = userService;
+        this.userCreateFormValidator = userCreateFormValidator;
+        this.socialUserFormValidator = socialUserFormValidator;
+        this.userPasswordValidator = userPasswordValidator;
+        this.providerSignInUtils = providerSignInUtils;
+        this.webUI = webUI;
+    }
 
-	@InitBinder("userDTO")
-	public void initUserBinder(WebDataBinder binder) {
-		binder.addValidators(userCreateFormValidator);
-	}
+    @InitBinder("userDTO")
+    public void initUserBinder(WebDataBinder binder) {
+        binder.addValidators(userCreateFormValidator);
+    }
 
-	@InitBinder("socialUserDTO")
-	public void initSocialUserBinder(WebDataBinder binder) {
-		binder.addValidators(socialUserFormValidator);
-	}
+    @InitBinder("socialUserDTO")
+    public void initSocialUserBinder(WebDataBinder binder) {
+        binder.addValidators(socialUserFormValidator);
+    }
 
-	@RequestMapping(value = "/signin", method = RequestMethod.GET)
-	public void signin() {
-	}
+    @InitBinder("userPasswordDTO")
+    public void initUserPasswordBinder(WebDataBinder binder) {
+        binder.addValidators(userPasswordValidator);
+    }
 
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String registrationForm(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
-		if (request.getUserPrincipal() != null)
-			return "redirect:/";
-		else
-			return REGISTER_VIEW;
-	}
+    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    public void signin() {
+    }
 
-	@RequestMapping(value = "/register", method = POST)
-	public String register(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result, WebRequest request,
-			RedirectAttributes redirect) {
-		if (result.hasErrors()) {
-			return REGISTER_VIEW;
-		}
-		userDTO.setSignInProvider(SignInProvider.SITE);
-		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
-		User user = userService.create(userDTO);
-		SignInUtils.authorizeUser(user);
-		return "redirect:/";
-	}
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String registrationForm(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
+        if (request.getUserPrincipal() != null)
+            return "redirect:/";
+        else
+            return REGISTER_VIEW;
+    }
 
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public String signupForm(@ModelAttribute SocialUserDTO socialUserDTO, WebRequest request, Model model) {
-		if (request.getUserPrincipal() != null)
-			return "redirect:/";
-		else {
-			Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
-			request.setAttribute("connectionSubheader",
-					webUI.parameterizedMessage(MESSAGE_KEY_SOCIAL_SIGNUP,
-							StringUtils.capitalize(connection.getKey().getProviderId())),
-					RequestAttributes.SCOPE_REQUEST);
+    @RequestMapping(value = "/register", method = POST)
+    public String register(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result, WebRequest request,
+                           RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            return REGISTER_VIEW;
+        }
+        userDTO.setSignInProvider(SignInProvider.SITE);
+        userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
+        User user = userService.create(userDTO);
+        SignInUtils.authorizeUser(user);
+        return "redirect:/";
+    }
 
-			socialUserDTO = createSocialUserDTO(request, connection);
-			
-			ConnectionData connectionData =  connection.createData();
-			SignInUtils.setUserConnection(request, connectionData);
-			
-			model.addAttribute(MODEL_ATTRIBUTE_SOCIALUSER, socialUserDTO);
-			return SIGNUP_VIEW;
-		}
-	}
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signupForm(@ModelAttribute SocialUserDTO socialUserDTO, WebRequest request, Model model) {
+        if (request.getUserPrincipal() != null)
+            return "redirect:/";
+        else {
+            Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+            request.setAttribute("connectionSubheader",
+                    webUI.parameterizedMessage(MESSAGE_KEY_SOCIAL_SIGNUP,
+                            StringUtils.capitalize(connection.getKey().getProviderId())),
+                    RequestAttributes.SCOPE_REQUEST);
 
-	@RequestMapping(value = "/signup", method = POST)
-	public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
-			WebRequest request, RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
-			return SIGNUP_VIEW;
-		}
+            socialUserDTO = createSocialUserDTO(request, connection);
 
-		UserDTO userDTO = createUserDTO(socialUserDTO);
-		User user = userService.create(userDTO);
+            ConnectionData connectionData = connection.createData();
+            SignInUtils.setUserConnection(request, connectionData);
 
-		providerSignInUtils.doPostSignUp(userDTO.getUsername(), request);
-		UserConnection userConnection =
-				userService.getUserConnectionByUserId(userDTO.getUsername());
-		if (userConnection.getImageUrl() != null) {
-			try {
-				webUI.processProfileImage(userConnection.getImageUrl(), user.getUserKey());
-				userService.updateHasAvatar(user.getId(), true);
-			} catch (IOException e) {
-				logger.error("ImageUrl IOException for username: {0}", user.getUsername());
-			}
-		}
-		SignInUtils.authorizeUser(user);
+            model.addAttribute(MODEL_ATTRIBUTE_SOCIALUSER, socialUserDTO);
+            return SIGNUP_VIEW;
+        }
+    }
 
-		redirectAttributes.addFlashAttribute("connectionWelcomeMessage", true);
-		return "redirect:/";
-	}
+    @RequestMapping(value = "/signup", method = POST)
+    public String signup(@Valid @ModelAttribute("socialUserDTO") SocialUserDTO socialUserDTO, BindingResult result,
+                         WebRequest request, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return SIGNUP_VIEW;
+        }
 
-	private UserDTO createUserDTO(SocialUserDTO socialUserDTO) {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setUsername(socialUserDTO.getUsername().toLowerCase());
-		userDTO.setFirstName(socialUserDTO.getFirstName());
-		userDTO.setLastName(socialUserDTO.getLastName());
-		userDTO.setEmail(socialUserDTO.getEmail());
-		userDTO.setSignInProvider(socialUserDTO.getSignInProvider());
-		userDTO.setPassword(UUID.randomUUID().toString());
-		userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
-		return userDTO;
-	}
+        UserDTO userDTO = createUserDTO(socialUserDTO);
+        User user = userService.create(userDTO);
 
-	private SocialUserDTO createSocialUserDTO(WebRequest request, Connection<?> connection) {
-		SocialUserDTO dto = new SocialUserDTO();
+        providerSignInUtils.doPostSignUp(userDTO.getUsername(), request);
+        UserConnection userConnection =
+                userService.getUserConnectionByUserId(userDTO.getUsername());
+        if (userConnection.getImageUrl() != null) {
+            try {
+                webUI.processProfileImage(userConnection.getImageUrl(), user.getUserKey());
+                userService.updateHasAvatar(user.getId(), true);
+            } catch (IOException e) {
+                logger.error("ImageUrl IOException for username: {0}", user.getUsername());
+            }
+        }
+        SignInUtils.authorizeUser(user);
 
-		if (connection != null) {
-			UserProfile socialMediaProfile = connection.fetchUserProfile();
-			dto.setEmail(socialMediaProfile.getEmail());
-			dto.setFirstName(socialMediaProfile.getFirstName());
-			dto.setLastName(socialMediaProfile.getLastName());
+        redirectAttributes.addFlashAttribute("connectionWelcomeMessage", true);
+        return "redirect:/";
+    }
 
-			ConnectionKey providerKey = connection.getKey();
-			dto.setSignInProvider(SignInProvider.valueOf(providerKey.getProviderId().toUpperCase()));
+    private UserDTO createUserDTO(SocialUserDTO socialUserDTO) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(socialUserDTO.getUsername().toLowerCase());
+        userDTO.setFirstName(socialUserDTO.getFirstName());
+        userDTO.setLastName(socialUserDTO.getLastName());
+        userDTO.setEmail(socialUserDTO.getEmail());
+        userDTO.setSignInProvider(socialUserDTO.getSignInProvider());
+        userDTO.setPassword(UUID.randomUUID().toString());
+        userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
+        return userDTO;
+    }
 
-		}
+    private SocialUserDTO createSocialUserDTO(WebRequest request, Connection<?> connection) {
+        SocialUserDTO dto = new SocialUserDTO();
 
-		return dto;
-	}
+        if (connection != null) {
+            UserProfile socialMediaProfile = connection.fetchUserProfile();
+            dto.setEmail(socialMediaProfile.getEmail());
+            dto.setFirstName(socialMediaProfile.getFirstName());
+            dto.setLastName(socialMediaProfile.getLastName());
 
-	@PreAuthorize("#username == authentication.name")
-	@RequestMapping(value = "/{username}", method = GET)
-	public String profilePage(@PathVariable("username") String username,
-							  Model model, WebRequest request)
-			throws UsernameNotFoundException {
+            ConnectionKey providerKey = connection.getKey();
+            dto.setSignInProvider(SignInProvider.valueOf(providerKey.getProviderId().toUpperCase()));
 
-		logger.info("Showing user page for user: {}", username);
-		ProfileImageDTO profileImageDTO = new ProfileImageDTO();
-		model.addAttribute("profileImageDTO", profileImageDTO);
+        }
 
-		return USER_PROFILE_VIEW;
-	}
+        return dto;
+    }
 
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/users/resetpassword", method = GET)
-	public String changePassword(CurrentUser currentUser, Model model)  {
+    @PreAuthorize("#username == authentication.name")
+    @RequestMapping(value = "/{username}", method = GET)
+    public String profilePage(@PathVariable("username") String username,
+                              Model model, WebRequest request)
+            throws UsernameNotFoundException {
 
-		UserPasswordDTO userPasswordDTO = new UserPasswordDTO(currentUser.getId(), UUID.randomUUID().toString());
-		model.addAttribute("userPasswordDTO", userPasswordDTO);
-		return USER_CHANGEPASSWORD_VIEW;
-	}
+        logger.info("Showing user page for user: {}", username);
+        ProfileImageDTO profileImageDTO = new ProfileImageDTO();
+        model.addAttribute("profileImageDTO", profileImageDTO);
+
+        return USER_PROFILE_VIEW;
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value = "/users/resetpassword", method = GET)
+    public String changePassword(CurrentUser currentUser, Model model) {
+
+        UserPasswordDTO userPasswordDTO = new UserPasswordDTO(currentUser.getId(), UUID.randomUUID().toString());
+        model.addAttribute("userPasswordDTO", userPasswordDTO);
+        return USER_CHANGEPASSWORD_VIEW;
+    }
 
     @RequestMapping(value = "/users/resetpassword", method = POST)
-    public ModelAndView changePassword(@ModelAttribute("userPasswordDTO") UserPasswordDTO userPasswordDTO)  {
+    public ModelAndView changePassword(@Valid @ModelAttribute("userPasswordDTO") UserPasswordDTO userPasswordDTO, BindingResult result) {
+        ModelAndView mav = new ModelAndView();
+        if (result.hasErrors()) {
 
-		ModelAndView mav = new ModelAndView();
-		mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK, webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET));
-		mav.addObject("userPasswordDTO", userPasswordDTO);
-		mav.setViewName(USER_CHANGEPASSWORD_VIEW);
-		return mav;
+        } else {
+            mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK, webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET));
+        }
+        mav.addObject("userPasswordDTO", userPasswordDTO);
+        mav.setViewName(USER_CHANGEPASSWORD_VIEW);
+        return mav;
 
     }
 

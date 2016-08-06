@@ -1,6 +1,10 @@
 package com.nixmash.springdata.jpa.dto;
 
+import org.hibernate.validator.constraints.Length;
+
 import java.io.Serializable;
+
+import static com.nixmash.springdata.jpa.model.User.MIN_LENGTH_PASSWORD;
 
 /**
  * Created by daveburke on 8/5/16.
@@ -9,8 +13,12 @@ public class UserPasswordDTO implements Serializable{
 
     private static final long serialVersionUID = -2221852531645649922L;
 
+    @Length(min = MIN_LENGTH_PASSWORD)
     private String password;
+
+    @Length(min = MIN_LENGTH_PASSWORD)
     private String repeatedPassword;
+
     private String verificationToken;
     private long userId;
 
