@@ -1,5 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -7,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,9 +18,11 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletException;
+import java.util.Optional;
 
 import static com.nixmash.springdata.mvc.controller.UserController.USER_CHANGEPASSWORD_VIEW;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -75,7 +79,7 @@ public class UserControllerTests extends AbstractContext {
     @Test
     public void resetPasswordMatchingPasswords() throws Exception {
         RequestBuilder request = post("/users/resetpassword")
-                .param("userId", "2").param("password", "password").param("repeatedPassword", "password").with(csrf());
+                .param("userId", "4").param("password", "password").param("repeatedPassword", "password").with(csrf());
 
         mvc.perform(request)
                 .andExpect(status().isOk())
@@ -88,7 +92,7 @@ public class UserControllerTests extends AbstractContext {
     @Test
     public void resetPasswordUnmatchedPasswords() throws Exception {
         RequestBuilder request = post("/users/resetpassword")
-                .param("userId", "2")
+                .param("userId", "4")
                 .param("password", "password1")
                 .param("repeatedPassword", "password2").with(csrf());
 
@@ -99,13 +103,31 @@ public class UserControllerTests extends AbstractContext {
     @Test
     public void resetPasswordWithBlankPasswords() throws Exception {
         RequestBuilder request = post("/users/resetpassword")
-                .param("userId", "2")
+                .param("userId", "4")
                 .param("password", "")
                 .param("repeatedPassword", "").with(csrf());
 
         mvc.perform(request)
                 .andExpect(model().attributeHasErrors("userPasswordDTO"));
 
+    }
+
+    @Test
+    public void loggedInUserPasswordIsUpdated() throws Exception {
+        Optional<User> user = userService.getUserById(4L);
+
+        RequestBuilder request = post("/users/resetpassword")
+                .param("userId", "4")
+                .param("password", "password")
+                .param("repeatedPassword", "password").with(csrf());
+
+        mvc.perform(request);
+
+        user = userService.getUserById(4L);
+        if (user.isPresent()) {
+            String encodedPassword = user.get().getPassword();
+            assertTrue(new BCryptPasswordEncoder().matches("password", encodedPassword));
+        }
     }
 
     private static ResultMatcher loginPage() {
