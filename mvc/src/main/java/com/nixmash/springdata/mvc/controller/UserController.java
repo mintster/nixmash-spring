@@ -20,6 +20,7 @@ import com.nixmash.springdata.jpa.dto.ProfileImageDTO;
 import com.nixmash.springdata.jpa.dto.SocialUserDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.dto.UserPasswordDTO;
+import com.nixmash.springdata.jpa.enums.ResetPasswordResult;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
@@ -73,6 +74,8 @@ public class UserController {
     public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
     public static final String USER_CHANGEPASSWORD_VIEW = "users/password";
     private static final String FEEDBACK_MESSAGE_PASSWORD_RESET = "feedback.user.password.reset";
+    private static final String FEEDBACK_MESSAGE_PASSWORD_ERROR = "feedback.user.password.error";
+    private static final String FEEDBACK_MESSAGE_PASSWORD_LOGIN = "feedback.user.password.login";
 
     // endregion
 
@@ -243,18 +246,29 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/resetpassword", method = POST)
-    public ModelAndView changePassword(@Valid @ModelAttribute("userPasswordDTO") UserPasswordDTO userPasswordDTO, BindingResult result) {
+    public ModelAndView changePassword(@Valid @ModelAttribute("userPasswordDTO") UserPasswordDTO userPasswordDTO,  BindingResult result) {
         ModelAndView mav = new ModelAndView();
-        if (result.hasErrors()) {
+        if (!result.hasErrors()) {
+            ResetPasswordResult resetPasswordResult = userService.updatePassword(userPasswordDTO);
+            String msg = webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET);
+            switch (resetPasswordResult) {
+                case ERROR:
+                    result.reject("global.error.password.reset");
+                    break;
+                case FORGOT_SUCCESSFUL:
+                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,  webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_LOGIN));
+                    break;
+                case LOGGEDIN_SUCCESSFUL:
+                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,  webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET));
+                    break;
+            }
 
-        } else {
-            mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK, webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET));
         }
+
         mav.addObject("userPasswordDTO", userPasswordDTO);
         mav.setViewName(USER_CHANGEPASSWORD_VIEW);
         return mav;
 
     }
-
 
 }

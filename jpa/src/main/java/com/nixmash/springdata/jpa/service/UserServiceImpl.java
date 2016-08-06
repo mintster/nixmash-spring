@@ -2,7 +2,9 @@ package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.dto.UserPasswordDTO;
 import com.nixmash.springdata.jpa.enums.Role;
+import com.nixmash.springdata.jpa.enums.ResetPasswordResult;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
@@ -118,6 +120,36 @@ public class UserServiceImpl implements UserService {
     public UserConnection getUserConnectionByUserId(String userId) {
         logger.debug("Getting userConnection={}", userId);
         return userConnectionRepository.findByUserId(userId);
+    }
+
+    @Transactional
+    @Override
+    public ResetPasswordResult updatePassword(UserPasswordDTO userPasswordDTO) {
+        boolean isLoggedIn = userPasswordDTO.getUserId() > 0;
+        User user = getCurrentUser(userPasswordDTO.getUserId());
+        if (user == null)
+            return ResetPasswordResult.ERROR;
+
+        user.setPassword(new BCryptPasswordEncoder().encode(userPasswordDTO.getPassword()));
+
+        if (isLoggedIn)
+            return ResetPasswordResult.LOGGEDIN_SUCCESSFUL;
+        else
+            return ResetPasswordResult.FORGOT_SUCCESSFUL;
+    }
+
+    // TODO: Move Method to Utilities area
+
+    private User getCurrentUser(long userId) {
+        User user = null;
+        if (userId > 0) {
+            user = userRepository.findById(userId);
+        }
+        else // user is using reset form  via email link after having forgotten password
+        {
+            // TODO: Add logic to retrieve user from user_tokens table
+        }
+        return user;
     }
 
     @Transactional

@@ -2,6 +2,8 @@ package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.dto.UserPasswordDTO;
+import com.nixmash.springdata.jpa.enums.ResetPasswordResult;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.User;
@@ -32,6 +34,9 @@ public interface UserService {
 	boolean canAccessUser(CurrentUser currentUser, String username);
 
 	UserConnection getUserConnectionByUserId(String userId);
+
+    @Transactional
+    ResetPasswordResult updatePassword(UserPasswordDTO userPasswordDTO);
 
     User update(UserDTO userDTO);
 
