@@ -4,10 +4,7 @@ import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.dto.UserPasswordDTO;
 import com.nixmash.springdata.jpa.enums.ResetPasswordResult;
-import com.nixmash.springdata.jpa.model.Authority;
-import com.nixmash.springdata.jpa.model.CurrentUser;
-import com.nixmash.springdata.jpa.model.User;
-import com.nixmash.springdata.jpa.model.UserConnection;
+import com.nixmash.springdata.jpa.model.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -37,6 +34,12 @@ public interface UserService {
 
     @Transactional
     ResetPasswordResult updatePassword(UserPasswordDTO userPasswordDTO);
+
+    @Transactional
+    UserToken createUserToken(User user);
+
+    @Transactional
+    Optional<UserToken> getUserToken(String token);
 
     User update(UserDTO userDTO);
 

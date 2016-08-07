@@ -73,9 +73,9 @@ public class UserController {
     public static final String REGISTER_VIEW = "register";
     public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
     public static final String USER_CHANGEPASSWORD_VIEW = "users/password";
-    private static final String FEEDBACK_MESSAGE_PASSWORD_RESET = "feedback.user.password.reset";
+    private static final String FEEDBACK_PASSWORD_RESET = "feedback.user.password.reset";
     private static final String FEEDBACK_MESSAGE_PASSWORD_ERROR = "feedback.user.password.error";
-    private static final String FEEDBACK_MESSAGE_PASSWORD_LOGIN = "feedback.user.password.login";
+    private static final String FEEDBACK_PASSWORD_LOGIN = "feedback.user.password.login";
 
     // endregion
 
@@ -246,23 +246,22 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/resetpassword", method = POST)
-    public ModelAndView changePassword(@Valid @ModelAttribute("userPasswordDTO") UserPasswordDTO userPasswordDTO,  BindingResult result) {
+    public ModelAndView changePassword(@Valid @ModelAttribute("userPasswordDTO")
+                                                   UserPasswordDTO userPasswordDTO,  BindingResult result) {
         ModelAndView mav = new ModelAndView();
         if (!result.hasErrors()) {
             ResetPasswordResult resetPasswordResult = userService.updatePassword(userPasswordDTO);
-            String msg = webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET);
             switch (resetPasswordResult) {
                 case ERROR:
                     result.reject("global.error.password.reset");
                     break;
                 case FORGOT_SUCCESSFUL:
-                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,  webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_LOGIN));
+                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,  webUI.getMessage(FEEDBACK_PASSWORD_LOGIN));
                     break;
                 case LOGGEDIN_SUCCESSFUL:
-                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,  webUI.getMessage(FEEDBACK_MESSAGE_PASSWORD_RESET));
+                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,  webUI.getMessage(FEEDBACK_PASSWORD_RESET));
                     break;
             }
-
         }
 
         mav.addObject("userPasswordDTO", userPasswordDTO);

@@ -2,6 +2,7 @@ package com.nixmash.springdata.jpa.utils;
 
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserUtils {
 
@@ -20,4 +21,7 @@ public class UserUtils {
         return userDTO;
     }
 
+    public static String bcryptedPassword(String rawPassword) {
+        return new BCryptPasswordEncoder().encode(rawPassword);
+    }
 }

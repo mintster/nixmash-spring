@@ -3,15 +3,14 @@ package com.nixmash.springdata.jpa.service;
 import com.nixmash.springdata.jpa.dto.RoleDTO;
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.dto.UserPasswordDTO;
-import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.enums.ResetPasswordResult;
-import com.nixmash.springdata.jpa.model.Authority;
-import com.nixmash.springdata.jpa.model.CurrentUser;
-import com.nixmash.springdata.jpa.model.User;
-import com.nixmash.springdata.jpa.model.UserConnection;
+import com.nixmash.springdata.jpa.enums.Role;
+import com.nixmash.springdata.jpa.model.*;
 import com.nixmash.springdata.jpa.repository.AuthorityRepository;
 import com.nixmash.springdata.jpa.repository.UserConnectionRepository;
 import com.nixmash.springdata.jpa.repository.UserRepository;
+import com.nixmash.springdata.jpa.repository.UserTokenRepository;
+import com.nixmash.springdata.jpa.utils.UserUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service("userService")
 @Transactional
@@ -37,16 +34,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final UserConnectionRepository userConnectionRepository;
+    private final UserTokenRepository userTokenRepository;
+
 
     @PersistenceContext
     private EntityManager em;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository,
-                           UserConnectionRepository userConnectionRepository) {
+                           UserConnectionRepository userConnectionRepository, UserTokenRepository userTokenRepository) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.userConnectionRepository = userConnectionRepository;
+        this.userTokenRepository = userTokenRepository;
     }
 
     @Transactional(readOnly = true)
@@ -126,11 +126,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResetPasswordResult updatePassword(UserPasswordDTO userPasswordDTO) {
         boolean isLoggedIn = userPasswordDTO.getUserId() > 0;
-        User user = getCurrentUser(userPasswordDTO.getUserId());
+        User user = null;
+        if (isLoggedIn)
+            user = userRepository.findById(userPasswordDTO.getUserId());
+        else {
+            Optional<UserToken> userToken =
+                    userTokenRepository.findByToken(userPasswordDTO.getVerificationToken());
+            if (userToken.isPresent()) {
+                user = userToken.get().getUser();
+                if (!isValidToken(user.getId(), userToken.get().getToken())) {
+                    user = null;
+                }
+            }
+        }
+
         if (user == null)
             return ResetPasswordResult.ERROR;
-
-        user.setPassword(new BCryptPasswordEncoder().encode(userPasswordDTO.getPassword()));
+        else
+            user.setPassword(UserUtils.bcryptedPassword(userPasswordDTO.getPassword()));
 
         if (isLoggedIn)
             return ResetPasswordResult.LOGGEDIN_SUCCESSFUL;
@@ -138,18 +151,31 @@ public class UserServiceImpl implements UserService {
             return ResetPasswordResult.FORGOT_SUCCESSFUL;
     }
 
-    // TODO: Move Method to Utilities area
+    @Transactional
+    @Override
+    public UserToken createUserToken(User user) {
+        UserToken userToken = new UserToken(UUID.randomUUID().toString(), user);
+        return userTokenRepository.save(userToken);
+    }
 
-    private User getCurrentUser(long userId) {
-        User user = null;
-        if (userId > 0) {
-            user = userRepository.findById(userId);
+    @Transactional
+    @Override
+    public Optional<UserToken> getUserToken(String token) {
+        return userTokenRepository.findByToken(token);
+    }
+
+    public Boolean isValidToken(long userId, String token) {
+        final Optional<UserToken> userToken = userTokenRepository.findByToken(token);
+        boolean isValidToken = false;
+        if (userToken.isPresent()) {
+            final Calendar cal = Calendar.getInstance();
+            UserToken passToken = userToken.get();
+
+            if (passToken.getUser().getId().equals(userId) && (passToken.getTokenExpiration().getTime() - cal.getTime().getTime()) > 0) {
+                isValidToken = true;
+            }
         }
-        else // user is using reset form  via email link after having forgotten password
-        {
-            // TODO: Add logic to retrieve user from user_tokens table
-        }
-        return user;
+        return isValidToken;
     }
 
     @Transactional
@@ -186,7 +212,6 @@ public class UserServiceImpl implements UserService {
         authority.setAuthority(roleDTO.getAuthority());
         return authorityRepository.save(authority);
     }
-
 
     @Transactional
     @Override

@@ -207,3 +207,13 @@ CREATE TABLE post_images (
   PRIMARY KEY (image_id),
   UNIQUE KEY post_images_image_id_uindex (image_id)
 );
+
+CREATE TABLE user_tokens (
+  token_id bigint(20) NOT NULL AUTO_INCREMENT,
+  user_id bigint(20) NOT NULL,
+  token varchar(255) DEFAULT NULL,
+  token_expiration timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (token_id),
+  UNIQUE KEY user_tokens_token_id_uindex (token_id),
+  UNIQUE KEY user_tokens_user_id_uindex (user_id)
+);

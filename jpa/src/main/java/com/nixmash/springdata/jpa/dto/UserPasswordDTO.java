@@ -32,7 +32,14 @@ public class UserPasswordDTO implements Serializable{
         this.userId = userId;
     }
 
-// endregion
+    public UserPasswordDTO( long userId, String verificationToken, String password, String repeatedPassword) {
+        this.password = password;
+        this.repeatedPassword = repeatedPassword;
+        this.verificationToken = verificationToken;
+        this.userId = userId;
+    }
+
+    // endregion
 
     // region Getter/Setters
 
