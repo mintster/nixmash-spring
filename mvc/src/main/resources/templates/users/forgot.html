@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <title th:text="#{user.password.page.title}"></title>
+</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('nohighlight')">Navbar</nav>
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="#{user.forgot.password.page.header}">[fullname]</h1>
+                <p class="lead" th:text="#{user.forgot.password.page.subheader}">[All Contacts]</p>
+            </div>
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+        </div>
+    </div>
+
+</div>
+<div class="container bs-container big-font-container">
+    <div class="row row-centered">
+        <div class="bs-section col-lg-9 col-centered">
+            <div id="message-holder">
+                <div th:if="${feedbackMessage}"
+                     th:class="'messageblock hidden'"
+                     th:text="${feedbackMessage}"></div>
+            </div>
+
+            <div id="form-table">
+                <!--/*@thymesVar id="forgotEmailDTO" type="com.nixmash.springdata.jpa.dto.ForgotEmailDTO"*/-->
+                <form name="f" th:action="@{/users/forgotpassword}" th:object="${forgotEmailDTO}" method="post"
+                      class="form-horizontal">
+
+                    <div th:if="${#fields.hasGlobalErrors()}"
+                         class="has-error col-lg-offset-4 alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <label class="control-label" th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</label>
+                    </div>
+
+                    <fieldset>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+                            <label for="email" class="col-lg-4 control-label"
+                                   th:text="#{user.forgot.password.form.email}">[Email]</label>
+                            <div class="col-lg-5">
+                                <input type="email" th:field="*{email}" class="form-control" id="email"/>
+                                <label class="control-label" th:errors="*{email}">[error]</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-9 col-lg-offset-4">
+                                <button type="submit" class="btn btn-primary" th:text="#{user.forgot.password.form.submit}">[Submit]</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <h3 th:if="${resetlink}"><a th:href="${resetlink}">Reset Test Link</a></h3>
+        </div>
+    </div>
+
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+
+</div>
+<div th:include=" fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+</body>
+</html>

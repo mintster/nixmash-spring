@@ -9,4 +9,6 @@ public interface UserTokenRepository extends CrudRepository<UserToken, Long> {
 
     Optional<UserToken> findByToken(String token);
 
+    Optional<UserToken> findByUserId(long userId);
+
 }

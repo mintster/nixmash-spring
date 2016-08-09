@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.model.UserToken;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -19,9 +20,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletException;
 import java.util.Optional;
+import java.util.UUID;
 
-import static com.nixmash.springdata.mvc.controller.UserController.USER_CHANGEPASSWORD_VIEW;
+import static com.nixmash.springdata.mvc.controller.UserPasswordController.USER_CHANGEPASSWORD_VIEW;
+import static com.nixmash.springdata.mvc.controller.UserPasswordController.USER_FORGOTPASSWORD_VIEW;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -32,7 +36,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserControllerTests extends AbstractContext {
+public class UserPasswordControllerTests extends AbstractContext {
 
     private UserService mockUserService;
 
@@ -43,18 +47,50 @@ public class UserControllerTests extends AbstractContext {
     private UserService userService;
 
     private MockMvc mvc;
+    private User erwin;
 
     @Autowired
     protected WebApplicationContext wac;
 
     @Before
     public void setup() throws ServletException {
-
+        erwin = userService.getUserByUsername("erwin");
         mvc = webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
 
         mockUserService = mock(UserService.class);
+    }
+
+    @Test
+    public void getForgotEmailView() throws Exception {
+        RequestBuilder request = get("/users/forgotpassword").with(csrf());
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("forgotEmailDTO"))
+                .andExpect(view().name(USER_FORGOTPASSWORD_VIEW));
+    }
+
+    @Test
+    public void emptyForgotPasswordPost() throws Exception {
+
+        RequestBuilder request = post("/users/forgotpassword")
+                .param("email", "").with(csrf());
+
+        mvc.perform(request)
+                .andExpect(model()
+                        .attributeHasFieldErrorCode("forgotEmailDTO", "email", containsString("NotEmpty")));
+    }
+
+
+    @Test
+    public void badEmailForgotPasswordPost() throws Exception {
+
+        RequestBuilder request = post("/users/forgotpassword")
+                .param("email", "bad@email.com").with(csrf());
+
+        mvc.perform(request)
+                .andExpect(model().attributeHasErrors("forgotEmailDTO"));
     }
 
     @Test
@@ -75,6 +111,31 @@ public class UserControllerTests extends AbstractContext {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(loginPage());
     }
+
+    @Test
+    @WithAnonymousUser
+    public void resetPasswordPageWithTokenReturnsChangePasswordView() throws Exception {
+        RequestBuilder request = get("/users/resetpassword/" + UUID.randomUUID().toString()).with(csrf());
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("userPasswordDTO"))
+                .andExpect(view().name(USER_CHANGEPASSWORD_VIEW));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void resetPasswordFromEmail() throws Exception {
+
+        UserToken userToken = userService.createUserToken(erwin);
+        RequestBuilder request = post("/users/resetpassword")
+                .param("userId", "-400")
+                .param("verificationToken", userToken.getToken())
+                .param("password", "password")
+                .param("repeatedPassword", "password").with(csrf());
+        mvc.perform(request)
+                .andExpect(model().attribute("feedbackMessage", containsString("login")));
+    }
+
 
     @Test
     public void resetPasswordMatchingPasswords() throws Exception {
@@ -114,8 +175,6 @@ public class UserControllerTests extends AbstractContext {
 
     @Test
     public void loggedInUserPasswordIsUpdated() throws Exception {
-        Optional<User> user = userService.getUserById(4L);
-
         RequestBuilder request = post("/users/resetpassword")
                 .param("userId", "4")
                 .param("password", "password")
@@ -123,7 +182,7 @@ public class UserControllerTests extends AbstractContext {
 
         mvc.perform(request);
 
-        user = userService.getUserById(4L);
+        Optional<User> user = userService.getUserById(4L);
         if (user.isPresent()) {
             String encodedPassword = user.get().getPassword();
             assertTrue(new BCryptPasswordEncoder().matches("password", encodedPassword));

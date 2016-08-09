@@ -127,11 +127,11 @@ public class UserServiceImpl implements UserService {
     public ResetPasswordResult updatePassword(UserPasswordDTO userPasswordDTO) {
         boolean isLoggedIn = userPasswordDTO.getUserId() > 0;
         User user = null;
+        Optional<UserToken> userToken = Optional.empty();
         if (isLoggedIn)
             user = userRepository.findById(userPasswordDTO.getUserId());
         else {
-            Optional<UserToken> userToken =
-                    userTokenRepository.findByToken(userPasswordDTO.getVerificationToken());
+            userToken = userTokenRepository.findByToken(userPasswordDTO.getVerificationToken());
             if (userToken.isPresent()) {
                 user = userToken.get().getUser();
                 if (!isValidToken(user.getId(), userToken.get().getToken())) {
@@ -142,8 +142,12 @@ public class UserServiceImpl implements UserService {
 
         if (user == null)
             return ResetPasswordResult.ERROR;
-        else
+        else {
             user.setPassword(UserUtils.bcryptedPassword(userPasswordDTO.getPassword()));
+            if (userToken.isPresent()) {
+                userTokenRepository.delete(userToken.get());
+            }
+        }
 
         if (isLoggedIn)
             return ResetPasswordResult.LOGGEDIN_SUCCESSFUL;
@@ -154,28 +158,19 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserToken createUserToken(User user) {
-        UserToken userToken = new UserToken(UUID.randomUUID().toString(), user);
-        return userTokenRepository.save(userToken);
+        Optional<UserToken> userToken = userTokenRepository.findByUserId(user.getId());
+        if (userToken.isPresent())
+            userToken.get().updateToken(UUID.randomUUID().toString());
+        else
+            userToken = Optional.of(new UserToken(UUID.randomUUID().toString(), user));
+
+        return userTokenRepository.save(userToken.get());
     }
 
     @Transactional
     @Override
     public Optional<UserToken> getUserToken(String token) {
         return userTokenRepository.findByToken(token);
-    }
-
-    public Boolean isValidToken(long userId, String token) {
-        final Optional<UserToken> userToken = userTokenRepository.findByToken(token);
-        boolean isValidToken = false;
-        if (userToken.isPresent()) {
-            final Calendar cal = Calendar.getInstance();
-            UserToken passToken = userToken.get();
-
-            if (passToken.getUser().getId().equals(userId) && (passToken.getTokenExpiration().getTime() - cal.getTime().getTime()) > 0) {
-                isValidToken = true;
-            }
-        }
-        return isValidToken;
     }
 
     @Transactional
@@ -262,6 +257,23 @@ public class UserServiceImpl implements UserService {
     }
     // endregion
 
+    // region Utility methods
+
+    private Boolean isValidToken(long userId, String token) {
+        final Optional<UserToken> userToken = userTokenRepository.findByToken(token);
+        boolean isValidToken = false;
+        if (userToken.isPresent()) {
+            final Calendar cal = Calendar.getInstance();
+            UserToken passToken = userToken.get();
+
+            if (passToken.getUser().getId().equals(userId) && (passToken.getTokenExpiration().getTime() - cal.getTime().getTime()) > 0) {
+                isValidToken = true;
+            }
+        }
+        return isValidToken;
+    }
+
+    // endregion
 }
 
 

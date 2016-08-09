@@ -14,7 +14,6 @@ public class MailLauncher {
 		ApplicationContext ctx = new
 				AnnotationConfigApplicationContext("com.nixmash.springdata.mail",
 				"com.nixmash.springdata.jpa");
-//		ApplicationContext ctx = SpringApplication.run(MailLauncher.class, args);
 		MailUI ui = ctx.getBean(MailUI.class);
 		ui.init();
 		((ConfigurableApplicationContext) ctx).close();

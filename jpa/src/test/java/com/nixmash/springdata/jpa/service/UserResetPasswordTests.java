@@ -22,9 +22,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
@@ -51,12 +49,29 @@ public class UserResetPasswordTests {
         UserToken userToken = userService.createUserToken(erwin);
         Optional<UserToken> found = userService.getUserToken(userToken.getToken());
         if (found.isPresent())
-        assertEquals(found.get().getUser(), erwin);
+            assertEquals(found.get().getUser(), erwin);
     }
 
     @Test
     public void update_Forgot_PasswordReturns_FORGOT_SUCCESSFUL() {
         assertEquals(userService.updatePassword(erwinPasswordDTO(-1L)), ResetPasswordResult.FORGOT_SUCCESSFUL);
+    }
+
+    @Test
+    public void existingUserTokensAreUpdated() {
+        UserToken userToken = userService.createUserToken(erwin);
+        String token = userToken.getToken();
+        userToken = userService.createUserToken(erwin);
+        String newToken = userToken.getToken();
+        assertNotEquals(token, newToken);
+        assertFalse(userService.getUserToken(token).isPresent());
+        assertTrue(userService.getUserToken(newToken).isPresent());
+    }
+
+    @Test
+    public void InitializedOptionalEmptyIsNotPresent() {
+        Optional<UserToken> userToken = Optional.empty();
+        assertFalse(userToken.isPresent());
     }
 
     // region Token Expiration tests
@@ -72,14 +87,14 @@ public class UserResetPasswordTests {
     }
 
     private static final int ONEMINUTEAFTER = -1;
-    private static final int ONEMINUTEBEFORE =  1;
+    private static final int ONEMINUTEBEFORE = 1;
 
     public Boolean isValidToken(int expiration) {
         boolean isValidToken = false;
         final Calendar cal = Calendar.getInstance();
-            if (startTimestamp(expiration).getTime() - cal.getTime().getTime() > 0) {
-                isValidToken = true;
-            }
+        if (startTimestamp(expiration).getTime() - cal.getTime().getTime() > 0) {
+            isValidToken = true;
+        }
         return isValidToken;
     }
 

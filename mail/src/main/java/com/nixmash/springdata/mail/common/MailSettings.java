@@ -21,6 +21,15 @@ public class MailSettings {
 	private String contactCC;
 	private Boolean sendContactCC;
 
+	private String developerTo;
+
+	public String getDeveloperTo() {
+		return developerTo;
+	}
+	public void setDeveloperTo(String developerTo) {
+		this.developerTo = developerTo;
+	}
+
 	public String getContactTo() {
 		return contactTo;
 	}

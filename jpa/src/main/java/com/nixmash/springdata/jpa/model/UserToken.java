@@ -83,6 +83,10 @@ public class UserToken {
         return new Timestamp(cal.getTime().getTime());
     }
 
+    public void updateToken(final String token) {
+        this.token = token;
+        this.tokenExpiration = calculateExpiryDate(EXPIRATION);
+    }
 
     @Override
     public String toString() {
