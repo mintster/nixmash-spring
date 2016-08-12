@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+
+    <script type="text/javascript">
+        var oTable_categoriesTable = $('#categoriesTable');
+
+        $(document).ready(function () {
+
+            $('#addCategory').on('click', function () {
+                $('#categoriesTable_wrapper').css('display', 'none');
+                $('#newCategoryTable').css('display', 'table');
+            });
+
+            $('#editCategories').on('click', function () {
+                oTable_categoriesTable.column(2).visible(true);
+                oTable_categoriesTable.column(1).visible(false);
+            });
+
+            $('#refreshCategories').on('click', function () {
+                oTable_categoriesTable.column(1).visible(true);
+                oTable_categoriesTable.column(2).visible(false);
+                $('#categoriesTable_wrapper').css('display', 'table');
+                $('#newCategoryTable').css('display', 'none');
+            });
+
+        });
+    </script>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 th:text="#{admin.flashcards.title}">[Flashcard Administration]
+                    </h2>
+                    <small th:text="#{admin.flashcards.subtitle}" class="h2_subtitle">[Manage Flashcards and Categories]</small>
+                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a id="addCategory" th:text="#{admin.categories.button.new}"
+                           class="btn btn-primary">[Add Category]</a>
+                        <a id="editCategories" th:text="#{admin.categories.button.edit}"
+                           class="btn btn-primary">[Edit Categories]</a>
+                        <a id="refreshCategories" th:text="#{admin.categories.button.cancel}"
+                           class="btn btn-primary">[Cancel]</a>
+                        <a th:href="@{'/admin/addons/flashcards'}" th:text="#{admin.flashcards}"
+                           class="btn btn-primary">[Flashcards]</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body-table">
+
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
+                    </div>
+
+                    <table id="newCategoryTable" style="display: none;" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="100px"></th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <!--/*@thymesVar id="newCategory" type="com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO"*/-->
+                                <form th:object="${newCategory}" method="post" th:action="@{/admin/addons/flashcards/categories/new}"
+                                      class="form-inline" id="new-role-form">
+                                    <input type="text" class="form-control align-top" th:field="*{category}"/>
+                                    <input type="submit" class="btn btn-primary" th:value="Add"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table id="categoriesTable" dt:table="true" class="table table-striped"
+                           dt:cssStyle="display: table;">
+                        <thead>
+                        <tr>
+                            <th width="100px">Id</th>
+                            <th>Role</th>
+                            <th dt:visible="false">Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--/*@thymesVar id="flashCategory" type="com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO"*/-->
+                        <!--/*@thymesVar id="flashcardCategories" type="List<com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO>"*/-->
+                        <tr th:each="flashCategory : ${flashcardCategories}">
+                            <td th:text="${flashCategory.categoryId}">1</td>
+                            <td th:text="${flashCategory.category}">SOME_CATEGORY</td>
+                            <td>
+                                <form th:object="${flashCategory}" method="post"
+                                      th:action="@{|/admin/addons/flashcards/categories/update/${flashCategory.categoryId}|}"
+                                      class="form-inline" id="role-form">
+                                    <input type="text" class="form-control" th:name="category" id="category" th:value="${flashCategory.category}" />
+                                    <input type="submit" class="btn btn-primary" th:value="Update"/>
+                                    <input th:type="submit" class="btn btn-success"
+                                           name="deleteCategory"
+                                           th:value="Remove"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

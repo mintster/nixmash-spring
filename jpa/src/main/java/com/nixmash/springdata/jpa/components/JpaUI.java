@@ -12,10 +12,13 @@ import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.model.UserConnection;
+import com.nixmash.springdata.jpa.model.addons.Flashcard;
+import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
 import com.nixmash.springdata.jpa.service.ContactService;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
+import com.nixmash.springdata.jpa.service.AddonService;
 import com.nixmash.springdata.jpa.utils.ContactUtils;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -37,11 +40,12 @@ public class JpaUI {
     private final ApplicationSettings applicationSettings;
     final DefaultListableBeanFactory beanfactory;
     private final SiteOptions siteOptions;
+    private final AddonService addonService;
 
     // endregion
 
     @Autowired
-    public JpaUI(ContactService contactService, PostService postService, SiteOptions siteOptions, UserService userService, ApplicationSettings applicationSettings, DefaultListableBeanFactory beanfactory, SiteService siteService) {
+    public JpaUI(ContactService contactService, PostService postService, SiteOptions siteOptions, UserService userService, ApplicationSettings applicationSettings, DefaultListableBeanFactory beanfactory, SiteService siteService, AddonService addonService) {
         this.contactService = contactService;
         this.postService = postService;
         this.siteOptions = siteOptions;
@@ -49,10 +53,28 @@ public class JpaUI {
         this.applicationSettings = applicationSettings;
         this.beanfactory = beanfactory;
         this.siteService = siteService;
+        this.addonService = addonService;
     }
 
     public void init() {
-        generateAlphabet();
+        displayFlashcards();
+    }
+
+    private void displayFlashcards() {
+
+        List<FlashcardCategory> flashcardCategories = addonService.getFlashcardCategories();
+        for (FlashcardCategory flashcardCategory : flashcardCategories) {
+            System.out.println(addonService.getFlashcardsByCategoryId(flashcardCategory.getCategoryId()));
+        }
+
+
+        System.out.println("\nFor Category One -------------------------------------- */\n ");
+
+        List<Flashcard> flashcards = addonService.getFlashcardsByCategoryId(1L);
+        for (Flashcard flashcard : flashcards) {
+            System.out.println(flashcard);
+        }
+
     }
 
     private void generateAlphabet() {
@@ -61,7 +83,6 @@ public class JpaUI {
         for (AlphabetDTO alphaLink : alphaLinks) {
             System.out.println(alphaLink.getAlphaCharacter() + " " + alphaLink.getActive());
         }
-
     }
 
     private void displayRandomUserIdString() {

@@ -46,7 +46,7 @@
                         <label for="firstName" class="col-lg-3 control-label" th:text="#{signup.form.firstName}">[First
                             Name]</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-5">
                             <input type="text" th:field="*{firstName}" class="form-control"/>
                             <label class="control-label" th:errors="*{firstName}">[error]</label>
                         </div>
@@ -55,7 +55,7 @@
                         <label for="lastName" class="col-lg-3 control-label" th:text="#{signup.form.lastName}">[Last
                             Name]</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-5">
                             <input type="text" th:field="*{lastName}" class="form-control"/>
                             <label class="control-label" th:errors="*{lastName}">[error]</label>
                         </div>
@@ -64,7 +64,7 @@
                         <label for="username" class="col-lg-3 control-label"
                                th:text="#{signup.form.username}">[Username]</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-5">
                             <input type="text" th:field="*{username}" class="form-control"/>
                             <label class="control-label" th:errors="*{username}">[error]</label>
                         </div>
@@ -73,7 +73,7 @@
                         <label for="email" class="col-lg-3 control-label"
                                th:text="#{signup.form.email}">[Email]</label>
 
-                        <div class="col-lg-9 controls">
+                        <div class="col-lg-7 controls">
                             <input type="text" th:field="*{email}" class="form-control"/>
                             <label class="control-label" th:errors="*{email}">[error]</label>
                         </div>
@@ -82,7 +82,7 @@
                         <label for="password" class="col-lg-3 control-label"
                                th:text="#{signup.form.password}">[Password]</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-5">
                             <input type="password" th:field="*{password}" class="form-control"/>
                             <label class="control-label" th:errors="*{password}">[error]</label>
                         </div>
@@ -91,7 +91,7 @@
                         <label for="repeatedPassword" class="col-lg-3 control-label"
                                th:text="#{signup.form.repeatedPassword}">[Verify Password]</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-5">
                             <input type="password" th:field="*{repeatedPassword}" class="form-control"/>
                         </div>
                     </div>

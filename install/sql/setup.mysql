@@ -389,3 +389,16 @@ CREATE TABLE post_images
 CREATE UNIQUE INDEX post_images_image_id_uindex ON post_images (image_id);
 CREATE INDEX post_images_post_id_index ON post_images (post_id);
 
+-- ----------------------------
+-- Table structure for post_images
+-- ----------------------------
+
+CREATE TABLE user_tokens
+(
+    token_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    user_id BIGINT(20) NOT NULL,
+    token VARCHAR(255),
+    token_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+CREATE UNIQUE INDEX user_tokens_token_id_uindex ON user_tokens (token_id);
+CREATE UNIQUE INDEX user_tokens_user_id_uindex ON user_tokens (user_id);

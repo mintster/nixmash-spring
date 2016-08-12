@@ -123,3 +123,10 @@ INSERT INTO user_likes (user_id, item_id, content_type_id) VALUES (2, 2, 1);
 INSERT INTO post_images (post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created) VALUES (1, 'WP_000993.jpg', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70-thumbnail.png', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70.jpg', 'image/jpeg', 1065071, 53726, '2016-08-03 13:49:09');
 INSERT INTO post_images (post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created) VALUES (1, 'WP_000624.jpg', '49e5d232-56a9-4bf9-a9df-916508a4f540-thumbnail.png', '49e5d232-56a9-4bf9-a9df-916508a4f540.jpg', 'image/jpeg', 580112, 40909, '2016-08-03 13:49:09');
 INSERT INTO post_images (post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created) VALUES (2, 'WP_000931.jpg', '000e045d-781b-4979-9a00-37692f8d33cf-thumbnail.png', '000e045d-781b-4979-9a00-37692f8d33cf.jpg', 'image/jpeg', 908532, 51092, '2016-08-03 14:58:45');
+
+INSERT INTO flashcard_categories (category) VALUES ('category one');
+INSERT INTO flashcard_categories (category) VALUES ('category two');
+
+INSERT INTO flashcard_slides (category_id, slide_image, slide_content, datetime_created) VALUES (1, 'slideone.jpg', 'slide one', '2016-08-11 15:01:46');
+INSERT INTO flashcard_slides (category_id, slide_image, slide_content, datetime_created) VALUES (1, 'slidetwo.jpg', 'slide two', '2016-08-11 15:02:11');
+INSERT INTO flashcard_slides (category_id, slide_image, slide_content, datetime_created) VALUES (2, 'slidethree.jpg', 'slide three', '2016-08-11 15:02:30');

@@ -39,17 +39,17 @@
 
 					<fieldset>
 						<div class="form-group" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
-							<label for="firstName" class="col-lg-3 control-label" th:text="#{signup.form.firstName}">[First Name]</label>
+							<label for="firstName" class="col-lg-5 control-label" th:text="#{signup.form.firstName}">[First Name]</label>
 
-							<div class="col-lg-9">
-								<input type="text" th:field="*{firstName}" class="form-control" /> <label class="control-label"
+							<div class="col-lg-5">
+								<input type="text" th:field="*{firstName}" id="firstName" class="form-control" /> <label class="control-label"
 									th:errors="*{firstName}">[error]</label>
 							</div>
 						</div>
 						<div class="form-group" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
 							<label for="lastName" class="col-lg-3 control-label" th:text="#{signup.form.lastName}">[Last Name]</label>
 
-							<div class="col-lg-9">
+							<div class="col-lg-5">
 								<input type="text" th:field="*{lastName}" class="form-control" /> <label class="control-label"
 									th:errors="*{lastName}">[error]</label>
 							</div>
@@ -57,7 +57,7 @@
 						<div class="form-group" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
 							<label for="username" class="col-lg-3 control-label" th:text="#{signup.form.username}">[Username]</label>
 
-							<div class="col-lg-9">
+							<div class="col-lg5">
 								<input type="text" th:field="*{username}" class="form-control" /> <label class="control-label"
 									th:errors="*{username}">[error]</label>
 							</div>
@@ -65,7 +65,7 @@
 						<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
 							<label for="email" class="col-lg-3 control-label" th:text="#{signup.form.email}">[Email]</label>
 
-							<div class="col-lg-9 controls">
+							<div class="col-lg-7 controls">
 								<input type="text" th:field="*{email}" class="form-control" /> <label class="control-label" th:errors="*{email}">[error]</label>
 							</div>
 						</div>

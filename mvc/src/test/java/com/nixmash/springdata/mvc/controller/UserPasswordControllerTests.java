@@ -82,7 +82,6 @@ public class UserPasswordControllerTests extends AbstractContext {
                         .attributeHasFieldErrorCode("forgotEmailDTO", "email", containsString("NotEmpty")));
     }
 
-
     @Test
     public void badEmailForgotPasswordPost() throws Exception {
 

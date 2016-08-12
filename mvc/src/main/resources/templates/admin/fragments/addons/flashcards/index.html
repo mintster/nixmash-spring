@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 th:text="#{admin.flashcards.title}">[Flashcard Administration]
+                    </h2>
+                    <small th:text="#{admin.flashcards.subtitle}"  class="h2_subtitle">[Manage Flashcards and Categories]</small>
+                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a th:href="@{'/admin/addons/flashcards/categories'}" th:text="#{admin.flashcards.categories}"
+                           class="btn btn-primary">[Manage Categories]</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body">
+                    <div class="fill-body-message">
+                        <p>Future location for flashcard management...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+</body>
+</html>

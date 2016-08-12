@@ -44,6 +44,7 @@ public class UserPasswordValidator implements Validator {
             }
         }
     }
+
     private void validatePasswords(Errors errors, UserPasswordDTO form) {
         if (!form.getPassword().equals(form.getRepeatedPassword())) {
             errors.reject("password.no_match", "Passwords do not match");

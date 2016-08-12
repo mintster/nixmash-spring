@@ -74,7 +74,10 @@ public class UserPasswordController {
     private static final Logger logger = LoggerFactory.getLogger(UserPasswordController.class);
 
     @Autowired
-    public UserPasswordController(UserService userService, UserPasswordValidator userPasswordValidator, WebUI webUI, MailService mailService) {
+    public UserPasswordController(UserService userService,
+                                  UserPasswordValidator userPasswordValidator,
+                                  WebUI webUI,
+                                  MailService mailService) {
         this.userService = userService;
         this.userPasswordValidator = userPasswordValidator;
         this.webUI = webUI;
@@ -86,7 +89,6 @@ public class UserPasswordController {
         binder.addValidators(userPasswordValidator);
     }
 
-
     @RequestMapping(value = "/users/forgotpassword", method = GET)
     public String sendForgotEmail(Model model) {
         model.addAttribute("forgotEmailDTO", new ForgotEmailDTO());
@@ -94,7 +96,8 @@ public class UserPasswordController {
     }
 
     @RequestMapping(value = "/users/forgotpassword", method = POST)
-    public String sendForgotEmail(@Valid ForgotEmailDTO forgotEmailDTO, BindingResult result, Model model) {
+    public String sendForgotEmail(@Valid ForgotEmailDTO forgotEmailDTO,
+                                  BindingResult result, Model model) {
         if (result.hasErrors()) {
             return USER_FORGOTPASSWORD_VIEW;
         } else {
@@ -102,16 +105,15 @@ public class UserPasswordController {
             if (!user.isPresent()) {
                 result.reject("global.error.email.does.not.exist");
             } else {
-                model.addAttribute(FLASH_MESSAGE_KEY_FEEDBACK, webUI.getMessage(FEEDBACK_PASSWORD_EMAIL_SENT));
+
+                model.addAttribute(FLASH_MESSAGE_KEY_FEEDBACK,
+                        webUI.getMessage(FEEDBACK_PASSWORD_EMAIL_SENT));
                 model.addAttribute("forgotEmailDTO", new ForgotEmailDTO());
 
                 UserToken userToken = userService.createUserToken(user.get());
                 mailService.sendResetPasswordMail(user.get(), userToken.getToken());
-
-                //   model.addAttribute("resetlink", "/users/resetpassword/" + userToken.getToken());
             }
         }
-
         return USER_FORGOTPASSWORD_VIEW;
     }
 
@@ -137,16 +139,21 @@ public class UserPasswordController {
                                                UserPasswordDTO userPasswordDTO, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         if (!result.hasErrors()) {
-            ResetPasswordResult resetPasswordResult = userService.updatePassword(userPasswordDTO);
+
+            ResetPasswordResult resetPasswordResult =
+                    userService.updatePassword(userPasswordDTO);
+
             switch (resetPasswordResult) {
                 case ERROR:
                     result.reject("global.error.password.reset");
                     break;
                 case FORGOT_SUCCESSFUL:
-                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK, webUI.getMessage(FEEDBACK_PASSWORD_LOGIN));
+                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,
+                            webUI.getMessage(FEEDBACK_PASSWORD_LOGIN));
                     break;
                 case LOGGEDIN_SUCCESSFUL:
-                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK, webUI.getMessage(FEEDBACK_PASSWORD_RESET));
+                    mav.addObject(FLASH_MESSAGE_KEY_FEEDBACK,
+                            webUI.getMessage(FEEDBACK_PASSWORD_RESET));
                     break;
             }
         }

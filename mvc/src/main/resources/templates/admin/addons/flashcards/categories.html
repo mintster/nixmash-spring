@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
+    <div th:include="admin/fragments/js :: functions('/admin/addons/flashcards')" th:remove="tag">Functions</div>
+    <title>NixMash Spring Administration - Flashcard Categories</title>
+</head>
+<body th:replace="admin/includes/body :: body('addons/flashcards/categories')"></body>
+</html>

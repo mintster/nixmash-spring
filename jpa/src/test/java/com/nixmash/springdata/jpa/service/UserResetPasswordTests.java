@@ -16,9 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,10 +35,12 @@ public class UserResetPasswordTests {
     UserTokenRepository userTokenRepository;
 
     private User erwin;
+    private User jeremy;
 
     @Before
     public void setup() {
         erwin = userService.getUserByUsername("erwin");
+        jeremy = userService.getUserByUsername("jeremy");
         userTokenRepository.deleteAll();
     }
 
@@ -62,6 +62,7 @@ public class UserResetPasswordTests {
         UserToken userToken = userService.createUserToken(erwin);
         String token = userToken.getToken();
         userToken = userService.createUserToken(erwin);
+
         String newToken = userToken.getToken();
         assertNotEquals(token, newToken);
         assertFalse(userService.getUserToken(token).isPresent());
@@ -77,32 +78,24 @@ public class UserResetPasswordTests {
     // region Token Expiration tests
 
     @Test
-    public void expiredTimeTests() {
-        final Calendar cal = Calendar.getInstance();
-        assertFalse(isValidToken(ONEMINUTEAFTER));
-        assertTrue(isValidToken(ONEMINUTEBEFORE));
-
-        UserToken userToken = userService.createUserToken(erwin);
-        assertTrue(isValidToken((int) userToken.getTokenExpiration().getTime()));
+    public void expiredTimeTest() {
+        UserToken userToken = userService.createUserToken(jeremy);
+       assertTrue(isValidToken(jeremy.getId(), userToken.getToken()));
     }
 
-    private static final int ONEMINUTEAFTER = -1;
-    private static final int ONEMINUTEBEFORE = 1;
-
-    public Boolean isValidToken(int expiration) {
+    // Copy of UserServiceImpl isValidToken() utility method
+    private Boolean isValidToken(long userId, String token) {
+        final Optional<UserToken> userToken = userTokenRepository.findByToken(token);
         boolean isValidToken = false;
-        final Calendar cal = Calendar.getInstance();
-        if (startTimestamp(expiration).getTime() - cal.getTime().getTime() > 0) {
-            isValidToken = true;
+        if (userToken.isPresent()) {
+            final Calendar cal = Calendar.getInstance();
+            UserToken passToken = userToken.get();
+
+            if (passToken.getUser().getId().equals(userId) && (passToken.getTokenExpiration().getTime() - cal.getTime().getTime()) > 0) {
+                isValidToken = true;
+            }
         }
         return isValidToken;
-    }
-
-    private Timestamp startTimestamp(int expiration) {
-        final Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(new Date().getTime());
-        cal.add(Calendar.MINUTE, expiration);
-        return new Timestamp(cal.getTime().getTime());
     }
 
     // endregion

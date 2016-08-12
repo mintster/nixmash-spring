@@ -131,7 +131,9 @@ public class UserServiceImpl implements UserService {
         if (isLoggedIn)
             user = userRepository.findById(userPasswordDTO.getUserId());
         else {
-            userToken = userTokenRepository.findByToken(userPasswordDTO.getVerificationToken());
+            userToken =
+                    userTokenRepository.findByToken(userPasswordDTO.getVerificationToken());
+
             if (userToken.isPresent()) {
                 user = userToken.get().getUser();
                 if (!isValidToken(user.getId(), userToken.get().getToken())) {

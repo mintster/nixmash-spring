@@ -217,3 +217,21 @@ CREATE TABLE user_tokens (
   UNIQUE KEY user_tokens_token_id_uindex (token_id),
   UNIQUE KEY user_tokens_user_id_uindex (user_id)
 );
+
+CREATE TABLE flashcard_categories (
+  category_id bigint(20) NOT NULL AUTO_INCREMENT,
+  category varchar(255) DEFAULT NULL,
+  PRIMARY KEY (category_id),
+  UNIQUE KEY flashcard_categories_category_id_uindex (category_id)
+);
+
+CREATE TABLE flashcard_slides (
+  slide_id bigint(20) NOT NULL AUTO_INCREMENT,
+  category_id bigint(20) NOT NULL,
+  slide_image varchar(255) DEFAULT NULL,
+  slide_content text,
+  datetime_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (slide_id),
+  UNIQUE KEY flashcard_slides_slide_id_uindex (slide_id),
+  CONSTRAINT fk_flashcard_slides_categories FOREIGN KEY (category_id) REFERENCES flashcard_categories (category_id)
+);
