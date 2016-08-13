@@ -75,6 +75,13 @@ public class JpaUI {
             System.out.println(flashcard);
         }
 
+        System.out.println("\nWith Category Name -------------------------------------- */\n ");
+
+        List<Flashcard> flashcardsAndCategories = addonService.getFlashcardsWithCategoryName();
+        for (Flashcard flashcard : flashcardsAndCategories) {
+            System.out.println(flashcard);
+        }
+
     }
 
     private void generateAlphabet() {

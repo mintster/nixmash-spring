@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.model.addons;
 
 import org.hibernate.annotations.Type;
+import org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -16,12 +17,36 @@ import static javax.persistence.AccessType.PROPERTY;
 @Table(name = "flashcard_slides")
 @Access(PROPERTY)
 @EntityListeners(AuditingEntityListener.class)
+@SqlResultSetMapping(name = "FlashcardsWithCategory",
+        classes = {
+                @ConstructorResult(
+                        targetClass = Flashcard.class,
+                        columns = {
+                                @ColumnResult(name = "slide_id", type = Long.class),
+                                @ColumnResult(name = "category_id", type = Long.class),
+                                @ColumnResult(name = "datetime_created", type= PersistentZonedDateTime.class),
+                                @ColumnResult(name = "slide_content"),
+                                @ColumnResult(name = "slide_image"),
+                                @ColumnResult(name = "category")
+                        }
+                )
+        }
+)
 public class Flashcard {
     private long slideId;
 
     private long categoryId;
     private String image;
     private String content;
+
+    public Flashcard(long slideId, long categoryId, ZonedDateTime datetimeCreated, String content, String image, String categoryName) {
+        this.slideId = slideId;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.content = content;
+        this.datetimeCreated = datetimeCreated;
+        this.categoryName = categoryName;
+    }
 
     @Id
     @Column(name = "slide_id", nullable = false)
@@ -78,6 +103,29 @@ public class Flashcard {
         this.datetimeCreated = dateCreated;
     }
 
+    public String categoryName;
+
+    @Transient
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public FlashcardCategory category;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id", insertable = false, updatable = false)
+    public FlashcardCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(FlashcardCategory category) {
+        this.category = category;
+    }
+
     public Flashcard() {
     }
 
@@ -91,9 +139,10 @@ public class Flashcard {
     public String toString() {
         return "Flashcard{" +
                 "slideId=" + slideId +
-                ", categoryId=" + categoryId+
+                ", categoryId=" + categoryId +
                 ", image='" + image + '\'' +
                 ", content='" + content + '\'' +
+                ", category ='" + categoryName + '\'' +
                 ", dateCreated=" + datetimeCreated +
                 '}';
     }

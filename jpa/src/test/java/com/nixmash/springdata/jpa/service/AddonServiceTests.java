@@ -64,4 +64,11 @@ public class AddonServiceTests {
         assertEquals(addonService.getFlashcardsByCategoryId(found.getCategoryId()).get(0).getImage(), "image_for_saved.jpg");
     }
 
+    @Test
+    public void categoryNotNull_For_FindFlashcardsWithCategories() {
+        List<Flashcard> flashcards = addonService.getFlashcardsWithCategoryName();
+        for (Flashcard flashcard : flashcards) {
+            assert (flashcard.categoryName.contains("category"));
+        }
+    }
 }

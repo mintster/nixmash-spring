@@ -29,7 +29,6 @@ import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -95,7 +94,8 @@ public class AdminAddonsControllerTests extends AbstractContext {
                 .andExpect(status().isOk())
                 .andExpect(view().name(ADMIN_FLASHCARDS_VIEW)).andReturn();
 
-        assertTrue(result.getModelAndView().getModel().containsKey("flashcard"));
+        assertThat(result.getModelAndView().getModel().get("flashcards"),
+                is(instanceOf(ArrayList.class)));
     }
 
     @Test

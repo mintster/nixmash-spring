@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -26,6 +28,9 @@ public class AddonServiceImpl implements AddonService {
         this.flashcardCategoryRepository = flashcardCategoryRepository;
         this.flashcardRepository = flashcardRepository;
     }
+
+    @PersistenceContext
+    private EntityManager em;
 
     // region Flashcards
 
@@ -71,6 +76,12 @@ public class AddonServiceImpl implements AddonService {
     @Override
     public List<Flashcard> getAllFlashcards() {
         return flashcardRepository.findAll();
+    }
+
+    @Override
+    public List<Flashcard> getFlashcardsWithCategoryName() {
+        return em.createNativeQuery("select *  from v_flashcards", "FlashcardsWithCategory")
+                .getResultList();
     }
     // endregion
 

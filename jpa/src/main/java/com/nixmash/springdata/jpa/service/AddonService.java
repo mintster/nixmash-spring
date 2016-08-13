@@ -28,4 +28,6 @@ public interface AddonService {
     Flashcard addFlashcard(Flashcard flashcard);
 
     List<Flashcard> getAllFlashcards();
+
+    List<Flashcard> getFlashcardsWithCategoryName();
 }

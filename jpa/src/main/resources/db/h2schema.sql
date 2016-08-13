@@ -229,9 +229,18 @@ CREATE TABLE flashcard_slides (
   slide_id bigint(20) NOT NULL AUTO_INCREMENT,
   category_id bigint(20) NOT NULL,
   slide_image varchar(255) DEFAULT NULL,
-  slide_content text,
+  slide_content varchar(2147483647),
   datetime_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (slide_id),
   UNIQUE KEY flashcard_slides_slide_id_uindex (slide_id),
   CONSTRAINT fk_flashcard_slides_categories FOREIGN KEY (category_id) REFERENCES flashcard_categories (category_id)
 );
+
+
+create VIEW v_flashcards AS
+  select s.slide_id as slide_id,
+         s.category_id as category_id,
+         s.slide_content as slide_content,
+         s.slide_image as slide_image,
+         s.datetime_created as datetime_created,
+         c.category  as category from flashcard_slides s inner join flashcard_categories c on s.category_id = c.category_id
