@@ -4,27 +4,133 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
+
+    <script type="text/javascript">
+        var oTable_flashcardTable = $('#flashcardTable');
+
+        $(document).ready(function () {
+
+            $('#addFlashcard').on('click', function () {
+                $('#flashcardTable_wrapper').css('display', 'none');
+                $('#newFlashcardTable').css('display', 'table');
+            });
+
+            $('#editFlashcards').on('click', function () {
+                oTable_flashcardTable.column(3).visible(true);
+                oTable_flashcardTable.column(5).visible(true);
+                oTable_flashcardTable.column(6).visible(true);
+                oTable_flashcardTable.column(2).visible(false);
+                oTable_flashcardTable.column(4).visible(false);
+            });
+
+            $('#refreshFlashcards').on('click', function () {
+                oTable_flashcardTable.column(3).visible(false);
+                oTable_flashcardTable.column(5).visible(false);
+                oTable_flashcardTable.column(6).visible(false);
+                oTable_flashcardTable.column(2).visible(true);
+                oTable_flashcardTable.column(4).visible(true);
+                $('#flashcardTable_wrapper').css('display', 'table');
+                $('#newFlashcardTable').css('display', 'none');
+            });
+
+        });
+    </script>
+
     <div class="row">
         <div class="col-md-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2 th:text="#{admin.flashcards.title}">[Flashcard Administration]
                     </h2>
-                    <small th:text="#{admin.flashcards.subtitle}"  class="h2_subtitle">[Manage Flashcards and Categories]</small>
+                    <small th:text="#{admin.flashcards.subtitle}" class="h2_subtitle">[Manage Flashcards and Categories]</small>
                     <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a id="addFlashcard" th:text="#{admin.flashcards.button.new}"
+                           class="btn btn-primary">[Add Flashcard]</a>
+                        <a id="editFlashcards" th:text="#{admin.flashcards.button.edit}"
+                           class="btn btn-primary">[Edit Flashcards]</a>
+                        <a id="refreshFlashcards" th:text="#{admin.flashcards.button.cancel}"
+                           class="btn btn-primary">[Cancel]</a>
                         <a th:href="@{'/admin/addons/flashcards/categories'}" th:text="#{admin.flashcards.categories}"
                            class="btn btn-primary">[Manage Categories]</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content  fill-body">
-                    <div class="fill-body-message">
-                        <p>Future location for flashcard management...</p>
+                <div class="x_content  fill-body-table">
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
                     </div>
+
+                    <table id="newFlashcardTable" style="display: none;" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="100px"></th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Image</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <!--/*@thymesVar id="newFlashcard" type="com.nixmash.springdata.jpa.model.addons.Flashcard"*/-->
+                            <form th:object="${newFlashcard}" method="post" th:action="@{/admin/addons/flashcards/new}"
+                                  class="form-inline" id="new-flashcard-form">
+                                <td>&nbsp;</td>
+                                <td><input type="text" class="form-control align-top" th:field="*{content}"/></td>
+                                <td><input type="text" class="form-control align-top" th:field="*{category}"/></td>
+                                <td><input type="text" class="form-control align-top" th:field="*{image}"/></td>
+                                <td><input type="submit" class="btn btn-primary" th:value="Add"/></td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table id="flashcardTable" dt:table="true" class="table table-striped"
+                           dt:cssStyle="display: table;">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>Description</th>
+                            <th dt:visible="false">Description1</th>
+                            <th>Category</th>
+                            <th dt:visible="false">Category1</th>
+                            <th dt:visible="false" class="flashcard-button-column"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--/*@thymesVar id="flashcard" type="com.nixmash.springdata.jpa.model.addons.Flashcard"*/-->
+
+                        <!--/*@thymesVar id="category" type="com.nixmash.springdata.jpa.model.addons.FlashcardCategory"*/-->
+                        <!--/*@thymesVar id="flashcardCategories" type="List<com.nixmash.springdata.jpa.model.addons.FlashcardCategory>"*/-->
+                        <tr th:each="flashcard : ${flashcards}">
+                            <form th:object="${flashcard}" method="post"
+                                  th:action="@{|/admin/addons/flashcards/update/${flashcard.slideId}|}"
+                                  class="form-inline" id="flashcard-form">
+                                <td th:text="${flashcard.slideId}">1</td>
+                                <td th:text="${flashcard.image}">image</td>
+                                <td th:text="${flashcard.content}">description</td>
+                                <td><input type="text" class="form-control align-top" th:value="${flashcard.content}" id="content" name="content"/></td>
+                                <td th:text="${flashcard.categoryName}">category</td>
+                                <td><select th:value="${flashcard.content}" name="categoryId" id="categoryId" class="selectpicker" data-style="btn-primary">
+                                    <option th:each="category : ${flashcardCategories}" th:text="${category.category}"
+                                            th:value="${category.categoryId}" th:selected="${category.categoryId == flashcard.categoryId}"></option>
+                                        </select>
+                                </td>
+                                <td><input type="submit" class="btn btn-primary" th:value="Update"/>
+                                    <input th:type="submit" class="btn btn-success"
+                                           name="deleteFlashcard"
+                                           th:value="Remove"/></td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
- </div>
+</div>
 </body>
 </html>

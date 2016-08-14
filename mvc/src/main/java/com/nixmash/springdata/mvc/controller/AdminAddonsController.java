@@ -63,7 +63,9 @@ public class AdminAddonsController {
     @RequestMapping(value = "/flashcards", method = GET)
     public ModelAndView flashcardsMainPage(Model model) {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("newFlashcard", new Flashcard());
         mav.addObject("flashcards", addonService.getFlashcardsWithCategoryName());
+        mav.addObject("flashcardCategories", addonService.getFlashcardCategories());
         mav.setViewName(ADMIN_FLASHCARDS_VIEW);
         return mav;
     }
