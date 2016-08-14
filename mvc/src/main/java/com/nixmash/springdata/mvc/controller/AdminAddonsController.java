@@ -70,6 +70,18 @@ public class AdminAddonsController {
         return mav;
     }
 
+    @RequestMapping(value = "/flashcards/update/{slideId}", method = RequestMethod.POST)
+    public String updateRole(@Valid Flashcard flashcard, BindingResult result,
+                             RedirectAttributes attributes, Model model) {
+        if (result.hasErrors()) {
+            webUI.addFeedbackMessage(attributes, "errors yousa!");
+            return "redirect:/admin/addons/flashcards";
+        } else {
+            webUI.addFeedbackMessage(attributes, "all good yousa!");
+            return "redirect:/admin/addons/flashcards";
+        }
+    }
+
     @RequestMapping(value = "/flashcards/categories/new", method = RequestMethod.POST)
     public String addFlashcardCategory(@Valid FlashcardCategoryDTO flashcardCategoryDTO,
                                        BindingResult result,
