@@ -79,9 +79,24 @@ public class AddonServiceImpl implements AddonService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Flashcard> getFlashcardsWithCategoryName() {
-        return em.createNativeQuery("select *  from v_flashcards", "FlashcardsWithCategory")
+        List<Flashcard> flashcards =
+                em.createNativeQuery("SELECT *  FROM v_flashcards", "FlashcardsWithCategory")
                 .getResultList();
+        return flashcards;
+    }
+
+    @Override
+    public Flashcard updateFlashcard(Flashcard flashcard) {
+        Flashcard found = flashcardRepository.findOne(flashcard.getSlideId());
+        found.update(flashcard.getCategoryId(), flashcard.getContent());
+        return found;
+    }
+
+    @Override
+    public void deleteFlashcard(Flashcard flashcard) {
+        flashcardRepository.delete(flashcard);
     }
     // endregion
 

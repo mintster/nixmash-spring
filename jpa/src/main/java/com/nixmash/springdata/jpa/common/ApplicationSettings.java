@@ -51,8 +51,27 @@ public class ApplicationSettings {
 	private String postImageUrlRoot;
 	private String postDemoImageUrlRoot;
 
+	private String flashcardImagePath;
+	private String flashcardUrlRoot;
+
 	// endregion
 
+
+	public String getFlashcardImagePath() {
+		return flashcardImagePath;
+	}
+
+	public void setFlashcardImagePath(String flashcardImagePath) {
+		this.flashcardImagePath = flashcardImagePath;
+	}
+
+	public String getFlashcardUrlRoot() {
+		return flashcardUrlRoot;
+	}
+
+	public void setFlashcardUrlRoot(String flashcardUrlRoot) {
+		this.flashcardUrlRoot = flashcardUrlRoot;
+	}
 
 	public String getPostDemoImagePath() {
 		return postDemoImagePath;

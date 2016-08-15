@@ -71,8 +71,22 @@ input#authority {
 #role-form input.btn.btn-primary {
     margin-right: 0px;
 }
-/*</editor-fold>*/
 
 tr.border-bottom-row {
     border-bottom: solid #ddd 1px;
 }
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="FLASHCARD ADMINISTRATION----------------------------/ "*/
+
+.form-inline .form-control.flashcard-content {
+    min-width: 220px;
+}
+
+span.option-spacer {
+
+}
+
+
+/*</editor-fold>*/

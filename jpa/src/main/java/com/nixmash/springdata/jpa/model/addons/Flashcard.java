@@ -24,7 +24,8 @@ import static javax.persistence.AccessType.PROPERTY;
                         columns = {
                                 @ColumnResult(name = "slide_id", type = Long.class),
                                 @ColumnResult(name = "category_id", type = Long.class),
-                                @ColumnResult(name = "datetime_created", type= PersistentZonedDateTime.class),
+                                @ColumnResult(name = "datetime_created",
+                                                                                             type= PersistentZonedDateTime.class),
                                 @ColumnResult(name = "slide_content"),
                                 @ColumnResult(name = "slide_image"),
                                 @ColumnResult(name = "category")
@@ -39,7 +40,8 @@ public class Flashcard {
     private String image;
     private String content;
 
-    public Flashcard(long slideId, long categoryId, ZonedDateTime datetimeCreated, String content, String image, String categoryName) {
+    public Flashcard(long slideId, long categoryId, ZonedDateTime datetimeCreated,
+                     String content, String image, String categoryName) {
         this.slideId = slideId;
         this.categoryId = categoryId;
         this.image = image;
@@ -89,7 +91,6 @@ public class Flashcard {
         this.content = content;
     }
 
-
     @Column(name = "datetime_created", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     @CreatedDate
@@ -132,6 +133,11 @@ public class Flashcard {
     public Flashcard(long categoryId, String image, String content) {
         this.categoryId = categoryId;
         this.image = image;
+        this.content = content;
+    }
+
+    public void update(long categoryId, String content) {
+        this.categoryId = categoryId;
         this.content = content;
     }
 

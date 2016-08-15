@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 th:text="#{admin.flashcards.title}">[Flashcard Administration]
+                    </h2>
+                    <small th:text="#{admin.flashcards.subtitle}" class="h2_subtitle">[Manage Flashcards and Categories]</small>
+                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a th:href="@{'/admin/addons/flashcards'}" th:text="#{admin.flashcards.button}"
+                           class="btn btn-primary">[All Flashcards]</a>
+                        <a th:href="@{'/admin/addons/flashcards/categories'}" th:text="#{admin.flashcards.categories}"
+                           class="btn btn-success">[Manage Categories]</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body-table">
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
+                    </div>
+
+                    <table id="newFlashcardTable" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="100px"></th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Image</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <!--/*@thymesVar id="newFlashcard" type="com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO"*/-->
+                            <form th:object="${newFlashcard}" method="post" th:action="@{/admin/addons/flashcards/add}"
+                                  enctype="multipart/form-data" class="form-inline" id="new-flashcard-form">
+                                <td>&nbsp;</td>
+                                <td><input type="text" class="form-control align-top" th:field="*{description}"/></td>
+                                <td><input type="text" class="form-control align-top" th:field="*{categoryId}"/></td>
+                                <td><input type="file" name="file" size="60"  multiple="multiple" /></td>
+                                <td><input type="submit" class="btn btn-primary" th:value="Add"/></td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

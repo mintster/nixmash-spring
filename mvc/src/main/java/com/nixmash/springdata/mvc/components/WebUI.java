@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.GitHubDTO;
 import com.nixmash.springdata.jpa.dto.ProfileImageDTO;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,7 @@ public class WebUI {
 
     // endregion
 
-    // region MultiFile Upload and Image Functions
+    // region User Profile MultiFile Upload Functions
 
     public void processProfileImage(ProfileImageDTO profileImageDTO, String userKey)
             throws IOException {
@@ -131,6 +132,48 @@ public class WebUI {
         File imageDestination = new File(destination + userKey);
         ImageIO.write(bufferedImage, "png", imageDestination);
 
+    }
+
+    // endregion
+
+
+    // region Flashcard MultiFile Upload Functions
+
+    public String processFlashcardImage(FlashcardImageDTO flashcardImageDTO, String newFilenameBase)
+            throws IOException {
+
+        String filename = flashcardImageDTO.getFile().getOriginalFilename();
+        logger.debug("Uploading {}", filename);
+
+        String newFilename = String.format("%s.png", newFilenameBase);
+
+        BufferedImage bufferedFlashcardImage =
+                Thumbnails.of(flashcardImageDTO.getFile().getInputStream())
+                        .scale(1)
+                        .allowOverwrite(true)
+                        .outputFormat("png")
+                        .asBufferedImage();
+
+        saveFlashcardImage(bufferedFlashcardImage, newFilename);
+
+        String newThumbnailFilename =  String.format("%s-thumbnail.png", newFilenameBase);
+        BufferedImage bufferedThumbnailImage =
+                Thumbnails.of(flashcardImageDTO.getFile().getInputStream())
+                        .size(160, 160)
+                        .allowOverwrite(true)
+                        .outputFormat("png")
+                        .asBufferedImage();
+
+        saveFlashcardImage(bufferedThumbnailImage, newThumbnailFilename);
+        return newFilename;
+    }
+
+
+    private void saveFlashcardImage(BufferedImage bufferedImage, String filename) throws IOException {
+
+        String fileStoragePath =  applicationSettings.getFlashcardImagePath();
+        File imageDestination = new File(fileStoragePath + filename);
+        ImageIO.write(bufferedImage, "png", imageDestination);
     }
 
     // endregion

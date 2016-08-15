@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
 import com.nixmash.springdata.jpa.service.AddonService;
@@ -9,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -30,20 +32,24 @@ public class AdminAddonsController {
     // region View Constants and redirects
 
     public static final String ADMIN_FLASHCARDS_VIEW = "admin/addons/flashcards/index";
+    public static final String ADMIN_FLASHCARDS_ADD_VIEW = "admin/addons/flashcards/add";
     public static final String ADMIN_FLASHCARD_CATEGORIES_VIEW = "admin/addons/flashcards/categories";
 
     public static final String REDIRECT_FLASHCARD_CATEGORIES = "redirect:/admin/addons/flashcards/categories";
-
+    private static final String REDIRECT_FLASHCARD_ADD = "redirect:/admin/addons/flashcards/add";
 
     // endregion
 
     // region Feedback Message Constants
-
     private static final String FEEDBACK_MESSAGE_FLASHCARD_CATEGORY_ADDED = "feedback.flashcard.category.added";
     private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_CATEGORY_ERROR = "feedback.flashcard.category.error";
     private static final String FEEDBACK_MESSAGE_KEY_FLASHCARDS_IN_CATEGORY_EXIST = "feedback.flashcards.in.category.error";
     private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_CATEGORY_DELETED = "feedback.flashcard.category.deleted";
     private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_CATEGORY_UPDATED = "feedback.flashcard.category.updated";
+    private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_UPDATE_SUCCESS = "feedback.flashcard.update.success";
+    private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_UPDATE_ERROR = "feedback.flashcard.update.error";
+    private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_DELETE_SUCCESS = "feedback.flashcard.delete.success";
+    private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_DELETE_ERROR = "feedback.flashcard.delete.error";
 
     // endregion
 
@@ -61,9 +67,8 @@ public class AdminAddonsController {
     // region Flashcards
 
     @RequestMapping(value = "/flashcards", method = GET)
-    public ModelAndView flashcardsMainPage(Model model) {
+    public ModelAndView flashcardsMainPage() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("newFlashcard", new Flashcard());
         mav.addObject("flashcards", addonService.getFlashcardsWithCategoryName());
         mav.addObject("flashcardCategories", addonService.getFlashcardCategories());
         mav.setViewName(ADMIN_FLASHCARDS_VIEW);
@@ -72,14 +77,28 @@ public class AdminAddonsController {
 
     @RequestMapping(value = "/flashcards/update/{slideId}", method = RequestMethod.POST)
     public String updateRole(@Valid Flashcard flashcard, BindingResult result,
-                             RedirectAttributes attributes, Model model) {
+                             RedirectAttributes attributes) {
         if (result.hasErrors()) {
-            webUI.addFeedbackMessage(attributes, "errors yousa!");
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_UPDATE_ERROR);
             return "redirect:/admin/addons/flashcards";
         } else {
-            webUI.addFeedbackMessage(attributes, "all good yousa!");
+            addonService.updateFlashcard(flashcard);
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_UPDATE_SUCCESS);
             return "redirect:/admin/addons/flashcards";
         }
+    }
+
+    @RequestMapping(value = "/flashcards/update/{slideId}", params = {"deleteFlashcard"}, method = RequestMethod.POST)
+    public String deleteRole(@Valid Flashcard flashcard, BindingResult result,
+                             RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_DELETE_ERROR);
+        } else {
+            addonService.deleteFlashcard(flashcard);
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_DELETE_SUCCESS);
+        }
+
+        return "redirect:/admin/addons/flashcards";
     }
 
     @RequestMapping(value = "/flashcards/categories/new", method = RequestMethod.POST)
@@ -101,7 +120,7 @@ public class AdminAddonsController {
     }
 
     @RequestMapping(value = " /flashcards/categories", method = GET)
-    public ModelAndView flashcardCategories(Model model) {
+    public ModelAndView flashcardCategories() {
         ModelAndView mav = new ModelAndView();
         mav.addObject("flashcardCategories", addonService.getFlashcardCategories());
         mav.addObject("newCategory", new FlashcardCategory());
@@ -111,7 +130,7 @@ public class AdminAddonsController {
 
     @RequestMapping(value = "/flashcards/categories/update/{categoryId}", method = RequestMethod.POST)
     public String updateRole(@Valid @ModelAttribute(value = "flashcardCategory") FlashcardCategoryDTO flashcardCategoryDTO, BindingResult result,
-                             RedirectAttributes attributes, Model model) {
+                             RedirectAttributes attributes) {
         if (result.hasErrors()) {
             webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_CATEGORY_ERROR);
             return REDIRECT_FLASHCARD_CATEGORIES;
@@ -124,7 +143,7 @@ public class AdminAddonsController {
 
     @RequestMapping(value = "/flashcards/categories/update/{categoryId}", params = {"deleteCategory"}, method = RequestMethod.POST)
     public String deleteRole(@Valid @ModelAttribute(value = "flashcardCategory") FlashcardCategoryDTO flashcardCategoryDTO, BindingResult result,
-                             RedirectAttributes attributes, Model model) {
+                             RedirectAttributes attributes) {
         if (result.hasErrors()) {
             webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_CATEGORY_ERROR);
             return REDIRECT_FLASHCARD_CATEGORIES;
@@ -141,6 +160,30 @@ public class AdminAddonsController {
         }
 
         return REDIRECT_FLASHCARD_CATEGORIES;
+    }
+
+    @RequestMapping(value = " /flashcards/add", method = GET)
+    public ModelAndView addFlashcard() {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("flashcardCategories", addonService.getFlashcardCategories());
+        mav.addObject("newFlashcard", new FlashcardImageDTO());
+        mav.setViewName(ADMIN_FLASHCARDS_ADD_VIEW);
+        return mav;
+    }
+
+    @RequestMapping(value = "/flashcards/add", method = RequestMethod.POST)
+    public String handleFlashcardUpload(@Valid FlashcardImageDTO flashcardImageDTO,
+                                   BindingResult result, RedirectAttributes attributes) throws IOException {
+
+        if (result.hasErrors()) {
+            webUI.addFeedbackMessage(attributes, "yo errors!");
+        } else {
+            String filenameBase = UUID.randomUUID().toString();
+            webUI.processFlashcardImage(flashcardImageDTO, filenameBase);
+            addonService.addFlashcard(new Flashcard(1, filenameBase, flashcardImageDTO.getDescription()));
+            webUI.addFeedbackMessage(attributes, "yo all good!");
+        }
+        return REDIRECT_FLASHCARD_ADD;
     }
 }
 

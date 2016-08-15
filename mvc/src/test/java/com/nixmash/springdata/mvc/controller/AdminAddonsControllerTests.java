@@ -23,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.ServletException;
 import java.util.ArrayList;
 
+import static com.nixmash.springdata.mvc.controller.AdminAddonsController.ADMIN_FLASHCARDS_ADD_VIEW;
 import static com.nixmash.springdata.mvc.controller.AdminAddonsController.ADMIN_FLASHCARDS_VIEW;
 import static com.nixmash.springdata.mvc.controller.AdminAddonsController.ADMIN_FLASHCARD_CATEGORIES_VIEW;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
@@ -32,6 +33,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -88,7 +90,7 @@ public class AdminAddonsControllerTests extends AbstractContext {
 
     @Test
     @WithAdminUser
-    public void flashcards_Page_Loads_And_Has_Empty_Flashcard_Model() throws Exception {
+    public void flashcards_Page_Loads_And_Has_Flashcards_In_Model() throws Exception {
         RequestBuilder request = get("/admin/addons/flashcards").with(csrf());
         MvcResult result = mvc.perform(request)
                 .andExpect(status().isOk())
@@ -110,4 +112,14 @@ public class AdminAddonsControllerTests extends AbstractContext {
                 is(instanceOf(ArrayList.class)));
     }
 
+    @Test
+    @WithAdminUser
+    public void addFlashcard_Has_Empty_NewFlashcard_In_Model() throws Exception {
+        RequestBuilder request = get("/admin/addons/flashcards/add").with(csrf());
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("newFlashcard"))
+                .andExpect(view().name(ADMIN_FLASHCARDS_ADD_VIEW));
+
+    }
 }

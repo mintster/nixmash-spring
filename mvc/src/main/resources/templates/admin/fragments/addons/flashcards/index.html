@@ -40,14 +40,14 @@
                     </h2>
                     <small th:text="#{admin.flashcards.subtitle}" class="h2_subtitle">[Manage Flashcards and Categories]</small>
                     <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
-                        <a id="addFlashcard" th:text="#{admin.flashcards.button.new}"
-                           class="btn btn-primary">[Add Flashcard]</a>
+                        <a th:href="@{'/admin/addons/flashcards/add'}" th:text="#{admin.flashcards.button.add}"
+                           class="btn btn-primary">[Add Flashcards]</a>
                         <a id="editFlashcards" th:text="#{admin.flashcards.button.edit}"
                            class="btn btn-primary">[Edit Flashcards]</a>
                         <a id="refreshFlashcards" th:text="#{admin.flashcards.button.cancel}"
                            class="btn btn-primary">[Cancel]</a>
                         <a th:href="@{'/admin/addons/flashcards/categories'}" th:text="#{admin.flashcards.categories}"
-                           class="btn btn-primary">[Manage Categories]</a>
+                           class="btn btn-success">[Manage Categories]</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -57,31 +57,6 @@
                              th:class="'messageblock hidden'"
                              th:text="${feedbackMessage}"></div>
                     </div>
-
-                    <table id="newFlashcardTable" style="display: none;" class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th width="100px"></th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Image</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <!--/*@thymesVar id="newFlashcard" type="com.nixmash.springdata.jpa.model.addons.Flashcard"*/-->
-                            <form th:object="${newFlashcard}" method="post" th:action="@{/admin/addons/flashcards/new}"
-                                  class="form-inline" id="new-flashcard-form">
-                                <td>&nbsp;</td>
-                                <td><input type="text" class="form-control align-top" th:field="*{content}"/></td>
-                                <td><input type="text" class="form-control align-top" th:field="*{category}"/></td>
-                                <td><input type="text" class="form-control align-top" th:field="*{image}"/></td>
-                                <td><input type="submit" class="btn btn-primary" th:value="Add"/></td>
-                            </form>
-                        </tr>
-                        </tbody>
-                    </table>
 
                     <table id="flashcardTable" dt:table="true" class="table table-striped"
                            dt:cssStyle="display: table;">
@@ -109,8 +84,8 @@
                                 <form th:object="${flashcard}" method="post"
                                       th:action="@{|/admin/addons/flashcards/update/${flashcard.slideId}|}"
                                       class="form-inline" id="flashcard-form">
-                                    <input type="text" class="form-control align-top" th:value="${flashcard.content}" id="content" name="content"/>
-                                    <select th:value="${flashcard.content}" name="categoryId" id="categoryId" class="selectpicker" data-style="btn-primary">
+                                    <input type="text" class="form-control align-top flashcard-content" th:value="${flashcard.content}" id="content" name="content" />
+                                    <select th:value="${flashcard.content}" name="categoryId" id="categoryId" class="btn dropdown-toggle btn-primary" data-style="btn-primary">
                                         <option th:each="category : ${flashcardCategories}" th:text="${category.category}"
                                                 th:value="${category.categoryId}" th:selected="${category.categoryId == flashcard.categoryId}"></option>
                                     </select>

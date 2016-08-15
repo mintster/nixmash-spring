@@ -30,4 +30,8 @@ public interface AddonService {
     List<Flashcard> getAllFlashcards();
 
     List<Flashcard> getFlashcardsWithCategoryName();
+
+    Flashcard updateFlashcard(Flashcard flashcard);
+
+    void deleteFlashcard(Flashcard flashcard);
 }
