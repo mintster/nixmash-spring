@@ -1,6 +1,9 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardDTO;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +28,17 @@ public interface AddonService {
 
     FlashcardCategory addFlashCardCategory(FlashcardCategory flashcardCategory);
 
-    Flashcard addFlashcard(Flashcard flashcard);
+    Flashcard addFlashcard(FlashcardImageDTO flashcardImageDTO);
 
     List<Flashcard> getAllFlashcards();
 
     List<Flashcard> getFlashcardsWithCategoryName();
 
-    Flashcard updateFlashcard(Flashcard flashcard);
+    Flashcard updateFlashcard(FlashcardDTO flashcardDTO);
 
     void deleteFlashcard(Flashcard flashcard);
+
+    List<Flashcard> getFlashcardsWithDetail();
+
+    List<Post> getFlashcardPosts();
 }

@@ -1,8 +1,13 @@
 package com.nixmash.springdata.jpa.service;
 
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardDTO;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
+import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardCategoryRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +27,15 @@ public class AddonServiceImpl implements AddonService {
 
     private final FlashcardCategoryRepository flashcardCategoryRepository;
     private final FlashcardRepository flashcardRepository;
+    private final PostRepository postRepository;
+    private final ApplicationSettings applicationSettings;
 
     @Autowired
-    public AddonServiceImpl(FlashcardCategoryRepository flashcardCategoryRepository, FlashcardRepository flashcardRepository) {
+    public AddonServiceImpl(FlashcardCategoryRepository flashcardCategoryRepository, FlashcardRepository flashcardRepository, PostRepository postRepository, ApplicationSettings applicationSettings) {
         this.flashcardCategoryRepository = flashcardCategoryRepository;
         this.flashcardRepository = flashcardRepository;
+        this.postRepository = postRepository;
+        this.applicationSettings = applicationSettings;
     }
 
     @PersistenceContext
@@ -69,7 +78,12 @@ public class AddonServiceImpl implements AddonService {
     }
 
     @Override
-    public Flashcard addFlashcard(Flashcard flashcard) {
+    public Flashcard addFlashcard(FlashcardImageDTO flashcardImageDTO) {
+        Post post = postRepository.findOne(flashcardImageDTO.getPostId());
+        Flashcard flashcard = new Flashcard(flashcardImageDTO.getCategoryId(),
+                                                                                                flashcardImageDTO.getImage(),
+                                                                                                flashcardImageDTO.getContent(),
+                                                                                                post);
         return flashcardRepository.save(flashcard);
     }
 
@@ -84,13 +98,20 @@ public class AddonServiceImpl implements AddonService {
         List<Flashcard> flashcards =
                 em.createNativeQuery("SELECT *  FROM v_flashcards", "FlashcardsWithCategory")
                 .getResultList();
+
+        String imageRootUrl = applicationSettings.getFlashcardImageUrlRoot();
+        for (Flashcard flashcard : flashcards) {
+            flashcard.setImageUrl(String.format("%s%s.png", imageRootUrl, flashcard.getImage()));
+            flashcard.setThumbnailUrl(String.format("%s%s-thumbnail.png", imageRootUrl, flashcard.getImage()));
+        }
         return flashcards;
     }
 
     @Override
-    public Flashcard updateFlashcard(Flashcard flashcard) {
-        Flashcard found = flashcardRepository.findOne(flashcard.getSlideId());
-        found.update(flashcard.getCategoryId(), flashcard.getContent());
+    public Flashcard updateFlashcard(FlashcardDTO flashcardDTO) {
+        Flashcard found = flashcardRepository.findOne(flashcardDTO.getSlideId());
+        Post post = postRepository.findOne(flashcardDTO.getPostId());
+        found.update(flashcardDTO.getCategoryId(), flashcardDTO.getContent(), post);
         return found;
     }
 
@@ -98,6 +119,17 @@ public class AddonServiceImpl implements AddonService {
     public void deleteFlashcard(Flashcard flashcard) {
         flashcardRepository.delete(flashcard);
     }
+
+    @Override
+    public List<Flashcard> getFlashcardsWithDetail() {
+        return flashcardRepository.findAllWithDetail();
+    }
+
+    @Override
+    public List<Post> getFlashcardPosts() {
+        return postRepository.findSinglePhotoPosts();
+    }
+
     // endregion
 
 }

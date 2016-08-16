@@ -52,7 +52,7 @@ public class ApplicationSettings {
 	private String postDemoImageUrlRoot;
 
 	private String flashcardImagePath;
-	private String flashcardUrlRoot;
+	private String flashcardImageUrlRoot;
 
 	// endregion
 
@@ -65,12 +65,12 @@ public class ApplicationSettings {
 		this.flashcardImagePath = flashcardImagePath;
 	}
 
-	public String getFlashcardUrlRoot() {
-		return flashcardUrlRoot;
+	public String getFlashcardImageUrlRoot() {
+		return flashcardImageUrlRoot;
 	}
 
-	public void setFlashcardUrlRoot(String flashcardUrlRoot) {
-		this.flashcardUrlRoot = flashcardUrlRoot;
+	public void setFlashcardImageUrlRoot(String flashcardImageUrlRoot) {
+		this.flashcardImageUrlRoot = flashcardImageUrlRoot;
 	}
 
 	public String getPostDemoImagePath() {

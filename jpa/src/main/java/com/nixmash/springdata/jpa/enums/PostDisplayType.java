@@ -9,7 +9,8 @@ public enum PostDisplayType {
     LINK_FEATURE,
     POST,
     NIXMASH_POST,
-    MULTIPHOTO_POST
+    MULTIPHOTO_POST,
+    SINGLEPHOTO_POST
 }
 
 

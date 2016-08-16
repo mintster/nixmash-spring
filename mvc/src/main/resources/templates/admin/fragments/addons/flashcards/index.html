@@ -64,28 +64,35 @@
                         <tr>
                             <th>Id</th>
                             <th>Image</th>
-                            <th>Description</th>
+                            <th>Post</th>
                             <th>Category</th>
                             <th dt:visible="false" class="flashcard-button-column"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <!--/*@thymesVar id="flashcard" type="com.nixmash.springdata.jpa.model.addons.Flashcard"*/-->
+                        <!--/*@thymesVar id="flashcard" type="com.nixmash.springdata.jpa.dto.addons.FlashcardDTO"*/-->
 
                         <!--/*@thymesVar id="category" type="com.nixmash.springdata.jpa.model.addons.FlashcardCategory"*/-->
                         <!--/*@thymesVar id="flashcardCategories" type="List<com.nixmash.springdata.jpa.model.addons.FlashcardCategory>"*/-->
+                        <!--/*@thymesVar id="flashcardPosts" type="List<com.nixmash.springdata.jpa.model.Post>"*/-->
+                        <!--/*@thymesVar id="flashcardPost" type="com.nixmash.springdata.jpa.model.Post"*/-->
+
                         <tr th:each="flashcard : ${flashcards}">
 
                             <td th:text="${flashcard.slideId}">1</td>
-                            <td th:text="${flashcard.image}">image</td>
-                            <td th:text="${flashcard.content}">description</td>
+                            <td><img th:src="${flashcard.thumbnailUrl}" th:alt="${flashcard.content}" th:title="${flashcard.content}" class="flash-thumbnail" /></td>
+                            <td th:text="${flashcard.postTitle}">post title</td>
                             <td th:text="${flashcard.categoryName}">category</td>
                             <td>
                                 <form th:object="${flashcard}" method="post"
                                       th:action="@{|/admin/addons/flashcards/update/${flashcard.slideId}|}"
                                       class="form-inline" id="flashcard-form">
-                                    <input type="text" class="form-control align-top flashcard-content" th:value="${flashcard.content}" id="content" name="content" />
-                                    <select th:value="${flashcard.content}" name="categoryId" id="categoryId" class="btn dropdown-toggle btn-primary" data-style="btn-primary">
+                                    <input type="hidden" th:value="${flashcard.content}" id="content" name="content" />
+                                    <select th:value="${flashcard.postId}" name="postId" id="postId" class="btn dropdown-toggle btn-primary" data-style="btn-primary">
+                                        <option th:each="flashcardPost : ${flashcardPosts}" th:text="${flashcardPost.postTitle}"
+                                                th:value="${flashcardPost.postId}" th:selected="${flashcardPost.postId == flashcard.postId}"></option>
+                                    </select>
+                                    <select th:value="${flashcard.categoryId}" name="categoryId" id="categoryId" class="btn dropdown-toggle btn-primary" data-style="btn-primary">
                                         <option th:each="category : ${flashcardCategories}" th:text="${category.category}"
                                                 th:value="${category.categoryId}" th:selected="${category.categoryId == flashcard.categoryId}"></option>
                                     </select>

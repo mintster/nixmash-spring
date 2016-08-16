@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardDTO;
 import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
@@ -71,13 +72,14 @@ public class AdminAddonsController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("flashcards", addonService.getFlashcardsWithCategoryName());
         mav.addObject("flashcardCategories", addonService.getFlashcardCategories());
+        mav.addObject("flashcardPosts", addonService.getFlashcardPosts());
         mav.setViewName(ADMIN_FLASHCARDS_VIEW);
         return mav;
     }
 
     @RequestMapping(value = "/flashcards/update/{slideId}", method = RequestMethod.POST)
-    public String updateRole(@Valid Flashcard flashcard, BindingResult result,
-                             RedirectAttributes attributes) {
+    public String updateFlashcard(@Valid FlashcardDTO flashcard, BindingResult result,
+                                  RedirectAttributes attributes) {
         if (result.hasErrors()) {
             webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_UPDATE_ERROR);
             return "redirect:/admin/addons/flashcards";
@@ -89,7 +91,7 @@ public class AdminAddonsController {
     }
 
     @RequestMapping(value = "/flashcards/update/{slideId}", params = {"deleteFlashcard"}, method = RequestMethod.POST)
-    public String deleteRole(@Valid Flashcard flashcard, BindingResult result,
+    public String deleteFlashcard(@Valid Flashcard flashcard, BindingResult result,
                              RedirectAttributes attributes) {
         if (result.hasErrors()) {
             webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_DELETE_ERROR);
@@ -180,7 +182,8 @@ public class AdminAddonsController {
         } else {
             String filenameBase = UUID.randomUUID().toString();
             webUI.processFlashcardImage(flashcardImageDTO, filenameBase);
-            addonService.addFlashcard(new Flashcard(1, filenameBase, flashcardImageDTO.getDescription()));
+            flashcardImageDTO.setImage(filenameBase);
+            addonService.addFlashcard(flashcardImageDTO);
             webUI.addFeedbackMessage(attributes, "yo all good!");
         }
         return REDIRECT_FLASHCARD_ADD;

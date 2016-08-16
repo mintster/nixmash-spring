@@ -1,9 +1,11 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
+import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
+import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardCategoryRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardRepository;
 import org.junit.Before;
@@ -37,6 +39,9 @@ public class AddonServiceTests {
     @Autowired
     FlashcardRepository flashcardRepository;
 
+    @Autowired
+    PostRepository postRepository;
+
 
     @Before
     public void setup() {
@@ -55,9 +60,8 @@ public class AddonServiceTests {
     public void canAddFlashcardCategoryAndFlashcards() {
         FlashcardCategory flashcardCategory = new FlashcardCategory("Category Three");
         FlashcardCategory savedCategory = addonService.addFlashCardCategory(flashcardCategory);
-
-        Flashcard flashcard = new Flashcard(savedCategory.getCategoryId(), "image_for_saved.jpg","This is a new flashcard");
-        addonService.addFlashcard(flashcard);
+        FlashcardImageDTO flashcardImageDTO = new FlashcardImageDTO(savedCategory.getCategoryId(), -1L, "image_for_saved.jpg","This is a new flashcard");
+        addonService.addFlashcard(flashcardImageDTO);
 
         FlashcardCategory found = addonService.getFlashcardCategoryById(savedCategory.getCategoryId());
         assertNotNull(found);
@@ -70,5 +74,11 @@ public class AddonServiceTests {
         for (Flashcard flashcard : flashcards) {
             assert (flashcard.categoryName.contains("category"));
         }
+    }
+
+    @Test
+    public void flashcardsWithDetailRetrievesCategoryAndPost() {
+        List<Flashcard> flashcards = addonService.getFlashcardsWithDetail();
+        assertNotNull(flashcards.get(0).getPost());
     }
 }

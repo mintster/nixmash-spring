@@ -228,12 +228,14 @@ CREATE TABLE flashcard_categories (
 CREATE TABLE flashcard_slides (
   slide_id bigint(20) NOT NULL AUTO_INCREMENT,
   category_id bigint(20) NOT NULL,
+  `post_id` bigint(20) NOT NULL DEFAULT '-1',
   slide_image varchar(255) DEFAULT NULL,
   slide_content varchar(2147483647),
   datetime_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (slide_id),
   UNIQUE KEY flashcard_slides_slide_id_uindex (slide_id),
-  CONSTRAINT fk_flashcard_slides_categories FOREIGN KEY (category_id) REFERENCES flashcard_categories (category_id)
+  CONSTRAINT fk_flashcard_slides_categories FOREIGN KEY (category_id) REFERENCES flashcard_categories (category_id),
+  CONSTRAINT fk_flashcard_slides_posts FOREIGN KEY (post_id) REFERENCES posts (post_id)
 );
 
 
@@ -243,4 +245,7 @@ create VIEW v_flashcards AS
          s.slide_content as slide_content,
          s.slide_image as slide_image,
          s.datetime_created as datetime_created,
-         c.category  as category from flashcard_slides s inner join flashcard_categories c on s.category_id = c.category_id
+         c.category  as category,
+          p.post_title as post_title,
+          p.post_id as post_id
+  from flashcard_slides s inner join flashcard_categories c on s.category_id = c.category_id inner join posts p on s.post_id = p.post_id

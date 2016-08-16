@@ -84,9 +84,8 @@ tr.border-bottom-row {
     min-width: 220px;
 }
 
-span.option-spacer {
-
+img.flash-thumbnail {
+    border: 2px #000000 solid;
 }
-
 
 /*</editor-fold>*/

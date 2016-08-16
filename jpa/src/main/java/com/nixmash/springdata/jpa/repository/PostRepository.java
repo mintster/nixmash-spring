@@ -38,4 +38,6 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
             " FROM posts WHERE is_published = true", nativeQuery = true)
     String getAlphaLinkString();
 
+    @Query("select distinct p from Post p where p.displayType = 'SINGLEPHOTO_POST'")
+    List<Post> findSinglePhotoPosts();
 }

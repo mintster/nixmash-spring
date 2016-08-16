@@ -327,4 +327,11 @@ public class PostServiceTests {
         List<PostImage> postImages = postService.getAllPostImages();
         assertEquals(postImages.size(), 3);
     }
+
+    @Test
+    public void negativePostIdStub_NotYetSelected() throws PostNotFoundException {
+        Post post = postService.getPostById(-1L);
+        assertEquals(post.getPostName(), "not-yet-selected");
+
+    }
 }
