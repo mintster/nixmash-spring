@@ -11,6 +11,7 @@ import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardCategoryRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class AddonServiceImpl implements AddonService {
     private final FlashcardRepository flashcardRepository;
     private final PostRepository postRepository;
     private final ApplicationSettings applicationSettings;
+
 
     @Autowired
     public AddonServiceImpl(FlashcardCategoryRepository flashcardCategoryRepository, FlashcardRepository flashcardRepository, PostRepository postRepository, ApplicationSettings applicationSettings) {
@@ -69,7 +71,7 @@ public class AddonServiceImpl implements AddonService {
 
     @Override
     public List<Flashcard> getFlashcardsByCategoryId(long categoryId) {
-        return flashcardRepository.findByCategoryId(categoryId);
+        return flashcardRepository.findByCategoryId(categoryId, sortByFlashcardDateDesc());
     }
 
     @Override
@@ -96,7 +98,7 @@ public class AddonServiceImpl implements AddonService {
     @SuppressWarnings("unchecked")
     public List<Flashcard> getFlashcardsWithCategoryName() {
         List<Flashcard> flashcards =
-                em.createNativeQuery("SELECT *  FROM v_flashcards", "FlashcardsWithCategory")
+                em.createNativeQuery("SELECT *  FROM v_flashcards ORDER BY datetime_created DESC", "FlashcardsWithCategory")
                 .getResultList();
 
         String imageRootUrl = applicationSettings.getFlashcardImageUrlRoot();
@@ -108,14 +110,17 @@ public class AddonServiceImpl implements AddonService {
     }
 
     @Override
+    @Transactional
     public Flashcard updateFlashcard(FlashcardDTO flashcardDTO) {
         Flashcard found = flashcardRepository.findOne(flashcardDTO.getSlideId());
         Post post = postRepository.findOne(flashcardDTO.getPostId());
         found.update(flashcardDTO.getCategoryId(), flashcardDTO.getContent(), post);
+        em.persist(found);
         return found;
     }
 
     @Override
+    @Transactional
     public void deleteFlashcard(Flashcard flashcard) {
         flashcardRepository.delete(flashcard);
     }
@@ -127,9 +132,21 @@ public class AddonServiceImpl implements AddonService {
 
     @Override
     public List<Post> getFlashcardPosts() {
-        return postRepository.findSinglePhotoPosts();
+        return postRepository.findSinglePhotoPosts(sortByPostDateDesc());
     }
 
     // endregion
+
+    //region Utility methods
+
+    public Sort sortByPostDateDesc() {
+        return new Sort(Sort.Direction.DESC, "postDate");
+    }
+
+    public Sort sortByFlashcardDateDesc() {
+        return new Sort(Sort.Direction.DESC, "datetimeCreated");
+    }
+
+    //endregion
 
 }

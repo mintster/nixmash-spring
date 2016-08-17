@@ -172,7 +172,9 @@ public class PostServiceImpl implements PostService {
             throw new PostNotFoundException("No post found with id: " + postName);
         } else {
             if (found.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST))
-                found.setPostImages(getPostImages(found.getPostId()));
+                found.setPostImages(this.getPostImages(found.getPostId()));
+            if (found.getDisplayType().equals(PostDisplayType.SINGLEPHOTO_POST))
+                found.setSingleImage(this.getPostImages(found.getPostId()).get(0));
         }
 
         return found;

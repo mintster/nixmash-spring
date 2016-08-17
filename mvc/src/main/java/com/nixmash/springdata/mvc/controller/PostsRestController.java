@@ -180,6 +180,9 @@ public class PostsRestController {
             if (post.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST)) {
                 post.setPostImages(postService.getPostImages(post.getPostId()));
             }
+            if (post.getDisplayType().equals(PostDisplayType.SINGLEPHOTO_POST)) {
+                post.setSingleImage(postService.getPostImages(post.getPostId()).get(0));
+            }
             post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
             result += templateService.createPostHtml(post, format);
         }

@@ -145,7 +145,7 @@ public class Flashcard {
     public Post post;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "post_id", insertable = false, updatable = false)
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id", insertable = false, updatable = true)
     public Post getPost() {
         return post;
     }
@@ -192,15 +192,17 @@ public class Flashcard {
 
     public Flashcard(long categoryId, String image, String content, Post post) {
         this.categoryId = categoryId;
-        this.setPost(post);
+        this.post = post;
         this.image = image;
         this.content = content;
+        this.postId = post.getPostId();
     }
 
     public void update(long categoryId, String content, Post post) {
         this.categoryId = categoryId;
         this.content = content;
-        this.setPost(post);
+        this.post = post;
+        this.postId = post.getPostId();
     }
 
     @Override

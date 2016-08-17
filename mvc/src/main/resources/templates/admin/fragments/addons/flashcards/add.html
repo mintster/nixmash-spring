@@ -40,12 +40,18 @@
                         <tbody>
                         <tr>
                             <!--/*@thymesVar id="newFlashcard" type="com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO"*/-->
+                            <!--/*@thymesVar id="category" type="com.nixmash.springdata.jpa.model.addons.FlashcardCategory"*/-->
+
                             <form th:object="${newFlashcard}" method="post" th:action="@{/admin/addons/flashcards/add}"
                                   enctype="multipart/form-data" class="form-inline" id="new-flashcard-form">
                                 <td>&nbsp;</td>
                                 <td><input type="text" class="form-control align-top" th:field="*{description}"/></td>
-                                <td><input type="text" class="form-control align-top" th:field="*{categoryId}"/></td>
-                                <td><input type="file" name="file" size="60"  multiple="multiple" /></td>
+                                <td><select th:field="*{categoryId}" name="categoryId"  id="categoryId" class="btn dropdown-toggle btn-primary selectpicker"
+                                            data-style="btn-primary">
+                                    <option th:each="category : ${flashcardCategories}" th:text="${category.category}"
+                                            th:value="${category.categoryId}"></option>
+                                </select></td>
+                                <td><input type="file" name="file" size="60" multiple="multiple"/></td>
                                 <td><input type="submit" class="btn btn-primary" th:value="Add"/></td>
                             </form>
                         </tr>

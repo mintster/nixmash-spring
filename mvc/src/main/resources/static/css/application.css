@@ -822,8 +822,16 @@ pre code {
     margin-right: 6px;
 }
 
-.post img.post-photo-thumbnail:hover {
+.post img.post-photo-thumbnail:hover, .post img.post-photo-single:hover {
     border: #000 2px solid;
+}
+
+.post .post-single-photo {
+    margin-bottom: 30px;
+}
+.post img.post-photo-single {
+    border: #dd4814 2px solid;
+    width: 80%;
 }
 /*</editor-fold>*/
 /*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
@@ -932,9 +940,18 @@ h1.post-title {
     margin-bottom: 8px;
 }
 
-#post img.post-photo-thumbnail:hover {
+#post img.post-photo-thumbnail:hover, #post img.post-photo-single:hover {
     border: #000 2px solid;
 }
+
+#post #post-photo {
+}
+
+#post img.post-photo-single {
+    border: #ae3910 2px solid;
+    max-width: 100%;
+}
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="POST SIDEBAR NAVIGATION----------------------------/ "*/
 

@@ -51,6 +51,8 @@ public class AdminAddonsController {
     private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_UPDATE_ERROR = "feedback.flashcard.update.error";
     private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_DELETE_SUCCESS = "feedback.flashcard.delete.success";
     private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_DELETE_ERROR = "feedback.flashcard.delete.error";
+    private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_ADD_ERROR = "feedback.flashcard.add.error";
+    private static final String FEEDBACK_MESSAGE_KEY_FLASHCARD_ADD_SUCCESS = "feedback.flashcard.add.success";
 
     // endregion
 
@@ -178,13 +180,13 @@ public class AdminAddonsController {
                                    BindingResult result, RedirectAttributes attributes) throws IOException {
 
         if (result.hasErrors()) {
-            webUI.addFeedbackMessage(attributes, "yo errors!");
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_ADD_ERROR);
         } else {
             String filenameBase = UUID.randomUUID().toString();
             webUI.processFlashcardImage(flashcardImageDTO, filenameBase);
             flashcardImageDTO.setImage(filenameBase);
             addonService.addFlashcard(flashcardImageDTO);
-            webUI.addFeedbackMessage(attributes, "yo all good!");
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_FLASHCARD_ADD_SUCCESS);
         }
         return REDIRECT_FLASHCARD_ADD;
     }

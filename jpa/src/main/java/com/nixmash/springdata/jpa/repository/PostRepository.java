@@ -39,5 +39,5 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     String getAlphaLinkString();
 
     @Query("select distinct p from Post p where p.displayType = 'SINGLEPHOTO_POST'")
-    List<Post> findSinglePhotoPosts();
+    List<Post> findSinglePhotoPosts(Sort sort);
 }

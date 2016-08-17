@@ -15,6 +15,7 @@
 <!--/*@thymesVar id="postCreated" type="java.util.Date"*/-->
 <!--/*@thymesVar id="PostType" type="com.nixmash.springdata.jpa.enums.PostType"*/-->
 <!--/*@thymesVar id="image" type="com.nixmash.springdata.jpa.model.PostImage"*/-->
+<!--/*@thymesVar id="singleImage" type="com.nixmash.springdata.jpa.model.PostImage"*/-->
 
 <div class="container">
     <div class="page-header" id="banner">
@@ -33,14 +34,20 @@
                 <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
                      th:utext="${feedbackMessage}"></div>
             </div>
+            <div id="post-photo" th:if="${post.displayType.name() == 'SINGLEPHOTO_POST'}">
+                <a th:href="|${post.singleImage.url}${post.singleImage.newFilename}|">
+                    <img th:src="|${post.singleImage.url}${post.singleImage.newFilename}|" alt="Click to view the lightbox"
+                         class="post-photo-single"/>
+                </a>
+            </div>
             <div id="post-body" th:utext="${post.postContent}">
             </div>
             <div id="post-photos" th:if="${post.displayType.name() == 'MULTIPHOTO_POST'}">
 
                 <div th:each="image : ${post.postImages }" th:remove="tag">
                     <a th:href="|${image.url}${image.newFilename}|">
-                        <img th:src="|${image.url}${image.newFilename}|"  alt="Click to view the lightbox"
-                             class="post-photo-thumbnail" />
+                        <img th:src="|${image.url}${image.newFilename}|" alt="Click to view the lightbox"
+                             class="post-photo-thumbnail"/>
                     </a>
                 </div>
 
@@ -110,8 +117,9 @@
         hljs.highlightBlock(block);
     });
 
-    $(function() {
+    $(function () {
         $('#post-photos a').lightbox();
+        $('#post-photo a').lightbox();
     });
 
     /*]]>*/

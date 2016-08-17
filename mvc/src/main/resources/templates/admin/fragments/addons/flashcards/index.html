@@ -30,6 +30,17 @@
             });
 
         });
+
+        function showConfirm(slideId) {
+            $('#delete-confirm-' + slideId).css('display', 'inline-block');
+            return false;
+        }
+
+        function closeConfirm(slideId) {
+            $('#delete-confirm-' + slideId).css('display', 'none');
+            return false;
+        }
+
     </script>
 
     <div class="row">
@@ -62,7 +73,7 @@
                            dt:cssStyle="display: table;">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th dt:sortInitDirection="desc">Id</th>
                             <th>Image</th>
                             <th>Post</th>
                             <th>Category</th>
@@ -88,18 +99,25 @@
                                       th:action="@{|/admin/addons/flashcards/update/${flashcard.slideId}|}"
                                       class="form-inline" id="flashcard-form">
                                     <input type="hidden" th:value="${flashcard.content}" id="content" name="content" />
-                                    <select th:value="${flashcard.postId}" name="postId" id="postId" class="btn dropdown-toggle btn-primary" data-style="btn-primary">
+                                    <select th:value="${flashcard.postId}" name="postId" id="postId" class="btn dropdown-toggle"
+                                            th:classappend="${flashcard.postId > 0} ? 'btn-primary' : 'btn-warning'" data-style="btn-primary">
                                         <option th:each="flashcardPost : ${flashcardPosts}" th:text="${flashcardPost.postTitle}"
                                                 th:value="${flashcardPost.postId}" th:selected="${flashcardPost.postId == flashcard.postId}"></option>
                                     </select>
-                                    <select th:value="${flashcard.categoryId}" name="categoryId" id="categoryId" class="btn dropdown-toggle btn-primary" data-style="btn-primary">
+                                    <select th:value="${flashcard.categoryId}" name="categoryId" id="categoryId" class="btn dropdown-toggle btn-primary"
+                                            data-style="btn-primary">
                                         <option th:each="category : ${flashcardCategories}" th:text="${category.category}"
                                                 th:value="${category.categoryId}" th:selected="${category.categoryId == flashcard.categoryId}"></option>
                                     </select>
                                     <input type="submit" class="btn btn-primary" th:value="Update"/>
-                                    <input th:type="submit" class="btn btn-success"
+                                    <button class="btn btn-primary" th:onclick="|showConfirm(${flashcard.slideId}); return false;|">Delete</button>
+                                    <div style="display:none;" th:id="|delete-confirm-${flashcard.slideId}|">
+                                    <input th:type="submit" class="btn btn-danger"
                                            name="deleteFlashcard"
-                                           th:value="Remove"/></form>
+                                           th:value="Confirm"/>
+                                        <button class="btn btn-default" th:onclick="|closeConfirm(${flashcard.slideId}); return false;|">Cancel</button>
+                                    </div>
+                                </form>
                             </td>
 
                         </tr>

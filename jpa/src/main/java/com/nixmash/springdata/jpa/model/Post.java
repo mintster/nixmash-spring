@@ -103,6 +103,9 @@ public class Post implements Serializable {
     @Transient
     public List<PostImage> postImages;
 
+    @Transient
+    public PostImage singleImage;
+
     // endregion
 
     // region Transient properties
@@ -119,11 +122,16 @@ public class Post implements Serializable {
 
     //region Getter Setters
 
+    public PostImage getSingleImage() {
+        return singleImage;
+    }
+    public void setSingleImage(PostImage singleImage) {
+        this.singleImage = singleImage;
+    }
 
     public List<PostImage> getPostImages() {
         return postImages;
     }
-
     public void setPostImages(List<PostImage> postImages) {
         this.postImages = postImages;
     }
@@ -131,7 +139,6 @@ public class Post implements Serializable {
     public boolean getIsOwner() {
         return isOwner;
     }
-
     public void setIsOwner(boolean owner) {
         isOwner = owner;
     }
@@ -139,7 +146,6 @@ public class Post implements Serializable {
     public Long getPostId() {
         return postId;
     }
-
     public void setPostId(Long postId) {
         this.postId = postId;
     }
@@ -147,7 +153,6 @@ public class Post implements Serializable {
     public Long getUserId() {
         return userId;
     }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -155,7 +160,6 @@ public class Post implements Serializable {
     public String getPostTitle() {
         return postTitle;
     }
-
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
     }
@@ -163,7 +167,6 @@ public class Post implements Serializable {
     public String getPostName() {
         return postName;
     }
-
     public void setPostName(String postName) {
         this.postName = postName;
     }
@@ -171,7 +174,6 @@ public class Post implements Serializable {
     public String getPostLink() {
         return postLink;
     }
-
     public void setPostLink(String postLink) {
         this.postLink = postLink;
     }
@@ -182,7 +184,6 @@ public class Post implements Serializable {
     public ZonedDateTime getPostDate() {
         return postDate;
     }
-
     public void setPostDate(ZonedDateTime postDate) {
         this.postDate = postDate;
     }
@@ -193,7 +194,6 @@ public class Post implements Serializable {
     public ZonedDateTime getPostModified() {
         return postModified;
     }
-
     public void setPostModified(ZonedDateTime postModified) {
         this.postModified = postModified;
     }
