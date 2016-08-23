@@ -1203,3 +1203,12 @@ h2.alphaheading a {
 }
 
 /*</editor-fold>*/
+
+/*/<editor-fold> desc="FLASHCARD DISPLAY----------------------------/ "*/
+
+button.btn.btn-success.btn-flashcard-category {
+    float: none;
+    margin-left: 6px;
+}
+
+/*</editor-fold>*/

@@ -40,5 +40,7 @@ public interface AddonService {
 
     List<Flashcard> getFlashcardsWithDetail();
 
+    List<Flashcard> getActiveFlashcardsWithDetail(long categoryId);
+
     List<Post> getFlashcardPosts();
 }

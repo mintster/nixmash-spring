@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--suppress JSUnusedLocalSymbols -->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--/*@thymesVar id="currentCategory" type="com.nixmash.springdata.jpa.model.addons.FlashcardCategory"*/-->
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/highlight/github.css}"/>
+    <script th:src="@{/js/highlight.pack.js}"></script>
+    <title th:utext="#{flashcards.page.title(${currentCategory.category})}">[Flashcards Demo]</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('demos')">Navbar</nav>
+
+<!--/*@thymesVar id="categories" type="List<com.nixmash.springdata.jpa.model.addons.FlashcardCategory>"*/-->
+<!--/*@thymesVar id="currentCategory" type="com.nixmash.springdata.jpa.model.addons.FlashcardCategory"*/-->
+
+<div class="container">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1 th:text="#{flashcards.page.header}">[flashcards]</h1>
+                <p class="lead" th:text="#{flashcards.page.subheader(${currentCategory.category})}">[Flashcards for Category...]</p>
+                <div class="flashcard-categories-select">
+                    <div class="form-actions special-select">
+
+
+                        <form th:object="${category}" method="post" th:action="@{/posts/flashcards}"
+                              class="form-horizontal" id="flashcard-categories-select">
+                            <select th:value="${categoryId}" name="categoryId" id="categoryId" class="selectpicker"
+                                    data-style="btn-primary">
+                                <option th:each="category : ${categories}" th:text="${category.category}"
+                                        th:value="${category.categoryId}"  th:selected="${category.categoryId == currentCategory.categoryId}"></option>
+                            </select>
+                            <button type="submit" class="btn btn-success btn-flashcard-category" name="link" value="true">Select
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="fragments/sponsor :: [id='sponsor']">Sponsor Image</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container bs-container">
+    <div class="row">
+        <div class="bs-section">
+            <p>Yousa!</p>
+            <!--<div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>-->
+        </div>
+    </div>
+
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+</body>
+</html>
+
+
+

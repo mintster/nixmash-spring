@@ -56,6 +56,20 @@ public class ApplicationSettings {
 
 	// endregion
 
+	//region Addons
+
+	private int defaultFlashcardCategory;
+
+	//endregion
+
+
+	public int getDefaultFlashcardCategory() {
+		return defaultFlashcardCategory;
+	}
+
+	public void setDefaultFlashcardCategory(int defaultFlashcardCategory) {
+		this.defaultFlashcardCategory = defaultFlashcardCategory;
+	}
 
 	public String getFlashcardImagePath() {
 		return flashcardImagePath;

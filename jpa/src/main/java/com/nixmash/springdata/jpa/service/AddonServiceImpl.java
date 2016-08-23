@@ -131,6 +131,11 @@ public class AddonServiceImpl implements AddonService {
     }
 
     @Override
+    public List<Flashcard> getActiveFlashcardsWithDetail(long categoryId) {
+        return flashcardRepository.findActiveWithDetail(categoryId);
+    }
+
+    @Override
     public List<Post> getFlashcardPosts() {
         return postRepository.findSinglePhotoPosts(sortByPostDateDesc());
     }

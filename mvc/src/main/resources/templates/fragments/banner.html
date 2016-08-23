@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-8 col-md-7 col-sm-6">
             <h1 th:text="${heading}">[Heading]</h1>
-            <p class="lead" th:utext="${subheading}">[Subheading]</p>
+            <p th:if="${subheading != ''}" class="lead" th:utext="${subheading}">[Subheading]</p>
         </div>
         <div th:replace="fragments/sponsor :: [id='sponsor']">[Sponsor Image]
         </div>

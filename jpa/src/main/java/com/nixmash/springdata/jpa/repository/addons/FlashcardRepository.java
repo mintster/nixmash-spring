@@ -19,4 +19,8 @@ public interface FlashcardRepository extends CrudRepository<Flashcard, Long> {
             "f.category c left join fetch f.post p")
     List<Flashcard> findAllWithDetail();
 
+    @Query(value = "SELECT distinct f from Flashcard f left join fetch " +
+            "f.category c left join fetch f.post p where p.postId > 0 and c.categoryId = ?1")
+    List<Flashcard> findActiveWithDetail(long categoryId);
+
 }
