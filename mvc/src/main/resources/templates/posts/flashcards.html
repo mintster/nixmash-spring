@@ -30,9 +30,17 @@
                             <select th:value="${categoryId}" name="categoryId" id="categoryId" class="selectpicker"
                                     data-style="btn-primary">
                                 <option th:each="category : ${categories}" th:text="${category.category}"
-                                        th:value="${category.categoryId}"  th:selected="${category.categoryId == currentCategory.categoryId}"></option>
+                                        th:value="${category.categoryId}" th:selected="${category.categoryId == currentCategory.categoryId}"></option>
                             </select>
                             <button type="submit" class="btn btn-success btn-flashcard-category" name="link" value="true">Select
+                            </button>
+                            <button id="show-answer-button" type="button" class="btn btn-success btn-flashcards" onclick="showAnswer()">
+                                <span class="glyphicon glyphicon-sunglasses"></span>
+                                <span>Show Answer!</span>
+                            </button>
+
+                            <button id="show-flashcards-button" type="button" class="btn btn-success btn-flashcards" onclick="showFlashcards()">
+                                <span>Return to Flashcards</span>
                             </button>
                         </form>
                     </div>
@@ -44,12 +52,45 @@
     </div>
 </div>
 
+<!--/*@thymesVar id="flashcards" type="List<com.nixmash.springdata.jpa.model.addons.Flashcard>"*/-->
+<!--/*@thymesVar id="flashcard" type="com.nixmash.springdata.jpa.model.addons.Flashcard"*/-->
 
 <div class="container bs-container">
     <div class="row">
         <div class="bs-section">
-            <p>Yousa!</p>
-            <!--<div th:include="fragments/posts/postlist :: postlist" th:remove="tag">Post List</div>-->
+
+
+            <div id="answer"></div>
+
+            <div class="flashcard-images" data-example-id="simple-carousel">
+                <div id="flashcard-carousel" class="carousel slide"
+                     data-ride="carousel">
+
+                    <!-- Indicators -->
+                    <div class="carousel-inner" role="listbox">
+                        <div th:each="flashcard, row : ${flashcards}" class="item"
+                             th:classappend="${row.index == 0 }? 'active'">
+                            <img th:src="${flashcard.imageUrl}"/>
+                        </div>
+                    </div>
+                    <ol class="carousel-indicators">
+                        <li th:each="flashcard, row : ${flashcards}" data-target="#flashcard-carousel" th:attr="data-slide-to=${row.index}"
+                            th:class="${row.index == 0 }? 'active'"/>
+                    </ol>
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#flashcard-carousel" role="button"
+                       data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#flashcard-carousel" role="button"
+                       data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+
+                </div>
+            </div>
         </div>
     </div>
 
@@ -58,6 +99,50 @@
 
 <div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
 <div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+<input type="hidden" id="imageIndex" name="imageIndex" value="0"/>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    $("#show-flashcards-button").hide();
+
+    var flashcardCarousel = '#flashcard-carousel';
+    var answer = '#answer';
+
+    $('.carousel').carousel({
+        interval: false
+    });
+
+    function showAnswer() {
+
+        var index = $('#imageIndex').val();
+
+        $.get('/posts/flashcards/answer/' + index, function (data) {
+            $("#flashcard-carousel").hide();
+            $("#show-flashcards-button").show();
+            $("#show-answer-button").hide();
+            $(answer).show();
+            $(answer).html(data);
+        });
+    }
+
+    function showFlashcards() {
+        $("#flashcard-carousel").show();
+        $("#show-flashcards-button").hide();
+        $("#show-answer-button").show();
+        $("#answer").hide();
+    }
+
+    $(flashcardCarousel).on('slide.bs.carousel', function (e) {
+        var slideFrom = $(this).find('.active').index();
+        var slideTo = $(e.relatedTarget).index();
+        console.log(slideFrom + ' => ' + slideTo);
+        $('#imageIndex').val(slideTo);
+    });
+
+    /*]]>*/
+</script>
 
 </body>
 </html>

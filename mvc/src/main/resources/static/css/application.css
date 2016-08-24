@@ -182,9 +182,11 @@ a.navbar-text.pull-right.navbar-welcome.dropdown-toggle {
     margin: 0;
     margin-right: 15px;
 }
+
 .navbar-nav-welcome {
     float: right;
 }
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="SECUSER USER AND GITHUB PROJECT INFO ----------------------------/ "*/
 #secInfo {
@@ -584,6 +586,7 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 }
 
 /*</editor-fold>*/
+
 /*/<editor-fold> desc="LINK ENTRY FORMS----------------------------/ "*/
 .pull-right.has-error.pad-right {
     padding-right: 8px;
@@ -620,14 +623,14 @@ button.btn.btn-success {
     line-height: 1.5;
 }
 
-.pagepreveiw-images {
+.pagepreview-images {
     margin-right: auto;
     margin-left: auto;
     text-align: center;
     position: relative;
 }
 
-.carousel-inner .item img {
+#pagepreview-carousel .carousel-inner .item img {
     display: inline-block;
     max-width: 600px;
     max-height: 400px;
@@ -829,10 +832,12 @@ pre code {
 .post .post-single-photo {
     margin-bottom: 30px;
 }
+
 .post img.post-photo-single {
     border: #dd4814 2px solid;
     width: 80%;
 }
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="POST PERMALINK DISPLAY ----------------------------/ "*/
 
@@ -1211,4 +1216,94 @@ button.btn.btn-success.btn-flashcard-category {
     margin-left: 6px;
 }
 
+.flashcard-images {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    position: relative;
+}
+
+#flashcard-carousel .carousel-inner .item img {
+    display: inline-block;
+}
+
+#flashcard-carousel .carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    z-index: 15;
+    width: 60%;
+    padding-left: 0;
+    margin-left: -30%;
+    text-align: center;
+    list-style: none;
+}
+
+@media screen and (min-width: 768px) {
+    #flashcard-carousel .carousel-indicators {
+        bottom: 20px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #flashcard-carousel .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+        margin-left: 12px;
+    }
+
+    #flashcard-carousel .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+        margin-right: 12px;
+    }
+}
+
+.btn.btn-success.btn-flashcards {
+    margin-left: 8px;
+    float: none;
+}
+
+#answer .flashcard {
+
+}
+
+#answer .flashcard h3 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+#answer .flashcard .post-single-photo {
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
+
+#answer .flashcard .post-single-photo img.post-photo-single {
+    max-width: 60%;
+    border: #000 2px solid;
+    margin-bottom: 30px;
+}
+
+#answer .flashcard .post-content p {
+    font-size: 18px;
+}
+
+#answer .flashcard .post-footer {
+
+}
+
+#answer .flashcard .post-tags {
+    max-width: 100%;
+    text-align: right;
+    margin-top: 10px;
+}
+
+#answer .flashcard span.taglink a.label {
+    font-size: medium;
+    padding: 8px;
+    margin-left: 6px;
+}
+
+#answer .flashcard img.share-img-sm {
+    max-width: 35px;
+    opacity: .6;
+    margin-right: 3px;
+}
 /*</editor-fold>*/

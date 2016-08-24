@@ -66,7 +66,7 @@ public class TemplateServiceImpl implements TemplateService {
                 String.format("%s/posts/post/%s", applicationSettings.getBaseUrl(), post.getPostName()));
 
         try {
-            String displayType = templateName == null ? post.getDisplayType().name().toLowerCase(): templateName;
+            String displayType = templateName == null ? post.getDisplayType().name().toLowerCase() : templateName;
             String template = String.format("posts/%s.vm", displayType);
 
             html = VelocityEngineUtils

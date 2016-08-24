@@ -34,6 +34,9 @@ public interface AddonService {
 
     List<Flashcard> getFlashcardsWithCategoryName();
 
+    @Transactional
+    Post getFlashcardPost(List<Flashcard> flashcards, int index);
+
     Flashcard updateFlashcard(FlashcardDTO flashcardDTO);
 
     void deleteFlashcard(Flashcard flashcard);

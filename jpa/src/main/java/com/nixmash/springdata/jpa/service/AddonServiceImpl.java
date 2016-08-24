@@ -5,8 +5,10 @@ import com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO;
 import com.nixmash.springdata.jpa.dto.addons.FlashcardDTO;
 import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.PostImage;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
+import com.nixmash.springdata.jpa.repository.PostImageRepository;
 import com.nixmash.springdata.jpa.repository.PostRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardCategoryRepository;
 import com.nixmash.springdata.jpa.repository.addons.FlashcardRepository;
@@ -30,14 +32,16 @@ public class AddonServiceImpl implements AddonService {
     private final FlashcardRepository flashcardRepository;
     private final PostRepository postRepository;
     private final ApplicationSettings applicationSettings;
+    private final PostImageRepository postImageRepository;
 
 
     @Autowired
-    public AddonServiceImpl(FlashcardCategoryRepository flashcardCategoryRepository, FlashcardRepository flashcardRepository, PostRepository postRepository, ApplicationSettings applicationSettings) {
+    public AddonServiceImpl(FlashcardCategoryRepository flashcardCategoryRepository, FlashcardRepository flashcardRepository, PostRepository postRepository, ApplicationSettings applicationSettings, PostImageRepository postImageRepository) {
         this.flashcardCategoryRepository = flashcardCategoryRepository;
         this.flashcardRepository = flashcardRepository;
         this.postRepository = postRepository;
         this.applicationSettings = applicationSettings;
+        this.postImageRepository = postImageRepository;
     }
 
     @PersistenceContext
@@ -101,12 +105,17 @@ public class AddonServiceImpl implements AddonService {
                 em.createNativeQuery("SELECT *  FROM v_flashcards ORDER BY datetime_created DESC", "FlashcardsWithCategory")
                 .getResultList();
 
-        String imageRootUrl = applicationSettings.getFlashcardImageUrlRoot();
-        for (Flashcard flashcard : flashcards) {
-            flashcard.setImageUrl(String.format("%s%s.png", imageRootUrl, flashcard.getImage()));
-            flashcard.setThumbnailUrl(String.format("%s%s-thumbnail.png", imageRootUrl, flashcard.getImage()));
-        }
-        return flashcards;
+       return populateFlashcardImages(flashcards);
+    }
+
+    @Override
+    @Transactional
+    public Post getFlashcardPost(List<Flashcard> flashcards, int index) {
+        Post post = flashcards.get(index).getPost();
+        PostImage postImage = postImageRepository.findByPostId(post.getPostId()).get(0);
+        postImage.setUrl(applicationSettings.getPostImageUrlRoot());
+        post.setSingleImage(postImage);
+        return post;
     }
 
     @Override
@@ -132,7 +141,17 @@ public class AddonServiceImpl implements AddonService {
 
     @Override
     public List<Flashcard> getActiveFlashcardsWithDetail(long categoryId) {
-        return flashcardRepository.findActiveWithDetail(categoryId);
+        List<Flashcard> flashcards = flashcardRepository.findActiveWithDetail(categoryId);
+        return populateFlashcardImages(flashcards);
+    }
+
+    private List<Flashcard> populateFlashcardImages(List<Flashcard> flashcards) {
+        String imageRootUrl = applicationSettings.getFlashcardImageUrlRoot();
+        for (Flashcard flashcard : flashcards) {
+            flashcard.setImageUrl(String.format("%s%s.png", imageRootUrl, flashcard.getImage()));
+            flashcard.setThumbnailUrl(String.format("%s%s-thumbnail.png", imageRootUrl, flashcard.getImage()));
+        }
+        return flashcards;
     }
 
     @Override

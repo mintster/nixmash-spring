@@ -92,7 +92,7 @@ public class PostServiceImpl implements PostService {
     public Post update(PostDTO postDTO) throws PostNotFoundException {
 
         Post post = postRepository.findByPostId(postDTO.getPostId());
-        post.update(postDTO.getPostTitle(), postDTO.getPostContent(), postDTO.getIsPublished());
+        post.update(postDTO.getPostTitle(), postDTO.getPostContent(), postDTO.getIsPublished(), postDTO.getDisplayType());
 
         saveNewTagsToDataBase(postDTO);
 
