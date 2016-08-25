@@ -374,7 +374,7 @@ public class PostServiceImpl implements PostService {
     @Transactional(readOnly = true)
     @Override
     public List<PostDTO> getAlphaPosts() {
-        List<Post> posts = Lists.newArrayList(postRepository.findAll());
+        List<Post> posts = Lists.newArrayList(postRepository.findByIsPublishedTrue(sortByPostDateDesc()));
 
         // converting all posts to postDTO objects
         //

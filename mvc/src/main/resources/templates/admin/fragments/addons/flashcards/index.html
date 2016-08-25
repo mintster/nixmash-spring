@@ -99,7 +99,7 @@
                                       th:action="@{|/admin/addons/flashcards/update/${flashcard.slideId}|}"
                                       class="form-inline" id="flashcard-form">
                                     <input type="hidden" th:value="${flashcard.content}" id="content" name="content" />
-                                    <select th:value="${flashcard.postId}" name="postId" id="postId" class="btn dropdown-toggle"
+                                    <select th:value="${flashcard.postId}" name="postId" id="postId" class="btn dropdown-toggle selectpicker"
                                             th:classappend="${flashcard.postId > 0} ? 'btn-primary' : 'btn-warning'" data-style="btn-primary">
                                         <option th:each="flashcardPost : ${flashcardPosts}" th:text="${flashcardPost.postTitle}"
                                                 th:value="${flashcardPost.postId}" th:selected="${flashcardPost.postId == flashcard.postId}"></option>

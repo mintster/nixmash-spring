@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.SelectOptionDTO;
+import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.mail.service.TemplateService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
@@ -35,14 +36,16 @@ public class  GeneralController {
 
     private final TemplateService templateService;
     private final WebUI webUI;
+    private final PostService postService;
 
     @Autowired
     Environment environment;
 
     @Autowired
-    public GeneralController(TemplateService templateService, WebUI webUI) {
+    public GeneralController(TemplateService templateService, WebUI webUI, PostService postService) {
         this.templateService = templateService;
         this.webUI = webUI;
+        this.postService = postService;
     }
 
     @RequestMapping(value = "/", method = GET)
@@ -50,6 +53,7 @@ public class  GeneralController {
         String springVersion = webUI.parameterizedMessage("home.spring.version", SpringBootVersion.getVersion(), SpringVersion.getVersion());
         model.addAttribute("springVersion", springVersion);
         model.addAttribute("gitHubStats", webUI.getGitHubStats());
+        model.addAttribute("posts", postService.getAllPublishedPosts().subList(0, 10));
         return HOME_VIEW;
     }
 

@@ -54,13 +54,33 @@
     </div>
 </div>
 
+
+<div class="container home-posts">
+    <div class="row">
+        <blockquote>
+            <p>
+                Most recent NixMash Spring Posts and Links
+            </p>
+            <!--/*@thymesVar id="post" type="com.nixmash.springdata.jpa.model.Post"*/-->
+            <!--/*@thymesVar id="posts" type="List<com.nixmash.springdata.jpa.model.Post>"*/-->
+            <small th:each="post : ${posts}">
+                <a th:href="@{|/posts/post/${post.postName}|}" th:text="${post.postTitle}" target="_blank">[post]</a>
+            </small>
+            <div class="home-posts-link">
+                <a href="/posts" class="btn btn-primary">View NixMash Spring Posts</a>
+            </div>
+        </blockquote>
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
         <blockquote>
             <p>
-                Below are some of the technologies featured on this site and described in detail at <a
-                    href="http://nixmash.com">NixMash.com.</a>
+                Some of the technologies featured on this site and detailed on <a
+                    href="http://nixmash.com">NixMash</a>
             </p>
+            <small>Bootstrap Carousel demos -- <em>Flashcards and Add New Link form</em></small>
             <small>Password Reset and Forgot Password Email Services -- <em>User Profile and Login page</em></small>
             <small>GitHub Stats with Spring RestTemplate and Thymeleaf</small>
             <small>Multifile uploads with Spring MVC, Thymeleaf and Blueimp jQuery-File-Upload plugin integration</small>

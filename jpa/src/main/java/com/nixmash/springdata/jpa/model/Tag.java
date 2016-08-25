@@ -13,6 +13,8 @@ import static javax.persistence.GenerationType.IDENTITY;
                 name = "getTagCloud",
                 query = "select count(*) as `tagCount`, t.tag_value, t.tag_id from tags t " +
                         " inner join post_tag_ids pt on t.tag_id = pt.tag_id " +
+                        " inner join posts p on pt.post_id = p.post_id " +
+                        " where p.is_published = true " +
                         "group by t.tag_value order by t.tag_value;",
                 resultClass = Tag.class)
 })

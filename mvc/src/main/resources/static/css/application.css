@@ -21,6 +21,14 @@ blockquote small {
     margin-bottom: 5px;
 }
 
+.home-posts {
+    margin-bottom: 30px;
+}
+
+.home-posts-link {
+    margin-top: 20px;
+}
+
 /*</editor-fold>*/
 /*/<editor-fold> desc="BODY, ROWS AND COLUMNS ----------------------------/ "*/
 body {
@@ -1306,4 +1314,5 @@ button.btn.btn-success.btn-flashcard-category {
     opacity: .6;
     margin-right: 3px;
 }
+
 /*</editor-fold>*/
