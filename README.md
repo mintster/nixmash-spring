@@ -83,6 +83,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Spring MVC, Thymeleaf, and the BlueImp FileUpload Plugin](http://nixmash.com/java/spring-mvc-thymeleaf-and-the-blueimp-fileupload-plugin/)
 - [Post: The New NixMash Spring MultiPhoto Post Format](http://nixmash.com/java/the-nixmash-spring-multiphoto-post-format/)
 - [Post: Forgot Password and Password Reset with Spring MVC](http://nixmash.com/java/forgot-password-and-password-reset-with-spring-mvc/)
+- [Post: The Pieces of a Flashcards App](http://nixmash.com/java/the-pieces-of-a-flashcards-app/)
 
 [[back to top](#nixmash-spring)]
 
