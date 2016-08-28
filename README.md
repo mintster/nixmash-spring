@@ -35,7 +35,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##Release History##
 - **[v0.3.6 -- Post Add/Edit Moved to Administration (in progress)](#v036----post-addedit-moved-to-administration-in-progress)**
-- **[v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates](#v035---posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates-in-progress)**
+- **[v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates](#v035----posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates)**
 - **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display](#v034----post-tag-cloud-sharing-likes-rss-title-display)**
 - **[v0.3.3 -- Post WYSIWYG editing, tagging, permalinks](#v033----post-wysiwyg-editing-tagging-permalinks)**
 - **[v0.3.2 -- Initial Posts Feature Release](#v032----initial-posts-feature-release)** : *Jsoup Annotations Framework, Generic Type as Beans*
@@ -74,6 +74,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 ##v0.3.6 -- Post Add/Edit Moved to Administration (in progress)
 
 - in progress...
+
+[[back to top](#nixmash-spring)]
 
 ##v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates
 
