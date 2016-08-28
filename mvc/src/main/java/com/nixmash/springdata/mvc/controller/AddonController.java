@@ -43,7 +43,10 @@ public class AddonController {
     private final TemplateService templateService;
 
     @Autowired
-    public AddonController(AddonService addonService, WebUI webUI, ApplicationSettings applicationSettings, TemplateService templateService) {
+    public AddonController(AddonService addonService,
+                           WebUI webUI,
+                           ApplicationSettings applicationSettings,
+                           TemplateService templateService) {
         this.addonService = addonService;
         this.webUI = webUI;
         this.applicationSettings = applicationSettings;
@@ -58,17 +61,20 @@ public class AddonController {
     }
 
     @RequestMapping(value = "/posts/flashcards", method = POST)
-    public String getFlashcardsFromSelect(@ModelAttribute(value = "category") FlashcardCategory category,
-                                          Model model, HttpServletRequest request) {
+    public String getFlashcardsFromSelect(@ModelAttribute(value = "category")
+                                                        FlashcardCategory category,
+                                                        Model model, HttpServletRequest request) {
         model.addAllAttributes(getFlashcardAttributes(category.getCategoryId(), request));
         return FLASHCARDS_VIEW;
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "/posts/flashcards/answer/{index}", produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/posts/flashcards/answer/{index}",
+                                                        produces = "text/html;charset=UTF-8")
     public @ResponseBody
     String showAnswer(@PathVariable int index, HttpServletRequest request) {
-        List<Flashcard> flashcards = (List<Flashcard>) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_FLASHCARDS);
+        List<Flashcard> flashcards =
+                (List<Flashcard>) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_FLASHCARDS);
 
         if (flashcards != null) {
             Post post = addonService.getFlashcardPost(flashcards, index);

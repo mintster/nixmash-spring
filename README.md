@@ -34,7 +34,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.3.5 - Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates (in progress)](#v035---posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates-in-progress)**
+- **[v0.3.6 -- Post Add/Edit Moved to Administration (in progress)](#v036----post-addedit-moved-to-administration-in-progress)**
+- **[v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates](#v035---posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates-in-progress)**
 - **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display](#v034----post-tag-cloud-sharing-likes-rss-title-display)**
 - **[v0.3.3 -- Post WYSIWYG editing, tagging, permalinks](#v033----post-wysiwyg-editing-tagging-permalinks)**
 - **[v0.3.2 -- Initial Posts Feature Release](#v032----initial-posts-feature-release)** : *Jsoup Annotations Framework, Generic Type as Beans*
@@ -70,7 +71,11 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.3.5 - Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates (in progress)
+##v0.3.6 -- Post Add/Edit Moved to Administration (in progress)
+
+- in progress...
+
+##v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates
 
 - Forgot Password with email and User Password Reset
 - Posts A-Z page with alphabetic navigation list and grouped posts by first letter of Post Title
@@ -84,6 +89,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: The New NixMash Spring MultiPhoto Post Format](http://nixmash.com/java/the-nixmash-spring-multiphoto-post-format/)
 - [Post: Forgot Password and Password Reset with Spring MVC](http://nixmash.com/java/forgot-password-and-password-reset-with-spring-mvc/)
 - [Post: The Pieces of a Flashcards App](http://nixmash.com/java/the-pieces-of-a-flashcards-app/)
+- [Post: Behind the Pieces of a Flashcards App](http://nixmash.com/java/behind-the-pieces-of-a-flashcards-app/)
 
 [[back to top](#nixmash-spring)]
 

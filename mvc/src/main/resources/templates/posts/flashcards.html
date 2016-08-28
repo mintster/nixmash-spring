@@ -34,12 +34,14 @@
                             </select>
                             <button type="submit" class="btn btn-success btn-flashcard-category" name="link" value="true">Select
                             </button>
-                            <button id="show-answer-button" type="button" class="btn btn-success btn-flashcards" onclick="showAnswer()">
+                            <button id="show-answer-button" type="button"
+                                    class="btn btn-success btn-flashcards" onclick="showAnswer()">
                                 <span class="glyphicon glyphicon-sunglasses"></span>
                                 <span>Show Answer!</span>
                             </button>
 
-                            <button id="show-flashcards-button" type="button" class="btn btn-success btn-flashcards" onclick="showFlashcards()">
+                            <button id="show-flashcards-button" type="button"
+                                    class="btn btn-success btn-flashcards" onclick="showFlashcards()">
                                 <span>Return to Flashcards</span>
                             </button>
                         </form>
@@ -70,12 +72,13 @@
                     <div class="carousel-inner" role="listbox">
                         <div th:each="flashcard, row : ${flashcards}" class="item"
                              th:classappend="${row.index == 0 }? 'active'">
-                            <img th:src="${flashcard.imageUrl}"/>
+                            <img th:src="${flashcard.imageUrl}" src=""/>
                         </div>
                     </div>
                     <ol class="carousel-indicators">
-                        <li th:each="flashcard, row : ${flashcards}" data-target="#flashcard-carousel" th:attr="data-slide-to=${row.index}"
-                            th:class="${row.index == 0 }? 'active'"/>
+                        <li th:each="flashcard, row : ${flashcards}"
+                            data-target="#flashcard-carousel" th:attr="data-slide-to=${row.index}"
+                            th:class="${row.index == 0 }? 'active'"></li>
                     </ol>
                     <!-- Controls -->
                     <a class="left carousel-control" href="#flashcard-carousel" role="button"

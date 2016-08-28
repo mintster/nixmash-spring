@@ -145,7 +145,7 @@ public class Flashcard {
     public Post post;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "post_id", insertable = false, updatable = true)
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id", insertable = false)
     public Post getPost() {
         return post;
     }
