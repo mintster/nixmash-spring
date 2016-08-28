@@ -79,6 +79,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates
 
+- Flashcards Q&A feature using Bootstrap Carousel and Post object for multimedia answer content
+- Featured Image Post format (Single Photo) with dual role as Flashcard Answer
 - Forgot Password with email and User Password Reset
 - Posts A-Z page with alphabetic navigation list and grouped posts by first letter of Post Title
 - Post "Draft/Published" state enabled and added to Add Post form. Only "Published" posts display in streams
@@ -90,6 +92,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Spring MVC, Thymeleaf, and the BlueImp FileUpload Plugin](http://nixmash.com/java/spring-mvc-thymeleaf-and-the-blueimp-fileupload-plugin/)
 - [Post: The New NixMash Spring MultiPhoto Post Format](http://nixmash.com/java/the-nixmash-spring-multiphoto-post-format/)
 - [Post: Forgot Password and Password Reset with Spring MVC](http://nixmash.com/java/forgot-password-and-password-reset-with-spring-mvc/)
+- [Post: Retrieving @Transient Fields With Spring JPA](http://nixmash.com/java/retrieving-transient-fields-with-spring-jpa/)
 - [Post: The Pieces of a Flashcards App](http://nixmash.com/java/the-pieces-of-a-flashcards-app/)
 - [Post: Behind the Pieces of a Flashcards App](http://nixmash.com/java/behind-the-pieces-of-a-flashcards-app/)
 
