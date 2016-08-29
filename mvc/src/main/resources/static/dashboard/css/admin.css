@@ -29,6 +29,7 @@ li.current-page {
 .sidebar-footer-text {
     margin-left: 5px;
 }
+
 .sidebar-footer a {
     text-align: left;
     width: 100%;
@@ -41,9 +42,11 @@ li.current-page {
 .fill-body, .fill-body-table {
     min-height: 600px;
 }
+
 .fill-body-table {
     font-size: 14px;
 }
+
 .fill-body-message {
     font-size: 20px;
     font-style: italic;
@@ -86,6 +89,78 @@ tr.border-bottom-row {
 
 img.flash-thumbnail {
     border: 2px #000000 solid;
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="LINK PAGE PREVIEW----------------------------/ "*/
+
+.page-preview img.thumbnail {
+    max-height: 120px;
+    float: right;
+    margin-left: 20px;
+}
+
+.page-preview h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.table tbody tr td.td-carousel {
+    padding: 20px;
+}
+
+#pagepreview-carousel .carousel-inner .item img {
+    display: inline-block;
+    max-width: 600px;
+    max-height: 400px;
+}
+
+.pagepreview-images {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    position: relative;
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image: none;
+    background-color: transparent;
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="TAGS AND POST FORMS----------------------------/ "*/
+
+
+.bootstrap-tagsinput {
+    width: 100%;
+}
+
+div#post-select .btn.dropdown-toggle.btn-primary {
+    padding-bottom: 2px;
+    padding-top: 2px;
+    margin-bottom: 4px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li a span.text {
+    display: inline-block;
+    font-weight: bold;
+    font-size: small;
+}
+span.tag.label {
+    padding: 2px 5px;
+    font-size: inherit;
+    margin-right: 6px;
+    color: #f2f2f2;
+    margin-bottom: 0px;
+}
+
+input#postTitle {
+    font-size: larger;
+    padding-left: 8px;
 }
 
 /*</editor-fold>*/

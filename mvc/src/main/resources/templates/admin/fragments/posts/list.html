@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+
+    <!--/*@thymesVar id="post" type="com.nixmash.springdata.jpa.model.Post"*/-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 th:text="#{admin.posts.title}">[Post Administration]
+                    </h2>
+                    <small th:text="#{admin.posts.subtitle}"  class="h2_subtitle">[List Posts]</small>
+                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a th:href="@{'/admin/posts/add/post'}" th:text="#{admin.posts.button.new}"
+                           class="btn btn-primary">[Add Post]</a>
+                        <a th:href="@{'/admin/posts/add/link'}" th:text="#{admin.links.button.new}"
+                           class="btn btn-primary">[Add a Link]</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body-table">
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
+                    </div>
+                    <table id="postsTable" dt:table="true" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th style="width: 36px;" dt:sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="post : ${posts}">
+                            <td th:text="${post.postId}">1</td>
+                            <td th:text="${post.postTitle}">post title</td>
+                            <td><a th:href="@{|/admin/posts/update/${post.postId}|}"><span
+                                    class="glyphicon glyphicon-pencil"></span></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

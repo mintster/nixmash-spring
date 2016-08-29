@@ -22,6 +22,98 @@
     </script>
 
 </div>
+
+<div th:fragment="summernote">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editor.css}"/>
+
+    <div th:include="fragments/js :: summernote" th:remove="tag">[Summernote Javascript]</div>
+
+    <script th:src="@{/js/bootstrap3-typeahead.js}"></script>
+    <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
+
+    <script type="text/javascript">
+
+        $('#tag-select').tagsinput({
+            tagClass: 'label label-default',
+            typeahead: {
+                source: function (query) {
+                    return $.get('/json/posts/tagvalues');
+                }
+
+            }
+        });
+
+        function saveDraftDialog() {
+            showDialog("Save Post", "Please save a draft of your post before adding images or attachments.");
+        }
+
+        function toggleImageUploads() {
+            {
+                var e = document.getElementById('imageuploads');
+                if (e.style.display == 'block' || e.style.display == '') {
+                    e.style.display = 'none';
+                    $('#imageUploadButton').text('Add Images')
+                }
+                else {
+                    e.style.display = 'block';
+                    $('#imageUploadButton').text('Hide Images')
+                }
+            }
+        }
+
+    </script>
+
+</div>
+
+<div th:fragment="carousel">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        $('.carousel').carousel({
+            interval: false
+        });
+
+        $('#pagepreview-carousel').on('slide.bs.carousel', function (e) {
+                    var imageIndex = $('#pagepreview-carousel').find('.active')
+                            .index('#pagepreview-carousel .item');
+                    var imageCount = [[${pagePreview.getImages().size() - 1 }]];
+
+                    if (e.direction == "left") {
+                        if (imageIndex == imageCount)
+                            $('#imageIndex').val(0);
+                        else
+                            $('#imageIndex').val(imageIndex + 1);
+                    }
+                    else {
+                        if (imageIndex == 0)
+                            $('#imageIndex').val(imageCount);
+                        else
+                            $('#imageIndex').val(imageIndex - 1);
+                    }
+                }
+        );
+
+        $(document).ready(function () {
+
+            if (!String.format) {
+                String.format = function (format) {
+                    var args = Array.prototype.slice.call(arguments, 1);
+                    return format.replace(/{(\d+)}/g, function (match, number) {
+                        return typeof args[number] != 'undefined'
+                                ? args[number]
+                                : match
+                                ;
+                    });
+                };
+            }
+
+        });
+
+        /*]]>*/
+    </script>
+</div>
 </html>
 
 

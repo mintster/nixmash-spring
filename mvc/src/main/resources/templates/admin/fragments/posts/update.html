@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+    <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 th:text="${pageHeading}">[Update Post or Link]</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body-table">
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
+                    </div>
+                   <p>Yousa Update a Post or Link!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

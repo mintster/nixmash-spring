@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
+    <div th:include="admin/fragments/js :: functions('/admin/posts')" th:remove="tag">Functions</div>
+    <title>NixMash Spring Administration - Add a New Link</title>
+</head>
+<body th:replace="admin/includes/body :: body('posts/addlink')"></body>
+</html>
