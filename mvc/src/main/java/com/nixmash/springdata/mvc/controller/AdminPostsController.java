@@ -1,8 +1,11 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
+import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
@@ -22,16 +25,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by daveburke on 8/29/16.
  */
+@SuppressWarnings("Duplicates")
 @Controller
 @RequestMapping(value = "/admin/posts")
 public class AdminPostsController {
@@ -46,7 +54,14 @@ public class AdminPostsController {
     private static final String ADD_POST_HEADER = "posts.add.note.page.header";
     private static final String ADD_LINK_HEADER = "posts.add.link.page.header";
 
+    private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
+    private static final String FEEDBACK_POST_POST_ADDED = "feedback.post.post.added";
+    public static final String FEEDBACK_POST_UPDATED = "feedback.post.updated";
+
     private static final String SESSION_ATTRIBUTE_NEWPOST = "activepostdto";
+
+    public static final String POST_PUBLISH = "publish";
+    public static final String POST_DRAFT = "draft";
 
     private final PostService postService;
     private final WebUI webUI;
@@ -63,6 +78,8 @@ public class AdminPostsController {
         this.jsoupService = jsoupService;
     }
 
+    //region Posts List GET
+
     @RequestMapping(value = "", method = GET)
     public ModelAndView postsListPage() {
         ModelAndView mav = new ModelAndView();
@@ -71,12 +88,17 @@ public class AdminPostsController {
         return mav;
     }
 
+    //endregion
+
+    //region Add Posts GET
+
     @RequestMapping(value = "/add/{type}", method = GET)
     public String addPostLink(@PathVariable("type") String type, Model model, HttpServletRequest request) {
         PostType postType = PostType.valueOf(type.toUpperCase());
         model.addAttribute("postDTO", new PostDTO());
         if (postType == PostType.POST) {
             WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, null);
+            model.addAttribute("hasPost", true);
             model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
             return ADMIN_POST_ADD_VIEW;
         } else {
@@ -86,8 +108,8 @@ public class AdminPostsController {
         }
     }
 
-    @RequestMapping(value = "/add/link", params = {"isUrl"}, method = GET)
-    public String addLink(@RequestParam(value = "isUrl") Boolean isUrl,
+    @RequestMapping(value = "/add/link", params = {"isLink"}, method = GET)
+    public String addLink(@RequestParam(value = "isLink") Boolean isLink,
                           @Valid PostLink postLink, BindingResult result, Model model, HttpServletRequest request) {
         model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
         if (StringUtils.isEmpty(postLink.getLink())) {
@@ -99,6 +121,7 @@ public class AdminPostsController {
                 return ADMIN_LINK_ADD_VIEW;
             } else {
                 model.addAttribute("hasLink", true);
+                model.addAttribute("hasCarousel", true);
                 WebUtils.setSessionAttribute(request, "pagePreview", pagePreview);
                 model.addAttribute("pagePreview", pagePreview);
                 model.addAttribute("postDTO",
@@ -108,22 +131,177 @@ public class AdminPostsController {
         return ADMIN_LINK_ADD_VIEW;
     }
 
-    @SuppressWarnings("Duplicates")
+    //endregion
+
+
+    //region Add Posts POST
+
+    @RequestMapping(value = "/add/link", method = POST)
+    public String createLinkPost(@Valid PostDTO postDTO, BindingResult result,
+                                 CurrentUser currentUser, RedirectAttributes attributes, Model model,
+                                 HttpServletRequest request) throws DuplicatePostNameException {
+        PagePreviewDTO pagePreview =
+                (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
+
+        model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
+        model.addAttribute("postFormType", "link");
+
+        if (!isDuplicatePost(postDTO, null)) {
+            if (result.hasErrors()) {
+                model.addAttribute("hasLink", true);
+                model.addAttribute("hasCarousel", true);
+                model.addAttribute("pagePreview", pagePreview);
+                if (result.hasFieldErrors("postTitle")) {
+                    postDTO.setPostTitle(pagePreview.getTitle());
+                }
+                model.addAttribute("postDTO", postDTO);
+                return ADMIN_LINK_ADD_VIEW;
+            } else {
+
+                if (postDTO.getHasImages()) {
+                    if (postDTO.getDisplayType() != PostDisplayType.LINK) {
+                        postDTO.setPostImage(
+                                pagePreview.getImages().get(postDTO.getImageIndex()).src);
+                    } else
+                        postDTO.setPostImage(null);
+                }
+
+                postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
+                postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
+                postDTO.setUserId(currentUser.getId());
+                postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+
+                request.setAttribute("postTitle", postDTO.getPostTitle());
+                postService.add(postDTO);
+
+                webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
+                return "redirect:/admin/posts";
+            }
+        } else {
+            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
+            model.addAttribute("hasLink", true);
+            model.addAttribute("hasCarousel", true);
+            model.addAttribute("pagePreview", pagePreview);
+            return ADMIN_LINK_ADD_VIEW;
+        }
+    }
+
+
+    @RequestMapping(value = "/add/post", method = POST)
+    public String createNotePost(@Valid PostDTO postDTO, BindingResult result,
+                                 CurrentUser currentUser, RedirectAttributes attributes, Model model,
+                                 HttpServletRequest request) throws DuplicatePostNameException, PostNotFoundException {
+
+        String saveAction = request.getParameter("post");
+
+        model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
+        model.addAttribute("hasPost", true);
+        Post sessionPost = null;
+        Object obj = WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST);
+        if (obj != null) {
+            sessionPost = (Post) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST);
+        }
+        if (!isDuplicatePost(postDTO, sessionPost)) {
+            if (result.hasErrors()) {
+                model.addAttribute("postDTO", postDTO);
+                return ADMIN_POST_ADD_VIEW;
+            } else {
+                postDTO.setDisplayType(postDTO.getDisplayType());
+                postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
+                postDTO.setUserId(currentUser.getId());
+                postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+                postDTO.setIsPublished(saveAction.equals(POST_PUBLISH));
+
+                request.setAttribute("postTitle", postDTO.getPostTitle());
+                Post saved;
+
+                if (sessionPost == null)
+                    saved = postService.add(postDTO);
+                else {
+                    postDTO.setPostId(sessionPost.getPostId());
+                    saved = postService.update(postDTO);
+                }
+                model.addAttribute("fileuploading", templateService.getFileUploadingScript());
+                model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
+                postDTO.setPostId(saved.getPostId());
+                WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
+
+                if (saveAction.equals(POST_PUBLISH)) {
+                    webUI.addFeedbackMessage(attributes, FEEDBACK_POST_POST_ADDED);
+                    return "redirect:/admin/posts";
+                } else {
+                    model.addAttribute("postDTO", getUpdatedPostDTO(saved));
+                    model.addAttribute("hasImageUploads", true);
+                    return ADMIN_POST_ADD_VIEW;
+                }
+            }
+        } else {
+            model.addAttribute("hasImageUploads", true);
+            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
+            return ADMIN_POST_ADD_VIEW;
+        }
+    }
+
+    //endregion
+
+
+
+    //region Update Posts GET POST
+
     @RequestMapping(value = "/update/{postId}", method = GET)
     public String updatePost(@PathVariable("postId") Long postId,
-                             Model model) throws PostNotFoundException {
+                             Model model, HttpServletRequest request) throws PostNotFoundException {
         Post post = postService.getPostById(postId);
-        String postType = StringUtils.capitalize(post.getPostType().name());
+        String postType = StringUtils.capitalize(post.getPostType().name().toLowerCase());
         String pageTitle = webUI.getMessage(MESSAGE_ADMIN_UPDATE_POSTLINK_TITLE, postType);
         String pageHeading = webUI.getMessage(MESSAGE_ADMIN_UPDATE_POSTLINK_HEADING, postType);
 
-        model.addAttribute("postDTO", getUpdatedPostDTO(post));
+        PostDTO postDTO = getUpdatedPostDTO(post);
+        if (post.getPostType() == PostType.LINK) {
+            postDTO.setHasImages(post.getPostImage() != null);
+            postDTO.setPostImage(post.getPostImage());
+            if (postDTO.getHasImages()) {
+                model.addAttribute("hasLinkImage", true);
+            }
+        }
+        model.addAttribute("postDTO", postDTO);
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("pageHeading", pageHeading);
-        model.addAttribute("fileuploading", templateService.getFileUploadingScript());
-        model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
+
+        model.addAllAttributes(getPostLinkAttributes(request, post.getPostType()));
+
         return ADMIN_POSTLINK_UPDATE_VIEW;
     }
+
+    @RequestMapping(value = "/update", method = POST)
+    public String updatePost(@Valid PostDTO postDTO, BindingResult result, Model model,
+                             RedirectAttributes attributes, HttpServletRequest request) throws PostNotFoundException {
+        if (result.hasErrors()) {
+            model.addAttribute("postDTO", postDTO);
+            model.addAllAttributes(getPostLinkAttributes(request, postDTO.getPostType()));
+            return ADMIN_POSTLINK_UPDATE_VIEW;
+        } else {
+            postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+            Post post = postService.update(postDTO);
+            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
+            return "redirect:/posts/post/" + post.getPostName();
+        }
+    }
+
+    private Map<String, Object> getPostLinkAttributes(HttpServletRequest request, PostType postType) {
+
+        Map<String, Object> attributes = new HashMap<>();
+        if (postType == PostType.POST) {
+            attributes.put("hasPost", true);
+            attributes.put("hasImageUploads", true);
+            attributes.put("fileuploading", templateService.getFileUploadingScript());
+            attributes.put("fileuploaded", templateService.getFileUploadedScript());
+        }
+        else
+            attributes.put("hasLink", true);
+        return attributes;
+    }
+    //endregion
 
 
     // region postDTO Utilities
@@ -251,7 +429,8 @@ public class AdminPostsController {
             Post found = null;
             try {
                 found = postService.getPost(slug);
-            } catch (PostNotFoundException e) {}
+            } catch (PostNotFoundException e) {
+            }
             if (sessionPost != null) {
                 if (found != null && !(found.getPostId().equals(sessionPost.getPostId()))) {
                     isDuplicate = true;

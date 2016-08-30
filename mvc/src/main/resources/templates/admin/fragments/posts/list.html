@@ -30,15 +30,19 @@
                     <table id="postsTable" dt:table="true" class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Id</th>
                             <th>Title</th>
+                            <th>Post Type</th>
+                            <th dt:sortInitDirection="desc">Date</th>
+                            <th>Published</th>
                             <th style="width: 36px;" dt:sortable="false"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="post : ${posts}">
-                            <td th:text="${post.postId}">1</td>
-                            <td th:text="${post.postTitle}">post title</td>
+                        <tr th:each="post : ${posts}" th:with="creationDate=${post.postDate}, displayType=|${#strings.replace(post.displayType,'_', ' ')}|">
+                            <td th:text="${post.postTitle}" th:classappend="${post.isPublished} ? 'published-title' :  'draft-title'">post title</td>
+                            <td class="post-displaytype-col" th:text="|${#strings.toLowerCase(displayType)}|">post display type</td>
+                            <td th:text="|${#dates.format(creationDate.toInstant(), 'MMM dd, yyyy')}|">post date</td>
+                            <td class="post-check-col"><input type="checkbox" th:checked="${post.isPublished}" disabled="true" /> </td>
                             <td><a th:href="@{|/admin/posts/update/${post.postId}|}"><span
                                     class="glyphicon glyphicon-pencil"></span></a></td>
                         </tr>

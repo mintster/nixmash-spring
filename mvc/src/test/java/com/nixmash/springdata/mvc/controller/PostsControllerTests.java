@@ -11,6 +11,7 @@ import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.security.WithAdminUser;
 import com.nixmash.springdata.mvc.security.WithPostUser;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,25 @@ public class PostsControllerTests extends AbstractContext {
                 .andExpect(view().name("errors/custom"));
     }
 
+
     @Test
+    public void titlesPageLoadsTitleView() throws Exception {
+        this.mockMvc.perform(get("/posts/titles"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(POSTS_TITLES_VIEW));
+    }
+
+    @Test
+    public void postsFeedLoads() throws Exception {
+        this.mockMvc.perform(get("/posts/feed"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/rss+xml"));
+    }
+
+    // region Post Administration Tests, moved to AdminPostsControllerTests
+
+    @Test
+    @Ignore(value = "Function moved to AdminPostsControllerTests")
     public void loadAddPostPage() throws Exception {
         mockMvc.perform(get("/posts/add"))
                 .andExpect(model().attributeExists("postLink"))
@@ -96,6 +115,7 @@ public class PostsControllerTests extends AbstractContext {
 
     @Test
     @WithPostUser
+    @Ignore(value = "Logic Removed after functions moved to Administration")
     public void getUpdatePostPage_Author_Loads() throws Exception {
 
         // h2 posts have keith userId (3) who is also in the ROLE_POSTS group and can create posts
@@ -107,6 +127,7 @@ public class PostsControllerTests extends AbstractContext {
 
     @Test
     @WithAdminUser
+    @Ignore(value = "Logic Removed after functions moved to Administration")
     public void getUpdatePost_NonAuthor_403() throws Exception {
 
         mockMvc.perform(get("/posts/update/3"))
@@ -116,6 +137,7 @@ public class PostsControllerTests extends AbstractContext {
 
     @Test
     @WithAnonymousUser
+    @Ignore(value = "Logic Removed after functions moved to Administration")
     public void getUpdatePost_Anonymous_login() throws Exception {
 
         mockMvc.perform(get("/posts/update/3"))
@@ -124,17 +146,19 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test(expected = PostNotFoundException.class)
+    @Ignore(value = "Function moved to AdminPostsControllerTests")
     public void badPostIdOnPostUpdate_ThrowsPostNotFoundException() throws Exception {
 
-        when(postService.getPostById(-1L))
+        when(postService.getPostById(-2L))
                 .thenThrow(new PostNotFoundException());
 
-        mockMvc.perform(get("/posts/update/-1"))
+        mockMvc.perform(get("/posts/update/-2"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("errors/custom"));
     }
 
     @Test
+    @Ignore(value = "Function moved to AdminPostsControllerTests")
     public void updatePostWithMissingTitle_ReturnsToPage() throws Exception {
         RequestBuilder request = post("/posts/update")
                 .param("postContent", "postContent").with(csrf());
@@ -145,6 +169,7 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    @Ignore(value = "Function moved to AdminPostsControllerTests")
     public void updatePostWithValidData_RedirectsToPermalinkPage() throws Exception {
 
         String newTitle = "New Title for updatePostWithValidData_RedirectsToPermalinkPage Test";
@@ -166,31 +191,8 @@ public class PostsControllerTests extends AbstractContext {
         assert (post.getPostTitle().equals(newTitle));
     }
 
-
     @Test
-    public void updateNoteWithValidData_RedirectsToPermalinkPage() throws Exception {
-
-        String newTitle = "New Title for Note";
-
-        Post post = postService.getPostById(6L);
-        RequestBuilder request = post("/posts/update")
-                .param("postId", "6")
-                .param("displayType", String.valueOf(post.getDisplayType()))
-                .param("postContent", post.getPostContent())
-                .param("postTitle", newTitle)
-                .param("tags", "updateNote1")
-                .with(csrf());
-
-        mockMvc.perform(request)
-                .andExpect(model().hasNoErrors())
-                .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
-                .andExpect(redirectedUrl("/posts/post/" + PostUtils.createSlug(newTitle)));
-
-        assert (post.getPostTitle().equals(newTitle));
-        assert (post.getPostName().equals(PostUtils.createSlug(newTitle)));
-    }
-
-    @Test
+    @Ignore(value = "Function moved to AdminPostsControllerTests")
     public void throwErrorOnEmptyPostLink() throws Exception {
 
         this.mockMvc.perform(get("/posts/add")
@@ -203,6 +205,7 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    @Ignore(value = "Logic removed after move to Administration")
     public void showPostSourceContents() throws Exception {
 
         this.mockMvc.perform(get("/posts/add")
@@ -215,6 +218,7 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    @Ignore(value = "Logic removed after move to Administration")
     public void validLinkUrlDisplaysPagePreviewArea() throws Exception {
         this.mockMvc.perform(get("/posts/add")
                 .param("formtype", "link")
@@ -225,6 +229,7 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    @Ignore(value = "Logic removed after move to Administration")
     public void noteSelectDisplaysNoteForm() throws Exception {
         this.mockMvc.perform(get("/posts/add")
                 .param("formtype", "post"))
@@ -234,27 +239,16 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
-    public void titlesPageLoadsTitleView() throws Exception {
-        this.mockMvc.perform(get("/posts/titles"))
-                .andExpect(status().isOk())
-                .andExpect(view().name(POSTS_TITLES_VIEW));
-    }
-
-    @Test
-    public void postsFeedLoads() throws Exception {
-        this.mockMvc.perform(get("/posts/feed"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/rss+xml"));
-    }
-
-    @Test
     @WithUserDetails(value = "erwin")
+    @Ignore(value = "Logic removed after move to Administration")
     public void submitNewNoteFormAsNonPostUser() throws Exception {
         mockMvc.perform(postRequest(PostType.POST, "submitNewNote"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/posts/add"));
     }
+
+    // endregion
 
     @Test
     @WithPostUser

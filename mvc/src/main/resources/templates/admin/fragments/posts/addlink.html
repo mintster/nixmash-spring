@@ -47,7 +47,7 @@
                                     <td></td>
                                     <td>
                                         <div class="form-actions pull-right">
-                                            <button type="submit" class="btn btn-success" name="isUrl" value="true"
+                                            <button type="submit" class="btn btn-success" name="isLink" value="true"
                                                     th:text="#{add.post.button.link}"></button>
                                         </div>
                                     </td>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div th:if="${hasLink}">
-                        <form th:object="${postDTO}" method="post" th:action="@{${#httpServletRequest.getRequestURI()}}"
+                        <form th:object="${postDTO}" method="post" th:action="@{/admin/posts/add/link}"
                               class="form-horizontal" id="link-add-form">
 
                             <div th:include="fragments/formutils :: global-errors" th:remove="tag">[Global Errors]</div>

@@ -41,12 +41,12 @@
     <div th:replace="admin/fragments/js :: summernote">Summernote</div>
 </div>
 
-<div th:if="${hasLink}">
+<div th:if="${hasCarousel}">
     <div th:replace="admin/fragments/js :: carousel">Carousel</div>
 </div>
 
-<div th:if="${hasPost}">
-    <div th:replace="fragments/posts/imageupload :: image-upload-javascript">[Image Upload Javascript]</div>
+<div th:if="${hasImageUploads}">
+    <div th:replace="admin/fragments/posts/imageupload :: image-upload-javascript">[Image Upload Javascript]</div>
 </div>
 
 </body>

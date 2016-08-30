@@ -10,12 +10,8 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.css}"/>
     <link th:href="@{/dashboard/css/bootstrap.min.css}" rel="stylesheet"/>
-
-    <link type="text/css" th:href="@{/dashboard/css/animate.min.css}" rel="stylesheet"/>
     <link type="text/css" th:href="@{/dashboard/css/custom.css}" rel="stylesheet"/>
-    <link type="text/css" th:href="@{/dashboard/css/maps/jquery-jvectormap-2.0.3.css}" rel="stylesheet"/>
-    <link type="text/css" th:href="@{/dashboard/css/icheck/flat/red.css}" rel="stylesheet"/>
-    <link type="text/css" th:href="@{/dashboard/css/floatexamples.css}" rel="stylesheet"/>
+
     <link type="text/css" th:href="@{/dashboard/css/admin.css}" rel="stylesheet"/>
 
     <!-- Added following stylesheets for Administration Post Forms v0.3.6-->
@@ -25,13 +21,14 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap-multiselect.css}" type="text/css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-tagsinput.css}"/>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        var $jq = jQuery.noConflict();
-    </script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>-->
+    <!--<script type="text/javascript">-->
+        <!--var $jq = jQuery.noConflict();-->
+    <!--</script>-->
 
-    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <!--<script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>-->
 
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>

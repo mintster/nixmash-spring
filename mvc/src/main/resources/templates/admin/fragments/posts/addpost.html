@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
@@ -19,7 +18,55 @@
                              th:class="'messageblock hidden'"
                              th:text="${feedbackMessage}"></div>
                     </div>
-                   <p>Yousa Add Post!</p>
+                    <form th:object="${postDTO}" method="post"  th:action="@{/admin/posts/add/post}"
+                          class="form-horizontal" id="link-add-form">
+
+                        <div th:include="fragments/formutils :: global-errors" th:remove="tag">[Global Errors]</div>
+
+                        <table class="table table-striped">
+                            <div th:include="fragments/posts/postform :: title-editor" th:remove="tag">[Title Editor Rows]
+                            </div>
+                            <div th:include="fragments/posts/postform :: tags" th:remove="tag">[Tags]</div>
+                            <tr class="tr-button-row">
+                                <td></td>
+                                <td>
+                                    <div class="form-actions pull-right" id="post-select">
+                                        <select th:field="*{displayType}" name="displayType" class="selectpicker"
+                                                data-style="btn-primary">
+                                            <option value="POST" th:text="#{add.post.option.default}">
+                                                [default post]
+                                            </option>
+                                            <option value="MULTIPHOTO_POST" th:text="#{add.post.option.multiphoto}">
+                                                [multiphoto post]
+                                            </option>
+                                            <option value="SINGLEPHOTO_POST" th:text="#{add.post.option.singlephoto}">
+                                                [singlephoto post]
+                                            </option>
+                                        </select>
+
+                                        <button type="submit" class="btn btn-success" name="post" value="publish">Publish
+                                        </button>
+                                        <button type="submit" class="btn btn-success" name="post" value="draft">Save Draft
+                                        </button>
+                                        <button id="imageUploadButton" class="btn btn-success"
+                                                name="imageUploadButton"
+                                                th:onclick="${postDTO.postId == null} ? 'saveDraftDialog()' : 'toggleImageUploads()'"
+                                                type="button">Add Images</button>
+                                    </div>
+                                    <div class="pull-right"
+                                         th:classappend="${#fields.hasErrors('displayType')} ? 'has-error pad-right'">
+                                        <label class="control-label" th:errors="*{displayType}">[error]</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="hidden" name="postType" value="POST"/>
+                    </form>
+
+                    <div th:unless="${postDTO.postId == null}" th:remove="tag">
+                        <div th:replace="admin/fragments/posts/imageupload :: image-upload-html">[Image Upload]</div>
+                    </div>
+
                 </div>
             </div>
         </div>

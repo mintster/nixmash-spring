@@ -11,7 +11,30 @@
     <!-- Added following JS files for Administration Post Forms v0.3.6-->
     <script th:src="@{/js/bootstrap-multiselect.js}"></script>
     <script th:src="@{/js/bootstrap-select.min.js}"></script>
+    <script th:inline="javascript">
 
+        function showDialog(title, result) {
+
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_PRIMARY,
+                title: title,
+                message: result,
+                draggable: true,
+                buttons: [{
+                    label: 'Close',
+                    cssClass: 'btn-info',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            })
+
+        }
+
+    </script>
+</div>
+
+<div th:fragment="mockup">
 
     <link type="text/css" th:href="@{/dashboard/css/animate.min.css}" rel="stylesheet"/>
     <link type="text/css" th:href="@{/dashboard/css/maps/jquery-jvectormap-2.0.3.css}" rel="stylesheet"/>
@@ -43,9 +66,7 @@
     <!-- pace -->
     <script th:src="@{/dashboard/js/pace/pace.min.js}"></script>
 
-</div>
 
-<div th:fragment="mockup">
     <!-- flot -->
     <script type="text/javascript">
         //<![CDATA[

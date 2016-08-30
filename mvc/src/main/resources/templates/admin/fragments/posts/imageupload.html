@@ -1,0 +1,133 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<div th:fragment="image-upload-css">
+    <link rel="stylesheet" href="/css/fileupload/blueimp-gallery.css"/>
+    <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+    <link rel="stylesheet" href="/css/fileupload/jquery.fileupload.css"/>
+    <link rel="stylesheet" href="/css/fileupload/jquery.fileupload-ui.css"/>
+    <!-- CSS adjustments for browsers with JavaScript disabled -->
+    <noscript>
+        <link rel="stylesheet" href="/css/fileupload/jquery.fileupload-noscript.css"/>
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="/css/fileupload/jquery.fileupload-ui-noscript.css"/>
+    </noscript>
+</div>
+
+<div th:fragment="image-upload-html">
+    <div class="bs-section col-lg-12 col-centered">
+        <div id="message-holder">
+            <div th:if="${feedbackMessage}" th:class="'messageblock hidden'"
+                 th:utext="${feedbackMessage}"></div>
+        </div>
+        <div id="imageuploads" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Image(s) for Multi-Image and Single Image posts</h3>
+                </div>
+                <div class="panel-body">
+                    <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
+                    <form id="fileupload" th:action="@{/posts/play/upload}" method="POST" enctype="multipart/form-data">
+                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                        <input type="hidden" name="parentId" id="parentId" th:value="${postDTO.postId}"/>
+                        <div class="row fileupload-buttonbar">
+                            <div class="col-lg-7">
+                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add</span>
+                    <input type="file" name="files[]" multiple="multiple"/>
+                </span>
+                                <button type="submit" class="btn btn-primary start">
+                                    <i class="glyphicon glyphicon-upload"></i>
+                                    <span>Upload</span>
+                                </button>
+                                <button type="reset" class="btn btn-primary cancel">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                    <span>Cancel</span>
+                                </button>
+                                <button type="button" class="btn  btn-primary " onclick="toggleImageUploads()">
+                                    <i class="glyphicon"></i>
+                                    <span>Close</span>
+                                </button>
+                                <button type="button" class="btn btn-danger delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                                <input type="checkbox" class="toggle"/>
+                                <!-- The global file processing state -->
+                                <span class="fileupload-process"></span>
+                            </div>
+                            <!-- The global progress state -->
+                            <div class="col-lg-5 fileupload-progress fade">
+                                <!-- The global progress bar -->
+                                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                </div>
+                                <!-- The extended global progress state -->
+                                <div class="progress-extended">&nbsp;</div>
+                            </div>
+                        </div>
+                        <!-- The table listing the files available for upload/download -->
+                        <table role="presentation" class="table table-striped">
+                            <tbody class="files"></tbody>
+                        </table>
+                    </form>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <!-- The blueimp Gallery widget -->
+        <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+            <div class="slides"></div>
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="close">×</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
+        </div>
+        <!-- The template to display files for uploading -->
+        <div th:utext="${fileuploading}" th:remove="tag"></div>
+        <!-- The template to display files already uploaded -->
+        <div th:utext="${fileuploaded}" th:remove="tag"></div>
+
+    </div>
+</div>
+
+<div th:fragment="image-upload-javascript"  th:remove="tag">
+
+    <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+    <script src="/js/fileupload/vendor/jquery.ui.widget.js"></script>
+    <!-- The Templates plugin is included to render the upload/download listings -->
+    <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+    <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+    <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+    <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+    <!-- blueimp Gallery script -->
+    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <script src="/js/fileupload/jquery.iframe-transport.js"></script>
+    <!-- The basic File Upload plugin -->
+    <script src="/js/fileupload/jquery.fileupload.js"></script>
+    <!-- The File Upload processing plugin -->
+    <script src="/js/fileupload/jquery.fileupload-process.js"></script>
+    <!-- The File Upload image preview & resize plugin -->
+    <script src="/js/fileupload/jquery.fileupload-image.js"></script>
+    <!-- The File Upload audio preview plugin -->
+    <script src="/js/fileupload/jquery.fileupload-audio.js"></script>
+    <!-- The File Upload video preview plugin -->
+    <script src="/js/fileupload/jquery.fileupload-video.js"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="/js/fileupload/jquery.fileupload-validate.js"></script>
+    <!-- The File Upload user interface plugin -->
+    <script src="/js/fileupload/jquery.fileupload-ui.js"></script>
+    <!-- The main application script -->
+    <script src="/js/fileupload/main.js"></script>
+</div>
+
+</html>

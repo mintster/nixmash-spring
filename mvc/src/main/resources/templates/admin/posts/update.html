@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="postDTO" type="com.nixmash.springdata.jpa.dto.PostDTO"*/-->
 <head>
+    <div th:replace="admin/fragments/posts/imageupload :: image-upload-css">[Image Upload CSS]</div>
+
     <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
     <div th:include="admin/fragments/js :: functions('/admin/posts')" th:remove="tag">Functions</div>
     <title th:text="${pageTitle}">[NixMash Spring Administration - Update Post or Link]</title>

@@ -222,7 +222,7 @@ var __slice = [].slice;
 })(window.jQuery, window);
 
 $(function () {
-    return $(".starrr").starrr();
+    // return $(".starrr").starrr();
 });
 
 $(document).ready(function () {
@@ -314,10 +314,10 @@ $(function () {
 /** ******  scrollview  *********************** **/
 $(document).ready(function () {
 
-    $(".scroll-view").niceScroll({
-        touchbehavior: true,
-        cursorcolor: "rgba(42, 63, 84, 0.35)"
-    });
+    // $(".scroll-view").niceScroll({
+    //     touchbehavior: true,
+    //     cursorcolor: "rgba(42, 63, 84, 0.35)"
+    // });
 
 });
 /** ******  /scrollview  *********************** **/

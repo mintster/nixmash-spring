@@ -91,6 +91,13 @@ img.flash-thumbnail {
     border: 2px #000000 solid;
 }
 
+#flashcard-form button.btn.dropdown-toggle.btn-primary {
+    padding: 0;
+}
+#flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-primary {
+    padding: 0px 5px 0px 8px;
+    margin-bottom: 4px;
+}
 /*</editor-fold>*/
 
 /*/<editor-fold> desc="LINK PAGE PREVIEW----------------------------/ "*/
@@ -145,6 +152,9 @@ div#post-select .btn.dropdown-toggle.btn-primary {
     margin-bottom: 4px;
 }
 
+div#post-select .buttons, button, .btn {
+    margin-right: 0;
+}
 .bootstrap-select.btn-group .dropdown-menu li a span.text {
     display: inline-block;
     font-weight: bold;
@@ -163,4 +173,33 @@ input#postTitle {
     padding-left: 8px;
 }
 
+.link-image {
+    float: right;
+}
+.link-image img {
+    border: 2px #0e285f solid;
+    margin: 3px;
+    max-width: 220px;
+}
+.link-image-text {
+    text-align: right;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+td.post-check-col {
+}
+td.post-check-col input  {
+    margin-left: 25px;
+}
+
+td.post-displaytype-col {
+    text-transform: capitalize;
+}
+td.draft-title {
+    color: #bbb;
+}
+td.published-title {
+    color: #403b63;
+}
 /*</editor-fold>*/

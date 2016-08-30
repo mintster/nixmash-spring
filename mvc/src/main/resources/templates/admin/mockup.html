@@ -3,7 +3,13 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
+
+    <link type="text/css" th:href="@{/dashboard/css/animate.min.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/dashboard/css/maps/jquery-jvectormap-2.0.3.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/dashboard/css/icheck/flat/red.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/dashboard/css/floatexamples.css}" rel="stylesheet"/>
     <title>NixMash Spring Administration Page</title>
+
 </head>
 
 <body class="nav-md">

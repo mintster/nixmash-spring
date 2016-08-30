@@ -94,7 +94,7 @@
                         <a th:href="${post.postLink}" th:text="|Source: ${post.postSource}|" target="_blank">[Post Source]</a>
                     </div>
                     <div class="edit-link" th:if="${post.isOwner}">
-                        <a th:href="@{|/posts/update/${post.postId}|}" th:text="#{post.permalink.edit}">[Edit]</a>
+                        <a th:href="@{|/admin/posts/update/${post.postId}|}" th:text="#{post.permalink.edit}">[Edit]</a>
                     </div>
                 </div>
             </div>
