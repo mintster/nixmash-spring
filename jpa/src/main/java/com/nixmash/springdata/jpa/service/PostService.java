@@ -56,11 +56,20 @@ public interface PostService {
     @Transactional(readOnly = true)
     List<Post> getPostsWithDetail();
 
+    @Transactional
+    Tag createTag(TagDTO tagDTO);
+
+    @Transactional
+    Tag updateTag(TagDTO tagDTO);
+
+    @Transactional
+    void deleteTag(TagDTO tagDTO, List<Post> posts);
+
     @Transactional(readOnly = true)
     Set<TagDTO> getTagDTOs();
 
     @Transactional(readOnly = true)
-    List<TagDTO> getTagCloud();
+    List<TagDTO> getTagCloud(int tagCount);
 
     @Transactional(readOnly = true)
     List<AlphabetDTO> getAlphaLInks();

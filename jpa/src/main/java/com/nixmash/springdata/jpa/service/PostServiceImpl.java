@@ -306,6 +306,37 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Transactional
+    @Override
+    public Tag createTag(TagDTO tagDTO) {
+            Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
+            if (tag == null) {
+                tag = new Tag(tagDTO.getTagValue());
+                tagRepository.save(tag);
+        }
+        return tag;
+    }
+
+    @Transactional
+    @Override
+    public Tag updateTag(TagDTO tagDTO) {
+        Tag tag = tagRepository.findOne(tagDTO.getTagId());
+        tag.setTagValue(tagDTO.getTagValue());
+        return tag;
+    }
+
+    @Transactional
+    @Override
+    public void deleteTag(TagDTO tagDTO, List<Post> posts) {
+        if (posts != null) {
+            Tag tag = tagRepository.findOne(tagDTO.getTagId());
+            for (Post post : posts) {
+                post.getTags().remove(tag);
+            }
+        }
+        tagRepository.delete(tagDTO.getTagId());
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Set<TagDTO> getTagDTOs() {
@@ -330,13 +361,13 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<TagDTO> getTagCloud() {
+    public List<TagDTO> getTagCloud(int tagCount) {
         List<Tag> tagcloud = em.createNamedQuery("getTagCloud", Tag.class)
                 .getResultList();
         List<TagDTO> tagDTOs = tagcloud
                 .stream()
                 .filter(t -> t.getPosts().size() > 0)
-                .limit(50)
+                .limit(tagCount)
                 .map(TagDTO::new)
                 .collect(Collectors.toList());
         return tagDTOs;

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+
+    <script type="text/javascript">
+        var oTable_tagsTable = $('#tagsTable');
+
+        $(document).ready(function () {
+
+            $('#add').on('click', function () {
+                $('#tagsTable_wrapper').css('display', 'none');
+                $('#newTagTable').css('display', 'table');
+            });
+
+            $('#editTags').on('click', function () {
+                oTable_tagsTable.column(3).visible(true);
+                oTable_tagsTable.column(1).visible(false);
+                oTable_tagsTable.column(2).visible(false);
+            });
+
+            $('#refreshTags').on('click', function () {
+                oTable_tagsTable.column(1).visible(true);
+                oTable_tagsTable.column(2).visible(true);
+                oTable_tagsTable.column(3).visible(false);
+                $('#tagsTable_wrapper').css('display', 'table');
+                $('#newTagTable').css('display', 'none');
+            });
+
+        });
+    </script>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 th:text="#{admin.tags.title}">[Tag Administration]
+                    </h2>
+                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
+                        <a id="addTag" th:text="#{admin.tags.button.new}"
+                           class="btn btn-primary">[Add Tag]</a>
+                        <a id="editTags" th:text="#{admin.tags.button.edit}"
+                           class="btn btn-primary">[Edit Tags]</a>
+                        <a id="refreshTags" th:text="#{admin.tags.button.cancel}"
+                           class="btn btn-primary">[Cancel]</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body-table">
+                    <div id="message-holder">
+                        <div th:if="${feedbackMessage}"
+                             th:class="'messageblock hidden'"
+                             th:text="${feedbackMessage}"></div>
+                    </div>
+
+                    <table id="newTagTable" style="display: none;" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="100px"></th>
+                            <th>Tag</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <form th:object="${newTag}" method="post" th:action="@{/admin/posts/tags/new}"
+                                      class="form-inline" id="new-tag-form">
+                                    <input type="text" class="form-control align-top" th:field="*{tagValue}"/>
+                                    <input type="submit" class="btn btn-primary" th:value="Add"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table id="tagsTable" dt:table="true" class="table table-striped"
+                            dt:cssStyle="display: table;">
+                        <thead>
+                        <tr>
+                            <th width="100px">Id</th>
+                            <th>Tag</th>
+                            <th>Posts</th>
+                            <th dt:visible="false">Tag</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--/*@thymesVar id="tag" type="com.nixmash.springdata.jpa.dto.TagDTO"*/-->
+                        <!--/*@thymesVar id="tags" type="List<com.nixmash.springdata.jpa.dto.TagDTO>"*/-->
+                        <tr th:each="tag : ${tags}">
+                            <td th:text="${tag.tagId}">1</td>
+                            <td th:text="${tag.tagValue}">SOME_TAG</td>
+                            <td th:text="${tag.tagCount}">1</td>
+                            <td>
+                                <form th:object="${tag}" method="post"
+                                      th:action="@{|/admin/posts/tags/update/${tag.tagId}|}"
+                                      class="form-inline" id="tag-form">
+                                    <input type="text" class="form-control" th:name="tagValue" id="tagValue" th:value="${tag.tagValue}" />
+                                    <input type="submit" class="btn btn-primary" th:value="Update"/>
+                                    <input th:type="submit" class="btn btn-success"
+                                           name="deleteTag"
+                                           th:value="Remove"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

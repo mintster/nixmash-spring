@@ -186,7 +186,7 @@ public class PostServiceTests {
 
     @Test
     public void getTagCloud_TagListNotNull() throws Exception {
-        List<TagDTO> tagcloud = postService.getTagCloud();
+        List<TagDTO> tagcloud = postService.getTagCloud(50);
         assertThat(tagcloud.get(0).getTagCount(), greaterThan(0));
         assertNotNull(tagcloud);
     }

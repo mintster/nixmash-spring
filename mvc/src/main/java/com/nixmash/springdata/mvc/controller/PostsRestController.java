@@ -205,9 +205,10 @@ public class PostsRestController {
 
 
     @RequestMapping(value = "/tagcloud", produces = "text/html;charset=UTF-8")
-    public String getTagCloud() {
+    public String getSidebarTagCloud() {
 
-        List<TagDTO> tags = postService.getTagCloud();
+        int tagCount = applicationSettings.getSidebarTagCloudCount();
+        List<TagDTO> tags = postService.getTagCloud(tagCount);
         maxTagCount = tags.stream().mapToInt(TagDTO::getTagCount).max().orElse(0);
         minTagCount = tags.stream().mapToInt(TagDTO::getTagCount).min().orElse(0);
 

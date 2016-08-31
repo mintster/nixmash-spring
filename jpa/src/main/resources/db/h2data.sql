@@ -103,6 +103,7 @@ INSERT INTO tags (tag_id, tag_value) VALUES (2, 'h2tagtwo');
 INSERT INTO tags (tag_id, tag_value) VALUES (3, 'h2tagthree');
 INSERT INTO tags (tag_id, tag_value) VALUES (4, 'h2tagfour');
 INSERT INTO tags (tag_id, tag_value) VALUES (5, 'h2 Tag With Spaces');
+INSERT INTO tags (tag_id, tag_value) VALUES (6, 'h2tagsix');
 
 INSERT INTO post_tag_ids (post_id, tag_id) VALUES (1, 1);
 INSERT INTO post_tag_ids (post_id, tag_id) VALUES (1, 2);

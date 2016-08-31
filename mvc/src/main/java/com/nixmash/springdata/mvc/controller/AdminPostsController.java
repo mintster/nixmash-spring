@@ -1,12 +1,14 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.Tag;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
@@ -21,9 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
@@ -31,6 +32,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -47,16 +49,22 @@ public class AdminPostsController {
     public static final String ADMIN_POSTS_LIST_VIEW = "admin/posts/list";
     public static final String ADMIN_POST_ADD_VIEW = "admin/posts/addpost";
     public static final String ADMIN_LINK_ADD_VIEW = "admin/posts/addlink";
+    public static final String ADMIN_TAGS_VIEW = "admin/posts/tags";
     public static final String ADMIN_POSTLINK_UPDATE_VIEW = "admin/posts/update";
 
     private static final String MESSAGE_ADMIN_UPDATE_POSTLINK_TITLE = "admin.update.postlink.title";
     private static final String MESSAGE_ADMIN_UPDATE_POSTLINK_HEADING = "admin.update.postlink.heading";
+
     private static final String ADD_POST_HEADER = "posts.add.note.page.header";
     private static final String ADD_LINK_HEADER = "posts.add.link.page.header";
 
     private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
     private static final String FEEDBACK_POST_POST_ADDED = "feedback.post.post.added";
     public static final String FEEDBACK_POST_UPDATED = "feedback.post.updated";
+    private static final String FEEDBACK_MESSAGE_TAG_ADDED = "feedback.message.tag.added";
+    private static final String FEEDBACK_MESSAGE_TAG_ERROR = "feedback.message.tag.error";
+    private static final String FEEDBACK_MESSAGE_TAG_UPDATED = "feedback.message.tag.updated";
+    private static final String FEEDBACK_MESSAGE_TAG_DELETED = "feedback.message.tag.deleted";
 
     private static final String SESSION_ATTRIBUTE_NEWPOST = "activepostdto";
 
@@ -132,7 +140,6 @@ public class AdminPostsController {
     }
 
     //endregion
-
 
     //region Add Posts POST
 
@@ -244,8 +251,6 @@ public class AdminPostsController {
 
     //endregion
 
-
-
     //region Update Posts GET POST
 
     @RequestMapping(value = "/update/{postId}", method = GET)
@@ -296,13 +301,73 @@ public class AdminPostsController {
             attributes.put("hasImageUploads", true);
             attributes.put("fileuploading", templateService.getFileUploadingScript());
             attributes.put("fileuploaded", templateService.getFileUploadedScript());
-        }
-        else
+        } else
             attributes.put("hasLink", true);
         return attributes;
     }
     //endregion
 
+    // region Tags
+
+    @RequestMapping(value = "/tags", method = GET)
+    public ModelAndView roleList(Model model) {
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("tags", postService.getTagCloud(Integer.MAX_VALUE));
+        mav.addObject("newTag", new Tag());
+        mav.setViewName(ADMIN_TAGS_VIEW);
+        return mav;
+    }
+
+    @RequestMapping(value = "/tags/new", method = RequestMethod.POST)
+    public String addUser(@Valid TagDTO tagDTO,
+                          BindingResult result,
+                          SessionStatus status,
+                          RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            return ADMIN_TAGS_VIEW;
+        } else {
+
+            Tag tag = postService.createTag(tagDTO);
+            logger.info("Tag Added: {}", tag.getTagValue());
+            status.setComplete();
+
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_TAG_ADDED, tag.getTagValue());
+            return "redirect:/admin/posts/tags";
+        }
+    }
+
+
+    @RequestMapping(value = "/tags/update/{tagId}", method = RequestMethod.POST)
+    public String updateRole(@Valid @ModelAttribute(value = "tag") TagDTO tagDTO, BindingResult result,
+                             RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_TAG_ERROR);
+            return "redirect:/admin/posts/tags";
+        } else {
+            postService.updateTag(tagDTO);
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_TAG_UPDATED, tagDTO.getTagValue());
+            return "redirect:/admin/posts/tags";
+        }
+    }
+
+    @RequestMapping(value = "/tags/update/{tagId}", params = {"deleteTag"}, method = RequestMethod.POST)
+    public String deleteRole(@Valid @ModelAttribute(value = "tag") TagDTO tagDTO, BindingResult result,
+                             RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_TAG_ERROR);
+            return "redirect:/admin/posts/tags";
+        } else {
+            List<Post> posts = postService.getPostsByTagId(tagDTO.getTagId());
+            postService.deleteTag(tagDTO, posts);
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_TAG_DELETED, tagDTO.getTagValue());
+        }
+
+        return "redirect:/admin/posts/tags";
+    }
+
+
+    // endregion
 
     // region postDTO Utilities
 

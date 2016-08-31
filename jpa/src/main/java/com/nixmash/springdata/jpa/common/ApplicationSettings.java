@@ -63,6 +63,20 @@ public class ApplicationSettings {
 	//endregion
 
 
+	// region Posts
+
+	private int sidebarTagCloudCount;
+
+	// endregion
+
+	public int getSidebarTagCloudCount() {
+		return sidebarTagCloudCount;
+	}
+
+	public void setSidebarTagCloudCount(int sidebarTagCloudCount) {
+		this.sidebarTagCloudCount = sidebarTagCloudCount;
+	}
+
 	public int getDefaultFlashcardCategory() {
 		return defaultFlashcardCategory;
 	}
