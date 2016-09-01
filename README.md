@@ -34,6 +34,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
+- **[v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades (In Progress)](#v040----spring-boot-140-and-dependency-upgrades-in-progress)**
 - **[v0.3.6 -- Post Add/Edit Moved to Administration](#v036----post-addedit-moved-to-administration)**
 - **[v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates](#v035----posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates)**
 - **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display](#v034----post-tag-cloud-sharing-likes-rss-title-display)**
@@ -70,6 +71,12 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.3 -- DAO Implementation](#v003----dao-implementation)**
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
+
+##v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades (In Progress)
+
+- *In Progress...*
+
+[[back to top](#nixmash-spring)]
 
 ##v0.3.6 -- Post Add/Edit Moved to Administration
 
