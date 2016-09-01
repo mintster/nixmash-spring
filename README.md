@@ -73,7 +73,15 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.3.6 -- Post Add/Edit Moved to Administration (in progress)
 
-- in progress...
+- All Post Management functions moved to Administration 
+- New Post List Display in Dandelion Table with Tags and Published Status
+- Tag Editing and Deletion
+- Link post types no longer lose their Link Display Type properties on Edit
+- [Post: Five Thymeleaf Format Examples](http://nixmash.com/java/five-thymeleaf-format-examples/)
+- [Post: Deleting Rows in a Hibernate @ManyToMany Child Table](http://nixmash.com/java/deleting-rows-in-a-hibernate-manytomany-child-table/)
+- [Post (NixMash Spring): New Post Administration Screenshots](http://nixmashspring.daveburkevt.com/posts/post/new-post-administration-screenshots)
+
+![v0.3.6 Administration Posts List](http://nixmash.com/x/pics/github/spring-data-0.3.6.png)
 
 [[back to top](#nixmash-spring)]
 

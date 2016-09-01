@@ -86,7 +86,7 @@ public class AdminPostsController {
         this.jsoupService = jsoupService;
     }
 
-    //region Posts List GET
+    //region Posts List
 
     @RequestMapping(value = "", method = GET)
     public ModelAndView postsListPage() {
@@ -338,7 +338,7 @@ public class AdminPostsController {
     }
 
 
-    @RequestMapping(value = "/tags/update/{tagId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/tags/update", method = RequestMethod.POST)
     public String updateRole(@Valid @ModelAttribute(value = "tag") TagDTO tagDTO, BindingResult result,
                              RedirectAttributes attributes) {
         if (result.hasErrors()) {
@@ -351,7 +351,7 @@ public class AdminPostsController {
         }
     }
 
-    @RequestMapping(value = "/tags/update/{tagId}", params = {"deleteTag"}, method = RequestMethod.POST)
+    @RequestMapping(value = "/tags/update", params = {"deleteTag"}, method = RequestMethod.POST)
     public String deleteRole(@Valid @ModelAttribute(value = "tag") TagDTO tagDTO, BindingResult result,
                              RedirectAttributes attributes) {
         if (result.hasErrors()) {

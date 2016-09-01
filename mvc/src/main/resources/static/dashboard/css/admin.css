@@ -141,7 +141,17 @@ img.flash-thumbnail {
 
 /*/<editor-fold> desc="TAGS AND POST FORMS----------------------------/ "*/
 
-
+.inline-tag {
+    font-size: smaller;
+    /* font-weight: bold; */
+    background-color: hsl(219, 14%, 94%);
+    display: inline;
+    color: #34495e;
+    padding: 5px 4px 7px 4px;
+    margin-right: 0;
+    white-space: nowrap;
+    border-radius: 3px;
+}
 .bootstrap-tagsinput {
     width: 100%;
 }
@@ -196,10 +206,10 @@ td.post-check-col input  {
 td.post-displaytype-col {
     text-transform: capitalize;
 }
-td.draft-title {
+td.draft-title a {
     color: #bbb;
 }
-td.published-title {
+td.published-title a {
     color: #403b63;
 }
 /*</editor-fold>*/

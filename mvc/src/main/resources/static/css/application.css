@@ -824,8 +824,8 @@ pre code {
     margin-bottom: 3px;
 }
 
-.post .post-photos {
-
+.post .post-photos img {
+    vertical-align: top;
 }
 
 .post img.post-photo-thumbnail {

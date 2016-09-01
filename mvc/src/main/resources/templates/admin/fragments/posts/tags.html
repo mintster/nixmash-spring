@@ -95,9 +95,10 @@
                             <td th:text="${tag.tagCount}">1</td>
                             <td>
                                 <form th:object="${tag}" method="post"
-                                      th:action="@{|/admin/posts/tags/update/${tag.tagId}|}"
+                                      th:action="@{/admin/posts/tags/update}"
                                       class="form-inline" id="tag-form">
                                     <input type="text" class="form-control" th:name="tagValue" id="tagValue" th:value="${tag.tagValue}" />
+                                    <input type="hidden" name="tagId" th:value="*{tagId}"/>
                                     <input type="submit" class="btn btn-primary" th:value="Update"/>
                                     <input th:type="submit" class="btn btn-success"
                                            name="deleteTag"
