@@ -47,7 +47,7 @@ public class PostRepoTests {
 
     @Test
     public void nonextistentPostFromRepository() {
-        Post post = postRepository.findByPostId(-1L);
+        Post post = postRepository.findByPostId(-100L);
         assertNull(post);
     }
 
