@@ -154,7 +154,7 @@
                 <div class="col-lg-12 button-col-align-right">
                     <input type="submit" class="btn btn-primary"
                            th:value="(${contact['new']} ? 'Add' : 'Update') + ' Contact'"
-                           th:disabled="${appSettings.getIsDemoSite()}"/>
+                           th:disabled="!${currentUser?.user.hasAuthority('ROLE_ADMIN')}" />
                     <input th:type="submit" class="btn btn-success" th:if="${!contact['new']}"
                            name="addContactPhone"
                            th:value="#{contactform.contactPhone.row.add}"/>

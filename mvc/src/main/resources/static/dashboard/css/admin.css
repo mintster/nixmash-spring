@@ -94,14 +94,27 @@ img.flash-thumbnail {
 #flashcard-form button.btn.dropdown-toggle.btn-primary {
     padding: 0;
 }
-#flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-primary {
+
+#flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-primary,
+#flatd.new-flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-primary {
     padding: 0px 5px 0px 8px;
     margin-bottom: 4px;
 }
+
+td.new-flashcard-form button.btn.dropdown-toggle.btn-primary {
+    padding: 0;
+}
+
+td.new-flashcard-form span {
+    line-height: 18px;
+}
+
+input#category {
+    vertical-align: top;
+}
+
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="LINK PAGE PREVIEW----------------------------/ "*/
-
 .page-preview img.thumbnail {
     max-height: 120px;
     float: right;
@@ -138,9 +151,7 @@ img.flash-thumbnail {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="TAGS AND POST FORMS----------------------------/ "*/
-
 .inline-tag {
     font-size: smaller;
     /* font-weight: bold; */
@@ -152,6 +163,7 @@ img.flash-thumbnail {
     white-space: nowrap;
     border-radius: 3px;
 }
+
 .bootstrap-tagsinput {
     width: 100%;
 }
@@ -165,11 +177,13 @@ div#post-select .btn.dropdown-toggle.btn-primary {
 div#post-select .buttons, button, .btn {
     margin-right: 0;
 }
+
 .bootstrap-select.btn-group .dropdown-menu li a span.text {
     display: inline-block;
     font-weight: bold;
     font-size: small;
 }
+
 span.tag.label {
     padding: 2px 5px;
     font-size: inherit;
@@ -183,14 +197,20 @@ input#postTitle {
     padding-left: 8px;
 }
 
+input#tagValue {
+    vertical-align: top;
+}
+
 .link-image {
     float: right;
 }
+
 .link-image img {
     border: 2px #0e285f solid;
     margin: 3px;
     max-width: 220px;
 }
+
 .link-image-text {
     text-align: right;
     margin-right: 5px;
@@ -199,17 +219,21 @@ input#postTitle {
 
 td.post-check-col {
 }
-td.post-check-col input  {
+
+td.post-check-col input {
     margin-left: 25px;
 }
 
 td.post-displaytype-col {
     text-transform: capitalize;
 }
+
 td.draft-title a {
     color: #bbb;
 }
+
 td.published-title a {
     color: #403b63;
 }
+
 /*</editor-fold>*/

@@ -27,12 +27,11 @@ dependencies {
 	compile 'com.jayway.restassured:json-path:2.4.1'
 	compile 'com.jayway.jsonpath:json-path-assert:2.0.0'
 
-	compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
 	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 	compile 'com.github.dandelion:datatables-thymeleaf:1.1.0'
 
-	compile 'org.webjars:webjars-locator:0.27'
-	compile 'org.webjars:webjars-locator-core:0.27'
+	compile 'org.webjars:webjars-locator:0.32'
+	compile 'org.webjars:webjars-locator-core:0.31'
 	compile 'org.webjars:jquery:2.1.4'
 	compile 'org.webjars:bootstrap:3.3.4'
 	compile 'org.webjars:bootswatch:3.3.4+1'
@@ -57,5 +56,7 @@ bootRun {
 	args "--appurl=http://localhost:9000"
 	main = 'com.nixmash.springdata.mvc.common.Application'
 }
+
+clean.dependsOn ':jpa:linkjBuild'
 
 

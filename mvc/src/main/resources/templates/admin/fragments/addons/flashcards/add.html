@@ -46,7 +46,7 @@
                                   enctype="multipart/form-data" class="form-inline" id="new-flashcard-form">
                                 <td>&nbsp;</td>
                                 <td><input type="text" class="form-control align-top" th:field="*{description}"/></td>
-                                <td><select th:field="*{categoryId}" name="categoryId"  id="categoryId" class="btn dropdown-toggle btn-primary selectpicker"
+                                <td class="new-flashcard-form"><select th:field="*{categoryId}" name="categoryId"  id="categoryId" class="btn dropdown-toggle btn-primary selectpicker"
                                             data-style="btn-primary">
                                     <option th:each="category : ${flashcardCategories}" th:text="${category.category}"
                                             th:value="${category.categoryId}"></option>

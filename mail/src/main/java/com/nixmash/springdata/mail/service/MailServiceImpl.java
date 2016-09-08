@@ -15,7 +15,7 @@ import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.ui.velocity.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -24,7 +24,7 @@ import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.Map;
 
-@SuppressWarnings("Convert2Lambda")
+@SuppressWarnings({"Convert2Lambda", "deprecation"})
 @Service("mailService")
 public class MailServiceImpl implements MailService {
 

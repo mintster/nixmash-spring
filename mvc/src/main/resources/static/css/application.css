@@ -1,10 +1,16 @@
 /*/<editor-fold> desc="HOME PAGE ----------------------------/ "*/
 .jumbotron {
-    padding: 40px 0;
+    padding: 40px 0 30px 0;
 }
 
 .jumbotron p {
     max-width: 550px;
+}
+
+@media screen and (min-width: 768px) {
+    .jumbotron h1, .jumbotron .h1 {
+        font-weight: bold;
+    }
 }
 
 blockquote small {
@@ -13,8 +19,8 @@ blockquote small {
 
 #spring-version {
     display: block;
-    margin: 0 auto 20px auto;
-    font-style: 16px;
+    margin: 20px auto 0 auto;
+    font-size: 16px;
 }
 
 .js-buttons .btn {
@@ -824,6 +830,14 @@ pre code {
     margin-bottom: 3px;
 }
 
+#posts .alert.alert-dismissible.alert-danger {
+    margin-top: 32px;
+}
+
+#posts .alert.alert-dismissible.alert-danger h3 {
+    margin-top: 8px;
+}
+
 .post .post-photos img {
     vertical-align: top;
 }
@@ -1005,6 +1019,11 @@ h1.post-title {
     #sidebar a.active i.glyphicon.glyphicon-chevron-right {
         opacity: 1 !important;
     }
+
+    #sidebar a:hover i.glyphicon.glyphicon-chevron-right {
+        opacity: .5;
+    }
+
 }
 
 @media (max-width: 768px) {

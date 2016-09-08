@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockFilterConfig;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -23,9 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.ServletException;
 import java.util.ArrayList;
 
-import static com.nixmash.springdata.mvc.controller.AdminAddonsController.ADMIN_FLASHCARDS_ADD_VIEW;
-import static com.nixmash.springdata.mvc.controller.AdminAddonsController.ADMIN_FLASHCARDS_VIEW;
-import static com.nixmash.springdata.mvc.controller.AdminAddonsController.ADMIN_FLASHCARD_CATEGORIES_VIEW;
+import static com.nixmash.springdata.mvc.controller.AdminAddonsController.*;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
@@ -33,13 +31,11 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 public class AdminAddonsControllerTests extends AbstractContext {
 
     private AdminController adminController;

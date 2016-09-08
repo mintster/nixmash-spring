@@ -1,17 +1,16 @@
 package com.nixmash.springdata.solr.config;
 
-import javax.annotation.Resource;
-
+import com.nixmash.springdata.solr.common.SolrSettings;
+import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.server.support.HttpSolrServerFactoryBean;
+import org.springframework.data.solr.server.support.HttpSolrClientFactoryBean;
 
-import com.nixmash.springdata.solr.common.SolrSettings;
-import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
+import javax.annotation.Resource;
 
 @Configuration
 @Profile("prod")
@@ -25,8 +24,8 @@ public class HttpSolrContext {
 	private SolrSettings solrSettings;
 
 	@Bean(name = "solrServer")
-	public HttpSolrServerFactoryBean solrServerFactoryBean() {
-		HttpSolrServerFactoryBean factory = new HttpSolrServerFactoryBean();
+	public HttpSolrClientFactoryBean solrServerFactoryBean() {
+		HttpSolrClientFactoryBean factory = new HttpSolrClientFactoryBean();
 		factory.setUrl(solrSettings.getSolrServerUrl());
 		return factory;
 	}

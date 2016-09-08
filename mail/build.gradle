@@ -29,7 +29,6 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-velocity'
 }
 
-
 bootRun {
 	addResources = false
 	systemProperty 'spring.profiles.active', 'mysql'

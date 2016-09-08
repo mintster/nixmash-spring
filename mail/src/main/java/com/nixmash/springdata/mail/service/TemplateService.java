@@ -13,4 +13,6 @@ public interface TemplateService {
     String createPostHtml(Post post, String template);
 
     String createPostHtml(Post post);
+
+    String getNoLikesMessage();
 }

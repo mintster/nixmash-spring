@@ -147,8 +147,10 @@ public class PostsController {
     }
 
     @RequestMapping(value = "/likes/{userId}", method = GET)
-    public String tags(@PathVariable("userId") long userId, Model model) {
-        boolean showMore = postService.getPostsByUserLikes(userId).size() > POST_PAGING_SIZE;
+    public String userLikes(@PathVariable("userId") long userId, Model model) {
+        boolean showMore = false;
+        if (postService.getPostsByUserLikes(userId) != null)
+            showMore = postService.getPostsByUserLikes(userId).size() > POST_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_LIKES_VIEW;
     }
@@ -511,7 +513,8 @@ public class PostsController {
             Post found = null;
             try {
                 found = postService.getPost(slug);
-            } catch (PostNotFoundException e) {}
+            } catch (PostNotFoundException e) {
+            }
             if (sessionPost != null) {
                 if (found != null && !(found.getPostId().equals(sessionPost.getPostId()))) {
                     isDuplicate = true;

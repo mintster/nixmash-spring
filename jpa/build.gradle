@@ -48,7 +48,7 @@ bootRun {
     main = 'com.nixmash.springdata.jpa.JpaLauncher'
 }
 
-task rmTestdb(type: Exec) {
-    commandLine "bash", "${rootDir}/doc/scripts/rmTestdb.sh"
+task linkjBuild(type: Exec) {
+    commandLine "bash", "${rootDir}/install/sh/linkjBuild.sh", "--rm"
 }
 

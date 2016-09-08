@@ -123,7 +123,7 @@ public class AdminAddonsController {
         }
     }
 
-    @RequestMapping(value = " /flashcards/categories", method = GET)
+    @RequestMapping(value = "/flashcards/categories", method = GET)
     public ModelAndView flashcardCategories() {
         ModelAndView mav = new ModelAndView();
         mav.addObject("flashcardCategories", addonService.getFlashcardCategories());
@@ -166,7 +166,7 @@ public class AdminAddonsController {
         return REDIRECT_FLASHCARD_CATEGORIES;
     }
 
-    @RequestMapping(value = " /flashcards/add", method = GET)
+    @RequestMapping(value = "/flashcards/add", method = GET)
     public ModelAndView addFlashcard() {
         ModelAndView mav = new ModelAndView();
         mav.addObject("flashcardCategories", addonService.getFlashcardCategories());

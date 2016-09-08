@@ -11,13 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.ui.velocity.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
 import java.util.Map;
 
 @Service("templateService")
+@SuppressWarnings("deprecation")
 public class TemplateServiceImpl implements TemplateService {
 
     private static final Logger logger = LoggerFactory.getLogger(TemplateServiceImpl.class);
@@ -82,6 +83,13 @@ public class TemplateServiceImpl implements TemplateService {
         return createPostHtml(post, null);
     }
 
+    @Override
+    public String getNoLikesMessage() {
+
+        Map<String, Object> model = modelWithTools();
+
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "posts/nolikes.vm", "UTF-8", null);
+    }
 
     private Map<String, Object> modelWithTools() {
         Map<String, Object> model = new Hashtable<>();

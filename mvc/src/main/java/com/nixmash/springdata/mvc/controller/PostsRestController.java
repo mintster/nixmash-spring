@@ -146,9 +146,16 @@ public class PostsRestController {
                                   @PathVariable int pageNumber,
                                   HttpServletRequest request,
                                   CurrentUser currentUser) {
-        List<Post> posts = postService.getPagedLikedPosts(userId, pageNumber, POST_PAGING_SIZE);
-        String result = populatePostStream(posts, currentUser);
-        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_LIKEDPOSTS, posts);
+        List<Post> posts = postService.getPostsByUserLikes(userId);
+        String result;
+        if (posts == null) {
+            result = templateService.getNoLikesMessage();
+        }
+        else {
+            posts = postService.getPagedLikedPosts(userId, pageNumber, POST_PAGING_SIZE);
+            result = populatePostStream(posts, currentUser);
+            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_LIKEDPOSTS, posts);
+        }
         return result;
     }
 

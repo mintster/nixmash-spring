@@ -16,27 +16,22 @@
         <ul class="list-group" id="sidebar">
 
             <a th:href="@{/posts}" class="list-group-item"
-               th:classappend="${activeTab == 'posts'} ? 'active'"
-               th:text="#{posts.sidebar.menu.recent}">[Recent Posts]
+               th:classappend="${activeTab == 'posts'} ? 'active'"><span  th:text="#{posts.sidebar.menu.recent}" th:remove="tag">[Recent Posts]</span>
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
             <a th:href="@{/posts/titles}" class="list-group-item"
-               th:classappend="${activeTab == 'titles'} ? 'active'"
-               th:text="#{posts.sidebar.menu.titles}">[Post Titles]
+               th:classappend="${activeTab == 'titles'} ? 'active'"><span  th:text="#{posts.sidebar.menu.titles}" th:remove="tag">[Post Titles]</span>
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
             <a th:href="@{/posts/az}" class="list-group-item"
-               th:classappend="${activeTab == 'az'} ? 'active'"
-               th:text="#{posts.sidebar.menu.az}">[Posts A-to-Z]
+               th:classappend="${activeTab == 'az'} ? 'active'"><span  th:text="#{posts.sidebar.menu.az}" th:remove="tag">[Posts A-to-Z]</span>
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
             <a th:if="${currentUser != null}" th:href="@{|/posts/likes/${currentUser.user.id}|}" class="list-group-item"
-               th:classappend="${activeTab == 'likes'} ? 'active'"
-               th:text="#{posts.sidebar.menu.likes}">[Your Liked Posts]
+               th:classappend="${activeTab == 'likes'} ? 'active'"><span  th:text="#{posts.sidebar.menu.likes}" th:remove="tag">[Your Liked Posts]</span>
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
-            <a th:href="@{/posts/feed}" class="list-group-item" target="_blank"
-               th:text="#{posts.sidebar.menu.rss}">[Post RSS Feed]
+            <a th:href="@{/posts/feed}" class="list-group-item" target="_blank"><span  th:text="#{posts.sidebar.menu.rss}" th:remove="tag">[Post RSS Feed]</span>
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
         </ul>
