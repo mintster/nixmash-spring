@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.ui.velocity.*;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@SuppressWarnings("deprecation")
 public class VelocityTests extends MailContext {
 
     @Autowired

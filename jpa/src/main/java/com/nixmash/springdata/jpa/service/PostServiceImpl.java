@@ -114,9 +114,13 @@ public class PostServiceImpl implements PostService {
     @Transactional(readOnly = true)
     @Override
     public List<Post> getPostsByUserLikes(Long userId) {
-        List<Post> posts = em.createNamedQuery("Post.getByPostIds", Post.class)
-                .setParameter("postIds", likeRepository.findLikedPostIds(userId))
-                .getResultList();
+        List<Post> posts;
+        if (likeRepository.findLikedPostIds(userId).size() == 0)
+            return null;
+        else
+            posts = em.createNamedQuery("Post.getByPostIds", Post.class)
+                    .setParameter("postIds", likeRepository.findLikedPostIds(userId))
+                    .getResultList();
         return posts;
     }
 
@@ -255,7 +259,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostImage> getPostImages(long postId) {
         List<PostImage> images = Lists.newArrayList(postImageRepository.findByPostId(postId));
-        for (PostImage image :  images) {
+        for (PostImage image : images) {
             image.setUrl(applicationSettings.getPostImageUrlRoot());
         }
         return images;
@@ -309,10 +313,10 @@ public class PostServiceImpl implements PostService {
     @Transactional
     @Override
     public Tag createTag(TagDTO tagDTO) {
-            Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
-            if (tag == null) {
-                tag = new Tag(tagDTO.getTagValue());
-                tagRepository.save(tag);
+        Tag tag = tagRepository.findByTagValueIgnoreCase(tagDTO.getTagValue());
+        if (tag == null) {
+            tag = new Tag(tagDTO.getTagValue());
+            tagRepository.save(tag);
         }
         return tag;
     }
@@ -422,16 +426,16 @@ public class PostServiceImpl implements PostService {
 
         postDTOs.addAll(
                 posts
-                .stream()
-                .filter(p -> Character.isAlphabetic(p.getPostTitle().charAt(0)) && !p.getPostTitle().startsWith("Changelist"))
-                .map(PostDTO::buildAlphaTitles)
-                .sorted(byfirstLetter)
-                .collect(Collectors.toList()));
+                        .stream()
+                        .filter(p -> Character.isAlphabetic(p.getPostTitle().charAt(0)) && !p.getPostTitle().startsWith("Changelist"))
+                        .map(PostDTO::buildAlphaTitles)
+                        .sorted(byfirstLetter)
+                        .collect(Collectors.toList()));
 
         return postDTOs;
     }
 
-    private Comparator<PostDTO> byfirstLetter= (e1, e2) -> e1
+    private Comparator<PostDTO> byfirstLetter = (e1, e2) -> e1
             .getPostTitle().compareTo(e2.getPostTitle());
 
     // endregion

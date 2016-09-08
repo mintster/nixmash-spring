@@ -330,13 +330,15 @@ public class AdminPostsControllerTests extends AbstractContext {
     }
 
     private RequestBuilder updateTagRequest(long tagId, String s) {
-        return post("/admin/posts/tags/update/" + tagId)
+        return post("/admin/posts/tags/update")
+                .param("tagId", String.valueOf(tagId))
                 .param("tagValue", s)
                 .with(csrf());
     }
 
     private RequestBuilder deleteTagRequest(long tagId) {
-        return post("/admin/posts/tags/update/" + tagId)
+        return post("/admin/posts/tags/update")
+                .param("tagId", String.valueOf(tagId))
                 .param("deleteTag", "true")
                 .with(csrf());
     }

@@ -103,8 +103,8 @@ public class SolrControllerTests extends AbstractContext {
 
 		MvcResult result = integrationMvc
 				.perform(get(String.format("/products/autocomplete?term=%s", AUTOCOMPLETE_FRAGMENT))
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON)).andReturn();
+						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8)).andReturn();
 
 		// Using Jackson ObjectMapper on JSON
 		//

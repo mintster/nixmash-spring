@@ -51,7 +51,7 @@ public abstract class JpaCommonConfig {
     @Value("#{ environment['entity.package'] }")
     private String entityPackage;
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public abstract DataSource dataSource();
 
     @Bean

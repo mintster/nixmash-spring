@@ -7,7 +7,7 @@
 
 # NOTES ------------------------------------------------------------- */
 
-# 1) Solr Version 4.10.4
+# 1) Solr Version 5.3.1
 # 2) Configure local Http Solr Server: 
 #
 #    Example used is http://solr/nixmashspring. Can be http://localhost:8983/solr/collection1 or whatever
@@ -32,9 +32,9 @@
 #
 # ------------------------------------------------------------------ */
 
-HTTP_COLLECTION=/ubuntuland/utils/solr-4.10.4/home/collections/nixmashspring
+HTTP_COLLECTION=/ubuntuland/utils/solr-5.5.2/server/solr/nixmashspring
 HTTP_URL=http://solr/nixmashspring/update?commit=true
-EMBEDDED_COLLECTION=/home/daveburke/web/solr-4.10.4/collection1
+EMBEDDED_COLLECTION=/home/daveburke/web/solr-5.5.2/collection1
 
 # Clear existing index for Collection1 ----------------------------- */
 

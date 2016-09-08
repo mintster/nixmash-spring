@@ -7,12 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +27,7 @@ public class GitHubTests extends AbstractContext {
 
     private String gitHubRepoUrl;
     private String gitHubUserUrl;
-    private RestTemplate restTemplate;
+    private TestRestTemplate restTemplate;
 
     @Before
     public void setUp() {

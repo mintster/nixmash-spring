@@ -61,7 +61,7 @@
                         <thead>
                         <tr>
                             <th width="100px"></th>
-                            <th>Role</th>
+                            <th>Category</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,7 +70,7 @@
                             <td>
                                 <!--/*@thymesVar id="newCategory" type="com.nixmash.springdata.jpa.dto.addons.FlashcardCategoryDTO"*/-->
                                 <form th:object="${newCategory}" method="post" th:action="@{/admin/addons/flashcards/categories/new}"
-                                      class="form-inline" id="new-role-form">
+                                      class="form-inline" id="single-line-form">
                                     <input type="text" class="form-control align-top" th:field="*{category}"/>
                                     <input type="submit" class="btn btn-primary" th:value="Add"/>
                                 </form>
@@ -84,8 +84,8 @@
                         <thead>
                         <tr>
                             <th width="100px">Id</th>
-                            <th>Role</th>
-                            <th dt:visible="false">Role</th>
+                            <th>Category</th>
+                            <th dt:visible="false">Category</th>
                         </tr>
                         </thead>
                         <tbody>
