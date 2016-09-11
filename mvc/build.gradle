@@ -37,8 +37,8 @@ dependencies {
 	compile 'org.webjars:bootswatch:3.3.4+1'
 	compile 'org.webjars:jquery-ui:1.11.4'
 	compile 'org.webjars:jquery-ui-themes:1.11.4'
-	compile 'com.rometools:rome:1.6.1'
 
+	compile 'com.rometools:rome:1.6.1'
 	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.6.0'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'

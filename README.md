@@ -13,7 +13,7 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and support
 | *Custom Validators* | *@Controller Advice* | *Custom Exception Handling* | *Tagging with Typeahead* |
 | *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
-| *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |   |  |
+| *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  |
 
 The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
 

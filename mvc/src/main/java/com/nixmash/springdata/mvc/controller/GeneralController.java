@@ -50,7 +50,8 @@ public class  GeneralController {
 
     @RequestMapping(value = "/", method = GET)
     public String home(Model model) {
-        String springVersion = webUI.parameterizedMessage("home.spring.version", SpringBootVersion.getVersion(), SpringVersion.getVersion());
+        String springVersion = webUI.parameterizedMessage("home.spring.version",
+                SpringBootVersion.getVersion(), SpringVersion.getVersion());
         model.addAttribute("springVersion", springVersion);
         model.addAttribute("gitHubStats", webUI.getGitHubStats());
         model.addAttribute("posts", postService.getAllPublishedPosts().subList(0, 10));
