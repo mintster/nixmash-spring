@@ -34,7 +34,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades (In Progress)](#v040----spring-boot-140-and-dependency-upgrades-in-progress)**
+- **[v0.4.1 -- Move from Velocity to FreeMarker for support templates (in progress)](#v041----move-from-velocity-to-freemarker-for-support-templates-in-progress)**
+- **[v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades](#v040----spring-boot-140-and-dependency-upgrades)**
 - **[v0.3.6 -- Post Add/Edit Moved to Administration](#v036----post-addedit-moved-to-administration)**
 - **[v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates](#v035----posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates)**
 - **[v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display](#v034----post-tag-cloud-sharing-likes-rss-title-display)**
@@ -72,9 +73,22 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades (In Progress)
+##v0.4.1 -- Move from Velocity to FreeMarker for support templates (in progress)
 
 - *In Progress...*
+
+[[back to top](#nixmash-spring)]
+
+##v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades
+
+- Upgraded to Spring Boot 1.4.0.
+- Solr Server and Embedded upgraded to Solr 5.5.2. Supporting scripts in `/install/solr` updated
+- "Liked Posts" page no longer throws exception if user has no liked posts
+- Use of Spring Dependency Management Gradle Plugin to revert to Hibernate 4.3 and apply newest Spring Security libraries
+- [Post: Upgrading from Spring Boot 1.3.5 to 1.4](http://nixmash.com/java/upgrading-from-spring-boot-1-3-5-to-1-4/)
+- [Post: Solr Server Configuration Changes With Spring Boot 1.4](http://nixmash.com/java/solr-server-configuration-changes-with-spring-boot-1-4/)
+- [Post: Securing Solr Server With Jetty](http://nixmash.com/java/securing-solr-server-with-jetty/)
+- [Post: Using the Spring Dependency Management Gradle Plugin](http://nixmash.com/java/using-the-spring-gradle-dependency-management-plugin/)
 
 [[back to top](#nixmash-spring)]
 
