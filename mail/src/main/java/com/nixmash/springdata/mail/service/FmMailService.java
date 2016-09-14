@@ -6,7 +6,7 @@ import com.nixmash.springdata.mail.dto.MailDTO;
 /**
  * Created by daveburke on 4/28/16.
  */
-public interface MailService {
+public interface FmMailService {
 
     void sendResetPasswordMail(User user, String token);
 

@@ -13,7 +13,7 @@ import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import com.nixmash.springdata.jsoup.service.JsoupService;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.containers.PostLink;
 import org.apache.commons.lang3.StringUtils;
@@ -73,16 +73,16 @@ public class AdminPostsController {
 
     private final PostService postService;
     private final WebUI webUI;
-    private final TemplateService templateService;
+    private final FmService fmService;
     private final JsoupService jsoupService;
 
     private static final Logger logger = LoggerFactory.getLogger(AdminPostsController.class);
 
     @Autowired
-    public AdminPostsController(PostService postService, WebUI webUI, TemplateService templateService, JsoupService jsoupService) {
+    public AdminPostsController(PostService postService, WebUI webUI, FmService fmService, JsoupService jsoupService) {
         this.postService = postService;
         this.webUI = webUI;
-        this.templateService = templateService;
+        this.fmService = fmService;
         this.jsoupService = jsoupService;
     }
 
@@ -228,8 +228,8 @@ public class AdminPostsController {
                     postDTO.setPostId(sessionPost.getPostId());
                     saved = postService.update(postDTO);
                 }
-                model.addAttribute("fileuploading", templateService.getFileUploadingScript());
-                model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
+                model.addAttribute("fileuploading", fmService.getFileUploadingScript());
+                model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
                 postDTO.setPostId(saved.getPostId());
                 WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
 
@@ -299,8 +299,8 @@ public class AdminPostsController {
         if (postType == PostType.POST) {
             attributes.put("hasPost", true);
             attributes.put("hasImageUploads", true);
-            attributes.put("fileuploading", templateService.getFileUploadingScript());
-            attributes.put("fileuploaded", templateService.getFileUploadedScript());
+            attributes.put("fileuploading", fmService.getFileUploadingScript());
+            attributes.put("fileuploaded", fmService.getFileUploadedScript());
         } else
             attributes.put("hasLink", true);
         return attributes;
@@ -451,22 +451,24 @@ public class AdminPostsController {
         // At some future point may require a database lookup approach:
         // if getNoImageSources(postSource) != null, imageUrl = "/images...{postSource}.png"
 
-        switch (postSource.toLowerCase()) {
-            case "stackoverflow.com":
-                imageUrl = "/images/posts/stackoverflow.png";
-                hasImages = false;
-                break;
-            case "spring.io":
-            case "docs.spring.io":
-                imageUrl = "/images/posts/spring.png";
-                hasImages = false;
-                break;
-            case "github.com":
-                imageUrl = "/images/posts/github.png";
-                hasImages = false;
-                break;
-            default:
-                break;
+        if (postSource != null) {
+            switch (postSource.toLowerCase()) {
+                case "stackoverflow.com":
+                    imageUrl = "/images/posts/stackoverflow.png";
+                    hasImages = false;
+                    break;
+                case "spring.io":
+                case "docs.spring.io":
+                    imageUrl = "/images/posts/spring.png";
+                    hasImages = false;
+                    break;
+                case "github.com":
+                    imageUrl = "/images/posts/github.png";
+                    hasImages = false;
+                    break;
+                default:
+                    break;
+            }
         }
 
         tmpDTO.setPostImage(imageUrl);
@@ -495,6 +497,7 @@ public class AdminPostsController {
             try {
                 found = postService.getPost(slug);
             } catch (PostNotFoundException e) {
+                // can be null for this check of a pre-existing post
             }
             if (sessionPost != null) {
                 if (found != null && !(found.getPostId().equals(sessionPost.getPostId()))) {

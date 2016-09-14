@@ -20,6 +20,7 @@
 	<logger name="org.thymeleaf" level="off" />
 	<logger name="org.hibernate" level="off" />
 	<logger name="org.springframework" level="info" />
+	<logger name="org.freemarker" level="info" />
 
 	<root level="off">
 		<appender-ref ref="console" />

@@ -17,6 +17,7 @@
 	<logger name="org.thymeleaf" level="OFF" />
 	<logger name="org.hibernate" level="OFF" />
 	<logger name="org.springframework" level="OFF" />
+	<logger name="org.freemarker" level="OFF" />
 
 	<root level="OFF">
 		<appender-ref ref="console" />

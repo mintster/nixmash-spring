@@ -24,7 +24,7 @@ import com.nixmash.springdata.jpa.model.UserToken;
 import com.nixmash.springdata.jpa.model.validators.UserPasswordValidator;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.jpa.utils.SharedUtils;
-import com.nixmash.springdata.mail.service.MailService;
+import com.nixmash.springdata.mail.service.FmMailService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class UserPasswordController {
     private final UserService userService;
     private final UserPasswordValidator userPasswordValidator;
     private WebUI webUI;
-    private final MailService mailService;
+    private final FmMailService fmMailService;
 
     // endregion
 
@@ -77,11 +77,11 @@ public class UserPasswordController {
     public UserPasswordController(UserService userService,
                                   UserPasswordValidator userPasswordValidator,
                                   WebUI webUI,
-                                  MailService mailService) {
+                                  FmMailService fmMailService) {
         this.userService = userService;
         this.userPasswordValidator = userPasswordValidator;
         this.webUI = webUI;
-        this.mailService = mailService;
+        this.fmMailService = fmMailService;
     }
 
     @InitBinder("userPasswordDTO")
@@ -111,7 +111,7 @@ public class UserPasswordController {
                 model.addAttribute("forgotEmailDTO", new ForgotEmailDTO());
 
                 UserToken userToken = userService.createUserToken(user.get());
-                mailService.sendResetPasswordMail(user.get(), userToken.getToken());
+                fmMailService.sendResetPasswordMail(user.get(), userToken.getToken());
             }
         }
         return USER_FORGOTPASSWORD_VIEW;

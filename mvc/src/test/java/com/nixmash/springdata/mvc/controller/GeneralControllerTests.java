@@ -2,7 +2,7 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.GitHubDTO;
 import com.nixmash.springdata.jpa.service.PostService;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.junit.Before;
@@ -29,7 +29,7 @@ public class GeneralControllerTests extends AbstractContext {
     private MockMvc mockMvc;
 
     @Autowired
-    TemplateService templateService;
+    FmService fmService;
 
     @Autowired
     PostService postService;
@@ -39,7 +39,7 @@ public class GeneralControllerTests extends AbstractContext {
 
     @Before
     public void setUp() {
-        mockController = new GeneralController(templateService, webUI, postService);
+        mockController = new GeneralController(fmService, webUI, postService);
         mockMvc = MockMvcBuilders.standaloneSetup(mockController).build();
     }
 

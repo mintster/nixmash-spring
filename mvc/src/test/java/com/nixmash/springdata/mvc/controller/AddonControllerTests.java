@@ -2,7 +2,7 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.service.AddonService;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.junit.Before;
@@ -41,14 +41,14 @@ public class AddonControllerTests  extends AbstractContext {
     ApplicationSettings applicationSettings;
 
     @Autowired
-    TemplateService templateService;
+    FmService fmService;
 
     @Autowired
     WebUI webUI;
 
     @Before
     public void setUp() {
-        addonController = new AddonController(addonService, webUI, applicationSettings, templateService);
+        addonController = new AddonController(addonService, webUI, applicationSettings, fmService);
         mvc = MockMvcBuilders.standaloneSetup(addonController).build();
     }
 

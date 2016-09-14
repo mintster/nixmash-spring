@@ -1,7 +1,7 @@
 <html>
 <body>
 <div>
-    #parse("fragments/header.vm")
+<#include "includes/header.ftl">
 </div>
 <h3>${greeting}</h3>
 <p>
@@ -14,7 +14,7 @@
     ${message.body}
 </p>
 <div>
-    #parse("fragments/footer.vm")
+<#include "includes/footer.ftl">
 </div>
 </body>
 </html>

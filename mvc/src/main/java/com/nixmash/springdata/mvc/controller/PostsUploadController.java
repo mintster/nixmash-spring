@@ -4,7 +4,7 @@ import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.model.PostImage;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.SharedUtils;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -45,23 +45,23 @@ public class PostsUploadController {
     private Pattern pattern;
 
     private final PostService postService;
-    private final TemplateService templateService;
+    private final FmService fmService;
     private final ApplicationSettings applicationSettings;
 
     @Autowired
     public PostsUploadController(PostService postService,
-                                 TemplateService templateService,
+                                 FmService fmService,
                                  ApplicationSettings applicationSettings) {
         this.postService = postService;
-        this.templateService = templateService;
+        this.fmService = fmService;
         this.applicationSettings = applicationSettings;
     }
 
     @RequestMapping(value = "/photos", method = GET)
     public String play(Model model) {
         model.addAttribute("parentId", SharedUtils.randomNegativeId());
-        model.addAttribute("fileuploading", templateService.getFileUploadingScript());
-        model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
+        model.addAttribute("fileuploading", fmService.getFileUploadingScript());
+        model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
         return POSTS_PLAY_VIEW;
     }
 

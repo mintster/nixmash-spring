@@ -1,7 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.mail.dto.MailDTO;
-import com.nixmash.springdata.mail.service.MailService;
+import com.nixmash.springdata.mail.service.FmMailService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +26,12 @@ public class MailController {
     public static final String EMAIL_SENT_MESSAGE_KEY = "mail.contact.sent";
 
     private WebUI webUI;
-    private MailService mailService;
+    private FmMailService fmMailService;
 
     @Autowired
-    public MailController(WebUI webUI, MailService mailService) {
+    public MailController(WebUI webUI, FmMailService fmMailService) {
         this.webUI = webUI;
-        this.mailService = mailService;
+        this.fmMailService = fmMailService;
     }
 
     @RequestMapping(value = "/users/contact", method = GET)
@@ -49,7 +49,7 @@ public class MailController {
             return MAIL_CONTACT_VIEW;
         } else {
             logger.info("Sending email from: {}", mailDTO.getFrom());
-            mailService.sendContactMail(mailDTO);
+            fmMailService.sendContactMail(mailDTO);
             webUI.addFeedbackMessage(attributes, EMAIL_SENT_MESSAGE_KEY);
             return "redirect:/users/contact";
         }

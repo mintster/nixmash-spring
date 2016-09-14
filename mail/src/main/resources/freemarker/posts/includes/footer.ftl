@@ -1,12 +1,13 @@
+<#-- @ftlvariable name="post" type="com.nixmash.springdata.jpa.model.Post" -->
 <div class="post-date"><span>Posted on </span><abbr title="${post.postDate}">${postCreated}</abbr>
 </div>
 <div class="post-tags">
-    #foreach ( ${tag} in ${post.tags})
-        #set ($url = $esc.url($tag.tagValue.toLowerCase()))
-        <span class="taglink">
-              <a href="/posts/tag/$url" class="big label label-default">${tag.tagValue}</a>
+<#list post.tags as tag>
+    <#assign url  = tag.tagValue?lower_case>
+    <span class="taglink">
+              <a href="/posts/tag/${url}" class="big label label-default">${tag.tagValue}</a>
           </span>
-    #end
+</#list>
 </div>
 <div class="share-like-row">
     <div class="share-links">
@@ -37,7 +38,8 @@
         <span class="like-count" id="output-${post.postId}">${post.likesCount}</span>
     </div>
 </div>
-#if (${post.postType.name()} == "LINK")
+
+<#if  post.postType.name() == "LINK">
 <a target="_blank" href="${post.postLink}" class="remote-link" title="Go to External Site">${post.postSource}</a>
-#end
+</#if>
 

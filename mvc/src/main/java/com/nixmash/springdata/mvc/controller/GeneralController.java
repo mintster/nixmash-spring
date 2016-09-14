@@ -2,7 +2,7 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.SelectOptionDTO;
 import com.nixmash.springdata.jpa.service.PostService;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class  GeneralController {
     public static final String HOME_VIEW = "home";
     public static final String ERROR_403_VIEW = "errors/custom";
 
-    private final TemplateService templateService;
+    private final FmService fmService;
     private final WebUI webUI;
     private final PostService postService;
 
@@ -42,8 +42,8 @@ public class  GeneralController {
     Environment environment;
 
     @Autowired
-    public GeneralController(TemplateService templateService, WebUI webUI, PostService postService) {
-        this.templateService = templateService;
+    public GeneralController(FmService fmService, WebUI webUI, PostService postService) {
+        this.fmService = fmService;
         this.webUI = webUI;
         this.postService = postService;
     }
@@ -64,7 +64,7 @@ public class  GeneralController {
     public String plaintext(HttpServletResponse response) {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        return templateService.getRobotsTxt();
+        return fmService.getRobotsTxt();
     }
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)

@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.MessagingException;
 import java.util.Optional;
@@ -24,13 +24,13 @@ import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-public class MailTests extends MailContext {
+@RunWith(SpringRunner.class)
+public class FmMailTests extends MailContext {
 
     private MailSender mockMailSender;
     private MailDTO mailDTO;
 
-    private FmMailService mockMailService;
+    private FmMailService mockFmMailService;
     private MailSettings mailSettings;
     private ApplicationSettings applicationSettings;
     private Configuration fm;
@@ -42,14 +42,14 @@ public class MailTests extends MailContext {
     @Before
     public void setUp() {
         mockMailSender = mock(MailSender.class);
-        mockMailService =
-                new FmMailServiceImpl(mockMailSender, mailSettings, applicationSettings, fm, environment);
+        mockFmMailService =
+                new FmMailServiceImpl(mockMailSender, mailSettings,applicationSettings, fm, environment );
         mailDTO = MailTestUtils.testMailDTO();
     }
 
     @Test
     public void contactSendsMimeMessage() throws MessagingException {
-        mockMailService.sendContactMail(mailDTO);
+        mockFmMailService.sendContactMail(mailDTO);
         verify(mockMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));
     }
 
@@ -57,7 +57,7 @@ public class MailTests extends MailContext {
     public void passwordResetSendsMimeMessage() throws MessagingException {
         Optional<User> user = userService.getUserById(2L);
         String token = UUID.randomUUID().toString();
-        mockMailService.sendResetPasswordMail(user.get(), token);
+        mockFmMailService.sendResetPasswordMail(user.get(), token);
         verify(mockMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));
     }
 

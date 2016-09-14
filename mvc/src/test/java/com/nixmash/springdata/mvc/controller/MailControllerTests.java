@@ -1,6 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.nixmash.springdata.mail.service.MailService;
+import com.nixmash.springdata.mail.service.FmMailService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MailControllerTests extends AbstractContext {
 
     MockMvc mockMvc;
-    MailService mockMailService;
+    FmMailService mockMailService;
     MailController mockMailController;
 
     @Autowired
@@ -32,7 +32,7 @@ public class MailControllerTests extends AbstractContext {
     @Before
     public void setUp() {
 
-        mockMailService = mock(MailService.class);
+        mockMailService = mock(FmMailService.class);
         mockMailController = new MailController(webUI, mockMailService);
         mockMvc = MockMvcBuilders.standaloneSetup(mockMailController).build();
 

@@ -8,7 +8,7 @@ import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.Pair;
 import com.nixmash.springdata.jpa.utils.PostUtils;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.annotations.JsonRequestMapping;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -42,16 +42,16 @@ public class PostsRestController {
     private static final String SESSION_ATTRIBUTE_LIKEDPOSTS = "likedposts";
 
     private PostService postService;
-    private TemplateService templateService;
+    private FmService fmService;
     private ApplicationSettings applicationSettings;
 
     private int minTagCount = 0;
     private int maxTagCount = 0;
 
     @Autowired
-    public PostsRestController(PostService postService, TemplateService templateService, ApplicationSettings applicationSettings) {
+    public PostsRestController(PostService postService, FmService fmService, ApplicationSettings applicationSettings) {
         this.postService = postService;
-        this.templateService = templateService;
+        this.fmService = fmService;
         this.applicationSettings = applicationSettings;
     }
 
@@ -149,7 +149,7 @@ public class PostsRestController {
         List<Post> posts = postService.getPostsByUserLikes(userId);
         String result;
         if (posts == null) {
-            result = templateService.getNoLikesMessage();
+            result = fmService.getNoLikesMessage();
         }
         else {
             posts = postService.getPagedLikedPosts(userId, pageNumber, POST_PAGING_SIZE);
@@ -191,7 +191,7 @@ public class PostsRestController {
                 post.setSingleImage(postService.getPostImages(post.getPostId()).get(0));
             }
             post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
-            result += templateService.createPostHtml(post, format);
+            result += fmService.createPostHtml(post, format);
         }
         return result;
     }

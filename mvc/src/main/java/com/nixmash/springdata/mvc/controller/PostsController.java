@@ -15,7 +15,7 @@ import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import com.nixmash.springdata.jsoup.service.JsoupService;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.containers.PostLink;
 import org.apache.commons.lang3.StringUtils;
@@ -91,19 +91,19 @@ public class PostsController {
     private final JsoupService jsoupService;
     private final PostService postService;
     private final ApplicationSettings applicationSettings;
-    private final TemplateService templateService;
+    private final FmService fmService;
 
     // endregion
 
     // region constructor
 
     @Autowired
-    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService, ApplicationSettings applicationSettings, TemplateService templateService) {
+    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService, ApplicationSettings applicationSettings, FmService fmService) {
         this.webUI = webUI;
         this.jsoupService = jsoupService;
         this.postService = postService;
         this.applicationSettings = applicationSettings;
-        this.templateService = templateService;
+        this.fmService = fmService;
     }
 
     // endregion
@@ -197,8 +197,8 @@ public class PostsController {
         Post post = postService.getPostById(postId);
 
         model.addAttribute("postDTO", getUpdatedPostDTO(post));
-        model.addAttribute("fileuploading", templateService.getFileUploadingScript());
-        model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
+        model.addAttribute("fileuploading", fmService.getFileUploadingScript());
+        model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
         return POSTS_UPDATE_VIEW;
     }
 
@@ -312,8 +312,8 @@ public class PostsController {
                         postDTO.setPostId(sessionPost.getPostId());
                         saved = postService.update(postDTO);
                     }
-                    model.addAttribute("fileuploading", templateService.getFileUploadingScript());
-                    model.addAttribute("fileuploaded", templateService.getFileUploadedScript());
+                    model.addAttribute("fileuploading", fmService.getFileUploadingScript());
+                    model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
                     postDTO.setPostId(saved.getPostId());
                     WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
 

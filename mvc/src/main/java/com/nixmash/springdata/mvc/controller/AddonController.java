@@ -5,7 +5,7 @@ import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
 import com.nixmash.springdata.jpa.service.AddonService;
-import com.nixmash.springdata.mail.service.TemplateService;
+import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,17 +40,17 @@ public class AddonController {
     private final AddonService addonService;
     private final WebUI webUI;
     private final ApplicationSettings applicationSettings;
-    private final TemplateService templateService;
+    private final FmService fmService;
 
     @Autowired
     public AddonController(AddonService addonService,
                            WebUI webUI,
                            ApplicationSettings applicationSettings,
-                           TemplateService templateService) {
+                           FmService fmService) {
         this.addonService = addonService;
         this.webUI = webUI;
         this.applicationSettings = applicationSettings;
-        this.templateService = templateService;
+        this.fmService = fmService;
     }
 
     @RequestMapping(value = "/posts/flashcards", method = GET)
@@ -78,7 +78,7 @@ public class AddonController {
 
         if (flashcards != null) {
             Post post = addonService.getFlashcardPost(flashcards, index);
-            return templateService.createPostHtml(post, FLASHCARD_POST_TEMPLATE);
+            return fmService.createPostHtml(post, FLASHCARD_POST_TEMPLATE);
         } else {
             return null;
         }
