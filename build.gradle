@@ -28,20 +28,8 @@ allprojects {
 	ext['hibernate.version'] = '4.3.11.Final'
 	ext['spring-security.version'] = '4.1.3.RELEASE'
 
-
-
 	dependencyManagement {
 		applyMavenExclusions false
-
-//		dependencies {
-//			dependencySet(group:'org.springframework.security', version: '4.1.3.RELEASE') {
-//				entry 'spring-security-config'
-//				entry 'spring-security-core'
-//				entry 'spring-security-crypto'
-//				entry 'spring-security-web'
-//				entry 'spring-security-test'
-//			}
-//		}
 	}
 
 	repositories {

@@ -9,11 +9,11 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and support
 | *Spring Security* | *Spring Social* | *Hibernate* | *Mockito* |
 | *Json* | *Gradle* | *Spring Mail* | *Jsoup* |
 | *Multi-Profile Configurations* | *JPA Auditing* | *Webjars* | *Dandelion* |
-| *Velocity Templating* | *@PreAuthorize Method Security* | *REST Templates* | *RSS View Resolver* |
+| *Velocity Templating (pre v.0.4.1)* | *@PreAuthorize Method Security* | *REST Templates* | *RSS View Resolver* |
 | *Custom Validators* | *@Controller Advice* | *Custom Exception Handling* | *Tagging with Typeahead* |
 | *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
-| *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  |
+| *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (post v0.4.0)* |
 
 The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
 
@@ -34,7 +34,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.4.1 -- Move from Velocity to FreeMarker for support templates (in progress)](#v041----move-from-velocity-to-freemarker-for-support-templates-in-progress)**
+- **[v0.4.1 -- Move from Velocity to FreeMarker for support templates](#v041----move-from-velocity-to-freemarker-for-support-templates)**
 - **[v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades](#v040----spring-boot-140-and-dependency-upgrades)**
 - **[v0.3.6 -- Post Add/Edit Moved to Administration](#v036----post-addedit-moved-to-administration)**
 - **[v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates](#v035----posts-a-z-multiphoto-posts-flashcard-qa-user-profile-updates)**
@@ -73,9 +73,10 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.4.1 -- Move from Velocity to FreeMarker for support templates (in progress)
+##v0.4.1 -- Move from Velocity to FreeMarker for support templates
 
-- *In Progress...*
+- All templates and Velocity source replaced with FreeMarker templates and source
+- [Post: The Move from Velocity to FreeMarker with Spring Boot](http://nixmash.com/java/the-move-from-velocity-to-freemarker-with-spring-boot/)
 
 [[back to top](#nixmash-spring)]
 

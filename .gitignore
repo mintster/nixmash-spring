@@ -34,3 +34,10 @@ bin
 testdb.*
 *.log
 
+jpa/src/main/webapp/
+jsoup/src/main/webapp/
+libs/
+mail/src/main/webapp/
+mvc/src/main/webapp/
+solr/src/main/webapp/
+src/
