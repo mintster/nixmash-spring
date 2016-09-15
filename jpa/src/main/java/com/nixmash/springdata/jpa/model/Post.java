@@ -291,7 +291,6 @@ public class Post implements Serializable {
     public void update(String postTitle, String postContent, Boolean isPublished, PostDisplayType displayType) {
         this.postTitle = postTitle;
         this.postContent = postContent;
-        this.postName = PostUtils.createSlug(postTitle);
         this.isPublished = isPublished;
         this.displayType = displayType;
     }

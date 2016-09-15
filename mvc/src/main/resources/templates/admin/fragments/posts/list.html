@@ -51,7 +51,7 @@
                             <td class="post-displaytype-col" th:text="|${#strings.toLowerCase(displayType)}|">post display type</td>
                             <td th:text="|${#dates.format(creationDate.toInstant(), 'MMM dd, yyyy')}|">post date</td>
                             <td class="post-check-col"><input type="checkbox" th:checked="${post.isPublished}" disabled="true"/></td>
-                            <td><a th:href="@{|/admin/posts/update/${post.postId}|}" target="_blank"><span
+                            <td><a th:href="@{|/admin/posts/update/${post.postId}|}"><span
                                     class="glyphicon glyphicon-pencil"></span></a></td>
                         </tr>
                         </tbody>

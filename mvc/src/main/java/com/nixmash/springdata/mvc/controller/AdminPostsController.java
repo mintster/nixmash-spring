@@ -104,6 +104,7 @@ public class AdminPostsController {
     public String addPostLink(@PathVariable("type") String type, Model model, HttpServletRequest request) {
         PostType postType = PostType.valueOf(type.toUpperCase());
         model.addAttribute("postDTO", new PostDTO());
+        model.addAttribute("canPreview", false);
         if (postType == PostType.POST) {
             WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, null);
             model.addAttribute("hasPost", true);
@@ -203,6 +204,8 @@ public class AdminPostsController {
 
         model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
         model.addAttribute("hasPost", true);
+        model.addAttribute("canPreview", false);
+
         Post sessionPost = null;
         Object obj = WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST);
         if (obj != null) {
@@ -228,8 +231,6 @@ public class AdminPostsController {
                     postDTO.setPostId(sessionPost.getPostId());
                     saved = postService.update(postDTO);
                 }
-                model.addAttribute("fileuploading", fmService.getFileUploadingScript());
-                model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
                 postDTO.setPostId(saved.getPostId());
                 WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
 
@@ -237,8 +238,12 @@ public class AdminPostsController {
                     webUI.addFeedbackMessage(attributes, FEEDBACK_POST_POST_ADDED);
                     return "redirect:/admin/posts";
                 } else {
+                    model.addAttribute("fileuploading", fmService.getFileUploadingScript());
+                    model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
                     model.addAttribute("postDTO", getUpdatedPostDTO(saved));
                     model.addAttribute("hasImageUploads", true);
+                    model.addAttribute("canPreview", true);
+                    model.addAttribute("postName", saved.getPostName());
                     return ADMIN_POST_ADD_VIEW;
                 }
             }
@@ -269,6 +274,7 @@ public class AdminPostsController {
                 model.addAttribute("hasLinkImage", true);
             }
         }
+        model.addAttribute("postName", post.getPostName());
         model.addAttribute("postDTO", postDTO);
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("pageHeading", pageHeading);
@@ -289,7 +295,19 @@ public class AdminPostsController {
             postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
             Post post = postService.update(postDTO);
             webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
-            return "redirect:/posts/post/" + post.getPostName();
+            return "redirect:/admin/posts";
+        }
+    }
+
+    @RequestMapping(value = "/archive", method = POST)
+    @ResponseBody
+    public String archivePost(@RequestBody @Valid PostDTO postDTO, BindingResult result) throws PostNotFoundException {
+        if (result.hasErrors()) {
+            return "ERROR";
+        } else {
+            postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
+            postService.update(postDTO);
+            return "SUCCESS";
         }
     }
 

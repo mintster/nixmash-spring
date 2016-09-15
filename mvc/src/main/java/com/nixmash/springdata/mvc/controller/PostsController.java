@@ -1,11 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
-import com.nixmash.springdata.jpa.dto.PostDTO;
-import com.nixmash.springdata.jpa.enums.PostDisplayType;
-import com.nixmash.springdata.jpa.enums.PostType;
-import com.nixmash.springdata.jpa.enums.Role;
-import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
@@ -13,33 +8,23 @@ import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.jpa.utils.PostUtils;
-import com.nixmash.springdata.jsoup.dto.PagePreviewDTO;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
-import com.nixmash.springdata.mvc.containers.PostLink;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by daveburke on 5/27/16.
@@ -108,6 +93,27 @@ public class PostsController {
 
     // endregion
 
+    // region /post get
+
+    @RequestMapping(value = "/post/{postName}", method = GET)
+    public String post(@PathVariable("postName") String postName, Model model, CurrentUser currentUser)
+            throws PostNotFoundException {
+
+        Post post = postService.getPost(postName);
+        Date postCreated = Date.from(post.getPostDate().toInstant());
+        post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
+        post.setPostContent(PostUtils.formatPostContent(post));
+        model.addAttribute("post", post);
+        model.addAttribute("postCreated", postCreated);
+        model.addAttribute("shareSiteName",
+                StringUtils.deleteWhitespace(applicationSettings.getSiteName()));
+        model.addAttribute("shareUrl",
+                String.format("%s/posts/post/%s", applicationSettings.getBaseUrl(), post.getPostName()));
+        return POSTS_PERMALINK_VIEW;
+    }
+
+    // endregion
+
     // region /posts get
 
     @RequestMapping(value = "", method = GET)
@@ -163,368 +169,6 @@ public class PostsController {
         model.addAttribute("tag", tag);
         model.addAttribute("showmore", showMore);
         return POSTS_TAGTITLES_VIEW;
-    }
-
-    // endregion
-
-    // region /post get
-
-    @RequestMapping(value = "/post/{postName}", method = GET)
-    public String post(@PathVariable("postName") String postName, Model model, CurrentUser currentUser)
-            throws PostNotFoundException {
-
-        Post post = postService.getPost(postName);
-        Date postCreated = Date.from(post.getPostDate().toInstant());
-        post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
-        post.setPostContent(PostUtils.formatPostContent(post));
-        model.addAttribute("post", post);
-        model.addAttribute("postCreated", postCreated);
-        model.addAttribute("shareSiteName",
-                StringUtils.deleteWhitespace(applicationSettings.getSiteName()));
-        model.addAttribute("shareUrl",
-                String.format("%s/posts/post/%s", applicationSettings.getBaseUrl(), post.getPostName()));
-        return POSTS_PERMALINK_VIEW;
-    }
-
-    // endregion
-
-    // region /update {get / post}
-
-    @PreAuthorize("@postService.canUpdatePost(authentication, #postId)")
-    @RequestMapping(value = "/update/{postId}", method = GET)
-    public String updatePost(@PathVariable("postId") Long postId,
-                             Model model) throws PostNotFoundException {
-        Post post = postService.getPostById(postId);
-
-        model.addAttribute("postDTO", getUpdatedPostDTO(post));
-        model.addAttribute("fileuploading", fmService.getFileUploadingScript());
-        model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
-        return POSTS_UPDATE_VIEW;
-    }
-
-    public PostDTO getUpdatedPostDTO(Post post) {
-        return PostDTO.getUpdateFields(post.getPostId(),
-                post.getPostTitle(),
-                post.getPostContent(),
-                post.getDisplayType())
-                .tags(PostUtils.tagsToTagDTOs(post.getTags()))
-                .build();
-    }
-
-    @RequestMapping(value = "/update", method = POST)
-    public String updatePost(@Valid PostDTO postDTO, BindingResult result, Model model,
-                             RedirectAttributes attributes) throws PostNotFoundException {
-        if (result.hasErrors()) {
-            model.addAttribute("postDTO", postDTO);
-            return POSTS_UPDATE_VIEW;
-        } else {
-            postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
-            Post post = postService.update(postDTO);
-            webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
-            return "redirect:/posts/post/" + post.getPostName();
-        }
-    }
-
-    // endregion
-
-    // region /add {get} methods
-
-    @RequestMapping(value = "/add", method = GET, params = {"formtype"})
-    public String displayAddPostForm(@RequestParam(value = "formtype") String formType,
-                                     PostLink postLink, BindingResult result, Model model, HttpServletRequest request) {
-        PostType postType = PostType.valueOf(formType.toUpperCase());
-        String postFormType;
-        model.addAttribute("postDTO", new PostDTO());
-
-        if (postType.equals(PostType.POST)) {
-            postFormType = "post";
-            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, null);
-            model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
-        } else {
-            model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
-            if (StringUtils.isEmpty(postLink.getLink())) {
-                result.rejectValue("link", "post.link.is.empty");
-                return POSTS_ADD_VIEW;
-            } else {
-                PagePreviewDTO pagePreview = jsoupService.getPagePreview(postLink.getLink());
-                if (pagePreview == null) {
-                    result.rejectValue("link", "post.link.page.not.found");
-                    return POSTS_ADD_VIEW;
-                } else {
-                    postFormType = "link";
-                    WebUtils.setSessionAttribute(request, "pagePreview", pagePreview);
-                    model.addAttribute("pagePreview", pagePreview);
-                    model.addAttribute("postDTO",
-                            postDtoFromPagePreview(pagePreview, postLink.getLink()));
-                }
-            }
-        }
-
-        model.addAttribute("postFormType", postFormType);
-        return POSTS_ADD_VIEW;
-    }
-
-
-    @RequestMapping(value = "/add", method = GET)
-    public String addPost(Model model) {
-        model.addAttribute("postLink", new PostLink());
-        model.addAttribute("postDTO", new PostDTO());
-        return POSTS_ADD_VIEW;
-    }
-
-    // endregion
-
-    // region /add {post} methods
-
-    @RequestMapping(value = "/add", method = POST, params = {"post"})
-    public String createNotePost(@Valid PostDTO postDTO, BindingResult result,
-                                 CurrentUser currentUser, RedirectAttributes attributes, Model model,
-                                 HttpServletRequest request) throws DuplicatePostNameException, PostNotFoundException {
-
-        String saveAction = request.getParameter("post");
-
-        model.addAttribute("postheader", webUI.getMessage(ADD_POST_HEADER));
-        model.addAttribute("postFormType", "post");
-        Post sessionPost = null;
-        Object obj = WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST);
-        if (obj != null) {
-            sessionPost = (Post) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST);
-        }
-        if (!isDuplicatePost(postDTO, sessionPost)) {
-            if (result.hasErrors()) {
-                model.addAttribute("postDTO", postDTO);
-                return POSTS_ADD_VIEW;
-            } else {
-                if (canPost(currentUser)) {
-
-                    postDTO.setDisplayType(postDTO.getDisplayType());
-                    postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
-                    postDTO.setUserId(currentUser.getId());
-                    postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
-                    postDTO.setIsPublished(saveAction.equals(POST_PUBLISH));
-
-                    request.setAttribute("postTitle", postDTO.getPostTitle());
-                    Post saved;
-
-                    if (sessionPost == null)
-                        saved = postService.add(postDTO);
-                    else {
-                        postDTO.setPostId(sessionPost.getPostId());
-                        saved = postService.update(postDTO);
-                    }
-                    model.addAttribute("fileuploading", fmService.getFileUploadingScript());
-                    model.addAttribute("fileuploaded", fmService.getFileUploadedScript());
-                    postDTO.setPostId(saved.getPostId());
-                    WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
-
-                    if (saveAction.equals(POST_PUBLISH)) {
-                        webUI.addFeedbackMessage(attributes, FEEDBACK_POST_NOTE_ADDED);
-                        return "redirect:/posts";
-                    } else {
-                        model.addAttribute("postDTO", getUpdatedPostDTO(saved));
-                        return POSTS_ADD_VIEW;
-                    }
-                } else {
-                    model.addAttribute("postDTO", new PostDTO());
-                    webUI.addFeedbackMessage(attributes, FEEDBACK_NOTE_DEMO_THANKS);
-                    return "redirect:/posts/add";
-                }
-            }
-        } else {
-            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
-            return POSTS_ADD_VIEW;
-        }
-    }
-
-    @RequestMapping(value = "/add", method = POST, params = {"link"})
-    public String createLinkPost(@Valid PostDTO postDTO, BindingResult result,
-                                 CurrentUser currentUser, RedirectAttributes attributes, Model model,
-                                 HttpServletRequest request) throws DuplicatePostNameException {
-        PagePreviewDTO pagePreview =
-                (PagePreviewDTO) WebUtils.getSessionAttribute(request, "pagePreview");
-
-        model.addAttribute("postheader", webUI.getMessage(ADD_LINK_HEADER));
-        model.addAttribute("postFormType", "link");
-
-        if (!isDuplicatePost(postDTO, null)) {
-            if (result.hasErrors()) {
-                model.addAttribute("pagePreview", pagePreview);
-                if (result.hasFieldErrors("postTitle")) {
-                    postDTO.setPostTitle(pagePreview.getTitle());
-                }
-                model.addAttribute("postDTO", postDTO);
-                return POSTS_ADD_VIEW;
-            } else {
-                if (canPost(currentUser)) {
-
-                    if (postDTO.getHasImages()) {
-                        if (postDTO.getDisplayType() != PostDisplayType.LINK) {
-                            postDTO.setPostImage(
-                                    pagePreview.getImages().get(postDTO.getImageIndex()).src);
-                        } else
-                            postDTO.setPostImage(null);
-                    }
-
-                    postDTO.setPostSource(PostUtils.createPostSource(postDTO.getPostLink()));
-                    postDTO.setPostName(PostUtils.createSlug(postDTO.getPostTitle()));
-                    postDTO.setUserId(currentUser.getId());
-                    postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
-
-                    request.setAttribute("postTitle", postDTO.getPostTitle());
-                    postService.add(postDTO);
-
-                    webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
-                    return "redirect:/posts";
-                } else {
-                    webUI.addFeedbackMessage(attributes, FEEDBACK_LINK_DEMO_THANKS);
-                    return "redirect:/posts/add";
-                }
-            }
-        } else {
-            result.reject("global.error.post.name.exists", new Object[]{postDTO.getPostTitle()}, "post name exists");
-            model.addAttribute("pagePreview", pagePreview);
-            return POSTS_ADD_VIEW;
-        }
-    }
-
-    private Boolean canPost(CurrentUser currentUser) {
-        Boolean canPost = false;
-        if (currentUser != null) {
-            if (currentUser.getUser().hasAuthority(Role.ROLE_POSTS))
-                canPost = true;
-        }
-        return canPost;
-    }
-    // endregion
-
-    // region postDTO Utilities
-
-    private PostDTO postDtoFromPagePreview(PagePreviewDTO page, String postLink) {
-
-        Boolean hasTwitter = page.getTwitterDTO() != null;
-        String postTitle = hasTwitter ? page.getTwitterDTO().getTwitterTitle() : page.getTitle();
-        String postDescription = hasTwitter ? page.getTwitterDTO().getTwitterDescription() : page.getDescription();
-        PostDTO tmpDTO = getPagePreviewImage(page, postLink);
-
-        // If twitter metatags missing title and description but have card metatag
-
-        if (postTitle == null)
-            postTitle = page.getTitle();
-        if (postDescription == null)
-            postDescription = page.getDescription();
-
-        String postDescriptionHtml = null;
-        if (StringUtils.isNotEmpty(postDescription))
-            postDescriptionHtml = String.format("<p>%s</p>", postDescription);
-
-        return PostDTO.getBuilder(null,
-                postTitle,
-                null,
-                postLink,
-                postDescriptionHtml,
-                PostType.LINK,
-                null)
-                .postImage(tmpDTO.getPostImage())
-                .hasImages(tmpDTO.getHasImages())
-                .build();
-    }
-
-    private PostDTO getPagePreviewImage(PagePreviewDTO page, String sourceLink) {
-        return getPagePreviewImage(page, sourceLink, null);
-    }
-
-    private PostDTO getPagePreviewImage(PagePreviewDTO page, String sourceLink, Integer imageIndex) {
-        String postSource = PostUtils.createPostSource(sourceLink);
-        PostDTO tmpDTO = new PostDTO();
-        String imageUrl = null;
-        Boolean hasImages = true;
-
-        if (imageIndex == null) {
-
-            // populating the postDTO image contents for addLink form
-
-            if (page.twitterDTO != null) {
-                imageUrl = page.getTwitterDTO().getTwitterImage();
-                if (imageUrl != null) {
-                    if (!StringUtils.startsWithIgnoreCase(imageUrl, "http"))
-                        imageUrl = null;
-                }
-            } else {
-                if (page.getImages().size() > 1) {
-                    imageUrl = page.getImages().get(1).getSrc();
-                } else
-                    hasImages = false;
-            }
-            // if twitter image url missing or page contains single image
-
-            if (StringUtils.isEmpty(imageUrl)) {
-                hasImages = false;
-                imageUrl = null;
-            }
-        } else {
-            // determining the final postDTO from addLink form carousel index
-
-            imageUrl = page.getImages().get(imageIndex).getSrc();
-        }
-
-        // At some future point may require a database lookup approach:
-        // if getNoImageSources(postSource) != null, imageUrl = "/images...{postSource}.png"
-
-        switch (postSource.toLowerCase()) {
-            case "stackoverflow.com":
-                imageUrl = "/images/posts/stackoverflow.png";
-                hasImages = false;
-                break;
-            case "spring.io":
-            case "docs.spring.io":
-                imageUrl = "/images/posts/spring.png";
-                hasImages = false;
-                break;
-            case "github.com":
-                imageUrl = "/images/posts/github.png";
-                hasImages = false;
-                break;
-            default:
-                break;
-        }
-
-        tmpDTO.setPostImage(imageUrl);
-        tmpDTO.setHasImages(hasImages);
-
-        return tmpDTO;
-    }
-
-    private String cleanContentTailHtml(String content) {
-        String[] tags = {"<p>\r\n</p>", "<p></p>", "<p><br></p>", "<br>"};
-        String result = content;
-        for (String t :
-                tags) {
-            result = StringUtils.removeEnd(result, t);
-        }
-        return result;
-
-    }
-
-    private Boolean isDuplicatePost(PostDTO postDTO, Post sessionPost) {
-        Boolean isDuplicate = false;
-
-        if (StringUtils.isNotEmpty(postDTO.getPostTitle())) {
-            String slug = PostUtils.createSlug(postDTO.getPostTitle());
-            Post found = null;
-            try {
-                found = postService.getPost(slug);
-            } catch (PostNotFoundException e) {
-            }
-            if (sessionPost != null) {
-                if (found != null && !(found.getPostId().equals(sessionPost.getPostId()))) {
-                    isDuplicate = true;
-                }
-            } else {
-                if (found != null)
-                    isDuplicate = true;
-            }
-        }
-        return isDuplicate;
     }
 
     // endregion
