@@ -1,7 +1,6 @@
 package com.nixmash.springdata.mvc;
 
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
-import com.nixmash.springdata.mvc.common.Application;
 import com.nixmash.springdata.solr.enums.SolrConfigProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

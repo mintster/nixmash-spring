@@ -148,11 +148,11 @@
 
         function savePost() {
             var data = {}
-            data["postId"] = parseInt($("#postId").val());
-            data["postTitle"] = $("#postTitle").val();
-            data["postContent"] = $("#summernote").val();
-            data["displayType"] = $("#displayType").val();
-            data["tags"] = $("#tag-select").val();
+            data["postId"] = parseInt($('#postId').val());
+            data["postTitle"] = $('#postTitle').val();
+            data["postContent"] = $('#summernote').val();
+            data["displayType"] = $('#displayType').val();
+            data["tags"] = $('#tag-select').val();
 
             console.log(data);
             $.ajax({

@@ -301,7 +301,7 @@ public class AdminPostsController {
 
     @RequestMapping(value = "/archive", method = POST)
     @ResponseBody
-    public String archivePost(@RequestBody @Valid PostDTO postDTO, BindingResult result) throws PostNotFoundException {
+    public String archivePost(@Valid @RequestBody PostDTO postDTO, BindingResult result) throws PostNotFoundException {
         if (result.hasErrors()) {
             return "ERROR";
         } else {

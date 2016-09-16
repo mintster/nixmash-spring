@@ -73,7 +73,7 @@ allprojects {
 	}
 
 	springBoot {
-		mainClass = 'com.nixmash.springdata.mvc.common.Application'
+		mainClass = 'com.nixmash.springdata.mvc.Application'
 	}
 
 	task getHomeDir << {

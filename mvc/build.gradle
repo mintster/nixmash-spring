@@ -54,7 +54,7 @@ bootRun {
 	systemProperty 'server.port', '9000'
 	systemProperty 'spring.profiles.active', 'mysql,dev'
 	args "--appurl=http://localhost:9000"
-	main = 'com.nixmash.springdata.mvc.common.Application'
+	main = 'com.nixmash.springdata.mvc.Application'
 }
 
 clean.dependsOn ':jpa:linkjBuild'
