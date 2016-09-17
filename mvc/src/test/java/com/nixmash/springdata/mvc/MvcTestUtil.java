@@ -1,7 +1,7 @@
 package com.nixmash.springdata.mvc;
 
 import com.nixmash.springdata.jpa.model.Post;
-import com.nixmash.springdata.mvc.security.JsonPostDTO;
+import com.nixmash.springdata.mvc.dto.JsonPostDTO;
 import org.springframework.http.MediaType;
 
 import java.nio.charset.Charset;

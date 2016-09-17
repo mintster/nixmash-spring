@@ -35,6 +35,7 @@ public class PostDTO implements Serializable {
     private String postTitle;
 
     @NotEmpty
+    @Length(min= Post.MIN_POST_CONTENT_LENGTH)
     private String postContent;
 
     private String postName;

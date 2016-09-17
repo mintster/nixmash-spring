@@ -31,6 +31,25 @@
 
         }
 
+        function showErrorDialog(title, result) {
+
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_PRIMARY,
+                title: title,
+                cssClass: 'error-dialog',
+                message: result,
+                draggable: true,
+                buttons: [{
+                    label: 'Close',
+                    cssClass: 'btn-info',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            })
+
+        }
+
     </script>
 </div>
 

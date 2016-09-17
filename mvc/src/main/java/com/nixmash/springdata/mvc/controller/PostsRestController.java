@@ -184,11 +184,15 @@ public class PostsRestController {
     private String populatePostStream(List<Post> posts, CurrentUser currentUser, String format) {
         String result = StringUtils.EMPTY;
         for (Post post : posts) {
-            if (post.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST)) {
-                post.setPostImages(postService.getPostImages(post.getPostId()));
-            }
-            if (post.getDisplayType().equals(PostDisplayType.SINGLEPHOTO_POST)) {
-                post.setSingleImage(postService.getPostImages(post.getPostId()).get(0));
+            try {
+                if (post.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST)) {
+                    post.setPostImages(postService.getPostImages(post.getPostId()));
+                }
+                if (post.getDisplayType().equals(PostDisplayType.SINGLEPHOTO_POST)) {
+                    post.setSingleImage(postService.getPostImages(post.getPostId()).get(0));
+                }
+            } catch (Exception e) {
+                logger.info(String.format("Image Retrieval Error for Post ID:%s Title: %s",String.valueOf( post.getPostId()), post.getPostTitle()));
             }
             post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
             result += fmService.createPostHtml(post, format);

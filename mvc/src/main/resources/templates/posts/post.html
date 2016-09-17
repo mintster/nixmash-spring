@@ -35,10 +35,12 @@
                      th:utext="${feedbackMessage}"></div>
             </div>
             <div id="post-photo" th:if="${post.displayType.name() == 'SINGLEPHOTO_POST'}">
-                <a th:href="|${post.singleImage.url}${post.singleImage.newFilename}|">
-                    <img th:src="|${post.singleImage.url}${post.singleImage.newFilename}|" alt="Click to view the lightbox"
-                         class="post-photo-single"/>
-                </a>
+                <div th:if="${post.singleImage != null}" th:remove="tag">
+                    <a th:href="|${post.singleImage.url}${post.singleImage.newFilename}|">
+                        <img th:src="|${post.singleImage.url}${post.singleImage.newFilename}|" alt="Click to view the lightbox"
+                             class="post-photo-single"/>
+                    </a>
+                </div>
             </div>
             <div id="post-body" th:utext="${post.postContent}">
             </div>

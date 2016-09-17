@@ -33,6 +33,7 @@ public class Post implements Serializable {
 
     public static final int MAX_POST_TITLE_LENGTH = 200;
     public static final int MAX_POST_NAME_LENGTH = 200;
+    public static final int MIN_POST_CONTENT_LENGTH = 20;
 
     // region properties
 

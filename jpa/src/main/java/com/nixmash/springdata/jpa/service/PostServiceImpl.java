@@ -175,10 +175,14 @@ public class PostServiceImpl implements PostService {
             logger.debug("No post found with id: {}", postName);
             throw new PostNotFoundException("No post found with id: " + postName);
         } else {
-            if (found.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST))
-                found.setPostImages(this.getPostImages(found.getPostId()));
-            if (found.getDisplayType().equals(PostDisplayType.SINGLEPHOTO_POST))
-                found.setSingleImage(this.getPostImages(found.getPostId()).get(0));
+            try {
+                if (found.getDisplayType().equals(PostDisplayType.MULTIPHOTO_POST))
+                    found.setPostImages(this.getPostImages(found.getPostId()));
+                if (found.getDisplayType().equals(PostDisplayType.SINGLEPHOTO_POST))
+                    found.setSingleImage(this.getPostImages(found.getPostId()).get(0));
+            } catch (Exception e) {
+                logger.info(String.format("Image Retrieval Error for Post ID:%s Title: %s", String.valueOf(found.getPostId()), found.getPostTitle()));
+            }
         }
 
         return found;

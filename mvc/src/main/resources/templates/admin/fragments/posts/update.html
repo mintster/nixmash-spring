@@ -166,7 +166,7 @@
                     if (data == "SUCCESS")
                         showDialog("Saved!", 'Your updates have been saved. Click \"Update\" when finished editing.');
                     else
-                        showDialog("Error!", 'There was an error updating your post. Please confirm all fields are valid');
+                        showErrorDialog("Error!", 'There was an error updating your post. Please confirm all fields are valid');
                 },
                 error: function (e) {
                     showDialog("Error!", 'There was an error updating your post.');
