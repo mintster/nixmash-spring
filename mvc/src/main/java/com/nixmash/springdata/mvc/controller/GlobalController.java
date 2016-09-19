@@ -35,14 +35,16 @@ public class  GlobalController {
 	public static final String LOCATION_ERROR_ATTRIBUTE = "mappingError";
 	public static final String SESSION_USER_CONNECTION = "MY_USER_CONNECTION";
 
-	@Autowired
-	WebUI webUI;
+	private final WebUI webUI;
+	private final ApplicationSettings applicationSettings;
+	private final SiteOptions siteOptions;
 
 	@Autowired
-	private ApplicationSettings applicationSettings;
-
-	@Autowired
-	private SiteOptions siteOptions;
+	public GlobalController(SiteOptions siteOptions, WebUI webUI, ApplicationSettings applicationSettings) {
+		this.siteOptions = siteOptions;
+		this.webUI = webUI;
+		this.applicationSettings = applicationSettings;
+	}
 
 	@ModelAttribute("currentUser")
 	public CurrentUser getCurrentUser(Authentication authentication) {

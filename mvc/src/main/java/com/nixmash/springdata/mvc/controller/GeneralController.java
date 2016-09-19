@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.dto.SelectOptionDTO;
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.core.SpringVersion;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,7 +56,11 @@ public class  GeneralController {
                 SpringBootVersion.getVersion(), SpringVersion.getVersion());
         model.addAttribute("springVersion", springVersion);
         model.addAttribute("gitHubStats", webUI.getGitHubStats());
-        model.addAttribute("posts", postService.getAllPublishedPosts().subList(0, 10));
+
+        Slice<Post> posts = postService.getPublishedPosts(0, 10);
+        if (posts.getContent().size() > 0)
+            model.addAttribute("posts", posts);
+
         return HOME_VIEW;
     }
 
