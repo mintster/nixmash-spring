@@ -34,7 +34,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.4.2 -- Post "Save and Continue" (In Progress)](#v042----post-save-and-continue-in-progress)**
+- **[v0.4.2 -- Post "Save and Continue"](#v042----post-save-and-continue)**
 - **[v0.4.1 -- Move from Velocity to FreeMarker for support templates](#v041----move-from-velocity-to-freemarker-for-support-templates)**
 - **[v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades](#v040----spring-boot-140-and-dependency-upgrades)**
 - **[v0.3.6 -- Post Add/Edit Moved to Administration](#v036----post-addedit-moved-to-administration)**
@@ -74,7 +74,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.4.2 -- Post "Save and Continue" (In Progress)
+##v0.4.2 -- Post "Save and Continue"
 
 - Fixed exception when a MUILTIPHOTO or SINGLEPHOTO post DisplayType selected but no images contained in POST object
 - Added PREVIEW button in Admin New Post and Post Update forms
