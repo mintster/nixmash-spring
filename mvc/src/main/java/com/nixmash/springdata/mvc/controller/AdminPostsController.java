@@ -394,6 +394,7 @@ public class AdminPostsController {
         return PostDTO.getUpdateFields(post.getPostId(),
                 post.getPostTitle(),
                 post.getPostContent(),
+                post.getIsPublished(),
                 post.getDisplayType())
                 .tags(PostUtils.tagsToTagDTOs(post.getTags()))
                 .build();

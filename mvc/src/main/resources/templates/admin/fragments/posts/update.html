@@ -28,6 +28,23 @@
                         <div th:include="fragments/formutils :: global-errors" th:remove="tag">[Global Errors]</div>
 
                         <table class="table table-striped">
+                            <tr class="ispublished-tr">
+                                <td></td>
+                                <td class="ispublished-td">
+                                    <div class="form-actions pull-right special-select" id="ispublished-select">
+                                        <div class="post-status-label" th:text="#{update.post.published.label}">[Status]</div>
+                                        <select th:field="*{isPublished}" name="isPublished" id="isPublished" class="selectpicker"
+                                                data-style="btn-primary">
+                                            <option value="true" th:text="#{update.post.published.true}">
+                                                [true]
+                                            </option>
+                                            <option value="false" th:text="#{update.post.published.false}">
+                                                [false]
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr th:classappend="${#fields.hasErrors('postTitle')} ? 'has-error'">
                                 <td class="col-sm-1">
                                     <div class="control-group" th:classappend="${#fields.hasErrors('postTitle')} ? 'error'">
@@ -152,6 +169,7 @@
             data["postTitle"] = $('#postTitle').val();
             data["postContent"] = $('#summernote').val();
             data["displayType"] = $('#displayType').val();
+            data["isPublished"] = $('#isPublished').val();
             data["tags"] = $('#tag-select').val();
 
             console.log(data);

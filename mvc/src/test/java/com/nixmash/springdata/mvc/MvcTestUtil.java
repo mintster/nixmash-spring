@@ -21,6 +21,7 @@ public class MvcTestUtil {
         return new JsonPostDTO(post.getPostId(),
                 tags, post.getPostTitle(),
                 post.getPostContent(),
+                post.getIsPublished(),
                 String.valueOf(post.getDisplayType()));
     }
 

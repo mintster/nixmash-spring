@@ -17,13 +17,15 @@ public class JsonPostDTO  implements Serializable {
     private Set<String> tags = new HashSet<>();
     private String postTitle;
     private String postContent;
+    private Boolean isPublished;
     private String displayType;
 
-    public JsonPostDTO(Long postId, Set<String> tags, String postTitle, String postContent, String displayType) {
+    public JsonPostDTO(Long postId, Set<String> tags, String postTitle, String postContent, Boolean isPublished, String displayType) {
         this.postId = postId;
         this.tags = tags;
         this.postTitle = postTitle;
         this.postContent = postContent;
+        this.isPublished = isPublished;
         this.displayType = displayType;
     }
 

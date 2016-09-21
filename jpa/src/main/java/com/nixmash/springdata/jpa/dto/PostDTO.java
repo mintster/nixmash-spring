@@ -288,8 +288,9 @@ public class PostDTO implements Serializable {
     public static Builder getUpdateFields(Long postId,
                                           String postTitle,
                                           String postContent,
+                                          Boolean isPublished,
                                           PostDisplayType displayType) {
-        return new PostDTO.Builder(postId, postTitle, postContent, displayType);
+        return new PostDTO.Builder(postId, postTitle, postContent, isPublished, displayType);
     }
 
 
@@ -336,11 +337,13 @@ public class PostDTO implements Serializable {
         public Builder(Long postId,
                        String postTitle,
                        String postContent,
+                       Boolean isPublished,
                        PostDisplayType displayType) {
             built = new PostDTO();
             built.postId = postId;
             built.postTitle = postTitle;
             built.postContent = postContent;
+            built.isPublished = isPublished;
             built.displayType = displayType;
         }
 

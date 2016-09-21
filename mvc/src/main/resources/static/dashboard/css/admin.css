@@ -19,7 +19,6 @@ span.pad-right {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="SIDEBAR ----------------------------/ "*/
 
 li.current-page {
@@ -36,7 +35,6 @@ li.current-page {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="BODY AREA ----------------------------/ "*/
 
 .fill-body, .fill-body-table {
@@ -53,7 +51,6 @@ li.current-page {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="FORMS ----------------------------/ "*/
 
 ul.roleList {
@@ -80,7 +77,6 @@ tr.border-bottom-row {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="FLASHCARD ADMINISTRATION----------------------------/ "*/
 
 .form-inline .form-control.flashcard-content {
@@ -252,6 +248,26 @@ td.published-title a {
 
 .error-dialog .modal-content {
     background-color: rgb(249, 246, 183);
+}
+
+tr.ispublished-tr {
+
+}
+td.ispublished-td {
+
+}
+.post-status-label {
+    float: left;
+    margin-right: 4px;
+    font-weight: bold;
+    margin-top: 6px;
+}
+td.ispublished-td button.btn.dropdown-toggle.btn-primary {
+    padding: 0 12px;
+    max-width: 150px;
+}
+td.ispublished-td .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 150px;
 }
 
 /*</editor-fold>*/
