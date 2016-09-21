@@ -95,6 +95,15 @@ img.flash-thumbnail {
     padding: 0;
 }
 
+#flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-warning {
+    padding: 0;
+    margin-bottom: 4px;
+}
+
+.btn-warning .btn-primary span.filter-option.pull-left {
+    padding-left: 8px;
+}
+
 #flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-primary,
 #flatd.new-flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-primary {
     padding: 0px 5px 0px 8px;
@@ -111,6 +120,11 @@ td.new-flashcard-form span {
 
 input#category {
     vertical-align: top;
+}
+
+td.file-upload-td input[type="file"] {
+    margin-top: 7px;
+    font-size: 16px;
 }
 
 /*</editor-fold>*/

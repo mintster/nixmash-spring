@@ -46,12 +46,12 @@
                                   enctype="multipart/form-data" class="form-inline" id="new-flashcard-form">
                                 <td>&nbsp;</td>
                                 <td><input type="text" class="form-control align-top" th:field="*{description}"/></td>
-                                <td class="new-flashcard-form"><select th:field="*{categoryId}" name="categoryId"  id="categoryId" class="btn dropdown-toggle btn-primary selectpicker"
+                                <td class="new-flashcard-form"><select th:field="*{categoryId}" name="categoryId"  class="btn dropdown-toggle btn-primary"
                                             data-style="btn-primary">
                                     <option th:each="category : ${flashcardCategories}" th:text="${category.category}"
                                             th:value="${category.categoryId}"></option>
                                 </select></td>
-                                <td><input type="file" name="file" size="60" multiple="multiple"/></td>
+                                <td class="file-upload-td"><input type="file" name="file" size="60" multiple="multiple"/></td>
                                 <td><input type="submit" class="btn btn-primary" th:value="Add"/></td>
                             </form>
                         </tr>

@@ -9,7 +9,7 @@ public class FlashcardImageDTO {
 
     private MultipartFile file;
 
-    private long categoryId = -1L;
+    private long categoryId;
     private long postId = -1L;
     private String image;
 

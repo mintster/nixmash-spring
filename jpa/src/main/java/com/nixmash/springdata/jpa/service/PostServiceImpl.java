@@ -397,7 +397,7 @@ public class PostServiceImpl implements PostService {
 
         // Iterate over alphabet char Array, set AlphabetDTO.active if char in activeAlphas
         for (char c : alphabet)
-            alphaLinks.add(new AlphabetDTO(String.valueOf(c), activeAlphas.indexOf(c) > 0));
+            alphaLinks.add(new AlphabetDTO(String.valueOf(c), activeAlphas.indexOf(c) >= 0));
 
         // add AlphabetDTO record for "0-9", set active if any digits in activeAlphas String
         alphaLinks.add(new AlphabetDTO("0-9", activeAlphas.matches(".*\\d+.*")));
