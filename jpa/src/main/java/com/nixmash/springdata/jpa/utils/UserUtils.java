@@ -13,6 +13,7 @@ public class UserUtils {
         userDTO.setLastName(user.getLastName());
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
+        userDTO.setRepeatedPassword(user.getPassword());
         userDTO.setEmail(user.getEmail());
         userDTO.setSignInProvider(user.getSignInProvider());
         userDTO.setAuthorities(user.getAuthorities());

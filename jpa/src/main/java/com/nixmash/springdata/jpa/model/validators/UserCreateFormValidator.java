@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.model.validators;
 
 import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,13 @@ public class UserCreateFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         logger.debug("Validating {}", target);
         UserDTO form = (UserDTO) target;
-        validatePasswords(errors, form);
-        validateEmail(errors, form);
-        validateUsername(errors, form);
+        if (form.isNew()) {
+            validatePasswords(errors, form);
+            validateEmail(errors, form);
+            validateUsername(errors, form);
+        } else {
+            validateUsername(errors, form, form.getUserId());
+        }
     }
 
     private void validatePasswords(Errors errors, UserDTO form) {
@@ -49,6 +54,15 @@ public class UserCreateFormValidator implements Validator {
     private void validateUsername(Errors errors, UserDTO form) {
         if (userService.getUserByUsername(form.getUsername()) != null) {
             errors.reject("user.exists", "User with this username already exists");
+        }
+    }
+
+    private void validateUsername(Errors errors, UserDTO form, long userId) {
+        User user = userService.getUserByUsername(form.getUsername());
+        if (user != null) {
+            if (user.getId() != userId) {
+                errors.reject("user.exists", "User with this username already exists");
+            }
         }
     }
 }

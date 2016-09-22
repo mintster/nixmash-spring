@@ -2,14 +2,12 @@ package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ISiteOption;
 import com.nixmash.springdata.jpa.common.SiteOptions;
-import com.nixmash.springdata.jpa.dto.RoleDTO;
-import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
-import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
-import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.dto.*;
 import com.nixmash.springdata.jpa.enums.SignInProvider;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.model.Authority;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.jpa.utils.UserUtils;
@@ -21,10 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -49,6 +45,7 @@ public class AdminController {
     public static final String ADMIN_USERS_VIEW = "admin/security/users";
     private static final String ADMIN_ROLES_VIEW = "admin/security/roles";
     private static final String ADMIN_USERFORM_VIEW = "admin/security/userform";
+    private static final String ADMIN_USERPASSWORD_VIEW = "admin/security/password";
     public static final String ADMIN_SITESETTINGS_VIEW = "admin/site/settings";
 
     // endregion
@@ -70,16 +67,24 @@ public class AdminController {
     private final UserService userService;
     private final WebUI webUI;
     private final SiteOptions siteOptions;
+    private final UserCreateFormValidator userCreateFormValidator;
 
     @Autowired
-    public AdminController(UserService userService, WebUI webUI, SiteOptions siteOptions, SiteService siteService) {
+    public AdminController(UserService userService, WebUI webUI, SiteOptions siteOptions,
+                           SiteService siteService, UserCreateFormValidator userCreateFormValidator) {
         this.userService = userService;
         this.webUI = webUI;
         this.siteOptions = siteOptions;
         this.siteService = siteService;
+        this.userCreateFormValidator = userCreateFormValidator;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
+    @InitBinder("userDTO")
+    public void initUserBinder(WebDataBinder binder) {
+        binder.addValidators(userCreateFormValidator);
+    }
 
     // region Main Pages
 
@@ -115,17 +120,24 @@ public class AdminController {
         return populateUserForm((long) -1);
     }
 
+    @RequestMapping(value = "/users/password/{userId}", method = RequestMethod.GET)
+    public String setPasswordPage(@PathVariable("userId") Long userId, Model model) {
+        UserPasswordDTO userPasswordDTO = new UserPasswordDTO(userId, UUID.randomUUID().toString());
+        model.addAttribute("userPasswordDTO", userPasswordDTO);
+        return ADMIN_USERPASSWORD_VIEW;
+    }
+
     private ModelAndView populateUserForm(Long id) {
 
         ModelAndView mav = new ModelAndView();
         Optional<User> found = userService.getUserById(id);
-        User user = new User();
+        User user;
         if (found.isPresent()) {
             user = found.get();
             logger.info("Editing User with id and username: {} {}", id, user.getUsername());
-            mav.addObject("user", UserUtils.userToUserDTO(user));
+            mav.addObject("userDTO", UserUtils.userToUserDTO(user));
         } else {
-            mav.addObject("user", new UserDTO());
+            mav.addObject("userDTO", new UserDTO());
         }
         mav.addObject("authorities", userService.getRoles());
         mav.setViewName(ADMIN_USERFORM_VIEW);
@@ -133,9 +145,10 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/users/update/{userId}", method = RequestMethod.POST)
-    public String updateUser(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult result,
+    public String updateUser(@Valid UserDTO userDTO, BindingResult result,
                              RedirectAttributes attributes, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("authorities", userService.getRoles());
             return ADMIN_USERFORM_VIEW;
         } else {
 
@@ -151,12 +164,14 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/users/new", method = RequestMethod.POST)
-    public String addUser(@Valid UserDTO userDTO, BindingResult result, SessionStatus status,
+    public String addUser(@Valid UserDTO userDTO,
+                          BindingResult result, SessionStatus status,Model model,
                           RedirectAttributes attributes) {
         if (result.hasErrors()) {
+            model.addAttribute("authorities", userService.getRoles());
             return ADMIN_USERFORM_VIEW;
         } else {
-            userDTO.setPassword(UUID.randomUUID().toString());
+//            userDTO.setPassword(UUID.randomUUID().toString());
             userDTO.setSignInProvider(SignInProvider.SITE);
             User added = userService.create(userDTO);
             logger.info("Added user with information: {}", added);

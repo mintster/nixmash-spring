@@ -42,7 +42,9 @@
                             <td th:text="${user.lastName}">Doe</td>
                             <td th:text="${user.firstName}">John</td>
                             <td><a th:href="@{|/admin/users/update/${user.id}|}"><span
-                                    class="glyphicon glyphicon-pencil"></span></a></td>
+                                    class="glyphicon glyphicon-pencil"></span></a>
+                                <a th:href="@{|/admin/users/password/${user.id}|}" class="password-glyph"><i class="fa fa-lock" aria-hidden="true"></i></a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

@@ -270,4 +270,8 @@ td.ispublished-td .bootstrap-select:not([class*="col-"]):not([class*="form-contr
     width: 150px;
 }
 
+a.password-glyph {
+    margin-left: 4px;
+}
+
 /*</editor-fold>*/

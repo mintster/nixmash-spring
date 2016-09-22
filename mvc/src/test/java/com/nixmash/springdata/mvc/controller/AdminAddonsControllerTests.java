@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc.controller;
 import com.github.dandelion.core.web.DandelionFilter;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
+import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.AbstractContext;
@@ -56,6 +57,9 @@ public class AdminAddonsControllerTests extends AbstractContext {
     private SiteOptions siteOptions;
 
     @Autowired
+    private UserCreateFormValidator userCreateFormValidator;
+
+    @Autowired
     private SiteService siteService;
 
     private MockMvc mvc;
@@ -76,7 +80,7 @@ public class AdminAddonsControllerTests extends AbstractContext {
                 .build();
 
         mockUserService = mock(UserService.class);
-        adminController = new AdminController(userService, webUI, siteOptions, siteService);
+        adminController = new AdminController(userService, webUI, siteOptions, siteService, userCreateFormValidator);
     }
 
     @After

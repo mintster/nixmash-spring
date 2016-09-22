@@ -362,7 +362,7 @@ public class AdminPostsControllerTests  extends AbstractContext{
                 .param("postDescription", "my description")
                 .param("postType", POST_CONSTANT)
                 .param("displayType", POST_CONSTANT)
-                .param("postContent", "My Post Content")
+                .param("postContent", "My Post Content must be longer so I don't trigger a new contraint addition!")
                 .param("isPublished", "true")
                 .param("tags", String.format("req%s, req%s%s", s, s, 1))
                 .with(csrf());

@@ -1508,7 +1508,9 @@ span.right {
   background: #172D44;
 }
 .sidebar-footer a:hover {
-  background: #425567;
+  background: #000;
+  text-decoration: none;
+  color: #ddd;
 }
 .tile_count {
   margin-bottom: 20px;

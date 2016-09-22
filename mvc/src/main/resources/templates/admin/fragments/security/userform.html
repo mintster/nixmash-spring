@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
-    <!--/*@thymesVar id="user" type="com.nixmash.springdata.jpa.dto.UserDTO"*/-->
+    <!--/*@thymesVar id="userDTO" type="com.nixmash.springdata.jpa.dto.UserDTO"*/-->
     <div class="row">
         <div class="col-md-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                    <span th:if="${user['new']}" th:remove="tag" th:text="#{admin.userform.add.title}">
+                    <span th:if="${userDTO['new']}" th:remove="tag" th:text="#{admin.userform.add.title}">
                     [New User]
                 </span>
-                    <span th:unless="${user['new']}" th:remove="tag"
-                          th:text="|#{admin.userform.update.title} ${user.firstName} ${user.lastName}|">
+                    <span th:unless="${userDTO['new']}" th:remove="tag"
+                          th:text="|#{admin.userform.update.title} ${userDTO.firstName} ${userDTO.lastName}|">
                      [Update User Bob Schmoe]
              </span>
                     </h2>
@@ -27,7 +27,7 @@
 
                         <div class="row row-centered">
                             <div class="bs-section col-lg-9 col-centered">
-                                <form th:object="${user}" method="post"
+                                <form th:object="${userDTO}" method="post"
                                       th:action="@{${#httpServletRequest.getRequestURI()}}"
                                       class="form-horizontal" id="user-form">
 
@@ -97,6 +97,36 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        <tr th:if="${userDTO['new']}" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+                                            <td>
+                                                <div class="control-group"
+                                                     th:classappend="${#fields.hasErrors('password')} ? 'error'">
+                                                    <label class="control-label">Password</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="controls">
+                                                    <input type="password" class="form-control" th:field="*{password}"/>
+                                                    <label class="control-label"
+                                                           th:errors="*{password}">[error]</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr th:if="${userDTO['new']}" th:classappend="${#fields.hasErrors('repeatedPassword')} ? 'has-error'">
+                                            <td>
+                                                <div class="control-group"
+                                                     th:classappend="${#fields.hasErrors('repeatedPassword')} ? 'error'">
+                                                    <label class="control-label">Repeat Password</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="controls">
+                                                    <input type="password"  class="form-control" th:field="*{repeatedPassword}"/>
+                                                    <label class="control-label"
+                                                           th:errors="*{repeatedPassword}">[error]</label>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </table>
                                     <table class="table table-striped">
                                         <tr class="border-bottom-row">
@@ -114,9 +144,10 @@
                                         </tr>
 
                                     </table>
+                                    <input th:if="!${userDTO['new']}" type="hidden" name="password" id="password" value="dummypassword" />
                                     <div class="col-lg-12 button-col-align-right">
                                         <input type="submit" class="btn btn-primary"
-                                               th:value="(${user['new']} ? 'Add' : 'Update') + ' '"/>
+                                               th:value="(${userDTO['new']} ? 'Add' : 'Update') + ' '"/>
                                         <input type="button"
                                                th:onclick="'window.location.href=\'' + @{|/admin/users/|} + '\''"
                                                class="btn btn-success" value="Cancel"/>
