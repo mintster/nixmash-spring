@@ -45,7 +45,7 @@ public class AdminController {
     public static final String ADMIN_USERS_VIEW = "admin/security/users";
     private static final String ADMIN_ROLES_VIEW = "admin/security/roles";
     private static final String ADMIN_USERFORM_VIEW = "admin/security/userform";
-    private static final String ADMIN_USERPASSWORD_VIEW = "admin/security/password";
+    public static final String ADMIN_USERPASSWORD_VIEW = "admin/security/password";
     public static final String ADMIN_SITESETTINGS_VIEW = "admin/site/settings";
 
     // endregion
@@ -59,6 +59,10 @@ public class AdminController {
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_IS_LOCKED = "feedback.message.role.islocked";
     private static final String FEEDBACK_MESSAGE_KEY_ROLE_DELETED = "feedback.message.role.deleted";
     private static final String FEEDBACK_SITE_SETTINGS_UPDATED = "feedback.message.sitesettings.updated";
+
+    private static final String ADMIN_USER_SETPASSWORD_HEADING_KEY = "admin.users.password.heading";
+    private static final String FEEDBACK_USER_PASSWORD_UPDATED_KEY = "feedback.user.password.updated";
+    private static final String GLOBAL_ERROR_PASSWORDS_DONOT_MATCH_KEY = "global.error.passwords.donotmatch";
 
 
     // endregion
@@ -124,7 +128,43 @@ public class AdminController {
     public String setPasswordPage(@PathVariable("userId") Long userId, Model model) {
         UserPasswordDTO userPasswordDTO = new UserPasswordDTO(userId, UUID.randomUUID().toString());
         model.addAttribute("userPasswordDTO", userPasswordDTO);
+        model.addAttribute("userDescription", getUserDescription(userId));
         return ADMIN_USERPASSWORD_VIEW;
+    }
+
+    private String getUserDescription(long userId) {
+        String userDescription = null;
+        Optional<User> user = userService.getUserById(userId);
+        if (user.isPresent()) {
+            userDescription = String.format("%s %s (%s)", user.get().getFirstName(),
+                    user.get().getLastName(), user.get().getUsername());
+        }
+        return webUI.getMessage(ADMIN_USER_SETPASSWORD_HEADING_KEY, userDescription);
+    }
+
+    @RequestMapping(value = "/users/password", method = RequestMethod.POST)
+    public String setPasswordPage(@Valid UserPasswordDTO userPasswordDTO, BindingResult result, Model model,
+                                  RedirectAttributes attributes) {
+
+        long userId = userPasswordDTO.getUserId();
+        if (result.hasErrors()) {
+            model.addAttribute("userDescription", getUserDescription(userId));
+            return ADMIN_USERPASSWORD_VIEW;
+        } else {
+            if (!userPasswordDTO.getPassword().equals(userPasswordDTO.getRepeatedPassword())) {
+                result.reject(GLOBAL_ERROR_PASSWORDS_DONOT_MATCH_KEY);
+                model.addAttribute("userDescription", getUserDescription(userId));
+                return ADMIN_USERPASSWORD_VIEW;
+            } else {
+                userService.updatePassword(userPasswordDTO);
+                Optional<User> user = userService.getUserById(userPasswordDTO.getUserId());
+                if (user.isPresent()) {
+                    webUI.addFeedbackMessage(attributes, FEEDBACK_USER_PASSWORD_UPDATED_KEY, user.get().getFirstName(),
+                            user.get().getLastName());
+                }
+            }
+        }
+        return "redirect:/admin/users";
     }
 
     private ModelAndView populateUserForm(Long id) {
@@ -156,8 +196,8 @@ public class AdminController {
             userService.update(userDTO);
 
             attributes.addAttribute(PARAMETER_USER_ID, userDTO.getUserId());
-            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_USER_UPDATED, userDTO.getFirstName(),
-                    userDTO.getLastName());
+            webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_KEY_USER_UPDATED,
+                    userDTO.getFirstName() + " " + userDTO.getLastName());
 
             return "redirect:/admin/users";
         }
@@ -165,7 +205,7 @@ public class AdminController {
 
     @RequestMapping(value = "/users/new", method = RequestMethod.POST)
     public String addUser(@Valid UserDTO userDTO,
-                          BindingResult result, SessionStatus status,Model model,
+                          BindingResult result, SessionStatus status, Model model,
                           RedirectAttributes attributes) {
         if (result.hasErrors()) {
             model.addAttribute("authorities", userService.getRoles());
@@ -273,8 +313,8 @@ public class AdminController {
 
     @RequestMapping(value = "/site/settings", method = RequestMethod.POST)
     public String siteSettings(@Valid SiteOptionMapDTO siteOptionMapDTO,
-                          BindingResult result,
-                          RedirectAttributes attributes) throws SiteOptionNotFoundException {
+                               BindingResult result,
+                               RedirectAttributes attributes) throws SiteOptionNotFoundException {
         if (hasSiteSettingsErrors(result)) {
             return ADMIN_SITESETTINGS_VIEW;
         } else {
@@ -289,8 +329,7 @@ public class AdminController {
 
     // region Utility Methods
 
-    SiteOptionMapDTO getGeneralSiteSettings()
-    {
+    SiteOptionMapDTO getGeneralSiteSettings() {
         return SiteOptionMapDTO.withGeneralSettings(
                 siteOptions.getSiteName(),
                 siteOptions.getSiteDescription(),

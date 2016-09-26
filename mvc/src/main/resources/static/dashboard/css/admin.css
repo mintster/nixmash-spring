@@ -18,7 +18,16 @@ span.pad-right {
     vertical-align: -webkit-baseline-middle;
 }
 
+.alert-danger .close, .alert-error .close {
+    opacity: 1;
+}
+.alert-danger label.control-label, .alert-error label.control-label{
+    color: #fff;
+}
+
+
 /*</editor-fold>*/
+
 /*/<editor-fold> desc="SIDEBAR ----------------------------/ "*/
 
 li.current-page {
@@ -35,6 +44,7 @@ li.current-page {
 }
 
 /*</editor-fold>*/
+
 /*/<editor-fold> desc="BODY AREA ----------------------------/ "*/
 
 .fill-body, .fill-body-table {
@@ -51,6 +61,7 @@ li.current-page {
 }
 
 /*</editor-fold>*/
+
 /*/<editor-fold> desc="FORMS ----------------------------/ "*/
 
 ul.roleList {
@@ -77,6 +88,7 @@ tr.border-bottom-row {
 }
 
 /*</editor-fold>*/
+
 /*/<editor-fold> desc="FLASHCARD ADMINISTRATION----------------------------/ "*/
 
 .form-inline .form-control.flashcard-content {
@@ -89,15 +101,6 @@ img.flash-thumbnail {
 
 #flashcard-form button.btn.dropdown-toggle.btn-primary {
     padding: 0;
-}
-
-#flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-warning {
-    padding: 0;
-    margin-bottom: 4px;
-}
-
-.btn-warning .btn-primary span.filter-option.pull-left {
-    padding-left: 8px;
 }
 
 #flashcard-form .btn-group.bootstrap-select.btn.dropdown-toggle.btn-primary,

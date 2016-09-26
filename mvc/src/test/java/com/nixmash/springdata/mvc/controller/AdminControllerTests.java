@@ -27,8 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.ServletException;
 
 import static com.nixmash.springdata.jpa.model.SiteOptionTests.*;
-import static com.nixmash.springdata.mvc.controller.AdminController.ADMIN_HOME_VIEW;
-import static com.nixmash.springdata.mvc.controller.AdminController.ADMIN_USERS_VIEW;
+import static com.nixmash.springdata.mvc.controller.AdminController.*;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -183,5 +182,54 @@ public class AdminControllerTests extends AbstractContext {
                 .andExpect(redirectedUrl("/admin/site/settings"));
     }
 
+    @Test
+    @WithAdminUser
+    public void getSetUserPasswordPage() throws Exception {
+        RequestBuilder request = get("/admin/users/password/3").with(csrf());
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("userPasswordDTO"))
+                .andExpect(model().attributeExists("userDescription"))
+                .andExpect(view().name(ADMIN_USERPASSWORD_VIEW));
+    }
 
+    @Test
+    @WithAdminUser
+    public void resetPasswordMatchingPasswords_RedirectsToUserList() throws Exception {
+        RequestBuilder request = post("/admin/users/password")
+                .param("userId", "4").param("password", "password").param("repeatedPassword", "password").with(csrf());
+
+        mvc.perform(request)
+                .andExpect(redirectedUrl("/admin/users"));
+
+    }
+
+    @Test
+    @WithAdminUser
+    public void resetPassword3CharPasswords_ReturnsToView() throws Exception {
+        RequestBuilder request = post("/admin/users/password")
+                .param("userId", "4").param("password", "one").param("repeatedPassword", "one").with(csrf());
+
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("userPasswordDTO"))
+                .andExpect(model().attributeExists("userDescription"))
+                .andExpect(view().name(ADMIN_USERPASSWORD_VIEW));
+
+    }
+
+
+    @Test
+    @WithAdminUser
+    public void resetNonMatchingPasswords_ReturnsToView() throws Exception {
+        RequestBuilder request = post("/admin/users/password")
+                .param("userId", "4").param("password", "firstpassword").param("repeatedPassword", "secondpassword").with(csrf());
+
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("userPasswordDTO"))
+                .andExpect(model().attributeExists("userDescription"))
+                .andExpect(view().name(ADMIN_USERPASSWORD_VIEW));
+
+    }
 }
