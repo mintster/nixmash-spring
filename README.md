@@ -85,6 +85,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - Bash script for creating all website support folders
 - [Post: Posting Json with Spring MVC](http://nixmash.com/java/posting-json-with-spring-mvc/)
 - [Post: Testing Json Posting with Spring Boot JacksonTester](http://nixmash.com/java/testing-json-posting-with-spring-boot-jacksontester/)
+- [Post: Possible Solution for Ignored MultiPartFile Locations in Spring Boot 1.4](http://nixmash.com/java/possible-solution-for-ignored-multipartfile-locations-in-spring-boot-1-4/)
 
 ![v0.4.2 Post Save and Continue](http://nixmash.com/x/pics/github/spring-data-0.4.2.png)
 
