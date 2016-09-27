@@ -15,11 +15,11 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (post v0.4.0)* |
 
-The primary driver of this app is shown on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "Becoming Spring Masters Together". Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining it in detail. 
+The primary driver of this app is shown on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "**Becoming Spring Masters Together.**" Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining it in detail. 
 
-The daily NixMash Spring changelist is [located here.](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and posted on the Demo Site.
+The daily NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and published on the Demo Site Post Stream.
 
-**See the [Installation](#installation) section below** on how to configure application settings to run the NixMash Spring Web App. Once configured you can run the Web Application with
+**See the [Installation section](#installation) below** on how to configure application settings to run the NixMash Spring Web App. Once configured you can run the Web Application with
 
 `$ gradle mvc:bootRun`
 
@@ -657,9 +657,9 @@ The application supports an H2 Profile (default) and a MySQL Profile. To run JPA
 
 To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.`
 
-##Installation - External Property File Settings##
+##Installation - External Property Files##
 
-The JPA Project demonstrates using an external Property File. To Configure Location of Properties File, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class`. An example of `external.properties` is found in the `/install/samples` folder.
+The **JPA** and **Mail** Modules use external Property Files which must be configured to compile successfully. To Configure the location of the Properties Files, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class` and `Mail/MailSettings.java.` You can quickly locate these settings by searching "/home/daveburke" in your IDE.
 
 ```java
 @Component
@@ -667,16 +667,7 @@ The JPA Project demonstrates using an external Property File. To Configure Locat
 @ConfigurationProperties(prefix="external")
 public class ApplicationSettings {
 ```
-##Installation - Email Services##
-
-The `Mail` Module contains the mail functionality. Like the JPA project above, an External `mail.properties` file defines SMTP HostName and other mail server properties. That file pathname is defined in the `Mail` Module `MailSettings.java` Class. An example of `mail.properties` is found in the `/install/samples` folder.
-
-```java
-@Component
-@PropertySource("file:/home/daveburke/web/nixmashspring/mail.properties")
-@ConfigurationProperties(prefix = "mail")
-public class MailSettings {
-```
+An example of `external.properties` and `mail.properties` are found in the `/install/samples` folder. Update the settings appropriately for your environment.
 
 ##Installation - Solr##
 
@@ -686,7 +677,7 @@ The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod"
 
 ##Installation - File Uploads##
 
-You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhosty:9000` you could create a soft-link to the `/files` location. See [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2.
+You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhost:9000` you could create a soft-link to the `/files` location. See [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2. There is also bash scripts in `/install/sh` for creating a `build/files` soft-link and all site support directories.
 
 ##References##
 
