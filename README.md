@@ -15,7 +15,7 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (post v0.4.0)* |
 
-The primary driver of this app is shown on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "**Becoming Spring Masters Together.**" Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining it in detail. 
+The primary motivation behind this app is shown below on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "**Becoming Spring Masters Together.**" Nearly every new application feature inspired one or more blog posts at [NixMash.com](http://nixmash.com) explaining it in detail. 
 
 The daily NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and published on the Demo Site Post Stream.
 
@@ -667,7 +667,7 @@ The **JPA** and **Mail** Modules use external Property Files which must be confi
 @ConfigurationProperties(prefix="external")
 public class ApplicationSettings {
 ```
-An example of `external.properties` and `mail.properties` are found in the `/install/samples` folder. Update the settings appropriately for your environment.
+An example of `external.properties` and `mail.properties` are found in the `/install/samples` folder. Update the property values for your environment.
 
 ##Installation - Solr##
 
@@ -677,7 +677,7 @@ The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod"
 
 ##Installation - File Uploads##
 
-You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhost:9000` you could create a soft-link to the `/files` location. See [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2. There is also bash scripts in `/install/sh` for creating a `build/files` soft-link and all site support directories.
+You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhost:9000` you could create a soft-link to the `/files` location. See [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2. There are also bash scripts in `/install/sh` for creating a `build/files` soft-link and all site support directories.
 
 ##References##
 
