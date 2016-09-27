@@ -1,7 +1,7 @@
 NixMash Spring
 ==========================
 
-NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and supporting technologies. Implemented in project:
+NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and supporting web technologies including:
 
 &nbsp; | &nbsp; | &nbsp; | &nbsp;
 | --- | --- | --- | --- |
@@ -15,9 +15,9 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring and support
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (post v0.4.0)* |
 
-The slogan on the [NixMash Spring Demo Site](http://nixmashspring.daveburkevt.com/) is "Becoming Spring Masters Together" which is what drives development in this app.
+The primary driver of this app is shown on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "Becoming Spring Masters Together". Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining it in detail. 
 
-Nearly every new application feature has one or more blog posts at [NixMash.com](http://nixmash.com) explaining the feature in detail. All NixMash Spring blog posts are listed below with their implementation version. The daily changelist is [located here.](http://nixmashspring.daveburkevt.com/x/html/changelist.html)
+The daily NixMash Spring changelist is [located here.](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and posted on the Demo Site.
 
 **See the [Installation](#installation) section below** on how to configure application settings to run the NixMash Spring Web App. Once configured you can run the Web Application with
 
@@ -27,7 +27,7 @@ The supporting projects (JPA, Mail, Solr and Jsoup) can also be executed with `$
 
 A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
 
-![Home Page in  Release 0.3.1](http://nixmash.com/x/pics/github/spring-home-0.3.1.1.png)
+![Home Page in  Release 0.3.1](http://nixmash.com/x/pics/github/spring-home-0.4.2.png)
 
 ##Implemented##
 
