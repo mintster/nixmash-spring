@@ -17,7 +17,7 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 
 The primary motivation behind this app is shown below on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "**Becoming Spring Masters Together.**" Nearly every new application feature inspired one or more blog posts at [NixMash.com](http://nixmash.com) explaining it in detail. 
 
-The daily NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and published on the Demo Site Post Stream.
+The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and published on the Demo Site Post Stream.
 
 **See the [Installation section](#installation) below** on how to configure application settings to run the NixMash Spring Web App. Once configured you can run the Web Application with
 
