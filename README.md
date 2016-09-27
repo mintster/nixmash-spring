@@ -15,11 +15,11 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (post v0.4.0)* |
 
-The primary motivation behind this app is shown below on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "**Becoming Spring Masters Together.**" Nearly every new application feature inspired one or more blog posts at [NixMash.com](http://nixmash.com) explaining it in detail. 
+The primary motivation behind this app is shown below on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "**Becoming Spring Masters Together.**" Nearly every new application feature inspired one or more blog posts at [NixMash.com](http://nixmash.com) with screen shots and source code excerpts. 
 
-The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and published on the Demo Site Post Stream.
+The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and published on the [Demo Site Post Stream](http://nixmashspring.daveburkevt.com/posts).
 
-**See the [Installation section](#installation) below** on how to configure application settings to run the NixMash Spring Web App. Once configured you can run the Web Application with
+**See the [Installation section](#installation) below** on how to configure NixMash Spring to get up and running. Once configured you can run the Web Application with
 
 `$ gradle mvc:bootRun`
 
