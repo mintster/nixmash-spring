@@ -1,7 +1,7 @@
 
 
 buildscript {
-	ext { springBootVersion = '1.4.0.RELEASE' }
+	ext { springBootVersion = '1.4.1.RELEASE' }
 	repositories {
 		mavenCentral()
 		maven { url "http://maven.restlet.org" }
