@@ -143,8 +143,8 @@
 
    <field name="store" type="location" indexed="true" stored="true"/>
 
-
-   <!-- NixMash Spring field added to filter by document type -->
+   <!-- NixMash Spring master field added to filter by document type -->
+    <!-- Indexed: PRODUCT, BOOK, MANUFACTURER, MONEY, POST -->
 
    <field name="doctype" type="text_general" indexed="true" stored="true"/>
 
@@ -156,11 +156,10 @@
        "content_type": From the HTTP headers of incoming stream
        "resourcename": From SolrCell request param resource.name
    -->
-   <field name="title" type="text_general" indexed="true" stored="true" multiValued="true"/>
+
    <field name="subject" type="text_general" indexed="true" stored="true"/>
    <field name="description" type="text_general" indexed="true" stored="true"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
-   <field name="author" type="text_general" indexed="true" stored="true"/>
    <field name="keywords" type="text_general" indexed="true" stored="true"/>
    <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
@@ -169,11 +168,26 @@
    <field name="last_modified" type="date" indexed="true" stored="true"/>
    <field name="links" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="_src_" type="string" indexed="false" stored="true"/>
+    <field name="author" type="text_general" indexed="true" stored="true"/>
+    <field name="title" type="text_general" indexed="true" stored="true" />
 
-   <!-- Main body of document extracted by SolrCell.
-        NOTE: This field is not indexed by default, since it is also copied to "text"
-        using copyField below. This is to save space. Use this field for returning and
-        highlighting document content. Use the "text" field to search the content. -->
+    <!-- NixMash Spring Posts Start  -->
+
+   <field name="post_title" type="text_general" indexed="true" stored="true" />
+   <field name="post_name" type="text_general" indexed="false" stored="true" />
+   <field name="post_author" type="text_general" indexed="true" stored="true" />
+   <field name="post_link" type="text_general" indexed="false" stored="true" />
+   <field name="post_source" type="text_general" indexed="true" stored="true"  />
+   <field name="post_type" type="string" indexed="true" stored="true" />
+   <field name="post_text" type="text_general" indexed="true" stored="true" omitNorms="true"/>
+   <field name="post_content" type="text_general" indexed="false" stored="true" omitNorms="true"/>
+   <field name="tag" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="post_date" type="date" indexed="true" stored="true"/>
+
+  <!-- Main body of document extracted by SolrCell.
+       NOTE: This field is not indexed by default, since it is also copied to "text"
+       using copyField below. This is to save space. Use this field for returning and
+       highlighting document content. Use the "text" field to search the content. -->
    <field name="content" type="text_general" indexed="false" stored="true" multiValued="true"/>
    
 
@@ -303,11 +317,17 @@
 
    <!-- Create a string version of author for faceting -->
    <copyField source="author" dest="author_s"/>
-	
-   <!-- Above, multiple source fields are copied to the [text] field. 
-	  Another way to map multiple source fields to the same 
-	  destination field is to use the dynamic field syntax. 
-	  copyField also supports a maxChars to copy setting.  -->
+
+    <!-- NixMash Spring Posts copyFields-->
+
+    <copyField source="tag" dest="text"/>
+    <copyField source="post_title" dest="text"/>
+    <copyField source="post_text" dest="text"/>
+
+    <!-- Above, multiple source fields are copied to the [text] field.
+       Another way to map multiple source fields to the same
+       destination field is to use the dynamic field syntax.
+       copyField also supports a maxChars to copy setting.  -->
 	   
    <!-- <copyField source="*_t" dest="text" maxChars="3000"/> -->
 

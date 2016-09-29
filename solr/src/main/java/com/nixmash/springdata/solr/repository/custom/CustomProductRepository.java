@@ -44,7 +44,7 @@ import com.nixmash.springdata.solr.model.Product;
  * On GitHub: https://goo.gl/JoAYaT
  * 
  */
-public interface CustomProductRepository extends CustomBaseRepository, SolrCrudRepository<Product, String> {
+public interface CustomProductRepository extends CustomBaseProductRepository, SolrCrudRepository<Product, String> {
 
 	Page<Product> findByPopularityGreaterThanEqual(Integer popularity, Pageable page);
 

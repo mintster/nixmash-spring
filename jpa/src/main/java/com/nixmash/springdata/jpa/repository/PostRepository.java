@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.repository;
 
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.Post;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -41,4 +42,11 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 
     @Query("select distinct p from Post p where p.displayType = 'SINGLEPHOTO_POST'")
     List<Post> findSinglePhotoPosts(Sort sort);
+
+    @Query("select distinct p from Post p left join p.tags t where p.isPublished = true and p.postType = ?1")
+    List<Post> findAllPublishedByPostType(PostType postType);
+
+    @Query("select distinct p from Post p left join p.tags t where p.isPublished = true and p.postType = ?1")
+    Page<Post> findPublishedByPostTypePaged(PostType postType, Pageable pageable);
+
 }

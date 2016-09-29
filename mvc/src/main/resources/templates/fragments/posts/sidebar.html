@@ -3,7 +3,7 @@
 <body>
 <div th:fragment="sidebar(activeTab)">
 
-    <div  th:with="top=${currentUser == null} ? 266px :  308px" th:remove="tag">
+    <div  th:with="top=${currentUser == null} ? 308px :  350px" th:remove="tag">
         <style type="text/css" th:inline="text">
             #tagcloud.affix
             {
@@ -25,6 +25,10 @@
 
             <a th:href="@{/posts/az}" class="list-group-item"
                th:classappend="${activeTab == 'az'} ? 'active'"><span  th:text="#{posts.sidebar.menu.az}" th:remove="tag">[Posts A-to-Z]</span>
+                <i class="glyphicon glyphicon-chevron-right"></i></a>
+
+            <a th:href="@{/posts/links}" class="list-group-item"
+               th:classappend="${activeTab == 'links'} ? 'active'"><span th:text="#{posts.sidebar.menu.links}" th:remove="tag">[Links Only]</span>
                 <i class="glyphicon glyphicon-chevron-right"></i></a>
 
             <a th:if="${currentUser != null}" th:href="@{|/posts/likes/${currentUser.user.id}|}" class="list-group-item"
@@ -52,14 +56,21 @@
     /* activate sidebar */
     $('#sidebar').affix({
         offset: {
-            top: 235
+            top: 277
         }
     });
 
     /* activate sidebar */
     $('#tagcloud').affix({
         offset: {
-            top: 235
+            top: 277
+        }
+    });
+
+    /* activate sidebar */
+    $('#secInfo').affix({
+        offset: {
+            top: 600
         }
     });
 

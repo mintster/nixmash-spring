@@ -1,11 +1,10 @@
 package com.nixmash.springdata.solr;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.nixmash.springdata.solr.enums.SolrProductField;
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
+import com.nixmash.springdata.solr.model.Product;
+import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
+import com.nixmash.springdata.solr.service.ProductService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,20 +23,19 @@ import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.core.query.result.HighlightEntry;
 import org.springframework.data.solr.core.query.result.HighlightEntry.Highlight;
 import org.springframework.data.solr.core.query.result.HighlightPage;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.nixmash.springdata.solr.enums.SolrProductField;
-import com.nixmash.springdata.solr.exceptions.GeoLocationException;
-import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
-import com.nixmash.springdata.solr.service.ProductService;
+import javax.annotation.Resource;
+import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-public class SolrApplicationTests extends SolrContext {
+import static org.junit.Assert.assertTrue;
+
+@RunWith(SpringRunner.class)
+public class SolrProductTests extends SolrContext {
 
 	private static final String SOLR_STRING = "solr";
 	private static final int PRODUCT_ID = 1000;
-	private static final int INITIAL_RECORD_COUNT = 55;
+	private static final int INITIAL_RECORD_COUNT = 62;
 	private static final int INITIAL_CATEGORY_COUNT = 6;
 	private static final int TEST_RECORD_COUNT = 10;
 
@@ -46,7 +44,7 @@ public class SolrApplicationTests extends SolrContext {
 
 	@After
 	public void tearDown() {
-		Query query = new SimpleQuery(new SimpleStringCriteria("cat:test"));
+		Query query = new SimpleQuery(new SimpleStringCriteria("cat:test*"));
 		solrOperations.delete(query);
 		solrOperations.commit();
 	}

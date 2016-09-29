@@ -7,6 +7,7 @@ import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.ContentType;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
@@ -208,6 +209,20 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getAllPosts() {
         return postRepository.findAll(sortByPostDateDesc());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getAllPublishedPostsByPostType(PostType postType) {
+        return postRepository.findAllPublishedByPostType(postType);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<Post> getPagedPostsByPostType(PostType postType, int pageNumber, int pageSize) {
+        PageRequest pageRequest =
+                new PageRequest(pageNumber, pageSize, sortByPostDateDesc());
+        return postRepository.findPublishedByPostTypePaged(postType, pageRequest);
     }
 
     @Transactional(readOnly = true)

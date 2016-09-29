@@ -15,43 +15,26 @@
  */
 package com.nixmash.springdata.solr.repository.custom;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.nixmash.springdata.solr.enums.SolrDocType;
+import com.nixmash.springdata.solr.model.IProduct;
+import com.nixmash.springdata.solr.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.core.query.Criteria;
-import org.springframework.data.solr.core.query.HighlightOptions;
-import org.springframework.data.solr.core.query.PartialUpdate;
-import org.springframework.data.solr.core.query.Query;
-import org.springframework.data.solr.core.query.SimpleHighlightQuery;
-import org.springframework.data.solr.core.query.SimpleQuery;
-import org.springframework.data.solr.core.query.SimpleStringCriteria;
+import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Repository;
 
-import com.nixmash.springdata.solr.enums.SolrDocType;
-import com.nixmash.springdata.solr.model.IProduct;
-import com.nixmash.springdata.solr.model.Product;
+import javax.annotation.Resource;
+import java.util.List;
 
-/**
- * 
- * NixMash Spring Notes: ---------------------------------------------------
- * 
- * Based on Christoph Strobl's Spring Solr Repository Example for Spring Boot
- * 
- * On GitHub: https://goo.gl/JoAYaT
- * 
- */
 @Repository
-public class CustomProductRepositoryImpl implements CustomBaseRepository {
+public class CustomProductRepositoryImpl implements CustomBaseProductRepository {
 
-	private static final Logger logger = LoggerFactory.getLogger(CustomProductRepositoryImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomBaseProductRepository.class);
 
 	@Resource
 	private SolrTemplate solrTemplate;

@@ -9,7 +9,7 @@ import org.springframework.data.solr.core.query.result.HighlightPage;
 
 import com.nixmash.springdata.solr.model.IProduct;
 import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.model.ProductDTO;
+import com.nixmash.springdata.solr.dto.ProductDTO;
 
 public class SolrUtils {
 

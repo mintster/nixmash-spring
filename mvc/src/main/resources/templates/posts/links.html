@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Global Header</div>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/highlight/github.css}"/>
+    <script th:src="@{/js/highlight.pack.js}"></script>
+
+    <title th:text="#{posts.links.page.title}">[NixMash Spring Links Only]</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
+
+<div class="container">
+    <div th:with="heading=#{posts.links.page.header}, subheading=#{posts.links.page.subheader}" th:remove="tag">
+        <div th:replace="fragments/banner :: banner(${heading}, ${subheading})">
+        </div>
+    </div>
+</div>
+
+<div class="container bs-container">
+    <div class="row">
+        <div class="bs-section">
+
+            <div th:include="fragments/alerts :: [id='feedback']" th:remove="tag">Feedback</div>
+
+            <div th:include="fragments/posts/sidebar :: sidebar('links')" th:remove="tag">Posts Sidebar</div>
+            <div th:include="fragments/posts/linklist :: linklist" th:remove="tag">Link List</div>
+
+        </div>
+    </div>
+
+    <nav th:replace="fragments/secinfo :: [id='secInfo']">User Info</nav>
+</div>
+
+<div th:include="fragments/scripts :: [id='scripts']" th:remove="tag">Scripts</div>
+<div th:include="fragments/alerts :: [id='alerts']" th:remove="tag">Alerts</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var pageIndex = 0;
+    var showMore = [[${showmore}]];
+    var backToTop = "<a href='/posts/links/'>Back to top</a>";
+    var baseUrl = "/json/posts/links/page/";
+    var moreUrl = "/json/posts/links/more";
+
+    /*]]>*/
+</script>
+
+<script th:replace="fragments/posts/postjs :: stream">Post Stream Scripts</script>
+<script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
+
+
+</body>
+</html>
+
+
+

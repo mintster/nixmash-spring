@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc.controller;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
@@ -40,6 +41,7 @@ public class PostsRestController {
     private static final String SESSION_ATTRIBUTE_POSTTITLES = "posttitles";
     private static final String SESSION_ATTRIBUTE_TAGGEDPOSTS = "taggedposts";
     private static final String SESSION_ATTRIBUTE_LIKEDPOSTS = "likedposts";
+    private static final String SESSION_ATTRIBUTE_JUSTLINKS = "justlinks";
 
     private PostService postService;
     private FmService fmService;
@@ -68,6 +70,23 @@ public class PostsRestController {
     @RequestMapping(value = "/titles/more")
     public String getTitleHasNext(HttpServletRequest request) {
         return hasNext(request, SESSION_ATTRIBUTE_POSTTITLES, TITLE_PAGING_SIZE);
+    }
+
+    // endregion
+
+    // region Just Links
+
+    @RequestMapping(value = "/links/page/{pageNumber}", produces = "text/html;charset=UTF-8")
+    public String getLinks(@PathVariable Integer pageNumber, HttpServletRequest request, CurrentUser currentUser) {
+        Slice<Post> posts = postService.getPagedPostsByPostType(PostType.LINK, pageNumber, POST_PAGING_SIZE);
+        String result = populatePostStream(posts.getContent(), currentUser);
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_JUSTLINKS, posts.getContent());
+        return result;
+    }
+
+    @RequestMapping(value = "/links/more")
+    public String getLinksHasNext(HttpServletRequest request) {
+        return hasNext(request, SESSION_ATTRIBUTE_JUSTLINKS, POST_PAGING_SIZE);
     }
 
     // endregion

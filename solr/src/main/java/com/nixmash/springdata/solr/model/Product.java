@@ -15,15 +15,12 @@
  */
 package com.nixmash.springdata.solr.model;
 
-import java.util.List;
-
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.geo.Point;
 import org.springframework.data.solr.core.geo.GeoConverters;
 
-/**
- * @author Christoph Strobl
- */
+import java.util.List;
+
 public class Product implements IProduct {
 
 	@Field(ID_FIELD)

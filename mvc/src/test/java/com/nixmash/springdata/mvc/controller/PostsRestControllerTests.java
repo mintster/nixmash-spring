@@ -28,7 +28,7 @@ public class PostsRestControllerTests extends AbstractContext {
 
     @Before
     public void setUp() {
-        mockMvc =  webAppContextSetup(wac)
+        mockMvc = webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
     }
@@ -61,7 +61,7 @@ public class PostsRestControllerTests extends AbstractContext {
                 .andExpect(status().isOk());
     }
 
-        @Test
+    @Test
     @WithAnonymousUser
     public void postPathsforAnonymousUsers() throws Exception {
 

@@ -15,12 +15,14 @@
  */
 package com.nixmash.springdata.solr;
 
+import com.nixmash.springdata.solr.enums.SolrDocType;
+import com.nixmash.springdata.solr.model.PostDoc;
+import com.nixmash.springdata.solr.model.Product;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import com.nixmash.springdata.solr.enums.SolrDocType;
-import com.nixmash.springdata.solr.model.Product;
 
 /**
  * 
@@ -34,6 +36,8 @@ import com.nixmash.springdata.solr.model.Product;
 public abstract class SolrTestUtils {
 
 	private static List<String> categories = Collections.singletonList("test");
+	private static List<String> tags = Arrays.asList("testone", "testtwo");
+
 
 	protected static List<Product> createProductList(int nrProducts) {
 		List<Product> products = new ArrayList<Product>(nrProducts);
@@ -55,5 +59,29 @@ public abstract class SolrTestUtils {
 		product.setLocation(null);
 		product.setDoctype(SolrDocType.PRODUCT);
 		return product;
+	}
+
+	protected static List<PostDoc> createPostList(int nrPosts) {
+		List<PostDoc> posts = new ArrayList<PostDoc>(nrPosts);
+		for (int i = 0; i < nrPosts; i++) {
+			posts.add(createPost(i));
+		}
+		return posts;
+	}
+
+	protected static PostDoc createPost(int id) {
+		PostDoc post = new PostDoc();
+		post.setPostId(Integer.toString(id));
+		post.setPostTitle("Post Title " + id);
+		post.setPostAuthor("mintster");
+		post.setPostName("post-title-" + id);
+		post.setPostLink(id % 2 == 0 ? "" : "http://somewhere/" + id);
+		post.setPostType(id % 2 == 0 ? "POST" : "LINK");
+		post.setPostContent("<strong>Post Content</strong> " + id);
+		post.setPostText("Post Content " + id);
+		post.setPostSource(id % 2 == 0 ? "somewhere.com" : "NA");
+		post.setTags(tags);
+		post.setDocType(SolrDocType.POST);
+		return post;
 	}
 }

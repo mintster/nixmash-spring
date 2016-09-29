@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.service;
 import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
@@ -47,6 +48,12 @@ public interface PostService {
 
     @Transactional(readOnly = true)
     List<Post> getAllPosts();
+
+    @Transactional(readOnly = true)
+    List<Post> getAllPublishedPostsByPostType(PostType postType);
+
+    @Transactional(readOnly = true)
+    Page<Post> getPagedPostsByPostType(PostType postType, int pageNumber, int pageSize);
 
     @Transactional(readOnly = true)
     List<Post> getAllPublishedPosts();

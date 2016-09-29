@@ -5,6 +5,7 @@ import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
@@ -16,6 +17,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,11 +33,10 @@ import static com.nixmash.springdata.jpa.utils.PostTestUtils.*;
 import static com.nixmash.springdata.jpa.utils.PostUtils.postDtoToPost;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
@@ -202,8 +203,25 @@ public class PostServiceTests {
     public void getLikedPostsForUserWithNoLikes_NotNull() {
         // no likes for userId = 4 in H2 data
         List<Post> posts = postService.getPostsByUserLikes(4L);
+        assertNull(posts);
+    }
+
+    @Test
+    public void getPostsByPostType() throws Exception{
+        List<Post> posts;
+        posts = postService.getAllPublishedPostsByPostType(PostType.POST);
         assertNotNull(posts);
-        assertEquals(posts.size(), 0);
+        posts = postService.getAllPublishedPostsByPostType(PostType.LINK);
+        assertNotNull(posts);
+    }
+
+    @Test
+    public void getPagedPostsByPostType() throws Exception{
+        Page<Post> posts;
+        posts = postService.getPagedPostsByPostType(PostType.POST, 0, 10);
+        assertNotNull(posts);
+        posts = postService.getPagedPostsByPostType(PostType.LINK, 0, 10);
+        assertNotNull(posts);
     }
 
     @Test

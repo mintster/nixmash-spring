@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
@@ -48,6 +49,7 @@ public class PostsController {
     private static final String POSTS_TAGTITLES_VIEW = "posts/tagtitles";
     public static final String POSTS_LIKES_VIEW = "posts/likes";
     public static final String POSTS_AZ_VIEW = "posts/az";
+    public static final String POSTS_LINKS_VIEW = "posts/links";
 
     private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
     private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
@@ -133,6 +135,13 @@ public class PostsController {
         boolean showMore = postService.getAllPosts().size() > TITLE_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_TITLES_VIEW;
+    }
+
+    @RequestMapping(value = "/links", method = GET)
+    public String justlinks(Model model) {
+        boolean showMore = postService.getAllPublishedPostsByPostType(PostType.LINK).size() > POST_PAGING_SIZE;
+        model.addAttribute("showmore", showMore);
+        return POSTS_LINKS_VIEW;
     }
 
     @RequestMapping(value = "/az", method = GET)

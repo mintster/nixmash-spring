@@ -1,0 +1,117 @@
+<add>
+    <doc>
+        <field name="id">1</field>
+        <field name="post_author">Dave Burke</field>
+        <field name="post_title">JavaScript · Bootstrap</field>
+        <field name="post_name">javascript-bootstrap</field>
+        <field name="post_link">http://getbootstrap.com/javascript/#carousel</field>
+        <field name="post_date">2016-08-04T11:10:53Z</field>
+        <field name="post_type">LINK</field>
+        <field name="post_content">&lt;p&gt;Bootstrap, a sleek, intuitive, and &lt;em&gt;powerful mobile first front-end framework&lt;/em&gt; for faster and easier web development.&lt;/p&gt;</field>
+        <field name="post_text">Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.
+        </field>
+        <field name="post_source">getbootstrap.com</field>
+        <field name="tag">electronics</field>
+        <field name="tag">cameras</field>
+        <field name="tag">dogs</field>
+        <field name="tag">cats</field>
+        <field name="doctype">post</field>
+    </doc>
+
+    <doc>
+        <field name="id">3</field>
+        <field name="post_author">Dave Burke</field>
+        <field name="post_title">Jsoup Parsing and Traversing Document and URL - JAVATIPS.INFO</field>
+        <field name="post_name">jsoup-parsing-and-traversing-document-and-url-javatips-info</field>
+        <field name="post_link">http://javatips.info/jsoup-parsing-and-traversing-document-and-url.html</field>
+        <field name="post_date">2016-09-03T08:10:53Z</field>
+        <field name="post_type">LINK</field>
+        <field name="post_content">Prerequisites Development environment JDK 1.8 Downloads Eclipse Mars Download Required jar files jsoup-1.8.3.jar Maven dependencies [crayon-5755cf911d25a486332694/] In order to run the example; simply follow steps below: Step 1 Create New Maven-based Dynamic Web Project Step 1.1 Create New Java Project Launch Eclipse IDE; Go to File -&gt; New -&gt; Others… -&gt; Java Project. Click Next. Choose any project … Continue reading Jsoup Parsing and Traversing Document and URL ?
+        </field>
+        <field name="post_text">&lt;p&gt;Prerequisites Development environment &lt;strong&gt;JDK 1.8 Downloads Eclipse Mars Download&lt;/strong&gt; Required jar files jsoup-1.8.3.jar Maven dependencies [crayon-5755cf911d25a486332694/] In order to run the example; simply follow steps below: Step 1 Create New Maven-based Dynamic Web Project Step 1.1 Create New Java Project Launch Eclipse IDE; Go to File -&gt; New -&gt; Others… -&gt; Java Project. Click Next. Choose any project … Continue reading Jsoup Parsing and Traversing Document and URL ?&lt;/p&gt;</field>
+        <field name="post_source">javatips.info</field>
+        <field name="tag">dogs</field>
+        <field name="tag">cats</field>
+        <field name="doctype">post</field>
+    </doc>
+
+    <doc>
+        <field name="id">56</field>
+        <field name="post_author">Dave Burke</field>
+        <field name="post_title">Changelist for Thursday AM</field>
+        <field name="post_name">changelist-for-thursday-am</field>
+        <field name="post_link"></field>
+        <field name="post_date">2016-08-04T11:10:53Z</field>
+        <field name="post_type">POST</field>
+        <field name="post_content">&lt;p&gt;some images for you&lt;/p&gt;</field>
+        <field name="post_text">some images for you</field>
+        <field name="post_source">NA</field>
+        <field name="tag">dogs</field>
+        <field name="doctype">post</field>
+    </doc>
+
+    <doc>
+        <field name="id">57</field>
+        <field name="post_author">Dave Burke</field>
+        <field name="post_title">First Single Photo Post</field>
+        <field name="post_name">first-single-photo-post</field>
+        <field name="post_link"></field>
+        <field name="post_date">2016-08-17T09:12:52Z</field>
+        <field name="post_type">POST</field>
+        <field name="post_content">&lt;p&gt;This is the description of the photo which will appear beneath it.&lt;/p&gt;</field>
+        <field name="post_text">This is the description of the photo which will appear beneath it</field>
+        <field name="post_source">NA</field>
+        <field name="tag">cameras</field>
+        <field name="doctype">post</field>
+    </doc>
+
+    <doc>
+        <field name="id">66</field>
+        <field name="post_author">Dave Burke</field>
+        <field name="post_title">Behind the Pieces of a Flashcards App</field>
+        <field name="post_name">behind-the-pieces-of-a-flashcards-app</field>
+        <field name="post_link">http://nixmash.com/java/behind-the-pieces-of-a-flashcards-app/</field>
+        <field name="post_date">2016-08-30T10:02:39Z</field>
+        <field name="post_type">LINK</field>
+        <field name="post_content">&lt;p&gt;We recently added a Flashcards App to NixMash Spring which you can view here. Flashcard images are displayed in a Bootstrap Carousel with a &quot;Show Answer!&quot; button revealing details of this modified link&lt;/p&gt;</field>
+        <field name="post_text">We recently added a Flashcards App to NixMash Spring which you can view here. Flashcard images are displayed in a Bootstrap Carousel with a Show Answer! button revealing details of this modified link
+        </field>
+        <field name="post_source">nixmash.com</field>
+        <field name="tag">electronics</field>
+        <field name="doctype">post</field>
+    </doc>
+
+    <doc>
+        <field name="id">71</field>
+        <field name="post_author">Dave Burke</field>
+        <field name="post_title">Behavior Post</field>
+        <field name="post_name">behavior-post</field>
+        <field name="post_link"></field>
+        <field name="post_date">2016-09-15T14:21:31Z</field>
+        <field name="post_type">POST</field>
+        <field name="post_content">&lt;p&gt;A post for tweaking various UI behaviors&lt;/p&gt;</field>
+        <field name="post_text">A post for tweaking various UI behaviors</field>
+        <field name="post_source">NA</field>
+        <field name="tag">electronics</field>
+        <field name="tag">cameras</field>
+        <field name="tag">cats</field>
+        <field name="doctype">post</field>
+    </doc>
+
+    <doc>
+        <field name="id">72</field>
+        <field name="post_author">Dave Burke</field>
+        <field name="post_title">New Post Delight</field>
+        <field name="post_name">new-post-delight</field>
+        <field name="post_link"></field>
+        <field name="post_date">2016-09-19T11:10:06Z</field>
+        <field name="post_type">POST</field>
+        <field name="post_content">&lt;p&gt;A post to test Preview function&lt;/p&gt;</field>
+        <field name="post_text">A post to test Preview function</field>
+        <field name="post_source">NA</field>
+        <field name="tag">cats</field>
+        <field name="tag">dogs</field>
+        <field name="doctype">post</field>
+    </doc>
+
+</add>

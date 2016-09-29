@@ -81,6 +81,13 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    public void justLinksPageLoads() throws Exception {
+        this.mockMvc.perform(get("/posts/links"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(POSTS_LINKS_VIEW));
+    }
+
+    @Test
     public void postsFeedLoads() throws Exception {
         this.mockMvc.perform(get("/posts/feed"))
                 .andExpect(status().isOk())

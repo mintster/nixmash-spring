@@ -1,27 +1,17 @@
 package com.nixmash.springdata.solr;
 
-import static org.junit.Assert.assertNotNull;
-
+import com.nixmash.springdata.solr.common.SolrSettings;
+import com.nixmash.springdata.solr.config.SolrApplicationConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.nixmash.springdata.solr.common.SolrSettings;
-import com.nixmash.springdata.solr.config.SolrApplicationConfig;
+import static org.junit.Assert.assertNotNull;
 
-/**
- * 
- * NixMash Spring Notes: ---------------------------------------------------
- * 
- * Based on Christoph Strobl's Spring Solr Repository Example for Spring Boot
- * 
- * On GitHub: https://goo.gl/JoAYaT
- * 
- */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = SolrApplicationConfig.class)
 @ActiveProfiles("dev")
 public class SolrContext {

@@ -39,7 +39,7 @@ import com.nixmash.springdata.mvc.containers.UserQuery;
 import com.nixmash.springdata.solr.common.SolrUtils;
 import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.model.ProductDTO;
+import com.nixmash.springdata.solr.dto.ProductDTO;
 import com.nixmash.springdata.solr.service.ProductService;
 
 @Controller

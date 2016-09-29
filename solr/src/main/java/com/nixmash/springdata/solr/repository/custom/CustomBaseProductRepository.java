@@ -15,13 +15,12 @@
  */
 package com.nixmash.springdata.solr.repository.custom;
 
-import java.util.List;
-
+import com.nixmash.springdata.solr.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 
-import com.nixmash.springdata.solr.model.Product;
+import java.util.List;
 
 /**
  * 
@@ -32,7 +31,7 @@ import com.nixmash.springdata.solr.model.Product;
  * On GitHub: https://goo.gl/JoAYaT
  * 
  */
-public interface CustomBaseRepository {
+public interface CustomBaseProductRepository {
 
 	void updateProductCategory(String productId, List<String> categories);
 
