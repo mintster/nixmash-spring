@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 public class Application {
 
-	// force add to repository
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

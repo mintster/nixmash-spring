@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <appender name="sitelogfile"
+              class="ch.qos.logback.core.FileAppender">
+        <file>/home/daveburke/web/nixmashspring/application.log</file>
+        <encoder>
+            <pattern>%.-1level|%-30.30logger{0}|%msg%n</pattern>
+        </encoder>
+        <append>false</append>
+    </appender>
+
+    <logger name="com.nixmash.springdata.mvc" level="info" />
+    <logger name="com.nixmash.springdata.jsoup" level="info" />
+    <logger name="com.nixmash.springdata.jpa" level="info" />
+    <logger name="com.nixmash.springdata.solr" level="info" />
+    <logger name="org.thymeleaf" level="off" />
+    <logger name="org.hibernate" level="off" />
+    <logger name="org.springframework" level="info" />
+    <logger name="org.freemarker" level="info" />
+
+</included>

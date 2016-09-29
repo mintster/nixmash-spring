@@ -121,11 +121,29 @@ input#category {
     vertical-align: top;
 }
 
-td.file-upload-td input[type="file"] {
+
+td.new-flashcard-form input {
+    display: inline;
+    float: none;
+    margin-left: 15px;
+}
+
+td.new-flashcard-form input[type="file"] {
+    margin-top: 7px;
+    font-size: 16px;
+    max-width: 256px;
     margin-top: 7px;
     font-size: 16px;
 }
 
+td.new-flashcard-form select#categoryId {
+    margin-left: 15px;
+    margin-top: 4px;
+}
+
+td.new-flashcard-form input#description {
+    min-width: 300px;
+}
 /*</editor-fold>*/
 /*/<editor-fold> desc="LINK PAGE PREVIEW----------------------------/ "*/
 .page-preview img.thumbnail {
