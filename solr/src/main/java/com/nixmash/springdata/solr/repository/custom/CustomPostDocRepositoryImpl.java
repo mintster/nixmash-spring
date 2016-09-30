@@ -15,31 +15,36 @@
  */
 package com.nixmash.springdata.solr.repository.custom;
 
+import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.solr.enums.SolrDocType;
 import com.nixmash.springdata.solr.model.IPostDoc;
 import com.nixmash.springdata.solr.model.PostDoc;
 import com.nixmash.springdata.solr.model.Product;
+import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.PartialUpdate;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Repository
-public class CustomPostRepositoryImpl implements CustomBasePostRepository {
+public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository {
 
-	private static final Logger logger = LoggerFactory.getLogger(CustomBasePostRepository.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomBasePostDocRepository.class);
 
 	@Resource
 	private SolrTemplate solrTemplate;
-
 
 	@Override
 	public List<PostDoc> findPostsBySimpleQuery(String userQuery) {
@@ -50,6 +55,22 @@ public class CustomPostRepositoryImpl implements CustomBasePostRepository {
 
 		Page<PostDoc> results = solrTemplate.queryForPage(query, PostDoc.class);
 		return results.getContent();
+	}
+
+	@Transactional(rollbackFor = {UncategorizedSolrException.class})
+	@Override
+	public void update(Post post) {
+		logger.debug("Performing partial update for post: {}", post);
+
+		PartialUpdate update = new PartialUpdate(PostDoc.ID, post.getPostId().toString());
+
+		update.add(PostDoc.POST_TITLE, post.getPostTitle());
+		update.add(PostDoc.POST_CONTENT, post.getPostContent());
+		update.add(PostDoc.POST_TEXT, Jsoup.parse(post.getPostContent()).text());
+		update.add(PostDoc.TAG, PostUtils.tagsToTagValues(post.getTags()));
+
+		solrTemplate.saveBean(update);
+		solrTemplate.commit();
 	}
 
 	public Sort sortByIdDesc() {

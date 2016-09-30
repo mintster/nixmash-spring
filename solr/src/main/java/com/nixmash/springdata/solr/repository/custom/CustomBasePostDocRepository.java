@@ -15,13 +15,15 @@
  */
 package com.nixmash.springdata.solr.repository.custom;
 
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.solr.model.PostDoc;
 import org.springframework.data.solr.UncategorizedSolrException;
 
 import java.util.List;
 
-public interface CustomBasePostRepository {
+public interface CustomBasePostDocRepository {
 
 	List<PostDoc> findPostsBySimpleQuery(String userQuery) throws UncategorizedSolrException;
 
+    void update(Post post);
 }

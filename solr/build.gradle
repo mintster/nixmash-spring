@@ -24,7 +24,9 @@ jar {
 }
 
 dependencies {
+	compile project(':jpa')
 	compile 'org.springframework.boot:spring-boot-starter-data-solr'
+	compile 'org.jsoup:jsoup:1.9.2'
 	compile ('org.apache.solr:solr-core:5.5.3') {
 		exclude(group: "org.slf4j", module: "slf4j-jdk14")
 		exclude(group: "ch.qos.logback", module: "logback-classic")

@@ -1,17 +1,13 @@
 package com.nixmash.springdata.mvc.controller;
 
-import static java.lang.Math.toIntExact;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.nixmash.springdata.mvc.containers.Pager;
+import com.nixmash.springdata.mvc.containers.ProductCategory;
+import com.nixmash.springdata.mvc.containers.UserQuery;
+import com.nixmash.springdata.solr.dto.ProductDTO;
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
+import com.nixmash.springdata.solr.model.Product;
+import com.nixmash.springdata.solr.service.ProductService;
+import com.nixmash.springdata.solr.utils.SolrUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,21 +22,15 @@ import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nixmash.springdata.mvc.containers.Pager;
-import com.nixmash.springdata.mvc.containers.ProductCategory;
-import com.nixmash.springdata.mvc.containers.UserQuery;
-import com.nixmash.springdata.solr.common.SolrUtils;
-import com.nixmash.springdata.solr.exceptions.GeoLocationException;
-import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.dto.ProductDTO;
-import com.nixmash.springdata.solr.service.ProductService;
+import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
+import java.util.*;
+
+import static java.lang.Math.toIntExact;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class SolrController {

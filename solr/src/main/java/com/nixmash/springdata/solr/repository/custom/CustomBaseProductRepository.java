@@ -22,15 +22,6 @@ import org.springframework.data.solr.core.query.result.HighlightPage;
 
 import java.util.List;
 
-/**
- * 
- * NixMash Spring Notes: ---------------------------------------------------
- * 
- * Based on Christoph Strobl's Spring Solr Repository Example for Spring Boot
- * 
- * On GitHub: https://goo.gl/JoAYaT
- * 
- */
 public interface CustomBaseProductRepository {
 
 	void updateProductCategory(String productId, List<String> categories);

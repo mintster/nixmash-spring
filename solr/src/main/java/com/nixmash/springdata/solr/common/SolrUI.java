@@ -1,10 +1,9 @@
 package com.nixmash.springdata.solr.common;
 
-import java.text.MessageFormat;
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
+import com.nixmash.springdata.solr.model.Product;
+import com.nixmash.springdata.solr.service.ProductService;
+import com.nixmash.springdata.solr.utils.SolrUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -14,9 +13,9 @@ import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Component;
 
-import com.nixmash.springdata.solr.exceptions.GeoLocationException;
-import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.service.ProductService;
+import javax.annotation.Resource;
+import java.text.MessageFormat;
+import java.util.List;
 
 @Component
 public class SolrUI {

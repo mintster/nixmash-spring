@@ -35,8 +35,8 @@ import java.util.List;
  */
 public abstract class SolrTestUtils {
 
-	private static List<String> categories = Collections.singletonList("test");
-	private static List<String> tags = Arrays.asList("testone", "testtwo");
+	public static List<String> categories = Collections.singletonList("test");
+	public static List<String> tags = Arrays.asList("testone", "testtwo");
 
 
 	protected static List<Product> createProductList(int nrProducts) {

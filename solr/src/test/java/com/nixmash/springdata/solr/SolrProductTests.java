@@ -66,7 +66,7 @@ public class SolrProductTests extends SolrContext {
 		}
 		try {
 			productService.getProductsWithUserQuery("bad::format");
-		} catch (UncategorizedSolrException ex) {
+		} catch (Exception ex) {
 			i++;
 			Assert.assertTrue(ex instanceof UncategorizedSolrException);
 		}

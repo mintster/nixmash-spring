@@ -19,7 +19,7 @@
     </doc>
 
     <doc>
-        <field name="id">3</field>
+        <field name="id">2</field>
         <field name="post_author">Dave Burke</field>
         <field name="post_title">Jsoup Parsing and Traversing Document and URL - JAVATIPS.INFO</field>
         <field name="post_name">jsoup-parsing-and-traversing-document-and-url-javatips-info</field>
@@ -36,7 +36,7 @@
     </doc>
 
     <doc>
-        <field name="id">56</field>
+        <field name="id">3</field>
         <field name="post_author">Dave Burke</field>
         <field name="post_title">Changelist for Thursday AM</field>
         <field name="post_name">changelist-for-thursday-am</field>
@@ -51,7 +51,7 @@
     </doc>
 
     <doc>
-        <field name="id">57</field>
+        <field name="id">4</field>
         <field name="post_author">Dave Burke</field>
         <field name="post_title">First Single Photo Post</field>
         <field name="post_name">first-single-photo-post</field>
@@ -66,7 +66,7 @@
     </doc>
 
     <doc>
-        <field name="id">66</field>
+        <field name="id">5</field>
         <field name="post_author">Dave Burke</field>
         <field name="post_title">Behind the Pieces of a Flashcards App</field>
         <field name="post_name">behind-the-pieces-of-a-flashcards-app</field>
@@ -82,7 +82,7 @@
     </doc>
 
     <doc>
-        <field name="id">71</field>
+        <field name="id">6</field>
         <field name="post_author">Dave Burke</field>
         <field name="post_title">Behavior Post</field>
         <field name="post_name">behavior-post</field>
@@ -99,7 +99,7 @@
     </doc>
 
     <doc>
-        <field name="id">72</field>
+        <field name="id">7</field>
         <field name="post_author">Dave Burke</field>
         <field name="post_title">New Post Delight</field>
         <field name="post_name">new-post-delight</field>

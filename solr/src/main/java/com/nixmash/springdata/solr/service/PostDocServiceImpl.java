@@ -1,0 +1,47 @@
+package com.nixmash.springdata.solr.service;
+
+import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.solr.model.PostDoc;
+import com.nixmash.springdata.solr.repository.custom.CustomPostDocRepository;
+import com.nixmash.springdata.solr.utils.SolrUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Service
+public class PostDocServiceImpl implements PostDocService {
+
+    private static final Logger logger = LoggerFactory.getLogger(PostDocServiceImpl.class);
+
+    @Resource
+    CustomPostDocRepository customPostDocRepository;
+
+    @Override
+    public List<PostDoc> getPostsWithUserQuery(String userQuery) {
+        logger.info("SimpleQuery from user search string -  findProductsBySimpleQuery()");
+        return customPostDocRepository.findPostsBySimpleQuery(userQuery);
+    }
+
+    @Transactional
+    @Override
+    public void addToIndex(Post post) {
+        logger.info("Saving a Post Document with information: {}", post);
+        PostDoc document = SolrUtils.createPostDoc(post);
+        customPostDocRepository.save(document);
+    }
+
+    @Transactional
+    @Override
+    public void updatePostDocument(Post post) {
+        customPostDocRepository.update(post);
+    }
+
+    @Override
+    public List<PostDoc> getAllPostDocuments() {
+       return customPostDocRepository.findAllPostDocuments();
+    }
+}

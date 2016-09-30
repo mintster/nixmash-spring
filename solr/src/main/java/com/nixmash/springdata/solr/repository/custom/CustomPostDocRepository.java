@@ -16,8 +16,14 @@
 package com.nixmash.springdata.solr.repository.custom;
 
 import com.nixmash.springdata.solr.model.PostDoc;
+import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
-public interface CustomPostRepository extends CustomBasePostRepository, SolrCrudRepository<PostDoc, String> {
+import java.util.List;
+
+public interface CustomPostDocRepository extends CustomBasePostDocRepository, SolrCrudRepository<PostDoc, String> {
+
+    @Query("doctype:post")
+    public List<PostDoc> findAllPostDocuments();
 
 }
