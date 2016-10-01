@@ -143,11 +143,6 @@
 
    <field name="store" type="location" indexed="true" stored="true"/>
 
-   <!-- NixMash Spring master field added to filter by document type -->
-    <!-- Indexed: PRODUCT, BOOK, MANUFACTURER, MONEY, POST -->
-
-   <field name="doctype" type="text_general" indexed="true" stored="true"/>
-
    <!-- Common metadata fields, named specifically to match up with
      SolrCell metadata when parsing rich documents such as Word, PDF.
      Some fields are multiValued only because Tika currently may return
@@ -168,21 +163,35 @@
    <field name="last_modified" type="date" indexed="true" stored="true"/>
    <field name="links" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="_src_" type="string" indexed="false" stored="true"/>
-    <field name="author" type="text_general" indexed="true" stored="true"/>
-    <field name="title" type="text_general" indexed="true" stored="true" />
 
     <!-- NixMash Spring Posts Start  -->
 
-   <field name="post_title" type="text_general" indexed="true" stored="true" />
-   <field name="post_name" type="text_general" indexed="false" stored="true" />
-   <field name="post_author" type="text_general" indexed="true" stored="true" />
-   <field name="post_link" type="text_general" indexed="false" stored="true" />
-   <field name="post_source" type="text_general" indexed="true" stored="true"  />
-   <field name="post_type" type="string" indexed="true" stored="true" />
-   <field name="post_text" type="text_general" indexed="true" stored="true" omitNorms="true"/>
-   <field name="post_content" type="text_general" indexed="false" stored="true" omitNorms="true"/>
-   <field name="tag" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="post_date" type="date" indexed="true" stored="true"/>
+
+    <!-- NixMash Spring master field added to filter by document type -->
+    <!-- Indexed: PRODUCT, BOOK, MANUFACTURER, MONEY, POST -->
+
+    <field name="doctype" type="text_general" indexed="true" stored="true"/>
+
+    <!--From Existing Fields ...............................-->
+
+    <field name="author" type="text_general" indexed="true" stored="true"/>
+    <field name="title" type="text_general" indexed="true" stored="true" />
+
+    <!--Primary Post Search Fields .........................................-->
+
+    <field name="body" type="text_general" indexed="true" stored="true" />
+    <field name="type" type="string" indexed="true" stored="true" />
+    <field name="source" type="text_general" indexed="true" stored="true"  />
+    <field name="tag" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="postdate" type="date" indexed="true" stored="true"/>
+
+    <!--Stored Post Fields .........................................-->
+
+    <field name="postname" type="text_general" indexed="false" stored="true" />
+    <field name="postlink" type="text_general" indexed="false" stored="true" />
+
+    <!--"html" is the original post_content field for display purposes here only-->
+    <field name="html" type="text_general" indexed="false" stored="true"/>
 
   <!-- Main body of document extracted by SolrCell.
        NOTE: This field is not indexed by default, since it is also copied to "text"
@@ -321,8 +330,8 @@
     <!-- NixMash Spring Posts copyFields-->
 
     <copyField source="tag" dest="text"/>
-    <copyField source="post_title" dest="text"/>
-    <copyField source="post_text" dest="text"/>
+    <!--<copyField source="post_title" dest="text"/>-->
+    <!--<copyField source="post_text" dest="text"/>-->
 
     <!-- Above, multiple source fields are copied to the [text] field.
        Another way to map multiple source fields to the same

@@ -49,8 +49,8 @@ public class PostDoc implements IPostDoc {
     @Field(POST_TYPE)
     private String postType;
 
-    @Field(POST_CONTENT)
-    private String postContent;
+    @Field(HTML)
+    private String postHTML;
 
     @Field(POST_TEXT)
     private String postText;
@@ -134,12 +134,12 @@ public class PostDoc implements IPostDoc {
         this.postType = postType;
     }
 
-    public String getPostContent() {
-        return postContent;
+    public String getPostHTML() {
+        return postHTML;
     }
 
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
+    public void setPostHTML(String postHTML) {
+        this.postHTML = postHTML;
     }
 
     public String getPostText() {
@@ -189,7 +189,7 @@ public class PostDoc implements IPostDoc {
                 ", postLink='" + postLink + '\'' +
                 ", postDate=" + postDate +
                 ", postType='" + postType + '\'' +
-                ", postContent='" + postContent + '\'' +
+                ", postHTML='" + postHTML + '\'' +
                 ", postText='" + postText + '\'' +
                 ", postSource='" + postSource + '\'' +
                 ", tags=" + tags +
@@ -202,10 +202,10 @@ public class PostDoc implements IPostDoc {
     // region Builders
 
     public static Builder getBuilder(Long postId, String postTitle, String postAuthor,
-                                     String postName, String postLink, String postContent,
+                                     String postName, String postLink, String postHTML,
                                      String postSource, String postType) {
         return new PostDoc.Builder(postId, postTitle, postAuthor, postName,
-                postLink, postContent, postSource, postType);
+                postLink, postHTML, postSource, postType);
     }
 
 
@@ -213,15 +213,15 @@ public class PostDoc implements IPostDoc {
         private PostDoc built;
 
         public Builder(Long postId, String postTitle, String postAuthor, String postName,
-                       String postLink, String postContent, String postSource, String postType) {
+                       String postLink, String postHTML, String postSource, String postType) {
             built = new PostDoc();
             built.postId = postId.toString();
             built.postTitle = postTitle;
             built.postAuthor = postAuthor;
             built.postName = postName;
             built.postLink = postLink;
-            built.postContent = postContent;
-            built.postText = Jsoup.parse(postContent).text();
+            built.postHTML = postHTML;
+            built.postText = Jsoup.parse(postHTML).text();
             built.postSource = postSource;
             built.postType = postType;
             built.docType = SolrDocType.POST;

@@ -70,18 +70,18 @@ public abstract class SolrTestUtils {
 	}
 
 	protected static PostDoc createPost(int id) {
-		PostDoc post = new PostDoc();
-		post.setPostId(Integer.toString(id));
-		post.setPostTitle("Post Title " + id);
-		post.setPostAuthor("mintster");
-		post.setPostName("post-title-" + id);
-		post.setPostLink(id % 2 == 0 ? "" : "http://somewhere/" + id);
-		post.setPostType(id % 2 == 0 ? "POST" : "LINK");
-		post.setPostContent("<strong>Post Content</strong> " + id);
-		post.setPostText("Post Content " + id);
-		post.setPostSource(id % 2 == 0 ? "somewhere.com" : "NA");
-		post.setTags(tags);
-		post.setDocType(SolrDocType.POST);
-		return post;
+		PostDoc postDoc = new PostDoc();
+		postDoc.setPostId(Integer.toString(id));
+		postDoc.setPostTitle("Post Title " + id);
+		postDoc.setPostAuthor("mintster");
+		postDoc.setPostName("post-title-" + id);
+		postDoc.setPostLink(id % 2 == 0 ? "" : "http://somewhere/" + id);
+		postDoc.setPostType(id % 2 == 0 ? "POST" : "LINK");
+		postDoc.setPostHTML("<strong>Post HTML</strong> " + id);
+		postDoc.setPostText("Post Content " + id);
+		postDoc.setPostSource(id % 2 == 0 ? "somewhere.com" : "NA");
+		postDoc.setTags(tags);
+		postDoc.setDocType(SolrDocType.POST);
+		return postDoc;
 	}
 }

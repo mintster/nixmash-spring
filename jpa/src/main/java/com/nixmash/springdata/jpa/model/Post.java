@@ -352,10 +352,20 @@ public class Post implements Serializable {
             return this;
         }
 
+        public Builder postId(long postId) {
+            built.postId = postId;
+            return this;
+        }
+
         public Builder postImage(String postImage) {
             if (StringUtils.isEmpty(postImage))
                 postImage = null;
             built.postImage = postImage;
+            return this;
+        }
+
+        public Builder tags(Set<Tag> tags) {
+            built.tags= tags;
             return this;
         }
 

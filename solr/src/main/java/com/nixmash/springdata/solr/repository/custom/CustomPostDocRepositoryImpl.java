@@ -65,7 +65,7 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 		PartialUpdate update = new PartialUpdate(PostDoc.ID, post.getPostId().toString());
 
 		update.add(PostDoc.POST_TITLE, post.getPostTitle());
-		update.add(PostDoc.POST_CONTENT, post.getPostContent());
+		update.add(PostDoc.HTML, post.getPostContent());
 		update.add(PostDoc.POST_TEXT, Jsoup.parse(post.getPostContent()).text());
 		update.add(PostDoc.TAG, PostUtils.tagsToTagValues(post.getTags()));
 

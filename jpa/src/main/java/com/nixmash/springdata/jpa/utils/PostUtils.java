@@ -40,6 +40,8 @@ public class PostUtils {
                 .isPublished(dto.getIsPublished())
                 .postSource(dto.getPostSource())
                 .postImage(dto.getPostImage())
+                .postId(dto.getPostId())
+                .tags(tagsDTOsToTags(dto.getTags()))
                 .build();
     }
 
@@ -56,6 +58,7 @@ public class PostUtils {
                 .postSource(post.getPostSource())
                 .postImage(post.getPostImage())
                 .postId(post.getPostId())
+                .tags(tagsToTagDTOs(post.getTags()))
                 .build();
     }
 
@@ -133,6 +136,14 @@ public class PostUtils {
             tagDTOs.add(new TagDTO(tag.getTagId(), tag.getTagValue()));
         }
         return tagDTOs;
+    }
+
+    public static Set<Tag> tagsDTOsToTags(Set<TagDTO> tagDTOs) {
+        Set<Tag> tags = new LinkedHashSet<>();
+        for (TagDTO tagDTO : tagDTOs) {
+            tags.add(new Tag(tagDTO.getTagId(), tagDTO.getTagValue()));
+        }
+        return tags;
     }
 
     public static List<String> tagsToTagValues(Set<Tag> tags) {

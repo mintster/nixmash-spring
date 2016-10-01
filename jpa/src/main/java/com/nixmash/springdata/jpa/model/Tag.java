@@ -34,6 +34,11 @@ public class Tag implements Serializable {
         this.tagValue = tagValue;
     }
 
+    public Tag(Long tagId, String tagValue) {
+        this.tagId = tagId;
+        this.tagValue = tagValue;
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "tag_id", nullable = false)
