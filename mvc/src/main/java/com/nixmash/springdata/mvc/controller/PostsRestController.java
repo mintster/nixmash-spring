@@ -4,6 +4,7 @@ import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
+import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.CurrentUser;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
@@ -11,6 +12,8 @@ import com.nixmash.springdata.jpa.utils.Pair;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.annotations.JsonRequestMapping;
+import com.nixmash.springdata.solr.model.PostDoc;
+import com.nixmash.springdata.solr.service.PostDocService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.*;
 
-import static com.nixmash.springdata.mvc.controller.PostsController.POST_PAGING_SIZE;
-import static com.nixmash.springdata.mvc.controller.PostsController.TITLE_PAGING_SIZE;
+import static com.nixmash.springdata.mvc.controller.PostsController.*;
 
 
 @RestController
@@ -42,19 +44,22 @@ public class PostsRestController {
     private static final String SESSION_ATTRIBUTE_TAGGEDPOSTS = "taggedposts";
     private static final String SESSION_ATTRIBUTE_LIKEDPOSTS = "likedposts";
     private static final String SESSION_ATTRIBUTE_JUSTLINKS = "justlinks";
+    private static final String SESSION_ATTRIBUTE_SEARCHPOSTS = "quicksearchposts";
 
     private PostService postService;
     private FmService fmService;
     private ApplicationSettings applicationSettings;
+    private PostDocService postDocService;
 
     private int minTagCount = 0;
     private int maxTagCount = 0;
 
     @Autowired
-    public PostsRestController(PostService postService, FmService fmService, ApplicationSettings applicationSettings) {
+    public PostsRestController(PostService postService, FmService fmService, ApplicationSettings applicationSettings, PostDocService postDocService) {
         this.postService = postService;
         this.fmService = fmService;
         this.applicationSettings = applicationSettings;
+        this.postDocService = postDocService;
     }
 
     // region Post Titles
@@ -152,6 +157,36 @@ public class PostsRestController {
 
     // endregion
 
+    // region Search
+
+
+    @RequestMapping(value = "/quicksearch/page/{pageNumber}",
+            produces = "text/html;charset=UTF-8")
+    public String getQuickSearchPosts(@PathVariable int pageNumber,
+                                  HttpServletRequest request,
+                                  CurrentUser currentUser) {
+        String search = (String) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_QUICKSEARCH_QUERY);
+        String result;
+        List<PostDoc> postDocs = postDocService.doQuickSearch(search);
+        if (postDocs.size() == 0) {
+            result = fmService.getNoResultsMessage(search);
+        }
+        else {
+            Slice<PostDoc> posts = postDocService.doPagedQuickSearch(search, pageNumber, POST_PAGING_SIZE);
+             result = populatePostDocStream(posts.getContent(), currentUser);
+            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_SEARCHPOSTS, posts.getContent());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/quicksearch/more")
+    public String getSearchHasNext(HttpServletRequest request) {
+        return hasNext(request, SESSION_ATTRIBUTE_SEARCHPOSTS, POST_PAGING_SIZE);
+    }
+
+    // endregion
+
+
     // region Likes
 
     @RequestMapping(value = "/post/like/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -197,6 +232,19 @@ public class PostsRestController {
     }
 
     private String populatePostStream(List<Post> posts, CurrentUser currentUser) {
+        return populatePostStream(posts, currentUser, null);
+    }
+
+    private String populatePostDocStream(List<PostDoc> postDocs, CurrentUser currentUser) {
+        List<Post> posts = new ArrayList<>();
+        for (PostDoc postDoc :
+                postDocs) {
+            try {
+                posts.add(postService.getPostById(Long.parseLong(postDoc.getPostId())));
+            } catch (PostNotFoundException e) {
+                logger.info("Could not convert PostDoc {} to Post with title \"{}\"", postDoc.getPostId(), postDoc.getPostTitle());
+            }
+        }
         return populatePostStream(posts, currentUser, null);
     }
 

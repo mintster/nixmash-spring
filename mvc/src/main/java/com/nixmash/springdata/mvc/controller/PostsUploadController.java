@@ -95,7 +95,7 @@ public class PostsUploadController {
         while (itr.hasNext()) {
             mpf = request.getFile(itr.next());
             String filename = mpf.getOriginalFilename();
-            logger.debug("Uploading {}", filename);
+            logger.info("Uploading {}", filename);
 
             String newFilenameBase = UUID.randomUUID().toString();
             String fileExtension = FilenameUtils.getExtension(filename).toLowerCase();

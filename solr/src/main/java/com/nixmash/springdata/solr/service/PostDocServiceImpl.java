@@ -6,6 +6,9 @@ import com.nixmash.springdata.solr.repository.custom.CustomPostDocRepository;
 import com.nixmash.springdata.solr.utils.SolrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +46,21 @@ public class PostDocServiceImpl implements PostDocService {
     @Override
     public List<PostDoc> getAllPostDocuments() {
        return customPostDocRepository.findAllPostDocuments();
+    }
+
+    @Override
+    public List<PostDoc> doQuickSearch(String searchTerm) {
+        return customPostDocRepository.quickSearch(searchTerm);
+    }
+
+    @Override
+    public Page<PostDoc> doPagedQuickSearch(String searchTerms, int pageNumber, int pageSize) {
+        PageRequest pageRequest =
+                new PageRequest(pageNumber, pageSize, sortByPostDateDesc());
+        return customPostDocRepository.pagedQuickSearch(searchTerms, pageRequest);
+    }
+
+    public Sort sortByPostDateDesc() {
+        return new Sort(Sort.Direction.DESC, PostDoc.POST_DATE);
     }
 }

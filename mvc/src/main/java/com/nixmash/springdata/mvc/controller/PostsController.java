@@ -12,6 +12,8 @@ import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
+import com.nixmash.springdata.solr.model.PostDoc;
+import com.nixmash.springdata.solr.service.PostDocService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +22,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -49,26 +54,29 @@ public class PostsController {
     private static final String POSTS_TAGTITLES_VIEW = "posts/tagtitles";
     public static final String POSTS_LIKES_VIEW = "posts/likes";
     public static final String POSTS_AZ_VIEW = "posts/az";
-    public static final String POSTS_LINKS_VIEW = "posts/links";
+    public static final String POSTS_QUICKSEARCH_VIEW = "posts/quicksearch";
 
+    public static final String POSTS_LINKS_VIEW = "posts/links";
     private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
     private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
     private static final String FEEDBACK_LINK_DEMO_THANKS = "feedback.post.link.demo.added";
     public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
-    private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
 
+    private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
     private static final String ADD_POST_HEADER = "posts.add.note.page.header";
     private static final String ADD_LINK_HEADER = "posts.add.link.page.header";
     private static final String ADD_PHOTO_HEADER = "posts.add.photo.page.header";
+
     private static final String ADD_MULTIPHOTO_HEADER = "posts.add.multiphoto.page.header";
-
     public static final String POST_PUBLISH = "publish";
+
+
     public static final String POST_DRAFT = "draft";
-
-
     public static final int POST_PAGING_SIZE = 10;
     public static final int TITLE_PAGING_SIZE = 10;
+
     private static final String SESSION_ATTRIBUTE_NEWPOST = "activepostdto";
+    public static final String SESSION_ATTRIBUTE_QUICKSEARCH_QUERY = "quicksearch";
 
     // endregion
 
@@ -79,18 +87,20 @@ public class PostsController {
     private final PostService postService;
     private final ApplicationSettings applicationSettings;
     private final FmService fmService;
+    private final PostDocService postDocService;
 
     // endregion
 
     // region constructor
 
     @Autowired
-    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService, ApplicationSettings applicationSettings, FmService fmService) {
+    public PostsController(WebUI webUI, JsoupService jsoupService, PostService postService, ApplicationSettings applicationSettings, FmService fmService, PostDocService postDocService) {
         this.webUI = webUI;
         this.jsoupService = jsoupService;
         this.postService = postService;
         this.applicationSettings = applicationSettings;
         this.fmService = fmService;
+        this.postDocService = postDocService;
     }
 
     // endregion
@@ -124,6 +134,21 @@ public class PostsController {
         model.addAttribute("showmore", showMore);
         return POSTS_LIST_VIEW;
     }
+
+    @RequestMapping(value = "", params = {"search"}, method = GET)
+    public String quicksearch(Model model, String search, HttpServletRequest request) {
+        List<PostDoc> postDocs = postDocService.doQuickSearch(search);
+
+        boolean showMore = postDocs.size() > POST_PAGING_SIZE;
+        boolean hasQuickSearchResults = postDocs.size() > 0;
+
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_QUICKSEARCH_QUERY, search);
+        model.addAttribute("showmore", showMore);
+        model.addAttribute("query", search);
+        model.addAttribute("hasResults", hasQuickSearchResults);
+        return POSTS_QUICKSEARCH_VIEW;
+    }
+
 
     @RequestMapping(value = "/feed", produces = "application/*")
     public String feed() {

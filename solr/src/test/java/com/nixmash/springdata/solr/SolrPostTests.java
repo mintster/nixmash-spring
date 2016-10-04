@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -31,10 +30,10 @@ public class SolrPostTests extends SolrContext {
 	private static final int INITIAL_POST_COUNT = 7;
 	private static final int BOOTSTRAP_POST_COUNT = 1;
 	private List<Post> posts;
-	private int postCount = 0;
+	private int postCount = 9;
 
 	@Resource
-	CustomPostDocRepository repo;
+	CustomPostDocRepository postDocRepository;
 
 	@Autowired
 	private PostDocService postDocService;
@@ -57,11 +56,11 @@ public class SolrPostTests extends SolrContext {
 		// using postId 10 which is "Solr Rama"
 		Post post = postService.getPostById(10L);
 		PostDoc postDoc = SolrUtils.createPostDoc(post);
-		repo.save(postDoc);
+		postDocRepository.save(postDoc);
 
-		PostDoc found = repo.findOne("10");
+		PostDoc found = postDocRepository.findOne("10");
 		assertEquals(found.getPostName(), "solr-rama");
-		repo.delete("10");
+		postDocRepository.delete("10");
 	}
 
 	@Test
@@ -69,7 +68,8 @@ public class SolrPostTests extends SolrContext {
 		// using postId 10 which is "Solr Rama"
 		Post post = postService.getPostById(10L);
 		postDocService.addToIndex(post);
-		PostDoc found = repo.findOne("10");
+		PostDoc found = postDocRepository.findOne("10");
+		System.out.println(found);
 		assertEquals(found.getPostName(), "solr-rama");
 	}
 
@@ -77,8 +77,8 @@ public class SolrPostTests extends SolrContext {
 	public void updatePostDocumentWithRepository() throws Exception {
 		// using postId 10 which is "Solr Rama"
 		String postTitle = "updatePostDocumentWithRepository";
-		repo.update(updatedPost(postTitle));
-		PostDoc found = repo.findOne("10");
+		postDocRepository.update(updatedPost(postTitle));
+		PostDoc found = postDocRepository.findOne("10");
 		assertEquals(found.getPostTitle(), postTitle);
 	}
 
@@ -87,28 +87,36 @@ public class SolrPostTests extends SolrContext {
 		// using postId 10 which is "Solr Rama"
 		String postTitle = "updatePostDocumentWithService";
 		postDocService.updatePostDocument(updatedPost(postTitle));
-		PostDoc found = repo.findOne("10");
+		PostDoc found = postDocRepository.findOne("10");
 		assertEquals(found.getPostTitle(), postTitle);
 	}
 
 	@Test
-	public void cleanAndReindexPostDocuments() throws Exception {
+	public void searchPostsWithCriteria() throws Exception {
+		List<PostDoc> postDocs = postDocService.doQuickSearch("post ways");
+//		List<PostDoc> postDocs = postDocService.getAllPostDocuments();
 
-		posts = postService.getAllPublishedPosts();
-		postCount = posts.size();
-		for (Post post : posts) {
-			postDocService.addToIndex(post);
+		//  1) Each of the search terms must be in either the Post Title or Body
+		//  2) All of the search terms must be present in Post
+
+		// Query: (Title.contains("post") or Body.contains("post")) AND (Title.contains("ways") or Body.contains("ways"))
+
+
+		for (PostDoc postDoc: postDocs) {
+			assert(postDoc.getPostTitle().toLowerCase().contains("post") ||
+					postDoc.getPostText().toLowerCase().contains("post"));
+
+			assert(postDoc.getPostTitle().toLowerCase().contains("ways") ||
+					postDoc.getPostText().toLowerCase().contains("ways"));
+
+			System.out.println(postDoc.getPostTitle() + " | " + postDoc.getPostText() + " | " + postDoc.getPostDate());
 		}
+	}
 
-		List<PostDoc> postDocs = postDocService.getAllPostDocuments();
-		assertEquals(postDocs.size(), postCount);
-
-		postDocs = postDocService.getPostsWithUserQuery("bootstrap");
-		assertEquals(BOOTSTRAP_POST_COUNT, postDocs.size());
-
-		Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
-		solrOperations.delete(query);
-		solrOperations.commit();
+	@Test
+	public void quickSearchListSize_IsZero_OnNoResults() throws Exception {
+		List<PostDoc> postDocs = postDocService.doQuickSearch("no_results_to_find_here");
+		assertEquals(postDocs.size(), 0);
 	}
 
 	private Post updatedPost(String postTitle) throws PostNotFoundException {
@@ -116,10 +124,6 @@ public class SolrPostTests extends SolrContext {
 		PostDTO postDTO = PostUtils.postToPostDTO(post);
 		postDTO.setPostTitle(postTitle);
 		return postService.update(postDTO);
-	}
-
-	private Sort sortByIdDesc() {
-		return new Sort(Sort.Direction.DESC, PostDoc.ID);
 	}
 
 }

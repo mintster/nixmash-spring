@@ -15,9 +15,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import static com.nixmash.springdata.mvc.controller.PostsController.*;
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -85,6 +87,26 @@ public class PostsControllerTests extends AbstractContext {
         this.mockMvc.perform(get("/posts/links"))
                 .andExpect(status().isOk())
                 .andExpect(view().name(POSTS_LINKS_VIEW));
+    }
+
+    @Test
+    public void quickSearchPageLoadsWithResults() throws Exception {
+        this.mockMvc.perform(get("/posts")
+                .param("search","ways post"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("query", containsString("ways post")))
+                .andExpect(model().attribute("hasResults", true))
+                .andExpect(view().name(POSTS_QUICKSEARCH_VIEW));
+    }
+
+    @Test
+    public void quickSearchPageLoadsWithNoResultsReturned() throws Exception {
+        this.mockMvc.perform(get("/posts")
+                .param("search","no_search_results"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("query"))
+                .andExpect(model().attribute("hasResults", false))
+                .andExpect(view().name(POSTS_QUICKSEARCH_VIEW)).andDo(print());
     }
 
     @Test

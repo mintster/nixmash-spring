@@ -17,6 +17,8 @@ package com.nixmash.springdata.solr.repository.custom;
 
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.solr.model.PostDoc;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.UncategorizedSolrException;
 
 import java.util.List;
@@ -26,4 +28,8 @@ public interface CustomBasePostDocRepository {
 	List<PostDoc> findPostsBySimpleQuery(String userQuery) throws UncategorizedSolrException;
 
     void update(Post post);
+
+    Page<PostDoc> pagedQuickSearch(String searchTerms, PageRequest pageRequest);
+
+    List<PostDoc> quickSearch(String searchTerm);
 }

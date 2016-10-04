@@ -2,6 +2,7 @@ package com.nixmash.springdata.solr.service;
 
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.solr.model.PostDoc;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface PostDocService {
     void updatePostDocument(Post post);
 
     List<PostDoc> getAllPostDocuments();
+
+    List<PostDoc> doQuickSearch(String searchTerm);
+
+    Page<PostDoc> doPagedQuickSearch(String searchTerms, int pageNumber, int pageSize);
 }

@@ -28,6 +28,7 @@ public class PostUtils {
     private static final Logger logger = LoggerFactory.getLogger(PostUtils.class);
     private static final Pattern REMOVE_TAGS = Pattern.compile("<.+?>");
 
+
     public static Post postDtoToPost(PostDTO dto) {
 
         return Post.getBuilder(dto.getUserId(),
@@ -40,8 +41,6 @@ public class PostUtils {
                 .isPublished(dto.getIsPublished())
                 .postSource(dto.getPostSource())
                 .postImage(dto.getPostImage())
-                .postId(dto.getPostId())
-                .tags(tagsDTOsToTags(dto.getTags()))
                 .build();
     }
 

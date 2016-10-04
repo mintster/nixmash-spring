@@ -66,6 +66,20 @@ public class FmServiceImpl implements FmService {
     // region Posts
 
     @Override
+    public String getNoResultsMessage(String search) {
+        String result = null;
+        Map<String, Object> model = new Hashtable<>();
+
+        model.put("search", search);
+        try {
+            result =  FreeMarkerTemplateUtils.processTemplateIntoString(fm.getTemplate("posts/noresults.ftl"), model);
+        } catch (IOException | TemplateException e) {
+            logger.error("Problem merging Quick Search template : " + e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
     public String getNoLikesMessage() {
         String result = null;
         try {

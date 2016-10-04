@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SolrControllerTests extends AbstractContext {
+public class SolrProductControllerTests extends AbstractContext {
 
 	private static final String PRODUCT_ID = "LOMAX7";
 

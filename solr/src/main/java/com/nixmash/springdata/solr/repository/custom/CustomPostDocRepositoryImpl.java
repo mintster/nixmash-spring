@@ -20,11 +20,11 @@ import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.solr.enums.SolrDocType;
 import com.nixmash.springdata.solr.model.IPostDoc;
 import com.nixmash.springdata.solr.model.PostDoc;
-import com.nixmash.springdata.solr.model.Product;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.SolrTemplate;
@@ -36,6 +36,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.MessageFormat;
 import java.util.List;
 
 @Repository
@@ -73,7 +74,53 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 		solrTemplate.commit();
 	}
 
+	@Override
+	public Page<PostDoc> pagedQuickSearch(String searchTerms, PageRequest pageRequest) {
+		logger.info("Paged Title and Body Quick Search with : {}", searchTerms);
+		Query query = new SimpleQuery(titleAndBodyCriteria(searchTerms));
+		query.setRows(1000);
+		query.setPageRequest(pageRequest);
+		Page<PostDoc> results = solrTemplate.queryForPage(query, PostDoc.class);
+		return results;
+	}
+
+
+	@Override
+	public List<PostDoc> quickSearch(String searchTerms) {
+		logger.info("Searching Title and Body with Multiple Terms : {}", searchTerms);
+
+//		String[] words = searchTerms.split(" ");
+//		Query query = new SimpleQuery(titleAndBodyQuery(words));
+
+		Query query = new SimpleQuery(titleAndBodyCriteria(searchTerms));
+		query.setRows(1000);
+		Page<PostDoc> results = solrTemplate.queryForPage(query, PostDoc.class);
+		return results.getContent();
+	}
+
+	private Criteria titleAndBodyCriteria(String searchTerms) {
+		String[] words = searchTerms.split(" ");
+		Criteria criteria = new Criteria();
+		for (String word : words) {
+			criteria = criteria.and(new Criteria(PostDoc.POST_TITLE).contains(word)
+					.or(PostDoc.POST_TEXT).contains(word));
+		}
+		return criteria.and(new Criteria(PostDoc.DOCTYPE).is("post"));
+	}
+
+	private String titleAndBodyQuery(String[] words) {
+		String query = null;
+		for (String word : words) {
+			if (query == null) {
+				query = MessageFormat.format("(title:{0} OR body:{0})", word);
+			}
+			else
+				query += MessageFormat.format(" AND (title:{0} OR body:{0})", word);
+		}
+		return query;
+	}
+
 	public Sort sortByIdDesc() {
-		return new Sort(Sort.Direction.DESC, Product.ID_FIELD);
+		return new Sort(Sort.Direction.DESC, PostDoc.POST_DATE);
 	}
 }

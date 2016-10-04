@@ -33,11 +33,11 @@ dependencies {
 	}
 }
 
-run { systemProperty 'spring.profiles.active', 'prod' }
+run { systemProperty 'spring.profiles.active', 'prod, mysql' }
 
 bootRun {
 	addResources = false
-	systemProperty 'spring.profiles.active', 'prod'
+	systemProperty 'spring.profiles.active', 'prod, mysql'
 	main = 'com.nixmash.springdata.solr.SolrLauncher'
 }
 

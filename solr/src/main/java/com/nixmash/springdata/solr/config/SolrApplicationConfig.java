@@ -10,7 +10,7 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 @Configuration
 @EnableConfigurationProperties
 @EnableSolrRepositories(basePackages = "com.nixmash.springdata.solr.repository", namedQueriesLocation = "classpath:named-queries.properties")
-@ComponentScan(basePackages = "com.nixmash.springdata.solr")
+@ComponentScan(basePackages = {"com.nixmash.springdata.solr", "com.nixmash.springdata.jpa"})
 @Import({ EmbeddedSolrContext.class, HttpSolrContext.class })
 @PropertySource("classpath:application.properties")
 public class SolrApplicationConfig {
