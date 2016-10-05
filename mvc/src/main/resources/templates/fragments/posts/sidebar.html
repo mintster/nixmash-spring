@@ -3,7 +3,7 @@
 <body>
 <div th:fragment="sidebar(activeTab)">
 
-    <div  th:with="top=${currentUser == null} ? 308px :  350px" th:remove="tag">
+    <div  th:with="top=${currentUser == null} ? 366px :  408px" th:remove="tag">
         <style type="text/css" th:inline="text">
             #tagcloud.affix
             {
@@ -17,7 +17,7 @@
         <div id="sidebar-search">
             <form method="get" class="search-form" action="/posts">
                 <div>
-                    <input class="search-text" type="text" name="search" value="" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;" />
+                    <input class="search-text form-control" type="text" name="search" value="" placeholder="Search" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;" />
                     <input class="search-submit button" name="submit" type="submit" value="Search" />
                 </div>
             </form>
@@ -63,6 +63,14 @@
 <script th:fragment="javascript" th:inline="javascript">
 
     /*<![CDATA[*/
+
+    /* activate sidebar */
+    $('#sidebar-search').affix({
+        offset: {
+            top: 277
+        }
+    });
+
 
     /* activate sidebar */
     $('#sidebar').affix({

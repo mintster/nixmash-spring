@@ -77,8 +77,12 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 
 ##v0.4.3 -- Post Searching with Solr (In Progress)
 
-- Post Stream Display of Links Only
+- Post Stream Links Only display
 - Spring Boot Updated to 1.4.1-RELEASE, Solr Core to 5.5.3
+- Runtime Tomcat libraries removed in favor of Embedded Jetty. (Commented out of `build.gradle` files and easily re-enabled)
+- [Post: Handling On/Off Checkbox State with JavaScript and Ajax](http://nixmash.com/java/handling-onoff-checkbox-state-with-javascript-and-ajax/)
+- [Post: Know Your Spring Boot Embedded Servlet Container](http://nixmash.com/java/know-your-spring-boot-embedded-servlet-container/)
+- [Post: How to Increase Embedded Tomcat Cache in Spring](http://nixmash.com/java/how-to-increase-embedded-tomcat-cache-in-spring/)
 
 [[back to top](#nixmash-spring)]
 

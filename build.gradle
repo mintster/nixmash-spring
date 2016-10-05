@@ -26,7 +26,6 @@ allprojects {
 
 
 	ext['hibernate.version'] = '4.3.11.Final'
-	ext['spring-security.version'] = '4.1.3.RELEASE'
 
 	dependencyManagement {
 		applyMavenExclusions false
@@ -39,6 +38,9 @@ allprojects {
 
 	configurations {
 		all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+
+		//	comment if not using Solr-Core with Jetty
+		all*.exclude module: 'spring-boot-starter-tomcat'
 	}
 
 	dependencies {

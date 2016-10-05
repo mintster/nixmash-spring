@@ -105,7 +105,12 @@ public class SolrUI {
                 System.out.println("Existing posts deleted...");
 
                 List<Post> posts = postService.getAllPublishedPosts();
-                posts.forEach(postDocService::addToIndex);
+                for (Post post :
+                        posts) {
+                    System.out.println(String.format("Entering Post #%s : %s", post.getPostId(), post.getPostTitle()));
+                    postDocService.addToIndex(post);
+                }
+//                posts.forEach(postDocService::addToIndex);
                 System.out.println("All posts added to Solr Server at " + solrSettings.getSolrServerUrl());
                 break;
 

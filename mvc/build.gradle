@@ -8,7 +8,8 @@ sourceSets {
 	test { java.srcDir 'src/test/java' }
 }
 
-configurations { providedRuntime }
+//	uncomment if not using Solr-Core w/ Jetty
+//	configurations { providedRuntime }
 
 dependencies {
 	compile project(':jpa')
@@ -16,7 +17,9 @@ dependencies {
 	compile project(':mail')
 	compile project(':jsoup')
 	compile 'org.springframework.boot:spring-boot-starter-web'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+//	uncomment if not using Solr-Core w/ Jetty
+//	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	compile 'org.springframework.boot:spring-boot-starter-social-twitter'
 	compile 'org.springframework.boot:spring-boot-starter-social-facebook'

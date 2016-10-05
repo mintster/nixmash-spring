@@ -64,7 +64,6 @@ public class  GeneralController {
         return HOME_VIEW;
     }
 
-
     @RequestMapping(value = "/robots.txt", method = RequestMethod.GET)
     @ResponseBody
     public String plaintext(HttpServletResponse response) {

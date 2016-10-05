@@ -993,20 +993,35 @@ h1.post-title {
     position: static;
 }
 
+#sidebar {
+    margin-top: 20px;
+}
+
 #leftCol, #tagcloud {
     margin-top: 30px;
 }
 
 @media (min-width: 979px) {
-    #sidebar.affix-top, #tagcloud.affix-top {
+    #sidebar.affix-top, #tagcloud.affix-top, #sidebar-search.affix-top {
         position: static;
         width: 245px;
     }
 
-    #sidebar.affix, #tagcloud.affix {
+    #sidebar.affix, #tagcloud.affix, #sidebar-search.affix {
         position: fixed;
-        top: 100px;
         width: 245px;
+    }
+
+    #sidebar-search.affix {
+        top: 100px;
+    }
+
+    #sidebar.affix {
+        top: 138px;
+    }
+
+    #tagcloud.affix  {
+        top: 366px;
     }
 
     #sidebar a i.glyphicon.glyphicon-chevron-right {
@@ -1331,6 +1346,20 @@ button.btn.btn-success.btn-flashcard-category {
     max-width: 35px;
     opacity: .6;
     margin-right: 3px;
+}
+
+/*</editor-fold>*/
+
+/*/<editor-fold> desc="SIDEBAR SEARCH WIDGET----------------------------/ "*/
+
+#sidebar-search {
+    position: static;
+}
+#sidebar-search input.search-submit.button {
+    display: none;
+}
+#sidebar-search input.form-control {
+    width: 245px;
 }
 
 /*</editor-fold>*/

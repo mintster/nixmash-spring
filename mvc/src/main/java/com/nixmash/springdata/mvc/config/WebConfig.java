@@ -44,6 +44,25 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		super.configureMessageConverters(converters);
 	}
 
+//	Uncomment when using Embedded Tomcat ----------------------------------------- */
+
+//	@Bean
+//	public EmbeddedServletContainerFactory servletContainer() {
+//		TomcatEmbeddedServletContainerFactory tomcatFactory = new TomcatEmbeddedServletContainerFactory() {
+//
+//			@Override
+//			protected void postProcessContext(Context context) {
+//				final int cacheSize = 40 * 1024;
+//				StandardRoot standardRoot = new StandardRoot(context);
+//				standardRoot.setCacheMaxSize(cacheSize);
+//				context.setResources(standardRoot);
+//
+//				logger.info(String.format("New cache size (KB): %d", context.getResources().getCacheMaxSize()));
+//			}
+//		};
+//		return tomcatFactory;
+//	}
+
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
