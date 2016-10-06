@@ -5,5 +5,6 @@ package com.nixmash.springdata.jpa.enums;
  */
 public enum PostType {
     LINK,
-    POST
+    POST,
+    UNDEFINED
 }

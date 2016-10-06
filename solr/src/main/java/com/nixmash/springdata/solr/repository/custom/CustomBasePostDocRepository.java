@@ -15,6 +15,7 @@
  */
 package com.nixmash.springdata.solr.repository.custom;
 
+import com.nixmash.springdata.jpa.dto.PostQueryDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.solr.model.PostDoc;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,8 @@ public interface CustomBasePostDocRepository {
     void update(Post post);
 
     Page<PostDoc> pagedQuickSearch(String searchTerms, PageRequest pageRequest);
+
+    List<PostDoc> fullSearch(PostQueryDTO postQueryDTO);
 
     List<PostDoc> quickSearch(String searchTerm);
 }

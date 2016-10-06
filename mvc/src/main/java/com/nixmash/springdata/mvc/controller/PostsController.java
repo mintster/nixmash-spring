@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.dto.PostQueryDTO;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.TagNotFoundException;
@@ -20,11 +21,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
@@ -54,29 +57,31 @@ public class PostsController {
     private static final String POSTS_TAGTITLES_VIEW = "posts/tagtitles";
     public static final String POSTS_LIKES_VIEW = "posts/likes";
     public static final String POSTS_AZ_VIEW = "posts/az";
+    public static final String POSTS_SEARCH_VIEW = "posts/search";
     public static final String POSTS_QUICKSEARCH_VIEW = "posts/quicksearch";
-
     public static final String POSTS_LINKS_VIEW = "posts/links";
+
     private static final String FEEDBACK_POST_LINK_ADDED = "feedback.post.link.added";
     private static final String FEEDBACK_POST_NOTE_ADDED = "feedback.post.note.added";
     private static final String FEEDBACK_LINK_DEMO_THANKS = "feedback.post.link.demo.added";
-    public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
 
+    public static final String FEEDBACK_POST_NOT_FOUND = "feedback.post.not.found";
     private static final String FEEDBACK_NOTE_DEMO_THANKS = "feedback.post.note.demo.added";
     private static final String ADD_POST_HEADER = "posts.add.note.page.header";
     private static final String ADD_LINK_HEADER = "posts.add.link.page.header";
+
     private static final String ADD_PHOTO_HEADER = "posts.add.photo.page.header";
-
     private static final String ADD_MULTIPHOTO_HEADER = "posts.add.multiphoto.page.header";
+
+
     public static final String POST_PUBLISH = "publish";
-
-
     public static final String POST_DRAFT = "draft";
     public static final int POST_PAGING_SIZE = 10;
-    public static final int TITLE_PAGING_SIZE = 10;
 
+    public static final int TITLE_PAGING_SIZE = 10;
     private static final String SESSION_ATTRIBUTE_NEWPOST = "activepostdto";
     public static final String SESSION_ATTRIBUTE_QUICKSEARCH_QUERY = "quicksearch";
+    public static final String SESSION_ATTRIBUTE_POSTQUERYDTO = "postquerydto";
 
     // endregion
 
@@ -133,6 +138,25 @@ public class PostsController {
         boolean showMore = postService.getAllPosts().size() > POST_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_LIST_VIEW;
+    }
+
+    @RequestMapping(value = "/search", method = GET)
+    public String searchPage(Model model, HttpServletRequest request) {
+        model.addAttribute("postQueryDTO", new PostQueryDTO());
+        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO, null);
+        return POSTS_SEARCH_VIEW;
+    }
+
+    @RequestMapping(value = "/search",  params = {"query"}, method = GET)
+    public String searchPageResults(@Valid PostQueryDTO postQueryDTO, BindingResult result, Model model, HttpServletRequest request) {
+        model.addAttribute("postQuery", postQueryDTO);
+        if (result.hasErrors()) {
+            return POSTS_SEARCH_VIEW;
+        } else {
+            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO, postQueryDTO);
+            model.addAttribute("isSearchResult", true);
+            return POSTS_SEARCH_VIEW;
+        }
     }
 
     @RequestMapping(value = "", params = {"search"}, method = GET)

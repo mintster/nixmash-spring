@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.dto.PostQueryDTO;
 import com.nixmash.springdata.jpa.dto.TagDTO;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
@@ -44,7 +45,8 @@ public class PostsRestController {
     private static final String SESSION_ATTRIBUTE_TAGGEDPOSTS = "taggedposts";
     private static final String SESSION_ATTRIBUTE_LIKEDPOSTS = "likedposts";
     private static final String SESSION_ATTRIBUTE_JUSTLINKS = "justlinks";
-    private static final String SESSION_ATTRIBUTE_SEARCHPOSTS = "quicksearchposts";
+    private static final String SESSION_ATTRIBUTE_QUICKSEARCH_POSTS = "quicksearchposts";
+    private static final String SESSION_ATTRIBUTE_FULLSEARCH_POSTS = "fullsearchposts";
 
     private PostService postService;
     private FmService fmService;
@@ -157,7 +159,7 @@ public class PostsRestController {
 
     // endregion
 
-    // region Search
+    // region Quick Search
 
 
     @RequestMapping(value = "/quicksearch/page/{pageNumber}",
@@ -174,18 +176,48 @@ public class PostsRestController {
         else {
             Slice<PostDoc> posts = postDocService.doPagedQuickSearch(search, pageNumber, POST_PAGING_SIZE);
              result = populatePostDocStream(posts.getContent(), currentUser);
-            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_SEARCHPOSTS, posts.getContent());
+            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_QUICKSEARCH_POSTS, posts.getContent());
         }
         return result;
     }
 
     @RequestMapping(value = "/quicksearch/more")
-    public String getSearchHasNext(HttpServletRequest request) {
-        return hasNext(request, SESSION_ATTRIBUTE_SEARCHPOSTS, POST_PAGING_SIZE);
+    public String getQuickSearchHasNext(HttpServletRequest request) {
+        return hasNext(request, SESSION_ATTRIBUTE_QUICKSEARCH_POSTS, POST_PAGING_SIZE);
     }
 
     // endregion
 
+
+    // region Full Search
+
+
+    @RequestMapping(value = "/search/page/{pageNumber}",
+            produces = "text/html;charset=UTF-8")
+    public String getFullSearchPosts(@PathVariable int pageNumber,
+                                      HttpServletRequest request,
+                                      CurrentUser currentUser) {
+        PostQueryDTO postQueryDTO= (PostQueryDTO) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO);
+        String result = null;
+        if (postQueryDTO != null) {
+            List<PostDoc> postDocs = postDocService.doFullSearch(postQueryDTO);
+            if (postDocs.size() == 0) {
+                result = fmService.getNoResultsMessage(postQueryDTO.getQuery());
+            } else {
+                Slice<PostDoc> posts = postDocService.doPagedQuickSearch(postQueryDTO.getQuery(), pageNumber, POST_PAGING_SIZE);
+                result = populatePostDocStream(posts.getContent(), currentUser);
+                WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_FULLSEARCH_POSTS, posts.getContent());
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/search/more")
+    public String getFullSearchHasNext(HttpServletRequest request) {
+        return hasNext(request, SESSION_ATTRIBUTE_FULLSEARCH_POSTS, POST_PAGING_SIZE);
+    }
+
+    // endregion
 
     // region Likes
 

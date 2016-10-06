@@ -600,7 +600,6 @@ nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="LINK ENTRY FORMS----------------------------/ "*/
 .pull-right.has-error.pad-right {
     padding-right: 8px;
@@ -1024,6 +1023,10 @@ h1.post-title {
         top: 366px;
     }
 
+    #secInfo.affix  {
+        top: 700px;
+    }
+
     #sidebar a i.glyphicon.glyphicon-chevron-right {
         float: right;
         margin-top: 2px;
@@ -1349,7 +1352,6 @@ button.btn.btn-success.btn-flashcard-category {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="SIDEBAR SEARCH WIDGET----------------------------/ "*/
 
 #sidebar-search {
@@ -1363,3 +1365,12 @@ button.btn.btn-success.btn-flashcard-category {
 }
 
 /*</editor-fold>*/
+
+/*/<editor-fold> desc="SEARCH PAGE----------------------------/ "*/
+
+.post-search-form {
+    margin-top: 30px;
+}
+
+/*</editor-fold>*/
+

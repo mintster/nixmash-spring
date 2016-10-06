@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<div th:fragment="searchform">
+    <div id="grid-table" class="col-lg-9 post-search-form" th:if="!${isSearchResult}">
+        <!--/*@thymesVar id="postQueryDTO" type="com.nixmash.springdata.jpa.dto.PostQueryDTO"*/-->
+        <form th:object="${postQueryDTO}" action="/posts/search" th:action="@{/posts/search}" method="get" class="form-horizontal"
+              id="post-search-form">
+            <table class="table table-striped">
+                <tr th:classappend="${#fields.hasErrors('query')} ? 'has-error'">
+                    <td class="col-sm-1">
+                        <div class="control-group" th:classappend="${#fields.hasErrors('query')} ? 'error'">
+                            <label class="control-label">Search Query</label>
+                        </div>
+                    </td>
+                    <td class="col-sm-4">
+                        <div class="controls">
+                            <input type="text" class="form-control" th:field="*{query}" name="query" size="30" maxlength="120"/>
+                        </div>
+                        <div class="controls" th:if="${#fields.hasErrors('query')}">
+                            <h4><span class="label label-danger" th:errors="*{query}">[Errors]</span></h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="form-actions pull-right">
+                            <select th:field="*{postType}" name="postType" class="selectpicker"
+                                    data-style="btn-primary">
+                                <option value="UNDEFINED" th:text="#{post.search.posttype.all}">
+                                    [posts and links]
+                                </option>
+                                <option value="POST" th:text="#{post.search.posttype.posts}">
+                                    [posts]
+                                </option>
+                                <option value="LINK" th:text="#{post.search.posttype.links}">
+                                    [links]
+                                </option>
+                            </select>
+                            <button type="submit" class="btn btn-success">Search</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div th:if="!${isSearchResult}">
+            <blockquote>
+                <p>Solr Server powers NixMash Spring Post searching. Available Post Search fields:</p>
+                <small><em><strong>title, body, tag, type, postdate, posttype, author</strong></em></small>
+                <div style="display: inline-block; height: 15px;"></div>
+                <p>Search examples using the Lucene Solr syntax include:</p>
+                <small>inStock:TRUE</small>
+                <small>cat:memory</small>
+                <small>name:Western+Digital AND inStock:FALSE</small>
+                <small>popularity:7</small>
+                <small>(name:memory AND name:corsair) AND popularity:[6 TO *]</small>
+                <small>"canon powershot"</small>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

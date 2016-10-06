@@ -15,6 +15,7 @@
  */
 package com.nixmash.springdata.solr.repository.custom;
 
+import com.nixmash.springdata.jpa.dto.PostQueryDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.solr.enums.SolrDocType;
@@ -86,6 +87,11 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 
 
 	@Override
+	public List<PostDoc> fullSearch(PostQueryDTO postQueryDTO) {
+		return quickSearch("something");
+	}
+
+		@Override
 	public List<PostDoc> quickSearch(String searchTerms) {
 		logger.info("Searching Title and Body with Multiple Terms : {}", searchTerms);
 

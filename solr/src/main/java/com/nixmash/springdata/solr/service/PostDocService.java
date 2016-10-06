@@ -1,5 +1,6 @@
 package com.nixmash.springdata.solr.service;
 
+import com.nixmash.springdata.jpa.dto.PostQueryDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.solr.model.PostDoc;
 import org.springframework.data.domain.Page;
@@ -18,11 +19,16 @@ public interface PostDocService {
     void addToIndex(Post post);
 
     @Transactional
+    void addAllToIndex(List<Post> posts);
+
+    @Transactional
     void updatePostDocument(Post post);
 
     List<PostDoc> getAllPostDocuments();
 
     List<PostDoc> doQuickSearch(String searchTerm);
+
+    List<PostDoc> doFullSearch(PostQueryDTO postQueryDTO);
 
     Page<PostDoc> doPagedQuickSearch(String searchTerms, int pageNumber, int pageSize);
 }

@@ -22,10 +22,6 @@
             $("#more-posts-button-row").css('display', 'none');
     });
 
-    $.get("/json/posts/tagcloud", function (data) {
-        $("#sidebartags").html(data);
-    });
-
     function morePosts() {
         $.get(baseUrl + pageIndex, function (data) {
             $("#posts").append(data);

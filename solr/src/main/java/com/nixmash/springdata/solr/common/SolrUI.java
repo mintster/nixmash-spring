@@ -74,7 +74,8 @@ public class SolrUI {
         HIGHLIGHT_SEARCH,
         HIGHLIGHT_SEARCH_CRITERIA,
         BY_LOCATION,
-        POPULATE_DATABASE
+        POPULATE_DATABASE_SINGLE_ENTRIES,
+        POPULATE_DATABASE_AS_LIST
     }
 
     ;
@@ -82,7 +83,7 @@ public class SolrUI {
     // @formatter:on
 
     public void init() {
-        DEMO demo = DEMO.POPULATE_DATABASE;
+        DEMO demo = DEMO.POPULATE_DATABASE_AS_LIST;
 
         String[] profiles = environment.getActiveProfiles();
         if (profiles[0].equals("dev"))
@@ -96,21 +97,30 @@ public class SolrUI {
 
     private void runDemos(DEMO demo) {
 
+        Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
+        List<Post> posts = postService.getAllPublishedPosts();
+
         switch (demo) {
 
-            case POPULATE_DATABASE:
-                Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
+            case POPULATE_DATABASE_SINGLE_ENTRIES:
                 solrOperations.delete(query);
                 solrOperations.commit();
                 System.out.println("Existing posts deleted...");
 
-                List<Post> posts = postService.getAllPublishedPosts();
                 for (Post post :
                         posts) {
                     System.out.println(String.format("Entering Post #%s : %s", post.getPostId(), post.getPostTitle()));
                     postDocService.addToIndex(post);
                 }
-//                posts.forEach(postDocService::addToIndex);
+                System.out.println("All posts added to Solr Server at " + solrSettings.getSolrServerUrl());
+                break;
+
+
+            case POPULATE_DATABASE_AS_LIST:
+                solrOperations.delete(query);
+                solrOperations.commit();
+                System.out.println("Existing posts deleted...");
+                postDocService.addAllToIndex(posts);
                 System.out.println("All posts added to Solr Server at " + solrSettings.getSolrServerUrl());
                 break;
 

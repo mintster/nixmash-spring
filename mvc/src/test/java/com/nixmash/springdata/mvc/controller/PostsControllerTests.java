@@ -19,7 +19,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -54,6 +53,28 @@ public class PostsControllerTests extends AbstractContext {
     public void homePageTest() throws Exception {
         mockMvc.perform(get("/posts"))
                 .andExpect(view().name(POSTS_LIST_VIEW));
+    }
+
+    @Test
+    public void searchPageLoads() throws Exception {
+        mockMvc.perform(get("/posts/search"))
+                .andExpect(model().attributeExists("postQueryDTO"))
+                .andExpect(view().name(POSTS_SEARCH_VIEW));
+    }
+
+    @Test
+    public void searchResultsPageLoads() throws Exception {
+        mockMvc.perform(get("/posts/search").param("query","title:something"))
+                .andExpect(model().attributeExists("isSearchResult"))
+                .andExpect(view().name(POSTS_SEARCH_VIEW));
+    }
+
+    @Test
+    public void searchResults_WithEmptyQuery_ReturnsToEmptyForm() throws Exception {
+        mockMvc.perform(get("/posts/search").param("query",""))
+                .andExpect(model().attributeHasErrors("postQueryDTO"))
+                .andExpect(model().attributeDoesNotExist("isSearchResult"))
+                .andExpect(view().name(POSTS_SEARCH_VIEW));
     }
 
     @Test
@@ -106,7 +127,7 @@ public class PostsControllerTests extends AbstractContext {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("query"))
                 .andExpect(model().attribute("hasResults", false))
-                .andExpect(view().name(POSTS_QUICKSEARCH_VIEW)).andDo(print());
+                .andExpect(view().name(POSTS_QUICKSEARCH_VIEW));
     }
 
     @Test

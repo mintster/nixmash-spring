@@ -1,5 +1,6 @@
 package com.nixmash.springdata.solr.service;
 
+import com.nixmash.springdata.jpa.dto.PostQueryDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.solr.model.PostDoc;
 import com.nixmash.springdata.solr.repository.custom.CustomPostDocRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,6 +41,18 @@ public class PostDocServiceImpl implements PostDocService {
 
     @Transactional
     @Override
+    public void addAllToIndex(List<Post> posts) {
+        logger.info("Saving all Post Documents to Index");
+        List<PostDoc> postDocs = new ArrayList<>();
+        for (Post post : posts
+                ) {
+            postDocs.add(SolrUtils.createPostDoc(post));
+        }
+        customPostDocRepository.save(postDocs);
+    }
+
+    @Transactional
+    @Override
     public void updatePostDocument(Post post) {
         customPostDocRepository.update(post);
     }
@@ -51,6 +65,11 @@ public class PostDocServiceImpl implements PostDocService {
     @Override
     public List<PostDoc> doQuickSearch(String searchTerm) {
         return customPostDocRepository.quickSearch(searchTerm);
+    }
+
+    @Override
+    public List<PostDoc> doFullSearch(PostQueryDTO postQueryDTO) {
+        return customPostDocRepository.quickSearch(postQueryDTO.getQuery());
     }
 
     @Override
