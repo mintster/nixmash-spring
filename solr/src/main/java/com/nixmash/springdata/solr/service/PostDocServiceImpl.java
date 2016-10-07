@@ -7,9 +7,12 @@ import com.nixmash.springdata.solr.repository.custom.CustomPostDocRepository;
 import com.nixmash.springdata.solr.utils.SolrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.solr.core.SolrOperations;
+import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,13 @@ public class PostDocServiceImpl implements PostDocService {
     @Resource
     CustomPostDocRepository customPostDocRepository;
 
+    private final SolrOperations solrOperations;
+
+    @Autowired
+    public PostDocServiceImpl(SolrOperations solrOperations) {
+        this.solrOperations = solrOperations;
+    }
+
     @Override
     public List<PostDoc> getPostsWithUserQuery(String userQuery) {
         logger.info("SimpleQuery from user search string -  findProductsBySimpleQuery()");
@@ -37,6 +47,7 @@ public class PostDocServiceImpl implements PostDocService {
         logger.info("Saving a Post Document with information: {}", post);
         PostDoc document = SolrUtils.createPostDoc(post);
         customPostDocRepository.save(document);
+        commit();
     }
 
     @Transactional
@@ -49,9 +60,35 @@ public class PostDocServiceImpl implements PostDocService {
             postDocs.add(SolrUtils.createPostDoc(post));
         }
         customPostDocRepository.save(postDocs);
+        commit();
     }
 
     @Transactional
+    @Override
+    public void removeFromIndex(PostDoc postDoc) {
+        customPostDocRepository.delete(postDoc);
+        commit();
+    }
+
+    @Transactional
+    @Override
+    public void removeFromIndex(List<PostDoc> postDocs) {
+        customPostDocRepository.delete(postDocs);
+        commit();
+    }
+
+    @Transactional
+    @Override
+    public void removeFromIndex(String query) {
+        solrOperations.delete(new SimpleQuery(query));
+        commit();
+    }
+
+    private void commit() {
+        solrOperations.getSolrClient();
+        solrOperations.commit();
+    }
+
     @Override
     public void updatePostDocument(Post post) {
         customPostDocRepository.update(post);
@@ -69,7 +106,14 @@ public class PostDocServiceImpl implements PostDocService {
 
     @Override
     public List<PostDoc> doFullSearch(PostQueryDTO postQueryDTO) {
-        return customPostDocRepository.quickSearch(postQueryDTO.getQuery());
+        return customPostDocRepository.fullSearch(postQueryDTO);
+    }
+
+    @Override
+    public Page<PostDoc> doPagedFullSearch(PostQueryDTO postQueryDTO, int pageNumber, int pageSize) {
+        PageRequest pageRequest =
+                new PageRequest(pageNumber, pageSize, sortByPostDateDesc());
+        return customPostDocRepository.pagedFullSearch(postQueryDTO, pageRequest);
     }
 
     @Override

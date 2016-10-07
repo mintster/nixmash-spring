@@ -47,16 +47,7 @@
         </form>
         <div th:if="!${isSearchResult}">
             <blockquote>
-                <p>Solr Server powers NixMash Spring Post searching. Available Post Search fields:</p>
-                <small><em><strong>title, body, tag, type, postdate, posttype, author</strong></em></small>
-                <div style="display: inline-block; height: 15px;"></div>
-                <p>Search examples using the Lucene Solr syntax include:</p>
-                <small>inStock:TRUE</small>
-                <small>cat:memory</small>
-                <small>name:Western+Digital AND inStock:FALSE</small>
-                <small>popularity:7</small>
-                <small>(name:memory AND name:corsair) AND popularity:[6 TO *]</small>
-                <small>"canon powershot"</small>
+                <div id="searchtips"></div>
             </blockquote>
         </div>
     </div>

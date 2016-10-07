@@ -29,5 +29,15 @@ public class PostQueryDTO implements java.io.Serializable {
 	public void setPostType(PostType postType) {
 		this.postType = postType;
 	}
+
+	public PostQueryDTO(String query, PostType postType) {
+		this.query = query;
+		this.postType = postType;
+	}
+
+	public PostQueryDTO(String query) {
+		this.query = query;
+		this.postType = PostType.UNDEFINED;
+	}
 }
 

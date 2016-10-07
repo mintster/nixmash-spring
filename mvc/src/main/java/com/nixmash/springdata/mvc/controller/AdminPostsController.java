@@ -16,6 +16,7 @@ import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.containers.PostLink;
+import com.nixmash.springdata.solr.service.PostDocService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,7 @@ public class AdminPostsController {
     public static final String POST_DRAFT = "draft";
 
     private final PostService postService;
+    private final PostDocService postDocService;
     private final WebUI webUI;
     private final FmService fmService;
     private final JsoupService jsoupService;
@@ -79,8 +81,9 @@ public class AdminPostsController {
     private static final Logger logger = LoggerFactory.getLogger(AdminPostsController.class);
 
     @Autowired
-    public AdminPostsController(PostService postService, WebUI webUI, FmService fmService, JsoupService jsoupService) {
+    public AdminPostsController(PostService postService, PostDocService postDocService, WebUI webUI, FmService fmService, JsoupService jsoupService) {
         this.postService = postService;
+        this.postDocService = postDocService;
         this.webUI = webUI;
         this.fmService = fmService;
         this.jsoupService = jsoupService;
@@ -180,7 +183,10 @@ public class AdminPostsController {
                 postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
 
                 request.setAttribute("postTitle", postDTO.getPostTitle());
-                postService.add(postDTO);
+                Post post = postService.add(postDTO);
+
+                // All links are saved as PUBLISHED so no _isPublished_ status check
+                postDocService.addToIndex(post);
 
                 webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
                 return "redirect:/admin/posts";
@@ -231,6 +237,10 @@ public class AdminPostsController {
                     postDTO.setPostId(sessionPost.getPostId());
                     saved = postService.update(postDTO);
                 }
+
+                if (saved.getIsPublished())
+                    postDocService.addToIndex(saved);
+
                 postDTO.setPostId(saved.getPostId());
                 WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
 
@@ -294,6 +304,10 @@ public class AdminPostsController {
         } else {
             postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
             Post post = postService.update(postDTO);
+
+            if (post.getIsPublished())
+                postDocService.updatePostDocument(post);
+
             webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
             return "redirect:/admin/posts";
         }

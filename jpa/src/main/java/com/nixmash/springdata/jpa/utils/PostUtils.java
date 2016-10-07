@@ -44,6 +44,13 @@ public class PostUtils {
                 .build();
     }
 
+    public static Post postDtoToSolrPost(PostDTO dto) {
+        Post post = postDtoToPost(dto);
+        post.setTags(tagsDTOsToTags(dto.getTags()));
+        return post;
+    }
+
+
     public static PostDTO postToPostDTO(Post post) {
 
         return PostDTO.getBuilder(post.getUserId(),
@@ -152,5 +159,18 @@ public class PostUtils {
         }
         return tagValues;
     }
+
+
+    // region display content
+
+    public static void printPosts(List<Post> posts) {
+        for (Post post :
+                posts) {
+            System.out.println(post.getPostTitle()
+                    + "\n" + post.getPostContent() + " : " + post.getPostType() + "\n------------------------");
+        }
+    }
+
+    // endregion
 
 }

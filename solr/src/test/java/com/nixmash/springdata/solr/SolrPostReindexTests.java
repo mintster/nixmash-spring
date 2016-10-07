@@ -25,61 +25,70 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 public class SolrPostReindexTests extends SolrContext {
 
-	private static final int INITIAL_POST_COUNT = 7;
-	private static final int BOOTSTRAP_POST_COUNT = 1;
-	private List<Post> posts;
-	private int postCount = 0;
+    private static final int INITIAL_POST_COUNT = 7;
+    private static final int BOOTSTRAP_POST_COUNT = 1;
+    private List<Post> posts;
+    private int postCount = 0;
 
-	@Resource
-	CustomPostDocRepository postDocRepository;
+    @Resource
+    CustomPostDocRepository postDocRepository;
 
-	@Autowired
-	private PostDocService postDocService;
+    @Autowired
+    private PostDocService postDocService;
 
-	@Autowired
-	PostService postService;
+    @Autowired
+    PostService postService;
 
-	@Autowired
-	SolrOperations solrOperations;
+    @Autowired
+    SolrOperations solrOperations;
 
-	@Before
-	public void cleanIndex() {
-		Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
-		solrOperations.delete(query);
-		solrOperations.commit();
-	}
+    @Before
+    public void cleanIndex() {
+        Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
+        solrOperations.delete(query);
+        solrOperations.commit();
+    }
 
-	@After
-	public void populateIndex() {
-		posts = postService.getAllPublishedPosts();
-		postCount = posts.size();
-		for (Post post : posts) {
-			postDocService.addToIndex(post);
-		}
+    @After
+    public void populateIndex() {
+        posts = postService.getAllPublishedPosts();
+        postCount = posts.size();
+            postDocService.addAllToIndex(posts);
+    }
 
-	}
-	@Test
-	public void cleanAndReindexPostDocuments() throws Exception {
+    @Test
+    public void cleanAndReindexPostDocuments_AddAsList() throws Exception {
 
-		posts = postService.getAllPublishedPosts();
-		postCount = posts.size();
-		for (Post post : posts) {
-			postDocService.addToIndex(post);
-		}
+        posts = postService.getAllPublishedPosts();
+        postCount = posts.size();
+        postDocService.addAllToIndex(posts);
 
-		List<PostDoc> postDocs = postDocService.getAllPostDocuments();
-		assertEquals(postDocs.size(), postCount);
+        List<PostDoc> postDocs = postDocService.getAllPostDocuments();
+        assertEquals(postDocs.size(), postCount);
+    }
 
-		postDocs = postDocService.getPostsWithUserQuery("bootstrap");
-		assertEquals(BOOTSTRAP_POST_COUNT, postDocs.size());
+    @Test
+    public void cleanAndReindexPostDocuments_AddIndividually() throws Exception {
 
-		Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
-		solrOperations.delete(query);
-		solrOperations.commit();
-	}
+        posts = postService.getAllPublishedPosts();
+        postCount = posts.size();
+        for (Post post : posts) {
+            postDocService.addToIndex(post);
+        }
 
-	private Sort sortByIdDesc() {
-		return new Sort(Sort.Direction.DESC, PostDoc.ID);
-	}
+        List<PostDoc> postDocs = postDocService.getAllPostDocuments();
+        assertEquals(postDocs.size(), postCount);
+
+        postDocs = postDocService.getPostsWithUserQuery("bootstrap");
+        assertEquals(BOOTSTRAP_POST_COUNT, postDocs.size());
+
+        Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
+        solrOperations.delete(query);
+        solrOperations.commit();
+    }
+
+    private Sort sortByIdDesc() {
+        return new Sort(Sort.Direction.DESC, PostDoc.ID);
+    }
 
 }

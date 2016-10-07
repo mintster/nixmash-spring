@@ -1,6 +1,8 @@
 package com.nixmash.springdata.solr;
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
+import com.nixmash.springdata.jpa.dto.PostQueryDTO;
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
@@ -9,10 +11,13 @@ import com.nixmash.springdata.solr.model.PostDoc;
 import com.nixmash.springdata.solr.repository.custom.CustomPostDocRepository;
 import com.nixmash.springdata.solr.service.PostDocService;
 import com.nixmash.springdata.solr.utils.SolrUtils;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -27,11 +32,6 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 public class SolrPostTests extends SolrContext {
 
-	private static final int INITIAL_POST_COUNT = 7;
-	private static final int BOOTSTRAP_POST_COUNT = 1;
-	private List<Post> posts;
-	private int postCount = 9;
-
 	@Resource
 	CustomPostDocRepository postDocRepository;
 
@@ -44,8 +44,18 @@ public class SolrPostTests extends SolrContext {
 	@Autowired
 	SolrOperations solrOperations;
 
+	@Before
+	public void setupSolr() {
+		Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
+		solrOperations.delete(query);
+		solrOperations.commit();
+		List<Post> posts = postService.getAllPublishedPosts();
+		postDocService.addAllToIndex(posts);
+	}
+
 	@Test
 	public void queryForPage() {
+		int postCount = postService.getAllPublishedPosts().size();
 		Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
 		Page<PostDoc> postDocs = solrOperations.queryForPage(query, PostDoc.class);
 		assertEquals(postDocs.getTotalElements(), postCount);
@@ -69,7 +79,6 @@ public class SolrPostTests extends SolrContext {
 		Post post = postService.getPostById(10L);
 		postDocService.addToIndex(post);
 		PostDoc found = postDocRepository.findOne("10");
-		System.out.println(found);
 		assertEquals(found.getPostName(), "solr-rama");
 	}
 
@@ -117,6 +126,72 @@ public class SolrPostTests extends SolrContext {
 	public void quickSearchListSize_IsZero_OnNoResults() throws Exception {
 		List<PostDoc> postDocs = postDocService.doQuickSearch("no_results_to_find_here");
 		assertEquals(postDocs.size(), 0);
+	}
+
+	// region fullSearch tests
+
+	// fullSearch tests use the following PostDocument objects
+
+		//100 Ways To Title Something
+		//This post title begins with 100 : POST
+		//------------------------
+		//200 Ways To Title Something
+		//This post title begins with 200 : POST
+		//------------------------
+		//1000 Ways To Title Something
+		//This post title begins with 1000 : POST
+
+	@Test
+	public void fullSearch() throws Exception {
+		PostQueryDTO postQueryDTO = new PostQueryDTO("body:begins", PostType.UNDEFINED);
+		List<PostDoc> postDocs = postDocService.doFullSearch(postQueryDTO);
+		assertEquals(postDocs.size(), 3);
+	}
+
+	@Test
+	public void fullSearchWithPostType_POST_ReturnsAll() throws Exception {
+		PostQueryDTO postQueryDTO = new PostQueryDTO("body:begins", PostType.POST);
+		List<PostDoc> postDocs = postDocService.doFullSearch(postQueryDTO);
+		assertEquals(postDocs.size(), 3);
+	}
+
+	@Test
+	public void fullSearchWithPostType_LINK_ReturnsNone() throws Exception {
+		PostQueryDTO postQueryDTO = new PostQueryDTO("body:begins", PostType.LINK);
+		List<PostDoc> postDocs = postDocService.doFullSearch(postQueryDTO);
+		assertEquals(postDocs.size(), 0);
+	}
+
+	@Test
+	public void badSimpleQueryThrowsUncategorizedSolrException() {
+		int i = 0;
+		try {
+			postDocService.doFullSearch(new PostQueryDTO("bad:field"));
+		} catch (Exception ex) {
+			i++;
+			Assert.assertTrue(ex instanceof UncategorizedSolrException);
+		}
+		try {
+			postDocService.doFullSearch(new PostQueryDTO("bad::format"));
+		} catch (Exception ex) {
+			i++;
+			Assert.assertTrue(ex instanceof UncategorizedSolrException);
+		}
+		try {
+			postDocService.doFullSearch(new PostQueryDTO("title:goodquery"));
+		} catch (UncategorizedSolrException ex) {
+			i++;
+		}
+		Assert.assertEquals(2, i);
+	}
+
+	// endregion
+
+
+	@Test
+	public void allPostDocuments() {
+		List<PostDoc> postDocs = postDocService.getAllPostDocuments();
+		SolrUtils.printPostDocs(postDocs);
 	}
 
 	private Post updatedPost(String postTitle) throws PostNotFoundException {

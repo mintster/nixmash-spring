@@ -180,7 +180,7 @@
     <!--Primary Post Search Fields .........................................-->
 
     <field name="body" type="text_general" indexed="true" stored="true" />
-    <field name="type" type="string" indexed="true" stored="true" />
+    <field name="posttype" type="string" indexed="true" stored="true" />
     <field name="source" type="text_general" indexed="true" stored="true"  />
     <field name="tag" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="postdate" type="date" indexed="true" stored="true"/>

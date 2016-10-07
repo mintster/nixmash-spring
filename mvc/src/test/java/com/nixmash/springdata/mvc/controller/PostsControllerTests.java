@@ -78,6 +78,14 @@ public class PostsControllerTests extends AbstractContext {
     }
 
     @Test
+    public void searchResults_WithBadQuery_Returns_FreemarkerMessage_IsOk() throws Exception {
+        mockMvc.perform(get("/posts/search").param("query","bad:query"))
+                .andExpect(model().attributeHasNoErrors("postQueryDTO"))
+                .andExpect(model().attributeExists("isSearchResult"))
+                .andExpect(view().name(POSTS_SEARCH_VIEW));
+    }
+
+    @Test
     public void postDisplayPage() throws Exception {
         mockMvc.perform(get("/posts/post/javascript-bootstrap"))
                 .andExpect(model().attributeExists("post"))

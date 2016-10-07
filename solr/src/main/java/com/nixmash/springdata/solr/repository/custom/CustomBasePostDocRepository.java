@@ -26,13 +26,16 @@ import java.util.List;
 
 public interface CustomBasePostDocRepository {
 
-	List<PostDoc> findPostsBySimpleQuery(String userQuery) throws UncategorizedSolrException;
+    List<PostDoc> findPostsBySimpleQuery(String userQuery) throws UncategorizedSolrException;
 
     void update(Post post);
 
     Page<PostDoc> pagedQuickSearch(String searchTerms, PageRequest pageRequest);
 
-    List<PostDoc> fullSearch(PostQueryDTO postQueryDTO);
+    Page<PostDoc> pagedFullSearch(PostQueryDTO postQueryDTO, PageRequest pageRequest);
+
+    List<PostDoc> fullSearch(PostQueryDTO postQueryDTO) throws UncategorizedSolrException;
 
     List<PostDoc> quickSearch(String searchTerm);
+
 }

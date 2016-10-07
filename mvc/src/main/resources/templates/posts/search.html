@@ -9,7 +9,7 @@
 
     <title th:text="#{posts.search.page.title}">[Search NixMash Spring Posts]</title>
 </head>
-<body>
+<body onload="$('input[name=query]').focus();">
 <nav th:replace="fragments/navbar :: navbar('posts')">Navbar</nav>
 
 <div class="container" th:unless="${isSearchResult}">
@@ -58,6 +58,15 @@
 <script th:replace="fragments/posts/postjs :: stream" th:if="${isSearchResult}">Post Stream Scripts</script>
 <script th:replace="fragments/posts/sidebar :: javascript">Post Sidebar Scripts</script>
 
+<script th:inline="javascript" th:if="!${isSearchResult}">
+    /*<![CDATA[*/
+
+    $(document).ready(function () {
+        $("#searchtips").load("/files/html/searchtips.html");
+    });
+
+    /*]]>*/
+</script>
 
 </body>
 </html>

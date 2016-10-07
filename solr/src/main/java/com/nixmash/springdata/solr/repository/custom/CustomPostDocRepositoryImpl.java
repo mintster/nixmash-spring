@@ -16,6 +16,7 @@
 package com.nixmash.springdata.solr.repository.custom;
 
 import com.nixmash.springdata.jpa.dto.PostQueryDTO;
+import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import com.nixmash.springdata.solr.enums.SolrDocType;
@@ -37,7 +38,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.text.MessageFormat;
 import java.util.List;
 
 @Repository
@@ -87,17 +87,40 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 
 
 	@Override
+	public Page<PostDoc> pagedFullSearch(PostQueryDTO postQueryDTO, PageRequest pageRequest) {
+		Query query = new SimpleQuery(postQueryDTO.getQuery());
+
+		if (!postQueryDTO.getPostType().equals(PostType.UNDEFINED)) {
+			query.addFilterQuery(new SimpleQuery(new Criteria(IPostDoc.POST_TYPE).is(postQueryDTO.getPostType())));
+		}
+
+		query.addFilterQuery(new SimpleQuery(new Criteria(IPostDoc.DOCTYPE).is(SolrDocType.POST)));
+		query.setRows(1000);
+		query.setPageRequest(pageRequest);
+
+		Page<PostDoc> results = solrTemplate.queryForPage(query, PostDoc.class);
+		return results;
+	}
+
+
+	@Override
 	public List<PostDoc> fullSearch(PostQueryDTO postQueryDTO) {
-		return quickSearch("something");
+		Query query = new SimpleQuery(postQueryDTO.getQuery());
+
+		if (!postQueryDTO.getPostType().equals(PostType.UNDEFINED)) {
+			query.addFilterQuery(new SimpleQuery(new Criteria(IPostDoc.POST_TYPE).is(postQueryDTO.getPostType())));
+		}
+
+		query.addFilterQuery(new SimpleQuery(new Criteria(IPostDoc.DOCTYPE).is(SolrDocType.POST)));
+		query.setRows(1000);
+
+		Page<PostDoc> results = solrTemplate.queryForPage(query, PostDoc.class);
+		return results.getContent();
 	}
 
 		@Override
 	public List<PostDoc> quickSearch(String searchTerms) {
 		logger.info("Searching Title and Body with Multiple Terms : {}", searchTerms);
-
-//		String[] words = searchTerms.split(" ");
-//		Query query = new SimpleQuery(titleAndBodyQuery(words));
-
 		Query query = new SimpleQuery(titleAndBodyCriteria(searchTerms));
 		query.setRows(1000);
 		Page<PostDoc> results = solrTemplate.queryForPage(query, PostDoc.class);
@@ -112,18 +135,6 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 					.or(PostDoc.POST_TEXT).contains(word));
 		}
 		return criteria.and(new Criteria(PostDoc.DOCTYPE).is("post"));
-	}
-
-	private String titleAndBodyQuery(String[] words) {
-		String query = null;
-		for (String word : words) {
-			if (query == null) {
-				query = MessageFormat.format("(title:{0} OR body:{0})", word);
-			}
-			else
-				query += MessageFormat.format(" AND (title:{0} OR body:{0})", word);
-		}
-		return query;
 	}
 
 	public Sort sortByIdDesc() {

@@ -10,6 +10,8 @@ import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.MvcTestUtil;
 import com.nixmash.springdata.mvc.dto.JsonPostDTO;
 import com.nixmash.springdata.mvc.security.WithAdminUser;
+import com.nixmash.springdata.solr.model.PostDoc;
+import com.nixmash.springdata.solr.service.PostDocService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.data.solr.core.SolrOperations;
+import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.SimpleStringCriteria;
 import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.nixmash.springdata.mvc.controller.AdminPostsController.*;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
@@ -52,12 +59,19 @@ public class AdminPostsControllerTests  extends AbstractContext{
     private static final Logger logger = LoggerFactory.getLogger(AdminPostsControllerTests.class);
 
     private static final String POST_CONSTANT = "POST";
+    private static final String LINK_CONSTANT = "LINK";
     private static final String GOOD_URL = "http://nixmash.com/some-post/";
 
     private JacksonTester<JsonPostDTO> json;
 
     @Autowired
+    private SolrOperations solrOperations;
+
+    @Autowired
     private PostService postService;
+
+    @Autowired
+    private PostDocService postDocService;
 
     private MockMvc mvc;
 
@@ -77,6 +91,12 @@ public class AdminPostsControllerTests  extends AbstractContext{
                 .apply(springSecurity())
                 .addFilters(dandelionFilter)
                 .build();
+
+        Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
+        solrOperations.delete(query);
+        solrOperations.commit();
+        List<Post> posts = postService.getAllPublishedPosts();
+        postDocService.addAllToIndex(posts);
     }
 
     @After
@@ -244,7 +264,105 @@ public class AdminPostsControllerTests  extends AbstractContext{
 
     // endregion
 
+    // region Solr
+
+
+    @Test
+    public void addNewPublishedPost_IncreasesPostAndPostDocSize() throws Exception {
+
+        // Adding a Published Post increases the PostCount and PostDocCount by 1
+
+        String TITLE = "addNewPublishedPost";
+        String SOLR_TITLE = "title:addNewPublishedPost";
+
+        int postStartCount = postService.getAllPosts().size();
+        int postDocStartCount = postDocService.getAllPostDocuments().size();
+
+        mvc.perform(addPostRequest(TITLE));
+
+        int postEndCount = postService.getAllPosts().size();
+        assertEquals(postStartCount + 1, postEndCount);
+
+        int postDocEndCount = postDocService.getAllPostDocuments().size();
+        assertEquals(postDocStartCount + 1, postDocEndCount);
+        postDocService.removeFromIndex(SOLR_TITLE);
+
+    }
+
+
+    @Test
+    public void addingUnPublishedPost_NoChangeInPostDocSize() throws Exception {
+
+        // Adding a Published Post increases the PostCount and PostDocCount by 1
+
+        String TITLE = "addingUnPublishedPost";
+        String SOLR_TITLE = "title:addingUnPublishedPost";
+
+        int postDocStartCount = postDocService.getAllPostDocuments().size();
+
+        mvc.perform(addPostRequest(TITLE, false));
+
+        int postDocEndCount = postDocService.getAllPostDocuments().size();
+        assertEquals(postDocStartCount, postDocEndCount);
+        postDocService.removeFromIndex(SOLR_TITLE);
+
+    }
+
+    @Test
+    public void updatingPostUpdatesItsSolrPostDocument() throws Exception {
+
+        List<PostDoc> postDocs = postDocService.getAllPostDocuments();
+        int postDocCount= postDocs.size();
+
+        Post post = postService.getPostById(1L);
+        String originalTitle = post.getPostTitle();
+        String newTitle = "updatingPostUpdatesItsSolrPostDocument";
+
+        mvc.perform(post("/admin/posts/update")
+                .param("postId", "1")
+                .param("displayType", String.valueOf(post.getDisplayType()))
+                .param("postContent", post.getPostContent())
+                .param("postTitle", newTitle)
+                .param("tags", "removingTag1")
+                .with(csrf()));
+
+        // size of PostDocuments in Solr Index Unchanged
+        assertEquals(postDocCount, postDocService.getAllPostDocuments().size());
+
+        Post verifyPost = postService.getPostById(1L);
+        assertEquals(verifyPost.getPostTitle(), newTitle);
+
+        List<PostDoc> verifyPostDocs = postDocService.getPostsWithUserQuery(newTitle);
+        assertEquals(verifyPostDocs.size(), 1);
+
+    }
+
+
+    // endregion
+
     // region Links
+
+    @Test
+    public void addNewPublishedLink_IncreasesPostAndPostDocSize() throws Exception {
+
+        // Adding a Published Link increases the PostCount and PostDocCount by 1
+
+        String TITLE = "addNewPublishedLink";
+        String SOLR_TITLE = "title:addNewPublishedLink";
+
+        int postStartCount = postService.getAllPosts().size();
+        int postDocStartCount = postDocService.getAllPostDocuments().size();
+
+        mvc.perform(addLinkRequest(TITLE));
+
+        int postEndCount = postService.getAllPosts().size();
+        assertEquals(postStartCount + 1, postEndCount);
+
+        int postDocEndCount = postDocService.getAllPostDocuments().size();
+        assertEquals(postDocStartCount + 1, postDocEndCount);
+        postDocService.removeFromIndex(SOLR_TITLE);
+
+    }
 
     @Test
     public void addLink_page_loads() throws Exception {
@@ -353,15 +471,34 @@ public class AdminPostsControllerTests  extends AbstractContext{
         return addPostRequest(s, true);
     }
 
+    private RequestBuilder addUnpublishedPostRequest(String s) {
+        return addPostRequest(s, false);
+    }
+
     private RequestBuilder addPostRequest(String s, Boolean isPublished) {
         return post("/admin/posts/add/post")
                 .param("post", isPublished ? POST_PUBLISH : POST_DRAFT)
                 .param("postTitle", "my title " + s)
                 .param("hasPost", "true")
-                .param("postLink", "http://some.link/some/path")
+                .param("postLink", StringUtils.EMPTY)
                 .param("postDescription", "my description")
                 .param("postType", POST_CONSTANT)
                 .param("displayType", POST_CONSTANT)
+                .param("postContent", "My Post Content must be longer so I don't trigger a new contraint addition!")
+                .param("isPublished", isPublished.toString())
+                .param("tags", String.format("req%s, req%s%s", s, s, 1))
+                .with(csrf());
+    }
+
+    private RequestBuilder addLinkRequest(String s) {
+        return post("/admin/posts/add/link")
+                .param("post", POST_PUBLISH )
+                .param("postTitle", "my title " + s)
+                .param("hasPost", "true")
+                .param("postLink", "http://some.link/some/path")
+                .param("postDescription", "my description")
+                .param("postType", LINK_CONSTANT)
+                .param("displayType", LINK_CONSTANT)
                 .param("postContent", "My Post Content must be longer so I don't trigger a new contraint addition!")
                 .param("isPublished", "true")
                 .param("tags", String.format("req%s, req%s%s", s, s, 1))

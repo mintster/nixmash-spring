@@ -24,6 +24,6 @@ import java.util.List;
 public interface CustomPostDocRepository extends CustomBasePostDocRepository, SolrCrudRepository<PostDoc, String> {
 
     @Query("doctype:post")
-    public List<PostDoc> findAllPostDocuments();
+    List<PostDoc> findAllPostDocuments();
 
 }

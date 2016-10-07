@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.*;
 
@@ -165,17 +167,16 @@ public class PostsRestController {
     @RequestMapping(value = "/quicksearch/page/{pageNumber}",
             produces = "text/html;charset=UTF-8")
     public String getQuickSearchPosts(@PathVariable int pageNumber,
-                                  HttpServletRequest request,
-                                  CurrentUser currentUser) {
+                                      HttpServletRequest request,
+                                      CurrentUser currentUser) {
         String search = (String) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_QUICKSEARCH_QUERY);
         String result;
         List<PostDoc> postDocs = postDocService.doQuickSearch(search);
         if (postDocs.size() == 0) {
             result = fmService.getNoResultsMessage(search);
-        }
-        else {
+        } else {
             Slice<PostDoc> posts = postDocService.doPagedQuickSearch(search, pageNumber, POST_PAGING_SIZE);
-             result = populatePostDocStream(posts.getContent(), currentUser);
+            result = populatePostDocStream(posts.getContent(), currentUser);
             WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_QUICKSEARCH_POSTS, posts.getContent());
         }
         return result;
@@ -195,16 +196,23 @@ public class PostsRestController {
     @RequestMapping(value = "/search/page/{pageNumber}",
             produces = "text/html;charset=UTF-8")
     public String getFullSearchPosts(@PathVariable int pageNumber,
-                                      HttpServletRequest request,
-                                      CurrentUser currentUser) {
-        PostQueryDTO postQueryDTO= (PostQueryDTO) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO);
+                                     HttpServletRequest request,
+                                     CurrentUser currentUser) {
+        PostQueryDTO postQueryDTO = (PostQueryDTO) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO);
         String result = null;
+        List<PostDoc> postDocs = null;
         if (postQueryDTO != null) {
-            List<PostDoc> postDocs = postDocService.doFullSearch(postQueryDTO);
+            try {
+                postDocs = postDocService.doFullSearch(postQueryDTO);
+            } catch (UncategorizedSolrException ex) {
+                logger.info(MessageFormat.format("Bad Query: {0}", postQueryDTO.getQuery()));
+                return fmService.getNoResultsMessage(postQueryDTO.getQuery());
+            }
+
             if (postDocs.size() == 0) {
                 result = fmService.getNoResultsMessage(postQueryDTO.getQuery());
             } else {
-                Slice<PostDoc> posts = postDocService.doPagedQuickSearch(postQueryDTO.getQuery(), pageNumber, POST_PAGING_SIZE);
+                Slice<PostDoc> posts = postDocService.doPagedFullSearch(postQueryDTO, pageNumber, POST_PAGING_SIZE);
                 result = populatePostDocStream(posts.getContent(), currentUser);
                 WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_FULLSEARCH_POSTS, posts.getContent());
             }
@@ -212,6 +220,20 @@ public class PostsRestController {
         return result;
     }
 
+    //    try {
+//        if (isSimpleTermQuery) {
+//            HighlightPage<Product> highlightedResults = productService
+//                    .findByHighlightedNameCriteria(userQuery.getQuery());
+//            results = SolrUtils.highlightPagesToList(highlightedResults);
+//        } else {
+//            results = productService.getProductsWithUserQuery(userQuery.getQuery());
+//        }
+//    } catch (UncategorizedSolrException ex) {
+//        logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
+//        result.rejectValue("query", "product.search.error", new Object[] { userQuery.getQuery() }, "not found");
+//        return PRODUCT_SEARCH_VIEW;
+//    }
+//
     @RequestMapping(value = "/search/more")
     public String getFullSearchHasNext(HttpServletRequest request) {
         return hasNext(request, SESSION_ATTRIBUTE_FULLSEARCH_POSTS, POST_PAGING_SIZE);
@@ -236,8 +258,7 @@ public class PostsRestController {
         String result;
         if (posts == null) {
             result = fmService.getNoLikesMessage();
-        }
-        else {
+        } else {
             posts = postService.getPagedLikedPosts(userId, pageNumber, POST_PAGING_SIZE);
             result = populatePostStream(posts, currentUser);
             WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_LIKEDPOSTS, posts);
@@ -291,7 +312,7 @@ public class PostsRestController {
                     post.setSingleImage(postService.getPostImages(post.getPostId()).get(0));
                 }
             } catch (Exception e) {
-                logger.info(String.format("Image Retrieval Error for Post ID:%s Title: %s",String.valueOf( post.getPostId()), post.getPostTitle()));
+                logger.info(String.format("Image Retrieval Error for Post ID:%s Title: %s", String.valueOf(post.getPostId()), post.getPostTitle()));
             }
             post.setIsOwner(PostUtils.isPostOwner(currentUser, post.getUserId()));
             result += fmService.createPostHtml(post, format);

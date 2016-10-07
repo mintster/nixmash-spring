@@ -6,7 +6,7 @@
         <field name="postname">javascript-bootstrap</field>
         <field name="postlink">http://getbootstrap.com/javascript/#carousel</field>
         <field name="postdate">2016-08-04T11:10:53Z</field>
-        <field name="type">LINK</field>
+        <field name="posttype">LINK</field>
         <field name="html">&lt;p&gt;Bootstrap, a sleek, intuitive, and &lt;em&gt;powerful mobile first front-end framework&lt;/em&gt; for faster and easier web development.&lt;/p&gt;</field>
         <field name="body">Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.
         </field>
@@ -25,7 +25,7 @@
         <field name="postname">jsoup-parsing-and-traversing-document-and-url-javatips-info</field>
         <field name="postlink">http://javatips.info/jsoup-parsing-and-traversing-document-and-url.html</field>
         <field name="postdate">2016-09-03T08:10:53Z</field>
-        <field name="type">LINK</field>
+        <field name="posttype">LINK</field>
         <field name="html">Prerequisites Development environment JDK 1.8 Downloads Eclipse Mars Download Required jar files jsoup-1.8.3.jar Maven dependencies [crayon-5755cf911d25a486332694/] In order to run the example; simply follow steps below: Step 1 Create New Maven-based Dynamic Web Project Step 1.1 Create New Java Project Launch Eclipse IDE; Go to File -&gt; New -&gt; Others… -&gt; Java Project. Click Next. Choose any project … Continue reading Jsoup Parsing and Traversing Document and URL ?
         </field>
         <field name="body">&lt;p&gt;Prerequisites Development environment &lt;strong&gt;JDK 1.8 Downloads Eclipse Mars Download&lt;/strong&gt; Required jar files jsoup-1.8.3.jar Maven dependencies [crayon-5755cf911d25a486332694/] In order to run the example; simply follow steps below: Step 1 Create New Maven-based Dynamic Web Project Step 1.1 Create New Java Project Launch Eclipse IDE; Go to File -&gt; New -&gt; Others… -&gt; Java Project. Click Next. Choose any project … Continue reading Jsoup Parsing and Traversing Document and URL ?&lt;/p&gt;</field>
@@ -42,7 +42,7 @@
         <field name="postname">changelist-for-thursday-am</field>
         <field name="postlink"></field>
         <field name="postdate">2016-08-04T11:10:53Z</field>
-        <field name="type">POST</field>
+        <field name="posttype">POST</field>
         <field name="html">&lt;p&gt;some images for you&lt;/p&gt;</field>
         <field name="body">some images for you</field>
         <field name="source">NA</field>
@@ -57,7 +57,7 @@
         <field name="postname">first-single-photo-post</field>
         <field name="postlink"></field>
         <field name="postdate">2016-08-17T09:12:52Z</field>
-        <field name="type">POST</field>
+        <field name="posttype">POST</field>
         <field name="html">&lt;p&gt;This is the description of the photo which will appear beneath it.&lt;/p&gt;</field>
         <field name="body">This is the description of the photo which will appear beneath it</field>
         <field name="source">NA</field>
@@ -72,7 +72,7 @@
         <field name="postname">behind-the-pieces-of-a-flashcards-app</field>
         <field name="postlink">http://nixmash.com/java/behind-the-pieces-of-a-flashcards-app/</field>
         <field name="postdate">2016-08-30T10:02:39Z</field>
-        <field name="type">LINK</field>
+        <field name="posttype">LINK</field>
         <field name="html">&lt;p&gt;We recently added a Flashcards App to NixMash Spring which you can view here. Flashcard images are displayed in a Bootstrap Carousel with a &quot;Show Answer!&quot; button revealing details of this modified link&lt;/p&gt;</field>
         <field name="body">We recently added a Flashcards App to NixMash Spring which you can view here. Flashcard images are displayed in a Bootstrap Carousel with a Show Answer! button revealing details of this modified link
         </field>
@@ -88,7 +88,7 @@
         <field name="postname">behavior-post</field>
         <field name="postlink"></field>
         <field name="postdate">2016-09-15T14:21:31Z</field>
-        <field name="type">POST</field>
+        <field name="posttype">POST</field>
         <field name="html">&lt;p&gt;A post for tweaking various UI behaviors&lt;/p&gt;</field>
         <field name="body">A post for tweaking various UI behaviors</field>
         <field name="source">NA</field>
@@ -105,7 +105,7 @@
         <field name="postname">new-post-delight</field>
         <field name="postlink"></field>
         <field name="postdate">2016-09-19T11:10:06Z</field>
-        <field name="type">POST</field>
+        <field name="posttype">POST</field>
         <field name="html">&lt;p&gt;A post to test Preview function&lt;/p&gt;</field>
         <field name="body">A post to test Preview function</field>
         <field name="source">NA</field>

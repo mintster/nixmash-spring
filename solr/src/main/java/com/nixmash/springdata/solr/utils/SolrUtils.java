@@ -91,4 +91,15 @@ public class SolrUtils {
     // endregion
 
 
+    // region display content
+
+    public static void printPostDocs(List<PostDoc> postDocs) {
+        for (PostDoc postDoc :
+                postDocs) {
+            System.out.println(postDoc.getPostTitle()
+                    + "\n" + postDoc.getPostText() + " : " + postDoc.getPostType() + "\n------------------------");
+        }
+    }
+
+    // endregion
 }
