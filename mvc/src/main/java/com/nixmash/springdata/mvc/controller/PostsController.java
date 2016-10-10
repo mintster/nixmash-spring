@@ -143,6 +143,7 @@ public class PostsController {
     @RequestMapping(value = "/search", method = GET)
     public String searchPage(Model model, HttpServletRequest request) {
         model.addAttribute("postQueryDTO", new PostQueryDTO());
+        model.addAttribute("isSearchResult", false);
         WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO, null);
         return POSTS_SEARCH_VIEW;
     }

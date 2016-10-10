@@ -16,6 +16,7 @@ import com.nixmash.springdata.jsoup.service.JsoupService;
 import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.containers.PostLink;
+import com.nixmash.springdata.solr.model.PostDoc;
 import com.nixmash.springdata.solr.service.PostDocService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -238,13 +239,14 @@ public class AdminPostsController {
                     saved = postService.update(postDTO);
                 }
 
-                if (saved.getIsPublished())
-                    postDocService.addToIndex(saved);
-
                 postDTO.setPostId(saved.getPostId());
                 WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_NEWPOST, saved);
 
                 if (saveAction.equals(POST_PUBLISH)) {
+
+                    if (saved.getIsPublished())
+                        postDocService.addToIndex(saved);
+
                     webUI.addFeedbackMessage(attributes, FEEDBACK_POST_POST_ADDED);
                     return "redirect:/admin/posts";
                 } else {
@@ -305,8 +307,20 @@ public class AdminPostsController {
             postDTO.setPostContent(cleanContentTailHtml(postDTO.getPostContent()));
             Post post = postService.update(postDTO);
 
-            if (post.getIsPublished())
-                postDocService.updatePostDocument(post);
+            PostDoc postDoc = postDocService.getPostDocByPostId(post.getPostId());
+            boolean postIsIndexed = postDoc != null;
+            if (post.getIsPublished()) {
+                if (postIsIndexed)
+                    postDocService.updatePostDocument(post);
+                else
+                    postDocService.addToIndex(post);
+            } else {
+                // remove postDocument from Solr Index if previously marked "Published", now marked "Draft"
+                if (postIsIndexed)
+                    postDocService.removeFromIndex(postDoc);
+            }
+
+
 
             webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
             return "redirect:/admin/posts";

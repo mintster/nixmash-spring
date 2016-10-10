@@ -28,6 +28,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 public class SolrPostTests extends SolrContext {
@@ -71,6 +73,24 @@ public class SolrPostTests extends SolrContext {
 		PostDoc found = postDocRepository.findOne("10");
 		assertEquals(found.getPostName(), "solr-rama");
 		postDocRepository.delete("10");
+	}
+
+	@Test
+	public void findPostDocByPostIdNotNullWithRepository() throws Exception {
+		PostDoc postDoc = postDocRepository.findPostDocByPostId(1L);
+		assertNotNull(postDoc);
+	}
+
+	@Test
+	public void findPostDocByPostIdNotNullWithService() throws Exception {
+		PostDoc postDoc = postDocService.getPostDocByPostId(1L);
+		assertNotNull(postDoc);
+	}
+
+	@Test
+	public void notFoundPostDocByPostIdIsNull() throws Exception {
+		PostDoc postDoc = postDocService.getPostDocByPostId(1000L);
+		assertNull(postDoc);
 	}
 
 	@Test

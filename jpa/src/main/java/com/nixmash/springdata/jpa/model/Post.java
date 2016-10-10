@@ -107,17 +107,37 @@ public class Post implements Serializable {
     @Transient
     public PostImage singleImage;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    public User author;
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
     // endregion
 
     // region Transient properties
 
     @Transient
+    public boolean isOwner = false;
+
+    // endregion
+
+    // region method properties
+
     public boolean isNew() {
         return (this.postId == null);
     }
 
-    @Transient
-    public boolean isOwner = false;
+    public String getAuthorFullname() {
+        return author.getFirstName() + " " +  author.getLastName();
+    }
+
 
     // endregion
 

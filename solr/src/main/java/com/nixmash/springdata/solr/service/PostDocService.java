@@ -26,6 +26,8 @@ public interface PostDocService {
 
     void updatePostDocument(Post post);
 
+    PostDoc getPostDocByPostId(long postId);
+
     List<PostDoc> getAllPostDocuments();
 
     List<PostDoc> doQuickSearch(String searchTerm);

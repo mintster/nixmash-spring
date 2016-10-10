@@ -68,6 +68,7 @@ public class PostServiceImpl implements PostService {
         Post post;
         try {
             post = postRepository.save(PostUtils.postDtoToPost(postDTO));
+            em.refresh(post);
 
         } catch (Exception e) {
             throw new DuplicatePostNameException("Duplicate Post Name for Post Title: " +

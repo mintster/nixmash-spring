@@ -58,6 +58,12 @@ public class PostServiceTests {
     }
 
     @Test
+    public void postContainsAuthorObject() throws Exception {
+        Post post = postService.getPostById(1L);
+        assertNotNull(post.author);
+    }
+
+    @Test
     public void unpublishedPost_ShouldNotBeReturned_InFindAll() throws DuplicatePostNameException {
         PostDTO postDTO = PostTestUtils.createPostDTO(2);
         postDTO.setIsPublished(false);

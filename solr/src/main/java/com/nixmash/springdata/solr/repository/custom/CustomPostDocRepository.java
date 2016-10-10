@@ -26,4 +26,6 @@ public interface CustomPostDocRepository extends CustomBasePostDocRepository, So
     @Query("doctype:post")
     List<PostDoc> findAllPostDocuments();
 
+    @Query("doctype:post AND id:?0")
+    PostDoc findPostDocByPostId(long postId);
 }

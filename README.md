@@ -683,7 +683,7 @@ An example of `external.properties` and `mail.properties` are found in the `/ins
 
 ##Installation - Solr##
 
-Configure Solr as normally on your development machine. Documents are included in `/dev/solr/docs` and scripts to populate the Solr Url and Embedded Servers located in `/dev/solr`. Script name: `refreshSolr.sh`. It contains additional installation instructions.
+Configure Solr as normally on your development machine. Documents are included in `/install/solr/docs` and scripts to populate the Solr Url and Embedded Servers located in `/install/solr`. Script name: `refreshSolr.sh`. It contains additional installation instructions.
 
 The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in an external `solr.properties` file. Same configuration as **external.properties** and **mail.properties** files discussed above. Set `solr.properties` file location in **Solr** project `common/SolrSettings.java` `@PropertySource` value.
 

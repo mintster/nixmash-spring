@@ -64,6 +64,7 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 	public void update(Post post) {
 		logger.debug("Performing partial update for post: {}", post);
 
+
 		PartialUpdate update = new PartialUpdate(PostDoc.ID, post.getPostId().toString());
 
 		update.add(PostDoc.POST_TITLE, post.getPostTitle());

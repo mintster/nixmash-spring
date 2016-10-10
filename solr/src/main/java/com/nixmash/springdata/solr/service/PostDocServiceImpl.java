@@ -95,6 +95,11 @@ public class PostDocServiceImpl implements PostDocService {
     }
 
     @Override
+    public PostDoc getPostDocByPostId(long postId) {
+        return customPostDocRepository.findPostDocByPostId(postId);
+    }
+
+    @Override
     public List<PostDoc> getAllPostDocuments() {
        return customPostDocRepository.findAllPostDocuments();
     }

@@ -3,6 +3,7 @@ package com.nixmash.springdata.jpa.dto;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.model.User;
 import com.nixmash.springdata.jpa.utils.PostImage;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -67,7 +68,17 @@ public class PostDTO implements Serializable {
 
     private List<PostImage> postImages;
 
+    private User author;
+
     // region getter setters
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
     public Long getTemporaryPostId() {
         return temporaryPostId;
@@ -255,6 +266,10 @@ public class PostDTO implements Serializable {
 
     public void setAlphaKey(String alphaKey) {
         this.alphaKey = alphaKey;
+    }
+
+    public String authorFullname() {
+        return this.author.getFirstName() + " " + this.author.getLastName();
     }
 
     // endregion

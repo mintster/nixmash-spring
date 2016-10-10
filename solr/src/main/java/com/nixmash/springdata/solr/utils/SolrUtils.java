@@ -77,7 +77,7 @@ public class SolrUtils {
     public static PostDoc createPostDoc(Post post) {
         PostDoc postDoc = PostDoc.getBuilder(post.getPostId(),
                 post.getPostTitle(),
-                "Blog Dude",
+                post.getAuthorFullname(),
                 post.getPostName(),
                 post.getPostLink(),
                 post.getPostContent(),
