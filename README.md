@@ -34,7 +34,7 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.4.4 -- Spring Caching (in progress)](#v044----spring-caching--in-progress)**
+- **[v0.4.4 -- Spring Caching (in progress)](#v044----spring-caching-in-progress)**
 - **[v0.4.3 -- Post Searching with Solr](#v043----post-searching-with-solr)**
 - **[v0.4.2 -- Post "Save and Continue" and Post Preview, Post Status and Password Administration Improvements](#v042----post-save-and-continue-and-post-preview-post-status-and-password-administration-improvements)**
 - **[v0.4.1 -- Move from Velocity to FreeMarker for support templates](#v041----move-from-velocity-to-freemarker-for-support-templates)**
