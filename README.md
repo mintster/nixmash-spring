@@ -15,25 +15,23 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (post v0.4.0)* |
 
-The primary motivation behind this app is shown below on the [NixMash Spring Demo Site Home Page](http://nixmashspring.daveburkevt.com/), "**Becoming Spring Masters Together.**" Nearly every new application feature inspired one or more blog posts at [NixMash.com](http://nixmash.com) with screen shots and source code excerpts. 
+##Becoming Spring Masters Together
 
-The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html) and published on the [Demo Site Post Stream](http://nixmashspring.daveburkevt.com/posts).
+The primary purpose for this app is to become Spring Masters together, and to blog about it along the way at [NixMash.com](http://nixmash.com) where we go deep on the Cool Tech of the Day. The latest release of NixMash Spring is online at **http://nixmashspring.daveburkevt.com.** The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html).
 
 **See the [Installation section](#installation) below** on how to configure NixMash Spring to get up and running. Once configured you can run the Web Application with
 
 `$ gradle mvc:bootRun`
 
-The supporting projects (JPA, Mail, Solr and Jsoup) can also be executed with `$ gradle bootRun`.
-
-A working demo of the site is online at **http://nixmashspring.daveburkevt.com.**
+The application has four supporting modules, JPA, Mail, Solr and Jsoup, which can also be executed with `$ gradle [module]:bootRun`.
 
 ![Home Page in  Release 0.3.1](http://nixmash.com/x/pics/github/spring-home-0.4.2.png)
 
-##Implemented##
+##Implemented
 
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
-##Release History##
+##Release History
 - **[v0.4.4 -- Spring Caching (in progress)](#v044----spring-caching-in-progress)**
 - **[v0.4.3 -- Post Searching with Solr](#v043----post-searching-with-solr)**
 - **[v0.4.2 -- Post "Save and Continue" and Post Preview, Post Status and Password Administration Improvements](#v042----post-save-and-continue-and-post-preview-post-status-and-password-administration-improvements)**
@@ -726,4 +724,3 @@ The [Social Showcase for Spring Boot Sample Project](https://github.com/spring-p
 
 The Administrative Dashboard introduced in **Version 0.2.9** is based on the [Gentelella Bootstrap Dashboard](https://github.com/puikinsh/gentelella) on GitHub.
 
-*test update...*
