@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.UncategorizedSolrException;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
@@ -86,7 +85,6 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 		return results;
 	}
 
-
 	@Override
 	public Page<PostDoc> pagedFullSearch(PostQueryDTO postQueryDTO, PageRequest pageRequest) {
 		Query query = new SimpleQuery(postQueryDTO.getQuery());
@@ -103,7 +101,6 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 		return results;
 	}
 
-
 	@Override
 	public List<PostDoc> fullSearch(PostQueryDTO postQueryDTO) {
 		Query query = new SimpleQuery(postQueryDTO.getQuery());
@@ -119,7 +116,7 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 		return results.getContent();
 	}
 
-		@Override
+	@Override
 	public List<PostDoc> quickSearch(String searchTerms) {
 		logger.info("Searching Title and Body with Multiple Terms : {}", searchTerms);
 		Query query = new SimpleQuery(titleAndBodyCriteria(searchTerms));
@@ -138,7 +135,4 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 		return criteria.and(new Criteria(PostDoc.DOCTYPE).is("post"));
 	}
 
-	public Sort sortByIdDesc() {
-		return new Sort(Sort.Direction.DESC, PostDoc.POST_DATE);
-	}
 }

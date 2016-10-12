@@ -4,6 +4,7 @@ import com.nixmash.springdata.jpa.dto.PostQueryDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.solr.model.PostDoc;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public interface PostDocService {
     List<PostDoc> getPostsWithUserQuery(String userQuery);
 
     void addToIndex(Post post);
+
+    @Transactional
+    void reindexPosts(List<Post> posts);
 
     void addAllToIndex(List<Post> posts);
 

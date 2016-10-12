@@ -12,7 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrOperations;
+import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.SimpleStringCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +50,15 @@ public class PostDocServiceImpl implements PostDocService {
         PostDoc document = SolrUtils.createPostDoc(post);
         customPostDocRepository.save(document);
         commit();
+    }
+
+    @Transactional
+    @Override
+    public void reindexPosts(List<Post> posts) {
+        Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));
+        solrOperations.delete(query);
+        solrOperations.commit();
+        addAllToIndex(posts);
     }
 
     @Transactional

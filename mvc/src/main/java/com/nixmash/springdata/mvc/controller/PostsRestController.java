@@ -169,7 +169,7 @@ public class PostsRestController {
     public String getQuickSearchPosts(@PathVariable int pageNumber,
                                       HttpServletRequest request,
                                       CurrentUser currentUser) {
-        String search = (String) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_QUICKSEARCH_QUERY);
+        String search = (String) WebUtils.getSessionAttribute(request, SESSION_QUICKSEARCH_QUERY);
         String result;
         List<PostDoc> postDocs = postDocService.doQuickSearch(search);
         if (postDocs.size() == 0) {
@@ -189,7 +189,6 @@ public class PostsRestController {
 
     // endregion
 
-
     // region Full Search
 
 
@@ -198,7 +197,8 @@ public class PostsRestController {
     public String getFullSearchPosts(@PathVariable int pageNumber,
                                      HttpServletRequest request,
                                      CurrentUser currentUser) {
-        PostQueryDTO postQueryDTO = (PostQueryDTO) WebUtils.getSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO);
+        PostQueryDTO postQueryDTO =
+                (PostQueryDTO) WebUtils.getSessionAttribute(request, SESSION_POSTQUERYDTO);
         String result = null;
         List<PostDoc> postDocs = null;
         if (postQueryDTO != null) {
@@ -212,28 +212,16 @@ public class PostsRestController {
             if (postDocs.size() == 0) {
                 result = fmService.getNoResultsMessage(postQueryDTO.getQuery());
             } else {
-                Slice<PostDoc> posts = postDocService.doPagedFullSearch(postQueryDTO, pageNumber, POST_PAGING_SIZE);
-                result = populatePostDocStream(posts.getContent(), currentUser);
-                WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_FULLSEARCH_POSTS, posts.getContent());
+                Slice<PostDoc> postDocSlice =
+                        postDocService.doPagedFullSearch(postQueryDTO, pageNumber, POST_PAGING_SIZE);
+                result = populatePostDocStream(postDocSlice.getContent(), currentUser);
+                WebUtils.setSessionAttribute(request,
+                        SESSION_ATTRIBUTE_FULLSEARCH_POSTS, postDocSlice.getContent());
             }
         }
         return result;
     }
 
-    //    try {
-//        if (isSimpleTermQuery) {
-//            HighlightPage<Product> highlightedResults = productService
-//                    .findByHighlightedNameCriteria(userQuery.getQuery());
-//            results = SolrUtils.highlightPagesToList(highlightedResults);
-//        } else {
-//            results = productService.getProductsWithUserQuery(userQuery.getQuery());
-//        }
-//    } catch (UncategorizedSolrException ex) {
-//        logger.info(MessageFormat.format("Bad Query: {0}", userQuery.getQuery()));
-//        result.rejectValue("query", "product.search.error", new Object[] { userQuery.getQuery() }, "not found");
-//        return PRODUCT_SEARCH_VIEW;
-//    }
-//
     @RequestMapping(value = "/search/more")
     public String getFullSearchHasNext(HttpServletRequest request) {
         return hasNext(request, SESSION_ATTRIBUTE_FULLSEARCH_POSTS, POST_PAGING_SIZE);

@@ -90,7 +90,7 @@ public class SolrUI {
             System.out.println("DEVELOPMENT mode: Embedded SOLR Home: " + solrSettings.getSolrEmbeddedPath());
         else
             System.out.println("PRODUCTION mode: SOLR Server Url: " + solrSettings.getSolrServerUrl());
-        System.out.println("Running Demo: " + demo.name() + "\n");
+        System.out.println("Running Solr Function: " + demo.name() + "\n");
 
         runDemos(demo);
     }

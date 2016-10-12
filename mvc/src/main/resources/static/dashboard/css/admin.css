@@ -27,7 +27,6 @@ span.pad-right {
 
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="SIDEBAR ----------------------------/ "*/
 
 li.current-page {
@@ -44,7 +43,6 @@ li.current-page {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="BODY AREA ----------------------------/ "*/
 
 .fill-body, .fill-body-table {
@@ -61,7 +59,6 @@ li.current-page {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="FORMS ----------------------------/ "*/
 
 ul.roleList {
@@ -88,7 +85,6 @@ tr.border-bottom-row {
 }
 
 /*</editor-fold>*/
-
 /*/<editor-fold> desc="FLASHCARD ADMINISTRATION----------------------------/ "*/
 
 .form-inline .form-control.flashcard-content {
@@ -293,6 +289,13 @@ td.ispublished-td .bootstrap-select:not([class*="col-"]):not([class*="form-contr
 
 a.password-glyph {
     margin-left: 4px;
+}
+
+/*</editor-fold>*/
+/*/<editor-fold> desc="SOLR FORMS----------------------------/ "*/
+
+td.reindex-msg-td {
+
 }
 
 /*</editor-fold>*/

@@ -289,7 +289,6 @@ public class AdminPostsControllerTests  extends AbstractContext{
 
     }
 
-
     @Test
     public void addingUnPublishedPost_NoChangeInPostDocSize() throws Exception {
 
@@ -337,6 +336,31 @@ public class AdminPostsControllerTests  extends AbstractContext{
 
     }
 
+    @Test
+    public void reindexPageLoads() throws Exception {
+        RequestBuilder request = get("/admin/posts/solr/reindex").with(csrf());
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(view().name(ADMIN_POSTS_REINDEX_VIEW));
+    }
+
+    @Test
+    public void reindexResetsSolrPosts() throws Exception {
+        RequestBuilder request = get("/admin/posts/solr/reindex")
+                .param("reindex", "doit")
+                .with(csrf());
+
+        int originalPostDocCount = postDocService.getAllPostDocuments().size();
+        postDocService.removeFromIndex(postDocService.getPostDocByPostId(1L));
+       assertThat(postDocService.getAllPostDocuments().size(), is(lessThan(originalPostDocCount)));
+
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("hasPostDocCount"))
+                .andExpect(view().name(ADMIN_POSTS_REINDEX_VIEW));
+
+        assertEquals(postDocService.getAllPostDocuments().size(), originalPostDocCount);
+    }
 
     // endregion
 

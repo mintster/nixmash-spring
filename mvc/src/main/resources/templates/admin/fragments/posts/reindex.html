@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Repopulate Solr Index
+                        <small>Delete and re-enter all published Posts and Links</small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content  fill-body">
+                    <div class="fill-body-message">
+                        <form action="/admin/posts/solr/reindex" th:action="@{/admin/posts/solr/reindex}" method="get" class="form-horizontal"
+                              id="post-search-form">
+                            <table class="table table-striped">
+                                <tr>
+                                    <td class="col-sm-5">
+                                            <label class="control-label">Click Button to Reindex Posts</label>
+                                    </td>
+                                    <td class="col-sm-1 reindex-button">
+                                        <div class="controls">
+                                            <input type="submit" class="btn btn-primary btn-lg" name="reindex"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr th:if="${hasPostDocCount}">
+                                    <td colspan="2" class="reindex-msg-td"><div class="reindex-msg" th:text="${reindexMessage}"></div></td>
+                                </tr>
+                                </table>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

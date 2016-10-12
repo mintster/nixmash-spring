@@ -83,6 +83,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - [Post: Handling On/Off Checkbox State with JavaScript and Ajax](http://nixmash.com/java/handling-onoff-checkbox-state-with-javascript-and-ajax/)
 - [Post: Know Your Spring Boot Embedded Servlet Container](http://nixmash.com/java/know-your-spring-boot-embedded-servlet-container/)
 - [Post: How to Increase Embedded Tomcat Cache in Spring](http://nixmash.com/java/how-to-increase-embedded-tomcat-cache-in-spring/)
+- [Post: Loading External Static HTML Files in your WAR](http://nixmash.com/java/loading-external-static-html-files-in-your-war/)
+- [Post: Solr Post Search Overview](http://nixmash.com/java/solr-post-search-overview/)
 
 [[back to top](#nixmash-spring)]
 

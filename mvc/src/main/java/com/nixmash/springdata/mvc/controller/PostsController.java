@@ -80,8 +80,8 @@ public class PostsController {
 
     public static final int TITLE_PAGING_SIZE = 10;
     private static final String SESSION_ATTRIBUTE_NEWPOST = "activepostdto";
-    public static final String SESSION_ATTRIBUTE_QUICKSEARCH_QUERY = "quicksearch";
-    public static final String SESSION_ATTRIBUTE_POSTQUERYDTO = "postquerydto";
+    public static final String SESSION_QUICKSEARCH_QUERY = "quicksearch";
+    public static final String SESSION_POSTQUERYDTO = "postquerydto";
 
     // endregion
 
@@ -144,17 +144,18 @@ public class PostsController {
     public String searchPage(Model model, HttpServletRequest request) {
         model.addAttribute("postQueryDTO", new PostQueryDTO());
         model.addAttribute("isSearchResult", false);
-        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO, null);
+        WebUtils.setSessionAttribute(request, SESSION_POSTQUERYDTO, null);
         return POSTS_SEARCH_VIEW;
     }
 
     @RequestMapping(value = "/search",  params = {"query"}, method = GET)
-    public String searchPageResults(@Valid PostQueryDTO postQueryDTO, BindingResult result, Model model, HttpServletRequest request) {
+    public String searchPageResults(@Valid PostQueryDTO postQueryDTO,
+                                    BindingResult result, Model model, HttpServletRequest request) {
         model.addAttribute("postQuery", postQueryDTO);
         if (result.hasErrors()) {
             return POSTS_SEARCH_VIEW;
         } else {
-            WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_POSTQUERYDTO, postQueryDTO);
+            WebUtils.setSessionAttribute(request, SESSION_POSTQUERYDTO, postQueryDTO);
             model.addAttribute("isSearchResult", true);
             return POSTS_SEARCH_VIEW;
         }
@@ -167,7 +168,7 @@ public class PostsController {
         boolean showMore = postDocs.size() > POST_PAGING_SIZE;
         boolean hasQuickSearchResults = postDocs.size() > 0;
 
-        WebUtils.setSessionAttribute(request, SESSION_ATTRIBUTE_QUICKSEARCH_QUERY, search);
+        WebUtils.setSessionAttribute(request, SESSION_QUICKSEARCH_QUERY, search);
         model.addAttribute("showmore", showMore);
         model.addAttribute("query", search);
         model.addAttribute("hasResults", hasQuickSearchResults);

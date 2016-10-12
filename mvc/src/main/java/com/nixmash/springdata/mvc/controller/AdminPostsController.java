@@ -33,9 +33,11 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -53,6 +55,7 @@ public class AdminPostsController {
     public static final String ADMIN_LINK_ADD_VIEW = "admin/posts/addlink";
     public static final String ADMIN_TAGS_VIEW = "admin/posts/tags";
     public static final String ADMIN_POSTLINK_UPDATE_VIEW = "admin/posts/update";
+    public static final String ADMIN_POSTS_REINDEX_VIEW = "admin/posts/reindex";
 
     private static final String MESSAGE_ADMIN_UPDATE_POSTLINK_TITLE = "admin.update.postlink.title";
     private static final String MESSAGE_ADMIN_UPDATE_POSTLINK_HEADING = "admin.update.postlink.heading";
@@ -72,6 +75,7 @@ public class AdminPostsController {
 
     public static final String POST_PUBLISH = "publish";
     public static final String POST_DRAFT = "draft";
+    private static final String MESSAGE_ADMIN_SOLR_REINDEX_COMPLETE = "admin.solr.posts.reindexed";
 
     private final PostService postService;
     private final PostDocService postDocService;
@@ -101,6 +105,42 @@ public class AdminPostsController {
     }
 
     //endregion
+
+    // region Solr
+
+    @RequestMapping(value = "/solr/reindex", method = GET)
+    public ModelAndView postsSolrReindexPage() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName(ADMIN_POSTS_REINDEX_VIEW);
+        return mav;
+    }
+
+    @RequestMapping(value = "/solr/reindex", params = "reindex",method = GET)
+    public ModelAndView reindexSolrPosts() {
+        ModelAndView mav = new ModelAndView();
+        List<Post> posts = postService.getAllPublishedPosts();
+        long lStartTime = new Date().getTime();
+        postDocService.reindexPosts(posts);
+        long lEndTime = new Date().getTime();
+        long duration = lEndTime - lStartTime;
+
+        String totalTime = String.format("%d min, %d sec",
+                TimeUnit.MILLISECONDS.toMinutes(duration),
+                TimeUnit.MILLISECONDS.toSeconds(duration) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
+        );
+
+        int postDocCount = postService.getAllPublishedPosts().size();
+        String reindexMessage = webUI.getMessage(MESSAGE_ADMIN_SOLR_REINDEX_COMPLETE, postDocCount, totalTime);
+
+        mav.addObject("reindexMessage", reindexMessage);
+        mav.addObject("hasPostDocCount", true);
+        mav.setViewName(ADMIN_POSTS_REINDEX_VIEW);
+        return mav;
+    }
+
+
+    // endregion
 
     //region Add Posts GET
 
