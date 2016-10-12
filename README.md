@@ -34,7 +34,8 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History##
-- **[v0.4.3 -- Post Searching with Solr (In Progress)](#v043----post-searching-with-solr-in-progress)**
+- **[v0.4.4 -- Spring Caching (in progress)(#v044----spring-caching--in-progress)**
+- **[v0.4.3 -- Post Searching with Solr](#v043----post-searching-with-solr)**
 - **[v0.4.2 -- Post "Save and Continue" and Post Preview, Post Status and Password Administration Improvements](#v042----post-save-and-continue-and-post-preview-post-status-and-password-administration-improvements)**
 - **[v0.4.1 -- Move from Velocity to FreeMarker for support templates](#v041----move-from-velocity-to-freemarker-for-support-templates)**
 - **[v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades](#v040----spring-boot-140-and-dependency-upgrades)**
@@ -75,16 +76,26 @@ A working demo of the site is online at **http://nixmashspring.daveburkevt.com.*
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.4.3 -- Post Searching with Solr (In Progress)
+##v0.4.4 -- Spring Caching (in progress)
 
-- Post Stream Links Only display
+- in progress...
+
+[[back to top](#nixmash-spring)]
+
+##v0.4.3 -- Post Searching with Solr
+
+- New Post Stream Links Only display
 - Spring Boot Updated to 1.4.1-RELEASE, Solr Core to 5.5.3
 - Runtime Tomcat libraries removed in favor of Embedded Jetty. (Commented out of `build.gradle` files and easily re-enabled)
+- "Quick" and "Full" Post Searching with Solr
+- Administrative one-click Solr Post Re-index function. Also can run `SOLR` module as JAR to reindex 
 - [Post: Handling On/Off Checkbox State with JavaScript and Ajax](http://nixmash.com/java/handling-onoff-checkbox-state-with-javascript-and-ajax/)
 - [Post: Know Your Spring Boot Embedded Servlet Container](http://nixmash.com/java/know-your-spring-boot-embedded-servlet-container/)
 - [Post: How to Increase Embedded Tomcat Cache in Spring](http://nixmash.com/java/how-to-increase-embedded-tomcat-cache-in-spring/)
 - [Post: Loading External Static HTML Files in your WAR](http://nixmash.com/java/loading-external-static-html-files-in-your-war/)
 - [Post: Solr Post Search Overview](http://nixmash.com/java/solr-post-search-overview/)
+
+![v0.4.3 Post Full Search form](http://nixmash.com/x/pics/github/spring-data-0.4.3.png)
 
 [[back to top](#nixmash-spring)]
 
