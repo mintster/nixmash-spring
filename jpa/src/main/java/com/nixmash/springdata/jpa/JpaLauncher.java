@@ -4,9 +4,11 @@ import com.nixmash.springdata.jpa.components.JpaUI;
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.SpringVersion;
 
+@EnableCaching
 @SpringBootApplication
 public class JpaLauncher {
 

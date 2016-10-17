@@ -24,10 +24,13 @@ springBoot {
 
 dependencies {
     compile 'com.github.slugify:slugify:2.1.5'
+    compile 'javax.cache:cache-api'
 	compile("org.springframework.boot:spring-boot-starter-social-twitter")
+	compile("org.springframework.boot:spring-boot-starter-cache")
 	compile("org.springframework.boot:spring-boot-starter-social-facebook")
 	compile("org.springframework.social:spring-social-security:1.1.4.RELEASE")
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'org.ehcache:ehcache'
 }
 
 task serviceTests(type: Test, dependsOn: testClasses) {

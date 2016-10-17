@@ -2,6 +2,7 @@ package com.nixmash.springdata.jpa.repository;
 
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.model.Post;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
