@@ -135,7 +135,7 @@ public class PostsController {
 
     @RequestMapping(value = "", method = GET)
     public String home(Model model) {
-        boolean showMore = postService.getAllPosts().size() > POST_PAGING_SIZE;
+        boolean showMore = postService.getAllPublishedPosts().size() > POST_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_LIST_VIEW;
     }
@@ -183,7 +183,7 @@ public class PostsController {
 
     @RequestMapping(value = "/titles", method = GET)
     public String titles(Model model) {
-        boolean showMore = postService.getAllPosts().size() > TITLE_PAGING_SIZE;
+        boolean showMore = postService.getAllPublishedPosts().size() > TITLE_PAGING_SIZE;
         model.addAttribute("showmore", showMore);
         return POSTS_TITLES_VIEW;
     }

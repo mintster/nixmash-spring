@@ -20,6 +20,8 @@ import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -38,6 +40,7 @@ import java.util.stream.Collectors;
  */
 @Service("postService")
 @Transactional
+@CacheConfig(cacheNames = "posts")
 public class PostServiceImpl implements PostService {
 
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
@@ -160,17 +163,19 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
-    public Post getPostById(Long ID) throws PostNotFoundException {
-        Post found = postRepository.findByPostId(ID);
+    @Cacheable(key = "#postId")
+    public Post getPostById(Long postId) throws PostNotFoundException {
+        Post found = postRepository.findByPostId(postId);
         if (found == null) {
-            logger.debug("No post found with id: {}", ID);
-            throw new PostNotFoundException("No post found with id: " + ID);
+            logger.debug("No post found with id: {}", postId);
+            throw new PostNotFoundException("No post found with id: " + postId);
         }
         return found;
     }
 
     @Transactional(readOnly = true)
     @Override
+    @Cacheable(key = "#postName")
     public Post getPost(String postName) throws PostNotFoundException {
         Post found = postRepository.findByPostNameIgnoreCase(postName);
         if (found == null) {
@@ -228,6 +233,7 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
+    @Cacheable
     public List<Post> getAllPublishedPosts() {
         return postRepository.findByIsPublishedTrue(sortByPostDateDesc());
     }

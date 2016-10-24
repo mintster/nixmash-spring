@@ -119,6 +119,8 @@ public class AdminPostsController {
     public ModelAndView reindexSolrPosts() {
         ModelAndView mav = new ModelAndView();
         List<Post> posts = postService.getAllPublishedPosts();
+        int postDocCount = posts.size();
+
         long lStartTime = new Date().getTime();
         postDocService.reindexPosts(posts);
         long lEndTime = new Date().getTime();
@@ -130,7 +132,7 @@ public class AdminPostsController {
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
         );
 
-        int postDocCount = postService.getAllPublishedPosts().size();
+
         String reindexMessage = webUI.getMessage(MESSAGE_ADMIN_SOLR_REINDEX_COMPLETE, postDocCount, totalTime);
 
         mav.addObject("reindexMessage", reindexMessage);
