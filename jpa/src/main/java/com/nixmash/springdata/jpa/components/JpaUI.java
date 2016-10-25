@@ -11,6 +11,7 @@ import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
+import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -57,8 +59,51 @@ public class JpaUI {
     }
 
     public void init() {
-        displayFlashcards();
+        allPublishedPostsCache();
     }
+
+    // region cache play
+
+    public void allPublishedPostsCache() {
+        List<Post> posts;
+        long start;
+        long end;
+
+        System.out.println();
+        start = timeMark();
+        postService.getPublishedPosts(0, 25);
+        end = timeMark();
+        System.out.println("Retrieval time getPublishedPosts(0, 25): " + totalTime(start, end));
+
+        start = timeMark();
+        postService.getPublishedPosts(0, 25);
+        end = timeMark();
+        System.out.println("Repeat retrieval time getPublishedPosts(0, 25): " + totalTime(start, end));
+
+        System.out.println();
+        start = timeMark();
+        postService.getPublishedPosts(1, 25);
+        end = timeMark();
+        System.out.println("Retrieval time getPublishedPosts(1, 25): " + totalTime(start, end));
+
+        start = timeMark();
+        postService.getPublishedPosts(1, 25);
+        end = timeMark();
+        System.out.println("Repeat retrieval time getPublishedPosts(1, 25): " + totalTime(start, end));
+
+    }
+
+    private long timeMark() {
+        return new Date().getTime();
+    }
+
+    private String totalTime(long lStartTime, long lEndTime) {
+        long duration = lEndTime - lStartTime;
+        String totalTime = String.format("Milliseconds: %d", duration);
+        return totalTime;
+    }
+
+    // endregion
 
     private void displayFlashcards() {
 
@@ -109,8 +154,6 @@ public class JpaUI {
         ).build();
         postService.add(postDTO);
     }
-
-    // region Unused demos
 
     private void siteOptionsDemo() {
         System.out.println("Initialized SiteOptions Bean Property: " +
@@ -169,6 +212,5 @@ public class JpaUI {
         }
     }
 
-    // endregion
 
 }

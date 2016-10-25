@@ -7,7 +7,14 @@
 		<expiry>
 			<ttl unit="seconds">600</ttl>
 		</expiry>
-		<heap unit="entries">200</heap>
+		<heap unit="entries">1000</heap>
+		<jsr107:mbeans enable-statistics="true"/>
+	</cache>
+	<cache alias="pagedPosts">
+		<expiry>
+			<ttl unit="seconds">600</ttl>
+		</expiry>
+		<heap unit="entries">1000</heap>
 		<jsr107:mbeans enable-statistics="true"/>
 	</cache>
 

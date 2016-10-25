@@ -26,4 +26,14 @@ public class PostTestUtils {
     private static String fieldit(String field, int i) {
         return String.format("%s-%d", field, i);
     }
+
+
+    public static PostDTO createPostDTO(String appender) {
+        return PostDTO.getBuilder(USER_ID,
+                fieldit(POST_TITLE, appender), fieldit(POST_NAME, appender), POST_LINK, POST_CONTENT, POST_TYPE, DISPLAY_TYPE).build();
+    }
+
+    private static String fieldit(String field, String appender) {
+        return String.format("%s-%s", field, appender);
+    }
 }

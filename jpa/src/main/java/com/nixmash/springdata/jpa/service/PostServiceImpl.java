@@ -1,6 +1,7 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.google.common.collect.Lists;
+import com.nixmash.springdata.jpa.annotations.CachePostUpdate;
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
@@ -67,6 +68,7 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(rollbackFor = DuplicatePostNameException.class)
     @Override
+    @CachePostUpdate
     public Post add(PostDTO postDTO) throws DuplicatePostNameException {
         Post post;
         try {
@@ -94,6 +96,7 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(rollbackFor = PostNotFoundException.class)
     @Override
+    @CachePostUpdate
     public Post update(PostDTO postDTO) throws PostNotFoundException {
 
         Post post = postRepository.findByPostId(postDTO.getPostId());
@@ -205,6 +208,8 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
+    @Cacheable(cacheNames = "pagedPosts",
+            key = "#pageNumber.toString().concat('-').concat(#pageSize.toString())")
     public Page<Post> getPublishedPosts(Integer pageNumber, Integer pageSize) {
         PageRequest pageRequest =
                 new PageRequest(pageNumber, pageSize, sortByPostDateDesc());
@@ -233,7 +238,6 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
-    @Cacheable
     public List<Post> getAllPublishedPosts() {
         return postRepository.findByIsPublishedTrue(sortByPostDateDesc());
     }

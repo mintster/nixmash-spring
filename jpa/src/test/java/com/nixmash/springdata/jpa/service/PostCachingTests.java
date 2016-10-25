@@ -1,8 +1,12 @@
 package com.nixmash.springdata.jpa.service;
 
 import com.nixmash.springdata.jpa.config.ApplicationConfig;
+import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.model.Post;
+import com.nixmash.springdata.jpa.utils.PostTestUtils;
+import com.nixmash.springdata.jpa.utils.PostUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
-import java.util.List;
-
+import static com.nixmash.springdata.jpa.utils.PostTestUtils.POST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -32,12 +34,18 @@ public class PostCachingTests {
     private PostService postService;
 
     private Cache postCache;
+    private Cache pagedPostsCache;
 
     @Before
     public void setup() {
         postCache = this.cacheManager.getCache("posts");
-        assertThat(postCache).isNotNull();
+        pagedPostsCache = this.cacheManager.getCache("pagedPosts");
+    }
+
+    @After
+    public void clearCache() {
         postCache.evict("posts");
+        postCache.evict("pagedPosts");
     }
 
     @Test
@@ -55,41 +63,49 @@ public class PostCachingTests {
     }
 
     @Test
-    public void compareRetrievalForAllPublishedPosts() throws Exception {
-        List<Post> posts;
-        long start;
-        long end;
+    public void savedPostIsRetrievedFromCache() throws Exception {
+        String appender = "post-cache";
+        PostDTO postDTO = PostTestUtils.createPostDTO(appender);
+        String savedPostName = String.format("%s-%s", POST_NAME ,appender);
 
-        start = timeMark();
-        postService.getAllPublishedPosts();
-        end = timeMark();
-        System.out.println("Retrieval without cache: " + totalTime(start, end));
+        assertThat(postCache.get(savedPostName)).isNull();
 
-        start = timeMark();
-        posts = postService.getAllPublishedPosts();
-        end = timeMark();
-        System.out.println("Retrieval WITH cache: " + totalTime(start, end));
+        Post post = postService.add(postDTO);
+        long postId = post.getPostId();
 
-//        assertThat(((JCacheCache) postCache).lookup(SimpleKey.EMPTY)).isEqualTo(posts);
+        assertThat((Post) postCache.get(savedPostName).get()).isEqualTo(post);
+        assertThat((Post) postCache.get(postId).get()).isEqualTo(post);
     }
 
-    private long timeMark() {
-        return new Date().getTime();
-    }
+    @Test
+    public void updatedPostIsRetrievedFromCache() throws Exception {
 
-    private String totalTime(long lStartTime, long lEndTime) {
-        long duration = lEndTime - lStartTime;
-        String totalTime = String.format("Total time: %d milliseconds", duration);
-        return totalTime;
-    }
+        // Confirm our pagedPosts Cache is populated
 
-    private void simulateSlowService() {
-        try {
-            long time = 3000L;
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException(e);
-        }
+        postService.getPublishedPosts(0,10);
+        assertThat(pagedPostsCache.get("0-10")).isNotNull();
+
+        // Update Post Title and call Post Update Service
+
+        String newTitle = "Something Wonderful";
+        Post post = postService.getPostById(1L);
+        PostDTO postDTO = PostUtils.postToPostDTO(post);
+        postDTO.setPostTitle(newTitle);
+        postService.update(postDTO);
+
+        // Updated Post with New Title in Post Caches by Name and PostId
+
+        Post postByName = (Post) postCache.get(post.getPostName()).get();
+        assertThat(postByName.getPostTitle()).isEqualTo(newTitle);
+
+        Post postById = (Post) postCache.get(post.getPostId()).get();
+        assertThat(postById.getPostTitle()).isEqualTo(newTitle);
+
+        // Paged Posts cache evicted on Post Update, rebuilt on next call
+
+        assertThat(pagedPostsCache.get("0-10")).isNull();
+        postService.getPublishedPosts(0,10);
+        assertThat(pagedPostsCache.get("0-10")).isNotNull();
     }
 
 }
