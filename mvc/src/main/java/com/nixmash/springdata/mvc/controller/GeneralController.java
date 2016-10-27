@@ -1,5 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
+import com.nixmash.springdata.jpa.dto.GitHubDTO;
 import com.nixmash.springdata.jpa.dto.SelectOptionDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
@@ -29,7 +30,7 @@ import static java.util.stream.Collectors.joining;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-public class  GeneralController {
+public class GeneralController {
 
     private static final Logger logger = LoggerFactory.getLogger(GeneralController.class);
 
@@ -55,7 +56,11 @@ public class  GeneralController {
         String springVersion = webUI.parameterizedMessage("home.spring.version",
                 SpringBootVersion.getVersion(), SpringVersion.getVersion());
         model.addAttribute("springVersion", springVersion);
-        model.addAttribute("gitHubStats", webUI.getGitHubStats());
+        GitHubDTO gitHubDTO = webUI.getGitHubStats();
+        if (gitHubDTO.getIsEmpty().equals(false)) {
+            model.addAttribute("showGitHubStats", true);
+            model.addAttribute("gitHubStats", webUI.getGitHubStats());
+        }
 
         Slice<Post> posts = postService.getPublishedPosts(0, 10);
         if (posts.getContent().size() > 0)

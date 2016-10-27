@@ -15,11 +15,7 @@ import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
 import com.nixmash.springdata.jpa.model.addons.FlashcardCategory;
-import com.nixmash.springdata.jpa.service.ContactService;
-import com.nixmash.springdata.jpa.service.PostService;
-import com.nixmash.springdata.jpa.service.SiteService;
-import com.nixmash.springdata.jpa.service.UserService;
-import com.nixmash.springdata.jpa.service.AddonService;
+import com.nixmash.springdata.jpa.service.*;
 import com.nixmash.springdata.jpa.utils.ContactUtils;
 import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -27,8 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
+
+import static com.nixmash.springdata.jpa.utils.SharedUtils.timeMark;
+import static com.nixmash.springdata.jpa.utils.SharedUtils.totalTime;
 
 @Component
 public class JpaUI {
@@ -91,16 +89,6 @@ public class JpaUI {
         end = timeMark();
         System.out.println("Repeat retrieval time getPublishedPosts(1, 25): " + totalTime(start, end));
 
-    }
-
-    private long timeMark() {
-        return new Date().getTime();
-    }
-
-    private String totalTime(long lStartTime, long lEndTime) {
-        long duration = lEndTime - lStartTime;
-        String totalTime = String.format("Milliseconds: %d", duration);
-        return totalTime;
     }
 
     // endregion

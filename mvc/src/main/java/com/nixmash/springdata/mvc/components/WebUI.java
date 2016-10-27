@@ -10,11 +10,13 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -180,6 +182,7 @@ public class WebUI {
 
     // region GitHub Statistics
 
+    @Cacheable(cacheNames = "githubStats", key = "#root.methodName")
     public GitHubDTO getGitHubStats() {
 
         String gitHubRepoUrl = environment.getProperty("github.repo.url");
@@ -187,8 +190,17 @@ public class WebUI {
 
         // Load Repository JSON elements into GitHubDTO Object
 
+        GitHubDTO gitHubDTO = new GitHubDTO();
+
         RestTemplate restTemplate = new RestTemplate();
-        GitHubDTO gitHubDTO = restTemplate.getForObject(gitHubRepoUrl, GitHubDTO.class);
+
+        try {
+            gitHubDTO = restTemplate.getForObject(gitHubRepoUrl, GitHubDTO.class);
+        } catch (RestClientException e) {
+            gitHubDTO.setIsEmpty(true);
+            return gitHubDTO;
+        }
+
 
         // Load User Followers count from GitHub User JSON Endpoint and add to GitHubDTO
 
