@@ -56,6 +56,7 @@ public class GeneralController {
         String springVersion = webUI.parameterizedMessage("home.spring.version",
                 SpringBootVersion.getVersion(), SpringVersion.getVersion());
         model.addAttribute("springVersion", springVersion);
+
         GitHubDTO gitHubDTO = webUI.getGitHubStats();
         if (gitHubDTO.getIsEmpty().equals(false)) {
             model.addAttribute("showGitHubStats", true);

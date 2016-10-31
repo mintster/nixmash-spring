@@ -14,10 +14,12 @@
         <div class="row">
             <div class="col-lg-12"><br/><br/></div>
         </div>
+        <!--/*@thymesVar id="showGitHubStats" type="java.lang.Boolean"*/-->
+
+
         <div class="row github-buttons" th:if="${showGitHubStats}">
             <div class="col-lg-12">
                 <div th:replace="fragments/github :: github">[GitHub Buttons]</div>
-
             </div>
         </div>
 

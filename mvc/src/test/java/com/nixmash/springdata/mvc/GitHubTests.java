@@ -18,7 +18,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 
 import static com.nixmash.springdata.jpa.utils.SharedUtils.timeMark;
@@ -62,10 +61,9 @@ public class GitHubTests extends AbstractContext {
         githubCache.evict("githubStats");
     }
 
-    @Test(expected = ResourceAccessException.class)
-    public void badGitHubUrl() throws ResourceAccessException {
-        GitHubDTO gitHubDTO = new GitHubDTO();
-        restTemplate.getForEntity("http://bad.url", String.class);
+    @Test(expected = RestClientException.class)
+    public void badGitHubUrl() throws Exception {
+        restTemplate.getForObject("http://bad.url", GitHubDTO.class);
     }
 
     @Test
@@ -120,7 +118,8 @@ public class GitHubTests extends AbstractContext {
         assertNotNull(githubCache);
         GitHubDTO gitHubDTO = webUI.getGitHubStats();
         githubCache.get("getGitHubStats");
-        assertThat(((GitHubDTO) githubCache.get("getGitHubStats").get()).getFollowers(), greaterThan(-1));
+        assertThat(
+                ((GitHubDTO) githubCache.get("getGitHubStats").get()).getFollowers(), greaterThan(-1));
     }
 
     @Test

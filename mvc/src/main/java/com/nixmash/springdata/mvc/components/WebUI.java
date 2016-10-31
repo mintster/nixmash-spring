@@ -193,7 +193,6 @@ public class WebUI {
         GitHubDTO gitHubDTO = new GitHubDTO();
 
         RestTemplate restTemplate = new RestTemplate();
-
         try {
             gitHubDTO = restTemplate.getForObject(gitHubRepoUrl, GitHubDTO.class);
         } catch (RestClientException e) {

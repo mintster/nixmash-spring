@@ -13,7 +13,8 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *Custom Validators* | *@Controller Advice* | *Custom Exception Handling* | *Tagging with Typeahead* |
 | *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
-| *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (post v0.4.0)* |
+| *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (v0.4.0+)* |
+| *Spring Caching* | 
 
 ##Becoming Spring Masters Together
 
@@ -74,9 +75,13 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.4.4 -- Spring Caching (in progress)
+##v0.4.4 -- Spring Caching
 
-- in progress...
+- Added Spring Caching to Posts Module, GitHub Statistics RestTemplate data
+- Fixed exception on displaying GitHub Statistics with RestTemplate when GitHub not available
+- [Post: Adding Spring Caching](http://nixmash.com/java/adding-spring-caching/)
+- [Post: Safeguarding Your Spring RestTemplate HTTP Operations](http://nixmash.com/java/safeguarding-your-spring-resttemplate-http-operations/)
+- [Post: Caching Your Spring RestTemplate Get Operations](http://nixmash.com/java/caching-your-spring-resttemplate-get-operations/)
 
 [[back to top](#nixmash-spring)]
 
@@ -86,7 +91,7 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 - Spring Boot Updated to 1.4.1-RELEASE, Solr Core to 5.5.3
 - Runtime Tomcat libraries removed in favor of Embedded Jetty. (Commented out of `build.gradle` files and easily re-enabled)
 - "Quick" and "Full" Post Searching with Solr
-- Administrative one-click Solr Post Re-index function. Also can run `SOLR` module as JAR to reindex 
+- Administrative one-click Solr Post Re-index function. Can also run `SOLR` module as JAR to reindex 
 - [Post: Handling On/Off Checkbox State with JavaScript and Ajax](http://nixmash.com/java/handling-onoff-checkbox-state-with-javascript-and-ajax/)
 - [Post: Know Your Spring Boot Embedded Servlet Container](http://nixmash.com/java/know-your-spring-boot-embedded-servlet-container/)
 - [Post: How to Increase Embedded Tomcat Cache in Spring](http://nixmash.com/java/how-to-increase-embedded-tomcat-cache-in-spring/)
