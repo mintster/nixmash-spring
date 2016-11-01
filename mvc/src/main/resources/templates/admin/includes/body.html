@@ -38,7 +38,7 @@
 
 
 <div th:if="${hasLink} OR ${hasPost}">
-    <div th:replace="admin/fragments/js :: summernote">Summernote</div>
+    <div th:replace="fragments/editor :: ckeditorHtml">CKEditor</div>
 </div>
 
 <div th:if="${hasCarousel}">

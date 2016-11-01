@@ -68,7 +68,7 @@
                                 <td>
                                     <div class="controls">
                                     <textarea name="postContent" th:field="*{postContent}" rows="5"
-                                              class="mail-body" id="summernote"></textarea>
+                                              class="mail-body" id="editor"></textarea>
                                         <label class="control-label" th:errors="*{postContent}">[error]</label>
                                     </div>
                                 </td>
@@ -167,7 +167,7 @@
             var data = {}
             data["postId"] = parseInt($('#postId').val());
             data["postTitle"] = $('#postTitle').val();
-            data["postContent"] = $('#summernote').val();
+            data["postContent"] = $('#editor').val();
             data["displayType"] = $('#displayType').val();
             data["isPublished"] = $('#isPublished').val();
             data["tags"] = $('#tag-select').val();

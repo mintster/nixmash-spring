@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="ckeditorHtml">
+
+    <script src="/js/ckeditor/ckeditor.js"></script>
+    <script src="/js/ckeditor/config.js"></script>
+    <script src="/js/ckeditor/styles.js"></script>
+
+    <div th:include="fragments/editor :: ckeditorJS" th:remove="tag">[CKEditor Javascript]</div>
+    <div th:include="fragments/editor :: genericEditorJS" th:remove="tag">[Generic Editor Javascript]</div>
+
+    <link rel="stylesheet" type="text/css" href="/css/editor.css" />
+
+</div>
+<div th:fragment="ckeditorJS">
+    <script>
+        CKEDITOR.replace( 'editor', {
+            height: 250.
+        } );
+    </script>
+</div>
+
+<div th:fragment="genericEditorJS">
+
+<script th:src="@{/js/bootstrap3-typeahead.js}"></script>
+<script th:src="@{/js/bootstrap-tagsinput.js}"></script>
+
+<script type="text/javascript">
+
+    $('#tag-select').tagsinput({
+        tagClass: 'label label-default',
+        typeahead: {
+            source: function (query) {
+                return $.get('/json/posts/tagvalues');
+            }
+
+        }
+    });
+
+    function saveDraftDialog() {
+        showDialog("Save Post", "Please save a draft of your post before adding images or attachments.");
+    }
+
+    function toggleImageUploads() {
+        {
+            var e = document.getElementById('imageuploads');
+            if (e.style.display == 'block' || e.style.display == '') {
+                e.style.display = 'none';
+                $('#imageUploadButton').text('Add Images')
+            }
+            else {
+                e.style.display = 'block';
+                $('#imageUploadButton').text('Hide Images')
+            }
+        }
+    }
+
+</script>
+</div>
+
+</body>
+</html>
