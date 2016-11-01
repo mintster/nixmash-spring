@@ -50,6 +50,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/admin/posts")
 public class AdminPostsController {
 
+    // region static view properties
+
     public static final String ADMIN_POSTS_LIST_VIEW = "admin/posts/list";
     public static final String ADMIN_POST_ADD_VIEW = "admin/posts/addpost";
     public static final String ADMIN_LINK_ADD_VIEW = "admin/posts/addlink";
@@ -57,7 +59,12 @@ public class AdminPostsController {
     public static final String ADMIN_POSTLINK_UPDATE_VIEW = "admin/posts/update";
     public static final String ADMIN_POSTS_REINDEX_VIEW = "admin/posts/reindex";
 
+    // endregion
+
+    // region static message.properites
+
     private static final String MESSAGE_ADMIN_UPDATE_POSTLINK_TITLE = "admin.update.postlink.title";
+    private static final String MESSAGE_ADMIN_SOLR_REINDEX_COMPLETE = "admin.solr.posts.reindexed";
     private static final String MESSAGE_ADMIN_UPDATE_POSTLINK_HEADING = "admin.update.postlink.heading";
 
     private static final String ADD_POST_HEADER = "posts.add.note.page.header";
@@ -71,17 +78,26 @@ public class AdminPostsController {
     private static final String FEEDBACK_MESSAGE_TAG_UPDATED = "feedback.message.tag.updated";
     private static final String FEEDBACK_MESSAGE_TAG_DELETED = "feedback.message.tag.deleted";
 
+    // endregion
+
+    // region class variables
+
     private static final String SESSION_ATTRIBUTE_NEWPOST = "activepostdto";
 
     public static final String POST_PUBLISH = "publish";
     public static final String POST_DRAFT = "draft";
-    private static final String MESSAGE_ADMIN_SOLR_REINDEX_COMPLETE = "admin.solr.posts.reindexed";
+
+    // endregion
+
+    // region beans
 
     private final PostService postService;
     private final PostDocService postDocService;
     private final WebUI webUI;
     private final FmService fmService;
     private final JsoupService jsoupService;
+
+    // endregion
 
     private static final Logger logger = LoggerFactory.getLogger(AdminPostsController.class);
 

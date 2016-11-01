@@ -33,8 +33,16 @@
     content: 'css';
 }
 
+.fa-sh:before {
+    font-family: Arial; /* your font family here! */
+    font-weight: bold;
+    content: 'sh';
+}
+
 .note-toolbar.panel-heading .btn-sm, .note-toolbar.panel-heading .btn-group-sm>.btn {
     padding: 2px 8px;
 }
+
+.note-icon-samp:before{content:"\f11d"}
 
 /*</editor-fold>*/

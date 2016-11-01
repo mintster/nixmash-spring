@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @SuppressWarnings({"SpringElInspection", "ELValidationInJSP"})
 @Caching(
         put = {
-                @CachePut(key = "#postDTO.postName"),
+                @CachePut(key = "#result.postName"),
                 @CachePut(key = "#result.postId")
         },
         evict = {

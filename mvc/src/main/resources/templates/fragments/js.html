@@ -124,6 +124,7 @@
             var JavaScriptButton= function (context) { return makeButton("javascript", "js"); };
             var HtmlButton = function (context) { return makeButton("html", "html"); };
             var CssButton = function (context) { return makeButton("css", "css"); };
+            var BashButton = function (context) { return makeButton("bash", "sh"); };
             var ImageButton = function (context) { return makeImageButton(); };
 
             function makeButton(language, abbrev) {
@@ -179,17 +180,18 @@
                 minHeight: 200,
                 toolbar: [
                     ['first', ['style']],
-                    ['style', ['bold', 'italic', 'underline', 'clear', 'strikethrough']],
+                    ['style', ['bold', 'italic', 'underline', 'clear', 'strikethrough', 'samp']],
                     ['insert', ['link']],
                     ['para', ['paragraph', 'ul', 'ol']],
                     ['misc', ['codeview', 'undo']],
-                    ['codebuttons', ['java', 'js', 'html', 'css', 'image']]
+                    ['codebuttons', ['java', 'js', 'html', 'css', 'sh', 'image']]
                 ],
                 buttons: {
                     java: JavaButton,
                     js: JavaScriptButton,
                     html: HtmlButton,
                     css: CssButton,
+                    sh: BashButton,
                     image: ImageButton
                 }
             });
