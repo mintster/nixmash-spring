@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="admin/fragments/posts/imageupload :: image-upload-css">[Image Upload CSS]</div>
-
     <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
+    <div th:replace="admin/fragments/posts/imageupload :: imageUploadCss">[Image Upload CSS]</div>
     <div th:include="admin/fragments/js :: functions('/admin/posts/add/post')" th:remove="tag">Functions</div>
     <title>NixMash Spring Administration - Add Post</title>
 </head>
