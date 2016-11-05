@@ -21,6 +21,7 @@ import com.nixmash.springdata.jpa.utils.PostUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -51,14 +52,17 @@ public class PostServiceImpl implements PostService {
     private LikeRepository likeRepository;
     private PostImageRepository postImageRepository;
     private ApplicationSettings applicationSettings;
+    private CacheManager cacheManager;
+
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository, LikeRepository likeRepository, PostImageRepository postImageRepository, ApplicationSettings applicationSettings) {
+    public PostServiceImpl(PostRepository postRepository, TagRepository tagRepository, LikeRepository likeRepository, PostImageRepository postImageRepository, ApplicationSettings applicationSettings, CacheManager cacheManager) {
         this.postRepository = postRepository;
         this.tagRepository = tagRepository;
         this.likeRepository = likeRepository;
         this.postImageRepository = postImageRepository;
         this.applicationSettings = applicationSettings;
+        this.cacheManager = cacheManager;
     }
 
     @PersistenceContext
@@ -157,6 +161,7 @@ public class PostServiceImpl implements PostService {
             likeRepository.save(like);
         }
         post.updateLikes(incrementValue);
+        clearPostCaches();
         return incrementValue;
     }
 
@@ -501,5 +506,9 @@ public class PostServiceImpl implements PostService {
         return new Sort(Sort.Direction.DESC, "postDate");
     }
 
+    public void clearPostCaches() {
+        cacheManager.getCache("posts").clear();
+        cacheManager.getCache("pagedPosts").clear();
+    }
     //endregion
 }

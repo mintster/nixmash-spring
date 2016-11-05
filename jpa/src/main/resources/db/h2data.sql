@@ -168,7 +168,8 @@ VALUES (9, 3, '1000 Ways To Title Something', '1000-ways-to-title-something', NU
            '2016-05-28 17:40:18', 'POST', 'POST', 1, 'This post title begins with 1000', 'NA', NULL, 0, 0, 0, 0);
 INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version)
 VALUES (10, 3, 'Solr Rama', 'solr-rama', NULL, '2016-09-30 17:40:18',
-           '2016-09-30 17:40:18', 'POST', 'POST', 1, '<p><strong>This is a post</strong> for <em>Solr Testing</em></p>', 'NA', NULL, 0, 0, 0, 0);
+            '2016-09-30 17:40:18', 'POST', 'POST', 1,
+            '<p><strong>This is a post</strong> for <em>Solr Testing</em></p>', 'NA', NULL, 0, 0, 0, 0);
 
 INSERT INTO tags (tag_id, tag_value) VALUES (1, 'h2tagone');
 INSERT INTO tags (tag_id, tag_value) VALUES (2, 'h2tagtwo');
@@ -191,23 +192,24 @@ INSERT INTO post_tag_ids (post_id, tag_id) VALUES (10, 1);
 INSERT INTO post_tag_ids (post_id, tag_id) VALUES (10, 2);
 INSERT INTO post_tag_ids (post_id, tag_id) VALUES (10, 3);
 
-INSERT INTO user_likes (user_id, item_id, content_type_id) VALUES (3, 1, 1);
-INSERT INTO user_likes (user_id, item_id, content_type_id) VALUES (3, 2, 1);
-INSERT INTO user_likes (user_id, item_id, content_type_id) VALUES (3, 3, 1);
-INSERT INTO user_likes (user_id, item_id, content_type_id) VALUES (2, 1, 1);
-INSERT INTO user_likes (user_id, item_id, content_type_id) VALUES (2, 2, 1);
+INSERT INTO user_likes (like_id, user_id, item_id, content_type_id) VALUES (1, 3, 1, 1);
+INSERT INTO user_likes (like_id, user_id, item_id, content_type_id) VALUES (2, 3, 2, 1);
+INSERT INTO user_likes (like_id, user_id, item_id, content_type_id) VALUES (3, 3, 3, 1);
+INSERT INTO user_likes (like_id, user_id, item_id, content_type_id) VALUES (4, 3, 10, 1);
+INSERT INTO user_likes (like_id, user_id, item_id, content_type_id) VALUES (5, 2, 1, 1);
+INSERT INTO user_likes (like_id, user_id, item_id, content_type_id) VALUES (6, 2, 2, 1);
 
-INSERT INTO post_images (post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
+INSERT INTO post_images (image_id, post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
 VALUES
-  (1, 'WP_000993.jpg', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70-thumbnail.png', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70.jpg',
+  (1, 1, 'WP_000993.jpg', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70-thumbnail.png', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70.jpg',
    'image/jpeg', 1065071, 53726, '2016-08-03 13:49:09');
-INSERT INTO post_images (post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
+INSERT INTO post_images (image_id, post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
 VALUES
-  (1, 'WP_000624.jpg', '49e5d232-56a9-4bf9-a9df-916508a4f540-thumbnail.png', '49e5d232-56a9-4bf9-a9df-916508a4f540.jpg',
+  (2, 1, 'WP_000624.jpg', '49e5d232-56a9-4bf9-a9df-916508a4f540-thumbnail.png', '49e5d232-56a9-4bf9-a9df-916508a4f540.jpg',
    'image/jpeg', 580112, 40909, '2016-08-03 13:49:09');
-INSERT INTO post_images (post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
+INSERT INTO post_images (image_id, post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
 VALUES
-  (2, 'WP_000931.jpg', '000e045d-781b-4979-9a00-37692f8d33cf-thumbnail.png', '000e045d-781b-4979-9a00-37692f8d33cf.jpg',
+  (3, 2, 'WP_000931.jpg', '000e045d-781b-4979-9a00-37692f8d33cf-thumbnail.png', '000e045d-781b-4979-9a00-37692f8d33cf.jpg',
    'image/jpeg', 908532, 51092, '2016-08-03 14:58:45');
 
 INSERT INTO flashcard_categories (category) VALUES ('category one');

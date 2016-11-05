@@ -78,7 +78,7 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 
 ##v0.4.5 -- CKEditor and Post Editing Updates
 
-- Replaced Summertime Editor with CKEditor
+- Replaced Summernote Editor with CKEditor
 - Full support for Code Highlighting
 - Fix for Exceptions logged on Administrative Post Edit and Post Update pages
 - Cache update modifications to "posts" caches by `postId` and `postName`. All **Post** properties updated on Post Update.

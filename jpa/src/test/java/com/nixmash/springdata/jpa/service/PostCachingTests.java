@@ -17,14 +17,17 @@ import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.nixmash.springdata.jpa.utils.PostTestUtils.POST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = ApplicationConfig.class)
 @ActiveProfiles(DataConfigProfile.H2)
+@Transactional
 public class PostCachingTests {
 
     @Autowired
@@ -43,9 +46,9 @@ public class PostCachingTests {
     }
 
     @After
-    public void clearCache() {
+    public void evictCaches() {
         postCache.evict("posts");
-        postCache.evict("pagedPosts");
+        pagedPostsCache.evict("pagedPosts");
     }
 
     @Test
@@ -72,9 +75,16 @@ public class PostCachingTests {
 
         Post post = postService.add(postDTO);
         long postId = post.getPostId();
+        String postName = post.getPostName();
 
-        assertThat((Post) postCache.get(savedPostName).get()).isEqualTo(post);
-        assertThat((Post) postCache.get(postId).get()).isEqualTo(post);
+        assertNull(postCache.get(post.getPostName()));
+        assertNull(postCache.get(postId));
+
+        Post postById = postService.getPostById(postId);
+        Post postByName = postService.getPost(postName);
+
+        assertThat((Post) postCache.get(postName).get()).isEqualTo(postByName);
+        assertThat((Post) postCache.get(postId).get()).isEqualTo(postById);
     }
 
     @Test
@@ -89,15 +99,23 @@ public class PostCachingTests {
 
         String newTitle = "Something Wonderful";
         Post post = postService.getPostById(1L);
+        String originalPostName = post.getPostName();
         PostDTO postDTO = PostUtils.postToPostDTO(post);
         postDTO.setPostTitle(newTitle);
         postService.update(postDTO);
 
         // Updated Post with New Title in Post Caches by Name and PostId
+        // AFTER it is evicted - Updated v0.4.5
 
+        assertNull(postCache.get(post.getPostName()));
+
+        postService.getPost(originalPostName);
         Post postByName = (Post) postCache.get(post.getPostName()).get();
         assertThat(postByName.getPostTitle()).isEqualTo(newTitle);
 
+        assertNull(postCache.get(post.getPostId()));
+
+        postService.getPostById(1L);
         Post postById = (Post) postCache.get(post.getPostId()).get();
         assertThat(postById.getPostTitle()).isEqualTo(newTitle);
 
