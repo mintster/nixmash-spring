@@ -155,7 +155,8 @@ public class AdminPostsControllerTests  extends AbstractContext{
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/admin/posts"));
 
-        assert (post.getPostTitle().equals(newTitle));
+        Post updatedPost = postService.getPostById(1L);
+        assert (updatedPost.getPostTitle().equals(newTitle));
     }
 
     @Test

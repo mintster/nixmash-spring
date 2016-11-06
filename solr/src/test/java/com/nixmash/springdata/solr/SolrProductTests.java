@@ -9,6 +9,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,9 +35,12 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 public class SolrProductTests extends SolrContext {
 
+	private static final Logger logger = LoggerFactory.getLogger(SolrProductTests.class);
+
+
 	private static final String SOLR_STRING = "solr";
 	private static final int PRODUCT_ID = 1000;
-	private static final int INITIAL_RECORD_COUNT = 62;
+	private static final int INITIAL_RECORD_COUNT = 56;
 	private static final int INITIAL_CATEGORY_COUNT = 6;
 	private static final int TEST_RECORD_COUNT = 10;
 

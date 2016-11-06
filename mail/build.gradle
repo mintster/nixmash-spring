@@ -27,6 +27,7 @@ dependencies {
 	compile project(':jpa')
 	compile 'org.springframework.boot:spring-boot-starter-mail'
 	compile 'org.springframework.boot:spring-boot-starter-freemarker'
+	testCompile project(':jpa').sourceSets.test.output
 }
 
 bootRun {

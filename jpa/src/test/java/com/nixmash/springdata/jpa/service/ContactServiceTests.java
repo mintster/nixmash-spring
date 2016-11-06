@@ -8,15 +8,19 @@ import com.nixmash.springdata.jpa.enums.DataConfigProfile;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.model.Contact;
 import com.nixmash.springdata.jpa.model.ContactPhone;
-import com.nixmash.springdata.jpa.utils.ContactTestUtils;
 import com.nixmash.springdata.jpa.model.Hobby;
+import com.nixmash.springdata.jpa.utils.ContactTestUtils;
 import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,11 +30,15 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 @ContextConfiguration(classes = ApplicationConfig.class)
-@Transactional
 @ActiveProfiles(DataConfigProfile.H2)
+@Transactional
 public class ContactServiceTests {
+
+	private static final Logger logger = LoggerFactory.getLogger(ContactServiceTests.class);
+
 
 	final String FIRST_NAME_CONTACT_ID_4L = "ROBIN";
 
@@ -197,9 +205,11 @@ public class ContactServiceTests {
 	}
 
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 	public void addContactPhoneToContactByUpdate() throws ContactNotFoundException {
 		Contact contact = contactService.findContactById(5L);
 		ContactDTO contactDTO = ContactTestUtils.contactToContactDTO(contact);
+//		logger.info("CONTACTDTO: " + contactDTO);
 		assertEquals(contactDTO.getContactPhones().size(), 2);
 
 		contactDTO.getContactPhones().add(ContactTestUtils.HOME_CONTACT_PHONE_DTO);

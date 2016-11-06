@@ -25,6 +25,8 @@ springBoot {
 dependencies {
 	compile project(':jpa')
 	compile 'org.jsoup:jsoup:1.9.2'
+
+	testCompile project(':jpa').sourceSets.test.output
 }
 
 
