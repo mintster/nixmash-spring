@@ -33,6 +33,7 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History
+- **[v0.5.0 -- Spring Batch Functions](#v050----spring-batch-functions)**
 - **[v0.4.5 -- CKEditor and Post Editing Updates](#v045----ckeditor-and-post-editing-updates)**
 - **[v0.4.4 -- Spring Caching](#v044----spring-caching)**
 - **[v0.4.3 -- Post Searching with Solr](#v043----post-searching-with-solr)**
@@ -75,6 +76,12 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 - **[v0.0.3 -- DAO Implementation](#v003----dao-implementation)**
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
+
+##v0.5.0 -- Spring Batch Functions
+
+- *In Progress...*
+
+[[back to top](#nixmash-spring)]
 
 ##v0.4.5 -- CKEditor and Post Editing Updates
 
