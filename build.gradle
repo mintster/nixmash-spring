@@ -62,10 +62,10 @@ allprojects {
 		compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1'
 		compile 'net.coobird:thumbnailator:0.4.8'
 		compile 'joda-time:joda-time:2.9.4'
-		
+
 		runtime('com.h2database:h2')
 		runtime('mysql:mysql-connector-java')
-		
+
 		testCompile 'org.springframework.boot:spring-boot-starter-test'
 		testCompile 'junit:junit:4.12'
 		testCompile "org.mockito:mockito-core"
@@ -97,6 +97,6 @@ allprojects {
 			containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
 		}
 	}
-	
+
 }
 
