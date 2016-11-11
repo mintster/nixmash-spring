@@ -1,0 +1,37 @@
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.nixmash.springdata.batch.BatchLauncher'
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java', 'src/main/resources']
+        resources.srcDir('src/main/resources')
+    }
+    test {
+        java.srcDir('src/test/java')
+    }
+}
+
+configurations {
+    compile.exclude module: 'org.slf4j'
+}
+
+springBoot {
+    mainClass = 'com.nixmash.springdata.batch.BatchLauncher'
+}
+
+bootRun {
+    addResources = false
+    systemProperty 'spring.profiles.active', 'mysql'
+    main = 'com.nixmash.springdata.batch.BatchLauncher'
+}
+
+
+dependencies {
+    compile project(':jpa')
+    testCompile project(':jpa').sourceSets.test.output
+
+    compile("org.springframework.boot:spring-boot-starter-batch")
+}
