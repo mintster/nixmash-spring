@@ -1,0 +1,332 @@
+-1,3,Not Yet Selected,not-yet-selected,,2016-05-16 10:30:04,2016-05-16 10:30:16,POST,SINGLEPHOTO_POST,0,<p>Placemarker post</p>,NA,,0,0,0,0
+1,3,JavaScript · Bootstrapping,javascript-bootstrap,http://getbootstrap.com/javascript/#carousel,2016-06-06 15:30:34,2016-06-06 15:30:34,LINK,LINK,1,"Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.",getbootstrap.com,,0,0,0,0
+2,3,A Java collection of value pairs? (tuples?),a-java-collection-of-value-pairs-tuples,http://stackoverflow.com/questions/521171/a-java-collection-of-value-pairs-tuples,2016-06-06 15:31:01,2016-06-06 15:31:01,LINK,LINK_SUMMARY,1,"I like how Java has a Map where you can define the types of each entry in the map, for example &lt;String, Integer&gt;. 
+
+What I'm looking for is a type of collection where each element in the coll...",stackoverflow.com,/images/posts/stackoverflow.png,0,0,0,0
+3,3,Jsoup Parsing and Traversing Document and URL - JAVATIPS.INFO,jsoup-parsing-and-traversing-document-and-url-javatips-info,http://javatips.info/jsoup-parsing-and-traversing-document-and-url.html,2016-06-06 15:31:38,2016-06-06 15:31:38,LINK,LINK,1,Prerequisites Development environment JDK 1.8 Downloads Eclipse Mars Download Required jar files jsoup-1.8.3.jar Maven dependencies [crayon-5755cf911d25a486332694/] In order to run the example; simply follow steps below: Step 1 Create New Maven-based Dynamic Web Project Step 1.1 Create New Java Project Launch Eclipse IDE; Go to File -> New -> Others… -> Java Project. Click Next. Choose any project … Continue reading Jsoup Parsing and Traversing Document and URL ?,javatips.info,,0,0,0,0
+4,3,Content Negotiation using Spring MVC,content-negotiation-using-spring-mvc,https://spring.io/blog/2013/05/11/content-negotiation-using-spring-mvc,2016-06-06 15:32:28,2016-06-06 15:32:28,LINK,LINK_SUMMARY,1,"<p>There are two ways to generate output using Spring MVC:</p>
+<ul> 
+ <li> You can use the RESTful <code style=""font-size: 100%; color: black;"">@ResponseBody</code> approach and HTTP message converters, typically to return data-formats like JSON or XML. Programmatic clients, mobile apps and AJAX enabled browsers are the usual clients. </li>
+ <li>Alternatively you may use <em>view resolution</em>. Although views are perfectly capable of generating JSON and XML if you wish (more on that in my next post), views are normally used to generate presentation formats like HTML for a traditional web-application. </li>
+ <li>Actually there is a third possibility - some applications require both, and Spring MVC supports such combinations easily. We will come back to that right at the end. </li>
+</ul>
+",spring.io,/images/posts/spring.png,0,0,0,0
+5,3,Variations on JSON Key-Value Pairs in Spring MVC,variations-on-json-key-value-pairs-in-spring-mvc,http://nixmash.com/java/variations-on-json-key-value-pairs-in-spring-mvc/,2016-06-06 15:34:09,2016-06-06 15:34:09,LINK,NIXMASH_POST,1,"The topic of this post is pretty lightweight. A bit of a lark, really, but Spring Java coders may find it interesting and maybe even useful. We're looking at the most efficient way of [...]",nixmash.com,http://nixmash.com/x/blog/2016/jsonpair0528c.png,0,0,0,0
+6,3,MySQL Commands,mysql-commands,https://www.pantz.org/software/mysql/mysqlcommands.html,2016-06-07 09:34:03,2016-06-07 09:34:03,LINK,LINK,1,"This is a list of handy MySQL commands that I use time and time again. At the bottom are statements, clauses, and functions you can use in MySQL.",www.pantz.org,,0,0,0,0
+7,3,jhy/jsoup,jhy-jsoup,https://github.com/jhy/jsoup/tree/master/src/test,2016-06-07 09:36:15,2016-06-07 09:36:15,LINK,LINK_SUMMARY,1,"jsoup: Java HTML Parser, with best of DOM, CSS, and jquery",github.com,/images/posts/github.png,0,0,0,0
+8,3,What is the cURL command-line syntax to do a POST request?,what-is-the-curl-command-line-syntax-to-do-a-post-request,http://superuser.com/questions/149329/what-is-the-curl-command-line-syntax-to-do-a-post-request,2016-06-07 09:36:42,2016-06-07 09:36:42,LINK,LINK,1,"How can I make a POST request with the cURL command-line tool?
+",superuser.com,,0,0,0,0
+9,3,Configuring a Generic Type Class as a Spring Bean,configuring-a-generic-type-class-as-a-spring-bean,http://nixmash.com/java/configuring-a-generic-type-class-as-a-spring-bean/,2016-06-07 09:37:05,2016-06-07 09:37:05,LINK,NIXMASH_POST,1,We've been talking about the new Jsoup Annotations feature in NixMash Spring which takes a POJO as a Generic Type and returns parsed Jsoup values for the annotated properties. The Jsoup [...],nixmash.com,http://nixmash.com/x/blog/2016/bean0526a.png,0,0,0,0
+10,3,Better application events in Spring Framework 4.2,better-application-events-in-spring-framework-4-2,https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2,2016-06-07 09:37:45,2016-07-14 15:54:56,LINK,LINK_SUMMARY,1,"<p>Application events are available since the <em>very</em> beginning of the Spring framework as a mean for loosely coupled components to exchange information. </p>
+
+<pre><code class=""java"">
+		public void init(AuthenticationManagerBuilder auth) throws Exception {
+			JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
+			userDetailsService.setDataSource(dataSource);
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			auth.userDetailsService(userDetailsService).passwordEncoder(encoder).and().jdbcAuthentication()
+					.dataSource(dataSource);
+		}
+</code></pre>
+",spring.io,/images/posts/spring.png,0,0,0,1
+11,3,19 Tips For Everyday Git Use,19-tips-for-everyday-git-use,http://www.alexkras.com/19-git-tips-for-everyday-use/,2016-06-07 09:38:35,2016-09-01 09:54:59,LINK,LINK,1,"I’ve been using git full time for the past 4 years, and I wanted to share the most practical tips that I’ve learned along the way.",www.alexkras.com,,0,0,0,2
+12,3,Model Comparisons | NORDICTRACKERONLINE,model-comparisons-nordictrackeronline,http://www.nordictrackeronline.com/pages/4,2016-06-07 09:39:11,2016-07-14 15:53:22,LINK,LINK_FEATURE,1,pre 1997 original nordic track ski machines restored made in  usa,www.nordictrackeronline.com,http://img.inkfrog.com/pix/markhall/GraphCompare1800.jpg,0,0,0,1
+13,3,Thymeleaf Interactive Tutorial,thymeleaf-interactive-tutorial,http://itutorial.thymeleaf.org/,2016-06-07 09:39:43,2016-07-14 15:53:02,LINK,LINK,1,Thymeleaf version used in this tutorial is 2.1.4.RELEASE.,itutorial.thymeleaf.org,,0,0,0,1
+14,3,Spring 4 - Generics Type as Qualifier When Injecting Beans,spring-4-generics-type-as-qualifier-when-injecting-beans,http://javabeat.net/spring-4-generics-qualifier/,2016-06-07 09:42:42,2016-07-14 15:52:25,LINK,LINK,1,This example highlights how to use the generic type as the Qualifier for injecting the beans,javabeat.net,,0,0,0,1
+15,3,How to ignore PKIX path building failed: SunCertPathBuilderException?,how-to-ignore-pkix-path-building-failed-suncertpathbuilderexception,http://stackoverflow.com/questions/13626965/how-to-ignore-pkix-path-building-failed-sun-security-provider-certpath-sunce,2016-06-07 09:43:27,2016-07-14 16:02:26,LINK,LINK_SUMMARY,1,"<p>I got the following exception when try to post a request to a http server...</p>
+
+<pre><code class=""java"">
+		public void init(AuthenticationManagerBuilder auth) throws Exception {
+			JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
+			userDetailsService.setDataSource(dataSource);
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			auth.userDetailsService(userDetailsService).passwordEncoder(encoder).and().jdbcAuthentication()
+					.dataSource(dataSource);
+		}
+</code></pre>
+
+",stackoverflow.com,/images/posts/stackoverflow.png,0,0,0,2
+16,3,Annotation-driven event listeners in Spring 4.2 | Java Code Geeks - 2016,annotation-driven-event-listeners-in-spring-4-2-java-code-geeks-2016,https://www.javacodegeeks.com/2015/10/annotation-driven-event-listeners-in-spring-4-2-2.html,2016-06-07 09:50:10,2016-07-21 15:46:50,LINK,LINK_SUMMARY,1,Introduction Exchanging events within the application has become indispensable part of many applications and thankfully Spring provides a complete infrastructure for transient events (*). ,www.javacodegeeks.com,https://www.javacodegeeks.com/wp-content/uploads/2013/04/w4g-badge-150x150.png,0,1,0,2
+17,3,Hibernate ignores hbm2ddl settings – always set to update | Out Of Singularity,hibernate-ignores-hbm2ddl-settings-always-set-to-update-out-of-singularity,https://outofsingularity.wordpress.com/2011/05/09/hibernate-ignores-hbm2ddl-settings-always-set-to-update/,2016-06-07 17:33:06,2016-07-14 15:51:07,LINK,LINK,1,"Despite my best effore to enforce setting of hibernate.hbm2ddl.auto to ""validate"" (only), Hibernate has continously ignored this value and set this to ""update"". I cannot find any obvious mention about this behavior elsewhere on the internet, therefore I started debugging of Hibernate in org.hibernate.tool.hbm2ddl.SchemaUpdate class. I found out that default setting of hibernate.hbm2ddl.auto is being…",outofsingularity.wordpress.com,,0,0,0,1
+19,3,The Unofficial GitHub Watch & Fork Buttons,the-unofficial-github-watch-fork-buttons,http://ghbtns.com/,2016-06-08 13:12:46,2016-07-21 15:46:41,LINK,LINK,1,"<p>A set of static buttons with dynamic watch and fork counts for any repo hosted on GitHub.</p>
+
+<pre><code class=""JavaScript"">
+	    $.get(""/json/posts/page/0"", function (data) {
+            $(""#posts"").html(data);
+            pageIndex++;
+        }).success(function () {
+            $('.post:odd').addClass(""odd"");
+            $('#morePosts').css('display', 'inline-block');
+            $('code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+</code></pre>
+",ghbtns.com,,0,1,0,2
+21,3,How to check "hasRole" in Java Code with Spring Security?,how-to-check-hasrole-in-java-code-with-spring-security,http://stackoverflow.com/questions/3021200/how-to-check-hasrole-in-java-code-with-spring-security/10232526#10232526,2016-06-08 13:32:39,2016-07-21 15:24:59,LINK,LINK_SUMMARY,1,"<p>How to check user authority or permission in Java Code ? For example - I want to show or hide button for user depending on role. There are annotations like:</p>
+ 
+<pre><code class=""Java"">
+public void init(AuthenticationManagerBuilder auth) throws Exception {
+   JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
+   userDetailsService.setDataSource(dataSource);
+   PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+   auth.userDetailsService(userDetailsService)
+	.passwordEncoder(encoder).and().jdbcAuthentication()
+	.dataSource(dataSource);
+}
+</code></pre>",stackoverflow.com,/images/posts/stackoverflow.png,0,1,0,2
+22,3,A Bootstrap Carousel with Spring MVC and Thymeleaf,a-bootstrap-carousel-with-spring-mvc-and-thymeleaf,http://nixmash.com/java/a-bootstrap-carousel-with-spring-mvc-and-thymeleaf/,2016-06-10 18:47:51,2016-07-21 15:52:17,LINK,NIXMASH_POST,1,"<p>This is the third post looking at the new Posts feature on NixMash Spring. Posts will stream bits of code, links and application notes relevant to the app and to fellow Spring developers. After some changes...and then more changes...</p><pre> &lt;div class=""row row-centered"" id=""post""&gt;
+  &lt;div class=""bs-docs-section col-lg-9 col-centered""&gt;
+      &lt;div id=""message-holder""&gt;
+          &lt;div th:if=""${feedbackMessage}"" th:class=""'messageblock hidden'""
+               th:utext=""${feedbackMessage}""&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div id=""post-body"" th:utext=""${post.postContent}""&gt;
+      &lt;/div&gt;
+      &lt;div id=""post-footer""&gt;
+          &lt;div id=""post-date"" th:text=""|Posted ${#dates.format(postCreated, 'MMMM dd, yyyy hh:mm a z')}|""&gt;
+              [post date]
+          &lt;/div&gt;
+          &lt;div class=""edit-link"" th:if=""${post.isOwner}""&gt;
+             &lt;a th:href=""@{|/posts/update/${post.postId}|}""&gt;[Edit]&lt;/a&gt;
+          &lt;/div&gt;
+      &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;<code class=""html""></code></pre><p>How about that??</p>",nixmash.com,http://nixmash.com/x/blog/2016/posts0609c.png,0,1,0,6
+23,3,Summernote - Super Simple WYSIWYG editor,summernote-super-simple-wysiwyg-editor,http://summernote.org/,2016-06-14 17:32:57,2016-07-21 15:52:13,LINK,LINK,1,"<p>Super Simple WYSIWYG Editor on Bootstrap Summernote is a JavaScript library that helps you create WYSIWYG editors online.
+</p>",summernote.org,,0,0,0,2
+24,3,Comparing the enum constants in thymeleaf,comparing-the-enum-constants-in-thymeleaf,http://stackoverflow.com/questions/24937441/comparing-the-enum-constants-in-thymeleaf,2016-06-22 08:19:17,2016-07-21 15:52:10,LINK,LINK_SUMMARY,1,"<p>How can I do an Enum comparison in Thymeleaf?</p><p>--------------</p><p>To display a ""View Source"" link on the Post Permalink page <i>for LINK Post Types only</i> we check the Post.PostType property, which is an Enum. Sampled the following two approaches. Went with the second because it was cleaner.</p><pre><code class=""html"">&lt;div th:if=""${post.postType == T(com.nixmash.springdata.jpa.enums.PostType).LINK}""&gt;
+           
+&lt;div th:if=""${post.postType.name() == 'LINK'}""&gt;</code></pre>",stackoverflow.com,/images/posts/stackoverflow.png,0,1,0,3
+25,3,Bootstrap Tags Input,bootstrap-tags-input,http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/,2016-06-25 09:07:41,2016-07-25 09:47:25,LINK,LINK,1,"<p>This is the Tags Plugin we're using in NixMash Spring. We looked at several and thought this was clean, Bootstrap-friendly, and its most recent GitHub check-in was 4 months ago. It also can handle objects and not just String arrays which we may or may not use.&nbsp;</p>",bootstrap-tagsinput.github.io,,0,2,0,11
+26,3,Gimp Arrow Settings,gimp-arrow-settings,,2016-06-29 13:11:09,2016-08-31 16:29:06,POST,POST,1,"<p>Here's the dialog box of setting the Gimp Arrow plugin...with updates</p><p><img src=""/x/posts/2016/gimp0629a.png"" alt=""""></p><p>This is the arrow it produces. I'm not completely happy with this arrow, but the Script-Fu Arrow dialog box is so damned confusing this post is a good point of reference.</p><p><img src=""/x/posts/2016/gimp0629b.png"" alt=""""></p>",NA,,0,2,0,15
+27,3,Changelist v0.3.4.0727,changelist-v0-3-4-0727,,2016-07-28 11:21:17,2016-07-28 11:21:20,POST,POST,1,"<ul>
+        <li>All <samp>bs-docs-section</samp> and <samp>bs-docs-container</samp> CSS classes changed to <samp>bs-section</samp> / <samp>bs-container</samp></li>
+        <li>New <samp>AlphabetDTO</samp> class to hold Alphabetic links</li>
+        <li>New method and native SQL query in <strong>PostRepostory</strong> to return string of <em>DISTINCT</em> Post Title first letters</li>
+        <li>New <strong>PostsAZ</strong> Thymeleaf View</li>
+        <li><samp>postsAtoZ()</samp> method in <strong>MVC</strong> <samp>PostsController</samp> to populate Alphabetic links with
+            <samp>List&lt;AlphabetDTO&gt;</samp></li>
+        <li>Post Service <samp>getAlphaLinks()</samp> and <samp>getAlphaPosts()</samp> methods</li>
+        <li>Logic added to place all Post Titles starting with a digit in a ""0-9"" section and a <strong>""09""</strong> <samp>PostDTO.alphaKey</samp>
+            value.</li>
+        <li><strong>JPA</strong> <samp>PostRepository</samp> and <samp>PostService</samp> tests, <strong>MVC</strong>
+            <samp>PostsAZ</samp> <samp>PostController</samp> tests.</li>
+    </ul>",NA,,0,0,0,1
+28,3,Multi-Photo Post Work,multi-photo-post-work,,2016-08-01 14:25:29,2016-08-01 15:28:00,POST,MULTIPHOTO_POST,1,<p>This is the content area of the multiphoto post.</p>,NA,,0,0,0,2
+29,3,Default Kinda Post Day,default-kinda-post-day,,2016-08-01 15:28:40,2016-08-01 15:28:57,POST,POST,1,<p>This is the body of the default kinda post. Updated.</p>,NA,,0,0,0,2
+30,3,Unpublished ditty,unpublished-ditty,,2016-08-01 15:32:57,2016-08-01 15:32:57,POST,POST,1,<p>This is an unpublished post...until I say different!</p>,NA,,0,0,0,1
+53,3,Unpublished ditty III,unpublished-ditty-iii,,2016-08-02 18:31:42,2016-08-02 18:34:30,POST,POST,0,<p>unpublished ditty content updated!</p>,NA,,0,0,0,4
+54,3,Unpublished ditty IV,unpublished-ditty-iv,,2016-08-02 18:43:00,2016-08-02 18:44:26,POST,POST,1,<p>The fourth in a series of unpublished ditties.</p>,NA,,0,0,0,2
+55,3,Post with Images,post-with-images,,2016-08-03 13:48:12,2016-08-04 09:20:47,POST,MULTIPHOTO_POST,1,<p>This is the first post with images. For real</p>,NA,,0,0,0,4
+56,3,Changelist for Thursday AM ,changelist-for-thursday-am,,2016-08-04 11:10:53,2016-08-04 12:33:32,POST,MULTIPHOTO_POST,1,<p>some images for you</p>,NA,,0,0,0,4
+57,3,First Single Photo Post,first-single-photo-post,,2016-08-17 09:12:52,2016-08-17 09:15:24,POST,SINGLEPHOTO_POST,1,<p>This is the description of the photo which will appear beneath it.</p>,NA,,0,0,0,3
+62,3,Train Station,train-station,,2016-08-27 10:28:07,2016-08-27 10:28:22,POST,SINGLEPHOTO_POST,0,<p>Albany Train Station</p>,NA,,0,0,0,2
+63,3,Snow Blower,snow-blower,,2016-08-27 10:28:45,2016-08-27 10:28:45,POST,SINGLEPHOTO_POST,0,<p>Boss Snow Blower</p>,NA,,0,0,0,1
+64,3,Red Rocks Park,red-rocks-park,,2016-08-27 10:29:29,2016-08-27 10:29:40,POST,SINGLEPHOTO_POST,0,<p>Gus in Red Rocks</p>,NA,,0,0,0,2
+65,3,Ferry,ferry,,2016-08-27 10:30:06,2016-08-27 10:30:15,POST,SINGLEPHOTO_POST,0,<p>Champlain - Essex Ferry</p>,NA,,0,0,0,2
+66,3,Behind the Pieces of a Flashcards App,behind-the-pieces-of-a-flashcards-app,http://nixmash.com/java/behind-the-pieces-of-a-flashcards-app/,2016-08-30 10:02:39,2016-09-01 15:04:15,LINK,LINK_FEATURE,1,<p>We recently added a Flashcards App to NixMash Spring which you can view here. Flashcard images are displayed in a Bootstrap Carousel with a "Show Answer!" button revealing details of this modified link</p>,nixmash.com,http://nixmash.com/x/blog/2016/flashcards0828a.png,0,0,0,4
+67,3,Behind the Pieces of a Flashcards App II,behind-the-pieces-of-a-flashcards-app-ii,http://nixmash.com/java/behind-the-pieces-of-a-flashcards-app/,2016-08-30 10:18:53,2016-08-30 14:26:32,LINK,LINK_SUMMARY,1,<p>We recently added a Flashcards App to NixMash Spring which you can view here. Flashcard images are displayed in a Bootstrap Carousel with a "Show Answer!" button revealing details of this modified description... twice!</p>,nixmash.com,http://nixmash.com/x/blog/2016/flashcards0828b.png,0,0,0,4
+68,3,First Post from Administration,first-post-from-administration,,2016-08-30 11:12:38,2016-08-30 13:39:43,POST,MULTIPHOTO_POST,1,"<p>This is my post from administration, updated!</p><pre><code class=""java"">@RequestMapping(value = ""/add/post"", method = POST)
+ public String createNotePost(@Valid PostDTO postDTO, BindingResult result,
+                              CurrentUser currentUser, RedirectAttributes attributes, Model model,
+                              HttpServletRequest request) throws DuplicatePostNameException, PostNotFoundException {
+	if (sessionPost == null)
+	  saved = postService.add(postDTO);
+	else {
+	  postDTO.setPostId(sessionPost.getPostId());
+	  saved = postService.update(postDTO);
+	}
+}</code></pre>",NA,,0,0,0,8
+69,3,Second Post from Administration,second-post-from-administration,,2016-08-31 09:38:08,2016-09-01 15:03:19,POST,SINGLEPHOTO_POST,1,<p>Giving it another go with removed pages from the public area</p>,NA,,0,0,0,4
+70,3,Forgot Password and Password Reset with Spring MVC,forgot-password-and-password-reset-with-spring-mvc,http://nixmash.com/java/forgot-password-and-password-reset-with-spring-mvc/,2016-08-31 09:42:59,2016-09-05 10:08:31,LINK,LINK_SUMMARY,1,"<p>You'll find a new ""Forgot Password"" link on the NixMash Spring Login Page, as well as the ability to reset your password on your User Profile. If you enter your account email...something will happen!</p>",nixmash.com,http://nixmash.com/x/blog/2016/reset0809a.png,0,0,0,5
+71,3,Behavior Post,behavior-post,,2016-09-15 14:21:31,2016-09-17 11:44:51,POST,MULTIPHOTO_POST,1,<p>A post for tweaking various UI behaviors</p>,NA,,0,0,0,40
+72,3,New Post Delight,new-post-delight,,2016-09-19 11:10:06,2016-09-19 11:10:06,POST,POST,0,<p>A post to test Preview function</p>,NA,,0,0,0,1
+73,3,Bread is Bread,bread-is-bread,,2016-09-21 10:16:12,2016-10-10 13:03:48,POST,SINGLEPHOTO_POST,0,<p>A description for Bread is Bread and is Bread only once.</p>,NA,,0,0,0,16
+74,3,Fun with Solr,fun-with-solr,,2016-10-10 13:04:50,2016-10-10 13:05:30,POST,POST,1,<p>A post to demonstrate that new posts are immediately available in the Solr Index for searching!</p>,NA,,0,0,0,2
+75,3,Published From the Top Post,published-from-the-top-post,,2016-10-10 16:31:45,2016-10-10 16:31:46,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,1
+76,3,Nuther Solr Daddy,nuther-solr-daddy,,2016-10-10 16:42:22,2016-10-10 16:42:23,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,1
+77,3,Too Short,too-short,,2016-10-10 16:47:34,2016-10-10 16:48:54,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,2
+78,3,Test again,test-again,,2016-10-10 16:49:38,2016-10-10 16:49:38,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,1
+79,3,Some author test,some-author-test,,2016-10-10 16:58:00,2016-10-10 17:00:19,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,1
+80,3,Any Tags?,any-tags,,2016-10-10 17:00:46,2016-10-10 17:00:46,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,0
+81,3,More tags,more-tags,,2016-10-10 17:02:48,2016-10-10 17:02:48,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,0
+82,3,Even more tags,even-more-tags,,2016-10-10 17:04:39,2016-10-10 17:04:39,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,0
+83,3,Refresh that post,refresh-that-post,,2016-10-10 17:07:05,2016-10-10 17:07:28,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,1
+84,3,authorfullname fun,authorfullname-fun,,2016-10-10 17:09:30,2016-10-10 17:09:37,POST,POST,1,"    <ul>
+        <li><em>@ManyToOne(fetch = FetchType.EAGER) <strong>User</strong></em> object (property name ""author"") added to <strong>Post</strong> object for Solr Indexing in <strong>PostDoc.</strong></li>
+        <li>Fixed <samp>_csrf.token</samp> exception being written to logs on <strong>Search Page</strong></li>
+        <li>New <samp>searchtips.html</samp> file loaded from site file support area with JQuery <em><strong>load()</strong></em></li>
+        <li><samp>PostDoc</samp> Solr documents created, saved and updated from all Administrative Post Edit processes</li>
+        <li><samp>findPostDocByPostId(long postId)</samp> with <em>@Query(""doctype:post AND id:?0"")</em> added in <strong>CustomPostDocRepository.java</strong></li>
+        <li><samp>PostDoc</samp> removed from Solr Index if Post previously saved as ""Published"" is saved as ""Draft""</li>
+        <li>Post Search Page now online and added to both sidebar and navbar menus. Searches following <strong>PostDoc</strong> fields: <em>title, body, tag, posttype, postdate, author</em></li>
+        <li><em>UPDATES PUSHED TO <a href=""http://nixmashspring.daveburkevt.com"">DEMO SITE</a></em></li>
+    </ul>",NA,,0,0,0,1
+85,3,more authorfullname fun renamed for solr,more-authorfullname-fun,,2016-10-10 17:12:50,2016-10-31 14:36:36,POST,POST,1,"    public String getAuthorFullname() {
+        return author.getFirstName() + "" "" +  author.getLastName();
+    }
+
+",NA,,0,0,0,7
+86,3,Something New For the Cache Renamed,something-new-for-the-cache,,2016-10-31 14:37:21,2016-11-01 16:33:41,POST,POST,1,"<pre>
+<code class=""language-javascript"">/**
+ * Returns the HTML &lt;IMG&gt; tag for the close box.
+ * @private
+ */
+InfoBox.prototype.getCloseBoxImg_ = function () {
+
+  var img = """";
+
+  if (this.closeBoxURL_ !== """") {
+
+    img  = ""&lt;img"";
+    img += "" src='"" + this.closeBoxURL_ + ""'"";
+    img += "" align=right""; // Do this because Opera chokes on style='float: right;'
+    img += "" style='"";
+    img += "" position: relative;""; // Required by MSIE
+    img += "" cursor: pointer;"";
+    img += "" margin: "" + this.closeBoxMargin_ + "";"";
+    img += ""'&gt;"";
+  }
+
+  return img;
+};
+</code></pre>
+
+<p>gimme some HTML!</p>
+
+<pre>
+<code class=""language-html"">&lt;!-- Controls --&gt;
+&lt;a class=""left carousel-control"" href=""#pagepreview-carousel"" role=""button""
+  data-slide=""prev""&gt;
+   &lt;span class=""glyphicon glyphicon-chevron-left"" aria-hidden=""true""&gt;&lt;/span&gt;
+   &lt;span class=""sr-only""&gt;Previous&lt;/span&gt;
+&lt;/a&gt;
+&lt;a class=""right carousel-control"" href=""#pagepreview-carousel"" role=""button""
+  data-slide=""next""&gt;
+   &lt;span class=""glyphicon glyphicon-chevron-right"" aria-hidden=""true""&gt;&lt;/span&gt;
+   &lt;span class=""sr-only""&gt;Next&lt;/span&gt;
+&lt;/a&gt;</code></pre>
+
+<p>&nbsp;</p>
+",NA,,0,0,0,17
+87,3,Unicode Study,unicode-study,,2016-11-01 12:31:38,2016-11-01 14:13:41,POST,POST,0,<p>I'm an instance of <a href="http://ckeditor.com">CKEditor</a></p><p>and more of the same with some text and other things</p>,NA,,0,0,0,2
+88,3,CKEditor SDK Samples Fixed User Interface,ckeditor-sdk-samples-fixed-user-interface,http://sdk.ckeditor.com/samples/fixedui.html,2016-11-01 14:14:38,2016-11-01 14:14:38,LINK,LINK_SUMMARY,1,"<p>CKEditor with Fixed User Interface. <strong>Common solution </strong>for static administration backends.</p>
+",sdk.ckeditor.com,http://sdk.ckeditor.com/samples/assets/sample.jpg,0,0,0,1
+89,3,Caching Your Spring RestTemplate Get Operations,caching-your-spring-resttemplate-get-operations,http://nixmash.com/java/caching-your-spring-resttemplate-get-operations/,2016-11-01 16:29:21,2016-11-01 16:29:22,LINK,LINK_SUMMARY,1,"<p>We just talked about safeguarding RestTemplate HTTP Operations from spitting out exceptions when the API Endpoint is not available. Now we&#39;re going to speed up processing a RestTemplate HTTP [...]</p>
+",nixmash.com,http://nixmash.com/x/blog/2016/rest1028a.png,0,0,0,1
+90,1,Solr Post Search Overview,solr-post-search-overview,http://nixmash.com/java/solr-post-search-overview/,2016-11-02 14:27:55,2016-11-02 14:27:55,LINK,LINK_SUMMARY,1,"<p>We added Solr Searching to NixMash Spring Posts, with both Quick and Full Search functions. With Quick Search all terms must appear in either Post Title or Body or in combination. Full Search [...]</p>
+",nixmash.com,http://nixmash.com/x/blog/2016/solr1011a.png,0,0,0,1
+91,1,Picture and Code,picture-and-code,,2016-11-02 14:31:50,2016-11-02 15:32:19,POST,POST,1,"<p><img alt="""" src=""http://nixmash.com/x/blog/2016/rest1028a.png"" style=""height:433px; width:600px"" /></p>
+
+<p>And here&#39;s some code!</p>
+
+<pre>
+<code class=""language-html"">&lt;select th:field=""*{displayType}"" name=""displayType"" class=""selectpicker""
+      data-style=""btn-primary""&gt;
+  &lt;option value=""POST"" th:text=""#{add.post.option.default}""&gt;
+      [default post]
+  &lt;/option&gt;
+  &lt;option value=""MULTIPHOTO_POST"" th:text=""#{add.post.option.multiphoto}""&gt;
+      [multiphoto post]
+  &lt;/option&gt;
+  &lt;option value=""SINGLEPHOTO_POST"" th:text=""#{add.post.option.singlephoto}""&gt;
+      [singlephoto post]
+  &lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+
+<p>&nbsp;</p>
+",NA,,0,0,0,4
+92,3,Fun with Photos,fun-with-photos,,2016-11-02 15:18:53,2016-11-02 16:28:38,POST,MULTIPHOTO_POST,1,"<p>This is a post to see if post image uploads work after moving the location of the ImageUploadCss fragment to fix exception. Any affect on the cache?</p>
+",NA,,0,0,0,26
+93,3,Using IntelliJ JPA GUI Tools to Create a @ManyToMany,using-intellij-jpa-gui-tools-to-create-a-manytomany,http://nixmash.com/java/using-intellij-jpa-gui-tools-to-create-a-manytomany/,2016-11-03 14:34:36,2016-11-03 14:34:36,LINK,LINK_SUMMARY,1,"<p>IntelliJ IDEA Unlimited has awesome JPA GUI database tools. We recently added Tags to our NixMash Spring Posts feature so needed to create a @ManyToMany relationship between our tags and posts [...]</p>
+",nixmash.com,http://nixmash.com/x/blog/2016/dbui0628f.png,0,0,0,1
+94,3,Loading External Static HTML Files in your WAR,loading-external-static-html-files-in-your-war,http://nixmash.com/java/loading-external-static-html-files-in-your-war/,2016-11-03 14:54:08,2016-11-03 14:55:06,LINK,LINK_SUMMARY,1,"<p>We added Solr Searching to NixMash Spring Posts and on the main search page provided some search tips. I wanted to be able to update those tips over time without having to update the application [...]</p>
+",nixmash.com,http://nixmash.com/x/blog/2016/static1011a.png,0,0,0,1
+95,3,Passing Arguments to Spring Boot,passing-arguments-to-spring-boot,http://nixmash.com/java/passing-arguments-to-spring-boot/,2016-11-03 15:03:01,2016-11-05 08:59:54,LINK,LINK_SUMMARY,1,"<p>The subject of this post may sound&nbsp;pretty dull, but here&#39;s the scenario which makes it interesting. We&#39;re using Spring Social and need to set an&nbsp;ApplicationUrl property on our [...]</p>
+",nixmash.com,http://nixmash.com/x/blog/2016/args0307a.png,0,0,0,3

@@ -47,7 +47,6 @@ allprojects {
 		compile 'org.springframework.boot:spring-boot-devtools'
 		compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 		compile 'org.springframework.boot:spring-boot-starter-security'
-		compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 		compile 'org.springframework.security:spring-security-test'
 		compile 'javax.servlet:javax.servlet-api'
 		compile 'org.javassist:javassist'

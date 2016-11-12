@@ -8,7 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BatchLoader implements CommandLineRunner {
+public class BatchLoader implements CommandLineRunner{
 
     private static final Logger logger = LoggerFactory.getLogger(BatchLoader.class);
 
