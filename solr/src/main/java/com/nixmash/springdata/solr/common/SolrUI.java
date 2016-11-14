@@ -83,7 +83,7 @@ public class SolrUI {
     // @formatter:on
 
     public void init() {
-        DEMO demo = DEMO.POPULATE_DATABASE_AS_LIST;
+        DEMO demo = DEMO.ALL_PRODUCTS;
 
         String[] profiles = environment.getActiveProfiles();
         if (profiles[0].equals("dev"))
@@ -226,8 +226,8 @@ public class SolrUI {
 
             case ALL_PRODUCTS:
 
-                productList = service.getProductsByFilter();
-                printProducts(productList);
+//                productList = service.getProductsByFilter();
+//                printProducts(productList);
 
                 productList = service.getProducts();
                 printProducts(productList);

@@ -103,12 +103,12 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findTestCategoryRecords();
 	}
 
-	@Override
-	public List<Product> getProductsByFilter() {
-		logger.info("Retrieving all records and filtering out by 'doctype:product'");
-		List<Product> products = Lists.newArrayList(productRepo.findAll());
-		return products.stream().filter(p -> p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
-	}
+//	@Override
+//	public List<Product> getProductsByFilter() {
+//		logger.info("Retrieving all records and filtering out by 'doctype:product'");
+//		List<Product> products = Lists.newArrayList(productRepo.findAll());
+//		return products.stream().filter(p -> p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
+//	}
 
 	@Override
 	public List<Product> getProducts() {

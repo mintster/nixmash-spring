@@ -17,7 +17,7 @@ public class PostItemProcessor implements ItemProcessor<Post, PostDTO> {
         PostDTO transformedPost = new PostDTO();
         transformedPost.setPostTitle(postTitle);
 
-        log.info("Converting (" + post.getPostTitle() + ") into (" + postTitle + ")");
+//        log.info("Converting (" + post.getPostTitle() + ") into (" + postTitle + ")");
 
         return transformedPost;
     }

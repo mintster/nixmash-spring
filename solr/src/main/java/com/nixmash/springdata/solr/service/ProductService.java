@@ -1,14 +1,13 @@
 package com.nixmash.springdata.solr.service;
 
-import java.util.List;
-
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
+import com.nixmash.springdata.solr.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 
-import com.nixmash.springdata.solr.exceptions.GeoLocationException;
-import com.nixmash.springdata.solr.model.Product;
+import java.util.List;
 
 public interface ProductService {
 
@@ -16,7 +15,7 @@ public interface ProductService {
 
 	Iterable<Product> getAllRecords();
 
-	List<Product> getProductsByFilter();
+//	List<Product> getProductsByFilter();
 
 	List<Product> getProducts();
 

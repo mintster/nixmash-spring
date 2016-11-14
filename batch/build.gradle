@@ -4,6 +4,7 @@ jar {
     }
 }
 
+
 sourceSets {
     main {
         java.srcDirs = ['src/main/java', 'src/main/resources']
@@ -31,10 +32,10 @@ bootRun {
 
 dependencies {
     compile project(':jpa')
+    compile("org.springframework.boot:spring-boot-starter-batch")
     testCompile project(':jpa').sourceSets.test.output
 
-    compile("com.fasterxml.jackson.core:jackson-databind")
-    compile("org.springframework.boot:spring-boot-starter-batch")
-    compile('org.springframework.boot:spring-boot-starter-web') {  exclude module: 'spring-boot-starter-tomcat'  }
-    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    compile("com.fasterxml.jackson.core:jackson-databind")
+//    compile('org.springframework.boot:spring-boot-starter-web') { exclude module: 'spring-boot-starter-tomcat' }
+//    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
