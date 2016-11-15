@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component;
  * Created by daveburke on 11/10/16.
  */
 @Component
-public class PostImportCompletionListener extends JobExecutionListenerSupport {
+public class PostImportJobListener extends JobExecutionListenerSupport  {
 
-    private static final Logger logger = LoggerFactory.getLogger(PostImportCompletionListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostImportJobListener.class);
 
     @Override
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
-            logger.info("!!! JOB FINISHED!");
+            logger.info("!!! JOB FINISHED! LAST POSTID IMPORTED: " + jobExecution.getExecutionContext().get("postId") );
         }
     }
 }

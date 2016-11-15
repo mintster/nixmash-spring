@@ -34,8 +34,9 @@ dependencies {
     compile project(':jpa')
     compile("org.springframework.boot:spring-boot-starter-batch")
     testCompile project(':jpa').sourceSets.test.output
+//    compile 'org.springframework.batch:spring-batch-test:3.0.7.RELEASE'
+}
 
 //    compile("com.fasterxml.jackson.core:jackson-databind")
 //    compile('org.springframework.boot:spring-boot-starter-web') { exclude module: 'spring-boot-starter-tomcat' }
 //    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-}

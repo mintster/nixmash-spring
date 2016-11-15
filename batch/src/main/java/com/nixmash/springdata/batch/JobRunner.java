@@ -22,13 +22,13 @@ public class JobRunner {
     }
 
     @Scheduled(fixedRate = 5000)
-    public void findAndRunJob() {
+    public void runImportJob() {
         JobParameters jobParameters =
                 new JobParametersBuilder()
                         .addLong("time", System.currentTimeMillis()).toJobParameters();
 
-        System.out.println("STARTING THE BATCH JOB -------------------------------------------------------------------- */");
         try {
+            System.out.println("STARTING BATCH JOB ----------------------- */");
             JobExecution execution = jobLauncher.run(importPostJob, jobParameters);
             System.out.println("JOB STATUS : " + execution.getStatus());
         } catch (Exception e) {

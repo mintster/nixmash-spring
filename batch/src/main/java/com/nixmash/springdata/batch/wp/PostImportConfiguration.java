@@ -9,8 +9,8 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
@@ -22,12 +22,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 
 @Configuration
-public class ImportConfiguration {
+public class PostImportConfiguration {
 
-    private static final Logger logger = LoggerFactory.getLogger(ImportConfiguration.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(PostImportConfiguration.class);
 
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
@@ -39,10 +39,13 @@ public class ImportConfiguration {
     private EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public PostImportCompletionListener postImportCompletionListener;
+    public PostImportJobListener postImportJobListener;
 
     @Autowired
-    public JobLauncher jobLauncher;
+    public PostImportStepListener postImportStepListener;
+
+    @Autowired
+    public DataSource dataSource;
 
     @Bean
     public JpaPagingItemReader<Post> reader() throws Exception {
@@ -80,7 +83,7 @@ public class ImportConfiguration {
     public Job importPostJob() throws Exception {
         return jobBuilderFactory.get("importPostJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(postImportCompletionListener)
+                .listener(postImportJobListener)
                 .flow(step1())
                 .end()
                 .build();
@@ -93,22 +96,17 @@ public class ImportConfiguration {
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
+                .listener(promotionListener())
+                .listener(postImportStepListener)
                 .allowStartIfComplete(true)
                 .build();
     }
 
-//    @Scheduled(fixedRate=5000)
-//    public void printMessage() {
-//        System.out.println("I am called by Spring scheduler");
-//    }
-
-
-//    @Scheduled(fixedRate = 1000)
-//    public void importPosts() throws Exception {
-//        JobParameters jobParameters =
-//                new JobParametersBuilder()
-//                        .addLong("time", System.currentTimeMillis()).toJobParameters();
-//        JobExecution execution = jobLauncher.run(importPostJob(), jobParameters);
-//            System.out.println("I am called by Spring scheduler");
-//    }
+    @Bean
+    public ExecutionContextPromotionListener promotionListener()
+    {
+        ExecutionContextPromotionListener listener = new ExecutionContextPromotionListener();
+        listener.setKeys( new String[] { "postId" } );
+        return listener;
+    }
 }
