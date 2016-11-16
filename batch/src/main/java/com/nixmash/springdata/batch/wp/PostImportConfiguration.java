@@ -5,29 +5,36 @@ import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.flow.FlowExecutionStatus;
+import org.springframework.batch.core.job.flow.JobExecutionDecider;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
 import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
+import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 
+@SuppressWarnings("Convert2Lambda")
 @Configuration
 public class PostImportConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(PostImportConfiguration.class);
+
+    public static final FlowExecutionStatus YES = new FlowExecutionStatus("YES");
+    public static final FlowExecutionStatus NO = new FlowExecutionStatus("NO");
 
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
@@ -44,8 +51,9 @@ public class PostImportConfiguration {
     @Autowired
     public PostImportStepListener postImportStepListener;
 
-    @Autowired
-    public DataSource dataSource;
+    private String c(FlowExecutionStatus executionStatus) {
+        return executionStatus.getName();
+    }
 
     @Bean
     public JpaPagingItemReader<Post> reader() throws Exception {
@@ -68,11 +76,11 @@ public class PostImportConfiguration {
 
     @Bean
     public ItemWriter<PostDTO> writer() {
-        FlatFileItemWriter<PostDTO> writer = new FlatFileItemWriter<PostDTO>();
+        FlatFileItemWriter<PostDTO> writer = new FlatFileItemWriter<>();
         writer.setResource(new FileSystemResource("/home/daveburke/web/nixmashspring/posts-out.csv"));
-        DelimitedLineAggregator<PostDTO> delLineAgg = new DelimitedLineAggregator<PostDTO>();
+        DelimitedLineAggregator<PostDTO> delLineAgg = new DelimitedLineAggregator<>();
         delLineAgg.setDelimiter(";");
-        BeanWrapperFieldExtractor<PostDTO> fieldExtractor = new BeanWrapperFieldExtractor<PostDTO>();
+        BeanWrapperFieldExtractor<PostDTO> fieldExtractor = new BeanWrapperFieldExtractor<>();
         fieldExtractor.setNames(new String[]{"postTitle"});
         delLineAgg.setFieldExtractor(fieldExtractor);
         writer.setLineAggregator(delLineAgg);
@@ -85,6 +93,11 @@ public class PostImportConfiguration {
                 .incrementer(new RunIdIncrementer())
                 .listener(postImportJobListener)
                 .flow(step1())
+                .next(decideIfGoodToContinue())
+                .on(c(NO))
+                .end()
+                .on(c(YES))
+                .to(optionalStep())
                 .end()
                 .build();
     }
@@ -101,6 +114,49 @@ public class PostImportConfiguration {
                 .allowStartIfComplete(true)
                 .build();
     }
+
+
+    @Bean
+    public JobExecutionDecider decideIfGoodToContinue() {
+        return new JobExecutionDecider() {
+
+            int iteration = 0;
+
+            @Override
+            public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+                long postId = 0;
+                try {
+                    postId = jobExecution.getExecutionContext().getLong("postId");
+                } catch (Exception e) {
+                    logger.info("Should not display, as all ExecutionContext keys are shared among steps");
+                }
+
+                if(iteration < 2) {
+                    logger.info("ITERATING... POSTID = " + postId);
+                    iteration++;
+                    return YES;
+                } else {
+                    logger.info("REPEATED 2X's. SKIPPING OPTIONAL STEP");
+                    return NO;
+                }
+            }
+        };
+    }
+
+
+    @Bean
+    public Step optionalStep() {
+        return stepBuilderFactory.get("optionalStep")
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        logger.info("IN OPTIONAL STEP ------------------------ */");
+                        return RepeatStatus.FINISHED;
+                    }
+                })
+                .build();
+    }
+
 
     @Bean
     public ExecutionContextPromotionListener promotionListener()

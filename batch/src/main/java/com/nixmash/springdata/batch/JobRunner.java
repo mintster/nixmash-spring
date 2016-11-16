@@ -6,10 +6,14 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource("file:/home/daveburke/web/nixmashspring/batch.properties")
+@ConditionalOnProperty(name = "jobs.enableImportJob")
 public class JobRunner {
 
     private final JobLauncher jobLauncher;
@@ -28,9 +32,10 @@ public class JobRunner {
                         .addLong("time", System.currentTimeMillis()).toJobParameters();
 
         try {
-            System.out.println("STARTING BATCH JOB ----------------------- */");
+            System.out.println("STARTING BATCH JOB!!!");
             JobExecution execution = jobLauncher.run(importPostJob, jobParameters);
             System.out.println("JOB STATUS : " + execution.getStatus());
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("JOB FAILED!!!");
