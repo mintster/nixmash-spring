@@ -33,23 +33,23 @@ public class PostImportConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(PostImportConfiguration.class);
 
-    public static final FlowExecutionStatus YES = new FlowExecutionStatus("YES");
-    public static final FlowExecutionStatus NO = new FlowExecutionStatus("NO");
+    private static final FlowExecutionStatus YES = new FlowExecutionStatus("YES");
+    private static final FlowExecutionStatus NO = new FlowExecutionStatus("NO");
+
+    private final JobBuilderFactory jobBuilderFactory;
+    private final StepBuilderFactory stepBuilderFactory;
+    private final EntityManagerFactory entityManagerFactory;
+    private final PostImportJobListener postImportJobListener;
+    private final PostImportStepListener postImportStepListener;
 
     @Autowired
-    public JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    public StepBuilderFactory stepBuilderFactory;
-
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
-
-    @Autowired
-    public PostImportJobListener postImportJobListener;
-
-    @Autowired
-    public PostImportStepListener postImportStepListener;
+    public PostImportConfiguration(EntityManagerFactory entityManagerFactory, PostImportJobListener postImportJobListener, PostImportStepListener postImportStepListener, StepBuilderFactory stepBuilderFactory, JobBuilderFactory jobBuilderFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+        this.postImportJobListener = postImportJobListener;
+        this.postImportStepListener = postImportStepListener;
+        this.stepBuilderFactory = stepBuilderFactory;
+        this.jobBuilderFactory = jobBuilderFactory;
+    }
 
     private String c(FlowExecutionStatus executionStatus) {
         return executionStatus.getName();
@@ -131,7 +131,8 @@ public class PostImportConfiguration {
                     logger.info("Should not display, as all ExecutionContext keys are shared among steps");
                 }
 
-                if(iteration < 2) {
+                long iterations = jobExecution.getJobParameters().getLong("iterations");
+                if(iteration < iterations) {
                     logger.info("ITERATING... POSTID = " + postId);
                     iteration++;
                     return YES;

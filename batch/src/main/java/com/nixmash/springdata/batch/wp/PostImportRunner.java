@@ -20,10 +20,10 @@ public class PostImportRunner {
     private final JobLauncher jobLauncher;
     private final Job postImportJob;
 
-    @Value("${post.import.job.param1}")
-    Integer iterations;
+    @Value("${post.import.job.param.iterations}")
+    long iterations;
 
-    @Value("${post.import.job.param2}")
+    @Value("${post.import.job.param.username}")
     String username;
 
     @Autowired
@@ -32,12 +32,12 @@ public class PostImportRunner {
         this.postImportJob = postImportJob;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedDelayString = "${post.import.job.fixed.delay.seconds:60}000")
     public void runPostImportJob() {
         System.out.println();
         JobParameters jobParameters =
                 new JobParametersBuilder()
-                        .addString("iterations", String.valueOf(iterations))
+                        .addLong("iterations", iterations)
                         .addString("username", username)
                         .addLong("time", System.currentTimeMillis()).toJobParameters();
 

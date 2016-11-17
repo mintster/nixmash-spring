@@ -704,7 +704,7 @@ To use MySQL run `setup.mysql` script in the `/install` directory to populate th
 
 ##Installation - External Property Files##
 
-The **JPA** and **Mail** Modules use external Property Files which must be configured to compile successfully. To Configure the location of the Properties Files, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class` and `Mail/MailSettings.java.` You can quickly locate these settings by searching "/home/daveburke" in your IDE.
+The **JPA**, **Mail**, **Solr** and **Batch** Modules use external Property Files which must be configured to compile successfully. To Configure the location of the Properties Files, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class` and `Mail/MailSettings.java.` You can quickly locate these settings by searching "/home/daveburke" in your IDE.
 
 ```java
 @Component
@@ -712,7 +712,7 @@ The **JPA** and **Mail** Modules use external Property Files which must be confi
 @ConfigurationProperties(prefix="external")
 public class ApplicationSettings {
 ```
-An example of `external.properties` and `mail.properties` are found in the `/install/samples` folder. Update the property values for your environment.
+An example of `*.properties` files used by the modules are found in the `/install/samples` folder. Update the property values for your environment.
 
 ##Installation - Solr##
 
