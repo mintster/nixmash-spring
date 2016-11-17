@@ -87,9 +87,9 @@ public class PostImportConfiguration {
         return writer;
     }
 
-    @Bean(name = "importPostJob")
-    public Job importPostJob() throws Exception {
-        return jobBuilderFactory.get("importPostJob")
+    @Bean(name = "postImportJob")
+    public Job postImportJob() throws Exception {
+        return jobBuilderFactory.get("postImportJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(postImportJobListener)
                 .flow(step1())

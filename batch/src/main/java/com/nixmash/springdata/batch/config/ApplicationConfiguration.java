@@ -4,6 +4,7 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -13,6 +14,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableBatchProcessing
 @EnableScheduling
 @ComponentScan(basePackages = {"com.nixmash.springdata.batch", "com.nixmash.springdata.jpa"})
-@PropertySource("classpath:/batch.properties")
+@PropertySources({
+        @PropertySource("classpath:/batch.properties"),
+        @PropertySource("file:/home/daveburke/web/nixmashspring/jobs.properties")
+})
+//@PropertySource("classpath:/batch.properties")
 public class ApplicationConfiguration {
 }

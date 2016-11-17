@@ -1,4 +1,4 @@
-package com.nixmash.springdata.batch;
+package com.nixmash.springdata.batch.wp;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -14,26 +14,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 @PropertySource("file:/home/daveburke/web/nixmashspring/jobs.properties")
-@ConditionalOnProperty(name = "import.post.job.enable")
-public class JobRunner {
+@ConditionalOnProperty("post.import.job.enabled")
+public class PostImportRunner {
 
     private final JobLauncher jobLauncher;
-    private final Job importPostJob;
+    private final Job postImportJob;
 
-    @Value("${jobs.importPostJobParam1}")
+    @Value("${post.import.job.param1}")
     Integer iterations;
 
-    @Value("${jobs.importPostJobParam2}")
+    @Value("${post.import.job.param2}")
     String username;
 
     @Autowired
-    public JobRunner(JobLauncher jobLauncher, Job importPostJob) {
+    public PostImportRunner(JobLauncher jobLauncher, Job postImportJob) {
         this.jobLauncher = jobLauncher;
-        this.importPostJob = importPostJob;
+        this.postImportJob = postImportJob;
     }
 
     @Scheduled(fixedRate = 5000)
-    public void runImportPostJob() {
+    public void runPostImportJob() {
         System.out.println();
         JobParameters jobParameters =
                 new JobParametersBuilder()
@@ -43,7 +43,7 @@ public class JobRunner {
 
         try {
             System.out.println("STARTING BATCH JOB!!!");
-            JobExecution execution = jobLauncher.run(importPostJob, jobParameters);
+            JobExecution execution = jobLauncher.run(postImportJob, jobParameters);
             System.out.println("JOB STATUS : " + execution.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
