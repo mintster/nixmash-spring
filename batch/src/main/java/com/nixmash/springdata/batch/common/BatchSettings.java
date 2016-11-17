@@ -5,18 +5,26 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("file:/home/daveburke/web/nixmashspring/batch.properties")
+@PropertySource("file:/home/daveburke/web/nixmashspring/jobs.properties")
 @ConfigurationProperties(prefix="jobs")
 public class BatchSettings {
 
-    public Boolean getEnableImportJob() {
-        return enableImportJob;
+    private Integer importPostJobParam1;
+    private String importPostJobParam2;
+
+    public Integer getImportPostJobParam1() {
+        return importPostJobParam1;
     }
 
-    public void setEnableImportJob(Boolean enableImportJob) {
-        this.enableImportJob = enableImportJob;
+    public void setImportPostJobParam1(Integer importPostJobParam1) {
+        this.importPostJobParam1 = importPostJobParam1;
     }
 
-    public Boolean enableImportJob;
+    public String getImportPostJobParam2() {
+        return importPostJobParam2;
+    }
 
+    public void setImportPostJobParam2(String importPostJobParam2) {
+        this.importPostJobParam2 = importPostJobParam2;
+    }
 }
