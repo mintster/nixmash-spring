@@ -13,7 +13,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableBatchProcessing
 @EnableScheduling
-@ComponentScan(basePackages = {"com.nixmash.springdata.batch", "com.nixmash.springdata.jpa"})
+@ComponentScan(basePackages = {
+        "com.nixmash.springdata.batch", "com.nixmash.springdata.jpa"
+})
 @PropertySources({
         @PropertySource("classpath:/batch.properties"),
         @PropertySource("file:/home/daveburke/web/nixmashspring/jobs.properties")

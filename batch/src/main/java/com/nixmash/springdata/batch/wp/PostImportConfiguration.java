@@ -115,7 +115,6 @@ public class PostImportConfiguration {
                 .build();
     }
 
-
     @Bean
     public JobExecutionDecider decideIfGoodToContinue() {
         return new JobExecutionDecider() {
@@ -144,7 +143,6 @@ public class PostImportConfiguration {
         };
     }
 
-
     @Bean
     public Step optionalStep() {
         return stepBuilderFactory.get("optionalStep")
@@ -157,7 +155,6 @@ public class PostImportConfiguration {
                 })
                 .build();
     }
-
 
     @Bean
     public ExecutionContextPromotionListener promotionListener()
