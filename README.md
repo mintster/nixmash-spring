@@ -14,7 +14,7 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (v0.4.0+)* |
-| *Spring Caching* | 
+| *Spring Caching* |  *Spring Batch* /
 
 ##Becoming Spring Masters Together
 

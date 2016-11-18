@@ -1,4 +1,4 @@
-package com.nixmash.springdata.batch.wp;
+package com.nixmash.springdata.batch.demo;
 
 import com.nixmash.springdata.jpa.model.Post;
 import org.slf4j.Logger;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * Created by daveburke on 11/10/16.
  */
 @Component
-public class PostImportStepListener extends StepExecutionListenerSupport implements ItemReadListener<Post> {
+public class DemoJobStepListener extends StepExecutionListenerSupport implements ItemReadListener<Post> {
 
-    private static final Logger logger = LoggerFactory.getLogger(PostImportStepListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(DemoJobStepListener.class);
 
     private ExecutionContext executionContext;
 

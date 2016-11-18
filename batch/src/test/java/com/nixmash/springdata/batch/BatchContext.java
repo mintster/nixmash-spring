@@ -1,6 +1,6 @@
 package com.nixmash.springdata.batch;
 
-import com.nixmash.springdata.batch.wp.PostImportRunner;
+import com.nixmash.springdata.batch.demo.DemoJobRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BatchContext {
 
     @Autowired
-    private PostImportRunner postImportRunner;
+    private DemoJobRunner demoJobRunner;
 
     @Test
     public void contextLoads() {
-        assertThat(postImportRunner).isNotNull();
+        assertThat(demoJobRunner).isNotNull();
     }
 
 }

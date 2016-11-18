@@ -1,4 +1,4 @@
-package com.nixmash.springdata.batch.wp;
+package com.nixmash.springdata.batch.demo;
 
 
 import com.nixmash.springdata.jpa.dto.PostDTO;
@@ -29,9 +29,9 @@ import javax.persistence.EntityManagerFactory;
 
 @SuppressWarnings("Convert2Lambda")
 @Configuration
-public class PostImportConfiguration {
+public class DemoJobConfiguration {
 
-    private static final Logger logger = LoggerFactory.getLogger(PostImportConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(DemoJobConfiguration.class);
 
     private static final FlowExecutionStatus YES = new FlowExecutionStatus("YES");
     private static final FlowExecutionStatus NO = new FlowExecutionStatus("NO");
@@ -39,14 +39,14 @@ public class PostImportConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
-    private final PostImportJobListener postImportJobListener;
-    private final PostImportStepListener postImportStepListener;
+    private final DemoJobListener demoJobListener;
+    private final DemoJobStepListener demoJobStepListener;
 
     @Autowired
-    public PostImportConfiguration(EntityManagerFactory entityManagerFactory, PostImportJobListener postImportJobListener, PostImportStepListener postImportStepListener, StepBuilderFactory stepBuilderFactory, JobBuilderFactory jobBuilderFactory) {
+    public DemoJobConfiguration(EntityManagerFactory entityManagerFactory, DemoJobListener demoJobListener, DemoJobStepListener demoJobStepListener, StepBuilderFactory stepBuilderFactory, JobBuilderFactory jobBuilderFactory) {
         this.entityManagerFactory = entityManagerFactory;
-        this.postImportJobListener = postImportJobListener;
-        this.postImportStepListener = postImportStepListener;
+        this.demoJobListener = demoJobListener;
+        this.demoJobStepListener = demoJobStepListener;
         this.stepBuilderFactory = stepBuilderFactory;
         this.jobBuilderFactory = jobBuilderFactory;
     }
@@ -70,8 +70,8 @@ public class PostImportConfiguration {
     }
 
     @Bean
-    public PostItemProcessor processor() {
-        return new PostItemProcessor();
+    public DemoJobItemProcessor processor() {
+        return new DemoJobItemProcessor();
     }
 
     @Bean
@@ -87,11 +87,11 @@ public class PostImportConfiguration {
         return writer;
     }
 
-    @Bean(name = "postImportJob")
-    public Job postImportJob() throws Exception {
-        return jobBuilderFactory.get("postImportJob")
+    @Bean(name = "demoJob")
+    public Job demoJob() throws Exception {
+        return jobBuilderFactory.get("demoJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(postImportJobListener)
+                .listener(demoJobListener)
                 .flow(step1())
                 .next(decideIfGoodToContinue())
                 .on(c(NO))
@@ -110,7 +110,7 @@ public class PostImportConfiguration {
                 .processor(processor())
                 .writer(writer())
                 .listener(promotionListener())
-                .listener(postImportStepListener)
+                .listener(demoJobStepListener)
                 .allowStartIfComplete(true)
                 .build();
     }

@@ -1,4 +1,4 @@
-package com.nixmash.springdata.batch.wp;
+package com.nixmash.springdata.batch.demo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
  * Created by daveburke on 11/10/16.
  */
 @Component
-public class PostImportJobListener extends JobExecutionListenerSupport  {
+public class DemoJobListener extends JobExecutionListenerSupport  {
 
-    private static final Logger logger = LoggerFactory.getLogger(PostImportJobListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(DemoJobListener.class);
 
     @Override
     public void afterJob(JobExecution jobExecution) {
