@@ -28,5 +28,4 @@ public class ApplicationConfig {
     DateTimeService currentTimeDateTimeService() {
         return new CurrentTimeDateTimeService();
     }
-
 }

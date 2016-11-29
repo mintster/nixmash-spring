@@ -122,12 +122,13 @@ public class DemoJobConfiguration {
             int iteration = 0;
 
             @Override
-            public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+            public FlowExecutionStatus decide(JobExecution jobExecution,
+                                              StepExecution stepExecution) {
                 long postId = 0;
                 try {
                     postId = jobExecution.getExecutionContext().getLong("postId");
                 } catch (Exception e) {
-                    logger.info("Should not display, as all ExecutionContext keys are shared among steps");
+                    logger.info("FlowExecution Exception: " + e.getMessage());
                 }
 
                 long iterations = jobExecution.getJobParameters().getLong("iterations");
@@ -148,7 +149,8 @@ public class DemoJobConfiguration {
         return stepBuilderFactory.get("optionalStep")
                 .tasklet(new Tasklet() {
                     @Override
-                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                    public RepeatStatus execute(StepContribution contribution,
+                                                ChunkContext chunkContext) throws Exception {
                         logger.info("IN OPTIONAL STEP ------------------------ */");
                         return RepeatStatus.FINISHED;
                     }
@@ -159,7 +161,8 @@ public class DemoJobConfiguration {
     @Bean
     public ExecutionContextPromotionListener promotionListener()
     {
-        ExecutionContextPromotionListener listener = new ExecutionContextPromotionListener();
+        ExecutionContextPromotionListener listener =
+                                                                                    new ExecutionContextPromotionListener();
         listener.setKeys( new String[] { "postId" } );
         return listener;
     }

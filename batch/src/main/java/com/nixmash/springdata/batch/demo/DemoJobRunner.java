@@ -1,5 +1,7 @@
 package com.nixmash.springdata.batch.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Conditional(DemoJobCondition.class)
 public class DemoJobRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(DemoJobRunner.class);
 
     private final JobLauncher jobLauncher;
     private final Job demoJob;
@@ -32,7 +36,6 @@ public class DemoJobRunner {
 
     @Scheduled(fixedDelayString = "${demo.job.fixed.delay.seconds:60}000")
     public void runDemoJob() {
-        System.out.println();
         JobParameters jobParameters =
                 new JobParametersBuilder()
                         .addLong("iterations", iterations)
@@ -40,12 +43,13 @@ public class DemoJobRunner {
                         .addLong("time", System.currentTimeMillis()).toJobParameters();
 
         try {
-            System.out.println("STARTING BATCH JOB!!!");
+            logger.info("");
+            logger.info("STARTING BATCH JOB!!!");
             JobExecution execution = jobLauncher.run(demoJob, jobParameters);
-            System.out.println("JOB STATUS : " + execution.getStatus());
+            logger.info("JOB STATUS : " + execution.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("JOB FAILED!!!");
+            logger.info("JOB FAILED!!!");
         }
 
     }

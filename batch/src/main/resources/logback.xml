@@ -13,10 +13,11 @@
         </encoder>
     </appender>
 
-    <logger name="com.nixmash.springdata.batch.BatchLauncher" level="debug"/>
+    <logger name="com.nixmash.springdata" level="info"/>
     <logger name="org.thymeleaf" level="off"/>
     <logger name="org.hibernate" level="off"/>
-    <logger name="org.springframework.batch" level="off" />
+    <!--<logger name="org.springframework.batch" level="off" />-->
+    <!--<logger name="org.springframework" level="off" />-->
 
     <root level="off">
         <appender-ref ref="console"/>

@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
  * Created by daveburke on 11/10/16.
  */
 @Component
-public class DemoJobStepListener extends StepExecutionListenerSupport implements ItemReadListener<Post> {
+public class DemoJobStepListener extends
+        StepExecutionListenerSupport implements ItemReadListener<Post> {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoJobStepListener.class);
 
@@ -26,7 +27,6 @@ public class DemoJobStepListener extends StepExecutionListenerSupport implements
 
     @Override
     public void beforeRead() {
-
     }
 
     @Override

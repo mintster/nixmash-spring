@@ -18,7 +18,8 @@ public class DemoJobListener extends JobExecutionListenerSupport  {
     @Override
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
-            logger.info("!!! JOB FINISHED! LAST POSTID IMPORTED: " + jobExecution.getExecutionContext().get("postId") );
+            logger.info("!!! JOB FINISHED! LAST POSTID IMPORTED: " +
+                    jobExecution.getExecutionContext().get("postId") );
         }
     }
 }
