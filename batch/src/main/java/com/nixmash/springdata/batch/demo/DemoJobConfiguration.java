@@ -56,7 +56,7 @@ public class DemoJobConfiguration {
     }
 
     @Bean
-    public JpaPagingItemReader<Post> reader() throws Exception {
+    public JpaPagingItemReader<Post> demoJobReader() throws Exception {
         String jpqlQuery = "SELECT p from Post p";
 
         JpaPagingItemReader<Post> reader = new JpaPagingItemReader<>();
@@ -70,12 +70,12 @@ public class DemoJobConfiguration {
     }
 
     @Bean
-    public DemoJobItemProcessor processor() {
+    public DemoJobItemProcessor demoJobProcessor() {
         return new DemoJobItemProcessor();
     }
 
     @Bean
-    public ItemWriter<PostDTO> writer() {
+    public ItemWriter<PostDTO> demoJobWriter() {
         FlatFileItemWriter<PostDTO> writer = new FlatFileItemWriter<>();
         writer.setResource(new FileSystemResource("/home/daveburke/web/nixmashspring/posts-out.csv"));
         DelimitedLineAggregator<PostDTO> delLineAgg = new DelimitedLineAggregator<>();
@@ -92,7 +92,7 @@ public class DemoJobConfiguration {
         return jobBuilderFactory.get("demoJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(demoJobListener)
-                .flow(step1())
+                .flow(demoStep1())
                 .next(decideIfGoodToContinue())
                 .on(c(NO))
                 .end()
@@ -103,12 +103,12 @@ public class DemoJobConfiguration {
     }
 
     @Bean
-    public Step step1() throws Exception {
-        return stepBuilderFactory.get("step1")
+    public Step demoStep1() throws Exception {
+        return stepBuilderFactory.get("demoStep1")
                 .<Post, PostDTO>chunk(100)
-                .reader(reader())
-                .processor(processor())
-                .writer(writer())
+                .reader(demoJobReader())
+                .processor(demoJobProcessor())
+                .writer(demoJobWriter())
                 .listener(promotionListener())
                 .listener(demoJobStepListener)
                 .allowStartIfComplete(true)
@@ -122,8 +122,7 @@ public class DemoJobConfiguration {
             int iteration = 0;
 
             @Override
-            public FlowExecutionStatus decide(JobExecution jobExecution,
-                                              StepExecution stepExecution) {
+            public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
                 long postId = 0;
                 try {
                     postId = jobExecution.getExecutionContext().getLong("postId");
