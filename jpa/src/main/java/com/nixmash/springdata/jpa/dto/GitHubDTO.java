@@ -3,8 +3,13 @@ package com.nixmash.springdata.jpa.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class GitHubDTO {
+
+    private long statId = -1;
+    private Date statDate;
 
     @JsonProperty("forks_count")
     private Integer forks = 0;
@@ -53,6 +58,22 @@ public class GitHubDTO {
     public GitHubDTO() {
     }
 
+    public long getStatId() {
+        return statId;
+    }
+
+    public void setStatId(long statId) {
+        this.statId = statId;
+    }
+
+    public Date getStatDate() {
+        return statDate;
+    }
+
+    public void setStatDate(Date statDate) {
+        this.statDate = statDate;
+    }
+
     public Boolean getIsEmpty() {
         return isEmpty;
     }
@@ -64,10 +85,12 @@ public class GitHubDTO {
     @Override
     public String toString() {
         return "GitHubDTO{" +
-                "forks=" + forks +
+                "statId=" + statId +
+                ", forks=" + forks +
                 ", stars=" + stars +
                 ", subscribers=" + subscribers +
                 ", followers=" + followers +
+                ", statDate=" + statDate +
                 '}';
     }
 }

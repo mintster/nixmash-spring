@@ -221,3 +221,6 @@ INSERT INTO flashcard_slides (category_id, slide_image, slide_content, datetime_
 VALUES (1, 'slidetwo.jpg', 'slide two', '2016-08-11 15:02:11');
 INSERT INTO flashcard_slides (category_id, slide_image, slide_content, datetime_created)
 VALUES (2, 'slidethree.jpg', 'slide three', '2016-08-11 15:02:30');
+
+INSERT INTO github_stats (stat_date) VALUES ('2016-12-01');
+

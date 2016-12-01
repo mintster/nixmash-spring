@@ -218,6 +218,19 @@ CREATE TABLE user_tokens (
   UNIQUE KEY user_tokens_user_id_uindex (user_id)
 );
 
+CREATE TABLE github_stats
+(
+  stat_id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  stat_date DATE NOT NULL,
+  followers INT(11) DEFAULT '0' NOT NULL,
+  subscribers INT(11) DEFAULT '0' NOT NULL,
+  stars INT(11) DEFAULT '0' NOT NULL,
+  forks INT(11) DEFAULT '0' NOT NULL,
+  PRIMARY KEY (stat_id),
+  UNIQUE KEY github_stats_stat_id_uindex (stat_id),
+  UNIQUE KEY github_stats_stat_date_uindex (stat_date)
+);
+
 CREATE TABLE flashcard_categories (
   category_id bigint(20) NOT NULL AUTO_INCREMENT,
   category varchar(255) DEFAULT NULL,

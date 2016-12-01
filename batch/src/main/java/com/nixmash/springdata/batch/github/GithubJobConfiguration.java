@@ -54,13 +54,8 @@ public class GithubJobConfiguration {
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
 //                        GitHubDTO gitHubDTO = githubJobUI.getGitHubStats();
                         GitHubDTO gitHubDTO = githubJobUI.getDummyStats();
-
-                        chunkContext
-                                .getStepContext()
-                                .getStepExecution()
-                                .getJobExecution()
-                                .getExecutionContext()
-                                .put("value", 1);
+                        gitHubDTO.setStatId(githubJobUI.getCurrentGithubId());
+                        githubJobUI.saveGithubStats(gitHubDTO);
 
                         logger.info("Working with GitHubDTO: " + gitHubDTO.toString());
                         return RepeatStatus.FINISHED;
