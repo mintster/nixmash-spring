@@ -9,6 +9,7 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -54,14 +55,31 @@ public class GithubJobConfiguration {
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
 //                        GitHubDTO gitHubDTO = githubJobUI.getGitHubStats();
                         GitHubDTO gitHubDTO = githubJobUI.getDummyStats();
-                        gitHubDTO.setStatId(githubJobUI.getCurrentGithubId());
+                        long currentStatId = githubJobUI.getCurrentGithubId();
+                        gitHubDTO.setStatId(currentStatId);
                         githubJobUI.saveGithubStats(gitHubDTO);
+
+                        chunkContext
+                                .getStepContext()
+                                .getStepExecution()
+                                .getJobExecution()
+                                .getExecutionContext()
+                                .put("statId", currentStatId);
 
                         logger.info("Working with GitHubDTO: " + gitHubDTO.toString());
                         return RepeatStatus.FINISHED;
                     }
                 })
+                .listener(githubPromotionListener())
                 .build();
     }
 
+    @Bean
+    public ExecutionContextPromotionListener githubPromotionListener()
+    {
+        ExecutionContextPromotionListener listener =
+                new ExecutionContextPromotionListener();
+        listener.setKeys( new String[] { "statId" } );
+        return listener;
+    }
 }

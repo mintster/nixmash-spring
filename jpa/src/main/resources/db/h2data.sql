@@ -222,5 +222,7 @@ VALUES (1, 'slidetwo.jpg', 'slide two', '2016-08-11 15:02:11');
 INSERT INTO flashcard_slides (category_id, slide_image, slide_content, datetime_created)
 VALUES (2, 'slidethree.jpg', 'slide three', '2016-08-11 15:02:30');
 
-INSERT INTO github_stats (stat_date) VALUES ('2016-12-01');
+INSERT INTO github_stats (forks, stars, subscribers, followers, stat_date) VALUES (20, 100, 25, 18, '2016-12-01');
+INSERT INTO github_stats (forks, stars, subscribers, followers, stat_date) VALUES (21, 102, 27, 18, '2016-12-02');
+INSERT INTO github_stats (forks, stars, subscribers, followers, stat_date) VALUES (22, 105, 31, 19, '2016-12-03');
 

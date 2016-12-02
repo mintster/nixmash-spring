@@ -3,6 +3,7 @@ package com.nixmash.springdata.mvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nixmash.springdata.jpa.dto.GitHubDTO;
+import com.nixmash.springdata.jpa.model.GitHubStats;
 import com.nixmash.springdata.mvc.components.WebUI;
 import org.junit.After;
 import org.junit.Before;
@@ -116,10 +117,10 @@ public class GitHubTests extends AbstractContext {
     @Test
     public void validateGithubStatsCache() throws Exception {
         assertNotNull(githubCache);
-        GitHubDTO gitHubDTO = webUI.getGitHubStats();
-        githubCache.get("getGitHubStats");
+        GitHubStats gitHubStats = webUI.getCurrentGitHubStats();
+        githubCache.get("getCurrentGitHubStats");
         assertThat(
-                ((GitHubDTO) githubCache.get("getGitHubStats").get()).getFollowers(), greaterThan(-1));
+                ((GitHubStats) githubCache.get("getCurrentGitHubStats").get()).getFollowers(), greaterThan(-1));
     }
 
     @Test
@@ -130,12 +131,12 @@ public class GitHubTests extends AbstractContext {
         githubCache.clear();
 
         start = timeMark();
-        webUI.getGitHubStats();
+        webUI.getCurrentGitHubStats();
         end = timeMark();
         System.out.println("Github Stats without Caching: " + totalTime(start, end));
 
         start = timeMark();
-        webUI.getGitHubStats();
+        webUI.getCurrentGitHubStats();
         end = timeMark();
         System.out.println("Github Stats WITH Caching: " + totalTime(start, end));
 

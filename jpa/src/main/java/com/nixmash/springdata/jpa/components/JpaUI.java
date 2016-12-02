@@ -6,11 +6,14 @@ import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.dto.AlphabetDTO;
 import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
+import com.nixmash.springdata.jpa.enums.BatchJobName;
 import com.nixmash.springdata.jpa.enums.PostDisplayType;
 import com.nixmash.springdata.jpa.enums.PostType;
 import com.nixmash.springdata.jpa.exceptions.ContactNotFoundException;
 import com.nixmash.springdata.jpa.exceptions.DuplicatePostNameException;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
+import com.nixmash.springdata.jpa.model.BatchJob;
+import com.nixmash.springdata.jpa.model.GitHubStats;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.model.addons.Flashcard;
@@ -41,11 +44,12 @@ public class JpaUI {
     final DefaultListableBeanFactory beanfactory;
     private final SiteOptions siteOptions;
     private final AddonService addonService;
+    private final StatService statService;
 
     // endregion
 
     @Autowired
-    public JpaUI(ContactService contactService, PostService postService, SiteOptions siteOptions, UserService userService, ApplicationSettings applicationSettings, DefaultListableBeanFactory beanfactory, SiteService siteService, AddonService addonService) {
+    public JpaUI(ContactService contactService, PostService postService, SiteOptions siteOptions, UserService userService, ApplicationSettings applicationSettings, DefaultListableBeanFactory beanfactory, SiteService siteService, AddonService addonService, StatService statService) {
         this.contactService = contactService;
         this.postService = postService;
         this.siteOptions = siteOptions;
@@ -54,11 +58,32 @@ public class JpaUI {
         this.beanfactory = beanfactory;
         this.siteService = siteService;
         this.addonService = addonService;
+        this.statService = statService;
     }
 
     public void init() {
-        allPublishedPostsCache();
+        getGithubStats();
     }
+
+    // region BatchJob Reports and GitHub Stats
+
+    private void getGithubStats() {
+        GitHubStats gitHubStats = statService.getCurrentGitHubStats();
+        if (gitHubStats != null)
+            System.out.println("GitHubStats Lives");
+        else
+            System.out.println("GitHubStats is null");
+    }
+
+    private void getBatchJobs() {
+        List<BatchJob> batchJobs = statService.getBatchJobsByJob(BatchJobName.GITHUBSTATS);
+        for (BatchJob batchJob :
+                batchJobs) {
+            System.out.println(batchJob);
+        }
+    }
+
+    // endregion
 
     // region cache play
 

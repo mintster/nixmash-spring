@@ -1,6 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.nixmash.springdata.jpa.dto.GitHubDTO;
+import com.nixmash.springdata.jpa.model.GitHubStats;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.mail.service.FmService;
 import com.nixmash.springdata.mvc.AbstractContext;
@@ -47,7 +47,7 @@ public class GeneralControllerTests extends AbstractContext {
     public void homePageTest() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(model().hasNoErrors())
-                .andExpect(model().attribute("gitHubStats", isA(GitHubDTO.class)))
+                .andExpect(model().attribute("gitHubStats", isA(GitHubStats.class)))
                 .andExpect(view().name(HOME_VIEW));
     }
 

@@ -6,6 +6,8 @@ import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.dto.GitHubDTO;
 import com.nixmash.springdata.jpa.dto.ProfileImageDTO;
 import com.nixmash.springdata.jpa.dto.addons.FlashcardImageDTO;
+import com.nixmash.springdata.jpa.model.GitHubStats;
+import com.nixmash.springdata.jpa.service.StatService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,14 +40,15 @@ public class WebUI {
     @Resource
     private MessageSource messageSource;
 
-    @Autowired
-    Environment environment;
-
+    private final Environment environment;
     private final ApplicationSettings applicationSettings;
+    private final StatService statService;
 
     @Autowired
-    public WebUI(ApplicationSettings applicationSettings) {
+    public WebUI(Environment environment, ApplicationSettings applicationSettings, StatService statService) {
+        this.environment = environment;
         this.applicationSettings = applicationSettings;
+        this.statService = statService;
     }
 
     // region Message Functions
@@ -138,7 +141,6 @@ public class WebUI {
 
     // endregion
 
-
     // region Flashcard MultiFile Upload Functions
 
     public String processFlashcardImage(FlashcardImageDTO flashcardImageDTO, String newFilenameBase)
@@ -183,6 +185,10 @@ public class WebUI {
     // region GitHub Statistics
 
     @Cacheable(cacheNames = "githubStats", key = "#root.methodName")
+    public GitHubStats getCurrentGitHubStats() {
+        return statService.getCurrentGitHubStats();
+    }
+
     public GitHubDTO getGitHubStats() {
 
         String gitHubRepoUrl = environment.getProperty("github.repo.url");

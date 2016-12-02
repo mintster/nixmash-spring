@@ -109,7 +109,7 @@ public class DemoJobConfiguration {
                 .reader(demoJobReader())
                 .processor(demoJobProcessor())
                 .writer(demoJobWriter())
-                .listener(promotionListener())
+                .listener(demoPromotionListener())
                 .listener(demoJobStepListener)
                 .allowStartIfComplete(true)
                 .build();
@@ -158,7 +158,7 @@ public class DemoJobConfiguration {
     }
 
     @Bean
-    public ExecutionContextPromotionListener promotionListener()
+    public ExecutionContextPromotionListener demoPromotionListener()
     {
         ExecutionContextPromotionListener listener =
                                                                                     new ExecutionContextPromotionListener();

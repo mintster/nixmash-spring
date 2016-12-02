@@ -1,7 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.nixmash.springdata.jpa.dto.GitHubDTO;
 import com.nixmash.springdata.jpa.dto.SelectOptionDTO;
+import com.nixmash.springdata.jpa.model.GitHubStats;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.service.PostService;
 import com.nixmash.springdata.mail.service.FmService;
@@ -57,10 +57,10 @@ public class GeneralController {
                 SpringBootVersion.getVersion(), SpringVersion.getVersion());
         model.addAttribute("springVersion", springVersion);
 
-        GitHubDTO gitHubDTO = webUI.getGitHubStats();
-        if (gitHubDTO.getIsEmpty().equals(false)) {
+        GitHubStats gitHubStats = webUI.getCurrentGitHubStats();
+        if (gitHubStats != null) {
             model.addAttribute("showGitHubStats", true);
-            model.addAttribute("gitHubStats", webUI.getGitHubStats());
+            model.addAttribute("gitHubStats", gitHubStats);
         }
 
         Slice<Post> posts = postService.getPublishedPosts(0, 10);
