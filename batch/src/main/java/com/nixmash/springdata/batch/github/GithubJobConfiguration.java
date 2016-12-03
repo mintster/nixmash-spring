@@ -16,6 +16,8 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Date;
+
 /**
  * Created by daveburke on 11/30/16.
  */
@@ -53,10 +55,14 @@ public class GithubJobConfiguration {
         return stepBuilderFactory.get("githubStep1")
                 .tasklet(new Tasklet() {
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
-//                        GitHubDTO gitHubDTO = githubJobUI.getGitHubStats();
-                        GitHubDTO gitHubDTO = githubJobUI.getDummyStats();
+
+//                        GitHubDTO gitHubDTO = githubJobUI.getDummyStats();
+
+                        GitHubDTO gitHubDTO = githubJobUI.getGitHubStats();
                         long currentStatId = githubJobUI.getCurrentGithubId();
                         gitHubDTO.setStatId(currentStatId);
+                        gitHubDTO.setStatDate(new Date());
+
                         githubJobUI.saveGithubStats(gitHubDTO);
 
                         chunkContext

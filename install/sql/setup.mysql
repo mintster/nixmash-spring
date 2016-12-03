@@ -569,3 +569,18 @@ CREATE VIEW v_batch_job_report AS
     JOIN batch_job_instance ON ((batch_job_execution.JOB_INSTANCE_ID =
                                                        batch_job_instance.JOB_INSTANCE_ID)));
 
+-- ------------------------------------------------------------------------------------
+-- Github Stats Table
+-- ------------------------------------------------------------------------------------
+
+CREATE TABLE github_stats
+(
+    stat_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    stat_date DATE NOT NULL,
+    followers INT(11) DEFAULT '0' NOT NULL,
+    subscribers INT(11) DEFAULT '0' NOT NULL,
+    stars INT(11) DEFAULT '0' NOT NULL,
+    forks INT(11) DEFAULT '0' NOT NULL
+);
+CREATE UNIQUE INDEX github_stats_stat_id_uindex ON github_stats (stat_id);
+CREATE UNIQUE INDEX github_stats_stat_date_uindex ON github_stats (stat_date);

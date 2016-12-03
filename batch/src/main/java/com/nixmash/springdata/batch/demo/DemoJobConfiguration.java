@@ -77,7 +77,7 @@ public class DemoJobConfiguration {
     @Bean
     public ItemWriter<PostDTO> demoJobWriter() {
         FlatFileItemWriter<PostDTO> writer = new FlatFileItemWriter<>();
-        writer.setResource(new FileSystemResource("/home/daveburke/web/nixmashspring/posts-out.csv"));
+        writer.setResource(new FileSystemResource("/home/daveburke/web/nixmashspring/posts.csv"));
         DelimitedLineAggregator<PostDTO> delLineAgg = new DelimitedLineAggregator<>();
         delLineAgg.setDelimiter(";");
         BeanWrapperFieldExtractor<PostDTO> fieldExtractor = new BeanWrapperFieldExtractor<>();

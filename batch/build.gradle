@@ -15,9 +15,9 @@ sourceSets {
     }
 }
 
-configurations {
-    compile.exclude module: 'org.slf4j'
-}
+//configurations {
+//    compile.exclude module: 'org.slf4j'
+//}
 
 springBoot {
     mainClass = 'com.nixmash.springdata.batch.BatchLauncher'

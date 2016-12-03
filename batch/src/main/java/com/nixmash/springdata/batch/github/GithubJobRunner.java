@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by daveburke on 11/30/16.
  */
@@ -28,17 +31,21 @@ public class GithubJobRunner {
         this.githubJob = githubJob;
     }
 
-    @Scheduled(fixedDelayString = "${github.job.fixed.delay.seconds:60}000")
+    @Scheduled(fixedRateString = "${github.job.fixed.delay.seconds:60}000")
     public void runGithubJob() {
+
+        SimpleDateFormat format = new SimpleDateFormat("M-dd-yy hh:mm:ss");
+        String startDateTime = format.format(new Date());
+
         JobParameters jobParameters =
                 new JobParametersBuilder()
                         .addLong("time", System.currentTimeMillis()).toJobParameters();
 
         try {
             logger.info("");
-            logger.info("STARTING GITHUB BATCH JOB!!!");
+            logger.info("STARTING GITHUB BATCH JOB : " + startDateTime);
             JobExecution execution = jobLauncher.run(githubJob, jobParameters);
-            logger.info("JOB STATUS : " + execution.getStatus());
+            logger.info("JOB STATUS  : " + execution.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
             logger.info("JOB FAILED!!!");

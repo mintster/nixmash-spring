@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Component
 @Conditional(DemoJobCondition.class)
 public class DemoJobRunner {
@@ -36,6 +39,10 @@ public class DemoJobRunner {
 
     @Scheduled(fixedDelayString = "${demo.job.fixed.delay.seconds:60}000")
     public void runDemoJob() {
+
+        SimpleDateFormat format = new SimpleDateFormat("M-dd-yy hh:mm:ss");
+        String startDateTime = format.format(new Date());
+
         JobParameters jobParameters =
                 new JobParametersBuilder()
                         .addLong("iterations", iterations)
@@ -44,7 +51,7 @@ public class DemoJobRunner {
 
         try {
             logger.info("");
-            logger.info("STARTING BATCH JOB!!!");
+            logger.info("STARTING BATCH JOB AT " + startDateTime);
             JobExecution execution = jobLauncher.run(demoJob, jobParameters);
             logger.info("JOB STATUS : " + execution.getStatus());
         } catch (Exception e) {
