@@ -7,6 +7,7 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ public class GithubJobRunner {
     private final JobLauncher jobLauncher;
     private final Job githubJob;
 
+    @Autowired
     public GithubJobRunner(JobLauncher jobLauncher, Job githubJob) {
         this.jobLauncher = jobLauncher;
         this.githubJob = githubJob;

@@ -54,7 +54,8 @@ public class GithubJobConfiguration {
     public Step githubStep1() throws Exception {
         return stepBuilderFactory.get("githubStep1")
                 .tasklet(new Tasklet() {
-                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
+                    public RepeatStatus execute(StepContribution contribution,
+                                                ChunkContext chunkContext) {
 
 //                        GitHubDTO gitHubDTO = githubJobUI.getDummyStats();
 
