@@ -9,10 +9,11 @@
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%.-1level|JPA|%-30.30logger{0}|%msg%n</pattern>
+            <pattern>%.-1level|JPA|%-20.20logger{0}|%msg%n</pattern>
         </encoder>
     </appender>
 
+    <logger name="com.nixmash.springdata.jpa" level="debug"/>
     <logger name="com.nixmash.springdata" level="info"/>
     <logger name="org.thymeleaf" level="off"/>
     <logger name="org.hibernate" level="off"/>

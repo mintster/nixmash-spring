@@ -73,8 +73,7 @@ public abstract class JpaCommonConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        logger.debug("\n\n************ {} ************\n\n",
-                getDatabaseDialect().getCanonicalName());
+//        logger.debug("\n\n************ {} ************\n\n",  getDatabaseDialect().getCanonicalName());
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setDatabasePlatform(getDatabaseDialect().getName());
@@ -83,7 +82,7 @@ public abstract class JpaCommonConfig {
         LocalContainerEntityManagerFactoryBean factory =
                 new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        logger.debug("\n\n****** Scanning '{}' Packages for Entities ******\n\n", entityPackage);
+//        logger.debug("\n\n****** Scanning '{}' Packages for Entities ******\n\n", entityPackage);
         factory.setPackagesToScan(entityPackage);
         factory.setDataSource(dataSource());
         if (getJpaProperties() != null) {

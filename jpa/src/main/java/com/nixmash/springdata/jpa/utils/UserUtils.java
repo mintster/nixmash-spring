@@ -25,4 +25,5 @@ public class UserUtils {
     public static String bcryptedPassword(String rawPassword) {
         return new BCryptPasswordEncoder().encode(rawPassword);
     }
+
 }
