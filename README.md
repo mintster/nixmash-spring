@@ -14,7 +14,7 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (v0.4.0+)* |
-| *Spring Caching* |  *Spring Batch* /
+| *Spring Caching* |  *Spring Batch* | |
 
 ##Becoming Spring Masters Together
 
@@ -33,7 +33,7 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
 ##Release History
-- **[v0.5.0 -- Spring Batch Functions](#v050----spring-batch-functions)**
+- **[v0.5.0 -- Spring Batch Functions, User Registration Updates](#v050----spring-batch-functions-user-registration-updates)**
 - **[v0.4.5 -- CKEditor and Post Editing Updates](#v045----ckeditor-and-post-editing-updates)**
 - **[v0.4.4 -- Spring Caching](#v044----spring-caching)**
 - **[v0.4.3 -- Post Searching with Solr](#v043----post-searching-with-solr)**
@@ -77,9 +77,17 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.5.0 -- Spring Batch Functions
+##v0.5.0 -- Spring Batch Functions, User Registration Updates
 
-- *In Progress...*
+- Spring Batch Job where GitHub Repo stats are retrieved every hour and stored in a `github_stats` table from where they're retrieved for display on Home Page
+- User Email Account domain filtering
+- [Post: Spring Batch Concepts, Part I](http://nixmash.com/java/spring-batch-concepts-part-i/)
+- [Post: Spring Batch Concepts, Part II](http://nixmash.com/java/spring-batch-concepts-part-ii/)
+- [Post: Spring Batch Concepts, Part III](http://nixmash.com/java/spring-batch-concepts-part-iii/)
+- [Post: Spring Batch Concepts, Part IV](http://nixmash.com/java/spring-batch-concepts-part-iv/)
+- [Post: Fix for MySQL root@localhost Access Denied on New Installs](http://nixmash.com/linux/fix-for-mysql-rootlocalhost-access-denied-on-new-installs/)
+- [Post: A Spring Batch Job For GitHub Repo Stats](http://nixmash.com/java/a-spring-batch-job-for-github-repo-stats/)
+- [Post: A Spring Validator to Block Email Domains](http://nixmash.com/java/a-spring-validator-to-block-email-domains/)
 
 [[back to top](#nixmash-spring)]
 

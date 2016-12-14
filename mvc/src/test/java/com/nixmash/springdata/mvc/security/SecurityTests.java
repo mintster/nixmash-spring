@@ -138,6 +138,24 @@ public class SecurityTests extends AbstractContext {
 		mvc.perform(request).andExpect(model().attributeHasErrors("userDTO")).andExpect(invalidRegistration());
 	}
 
+	@Test
+	public void unapprovedEmailDomainFails() throws Exception {
+		RequestBuilder request = post("/register").param("username", "user143").param("firstName", "Bob")
+				.param("lastName", "Crachet").param("email", "bob@somewhere.ru").param("password", "password")
+				.param("repeatedPassword", "password").with(csrf());
+		 mvc.perform(request).andExpect(model().attributeHasErrors("userDTO")).andExpect(invalidRegistration());
+	}
+
+	@Test
+	public void gmailDomainIsApproved() throws Exception {
+		RequestBuilder request = post("/register").param("username", "user153").param("firstName", "Bob")
+				.param("lastName", "Crachet").param("email", "bob@gmail.com").param("password", "password")
+				.param("repeatedPassword", "password").with(csrf());
+
+		mvc.perform(request).andExpect(redirectedUrl("/"));
+	}
+
+
 	// endregion
 
 	// region Contact Form

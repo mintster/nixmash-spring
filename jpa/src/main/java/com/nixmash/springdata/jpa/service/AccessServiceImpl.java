@@ -14,7 +14,7 @@ import java.util.List;
  * Created by daveburke on 12/10/16.
  */
 @Service("accessService")
-@PropertySource("file:${external.properties.file.path}access.properties")
+@PropertySource("file:/home/daveburke/web/nixmashspring/access.properties")
 public class AccessServiceImpl implements AccessService {
 
     private static final Logger logger = LoggerFactory.getLogger(AccessServiceImpl.class);

@@ -2,6 +2,7 @@ package com.nixmash.springdata.jpa.model.validators;
 
 import com.nixmash.springdata.jpa.dto.UserDTO;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.service.AccessService;
 import com.nixmash.springdata.jpa.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,12 @@ public class UserCreateFormValidator implements Validator {
 
     private static final Logger logger = LoggerFactory.getLogger(UserCreateFormValidator.class);
     private final UserService userService;
+    private final AccessService accessService;
 
     @Autowired
-    public UserCreateFormValidator(UserService userService) {
+    public UserCreateFormValidator(UserService userService, AccessService accessService) {
         this.userService = userService;
+        this.accessService = accessService;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class UserCreateFormValidator implements Validator {
         if (form.isNew()) {
             validatePasswords(errors, form);
             validateEmail(errors, form);
+            validateDomain(errors, form);
             validateUsername(errors, form);
         } else {
             validateUsername(errors, form, form.getUserId());
@@ -48,6 +52,13 @@ public class UserCreateFormValidator implements Validator {
     private void validateEmail(Errors errors, UserDTO form) {
         if (userService.getByEmail(form.getEmail()).isPresent()) {
             errors.reject("email.exists", "User with this email already exists");
+        }
+    }
+
+    private void validateDomain(Errors errors, UserDTO form) {
+        if (!accessService.isEmailApproved(form.getEmail())) {
+            errors.reject("domain.not.approved",
+                    "The email address domain is not currently supported");
         }
     }
 

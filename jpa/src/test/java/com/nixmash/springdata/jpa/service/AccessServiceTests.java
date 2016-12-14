@@ -32,8 +32,8 @@ public class AccessServiceTests {
 
         assertFalse(accessService.isEmailApproved("guy@bademail"));
         assertFalse(accessService.isEmailApproved("guy@printemailtext.com"));
-        assertFalse(accessService.isEmailApproved("guy@some.where.ru"));
-        assertFalse(accessService.isEmailApproved("guy@some.where.ch"));
+        assertFalse(accessService.isEmailApproved("guy@somewhere.ru"));
+        assertFalse(accessService.isEmailApproved("guy@somewhere.ch"));
         assertFalse(accessService.isEmailApproved("guy@mail.eamale.com"));
         assertFalse(accessService.isEmailApproved("guy@rerere@qwkcmail.net"));
         assertFalse(accessService.isEmailApproved("guy@dfoofmail.com"));
@@ -47,15 +47,21 @@ public class AccessServiceTests {
 
         // good.com domain is valid and is approved. Passes with multiple subdomains
 
-        accessDTO = accessService.createAccessDTO("johnny@some.where.good.com");
+        accessDTO = accessService.createAccessDTO("johnny@anywhere.good.com");
         assertEquals(accessDTO.getDomain(), "good.com");
         assertTrue(accessDTO.isValid());
         assertTrue(accessDTO.isApproved());
 
         // printemailtext.com on blacklist. Email valid but domain is not
 
-        accessDTO = accessService.createAccessDTO("putz@printemailtext.com");
+        accessDTO = accessService.createAccessDTO("putz@ggg.printemailtext.com");
         assertEquals(accessDTO.getDomain(), "printemailtext.com");
+        assertTrue(accessDTO.isValid());
+        assertFalse(accessDTO.isApproved());
+
+        // .ru TLD is blacklisted. Valid email address but not approved
+
+        accessDTO = accessService.createAccessDTO("putz@anywhere.ru");
         assertTrue(accessDTO.isValid());
         assertFalse(accessDTO.isApproved());
 
@@ -69,12 +75,6 @@ public class AccessServiceTests {
 
         accessDTO = accessService.createAccessDTO("putz@printemailtext");
         assertFalse(accessDTO.isValid());
-        assertFalse(accessDTO.isApproved());
-
-        // .ru TLD is blacklisted. Valid email address but not approved
-
-        accessDTO = accessService.createAccessDTO("putz@somewhere.ru");
-        assertTrue(accessDTO.isValid());
         assertFalse(accessDTO.isApproved());
 
         // Other test emails from demo site which fail
