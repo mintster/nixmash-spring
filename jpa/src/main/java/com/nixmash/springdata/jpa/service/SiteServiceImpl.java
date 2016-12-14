@@ -30,7 +30,7 @@ public class SiteServiceImpl implements SiteService{
 
     @Override
     public SiteOption update(SiteOptionDTO siteOptionDTO) throws SiteOptionNotFoundException {
-        logger.info("Updating siteOption property {} with value: {}",
+        logger.debug("Updating siteOption property {} with value: {}",
                 siteOptionDTO.getName(), siteOptionDTO.getValue());
 
         SiteOption found = findOptionByName(siteOptionDTO.getName());
@@ -48,11 +48,11 @@ public class SiteServiceImpl implements SiteService{
     @Override
     public SiteOption findOptionByName(String name) throws SiteOptionNotFoundException {
 
-        logger.info("Finding siteOption property with name: {}", name);
+        logger.debug("Finding siteOption property with name: {}", name);
         SiteOption found = siteOptionRepository.findByNameIgnoreCase(name);
 
         if (found == null) {
-            logger.info("No siteOption property with name: {}", name);
+            logger.debug("No siteOption property with name: {}", name);
             throw new SiteOptionNotFoundException("No siteOption with property name: " + name);
         }
 

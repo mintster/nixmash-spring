@@ -28,6 +28,8 @@ CREATE TABLE users (
   provider_id varchar(25) NOT NULL DEFAULT 'SITE',
   password varchar(255) NOT NULL,
   version int(11) NOT NULL DEFAULT '0',
+  created_datetime TIMESTAMP NOT NULL  DEFAULT CURRENT_TIMESTAMP,
+  approved_datetime TIMESTAMP,
   PRIMARY KEY (user_id)
 );
 

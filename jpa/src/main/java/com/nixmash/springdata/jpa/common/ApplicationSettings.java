@@ -4,10 +4,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
 @PropertySource("file:/home/daveburke/web/nixmashspring/external.properties")
 @ConfigurationProperties(prefix = "external")
-public class ApplicationSettings {
+public class ApplicationSettings  implements Serializable {
+
+	private static final long serialVersionUID = 7939595017750704755L;
 
 	private Boolean isDemoSite;
 	private String baseUrl;

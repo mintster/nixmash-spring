@@ -168,32 +168,34 @@ INSERT INTO `hobbies` VALUES ('4', 'Reading');
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `first_name` varchar(40) NOT NULL,
-  `last_name` varchar(40) NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
-  `account_expired` tinyint(1) NOT NULL,
-  `account_locked` tinyint(1) NOT NULL,
-  `credentials_expired` tinyint(1) NOT NULL,
-  `has_avatar` tinyint(1) NOT NULL,
-  `user_key` varchar(25) NOT NULL DEFAULT '0000000000000000',
-  `provider_id` varchar(25) NOT NULL DEFAULT 'SITE',
-  `password` varchar(255) NOT NULL,
-  `version` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `users_user_key_uindex` (`user_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+CREATE TABLE users
+(
+    user_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    first_name VARCHAR(40) NOT NULL,
+    last_name VARCHAR(40) NOT NULL,
+    enabled TINYINT(1) NOT NULL,
+    account_expired TINYINT(1) NOT NULL,
+    account_locked TINYINT(1) NOT NULL,
+    credentials_expired TINYINT(1) NOT NULL,
+    has_avatar TINYINT(1) NOT NULL,
+    user_key VARCHAR(25) DEFAULT '0000000000000000' NOT NULL,
+    provider_id VARCHAR(25) DEFAULT 'SITE' NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    approved_datetime TIMESTAMP,
+    version INT(11) DEFAULT '0' NOT NULL
+);
+CREATE UNIQUE INDEX users_user_key_uindex ON users (user_key);
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'admin', 'admin@aol.com', 'Admin', 'Jones', '1', '0', '0', '0', '0', '4L4Hr3skHYYMbjkQ','SITE', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', '0');
-INSERT INTO `users` VALUES ('2', 'user', 'user@aol.com', 'User', 'Charlie', '1', '0', '0', '0', '0', 'v7jXapyD6fbRyZvi', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('7', 'john', 'john@email.com', 'John', 'Bubkis', '1', '0', '0', '0',  '0', '0tPCRjbxfttB2M3h', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
-INSERT INTO `users` VALUES ('8', 'ken', 'ken@email.com', 'Ken', 'Watts', '1', '0', '0', '0',  '0', 'TUuOypJ5pPI0ksqi', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', '0');
+INSERT INTO `users` VALUES ('1', 'admin', 'admin@aol.com', 'Admin', 'Jones', '1', '0', '0', '0', '0', '4L4Hr3skHYYMbjkQ','SITE', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', CURRENT_TIMESTAMP, NULL,'0');
+INSERT INTO `users` VALUES ('2', 'user', 'user@aol.com', 'User', 'Charlie', '1', '0', '0', '0', '0', 'v7jXapyD6fbRyZvi', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', CURRENT_TIMESTAMP, NULL, '0');
+INSERT INTO `users` VALUES ('7', 'john', 'john@email.com', 'John', 'Bubkis', '1', '0', '0', '0',  '0', '0tPCRjbxfttB2M3h', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', CURRENT_TIMESTAMP, NULL, '0');
+INSERT INTO `users` VALUES ('8', 'ken', 'ken@email.com', 'Ken', 'Watts', '1', '0', '0', '0',  '0', 'TUuOypJ5pPI0ksqi', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', CURRENT_TIMESTAMP, NULL, '0');
 
 -- ----------------------------
 -- Table structure for user_authorities

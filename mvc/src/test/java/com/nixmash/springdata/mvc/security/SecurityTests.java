@@ -19,6 +19,7 @@ import javax.servlet.Filter;
 
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.user;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -120,6 +121,9 @@ public class SecurityTests extends AbstractContext {
 				.param("repeatedPassword", "password").with(csrf());
 
 		mvc.perform(request).andExpect(redirectedUrl("/"));
+
+		CurrentUser bobby = currentUserDetailsService.loadUserByUsername("bobby");
+		assertNotNull(bobby.getUser().getCreatedDatetime());
 	}
 
 	@Test
@@ -153,6 +157,8 @@ public class SecurityTests extends AbstractContext {
 				.param("repeatedPassword", "password").with(csrf());
 
 		mvc.perform(request).andExpect(redirectedUrl("/"));
+
+
 	}
 
 

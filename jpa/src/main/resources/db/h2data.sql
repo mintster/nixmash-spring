@@ -18,26 +18,27 @@ Date: 2015-04-21 17:49:43
 -- Users
 ------------------------------------------------------------
 
-INSERT INTO users (user_id, email, username, PASSWORD, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id) VALUES (1, 'admin@email.com', 'admin', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', 'Admin', 'Jones', TRUE, FALSE, FALSE, FALSE, FALSE, '4L4Hr3skHYYMbjkQ', 'SITE');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime) VALUES
+  (1, 'admin@email.com', 'admin', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', 'Admin', 'Jones', TRUE, FALSE, FALSE, FALSE, FALSE, '4L4Hr3skHYYMbjkQ', 'SITE',  '2016-09-30 17:40:18');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
 VALUES
   (2, 'user@aol.com', 'user', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'User', 'Charlie', TRUE,
-      FALSE, FALSE, FALSE, FALSE, 'v7jXapyD6fbRyZvi', 'SITE');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
+      FALSE, FALSE, FALSE, FALSE, 'v7jXapyD6fbRyZvi', 'SITE',  '2016-09-30 17:40:18');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
 VALUES (3, 'keith@aol.com', 'keith', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Keith', 'Obannon',
-           TRUE, FALSE, FALSE, FALSE, FALSE, 'HuoPByrU0hC87gz8', 'SITE');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
+           TRUE, FALSE, FALSE, FALSE, FALSE, 'HuoPByrU0hC87gz8', 'SITE',  '2016-09-30 17:40:18');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
 VALUES
   (4, 'erwin@aol.com', 'erwin', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Erwin', 'Lapote', TRUE,
-      FALSE, FALSE, FALSE, FALSE, 'kSpaxKbYIL0a5Mma', 'SITE');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
+      FALSE, FALSE, FALSE, FALSE, 'kSpaxKbYIL0a5Mma', 'SITE',  '2016-09-30 17:40:18');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
 VALUES
   (5, 'jeremy@aol.com', 'jeremy', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Jeremy', 'Sloan',
-      TRUE, FALSE, FALSE, FALSE, FALSE, 'xt4e25EoFgjx5CP2', 'SITE');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
+      TRUE, FALSE, FALSE, FALSE, FALSE, 'xt4e25EoFgjx5CP2', 'SITE',  '2016-09-30 17:40:18');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
 VALUES
   (6, 'scott@aol.com', 'scott', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Scott', 'Shoenberger',
-      TRUE, FALSE, FALSE, FALSE, FALSE, 'Fx05XbWjPFECJZQP', 'SITE');
+      TRUE, FALSE, FALSE, FALSE, FALSE, 'Fx05XbWjPFECJZQP', 'SITE',  '2016-09-30 17:40:18');
 
 
 ------------------------------------------------------------

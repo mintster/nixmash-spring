@@ -79,7 +79,7 @@ public class ContactServiceImpl implements ContactService {
     @Transactional(readOnly = true)
     public Contact findContactById(Long ID) throws ContactNotFoundException {
 
-        logger.info("Finding contact by id: {}", ID);
+        logger.debug("Finding contact by id: {}", ID);
 
         Contact found = contactRepository.findOne(ID);
 
@@ -104,7 +104,7 @@ public class ContactServiceImpl implements ContactService {
         Contact deleted = findContactById(id);
         contactRepository.delete(deleted);
 
-        logger.info("Deleted contact: {}", deleted);
+        logger.debug("Deleted contact: {}", deleted);
         return deleted;
     }
 

@@ -98,7 +98,7 @@ public class  GlobalController {
 
 	@ExceptionHandler(ContactNotFoundException.class)
 	public ModelAndView handleContactNotFoundException() {
-		logger.info("In ContactNotFound Exception Handler");
+		logger.debug("In ContactNotFound Exception Handler");
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("errortitle", "Contact Missing in Action!");

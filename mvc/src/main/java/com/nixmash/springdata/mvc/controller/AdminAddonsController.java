@@ -115,7 +115,7 @@ public class AdminAddonsController {
         } else {
 
             FlashcardCategory flashcardCategory = addonService.addFlashCardCategory(new FlashcardCategory(flashcardCategoryDTO.getCategory()));
-            logger.info("Flashcard Category Added: {}", flashcardCategory);
+            logger.debug("Flashcard Category Added: {}", flashcardCategory);
             status.setComplete();
 
             webUI.addFeedbackMessage(attributes, FEEDBACK_MESSAGE_FLASHCARD_CATEGORY_ADDED, flashcardCategoryDTO.getCategory());

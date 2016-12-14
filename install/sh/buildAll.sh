@@ -29,6 +29,9 @@ gradle mail:build
 printHeader "SOLR"
 gradle solr:build
 
+printHeader "BATCH"
+gradle batch:build
+
 printHeader "MVC"
 gradle mvc:build
 

@@ -94,7 +94,7 @@ public class GeneralController {
     String updateBadges(@RequestBody List<String> badgeboys) {
         if (badgeboys != null) {
             String badges = badgeboys.stream().collect(joining(", "));
-            logger.info("Badge Boy Items: " + badges);
+            logger.debug("Badge Boy Items: " + badges);
             return webUI.getMessage("js.badgeboy.result", badges);
         } else
             return "No badges selected...";

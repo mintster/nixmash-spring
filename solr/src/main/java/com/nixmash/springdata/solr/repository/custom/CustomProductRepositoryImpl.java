@@ -76,7 +76,7 @@ public class CustomProductRepositoryImpl implements CustomBaseProductRepository 
 
 	@Override
 	public List<Product> searchWithCriteria(String searchTerm) {
-		logger.info("Building a product criteria query with search term: {}", searchTerm);
+		logger.debug("Building a product criteria query with search term: {}", searchTerm);
 
 		String[] words = searchTerm.split(" ");
 

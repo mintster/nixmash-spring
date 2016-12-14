@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashSet;
 
 @Entity
@@ -99,6 +100,14 @@ public class User implements UserDetails, Serializable {
 
     @Column
     private boolean enabled = true;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_datetime")
+    private Date createdDatetime;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "approved_datetime")
+    private Date approvedDatetime;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authorities",
@@ -192,7 +201,7 @@ public class User implements UserDetails, Serializable {
             return false;
         }
         if (authorities == null) {
-            logger.info("authorities is null for user " + this);
+            logger.debug("authorities is null for user " + this);
         }
 
         for (Authority authority : authorities) {
@@ -244,7 +253,23 @@ public class User implements UserDetails, Serializable {
         this.hasAvatar = hasAvatar;
     }
 
-// @formatter:off
+    public Date getCreatedDatetime() {
+        return createdDatetime;
+    }
+
+    public void setCreatedDatetime(Date createdDatetime) {
+        this.createdDatetime = createdDatetime;
+    }
+
+    public Date getApprovedDatetime() {
+        return approvedDatetime;
+    }
+
+    public void setApprovedDatetime(Date approvedDatetime) {
+        this.approvedDatetime = approvedDatetime;
+    }
+
+    // @formatter:off
     
     @Override
     public String toString() {

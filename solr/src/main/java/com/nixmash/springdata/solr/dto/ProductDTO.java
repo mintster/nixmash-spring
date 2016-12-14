@@ -15,12 +15,14 @@
  */
 package com.nixmash.springdata.solr.dto;
 
+import org.springframework.data.geo.Point;
+
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.data.geo.Point;
-
 public class ProductDTO implements Serializable {
+
+	private static final long serialVersionUID = -2572547753224433591L;
 
 	private String id;
 	private String name;

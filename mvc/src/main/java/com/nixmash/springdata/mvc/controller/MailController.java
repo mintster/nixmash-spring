@@ -48,7 +48,7 @@ public class MailController {
             logger.info("Email Errors for email from: {}", mailDTO.getFrom());
             return MAIL_CONTACT_VIEW;
         } else {
-            logger.info("Sending email from: {}", mailDTO.getFrom());
+            logger.debug("Sending email from: {}", mailDTO.getFrom());
             fmMailService.sendContactMail(mailDTO);
             webUI.addFeedbackMessage(attributes, EMAIL_SENT_MESSAGE_KEY);
             return "redirect:/users/contact";

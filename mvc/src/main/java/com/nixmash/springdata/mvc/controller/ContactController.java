@@ -128,10 +128,10 @@ public class ContactController {
 
 	@RequestMapping(value = "/contact/{contactId}", method = GET)
 	public String contactDisplayPage(@PathVariable("contactId") Long id, Model model) throws ContactNotFoundException {
-		logger.info("Showing contact page for contact with id: {}", id);
+		logger.debug("Showing contact page for contact with id: {}", id);
 
 		Contact found = contactService.findContactById(id);
-		logger.info("Found contact: {}", found);
+		logger.debug("Found contact: {}", found);
 
 		model.addAttribute(MODEL_ATTRIBUTE_CONTACT, found);
 		return CONTACT_VIEW;
@@ -139,10 +139,10 @@ public class ContactController {
 
 	@RequestMapping(value = "/contact/update/{contactId}", method = GET)
 	public String contactEditPage(@PathVariable("contactId") Long id, Model model) throws ContactNotFoundException {
-		logger.info("Showing contact update page for contact with id: {}", id);
+		logger.debug("Showing contact update page for contact with id: {}", id);
 
 		Contact found = contactService.getContactByIdWithDetail(id);
-		logger.info("Found contact: {}", found);
+		logger.debug("Found contact: {}", found);
 
 		List<Hobby> hobbies = contactService.findAllHobbies();
 		model.addAttribute(MODEL_ATTRIBUTE_CONTACT, found);
@@ -202,7 +202,7 @@ public class ContactController {
 
 	@RequestMapping(value = "/contacts", method = GET)
 	public String showContactsPage(Model model) {
-		logger.info("Showing all contacts page");
+		logger.debug("Showing all contacts page");
 		return CONTACT_LIST_VIEW;
 	}
 

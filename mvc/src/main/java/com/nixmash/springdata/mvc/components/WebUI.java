@@ -59,16 +59,16 @@ public class WebUI {
     }
 
     public void addFeedbackMessage(RedirectAttributes model, String code, Object... params) {
-//        logger.info("Adding feedback message with code: {} and params: {}", code, params);
+//        logger.debug("Adding feedback message with code: {} and params: {}", code, params);
         String localizedFeedbackMessage = getMessage(code, params);
-//        logger.info("Localized message is: {}", localizedFeedbackMessage);
+//        logger.debug("Localized message is: {}", localizedFeedbackMessage);
         model.addFlashAttribute(FLASH_MESSAGE_KEY_FEEDBACK, localizedFeedbackMessage);
     }
 
     public String parameterizedMessage(String code, Object... params) {
-//        logger.info("Adding paramertized message with code: {} and params: {}", code, params);
+//        logger.debug("Adding paramertized message with code: {} and params: {}", code, params);
         String localizedMessage = getMessage(code, params);
-//        logger.info("Localized message is: {}", localizedMessage);
+//        logger.debug("Localized message is: {}", localizedMessage);
         return localizedMessage;
     }
 

@@ -20,11 +20,14 @@ import com.nixmash.springdata.solr.enums.SolrDocType;
 import org.apache.solr.client.solrj.beans.Field;
 import org.jsoup.Jsoup;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PostDoc implements IPostDoc {
+public class PostDoc implements Serializable, IPostDoc {
+
+    private static final long serialVersionUID = -6567393464918733512L;
 
     // region Properties
 

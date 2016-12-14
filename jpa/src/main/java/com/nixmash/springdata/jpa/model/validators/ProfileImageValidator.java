@@ -27,7 +27,7 @@ public class ProfileImageValidator  implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        logger.info("Validating {}", target.toString());
+        logger.debug("Validating {}", target.toString());
         ProfileImageDTO profileImage = (ProfileImageDTO) target;
         validateFileType(errors, profileImage);
         validateForMinMaxFileSize(errors, profileImage);

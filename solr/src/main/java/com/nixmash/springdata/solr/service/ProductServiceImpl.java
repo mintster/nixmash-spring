@@ -1,14 +1,10 @@
 package com.nixmash.springdata.solr.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
+import com.nixmash.springdata.solr.enums.SolrDocType;
+import com.nixmash.springdata.solr.exceptions.GeoLocationException;
+import com.nixmash.springdata.solr.model.Product;
+import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
+import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +20,12 @@ import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
-import com.nixmash.springdata.solr.enums.SolrDocType;
-import com.nixmash.springdata.solr.exceptions.GeoLocationException;
-import com.nixmash.springdata.solr.model.Product;
-import com.nixmash.springdata.solr.repository.custom.CustomProductRepository;
-import com.nixmash.springdata.solr.repository.simple.SimpleProductRepository;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -45,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAvailableProducts() {
-		logger.info("Retrieving all available products where inStock:true");
+		logger.debug("Retrieving all available products where inStock:true");
 		List<Product> products = productRepo.findByAvailableTrueAndDoctype(SolrDocType.PRODUCT);
 		return products;
 	}
@@ -76,25 +72,25 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public FacetPage<Product> getFacetedProductsAvailable() {
-		logger.info("Retrieving faceted products by available");
+		logger.debug("Retrieving faceted products by available");
 		return simpleProductRepo.findByFacetOnAvailable();
 	}
 
 	@Override
 	public FacetPage<Product> getFacetedProductsCategory() {
-		logger.info("Retrieving faceted products by category");
+		logger.debug("Retrieving faceted products by category");
 		return productRepo.findProductCategoryFacets(new PageRequest(0, 20));
 	}
 
 	@Override
 	public List<Product> getProductsByCategory(String category) {
-		logger.info("Retrieving products by category: {}", category);
+		logger.debug("Retrieving products by category: {}", category);
 		return productRepo.findByCategory(category);
 	}
 
 	@Override
 	public Iterable<Product> getAllRecords() {
-		logger.info("Retrieving all records in index");
+		logger.debug("Retrieving all records in index");
 		return simpleProductRepo.findAll();
 	}
 
@@ -105,50 +101,50 @@ public class ProductServiceImpl implements ProductService {
 
 //	@Override
 //	public List<Product> getProductsByFilter() {
-//		logger.info("Retrieving all records and filtering out by 'doctype:product'");
+//		logger.debug("Retrieving all records and filtering out by 'doctype:product'");
 //		List<Product> products = Lists.newArrayList(productRepo.findAll());
 //		return products.stream().filter(p -> p.getDoctype().equals(SolrDocType.PRODUCT)).collect(Collectors.toList());
 //	}
 
 	@Override
 	public List<Product> getProducts() {
-		logger.info("Retrieving all products by solr @Query");
+		logger.debug("Retrieving all products by solr @Query");
 		return productRepo.findAllProducts();
 	}
 
 	@Override
 	public Page<Product> getProductsPaged(Pageable page) {
-		logger.info("Retrieving all products by solr @Query");
+		logger.debug("Retrieving all products by solr @Query");
 		return productRepo.findAllProductsPaged(page);
 	}
 
 	@Override
 	public List<Product> getProductsByStartOfName(String nameStart) {
-		logger.info("Named Method Query -  findByNameStartingWith()");
+		logger.debug("Named Method Query -  findByNameStartingWith()");
 		return productRepo.findByNameStartingWith(nameStart);
 	}
 
 	@Override
 	public List<Product> getProductsWithUserQuery(String userQuery) {
-		logger.info("SimpleQuery from user search string -  findProductsBySimpleQuery()");
+		logger.debug("SimpleQuery from user search string -  findProductsBySimpleQuery()");
 		return productRepo.findProductsBySimpleQuery(userQuery);
 	}
 
 	@Override
 	public Iterable<Product> getProductsByNameOrCategory(String searchTerm) {
-		logger.info("Using 'Product.findByNameOrCategory' named query - ('name:*?0* OR cat:*?0*')");
+		logger.debug("Using 'Product.findByNameOrCategory' named query - ('name:*?0* OR cat:*?0*')");
 		return productRepo.findByNameOrCategory(searchTerm, sortByIdDesc());
 	}
 
 	@Override
 	public List<Product> getProductsByNameOrCategoryAnnotatedQuery(String searchTerm) {
-		logger.info("Using annotated @query  - ('(name:*?0* OR cat:*?0*) AND doctype:product'");
+		logger.debug("Using annotated @query  - ('(name:*?0* OR cat:*?0*) AND doctype:product'");
 		return productRepo.findByAnnotatedQuery(searchTerm, sortByIdDesc());
 	}
 
 	@Override
 	public Page<Product> getProductsByPopularity(int popularity) {
-		logger.info("Using JPA Method Name Query - findByPopularityGreaterThanEqual()");
+		logger.debug("Using JPA Method Name Query - findByPopularityGreaterThanEqual()");
 		return productRepo.findByPopularityGreaterThanEqual(popularity, new PageRequest(0, 10));
 	}
 

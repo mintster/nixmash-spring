@@ -31,6 +31,6 @@ public class JpaLoader implements CommandLineRunner {
         String applicationVersion = environment.getProperty("nixmash.spring.jpa.version");
         logger.info(String.format("NixMash Spring JPA Application Version: %s", applicationVersion));
 
-        logger.info("Using Cache Manager: " + this.cacheManager.getClass().getName());
+        logger.debug("Using Cache Manager: " + this.cacheManager.getClass().getName());
     }
 }

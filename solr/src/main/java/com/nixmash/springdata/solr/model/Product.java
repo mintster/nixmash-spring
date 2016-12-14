@@ -19,9 +19,12 @@ import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.geo.Point;
 import org.springframework.data.solr.core.geo.GeoConverters;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Product implements IProduct {
+public class Product implements Serializable, IProduct {
+
+	private static final long serialVersionUID = -1636370516058761621L;
 
 	@Field(ID_FIELD)
 	private String id;

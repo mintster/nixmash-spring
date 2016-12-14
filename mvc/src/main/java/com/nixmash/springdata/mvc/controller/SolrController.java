@@ -89,7 +89,7 @@ public class SolrController {
 		mav.addObject(LOCATION_ATTRIBUTE_NAME, location);
 
 		locationProducts = productService.getProductsByLocation(location);
-		logger.info("Found {} products for location: {}", locationProducts.size(), location);
+		logger.debug("Found {} products for location: {}", locationProducts.size(), location);
 
 		mav.setViewName(PRODUCT_MAP_VIEW);
 		return mav;
@@ -105,7 +105,7 @@ public class SolrController {
 	@RequestMapping(value = "/products/page/{pageNumber}", method = RequestMethod.GET)
 	public String pagedProductsPage(HttpServletRequest request, @PathVariable Integer pageNumber, Model uiModel) {
 
-		logger.info("Showing paged products page # {}", pageNumber);
+		logger.debug("Showing paged products page # {}", pageNumber);
 		PagedListHolder<Product> pagedListHolder = (PagedListHolder<Product>) request.getSession()
 				.getAttribute(SESSION_ATTRIBUTE_PRODUCTLIST);
 
@@ -152,10 +152,10 @@ public class SolrController {
 
 	@RequestMapping(value = "/products/categories/{category}", method = GET)
 	public String productByCategory(@PathVariable("category") String category, Model model) {
-		logger.info("Showing product page for category: {}", category);
+		logger.debug("Showing product page for category: {}", category);
 
 		List<Product> found = productService.getProductsByCategory(category);
-		logger.info("Found {} products for category: {}", found.size(), category);
+		logger.debug("Found {} products for category: {}", found.size(), category);
 
 		model.addAttribute(MODEL_ATTRIBUTE_CATEGORY, StringUtils.capitalize(category));
 		model.addAttribute(MODEL_ATTRIBUTE_PRODUCTS, found);
@@ -236,10 +236,10 @@ public class SolrController {
 
 	@RequestMapping(value = "/products/{id}", method = GET)
 	public String productPage(@PathVariable("id") String id, Model model) {
-		logger.info("Showing product page for product with id: {}", id);
+		logger.debug("Showing product page for product with id: {}", id);
 
 		Product found = productService.getProduct(id);
-		logger.info("Found product: {}", found);
+		logger.debug("Found product: {}", found);
 
 		model.addAttribute(MODEL_ATTRIBUTE_PRODUCT, found);
 		return PRODUCT_VIEW;

@@ -85,6 +85,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
         user.setUserKey(RandomStringUtils.randomAlphanumeric(16));
         user.setSignInProvider(form.getSignInProvider());
+        user.setCreatedDatetime(Calendar.getInstance().getTime());
         User saved = userRepository.save(user);
 
         for (Authority authority : form.getAuthorities()) {

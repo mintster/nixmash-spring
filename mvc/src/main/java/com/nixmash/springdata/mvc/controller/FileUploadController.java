@@ -78,7 +78,7 @@ public class FileUploadController {
             return USER_PROFILE_VIEW;
 
         } else {
-            logger.info("Fetching file");
+            logger.debug("Fetching file");
             MultipartFile multipartFile = profileImageDTO.getFile();
             String userKey = currentUser.getUser().getUserKey();
             webUI.processProfileImage(profileImageDTO, userKey);
