@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 import static javax.persistence.AccessType.PROPERTY;
@@ -36,9 +37,11 @@ import static javax.persistence.AccessType.PROPERTY;
                 )
         }
 )
-public class Flashcard {
-    private long slideId;
+public class Flashcard implements Serializable {
 
+    private static final long serialVersionUID = -5546105385489785171L;
+
+    private long slideId;
     private long categoryId;
     private String image;
     private String content;

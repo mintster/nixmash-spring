@@ -61,4 +61,11 @@ public class FmMailTests extends MailContext {
         verify(mockMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));
     }
 
+    @Test
+    public void userVerificationSendsMimeMessage() throws MessagingException {
+        Optional<User> user = userService.getUserById(2L);
+        mockFmMailService.sendUserVerificationMail(user.get());
+        verify(mockMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));
+    }
+
 }

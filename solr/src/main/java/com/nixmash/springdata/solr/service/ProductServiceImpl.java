@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 			found = 
 					productRepo.findByLocationNear(new Point(point.getX(), point.getY()), new Distance(30));
 		} catch (Exception e) {
-			logger.info("No location found with coordinates: {}", LatLng);
+			logger.debug("No location found with coordinates: {}", LatLng);
 			throw new GeoLocationException("Error in mapping latLng: " + LatLng);
 		}
 		return found;

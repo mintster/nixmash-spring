@@ -35,6 +35,9 @@ public class  GlobalController {
 	public static final String LOCATION_ERROR_ATTRIBUTE = "mappingError";
 	public static final String SESSION_USER_CONNECTION = "MY_USER_CONNECTION";
 
+	public static final String ERROR_PAGE_TITLE_ATTRIBUTE ="errortitle";
+	public static final String ERROR_PAGE_MESSAGE_ATTRIBUTE ="errormessage";
+
 	private final WebUI webUI;
 	private final ApplicationSettings applicationSettings;
 	private final SiteOptions siteOptions;
@@ -101,8 +104,8 @@ public class  GlobalController {
 		logger.debug("In ContactNotFound Exception Handler");
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("errortitle", "Contact Missing in Action!");
-		mav.addObject("errorbody", "We'll find the rascal, don't you worry");
+		mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, "Contact Missing in Action!");
+		mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, "We'll find the rascal, don't you worry");
 		mav.setViewName(ERROR_CUSTOM_VIEW);
 		return mav;
 	}
@@ -122,8 +125,8 @@ public class  GlobalController {
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		String postTitle = (String) request.getAttribute("postTitle");
-		mav.addObject("errortitle", "Duplicate Post Name");
-		mav.addObject("errorbody", String.format("\"%s\" exists.<br /> " +
+		mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, "Duplicate Post Name");
+		mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, String.format("\"%s\" exists.<br /> " +
 				"Please rename your post title and try again.", postTitle));
 		mav.setViewName(ERROR_CUSTOM_VIEW);
 		return mav;
@@ -133,8 +136,8 @@ public class  GlobalController {
 	public ModelAndView handlePostNotFoundException (
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("errortitle", "Post Not Found");
-		mav.addObject("errorbody", "No post retrieved for your ID or Post Name");
+		mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, "Post Not Found");
+		mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, "No post retrieved for your ID or Post Name");
 		mav.setViewName(ERROR_CUSTOM_VIEW);
 		return mav;
 	}

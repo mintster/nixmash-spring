@@ -82,7 +82,7 @@ public class FmMailServiceImpl implements FmMailService {
                     String greeting = environment.getProperty(PASSWORD_RESET_EMAIL_GREETING);
                     greeting = MessageFormat.format(greeting, String.format("%s %s", user.getFirstName(), user.getLastName()));
 
-                    String applicationPropertyUrl = environment.getProperty("spring.social.application.url");
+                    String applicationPropertyUrl = environment.getProperty("spring.application.url");
                     String siteName = environment.getProperty("mail.site.name");
 
                     String resetLink = applicationSettings.getBaseUrl() + "/users/resetpassword/" + token;
@@ -135,7 +135,7 @@ public class FmMailServiceImpl implements FmMailService {
 
                 String body = mailDTO.getBody();
                 String greeting = environment.getProperty(CONTACT_EMAIL_GREETING);
-                String applicationPropertyUrl = environment.getProperty("spring.social.application.url");
+                String applicationPropertyUrl = environment.getProperty("spring.application.url");
                 String siteName = environment.getProperty("mail.site.name");
 
                 // endregion
@@ -166,6 +166,65 @@ public class FmMailServiceImpl implements FmMailService {
             });
         } catch (MailSendException e) {
             logger.error("Contact Email Exception: " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void sendUserVerificationMail(User user) {
+        try {
+            mailSender.send(new MimeMessagePreparator() {
+                static final String USER_VERIFICATION_EMAIL_SUBJECT = "mail.user.verification.subject";
+                static final String USER_VERIFICATION_EMAIL_FROM = "mail.user.verification.from";
+                static final String USER_VERIFICATION_EMAIL_GREETING = "mail.user.verification.greeting";
+
+                public void prepare(MimeMessage mimeMessage)
+                        throws MessagingException {
+
+                    // region build mimeMessage
+
+                    MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                    message.setFrom(environment.getProperty(USER_VERIFICATION_EMAIL_FROM));
+                    String sendTo = user.getEmail();
+                    if (applicationSettings.getBaseUrl().indexOf("localhost") > 0) {
+                        sendTo = mailSettings.getDeveloperTo();
+                    }
+                    message.addTo(sendTo);
+
+                    message.setSubject(environment.getProperty(USER_VERIFICATION_EMAIL_SUBJECT));
+
+                    String greeting = environment.getProperty(USER_VERIFICATION_EMAIL_GREETING);
+                    greeting = MessageFormat.format(greeting, String.format("%s %s", user.getFirstName(), user.getLastName()));
+
+                    String applicationPropertyUrl = environment.getProperty("spring.application.url");
+                    String siteName = environment.getProperty("mail.site.name");
+
+                    String verifyLink = applicationSettings.getBaseUrl() + "/users/verify/" + user.getUserKey();
+
+                    // endregion
+
+                    Map<String, Object> model = new Hashtable<>();
+                    model.put("greeting", greeting);
+                    model.put("memberServices",  environment.getProperty(EMAIL_SITE_USER_SERVICES));
+                    model.put("siteName", siteName);
+                    model.put("applicationPropertyUrl", applicationPropertyUrl);
+                    model.put("verifyLink", verifyLink);
+
+                    String html;
+                    try {
+                        Template template = fm.getTemplate("mail/userverification.ftl");
+                        html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+                        message.setText(html, true);
+                    } catch (IOException | TemplateException e) {
+                        logger.error("Problem merging user verification mail template : " + e.getMessage());
+                    }
+
+                    logger.info(String.format("User Verification email sent to: %s", String.format("%s %s", user.getFirstName(), user.getLastName())));
+                }
+
+            });
+        } catch (MailSendException e) {
+            logger.error("User Verification Email Exception: " + e.getMessage());
         }
 
     }

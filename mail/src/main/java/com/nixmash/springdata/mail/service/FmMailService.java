@@ -12,4 +12,5 @@ public interface FmMailService {
 
     void sendContactMail(MailDTO mailDTO);
 
+    void sendUserVerificationMail(User user);
 }

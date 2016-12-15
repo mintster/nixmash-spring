@@ -211,7 +211,6 @@ public class AdminController {
             model.addAttribute("authorities", userService.getRoles());
             return ADMIN_USERFORM_VIEW;
         } else {
-//            userDTO.setPassword(UUID.randomUUID().toString());
             userDTO.setSignInProvider(SignInProvider.SITE);
             User added = userService.create(userDTO);
             logger.info("Added user with information: {}", added);

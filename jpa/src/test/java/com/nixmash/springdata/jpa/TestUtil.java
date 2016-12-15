@@ -1,5 +1,10 @@
 package com.nixmash.springdata.jpa;
 
+import com.google.common.collect.Lists;
+import com.nixmash.springdata.jpa.dto.UserDTO;
+import com.nixmash.springdata.jpa.enums.SignInProvider;
+import com.nixmash.springdata.jpa.model.Authority;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
@@ -31,4 +36,18 @@ public class TestUtil {
         ZonedDateTime zdt = ZonedDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault());
         return zdt;
     }
+
+    // UserDTO as passed to userService.create(UserDTO)
+    public static UserDTO createTestUserDTO(String username, String firstName, String lastName, String email) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName(firstName);
+        userDTO.setUsername(username);
+        userDTO.setLastName(lastName);
+        userDTO.setPassword("password");
+        userDTO.setEmail(email);
+        userDTO.setSignInProvider(SignInProvider.SITE);
+        userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
+        return userDTO;
+    }
+
 }

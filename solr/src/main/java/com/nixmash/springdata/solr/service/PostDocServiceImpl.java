@@ -39,14 +39,14 @@ public class PostDocServiceImpl implements PostDocService {
 
     @Override
     public List<PostDoc> getPostsWithUserQuery(String userQuery) {
-        logger.info("SimpleQuery from user search string -  findProductsBySimpleQuery()");
+        logger.debug("SimpleQuery from user search string -  findProductsBySimpleQuery()");
         return customPostDocRepository.findPostsBySimpleQuery(userQuery);
     }
 
     @Transactional
     @Override
     public void addToIndex(Post post) {
-        logger.info("Saving a Post Document with information: {}", post);
+        logger.debug("Saving a Post Document with information: {}", post);
         PostDoc document = SolrUtils.createPostDoc(post);
         customPostDocRepository.save(document);
         commit();
@@ -64,7 +64,7 @@ public class PostDocServiceImpl implements PostDocService {
     @Transactional
     @Override
     public void addAllToIndex(List<Post> posts) {
-        logger.info("Saving all Post Documents to Index");
+        logger.debug("Saving all Post Documents to Index");
         List<PostDoc> postDocs = new ArrayList<>();
         for (Post post : posts
                 ) {

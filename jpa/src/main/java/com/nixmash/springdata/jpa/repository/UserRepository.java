@@ -51,4 +51,5 @@ public interface UserRepository extends Repository<User, Long> {
     @Query("select distinct u from User u left join u.authorities a where a.id = ?1")
     List<User> findByAuthorityId(Long id);
 
+    Optional<User> findOneByUserKey(String userKey);
 }

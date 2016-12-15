@@ -28,7 +28,7 @@ public class SolrLoader implements CommandLineRunner {
 			String activeProfile = environment.getActiveProfiles()[1];
 			logger.info(String.format("Current Solr Active Profile: %s", activeProfile));
 		} catch (Exception e) {
-			logger.info("No second profile entered.");
+			logger.debug("No second profile entered.");
 		}
     }
 }

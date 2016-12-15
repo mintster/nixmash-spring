@@ -30,13 +30,20 @@ public class MailUI {
     }
 
     public void init() {
-        displayUserTemplate();
+        userVerificationDemo();
     }
 
     private void displayUserTemplate() {
         Optional<User> user = userService.getUserById(8L);
         if (user.isPresent()) {
                 System.out.println(fmService.displayTestTemplate(user.get()));
+        }
+    }
+
+    private void userVerificationDemo() {
+        Optional<User> user = userService.getUserById(8L);
+        if (user.isPresent()) {
+            fmMailService.sendUserVerificationMail(user.get());
         }
     }
 

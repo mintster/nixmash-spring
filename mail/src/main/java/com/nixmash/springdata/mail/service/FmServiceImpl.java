@@ -40,7 +40,7 @@ public class FmServiceImpl implements FmService {
     @Override
     public String displayTestTemplate(User user) {
 
-        String applicationPropertyUrl = environment.getProperty("spring.social.application.url");
+        String applicationPropertyUrl = environment.getProperty("spring.application.url");
         String siteName = environment.getProperty("mail.site.name");
         String greeting = "YOUSA!";
 

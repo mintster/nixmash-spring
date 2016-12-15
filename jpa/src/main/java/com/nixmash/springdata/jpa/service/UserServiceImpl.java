@@ -50,24 +50,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
+    @Override
     public Optional<User> getUserById(long id) {
         logger.debug("Getting user={}", id);
         return Optional.ofNullable(userRepository.findById(id));
     }
 
     @Transactional(readOnly = true)
+    @Override
     public User getUserByUsername(String username) {
         logger.debug("Getting user={}", username);
         return userRepository.findByUsername(username);
     }
 
     @Transactional(readOnly = true)
+    @Override
     public Optional<User> getByEmail(String email) {
         logger.debug("Getting user by email={}", email);
         return userRepository.findOneByEmail(email);
     }
 
     @Transactional(readOnly = true)
+    @Override
+    public Optional<User> getByUserKey(String userKey) {
+        logger.debug("Getting user by userkey={}", userKey);
+        return userRepository.findOneByUserKey(userKey);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public Collection<User> getAllUsers() {
         logger.debug("Getting all users");
         return userRepository.findAll();
@@ -75,20 +86,21 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User create(UserDTO form) {
+    public User create(UserDTO userDTO) {
 
         User user = new User();
-        user.setUsername(form.getUsername());
-        user.setFirstName(form.getFirstName());
-        user.setLastName(form.getLastName());
-        user.setEmail(form.getEmail());
-        user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
+        user.setUsername(userDTO.getUsername());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
         user.setUserKey(RandomStringUtils.randomAlphanumeric(16));
-        user.setSignInProvider(form.getSignInProvider());
+        user.setSignInProvider(userDTO.getSignInProvider());
         user.setCreatedDatetime(Calendar.getInstance().getTime());
+        user.setEnabled(userDTO.isEnabled());
         User saved = userRepository.save(user);
 
-        for (Authority authority : form.getAuthorities()) {
+        for (Authority authority : userDTO.getAuthorities()) {
             Authority _authority = authorityRepository.findByAuthority(authority.getAuthority());
             saved.getAuthorities().add(_authority);
         }
@@ -262,7 +274,8 @@ public class UserServiceImpl implements UserService {
 
     // region Utility methods
 
-    private Boolean isValidToken(long userId, String token) {
+    @Override
+    public boolean isValidToken(long userId, String token) {
         final Optional<UserToken> userToken = userTokenRepository.findByToken(token);
         boolean isValidToken = false;
         if (userToken.isPresent()) {

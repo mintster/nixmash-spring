@@ -17,9 +17,12 @@ public interface UserService {
 
     Optional<User> getByEmail(String email);
 
+    @Transactional(readOnly = true)
+    Optional<User> getByUserKey(String userKey);
+
     Collection<User> getAllUsers();
 
-    User create(UserDTO form);
+    User create(UserDTO userDTO);
 
     User getUserByUsername(String username);
 
@@ -58,4 +61,5 @@ public interface UserService {
 
     User updateHasAvatar(Long userId, boolean hasAvatar);
 
+    boolean isValidToken(long userId, String token);
 }

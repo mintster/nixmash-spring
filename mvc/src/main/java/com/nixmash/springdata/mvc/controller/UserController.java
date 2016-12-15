@@ -43,14 +43,20 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
+import static com.nixmash.springdata.mvc.controller.GeneralController.HOME_VIEW;
+import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_CUSTOM_VIEW;
+import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_PAGE_MESSAGE_ATTRIBUTE;
+import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_PAGE_TITLE_ATTRIBUTE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -66,6 +72,11 @@ public class UserController {
     public static final String SIGNIN_VIEW = "signin";
     public static final String REGISTER_VIEW = "register";
     public static final String MESSAGE_KEY_SOCIAL_SIGNUP = "signup.page.subheader";
+
+    public static final String USER_VERIFICATION_NOKEY_TITLE = "user.verification.nokey.title";
+    private static final String USER_VERIFICATION_NOKEY_MESSAGE = "user.verification.nokey.message";
+    public static final String USER_VERIFICATION_ERROR_TITLE = "user.verification.error.title";
+    private static final String USER_VERIFICATION_ERROR_MESSAGE = "user.verification.error.message";
 
     // endregion
 
@@ -127,6 +138,29 @@ public class UserController {
         User user = userService.create(userDTO);
         SignInUtils.authorizeUser(user);
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/users/verify", method = RequestMethod.GET)
+    public ModelAndView emptyVerifyUserKey() {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_TITLE));
+        mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_MESSAGE));
+        mav.setViewName(ERROR_CUSTOM_VIEW);
+        return mav;
+    }
+
+    @RequestMapping(value = "/users/verify/{userkey}", method = RequestMethod.GET)
+    public ModelAndView verifyUser(@PathVariable("userkey") String userkey) {
+        ModelAndView mav = new ModelAndView();
+        Optional<User> user = userService.getByUserKey(userkey);
+        if (!user.isPresent()) {
+            mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_TITLE));
+            mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_MESSAGE));
+            mav.setViewName(ERROR_CUSTOM_VIEW);
+        }
+        else
+            mav.setViewName(HOME_VIEW);
+        return mav;
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)

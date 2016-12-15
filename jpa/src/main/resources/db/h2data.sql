@@ -39,7 +39,10 @@ INSERT INTO users (user_id, email, username, password, first_name, last_name, en
 VALUES
   (6, 'scott@aol.com', 'scott', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Scott', 'Shoenberger',
       TRUE, FALSE, FALSE, FALSE, FALSE, 'Fx05XbWjPFECJZQP', 'SITE',  '2016-09-30 17:40:18');
-
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
+VALUES
+  (7, 'tommy@aol.com', 'tommy', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Tommy', 'Twotone',
+      FALSE, FALSE, FALSE, FALSE, FALSE, 'VYlGwj3HOi665LIa', 'SITE',  '2016-10-30 18:20:18');
 
 ------------------------------------------------------------
 -- Authorities
@@ -62,6 +65,7 @@ INSERT INTO user_authorities (user_id, authority_id) VALUES (3, 3);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (4, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (5, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (6, 2);
+INSERT INTO user_authorities (user_id, authority_id) VALUES (7, 2);
 
 
 INSERT INTO contacts (contact_id, first_name, last_name, birth_date, email, created_by_user, creation_time, modified_by_user, modification_time, version)

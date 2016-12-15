@@ -26,6 +26,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_PAGE_MESSAGE_ATTRIBUTE;
+import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_PAGE_TITLE_ATTRIBUTE;
 import static java.util.stream.Collectors.joining;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -82,8 +84,8 @@ public class GeneralController {
     public ModelAndView accesssDenied(Principal user) {
 
         ModelAndView mav = new ModelAndView();
-        mav.addObject("errortitle", "Not Authorized");
-        mav.addObject("errorbody", "You are not authorized to view this page.");
+        mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, "Not Authorized");
+        mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, "You are not authorized to view this page.");
         mav.setViewName(ERROR_403_VIEW);
         return mav;
     }

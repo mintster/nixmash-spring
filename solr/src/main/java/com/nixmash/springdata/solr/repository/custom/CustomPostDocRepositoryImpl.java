@@ -77,7 +77,7 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 
 	@Override
 	public Page<PostDoc> pagedQuickSearch(String searchTerms, PageRequest pageRequest) {
-		logger.info("Paged Title and Body Quick Search with : {}", searchTerms);
+		logger.debug("Paged Title and Body Quick Search with : {}", searchTerms);
 		Query query = new SimpleQuery(titleAndBodyCriteria(searchTerms));
 		query.setRows(1000);
 		query.setPageRequest(pageRequest);
@@ -118,7 +118,7 @@ public class CustomPostDocRepositoryImpl implements CustomBasePostDocRepository 
 
 	@Override
 	public List<PostDoc> quickSearch(String searchTerms) {
-		logger.info("Searching Title and Body with Multiple Terms : {}", searchTerms);
+		logger.debug("Searching Title and Body with Multiple Terms : {}", searchTerms);
 		Query query = new SimpleQuery(titleAndBodyCriteria(searchTerms));
 		query.setRows(1000);
 		Page<PostDoc> results = solrTemplate.queryForPage(query, PostDoc.class);

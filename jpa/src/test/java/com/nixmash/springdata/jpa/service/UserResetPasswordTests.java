@@ -16,7 +16,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -85,17 +84,7 @@ public class UserResetPasswordTests {
 
     // Copy of UserServiceImpl isValidToken() utility method
     private Boolean isValidToken(long userId, String token) {
-        final Optional<UserToken> userToken = userTokenRepository.findByToken(token);
-        boolean isValidToken = false;
-        if (userToken.isPresent()) {
-            final Calendar cal = Calendar.getInstance();
-            UserToken passToken = userToken.get();
-
-            if (passToken.getUser().getId().equals(userId) && (passToken.getTokenExpiration().getTime() - cal.getTime().getTime()) > 0) {
-                isValidToken = true;
-            }
-        }
-        return isValidToken;
+        return userService.isValidToken(userId, token);
     }
 
     // endregion

@@ -32,7 +32,7 @@ public class MvcLoader implements CommandLineRunner {
 
         logger.info(String.format("Command-line appurl is %s", appUrl));
 
-        String applicationPropertyUrl = environment.getProperty("spring.social.application.url");
+        String applicationPropertyUrl = environment.getProperty("spring.application.url");
         logger.info(String.format("Current Spring Social ApplicationUrl is %s", applicationPropertyUrl));
 
         String applicationVersion = environment.getProperty("web.site.version");

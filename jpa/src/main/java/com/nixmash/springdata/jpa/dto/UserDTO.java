@@ -25,6 +25,7 @@ public class UserDTO {
 
     private Long userId;
     private boolean updateChildren = true;
+    private boolean isEnabled = true;
 
     @Length(min = User.MIN_LENGTH_USERNAME, max = User.MAX_LENGTH_USERNAME)
     private String username = "";
@@ -144,6 +145,14 @@ public class UserDTO {
 
     public void setUpdateChildren(boolean updateChildren) {
         this.updateChildren = updateChildren;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 
     @Override

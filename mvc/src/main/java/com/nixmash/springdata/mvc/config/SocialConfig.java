@@ -40,7 +40,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Autowired
     private Environment environment;
 
-    @Value("#{ environment['spring.social.application.url'] }")
+    @Value("#{ environment['spring.application.url'] }")
     private String applicationUrl;
 
     @Override

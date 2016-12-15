@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -20,6 +20,9 @@ import javax.servlet.Filter;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.user;
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Rob Winch
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 public class SecurityTests extends AbstractContext {
 
 	@Rule
@@ -63,16 +66,16 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void invalidUsernamePassword() throws Exception {
-		RequestBuilder request = post("/signin/authenticate").param("username", "user").param("password", "invalid").with(csrf());
-
-		mvc.perform(request).andExpect(invalidLogin());
+		mvc.perform(formLogin("/signin/authenticate")
+				.user("user").password("nope"))
+				.andExpect(unauthenticated());
 	}
 
 	@Test
 	public void validUsernamePassword() throws Exception {
-		RequestBuilder request = post("/signin/authenticate").param("username", "user").param("password", "password").with(csrf());
-
-		mvc.perform(request).andExpect(redirectedUrl("/"));
+		mvc.perform(formLogin("/signin/authenticate")
+				.user("user").password("password"))
+				.andExpect(authenticated());
 	}
 
 	// endregion
@@ -82,7 +85,6 @@ public class SecurityTests extends AbstractContext {
 	@Test
 	public void redirectOnContactDetails() throws Exception {
 		RequestBuilder request = post("/contact/1").with(csrf());
-
 		mvc.perform(request).andExpect(loginPage());
 	}
 
@@ -120,7 +122,7 @@ public class SecurityTests extends AbstractContext {
 				.param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 
-		mvc.perform(request).andExpect(redirectedUrl("/"));
+		mvc.perform(request).andExpect(status().is3xxRedirection());
 
 		CurrentUser bobby = currentUserDetailsService.loadUserByUsername("bobby");
 		assertNotNull(bobby.getUser().getCreatedDatetime());
@@ -152,11 +154,14 @@ public class SecurityTests extends AbstractContext {
 
 	@Test
 	public void gmailDomainIsApproved() throws Exception {
-		RequestBuilder request = post("/register").param("username", "user153").param("firstName", "Bob")
+		RequestBuilder request = post("/register").param("username", "user1215155").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "bob@gmail.com").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 
-		mvc.perform(request).andExpect(redirectedUrl("/"));
+		mvc.perform(request).andExpect(status().is3xxRedirection());
+
+		CurrentUser user1215155 = currentUserDetailsService.loadUserByUsername("user1215155");
+		assertNotNull(user1215155.getUser().getCreatedDatetime());
 
 
 	}
