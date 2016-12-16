@@ -12,6 +12,7 @@ import com.nixmash.springdata.solr.exceptions.GeoLocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,6 +23,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static com.nixmash.springdata.mvc.controller.GeneralController.HOME_VIEW;
 
 @ControllerAdvice
 public class  GlobalController {
@@ -117,6 +120,13 @@ public class  GlobalController {
 		String msg = webUI.getMessage(LOCATION_ERROR_MESSAGE_KEY, location);
 		mav.addObject(LOCATION_ERROR_ATTRIBUTE, msg);
 		mav.setViewName(PRODUCT_MAP_VIEW);
+		return mav;
+	}
+
+	@ExceptionHandler(DisabledException.class)
+	public ModelAndView handleDisabledUserException(String msg, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(HOME_VIEW);
 		return mav;
 	}
 

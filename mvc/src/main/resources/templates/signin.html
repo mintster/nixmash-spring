@@ -30,17 +30,16 @@
 		<div class="row row-centered">
 			<div class="bs-section col-lg-6 col-centered">
 
-				<div role="alert" th:if="${statusMessage}"
-					th:class="'alert ' + ${statusMessageClass}?: 'alert-dismissible alert-success'" th:text="${statusMessage}">
+				<div role="alert" th:if="${param.message}"
+					th:class="'alert alert-success'" th:utext="${statusMessage}">
 					<button type="button" class="close" data-dismiss="alert">×</button>
 				</div>
 				<div role="alert" th:if="${param.logout}" class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">×</button>
 					You have been logged out
 				</div>
-				<div role="alert" th:if="${param.error}" class="alert alert-danger">
+				<div role="alert" th:if="${param.error}" class="alert alert-danger"  th:utext="${session[SPRING_SECURITY_LAST_EXCEPTION]}">
 					<button type="button" class="close" data-dismiss="alert">×</button>
-					There was an error, please try again.
 				</div>
 
 				<h2 th:text="#{login.form.title}" class="form-title">[Please log in]</h2>
@@ -54,14 +53,14 @@
 							<label for="username" class="col-lg-3 control-label" th:text="#{login.form.username}">[Username]</label>
 
 							<div class="col-lg-9">
-								<input type="text" name="username" value="" placeholder="Username" class="form-control" />
+								<input type="text" name="username" id="username" value="" placeholder="Username" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="password" class="col-lg-3 control-label" th:text="#{login.form.password}">[Password]</label>
 
 							<div class="col-lg-9">
-								<input type="password" name="password" placeholder="Password" class="form-control" />
+								<input type="password" name="password" id="password" placeholder="Password" class="form-control" />
 
 								<div class="checkbox">
 									<label> <input type="checkbox" name="remember-me" id="remember-me" th:text="#{login.form.rememberme}" />

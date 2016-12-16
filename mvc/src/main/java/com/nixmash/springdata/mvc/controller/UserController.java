@@ -54,9 +54,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.nixmash.springdata.mvc.controller.GeneralController.HOME_VIEW;
-import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_CUSTOM_VIEW;
-import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_PAGE_MESSAGE_ATTRIBUTE;
-import static com.nixmash.springdata.mvc.controller.GlobalController.ERROR_PAGE_TITLE_ATTRIBUTE;
+import static com.nixmash.springdata.mvc.controller.GlobalController.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -68,6 +66,7 @@ public class UserController {
     public static final String MODEL_ATTRIBUTE_CURRENTUSER = "currentUser";
     private static final String MODEL_ATTRIBUTE_SOCIALUSER = "socialUserDTO";
     public static final String USER_PROFILE_VIEW = "users/profile";
+    public static final String USER_REVERIFY_VIEW = "users/reverify";
     public static final String SIGNUP_VIEW = "signup";
     public static final String SIGNIN_VIEW = "signin";
     public static final String REGISTER_VIEW = "register";
@@ -77,6 +76,7 @@ public class UserController {
     private static final String USER_VERIFICATION_NOKEY_MESSAGE = "user.verification.nokey.message";
     public static final String USER_VERIFICATION_ERROR_TITLE = "user.verification.error.title";
     private static final String USER_VERIFICATION_ERROR_MESSAGE = "user.verification.error.message";
+    private static final String USER_VERIFICATION_EMAIL_SENT = "user.verification.email.sent";
 
     // endregion
 
@@ -140,14 +140,25 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/users/verify", method = RequestMethod.GET)
-    public ModelAndView emptyVerifyUserKey() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_TITLE));
-        mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_MESSAGE));
-        mav.setViewName(ERROR_CUSTOM_VIEW);
-        return mav;
+    @RequestMapping(value = "/users/reverify/{username}", method = RequestMethod.GET)
+    public String resendUserVerification(@PathVariable String username, RedirectAttributes redirectAttributes) throws UsernameNotFoundException {
+        User user = userService.getUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username + " not found!");
+        } else {
+            redirectAttributes.addFlashAttribute("statusMessage", webUI.getMessage(USER_VERIFICATION_EMAIL_SENT, user.getEmail()));
+            return "redirect:/signin?message";
+        }
     }
+
+//    @RequestMapping(value = "/users/verify", method = RequestMethod.GET)
+//    public ModelAndView emptyVerifyUserKey() {
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_TITLE));
+//        mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_MESSAGE));
+//        mav.setViewName(ERROR_CUSTOM_VIEW);
+//        return mav;
+//    }
 
     @RequestMapping(value = "/users/verify/{userkey}", method = RequestMethod.GET)
     public ModelAndView verifyUser(@PathVariable("userkey") String userkey) {
@@ -157,9 +168,10 @@ public class UserController {
             mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_TITLE));
             mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_MESSAGE));
             mav.setViewName(ERROR_CUSTOM_VIEW);
-        }
-        else
+        } else {
+            // enable user and enter approved_datetime
             mav.setViewName(HOME_VIEW);
+        }
         return mav;
     }
 

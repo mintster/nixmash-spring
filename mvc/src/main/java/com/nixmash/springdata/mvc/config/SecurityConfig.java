@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
 
@@ -37,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private AuthenticationFailureHandler authenticationFailureHandler;
 
 	@Override
 	@Profile(DataConfigProfile.H2)
@@ -74,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	// @formatter:off
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -90,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.formLogin()
 					.loginPage("/signin")
 					.loginProcessingUrl("/signin/authenticate")
-					.failureUrl("/signin?error")
+				    .failureHandler(authenticationFailureHandler)
 					.permitAll()
 			.and()
 				.logout()
@@ -105,11 +109,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.apply(new SpringSocialConfigurer()
 				.postLoginUrl("/")
 				.alwaysUsePostLoginUrl(true));
-
-//		http
-//			.authorizeRequests()
-//				.antMatchers(ADMIN_RESOURCE_LIST)
-//				.hasRole("ADMIN");
 
 	}
 

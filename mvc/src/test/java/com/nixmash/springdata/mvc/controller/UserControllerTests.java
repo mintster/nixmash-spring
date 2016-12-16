@@ -96,9 +96,4 @@ public class UserControllerTests extends AbstractContext {
                 .andExpect(view().name(ERROR_CUSTOM_VIEW));
     }
 
-    @Test
-    public void unEnabledUserIsNotAuthenticatedOnLogin() throws Exception {
-
-    }
-
 }

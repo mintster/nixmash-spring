@@ -57,9 +57,6 @@ public class SecurityTests extends AbstractContext {
 
 		mvc = MockMvcBuilders.webAppContextSetup(context).addFilters(springSecurityFilterChain).build();
 
-		// userController = new UserController(userService,
-		// userCreateFormValidator, currentUserDetailsService);
-
 	}
 
 	// region Login
@@ -76,6 +73,15 @@ public class SecurityTests extends AbstractContext {
 		mvc.perform(formLogin("/signin/authenticate")
 				.user("user").password("password"))
 				.andExpect(authenticated());
+	}
+
+	@Test
+	public void unEnabledUserIsNotAuthenticatedOnLogin() throws Exception {
+		// tommy.isEnabled(0) | approvedDateTime(null)
+
+		mvc.perform(formLogin("/signin/authenticate")
+				.user("tommy").password("password"))
+				.andExpect(unauthenticated());
 	}
 
 	// endregion
@@ -131,7 +137,7 @@ public class SecurityTests extends AbstractContext {
 	@Test
 	public void invalidRegistrationEmail() throws Exception {
 		RequestBuilder request = post("/register").param("username", "bobby").param("firstName", "Bob")
-				.param("lastName", "Crachet").param("email", "user").param("password", "password")
+				.param("lastName", "Crachet").param("email", "bad@email").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 		mvc.perform(request).andExpect(invalidRegistration());
 	}
