@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedHashSet;
 
 @Entity
@@ -101,22 +100,19 @@ public class User implements UserDetails, Serializable {
     @Column
     private boolean enabled = true;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_datetime")
-    private Date createdDatetime;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "approved_datetime")
-    private Date approvedDatetime;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authorities",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     public Collection<Authority> authorities;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserProfile userProfile;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    public UserData userData;
 
     public User() {
         this.authorities = new LinkedHashSet<>();
@@ -177,6 +173,14 @@ public class User implements UserDetails, Serializable {
 
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 
     public SignInProvider getSignInProvider() {
@@ -253,22 +257,6 @@ public class User implements UserDetails, Serializable {
         this.hasAvatar = hasAvatar;
     }
 
-    public Date getCreatedDatetime() {
-        return createdDatetime;
-    }
-
-    public void setCreatedDatetime(Date createdDatetime) {
-        this.createdDatetime = createdDatetime;
-    }
-
-    public Date getApprovedDatetime() {
-        return approvedDatetime;
-    }
-
-    public void setApprovedDatetime(Date approvedDatetime) {
-        this.approvedDatetime = approvedDatetime;
-    }
-
     // @formatter:off
     
     @Override
@@ -295,6 +283,10 @@ public class User implements UserDetails, Serializable {
         this.lastName = lastName;
         this.email = email;
         this.username = username;
+    }
+
+    public void update(UserData userData) {
+        this.userData = userData;
     }
 
     // @formatter:on

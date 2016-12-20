@@ -50,7 +50,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                     user.getUsername(), user.getEmail());
 
             if (exception.getMessage().equalsIgnoreCase((USER_IS_DISABLED))) {
-                if (user.getApprovedDatetime() == null) errorMessage = notYetApprovedMessage;
+                if (user.getUserData().getApprovedDatetime() == null) errorMessage = notYetApprovedMessage;
             }
         }
         request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, errorMessage);

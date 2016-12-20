@@ -55,7 +55,7 @@ dependencies {
 
 bootRun {
 	systemProperty 'server.port', '9000'
-	systemProperty 'spring.profiles.active', 'mysql,dev'
+	systemProperty 'spring.profiles.active', 'mysql,prod'
 	args "--appurl=http://localhost:9000"
 	main = 'com.nixmash.springdata.mvc.Application'
 }

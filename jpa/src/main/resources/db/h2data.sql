@@ -14,47 +14,59 @@ Date: 2015-04-21 17:49:43
 */
 
 
-------------------------------------------------------------
+/* ------------------------------------------------------------ */
 -- Users
-------------------------------------------------------------
+/* ------------------------------------------------------------ */
 
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime) VALUES
-  (1, 'admin@email.com', 'admin', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', 'Admin', 'Jones', TRUE, FALSE, FALSE, FALSE, FALSE, '4L4Hr3skHYYMbjkQ', 'SITE',  '2016-09-30 17:40:18');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
+VALUES
+  (1, 'admin@email.com', 'admin', '$2a$10$B9wQFSrr3bfQeUGqxtTDuut1.4YFcA/WFthZaGe1wtb1wgVW./Oiq', 'Admin', 'Jones',
+      TRUE, FALSE, FALSE, FALSE, FALSE, '4L4Hr3skHYYMbjkQ', 'SITE');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
 VALUES
   (2, 'user@aol.com', 'user', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'User', 'Charlie', TRUE,
-      FALSE, FALSE, FALSE, FALSE, 'v7jXapyD6fbRyZvi', 'SITE',  '2016-09-30 17:40:18');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
+      FALSE, FALSE, FALSE, FALSE, 'v7jXapyD6fbRyZvi', 'SITE');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
 VALUES (3, 'keith@aol.com', 'keith', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Keith', 'Obannon',
-           TRUE, FALSE, FALSE, FALSE, FALSE, 'HuoPByrU0hC87gz8', 'SITE',  '2016-09-30 17:40:18');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
+           TRUE, FALSE, FALSE, FALSE, FALSE, 'HuoPByrU0hC87gz8', 'SITE');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
 VALUES
   (4, 'erwin@aol.com', 'erwin', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Erwin', 'Lapote', TRUE,
-      FALSE, FALSE, FALSE, FALSE, 'kSpaxKbYIL0a5Mma', 'SITE',  '2016-09-30 17:40:18');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
+      FALSE, FALSE, FALSE, FALSE, 'kSpaxKbYIL0a5Mma', 'SITE');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
 VALUES
   (5, 'jeremy@aol.com', 'jeremy', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Jeremy', 'Sloan',
-      TRUE, FALSE, FALSE, FALSE, FALSE, 'xt4e25EoFgjx5CP2', 'SITE',  '2016-09-30 17:40:18');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
+      TRUE, FALSE, FALSE, FALSE, FALSE, 'xt4e25EoFgjx5CP2', 'SITE');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
 VALUES
   (6, 'scott@aol.com', 'scott', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Scott', 'Shoenberger',
-      TRUE, FALSE, FALSE, FALSE, FALSE, 'Fx05XbWjPFECJZQP', 'SITE',  '2016-09-30 17:40:18');
-INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id, created_datetime)
+      TRUE, FALSE, FALSE, FALSE, FALSE, 'Fx05XbWjPFECJZQP', 'SITE');
+INSERT INTO users (user_id, email, username, password, first_name, last_name, enabled, account_expired, account_locked, credentials_expired, has_avatar, user_key, provider_id)
 VALUES
   (7, 'tommy@aol.com', 'tommy', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', 'Tommy', 'Twotone',
-      FALSE, FALSE, FALSE, FALSE, FALSE, 'VYlGwj3HOi665LIa', 'SITE',  '2016-10-30 18:20:18');
+      FALSE, FALSE, FALSE, FALSE, FALSE, 'VYlGwj3HOi665LIa', 'SITE');
 
-------------------------------------------------------------
+
+INSERT INTO user_data (user_id, lastlogin_datetime, created_datetime) SELECT
+                                                                        user_id,
+                                                                       current_timestamp,
+                                                                        current_timestamp
+                                                                      FROM users;
+UPDATE user_data
+SET login_attempts = 2
+WHERE user_id = 7;
+
+/* ------------------------------------------------------------ */
 -- Authorities
-------------------------------------------------------------
+/* ------------------------------------------------------------ */
 
-INSERT INTO authorities (authority_id, authority, is_locked) VALUES (1, 'ROLE_ADMIN', TRUE );
+INSERT INTO authorities (authority_id, authority, is_locked) VALUES (1, 'ROLE_ADMIN', TRUE);
 INSERT INTO authorities (authority_id, authority, is_locked) VALUES (2, 'ROLE_USER', TRUE);
 INSERT INTO authorities (authority_id, authority, is_locked) VALUES (3, 'ROLE_POSTS', TRUE);
 
-------------------------------------------------------------
+/* ------------------------------------------------------------ */
 -- User_Authorities
-------------------------------------------------------------
+/* ------------------------------------------------------------ */
 
 INSERT INTO user_authorities (user_id, authority_id) VALUES (1, 2);
 INSERT INTO user_authorities (user_id, authority_id) VALUES (1, 1);
@@ -97,7 +109,8 @@ VALUES (1, '1', 'Mobile', '1-113-753-8020'), (2, '1', 'Home', '1-996-507-0853'),
   (7, '4', 'Mobile', '1-234-628-6511'), (8, '4', 'Home', '1-560-178-3273'), (9, '5', 'Mobile', '1-430-941-9233'),
   (10, '5', 'Home', '1-271-831-8886');
 INSERT INTO contact_phones (contact_phone_id, contact_id, phone_type, phone_number)
-VALUES (11, '6', 'Mobile', '1-255-105-0103'), (12, '6', 'Home', '1-481-652-4155'), (13, '7', 'Mobile', '1-917-917-8478'),
+VALUES (11, '6', 'Mobile', '1-255-105-0103'), (12, '6', 'Home', '1-481-652-4155'),
+  (13, '7', 'Mobile', '1-917-917-8478'),
   (14, '7', 'Home', '1-766-831-2271'), (15, '8', 'Mobile', '1-863-515-3218'), (16, '8', 'Home', '1-930-909-9849'),
   (17, '9', 'Mobile', '1-423-399-6903'), (18, '9', 'Home', '1-294-840-1996'), (19, '10', 'Mobile', '1-661-300-3848'),
   (20, '10', 'Home', '1-972-479-8970');
@@ -122,14 +135,16 @@ INSERT INTO site_options (option_id, option_name, option_value)
 VALUES ('4', 'googleAnalyticsTrackingId', 'UA-XXXXXX-7');
 INSERT INTO site_options (option_id, option_name, option_value) VALUES ('5', 'integerProperty', '1');
 
-------------------------------------------------------------
+/* ------------------------------------------------------------ */
 -- Posts
-------------------------------------------------------------
+/* ------------------------------------------------------------ */
 
 -- INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (1, 1, 'Post One Title', 'post-one-title', 'http://nixmash.com/something', '2016-05-31 13:27:47', '2016-05-31 13:28:01', 'LINK', 'LINK', 1, 'Post One Content', 'nixmash.com', null, 0, 0, 0, 0);
 -- INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (2, 1, 'Post Two Title', 'post-two-title', 'http://stackoverflow.com/something', '2016-05-31 14:30:45', '2016-05-31 14:30:47', 'LINK', 'LINK', 1, 'Post Two Content', 'stackoverflow.com', null, 0, 0, 0, 0);
 
-INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version) VALUES (-1, 3, 'Not Yet Selected', 'not-yet-selected', NULL, '2016-03-28 17:40:18', '2016-03-28 17:40:18', 'POST', 'SINGLEPHOTO_POST', 0, 'This is a placemarker post', 'NA', NULL, 0, 0, 0, 0);
+INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version)
+VALUES (-1, 3, 'Not Yet Selected', 'not-yet-selected', NULL, '2016-03-28 17:40:18', '2016-03-28 17:40:18', 'POST',
+            'SINGLEPHOTO_POST', 0, 'This is a placemarker post', 'NA', NULL, 0, 0, 0, 0);
 INSERT INTO posts (post_id, user_id, post_title, post_name, post_link, post_date, post_modified, post_type, display_type, is_published, post_content, post_source, post_image, click_count, likes_count, value_rating, version)
 VALUES (1, 3, 'JavaScript · Bootstrap', 'javascript-bootstrap', 'http://getbootstrap.com/javascript/#carousel',
            '2016-06-06 15:30:34', '2016-06-06 15:30:34', 'LINK', 'LINK', 1,
@@ -206,15 +221,18 @@ INSERT INTO user_likes (like_id, user_id, item_id, content_type_id) VALUES (6, 2
 
 INSERT INTO post_images (image_id, post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
 VALUES
-  (1, 1, 'WP_000993.jpg', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70-thumbnail.png', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70.jpg',
+  (1, 1, 'WP_000993.jpg', 'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70-thumbnail.png',
+   'f6dea6b8-87bf-42eb-a4b6-4e4c751f0d70.jpg',
    'image/jpeg', 1065071, 53726, '2016-08-03 13:49:09');
 INSERT INTO post_images (image_id, post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
 VALUES
-  (2, 1, 'WP_000624.jpg', '49e5d232-56a9-4bf9-a9df-916508a4f540-thumbnail.png', '49e5d232-56a9-4bf9-a9df-916508a4f540.jpg',
+  (2, 1, 'WP_000624.jpg', '49e5d232-56a9-4bf9-a9df-916508a4f540-thumbnail.png',
+   '49e5d232-56a9-4bf9-a9df-916508a4f540.jpg',
    'image/jpeg', 580112, 40909, '2016-08-03 13:49:09');
 INSERT INTO post_images (image_id, post_id, image_name, thumbnail_filename, filename, content_type, size, thumbnail_size, datetime_created)
 VALUES
-  (3, 2, 'WP_000931.jpg', '000e045d-781b-4979-9a00-37692f8d33cf-thumbnail.png', '000e045d-781b-4979-9a00-37692f8d33cf.jpg',
+  (3, 2, 'WP_000931.jpg', '000e045d-781b-4979-9a00-37692f8d33cf-thumbnail.png',
+   '000e045d-781b-4979-9a00-37692f8d33cf.jpg',
    'image/jpeg', 908532, 51092, '2016-08-03 14:58:45');
 
 INSERT INTO flashcard_categories (category) VALUES ('category one');

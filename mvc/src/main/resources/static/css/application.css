@@ -408,6 +408,21 @@ td a b {
     background-color: Yellow;
 }
 
+/* USER REGISTRATION FORM MESSAGES -------------------------- */
+
+.register-email-message {
+
+}
+
+/* USER REGISTRATION HOME MESSAGE -------------------------- */
+
+.email-approved-row {
+    font-size: 21px;
+    margin-bottom: 2em;
+    padding: 10px;
+    color: #333;
+    font-style: italic;
+}
 /* SOCIAL BUTTONS ---------------------------------------------- */
 .welcome-row {
     font-size: 18px;

@@ -42,6 +42,7 @@ public abstract class JpaCommonConfig {
     public static final String CONNECTION_CHAR_SET = "hibernate.connection.charSet";
     public static final String VALIDATOR_APPLY_TO_DDL = "hibernate.validator.apply_to_ddl";
     public static final String VALIDATOR_AUTOREGISTER_LISTENERS = "hibernate.validator.autoregister_listeners";
+    public static final String ZERO_DATETIME_BEHAVIOR = "hibernate.connection.zeroDateTimeBehavior";
 
     // endregion
 
@@ -99,6 +100,7 @@ public abstract class JpaCommonConfig {
         properties.setProperty(HBM2DDL_IMPORT_FILES_SQL_EXTRACTOR, getH2SqlExtractor());
         properties.setProperty(GENERATE_STATISTICS, TRUE.toString());
         properties.setProperty(SHOW_SQL, getShowSql());
+        properties.setProperty(ZERO_DATETIME_BEHAVIOR, getZeroDateTimeBehavior());
         properties.setProperty(FORMAT_SQL, TRUE.toString());
         properties.setProperty(USE_SQL_COMMENTS, TRUE.toString());
         properties.setProperty(CONNECTION_CHAR_SET, getHibernateCharSet());
@@ -107,6 +109,11 @@ public abstract class JpaCommonConfig {
     }
 
     // region Get Properties from datasource .properties file
+
+
+    private String getZeroDateTimeBehavior() {
+        return environment.getProperty("hibernate.connection.zeroDateTimeBehavior", UNDEFINED);
+    }
 
     public String getDatabaseName() {
         return environment.getProperty("database.name", UNDEFINED);

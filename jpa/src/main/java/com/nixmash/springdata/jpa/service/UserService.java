@@ -46,6 +46,9 @@ public interface UserService {
 
     User update(UserDTO userDTO);
 
+    @Transactional
+    User enableAndApproveUser(User user);
+
     @Transactional(readOnly = true)
     Optional<User> getUserByIdWithDetail(Long ID);
 

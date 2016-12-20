@@ -6,10 +6,7 @@ import com.nixmash.springdata.jpa.dto.UserPasswordDTO;
 import com.nixmash.springdata.jpa.enums.ResetPasswordResult;
 import com.nixmash.springdata.jpa.enums.Role;
 import com.nixmash.springdata.jpa.model.*;
-import com.nixmash.springdata.jpa.repository.AuthorityRepository;
-import com.nixmash.springdata.jpa.repository.UserConnectionRepository;
-import com.nixmash.springdata.jpa.repository.UserRepository;
-import com.nixmash.springdata.jpa.repository.UserTokenRepository;
+import com.nixmash.springdata.jpa.repository.*;
 import com.nixmash.springdata.jpa.utils.UserUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
@@ -32,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
+    private final UserDataRepository userDataRepository;
+
     private final AuthorityRepository authorityRepository;
     private final UserConnectionRepository userConnectionRepository;
     private final UserTokenRepository userTokenRepository;
@@ -41,9 +40,10 @@ public class UserServiceImpl implements UserService {
     private EntityManager em;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository,
+    public UserServiceImpl(UserRepository userRepository, UserDataRepository userDataRepository, AuthorityRepository authorityRepository,
                            UserConnectionRepository userConnectionRepository, UserTokenRepository userTokenRepository) {
         this.userRepository = userRepository;
+        this.userDataRepository = userDataRepository;
         this.authorityRepository = authorityRepository;
         this.userConnectionRepository = userConnectionRepository;
         this.userTokenRepository = userTokenRepository;
@@ -96,9 +96,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
         user.setUserKey(RandomStringUtils.randomAlphanumeric(16));
         user.setSignInProvider(userDTO.getSignInProvider());
-        user.setCreatedDatetime(Calendar.getInstance().getTime());
         user.setEnabled(userDTO.isEnabled());
+
         User saved = userRepository.save(user);
+
+        UserData userData = userDataRepository.save(UserUtils.newRegisteredUserData(saved));
+        saved.setUserData(userData);
 
         for (Authority authority : userDTO.getAuthorities()) {
             Authority _authority = authorityRepository.findByAuthority(authority.getAuthority());
@@ -204,6 +207,19 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
+        return user;
+    }
+
+    @Transactional
+    @Override
+    public User enableAndApproveUser(User user) {
+
+        UserData userData = user.getUserData();
+        userData.setApprovedDatetime(Calendar.getInstance().getTime());
+
+        user.setEnabled(true);
+        user.update(userData);
+
         return user;
     }
 

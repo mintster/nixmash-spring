@@ -198,6 +198,28 @@ INSERT INTO `users` VALUES ('7', 'john', 'john@email.com', 'John', 'Bubkis', '1'
 INSERT INTO `users` VALUES ('8', 'ken', 'ken@email.com', 'Ken', 'Watts', '1', '0', '0', '0',  '0', 'TUuOypJ5pPI0ksqi', 'SITE', '$2a$10$F2a2W8RtbD99xXd9xtwjbuI4zjSYe04kS.s0FyvQcAIDJfh/6jjLW', CURRENT_TIMESTAMP, NULL, '0');
 
 -- ----------------------------
+-- Table structure for user_data
+-- ----------------------------
+DROP TABLE IF EXISTS `user_data`;
+CREATE TABLE user_data
+(
+  user_id BIGINT(20) PRIMARY KEY NOT NULL,
+  login_attempts INT(11) DEFAULT '0' NOT NULL,
+  lastlogin_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  approved_datetime TIMESTAMP NULL,
+  invited_datetime TIMESTAMP NULL,
+  accepted_datetime TIMESTAMP NULL,
+  invited_by_id BIGINT(20) DEFAULT '0' NOT NULL,
+  ip VARCHAR(25),
+  CONSTRAINT user_data_users_fk FOREIGN KEY (user_id)
+  REFERENCES users (user_id)
+);
+CREATE UNIQUE INDEX user_data_user_id_uindex ON user_data (user_id);
+
+INSERT INTO user_data (user_id) SELECT user_id from users;
+
+-- ----------------------------
 -- Table structure for user_authorities
 -- ----------------------------
 DROP TABLE IF EXISTS `user_authorities`;

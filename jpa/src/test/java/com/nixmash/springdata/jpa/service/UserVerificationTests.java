@@ -37,8 +37,8 @@ public class UserVerificationTests {
         userDTO.setEnabled(false);
         User user = userService.create(userDTO);
         assertFalse(user.isEnabled());
-        assertNotNull(user.getCreatedDatetime());
-        assertNull(user.getApprovedDatetime());
+        assertNotNull(user.getUserData().getCreatedDatetime());
+        assertNull(user.getUserData().getApprovedDatetime());
     }
 
     @Test

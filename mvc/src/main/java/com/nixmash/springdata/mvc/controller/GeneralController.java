@@ -37,6 +37,7 @@ public class GeneralController {
     private static final Logger logger = LoggerFactory.getLogger(GeneralController.class);
 
     public static final String HOME_VIEW = "home";
+    public static final String REDIRECT_HOME_VIEW = "redirect:/";
     public static final String ERROR_403_VIEW = "errors/custom";
 
     private final FmService fmService;

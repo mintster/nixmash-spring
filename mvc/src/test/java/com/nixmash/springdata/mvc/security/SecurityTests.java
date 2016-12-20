@@ -131,7 +131,7 @@ public class SecurityTests extends AbstractContext {
 		mvc.perform(request).andExpect(status().is3xxRedirection());
 
 		CurrentUser bobby = currentUserDetailsService.loadUserByUsername("bobby");
-		assertNotNull(bobby.getUser().getCreatedDatetime());
+		assertNotNull(bobby.getUser().getUserData().getCreatedDatetime());
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class SecurityTests extends AbstractContext {
 		mvc.perform(request).andExpect(status().is3xxRedirection());
 
 		CurrentUser user1215155 = currentUserDetailsService.loadUserByUsername("user1215155");
-		assertNotNull(user1215155.getUser().getCreatedDatetime());
+		assertNotNull(user1215155.getUser().getUserData().getCreatedDatetime());
 
 
 	}

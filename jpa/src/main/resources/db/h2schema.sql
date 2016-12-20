@@ -28,8 +28,6 @@ CREATE TABLE users (
   provider_id varchar(25) NOT NULL DEFAULT 'SITE',
   password varchar(255) NOT NULL,
   version int(11) NOT NULL DEFAULT '0',
-  created_datetime TIMESTAMP NOT NULL  DEFAULT CURRENT_TIMESTAMP,
-  approved_datetime TIMESTAMP,
   PRIMARY KEY (user_id)
 );
 
@@ -123,6 +121,25 @@ CREATE TABLE user_profiles (
 );
 
 -- ----------------------------
+-- Table structure for user_data
+-- ----------------------------
+CREATE TABLE user_data
+(
+  user_id BIGINT(20) NOT NULL,
+  login_attempts INT(11) DEFAULT '0' NOT NULL,
+  lastlogin_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  approved_datetime TIMESTAMP NULL,
+  invited_datetime TIMESTAMP NULL,
+  accepted_datetime TIMESTAMP NULL,
+  invited_by_id BIGINT(20) DEFAULT '0' NOT NULL,
+  ip VARCHAR(25),
+  UNIQUE INDEX user_data_user_id_uindex (user_id),
+  PRIMARY KEY (user_id),
+  CONSTRAINT user_data_users_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+-- ----------------------------
 -- Table structure for userconnection
 -- ----------------------------
 CREATE TABLE userconnection (
@@ -164,8 +181,7 @@ CREATE TABLE posts (
   UNIQUE KEY posts_post_id_uindex (post_id),
   UNIQUE KEY posts_post_name_pk (post_name),
   PRIMARY KEY (post_id),
-  CONSTRAINT posts_users_user_id_fk FOREIGN KEY (user_id) REFERENCES users (user_id),
-
+  CONSTRAINT posts_users_user_id_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE tags

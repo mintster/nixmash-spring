@@ -14,9 +14,17 @@
         <div class="row">
             <div class="col-lg-12"><br/><br/></div>
         </div>
+
+        <!--/*@thymesVar id="emailVerifiedWelcomeMessage" type="java.lang.Boolean"*/-->
+        <div th:if="${emailVerifiedWelcomeMessage}" class="container">
+            <div class="row email-approved-row">
+                <div class="col-lg-12">
+                    Thank you for verifying your Email Address and completing the registration process!<br /><strong><a href="signin.html"  th:href="@{'/signin/'}">Please login</a></strong> with your username and password.
+                </div>
+            </div>
+        </div>
+
         <!--/*@thymesVar id="showGitHubStats" type="java.lang.Boolean"*/-->
-
-
         <div class="row github-buttons" th:if="${showGitHubStats}">
             <div class="col-lg-12">
                 <div th:replace="fragments/github :: github">[GitHub Buttons]</div>

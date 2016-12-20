@@ -26,6 +26,7 @@ import com.nixmash.springdata.jpa.model.UserConnection;
 import com.nixmash.springdata.jpa.model.validators.SocialUserFormValidator;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.UserService;
+import com.nixmash.springdata.mail.service.FmMailService;
 import com.nixmash.springdata.mvc.components.WebUI;
 import com.nixmash.springdata.mvc.security.SignInUtils;
 import org.slf4j.Logger;
@@ -43,7 +44,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
@@ -53,7 +53,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.nixmash.springdata.mvc.controller.GeneralController.HOME_VIEW;
+import static com.nixmash.springdata.mvc.controller.GeneralController.REDIRECT_HOME_VIEW;
 import static com.nixmash.springdata.mvc.controller.GlobalController.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -87,6 +87,7 @@ public class UserController {
     private final SocialUserFormValidator socialUserFormValidator;
     private final ProviderSignInUtils providerSignInUtils;
     private WebUI webUI;
+    private final FmMailService fmMailService;
 
     // endregion
 
@@ -97,12 +98,13 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator,
-                          SocialUserFormValidator socialUserFormValidator, ProviderSignInUtils providerSignInUtils, WebUI webUI) {
+                          SocialUserFormValidator socialUserFormValidator, ProviderSignInUtils providerSignInUtils, WebUI webUI, FmMailService fmMailService) {
         this.userService = userService;
         this.userCreateFormValidator = userCreateFormValidator;
         this.socialUserFormValidator = socialUserFormValidator;
         this.providerSignInUtils = providerSignInUtils;
         this.webUI = webUI;
+        this.fmMailService = fmMailService;
     }
 
     @InitBinder("userDTO")
@@ -129,15 +131,31 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = POST)
     public String register(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result, WebRequest request,
-                           RedirectAttributes redirect) {
+                           RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return REGISTER_VIEW;
         }
         userDTO.setSignInProvider(SignInProvider.SITE);
         userDTO.setAuthorities(Lists.newArrayList(new Authority("ROLE_USER")));
+
+        // todo: test for SiteOptions.AuthenticationType before setEnabled(false)
+        userDTO.setEnabled(false);
+
         User user = userService.create(userDTO);
-        SignInUtils.authorizeUser(user);
-        return "redirect:/";
+
+        String redirectionUrl = "redirect:/";
+
+        // todo: SiteOptions.AuthenticationType check
+        if (!userDTO.isEnabled()) {
+            // send validation email
+            fmMailService.sendUserVerificationMail(user);
+            redirectAttributes.addFlashAttribute("statusMessage", webUI.getMessage(USER_VERIFICATION_EMAIL_SENT, user.getEmail()));
+            redirectionUrl += "register?message";
+        } else {
+            // non-email validation
+            SignInUtils.authorizeUser(user);
+        }
+        return redirectionUrl;
     }
 
     @RequestMapping(value = "/users/reverify/{username}", method = RequestMethod.GET)
@@ -151,28 +169,19 @@ public class UserController {
         }
     }
 
-//    @RequestMapping(value = "/users/verify", method = RequestMethod.GET)
-//    public ModelAndView emptyVerifyUserKey() {
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_TITLE));
-//        mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_NOKEY_MESSAGE));
-//        mav.setViewName(ERROR_CUSTOM_VIEW);
-//        return mav;
-//    }
-
     @RequestMapping(value = "/users/verify/{userkey}", method = RequestMethod.GET)
-    public ModelAndView verifyUser(@PathVariable("userkey") String userkey) {
-        ModelAndView mav = new ModelAndView();
+    public String verifyUser(@PathVariable("userkey") String userkey, Model model, RedirectAttributes redirectAttributes) {
         Optional<User> user = userService.getByUserKey(userkey);
+        String viewName = ERROR_CUSTOM_VIEW;
         if (!user.isPresent()) {
-            mav.addObject(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_TITLE));
-            mav.addObject(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_MESSAGE));
-            mav.setViewName(ERROR_CUSTOM_VIEW);
+            model.addAttribute(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_TITLE));
+            model.addAttribute(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_MESSAGE));
         } else {
-            // enable user and enter approved_datetime
-            mav.setViewName(HOME_VIEW);
+            userService.enableAndApproveUser(user.get());
+            redirectAttributes.addFlashAttribute("emailVerifiedWelcomeMessage", true);
+            viewName =  REDIRECT_HOME_VIEW;
         }
-        return mav;
+        return viewName;
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)

@@ -2,15 +2,16 @@ package com.nixmash.springdata.jpa.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * A profile for a system user.
  */
 @Entity
 @Table(name = "user_profiles")
-public class UserProfile {
+public class UserProfile implements Serializable {
 
-    private static final long serialVersionUID = 6529028956634326182L;
+    private static final long serialVersionUID = -2264925400662063658L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
