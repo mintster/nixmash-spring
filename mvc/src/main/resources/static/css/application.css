@@ -411,9 +411,9 @@ td a b {
 /* USER REGISTRATION FORM MESSAGES -------------------------- */
 
 .register-email-message {
-
+    display: block;
+    margin-top: 25px;
 }
-
 /* USER REGISTRATION HOME MESSAGE -------------------------- */
 
 .email-approved-row {

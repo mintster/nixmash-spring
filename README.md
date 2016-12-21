@@ -14,7 +14,7 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *JPA @NamedQueries and @NamedNativeQueries* | *JPA Paging and Sorting* |  *Bootstrap3* | *Responsive Admin Dashboard* |
 | *RSS w/ AbstractRSSView* | *Thymeleaf* | *Like Buttons* |  *File Uploading*|
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (v0.4.0+)* |
-| *Spring Caching* |  *Spring Batch* | |
+| *Spring Caching* |  *Spring Batch* | *AuthenticationFailure Handling* | |
 
 ##Becoming Spring Masters Together
 
@@ -81,6 +81,8 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 
 - Spring Batch Job where GitHub Repo stats are retrieved every hour and stored in a `github_stats` table from where they're retrieved for display on Home Page
 - User Email Account domain filtering
+- User Registration with Email Validation
+- [Post: New User Email Verification with Spring, the Process](http://nixmash.com/java/new-user-email-verification-with-spring-the-process/)
 - [Post: Spring Batch Concepts, Part I](http://nixmash.com/java/spring-batch-concepts-part-i/)
 - [Post: Spring Batch Concepts, Part II](http://nixmash.com/java/spring-batch-concepts-part-ii/)
 - [Post: Spring Batch Concepts, Part III](http://nixmash.com/java/spring-batch-concepts-part-iii/)
