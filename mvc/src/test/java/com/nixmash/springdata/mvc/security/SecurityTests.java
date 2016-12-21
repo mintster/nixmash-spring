@@ -1,6 +1,8 @@
 package com.nixmash.springdata.mvc.security;
 
 import com.nixmash.springdata.jpa.model.CurrentUser;
+import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.service.UserService;
 import com.nixmash.springdata.mvc.AbstractContext;
 import com.nixmash.springdata.mvc.controller.UserController;
 import org.junit.Before;
@@ -9,6 +11,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -19,7 +22,9 @@ import javax.servlet.Filter;
 
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.user;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
@@ -41,6 +46,9 @@ public class SecurityTests extends AbstractContext {
 
 	@Autowired
 	private CurrentUserDetailsService currentUserDetailsService;
+
+	@Autowired
+	private UserService userService;
 
 	private CurrentUser keith;
 	private CurrentUser user;
@@ -121,17 +129,17 @@ public class SecurityTests extends AbstractContext {
 	// region Registration Form
 
 	@Test
-	public void validRegistration() throws Exception {
-		RequestBuilder request = post("/register")
+	public void validRegistration_UserCreatedButNotApproved() throws Exception {
+		mvc.perform(post("/register")
 				.param("username", "bobby").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "bob@aol.com")
 				.param("password", "password")
-				.param("repeatedPassword", "password").with(csrf());
+				.param("repeatedPassword", "password").with(csrf()));
 
-		mvc.perform(request).andExpect(status().is3xxRedirection());
-
-		CurrentUser bobby = currentUserDetailsService.loadUserByUsername("bobby");
-		assertNotNull(bobby.getUser().getUserData().getCreatedDatetime());
+		User bobby = userService.getUserByUsername("bobby");
+		assertNotNull(bobby.getUserData().getCreatedDatetime());
+		assertNull(bobby.getUserData().getApprovedDatetime());
+		assertFalse(bobby.isEnabled());
 	}
 
 	@Test
@@ -158,16 +166,16 @@ public class SecurityTests extends AbstractContext {
 		 mvc.perform(request).andExpect(model().attributeHasErrors("userDTO")).andExpect(invalidRegistration());
 	}
 
-	@Test
-	public void gmailDomainIsApproved() throws Exception {
+	@Test(expected = DisabledException.class)
+	public void gmailDomainPassesFilter_IsNotYetApproved() throws Exception {
 		RequestBuilder request = post("/register").param("username", "user1215155").param("firstName", "Bob")
 				.param("lastName", "Crachet").param("email", "bob@gmail.com").param("password", "password")
 				.param("repeatedPassword", "password").with(csrf());
 
 		mvc.perform(request).andExpect(status().is3xxRedirection());
 
-		CurrentUser user1215155 = currentUserDetailsService.loadUserByUsername("user1215155");
-		assertNotNull(user1215155.getUser().getUserData().getCreatedDatetime());
+		// user is disabled. Where it throws DisabledException
+		CurrentUser currentUser1215155 = currentUserDetailsService.loadUserByUsername("user1215155");
 
 
 	}

@@ -19,12 +19,16 @@ import static com.nixmash.springdata.mvc.security.CurrentUserDetailsService.USER
 @Component("authenticationFailureHandler")
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+    // region Constants / Beans
+
     private static final String GENERIC_AUTHENTICATION_ERROR_KEY = "user.generic.authentication.error";
     private static final String NOT_YET_USER_VERIFIED_ERROR_KEY = "user.not.verified.message";
     private static final String USERNAME = "username";
 
     private final WebUI webUI;
     private final UserService userService;
+
+    // endregion
 
     @Autowired
     public CustomAuthenticationFailureHandler(WebUI webUI, UserService userService) {
@@ -38,7 +42,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             throws IOException, ServletException {
 
         setDefaultFailureUrl("/signin?error");
-
         super.onAuthenticationFailure(request, response, exception);
 
         String errorMessage = webUI.getMessage(GENERIC_AUTHENTICATION_ERROR_KEY);

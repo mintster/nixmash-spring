@@ -170,12 +170,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/verify/{userkey}", method = RequestMethod.GET)
-    public String verifyUser(@PathVariable("userkey") String userkey, Model model, RedirectAttributes redirectAttributes) {
+    public String verifyUser(@PathVariable("userkey") String userkey, Model model,
+                             RedirectAttributes redirectAttributes) {
         Optional<User> user = userService.getByUserKey(userkey);
         String viewName = ERROR_CUSTOM_VIEW;
         if (!user.isPresent()) {
-            model.addAttribute(ERROR_PAGE_TITLE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_TITLE));
-            model.addAttribute(ERROR_PAGE_MESSAGE_ATTRIBUTE, webUI.getMessage(USER_VERIFICATION_ERROR_MESSAGE));
+            model.addAttribute(ERROR_PAGE_TITLE_ATTRIBUTE,
+                    webUI.getMessage(USER_VERIFICATION_ERROR_TITLE));
+            model.addAttribute(ERROR_PAGE_MESSAGE_ATTRIBUTE,
+                    webUI.getMessage(USER_VERIFICATION_ERROR_MESSAGE));
         } else {
             userService.enableAndApproveUser(user.get());
             redirectAttributes.addFlashAttribute("emailVerifiedWelcomeMessage", true);

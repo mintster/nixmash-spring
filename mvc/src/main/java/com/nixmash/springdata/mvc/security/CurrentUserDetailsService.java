@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CurrentUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
-    public static final String USER_IS_DISABLED = "User is disabled";
+    static final String USER_IS_DISABLED = "User is disabled";
 
 
     @Autowired
@@ -28,9 +28,6 @@ public class CurrentUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         if (!user.isEnabled())
             throw new  DisabledException(USER_IS_DISABLED);
-        if(user == null) {
-            throw new UsernameNotFoundException("Could not find user " + username);
-        }
         return new CurrentUser(user);
     }
 
