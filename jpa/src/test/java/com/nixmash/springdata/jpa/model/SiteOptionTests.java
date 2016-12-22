@@ -6,6 +6,7 @@ import com.nixmash.springdata.jpa.config.ApplicationConfig;
 import com.nixmash.springdata.jpa.dto.SiteOptionDTO;
 import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
 import com.nixmash.springdata.jpa.enums.DataConfigProfile;
+import com.nixmash.springdata.jpa.enums.UserRegistration;
 import com.nixmash.springdata.jpa.exceptions.SiteOptionNotFoundException;
 import com.nixmash.springdata.jpa.repository.SiteOptionRepository;
 import com.nixmash.springdata.jpa.service.SiteService;
@@ -35,9 +36,11 @@ public class SiteOptionTests {
     public static final String DEFAULT_SITE_DESCRIPTION = "My Site Description";
     public static final String DEFAULT_TRACKING_ID = "UA-XXXXXX-7";
     public static final Integer DEFAULT_INTEGER_PROPERTY = 1;
+    public static final UserRegistration DEFAULT_USER_REGISTRATION=  UserRegistration.ADMINISTRATIVE_APPROVAL;
 
     private static final String MY_UPDATED_SITE_NAME = "My Updated Site Name";
     private static final Integer UPDATED_INTEGER_PROPERTY = 8;
+    public static final UserRegistration UPDATED_USER_REGISTRATION=  UserRegistration.CLOSED;
 
     // endregion
 
@@ -69,6 +72,7 @@ public class SiteOptionTests {
         assertEquals(siteOptions.getGoogleAnalyticsTrackingId(), "UA-XXXXXX-7");
         assertEquals(siteOptions.getSiteName(), "My Site");
         assertEquals(siteOptions.getSiteDescription(), "My Site Description");
+        assertEquals(siteOptions.getUserRegistration(), UserRegistration.ADMINISTRATIVE_APPROVAL);
     }
 
     @Test
@@ -76,13 +80,16 @@ public class SiteOptionTests {
 
         assertEquals(siteOptions.getSiteName(), DEFAULT_SITE_NAME);
         assertEquals(siteOptions.getIntegerProperty(), DEFAULT_INTEGER_PROPERTY);
+        assertEquals(siteOptions.getUserRegistration(), DEFAULT_USER_REGISTRATION);
 
         siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, MY_UPDATED_SITE_NAME));
         siteService.update(new SiteOptionDTO(ISiteOption.INTEGER_PROPERTY,
                 UPDATED_INTEGER_PROPERTY.toString()));
+        siteService.update(new SiteOptionDTO(ISiteOption.USER_REGISTRATION, String.valueOf(UPDATED_USER_REGISTRATION)));
 
         assertEquals(siteOptions.getSiteName(), MY_UPDATED_SITE_NAME);
         assertEquals(siteOptions.getIntegerProperty(), UPDATED_INTEGER_PROPERTY);
+        assertEquals(siteOptions.getUserRegistration(), UserRegistration.CLOSED);
 
         siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, DEFAULT_SITE_NAME));
     }
@@ -95,13 +102,21 @@ public class SiteOptionTests {
     }
 
     @Test
+    public void userRegistrationEnumRetrievedFromSiteOptionDTO() {
+        SiteOptionDTO siteOptionDTO = SiteOptionDTO.with(ISiteOption.USER_REGISTRATION, UserRegistration.INVITE_ONLY).build();
+        assertEquals(siteOptionDTO.getName(), ISiteOption.USER_REGISTRATION);
+        assertEquals(siteOptionDTO.getValue(), "INVITE_ONLY");
+    }
+
+    @Test
     public void SiteOptionMapDtoValidationTests() {
 
         SiteOptionMapDTO siteOptionMapDTO = SiteOptionMapDTO.withGeneralSettings(
                 null,
                 siteOptions.getSiteDescription(),
                 siteOptions.getAddGoogleAnalytics(),
-                siteOptions.getGoogleAnalyticsTrackingId())
+                siteOptions.getGoogleAnalyticsTrackingId(),
+                siteOptions.getUserRegistration())
                 .build();
 
         Errors errors = new BeanPropertyBindingResult(siteOptionMapDTO, "siteOptionMapDTO");

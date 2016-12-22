@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.dto;
 
+import com.nixmash.springdata.jpa.enums.UserRegistration;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,8 @@ public class SiteOptionMapDTO implements Serializable{
 
     @NotNull
     private Integer integerProperty;
+
+    private UserRegistration userRegistration;
 
     // region getters setters
 
@@ -67,27 +70,37 @@ public class SiteOptionMapDTO implements Serializable{
         this.integerProperty = integerProperty;
     }
 
+    public UserRegistration getUserRegistration() {
+        return userRegistration;
+    }
+
+    public void setUserRegistration(UserRegistration userRegistration) {
+        this.userRegistration = userRegistration;
+    }
+
     // endregion
 
     public static Builder withGeneralSettings(
-                                           String siteName,
-                                           String siteDescription,
-                                           Boolean addGoogleAnalytics,
-                                           String googleAnalyticsTrackingId){
+            String siteName,
+            String siteDescription,
+            Boolean addGoogleAnalytics,
+            String googleAnalyticsTrackingId,
+            UserRegistration userRegistration){
 
-        return new Builder(siteName, siteDescription, addGoogleAnalytics, googleAnalyticsTrackingId);
+        return new Builder(siteName, siteDescription, addGoogleAnalytics, googleAnalyticsTrackingId, userRegistration);
     }
 
     public static class Builder {
 
         private SiteOptionMapDTO built;
 
-        public Builder(String siteName, String siteDescription, Boolean addGoogleAnalytics, String googleAnalyticsTrackingId) {
+        public Builder(String siteName, String siteDescription, Boolean addGoogleAnalytics, String googleAnalyticsTrackingId, UserRegistration userRegistration) {
             built = new SiteOptionMapDTO();
             built.siteName = siteName;
             built.siteDescription = siteDescription;
             built.addGoogleAnalytics = addGoogleAnalytics;
             built.googleAnalyticsTrackingId = googleAnalyticsTrackingId;
+            built.userRegistration = userRegistration;
         }
 
         public Builder integerProperty(Integer integerProperty) {

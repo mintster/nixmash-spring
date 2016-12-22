@@ -62,7 +62,7 @@ public class JpaUI {
     }
 
     public void init() {
-        getGithubStats();
+        siteOptionsDemo();
     }
 
     // region BatchJob Reports and GitHub Stats
@@ -175,15 +175,18 @@ public class JpaUI {
         Boolean reset = true;
         String siteName = reset ? "My Site" : "My Updated Site Name";
         String integerProperty = reset ? "1" : "8";
+        String userRegistration = "EMAIL_VERIFICATION";
 
         try {
             siteService.update(new SiteOptionDTO(ISiteOption.SITE_NAME, siteName));
             siteService.update(new SiteOptionDTO(ISiteOption.INTEGER_PROPERTY, integerProperty));
+            siteService.update(new SiteOptionDTO(ISiteOption.USER_REGISTRATION, userRegistration));
         } catch (SiteOptionNotFoundException e) {
             e.printStackTrace();
         }
         System.out.println("New SiteOptions values: " + siteOptions.getSiteName() + " -- " + siteOptions.getIntegerProperty());
         System.out.println("GoogleAnalyticsId: " + siteOptions.getGoogleAnalyticsTrackingId());
+        System.out.println("UserRegistration: " + siteOptions.getUserRegistration());
     }
 
     public void entityDemo() {

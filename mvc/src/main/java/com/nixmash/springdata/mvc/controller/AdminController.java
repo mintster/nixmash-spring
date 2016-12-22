@@ -333,7 +333,8 @@ public class AdminController {
                 siteOptions.getSiteName(),
                 siteOptions.getSiteDescription(),
                 siteOptions.getAddGoogleAnalytics(),
-                siteOptions.getGoogleAnalyticsTrackingId())
+                siteOptions.getGoogleAnalyticsTrackingId(),
+                siteOptions.getUserRegistration())
                 .build();
     }
 
@@ -351,6 +352,9 @@ public class AdminController {
                 .build());
         siteService.update(SiteOptionDTO.with(
                 ISiteOption.GOOGLE_ANALYTICS_TRACKING_ID, siteOptionMapDTO.getGoogleAnalyticsTrackingId())
+                .build());
+        siteService.update(SiteOptionDTO.with(
+                ISiteOption.USER_REGISTRATION, siteOptionMapDTO.getUserRegistration())
                 .build());
     }
 

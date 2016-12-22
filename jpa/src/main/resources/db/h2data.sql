@@ -134,6 +134,7 @@ INSERT INTO site_options (option_id, option_name, option_value) VALUES ('3', 'ad
 INSERT INTO site_options (option_id, option_name, option_value)
 VALUES ('4', 'googleAnalyticsTrackingId', 'UA-XXXXXX-7');
 INSERT INTO site_options (option_id, option_name, option_value) VALUES ('5', 'integerProperty', '1');
+INSERT INTO site_options (option_id, option_name, option_value) VALUES ('6', 'userRegistration', 'ADMINISTRATIVE_APPROVAL');
 
 /* ------------------------------------------------------------ */
 -- Posts

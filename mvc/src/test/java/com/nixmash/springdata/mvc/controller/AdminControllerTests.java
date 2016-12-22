@@ -4,6 +4,7 @@ import com.github.dandelion.core.web.DandelionFilter;
 import com.nixmash.springdata.jpa.common.ISiteOption;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
+import com.nixmash.springdata.jpa.enums.UserRegistration;
 import com.nixmash.springdata.jpa.model.validators.UserCreateFormValidator;
 import com.nixmash.springdata.jpa.service.SiteService;
 import com.nixmash.springdata.jpa.service.UserService;
@@ -47,7 +48,7 @@ public class AdminControllerTests extends AbstractContext {
 
     private static final String NEW_SITE_NAME = "New Site Name";
     private static final Integer NEW_INTEGER_PROPERTY = 8;
-
+    private static final UserRegistration NEW_USER_REGISTRATION = UserRegistration.CLOSED;
 
     @Autowired
     private WebUI webUI;
@@ -85,7 +86,8 @@ public class AdminControllerTests extends AbstractContext {
                 siteOptions.getSiteName(),
                 siteOptions.getSiteDescription(),
                 siteOptions.getAddGoogleAnalytics(),
-                siteOptions.getGoogleAnalyticsTrackingId())
+                siteOptions.getGoogleAnalyticsTrackingId(),
+                siteOptions.getUserRegistration())
                 .build();
 
         mockUserService = mock(UserService.class);
@@ -98,6 +100,7 @@ public class AdminControllerTests extends AbstractContext {
         siteOptions.setSiteDescription(DEFAULT_SITE_DESCRIPTION);
         siteOptions.setAddGoogleAnalytics(false);
         siteOptions.setGoogleAnalyticsTrackingId(DEFAULT_TRACKING_ID);
+        siteOptions.setUserRegistration(DEFAULT_USER_REGISTRATION);
     }
 
 
@@ -157,10 +160,12 @@ public class AdminControllerTests extends AbstractContext {
     public void updateGeneralSiteSettingsMethodTest() throws Exception {
         siteOptionMapDTO.setSiteName(NEW_SITE_NAME);
         siteOptionMapDTO.setIntegerProperty(NEW_INTEGER_PROPERTY);
+        siteOptionMapDTO.setUserRegistration(NEW_USER_REGISTRATION);
 
         adminController.updateGeneralSiteSettings(siteOptionMapDTO);
 
         assertEquals(siteOptions.getSiteName(), NEW_SITE_NAME);
+        assertEquals(siteOptions.getUserRegistration(), NEW_USER_REGISTRATION);
 
         // integerProperty is not updated as a General Site Setting
         assertEquals(siteOptions.getIntegerProperty(), DEFAULT_INTEGER_PROPERTY);

@@ -1,5 +1,6 @@
 package com.nixmash.springdata.jpa.common;
 
+import com.nixmash.springdata.jpa.enums.UserRegistration;
 import com.nixmash.springdata.jpa.model.SiteOption;
 import com.nixmash.springdata.jpa.repository.SiteOptionRepository;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 @Component
 @DependsOn("databasePopulator")
-public class SiteOptions  {
+public class SiteOptions {
 
     private SiteOptionRepository siteOptionRepository;
 
@@ -51,6 +52,7 @@ public class SiteOptions  {
     private Boolean addGoogleAnalytics;
     private String googleAnalyticsTrackingId;
     private Integer integerProperty;
+    private UserRegistration userRegistration;
 
     // endregion
 
@@ -96,12 +98,13 @@ public class SiteOptions  {
         this.googleAnalyticsTrackingId = googleAnalyticsTrackingId;
     }
 
-    // endregion
+    public UserRegistration getUserRegistration() {
+        return userRegistration;
+    }
 
-    // region Constants
-
-    public static final String OPTION_VALUE_TYPE_BOOLEAN = "Boolean";
-    public static final String OPTION_VALUE_TYPE_INTEGER = "Integer";
+    public void setUserRegistration(UserRegistration userRegistration) {
+        this.userRegistration = userRegistration;
+    }
 
     // endregion
 
@@ -115,13 +118,17 @@ public class SiteOptions  {
                 ", addGoogleAnalytics=" + addGoogleAnalytics +
                 ", googleAnalyticsTrackingId='" + googleAnalyticsTrackingId + '\'' +
                 ", integerProperty=" + integerProperty +
+                ", userRegistration=" + userRegistration +
                 '}';
     }
-
 
     // endregion
 
     // region Utils
+
+    private static final String OPTION_VALUE_TYPE_BOOLEAN = "Boolean";
+    private static final String OPTION_VALUE_TYPE_INTEGER = "Integer";
+    private static final String OPTION_VALUE_TYPE_USERREGISTRATION = "UserRegistration";
 
     public void setSiteOptionProperty(String property, Object value)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
@@ -134,6 +141,9 @@ public class SiteOptions  {
                     break;
                 case OPTION_VALUE_TYPE_INTEGER:
                     value = Integer.parseInt(value.toString());
+                    break;
+                case OPTION_VALUE_TYPE_USERREGISTRATION:
+                    value = UserRegistration.valueOf(value.toString());
                     break;
                 default:
                     break;
