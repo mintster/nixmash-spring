@@ -179,7 +179,9 @@ public class AdminControllerTests extends AbstractContext {
                 .param(ISiteOption.SITE_NAME, siteOptionMapDTO.getSiteName())
                 .param(ISiteOption.SITE_DESCRIPTION, siteOptionMapDTO.getSiteDescription())
                 .param(ISiteOption.ADD_GOOGLE_ANALYTICS, String.valueOf(siteOptionMapDTO.getAddGoogleAnalytics()))
-                .param(ISiteOption.GOOGLE_ANALYTICS_TRACKING_ID, siteOptionMapDTO.getGoogleAnalyticsTrackingId()).with(csrf());
+                .param(ISiteOption.GOOGLE_ANALYTICS_TRACKING_ID, siteOptionMapDTO.getGoogleAnalyticsTrackingId())
+                .param(ISiteOption.USER_REGISTRATION, String.valueOf(siteOptionMapDTO.getUserRegistration()))
+                .with(csrf());
 
         mvc.perform(request)
                 .andExpect(model().attributeHasNoErrors())

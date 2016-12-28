@@ -14,13 +14,13 @@
 	</appender>
 
 	<logger name="com.nixmash.springdata" level="OFF" />
-	<logger name="com.nixmash.springdata.mvc" level="OFF" />
+	<logger name="com.nixmash.springdata.mvc" level="INFO" />
 	<logger name="org.thymeleaf" level="OFF" />
 	<logger name="org.hibernate" level="OFF" />
 	<logger name="org.springframework" level="OFF" />
 	<logger name="org.freemarker" level="OFF" />
 
-	<root level="OFF">
+	<root level="INFO">
 		<appender-ref ref="console" />
 	</root>
 </configuration>
