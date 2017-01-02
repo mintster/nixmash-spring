@@ -11,19 +11,10 @@
         $(document).ready(function () {
 
             $('#addCategory').on('click', function () {
-                $('#categoriesTable_wrapper').css('display', 'none');
                 $('#newCategoryTable').css('display', 'table');
             });
 
-            $('#editCategories').on('click', function () {
-                oTable_categoriesTable.column(2).visible(true);
-                oTable_categoriesTable.column(1).visible(false);
-            });
-
             $('#refreshCategories').on('click', function () {
-                oTable_categoriesTable.column(1).visible(true);
-                oTable_categoriesTable.column(2).visible(false);
-                $('#categoriesTable_wrapper').css('display', 'table');
                 $('#newCategoryTable').css('display', 'none');
             });
 
@@ -40,8 +31,6 @@
                     <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
                         <a id="addCategory" th:text="#{admin.categories.button.new}"
                            class="btn btn-primary">[Add Category]</a>
-                        <a id="editCategories" th:text="#{admin.categories.button.edit}"
-                           class="btn btn-primary">[Edit Categories]</a>
                         <a id="refreshCategories" th:text="#{admin.categories.button.cancel}"
                            class="btn btn-primary">[Cancel]</a>
                         <a th:href="@{'/admin/addons/flashcards'}" th:text="#{admin.flashcards}"
@@ -79,13 +68,12 @@
                         </tbody>
                     </table>
 
-                    <table id="categoriesTable" dt:table="true" class="table table-striped"
-                           dt:cssStyle="display: table;">
+                    <table id="categoriesTable" class="table table-striped">
                         <thead>
                         <tr>
                             <th width="100px">Id</th>
                             <th>Category</th>
-                            <th dt:visible="false">Category</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>

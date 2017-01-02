@@ -6,26 +6,14 @@
 <div th:fragment="body">
 
     <script type="text/javascript">
-        var oTable_flashcardTable = $('#flashcardTable');
 
         $(document).ready(function () {
-
+            $('#flashcardTable').DataTable();
             $('#addFlashcard').on('click', function () {
-                $('#flashcardTable_wrapper').css('display', 'none');
                 $('#newFlashcardTable').css('display', 'table');
             });
 
-            $('#editFlashcards').on('click', function () {
-                oTable_flashcardTable.column(4).visible(true);
-                oTable_flashcardTable.column(2).visible(false);
-                oTable_flashcardTable.column(3).visible(false);
-            });
-
             $('#refreshFlashcards').on('click', function () {
-                oTable_flashcardTable.column(4).visible(false);
-                oTable_flashcardTable.column(2).visible(true);
-                oTable_flashcardTable.column(3).visible(true);
-                $('#flashcardTable_wrapper').css('display', 'table');
                 $('#newFlashcardTable').css('display', 'none');
             });
 
@@ -53,12 +41,10 @@
                     <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
                         <a th:href="@{'/admin/addons/flashcards/add'}" th:text="#{admin.flashcards.button.add}"
                            class="btn btn-primary">[Add Flashcards]</a>
-                        <a id="editFlashcards" th:text="#{admin.flashcards.button.edit}"
-                           class="btn btn-primary">[Edit Flashcards]</a>
-                        <a id="refreshFlashcards" th:text="#{admin.flashcards.button.cancel}"
-                           class="btn btn-primary">[Cancel]</a>
                         <a th:href="@{'/admin/addons/flashcards/categories'}" th:text="#{admin.flashcards.categories}"
                            class="btn btn-success">[Manage Categories]</a>
+                        <a id="refreshFlashcards" th:text="#{admin.flashcards.button.refresh}"
+                           class="btn btn-primary">[Refresh]</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -69,15 +55,12 @@
                              th:text="${feedbackMessage}"></div>
                     </div>
 
-                    <table id="flashcardTable" dt:table="true" class="table table-striped"
-                           dt:cssStyle="display: table;">
+                    <table id="flashcardTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th dt:sortInitDirection="desc">Id</th>
+                            <th>Id</th>
                             <th>Image</th>
-                            <th dt:visible="false">Post</th>
-                            <th dt:visible="false">Category</th>
-                            <th class="flashcard-button-column"></th>
+                            <th class="flashcard-button-column">Select Answer Post and Category</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -92,8 +75,6 @@
 
                             <td th:text="${flashcard.slideId}">1</td>
                             <td><img th:src="${flashcard.thumbnailUrl}" th:alt="${flashcard.content}" th:title="${flashcard.content}" class="flash-thumbnail" /></td>
-                            <td th:text="${flashcard.postTitle}">post title</td>
-                            <td th:text="${flashcard.categoryName}">category</td>
                             <td>
                                 <form th:object="${flashcard}" method="post"
                                       th:action="@{|/admin/addons/flashcards/update/${flashcard.slideId}|}"

@@ -4,31 +4,10 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="body">
-
     <script type="text/javascript">
-        var oTable_tagsTable = $('#tagsTable');
 
-        $(document).ready(function () {
-
-            $('#add').on('click', function () {
-                $('#tagsTable_wrapper').css('display', 'none');
-                $('#newTagTable').css('display', 'table');
-            });
-
-            $('#editTags').on('click', function () {
-                oTable_tagsTable.column(3).visible(true);
-                oTable_tagsTable.column(1).visible(false);
-                oTable_tagsTable.column(2).visible(false);
-            });
-
-            $('#refreshTags').on('click', function () {
-                oTable_tagsTable.column(1).visible(true);
-                oTable_tagsTable.column(2).visible(true);
-                oTable_tagsTable.column(3).visible(false);
-                $('#tagsTable_wrapper').css('display', 'table');
-                $('#newTagTable').css('display', 'none');
-            });
-
+        $(document).ready(function(){
+            $('#tagsTable').DataTable();
         });
     </script>
 
@@ -38,14 +17,7 @@
                 <div class="x_title">
                     <h2 th:text="#{admin.tags.title}">[Tag Administration]
                     </h2>
-                    <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
-                        <a id="addTag" th:text="#{admin.tags.button.new}"
-                           class="btn btn-primary">[Add Tag]</a>
-                        <a id="editTags" th:text="#{admin.tags.button.edit}"
-                           class="btn btn-primary">[Edit Tags]</a>
-                        <a id="refreshTags" th:text="#{admin.tags.button.cancel}"
-                           class="btn btn-primary">[Cancel]</a>
-                    </div>
+                    <small th:text="#{admin.site.tags.subtitle}" class="h2_subtitle">[Update and Remove Tags]</small>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content  fill-body-table">
@@ -55,7 +27,7 @@
                              th:text="${feedbackMessage}"></div>
                     </div>
 
-                    <table id="newTagTable" style="display: none;" class="table table-striped">
+                    <table id="newTagTable" style="display: none;"  class="table table-striped">
                         <thead>
                         <tr>
                             <th width="100px"></th>
@@ -76,14 +48,13 @@
                         </tbody>
                     </table>
 
-                    <table id="tagsTable" dt:table="true" class="table table-striped"
-                            dt:cssStyle="display: table;">
+                    <table id="tagsTable" class="table table-striped">
                         <thead>
                         <tr>
                             <th width="100px">Id</th>
                             <th>Tag</th>
                             <th>Posts</th>
-                            <th dt:visible="false">Tag</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>

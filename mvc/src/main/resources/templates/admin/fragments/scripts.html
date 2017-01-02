@@ -1,6 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
+
+<div th:fragment="datatables">
+    <link rel="stylesheet" type="text/css" th:href="@{/dashboard/css/datatables/css/nixmash.dataTables.css}"/>
+    <script th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+</div>
+
 <div th:fragment="scripts">
     <script th:src="@{/dashboard/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/bootstrap-dialog.js}"></script>

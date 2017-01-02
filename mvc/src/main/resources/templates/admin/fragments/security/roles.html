@@ -6,24 +6,16 @@
 <div th:fragment="body">
 
     <script type="text/javascript">
-        var oTable_rolesTable = $('#rolesTable');
 
         $(document).ready(function () {
 
+            $('#rolesTable').DataTable();
+
             $('#addRole').on('click', function () {
-                $('#rolesTable_wrapper').css('display', 'none');
                 $('#newRoleTable').css('display', 'table');
             });
 
-            $('#editRoles').on('click', function () {
-                oTable_rolesTable.column(2).visible(true);
-                oTable_rolesTable.column(1).visible(false);
-            });
-
             $('#refreshRoles').on('click', function () {
-                oTable_rolesTable.column(1).visible(true);
-                oTable_rolesTable.column(2).visible(false);
-                $('#rolesTable_wrapper').css('display', 'table');
                 $('#newRoleTable').css('display', 'none');
             });
 
@@ -39,10 +31,8 @@
                     <div class="form-actions col-md-offset-3 col-sm-offset-2 pull-right">
                         <a id="addRole" th:text="#{admin.roles.button.new}"
                            class="btn btn-primary">[Add Role]</a>
-                        <a id="editRoles" th:text="#{admin.roles.button.edit}"
-                           class="btn btn-primary">[Edit Roles]</a>
-                        <a id="refreshRoles" th:text="#{admin.roles.button.cancel}"
-                           class="btn btn-primary">[Cancel]</a>
+                        <a id="refreshRoles" th:text="#{admin.roles.button.refresh}"
+                           class="btn btn-primary">[Refresh]</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -77,13 +67,12 @@
                     <!--/*@thymesVar id="role" type="com.nixmash.springdata.jpa.model.Authority"*/-->
                     <!--/*@thymesVar id="roles" type="List<com.nixmash.springdata.jpa.model.Authority>"*/-->
 
-                    <table id="rolesTable" dt:table="true" class="table table-striped"
-                            dt:cssStyle="display: table;">
+                    <table id="rolesTable" class="table table-striped">
                         <thead>
                         <tr>
                             <th width="100px">Id</th>
                             <th>Role</th>
-                            <th dt:visible="false">Role</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -96,7 +85,8 @@
                                 <form th:object="${role}" method="post"
                                       th:action="@{|/admin/roles/update/${role.id}|}"
                                       class="form-inline" id="role-form">
-                                    <input type="text" class="form-control" th:name="authority" id="authority" th:value="${role.authority}" />
+                                    <input type="text" class="form-control" th:name="authority" id="authority"
+                                           th:value="${role.authority}"/>
                                     <input type="submit" class="btn btn-primary" th:value="Update"/>
                                     <input th:type="submit" class="btn btn-success"
                                            name="deleteRole"

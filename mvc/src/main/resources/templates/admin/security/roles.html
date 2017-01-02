@@ -3,6 +3,7 @@
 <head>
     <div th:include="admin/fragments/head :: head" th:remove="tag">Global Header</div>
     <div th:include="admin/fragments/js :: functions('/admin/roles')" th:remove="tag">Functions</div>
+    <div th:include="admin/fragments/scripts :: datatables" th:remove="tag">Datatables Support</div>
     <title>NixMash Spring Administration - List Roles</title>
 </head>
 <body th:replace="admin/includes/body :: body('security/roles')"></body>

@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] IGNORED_RESOURCE_LIST = new String[] {"/fonts/**", "/webjars/**", "/dashboard/**",
-			"/dandelion-assets/**", "/dandelion/**", "/files/**" , "/x/**", "/robots.txt" };
+			 "/files/**" , "/x/**", "/robots.txt" };
 	private static final String[] PERMITALL_RESOURCE_LIST = new String[] {"/auth/**", "/signin/**", "/signup/**", "/",
 			"/register/**", "/contacts", "/json/**", "/products/**",  "/errors/**", "/users/**", "/posts/**", "/403" };
 	private static final String[] ADMIN_RESOURCE_LIST = new String[] { "/admin/**" };

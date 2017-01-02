@@ -1,7 +1,6 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.dandelion.core.web.DandelionFilter;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
@@ -25,7 +24,6 @@ import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.SimpleStringCriteria;
-import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -84,12 +82,9 @@ public class AdminPostsControllerTests  extends AbstractContext{
         ObjectMapper objectMapper = new ObjectMapper();
         JacksonTester.initFields(this, objectMapper);
 
-        DandelionFilter dandelionFilter = new DandelionFilter();
-        dandelionFilter.init(new MockFilterConfig());
 
         mvc = webAppContextSetup(wac)
                 .apply(springSecurity())
-                .addFilters(dandelionFilter)
                 .build();
 
         Query query = new SimpleQuery(new SimpleStringCriteria("doctype:post"));

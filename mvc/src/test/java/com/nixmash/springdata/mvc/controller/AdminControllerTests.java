@@ -1,6 +1,5 @@
 package com.nixmash.springdata.mvc.controller;
 
-import com.github.dandelion.core.web.DandelionFilter;
 import com.nixmash.springdata.jpa.common.ISiteOption;
 import com.nixmash.springdata.jpa.common.SiteOptions;
 import com.nixmash.springdata.jpa.dto.SiteOptionMapDTO;
@@ -17,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,7 +42,6 @@ public class AdminControllerTests extends AbstractContext {
 
     private AdminController adminController;
     private UserService mockUserService;
-    private DandelionFilter dandelionFilter;
 
     private static final String NEW_SITE_NAME = "New Site Name";
     private static final Integer NEW_INTEGER_PROPERTY = 8;
@@ -74,12 +71,9 @@ public class AdminControllerTests extends AbstractContext {
     @Before
     public void setup() throws ServletException {
 
-        this.dandelionFilter = new DandelionFilter();
-        this.dandelionFilter.init(new MockFilterConfig());
 
         mvc = webAppContextSetup(wac)
                 .apply(springSecurity())
-                .addFilters(dandelionFilter)
                 .build();
 
         siteOptionMapDTO = SiteOptionMapDTO.withGeneralSettings(
