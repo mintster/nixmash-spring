@@ -82,6 +82,8 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 - Spring Batch Job where GitHub Repo stats are retrieved every hour and stored in a `github_stats` table from where they're retrieved for display on Home Page
 - User Email Account domain filtering
 - User Registration with Email Validation
+- [Post: The Saga of the Case Insensitive MySQL Table Name](http://nixmash.com/java/the-saga-of-the-case-insensitive-mysql-table-name/)
+- [Post: New User Email Verification with Spring, the Code](http://nixmash.com/java/new-user-email-verification-with-spring-the-code/)
 - [Post: New User Email Verification with Spring, the Process](http://nixmash.com/java/new-user-email-verification-with-spring-the-process/)
 - [Post: Spring Batch Concepts, Part I](http://nixmash.com/java/spring-batch-concepts-part-i/)
 - [Post: Spring Batch Concepts, Part II](http://nixmash.com/java/spring-batch-concepts-part-ii/)
