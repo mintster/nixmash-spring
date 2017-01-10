@@ -244,9 +244,11 @@ public class AdminPostsController {
                 request.setAttribute("postTitle", postDTO.getPostTitle());
                 Post post = postService.add(postDTO);
 
-                // All links are saved as PUBLISHED so no _isPublished_ status check
-                // Links are NOT written to the Posts A-to-Z Listing
+                // All links are saved as PUBLISHED so no _isPublished_ status check on new Links
                 postDocService.addToIndex(post);
+
+                // Links are included in Posts A-to-Z Listing
+                fmService.createPostAtoZs();
 
                 webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
                 return "redirect:/admin/posts";
@@ -262,7 +264,7 @@ public class AdminPostsController {
 
 
     @RequestMapping(value = "/add/post", method = POST)
-    public String createNotePost(@Valid PostDTO postDTO, BindingResult result,
+    public String createPost(@Valid PostDTO postDTO, BindingResult result,
                                  CurrentUser currentUser, RedirectAttributes attributes, Model model,
                                  HttpServletRequest request) throws DuplicatePostNameException, PostNotFoundException {
 
@@ -305,8 +307,7 @@ public class AdminPostsController {
 
                     if (saved.getIsPublished()) {
                         postDocService.addToIndex(saved);
-                        // TODO: create Posts A-to-Z
-                        // fmService.createPostAtoZs();
+                        fmService.createPostAtoZs();
                     }
 
 
@@ -378,15 +379,12 @@ public class AdminPostsController {
                 else
                     postDocService.addToIndex(post);
 
-                // TODO: Rebuild Posts A-to-Z Listing
-                // fmService.createPostAtoZs();
+                 fmService.createPostAtoZs();
             } else {
                 // remove postDocument from Solr Index if previously marked "Published", now marked "Draft"
                 if (postIsIndexed)
                     postDocService.removeFromIndex(postDoc);
             }
-
-
 
             webUI.addFeedbackMessage(attributes, FEEDBACK_POST_UPDATED);
             return "redirect:/admin/posts";

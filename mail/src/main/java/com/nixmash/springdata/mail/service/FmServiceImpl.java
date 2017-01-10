@@ -1,13 +1,14 @@
 package com.nixmash.springdata.mail.service;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
-import com.nixmash.springdata.jpa.dto.AlphabetDTO;
-import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.User;
+import com.nixmash.springdata.jpa.service.PostService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 @Service("fmService")
@@ -30,12 +32,14 @@ public class FmServiceImpl implements FmService {
     private final ApplicationSettings applicationSettings;
     private final Configuration fm;
     private final Environment environment;
+    private final PostService postService;
 
     @Autowired
-    public FmServiceImpl(ApplicationSettings applicationSettings, Configuration fm, Environment environment) {
+    public FmServiceImpl(ApplicationSettings applicationSettings, Configuration fm, Environment environment, PostService postService) {
         this.applicationSettings = applicationSettings;
         this.fm = fm;
         this.environment = environment;
+        this.postService = postService;
     }
 
     // region Test Template
@@ -126,19 +130,25 @@ public class FmServiceImpl implements FmService {
     }
 
     @Override
-    public String createPostAtoZs(List<AlphabetDTO> alphaLinks, List<PostDTO> alphaPosts) {
+    public String createPostAtoZs() {
         String html = null;
+
         String backToTop = environment.getProperty("posts.az.page.backtotop");
+        String azFileName = environment.getProperty("posts.az.file.name");
+        String azFilePath = applicationSettings.getPostAtoZFilePath();
+
         Map<String, Object> model = new Hashtable<>();
-        model.put("alphaLinks", alphaLinks);
-        model.put("alphaPosts", alphaPosts);
+        model.put("alphaLinks", postService.getAlphaLInks());
+        model.put("alphaPosts", postService.getAlphaPosts());
         model.put("backToTop", backToTop);
 
         try {
             Template template = fm.getTemplate("posts/az.ftl");
             html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+            InputStream in = IOUtils.toInputStream(html, "UTF-8");
+            FileUtils.copyInputStreamToFile(in, new File(azFilePath + azFileName));
         } catch (IOException | TemplateException e) {
-            logger.error("Problem merging post A-to-Z template : " + e.getMessage());
+            logger.error("Problem creating A-to-Z template or HTML file: " + e.getMessage());
         }
         return html;
     }

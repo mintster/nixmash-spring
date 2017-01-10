@@ -109,11 +109,8 @@ public class FmServiceTests extends MailContext {
 
     @Test
     public void postAZTemplatePopulated() throws Exception {
-        List<AlphabetDTO> alphaLInks =postService.getAlphaLInks();
-        List<PostDTO> alphaPosts =postService.getAlphaPosts();
-        String result = fmService.createPostAtoZs(alphaLInks, alphaPosts);
-        assertThat(result, containsString("alphaposts"));
-        System.out.println(result);
+        String result = fmService.createPostAtoZs();
+        assertThat(result, containsString("toppie!"));
     }
 
     // endregion

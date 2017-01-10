@@ -1,6 +1,7 @@
 package com.nixmash.springdata.mvc.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nixmash.springdata.jpa.common.ApplicationSettings;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.Tag;
@@ -11,6 +12,7 @@ import com.nixmash.springdata.mvc.dto.JsonPostDTO;
 import com.nixmash.springdata.mvc.security.WithAdminUser;
 import com.nixmash.springdata.solr.model.PostDoc;
 import com.nixmash.springdata.solr.service.PostDocService;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.core.env.Environment;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -32,6 +35,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +43,7 @@ import static com.nixmash.springdata.mvc.controller.AdminPostsController.*;
 import static com.nixmash.springdata.mvc.security.SecurityRequestPostProcessors.csrf;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -63,6 +66,12 @@ public class AdminPostsControllerTests  extends AbstractContext{
     private JacksonTester<JsonPostDTO> json;
 
     @Autowired
+    private Environment environment;
+
+    @Autowired
+    private ApplicationSettings applicationSettings;
+
+    @Autowired
     private SolrOperations solrOperations;
 
     @Autowired
@@ -72,6 +81,7 @@ public class AdminPostsControllerTests  extends AbstractContext{
     private PostDocService postDocService;
 
     private MockMvc mvc;
+    private String azTestFileName;
 
     @Autowired
     protected WebApplicationContext wac;
@@ -91,10 +101,18 @@ public class AdminPostsControllerTests  extends AbstractContext{
         solrOperations.commit();
         List<Post> posts = postService.getAllPublishedPosts();
         postDocService.addAllToIndex(posts);
+
+        azTestFileName = applicationSettings.getPostAtoZFilePath() +
+                environment.getProperty("posts.az.file.name");
     }
 
     @After
     public void tearDown() {
+    }
+
+    @Test
+    public void AZFileNameIsAZTest() throws Exception {
+        assertThat(environment.getProperty("posts.az.file.name"), is("aztest.html"));
     }
 
     @Test
@@ -149,6 +167,10 @@ public class AdminPostsControllerTests  extends AbstractContext{
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/admin/posts"));
 
+        File azFile = new File(azTestFileName);
+        String contents = FileUtils.readFileToString(azFile);
+        assertTrue(contents.contains(newTitle));
+
         Post updatedPost = postService.getPostById(1L);
         assert (updatedPost.getPostTitle().equals(newTitle));
     }
@@ -169,6 +191,10 @@ public class AdminPostsControllerTests  extends AbstractContext{
 
         post = postService.getPostById(8L);
         assertEquals(post.getPostTitle(), newTitle);
+
+        File azFile = new File(azTestFileName);
+        String contents = FileUtils.readFileToString(azFile);
+        assertFalse(contents.contains(newTitle));
     }
 
     @Test
@@ -381,6 +407,9 @@ public class AdminPostsControllerTests  extends AbstractContext{
         assertEquals(postDocStartCount + 1, postDocEndCount);
         postDocService.removeFromIndex(SOLR_TITLE);
 
+        File azFile = new File(azTestFileName);
+        String contents = FileUtils.readFileToString(azFile);
+        assertTrue(contents.contains("addNewPublishedLink"));
     }
 
     @Test

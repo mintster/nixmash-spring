@@ -27,6 +27,8 @@ dependencies {
 	compile project(':jpa')
 	compile 'org.springframework.boot:spring-boot-starter-mail'
 	compile 'org.springframework.boot:spring-boot-starter-freemarker'
+	compile group: 'commons-io', name: 'commons-io', version: '2.4'
+
 	testCompile project(':jpa').sourceSets.test.output
 }
 
