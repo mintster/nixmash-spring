@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNull;
 @SpringBootTest
 @ContextConfiguration(classes = ApplicationConfig.class)
 @ActiveProfiles(DataConfigProfile.H2)
+@SuppressWarnings("SpringJavaAutowiringInspection")
 @Transactional
 public class PostCachingTests {
 

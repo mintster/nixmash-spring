@@ -245,6 +245,7 @@ public class AdminPostsController {
                 Post post = postService.add(postDTO);
 
                 // All links are saved as PUBLISHED so no _isPublished_ status check
+                // Links are NOT written to the Posts A-to-Z Listing
                 postDocService.addToIndex(post);
 
                 webUI.addFeedbackMessage(attributes, FEEDBACK_POST_LINK_ADDED);
@@ -302,8 +303,12 @@ public class AdminPostsController {
 
                 if (saveAction.equals(POST_PUBLISH)) {
 
-                    if (saved.getIsPublished())
+                    if (saved.getIsPublished()) {
                         postDocService.addToIndex(saved);
+                        // TODO: create Posts A-to-Z
+                        // fmService.createPostAtoZs();
+                    }
+
 
                     webUI.addFeedbackMessage(attributes, FEEDBACK_POST_POST_ADDED);
                     return "redirect:/admin/posts";
@@ -372,6 +377,9 @@ public class AdminPostsController {
                     postDocService.updatePostDocument(post);
                 else
                     postDocService.addToIndex(post);
+
+                // TODO: Rebuild Posts A-to-Z Listing
+                // fmService.createPostAtoZs();
             } else {
                 // remove postDocument from Solr Index if previously marked "Published", now marked "Draft"
                 if (postIsIndexed)

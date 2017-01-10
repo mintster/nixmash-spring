@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class JpaLoader implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(JpaLoader.class);

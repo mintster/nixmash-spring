@@ -1,5 +1,7 @@
 package com.nixmash.springdata.mail;
 
+import com.nixmash.springdata.jpa.dto.AlphabetDTO;
+import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.exceptions.PostNotFoundException;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.User;
@@ -12,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -54,7 +58,7 @@ public class FmServiceTests extends MailContext {
     // region Test Template
 
     @Test
-    public void testTemplate()  {
+    public void testTemplate() {
         String result = fmService.displayTestTemplate(user);
         assertThat(result, containsString(siteName));
     }
@@ -64,39 +68,52 @@ public class FmServiceTests extends MailContext {
     // region Posts
 
     @Test
-    public void noLikesTemplate()   {
+    public void noLikesTemplate() {
         String result = fmService.getNoLikesMessage();
         assertThat(result, containsString("No Liked Posts Selected"));
     }
 
     @Test
-    public void flashcardPostTemplate()  {
+    public void flashcardPostTemplate() {
         String result = fmService.createPostHtml(post, "flashcard_post");
         assertThat(result, containsString(postTitle));
     }
 
     @Test
-    public void postTemplate()  {
+    public void postTemplate() {
         String result = fmService.createPostHtml(post);
         assertThat(result, containsString(postTitle));
     }
 
     @Test
-    public void titlePostTemplate()  {
+    public void titlePostTemplate() {
         String result = fmService.createPostHtml(post, "title");
         assertThat(result, containsString(postTitle));
     }
 
     @Test
-    public void multiphotoPostTemplate()  {
+    public void multiphotoPostTemplate() {
         String result = fmService.createPostHtml(post, "multiphoto_post");
         assertThat(result, containsString(postTitle));
     }
 
     @Test
-    public void singlephotoPostTemplate()  {
+    public void singlephotoPostTemplate() {
         String result = fmService.createPostHtml(post, "singlephoto_post");
         assertThat(result, containsString(postTitle));
+    }
+
+    // endregion
+
+    // region Posts A-to-Z
+
+    @Test
+    public void postAZTemplatePopulated() throws Exception {
+        List<AlphabetDTO> alphaLInks =postService.getAlphaLInks();
+        List<PostDTO> alphaPosts =postService.getAlphaPosts();
+        String result = fmService.createPostAtoZs(alphaLInks, alphaPosts);
+        assertThat(result, containsString("alphaposts"));
+        System.out.println(result);
     }
 
     // endregion
@@ -104,25 +121,25 @@ public class FmServiceTests extends MailContext {
     // region LInk Templates
 
     @Test
-    public void linkTemplate()  {
+    public void linkTemplate() {
         String result = fmService.createPostHtml(link, "link");
         assertThat(result, containsString(linkTitle));
     }
 
     @Test
-    public void linkSummaryTemplate()  {
+    public void linkSummaryTemplate() {
         String result = fmService.createPostHtml(link, "link_summary");
         assertThat(result, containsString(linkTitle));
     }
 
     @Test
-    public void linkFeatureTemplate()  {
+    public void linkFeatureTemplate() {
         String result = fmService.createPostHtml(link, "link_feature");
         assertThat(result, containsString(linkTitle));
     }
 
     @Test
-    public void nixmashLinkTemplate()  {
+    public void nixmashLinkTemplate() {
         String result = fmService.createPostHtml(link, "nixmash_post");
         assertThat(result, containsString(linkTitle));
     }
@@ -132,19 +149,19 @@ public class FmServiceTests extends MailContext {
     // region Utility Templates
 
     @Test
-    public void robotsTxtTemplate()  {
+    public void robotsTxtTemplate() {
         String result = fmService.getRobotsTxt();
         assertThat(result, containsString("User-agent"));
     }
 
     @Test
-    public void fileUploadedTemplate()  {
+    public void fileUploadedTemplate() {
         String result = fmService.getFileUploadedScript();
         assertThat(result, containsString("template-download"));
     }
 
     @Test
-    public void fileUploadingTemplate()  {
+    public void fileUploadingTemplate() {
         String result = fmService.getFileUploadingScript();
         assertThat(result, containsString("template-upload"));
     }

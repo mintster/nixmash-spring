@@ -82,7 +82,6 @@ public class AdminPostsControllerTests  extends AbstractContext{
         ObjectMapper objectMapper = new ObjectMapper();
         JacksonTester.initFields(this, objectMapper);
 
-
         mvc = webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
@@ -501,7 +500,6 @@ public class AdminPostsControllerTests  extends AbstractContext{
                 .param("postTitle", "my title " + s)
                 .param("hasPost", "true")
                 .param("postLink", StringUtils.EMPTY)
-                .param("postDescription", "my description")
                 .param("postType", POST_CONSTANT)
                 .param("displayType", POST_CONSTANT)
                 .param("postContent", "My Post Content must be longer so I don't trigger a new contraint addition!")

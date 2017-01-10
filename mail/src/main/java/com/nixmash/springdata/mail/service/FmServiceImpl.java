@@ -1,6 +1,8 @@
 package com.nixmash.springdata.mail.service;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
+import com.nixmash.springdata.jpa.dto.AlphabetDTO;
+import com.nixmash.springdata.jpa.dto.PostDTO;
 import com.nixmash.springdata.jpa.model.Post;
 import com.nixmash.springdata.jpa.model.User;
 import freemarker.template.Configuration;
@@ -17,6 +19,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 @Service("fmService")
@@ -120,6 +123,24 @@ public class FmServiceImpl implements FmService {
     @Override
     public String createPostHtml(Post post) {
         return createPostHtml(post, null);
+    }
+
+    @Override
+    public String createPostAtoZs(List<AlphabetDTO> alphaLinks, List<PostDTO> alphaPosts) {
+        String html = null;
+        String backToTop = environment.getProperty("posts.az.page.backtotop");
+        Map<String, Object> model = new Hashtable<>();
+        model.put("alphaLinks", alphaLinks);
+        model.put("alphaPosts", alphaPosts);
+        model.put("backToTop", backToTop);
+
+        try {
+            Template template = fm.getTemplate("posts/az.ftl");
+            html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+        } catch (IOException | TemplateException e) {
+            logger.error("Problem merging post A-to-Z template : " + e.getMessage());
+        }
+        return html;
     }
 
     // endregion

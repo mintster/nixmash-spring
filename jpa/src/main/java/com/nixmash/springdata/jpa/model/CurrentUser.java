@@ -2,7 +2,6 @@
 package com.nixmash.springdata.jpa.model;
 
 import com.nixmash.springdata.jpa.common.ApplicationSettings;
-
 import static com.nixmash.springdata.jpa.components.ApplicationContextUI.getAppSettingsFromContext;
 
 public class CurrentUser

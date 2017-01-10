@@ -62,7 +62,7 @@ public class JpaUI {
     }
 
     public void init() {
-        siteOptionsDemo();
+        allPublishedPostsCache();
     }
 
     // region BatchJob Reports and GitHub Stats

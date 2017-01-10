@@ -70,8 +70,18 @@ public class ApplicationSettings  implements Serializable {
 	// region Posts
 
 	private int sidebarTagCloudCount;
+	private String postAtoZFilePath;
 
 	// endregion
+
+
+	public String getPostAtoZFilePath() {
+		return postAtoZFilePath;
+	}
+
+	public void setPostAtoZFilePath(String postAtoZFilePath) {
+		this.postAtoZFilePath = postAtoZFilePath;
+	}
 
 	public int getSidebarTagCloudCount() {
 		return sidebarTagCloudCount;
