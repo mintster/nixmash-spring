@@ -167,13 +167,31 @@ public class AdminPostsControllerTests  extends AbstractContext{
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("feedbackMessage"))
                 .andExpect(redirectedUrl("/admin/posts"));
 
-        File azFile = new File(azTestFileName);
-        String contents = FileUtils.readFileToString(azFile);
-        assertTrue(contents.contains(newTitle));
-
         Post updatedPost = postService.getPostById(1L);
         assert (updatedPost.getPostTitle().equals(newTitle));
     }
+
+    @Test
+    public void updatedPostTitleInAzIncludeFile() throws Exception {
+
+        String newTitle = "New Title for updatedPostTitleInAzIncludeFile Test";
+
+        Post post = postService.getPostById(1L);
+        RequestBuilder request = post("/admin/posts/update")
+                .param("postId", "1")
+                .param("displayType", String.valueOf(post.getDisplayType()))
+                .param("postContent", post.getPostContent())
+                .param("postTitle", newTitle)
+                .param("tags", "one, two")
+                .with(csrf());
+
+        mvc.perform(request);
+
+        File azFile = new File(azTestFileName);
+        String contents = FileUtils.readFileToString(azFile);
+        assertTrue(contents.contains(newTitle));
+    }
+
 
     @Test
     public void saveAndContinueWithValidData_UpdatesPost() throws Exception  {

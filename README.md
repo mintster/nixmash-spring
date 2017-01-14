@@ -20,11 +20,15 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 
 The primary purpose for this app is to become Spring Masters together, and to blog about it along the way at [NixMash.com](http://nixmash.com) where we go deep on the Cool Tech of the Day. The latest release of NixMash Spring is online at **http://nixmashspring.daveburkevt.com.** The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html).
 
-**See the [Installation section](#installation) below** on how to configure NixMash Spring to get up and running. Once configured you can run the Web Application with
+**See the [Installation section](#installation) below** on how to configure NixMash Spring to get up and running. Once configured you can build the project in Gradle with a bash script:
+
+`project_root>$ install/sh/buildAll.sh`
+
+All modules should compile and tests succeed, at which point you can launch the web app with
 
 `$ gradle mvc:bootRun`
 
-The application has four supporting modules, JPA, Mail, Solr and Jsoup, which can also be executed with `$ gradle [module]:bootRun`.
+The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, each of which can also be executed with `$ gradle [module]:bootRun`.
 
 ![Home Page in  Release 0.3.1](http://nixmash.com/x/pics/github/spring-home-0.4.2.png)
 
@@ -82,6 +86,8 @@ The application has four supporting modules, JPA, Mail, Solr and Jsoup, which ca
 - Spring Batch Job where GitHub Repo stats are retrieved every hour and stored in a `github_stats` table from where they're retrieved for display on Home Page
 - User Email Account domain filtering
 - User Registration with Email Validation
+- Generating complex HTML, saving it as a static file and loading it at runtime - Posts A-to-Z page
+- [Post: Avoiding Dynamic Templating for Performance Gains](http://nixmash.com/java/moving-client-templating-to-server-for-performance-gains/)
 - [Post: The Saga of the Case Insensitive MySQL Table Name](http://nixmash.com/java/the-saga-of-the-case-insensitive-mysql-table-name/)
 - [Post: New User Email Verification with Spring, the Code](http://nixmash.com/java/new-user-email-verification-with-spring-the-code/)
 - [Post: New User Email Verification with Spring, the Process](http://nixmash.com/java/new-user-email-verification-with-spring-the-process/)
@@ -712,7 +718,7 @@ The application supports an H2 Profile (default) and a MySQL Profile. To run JPA
 
 ##Installation - Database Configuration##
 
-To use MySQL run `setup.mysql` script in the `/install` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.`
+To use MySQL run `mysqlsetup.sql` script in the `/install/sql` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.`
 
 ##Installation - External Property Files##
 
@@ -732,9 +738,17 @@ Configure Solr as normally on your development machine. Documents are included i
 
 The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod" Profiles respectively.) Configure these in an external `solr.properties` file. Same configuration as **external.properties** and **mail.properties** files discussed above. Set `solr.properties` file location in **Solr** project `common/SolrSettings.java` `@PropertySource` value.
 
+You can start by chosing not to include Solr in your application. To do so, remove `solr` from the root Gradle `settings.gradle` file and from **MVC** Module's `build.gradle` (compile project(':solr')). While in that `build.gradle` file you will notice a line to uncomment if you are not using Solr. That is to use *Tomcat* as your embedded Web Server. Otherwise the app will use the *Jetty* embedded server as part of the `Solr-Core` package dependency.
+
 ##Installation - File Uploads##
 
-You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhost:9000` you could create a soft-link to the `/files` location. See [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2. There are also bash scripts in `/install/sh` for creating a `build/files` soft-link and all site support directories.
+You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhost:9000` you could create a soft-link to the `/files` location. See the NixMash.com post [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2. There are also bash scripts in `/install/sh` for creating a `build/files` soft-link and all site support directories.
+
+##Installation - Gradle BuildAll Script##
+
+When you've added your  external`.properties` files, configured MySQL and, optionally, Solr, there is a bash script found in `/install/sh` named **buildAll.sh** which will build each module and run all tests (which should pass), at which point you can run the app in IntelliJ/Eclipse or at the command line:
+
+`$ gradle mvc:bootRun`
 
 ##References##
 

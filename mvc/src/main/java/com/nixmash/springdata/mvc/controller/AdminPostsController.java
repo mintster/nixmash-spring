@@ -310,7 +310,6 @@ public class AdminPostsController {
                         fmService.createPostAtoZs();
                     }
 
-
                     webUI.addFeedbackMessage(attributes, FEEDBACK_POST_POST_ADDED);
                     return "redirect:/admin/posts";
                 } else {

@@ -7,7 +7,18 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-            $('#postsTable').DataTable();
+            $('#postsTable').DataTable( {
+                "aoColumns": [
+                    null,
+                    null,
+                    null,
+                    { "sType": "date" },
+                    null,
+                    null
+                ],
+                "pageLength": 50,
+                "order": [4, "desc"]]
+            });
         });
     </script>
 
