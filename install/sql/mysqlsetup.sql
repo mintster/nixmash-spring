@@ -315,6 +315,7 @@ INSERT INTO `site_options` VALUES ('2', 'siteDescription', 'My Site Description'
 INSERT INTO `site_options` VALUES ('3', 'addGoogleAnalytics', 'false');
 INSERT INTO `site_options` VALUES ('4', 'googleAnalyticsTrackingId', 'UA-XXXXXX-7');
 INSERT INTO `site_options` VALUES ('5', 'integerProperty', '1');
+INSERT INTO `site_options` VALUES ('6', 'userRegistration', 'EMAIL_VERIFICATION');
 
 -- ----------------------------
 -- Table structure for posts
