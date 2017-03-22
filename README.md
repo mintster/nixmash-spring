@@ -3,6 +3,8 @@ NixMash Spring
 
 NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and supporting web technologies including:
 
+&nbsp; | &nbsp; | &nbsp; | &nbsp;
+| --- | --- | --- | --- |
 | *Spring Boot* | *Spring Data JPA* | *Spring Solr* | *Spring Web MVC* |
 | *Spring Security* | *Spring Social* | *Hibernate* | *Mockito* |
 | *Json* | *Gradle* | *Spring Mail* | *Jsoup* |
