@@ -3,8 +3,6 @@ NixMash Spring
 
 NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and supporting web technologies including:
 
-&nbsp; | &nbsp; | &nbsp; | &nbsp;
-| --- | --- | --- | --- |
 | *Spring Boot* | *Spring Data JPA* | *Spring Solr* | *Spring Web MVC* |
 | *Spring Security* | *Spring Social* | *Hibernate* | *Mockito* |
 | *Json* | *Gradle* | *Spring Mail* | *Jsoup* |
@@ -16,7 +14,7 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (v0.4.0+)* |
 | *Spring Caching* |  *Spring Batch* | *AuthenticationFailure Handling* | |
 
-##Becoming Spring Masters Together
+## Becoming Spring Masters Together
 
 The primary purpose for this app is to become Spring Masters together, and to blog about it along the way at [NixMash.com](http://nixmash.com) where we go deep on the Cool Tech of the Day. The latest release of NixMash Spring is online at **http://nixmashspring.daveburkevt.com.** The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html).
 
@@ -32,11 +30,11 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 ![Home Page in  Release 0.3.1](http://nixmash.com/x/pics/github/spring-home-0.4.2.png)
 
-##Implemented
+## Implemented
 
 *Implementations listed in the Release History below are found in their corresponding branch, v0.0.1, v0.0.2, etc. Newer branches may not contain features found in prior versions.*
 
-##Release History
+## Release History
 - **[v0.5.0 -- Spring Batch Functions, User Registration Updates](#v050----spring-batch-functions-user-registration-updates)**
 - **[v0.4.5 -- CKEditor and Post Editing Updates](#v045----ckeditor-and-post-editing-updates)**
 - **[v0.4.4 -- Spring Caching](#v044----spring-caching)**
@@ -81,7 +79,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 - **[v0.0.2 -- Using Spring Properties](#v002----using-spring-properties)** : *Using Property Files, @Value and @Autowired Environment properties, @ImportResource of app-context.xml demo*
 - **[v0.0.1 -- Base Configuration in Spring and Hibernate](#v001----base-configuration-in-spring-and-hibernate)** : *Spring Annotation Configuration, Lazy Fetching, Named Queries, Logging, Gradle Build Configuration*
 
-##v0.5.0 -- Spring Batch Functions, User Registration Updates
+## v0.5.0 -- Spring Batch Functions, User Registration Updates
 
 - Spring Batch Job where GitHub Repo stats are retrieved every hour and stored in a `github_stats` table from where they're retrieved for display on Home Page
 - User Email Account domain filtering
@@ -101,7 +99,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.4.5 -- CKEditor and Post Editing Updates
+## v0.4.5 -- CKEditor and Post Editing Updates
 
 - Replaced Summernote Editor with CKEditor
 - Full support for Code Highlighting
@@ -110,7 +108,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.4.4 -- Spring Caching
+## v0.4.4 -- Spring Caching
 
 - Added Spring Caching to Posts Module, GitHub Statistics RestTemplate data
 - Fixed exception on displaying GitHub Statistics with RestTemplate when GitHub not available
@@ -120,7 +118,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.4.3 -- Post Searching with Solr
+## v0.4.3 -- Post Searching with Solr
 
 - New Post Stream Links Only display
 - Spring Boot Updated to 1.4.1-RELEASE, Solr Core to 5.5.3
@@ -137,7 +135,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.4.2 -- Post "Save and Continue" and Post Preview, Post Status and Password Administration Improvements
+## v0.4.2 -- Post "Save and Continue" and Post Preview, Post Status and Password Administration Improvements
 
 - Password field added to Administration Create User form
 - Administration "Change Password" form
@@ -154,14 +152,14 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.4.1 -- Move from Velocity to FreeMarker for support templates
+## v0.4.1 -- Move from Velocity to FreeMarker for support templates
 
 - All templates and Velocity source replaced with FreeMarker templates and source
 - [Post: The Move from Velocity to FreeMarker with Spring Boot](http://nixmash.com/java/the-move-from-velocity-to-freemarker-with-spring-boot/)
 
 [[back to top](#nixmash-spring)]
 
-##v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades
+## v0.4.0 -- Spring Boot 1.4.0 and Dependency Upgrades
 
 - Upgraded to Spring Boot 1.4.0.
 - Solr Server and Embedded upgraded to Solr 5.5.2. Supporting scripts in `/install/solr` updated
@@ -174,7 +172,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.3.6 -- Post Add/Edit Moved to Administration
+## v0.3.6 -- Post Add/Edit Moved to Administration
 
 - All Post Management functions moved to Administration 
 - New Post List Display in Dandelion Table with Tags and Published Status
@@ -188,7 +186,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates
+## v0.3.5 -- Posts A-Z, MultiPhoto posts, Flashcard Q&A, User Profile updates
 
 - Flashcards Q&A feature using Bootstrap Carousel and Post object for multimedia answer content
 - Featured Image Post format (Single Photo) with dual role as Flashcard Answer
@@ -209,7 +207,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display##
+## v0.3.4 -- Post tag cloud, sharing, likes, RSS, title display ## 
 
 - Like Buttons
 - Sharing Bookmarks
@@ -235,7 +233,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.3.3 -- Post WYSIWYG editing, tagging, permalinks##
+## v0.3.3 -- Post WYSIWYG editing, tagging, permalinks ## 
 
 - WYSIWYG Editor for Posts and Link Descriptions
 - Post Permalink Display Page
@@ -256,7 +254,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.3.2 -- Initial Posts Feature Release##
+## v0.3.2 -- Initial Posts Feature Release ## 
 
 - Jsoup Annotations Framework
 - Classes with Generic Types as Beans
@@ -277,7 +275,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics##
+## v0.3.1 -- SiteOptions Properties, GitHub Buttons, Google Analytics ## 
 
 - Configurable Google Analytics script and robots.txt file
 - GitHub Repository Statistics with Spring RestTemplate, MVC and Thymeleaf. HTML and CSS from Mark Otto's [GitHub Buttons](https://github.com/mdo/github-buttons)
@@ -298,14 +296,14 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus##
+## v0.3.0 -- Spring Boot 1.3.4, NavBar Submenus ## 
 
 - Bootstrap3 NavBar Submenus
 - Upgrade to Spring Boot 1.3.4, primarily to re-activate DevTools which had a bug in 1.3.3 stopping MySql services on app shutdown
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services##
+## v0.2.9 -- Site Administration Start, Profile Image Uploads, Email Services ## 
 
 - Email Services with Contact Form page
 - Mail Spring Boot Module
@@ -336,7 +334,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.8 -- Spring Social##
+## v0.2.8 -- Spring Social ## 
 
 - Google, Facebook and Twitter Sign-In
 - Social Services app-id and secret keys configured in `external.properties` file
@@ -358,7 +356,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.7 -- Solr MVC##
+## v0.2.7 -- Solr MVC ## 
 
 - Replaced application-dev.properties/application-prod.properties logic with External Properties file `solr.properties`
 - Configured for local and public Solr Server Url of http://solr/nixmashspring or a public url
@@ -384,7 +382,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.6 -- Solr Query Samplings##
+## v0.2.6 -- Solr Query Samplings ## 
 
 - Tests for CRUD and Custom Solr Queries
 - Console demonstrations of Named Method Queries, Java Criteria API, Annotated Queries, Named Queries and Solr Facets
@@ -399,13 +397,13 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.5 -- Spring Boot 1.3##
+## v0.2.5 -- Spring Boot 1.3 ## 
 
 - Spring-Boot-1.3.0.RELEASE
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.4 -- Multiple Solr Repository Configurations##
+## v0.2.4 -- Multiple Solr Repository Configurations ## 
 
 - Four different examples of configuring Solr Repositories
 - 1) Simple @NoRepositoryBean, 2) Derived @NoRepositoryBean, 3) Custom w/ @Repository, 4) SolrFactoryBean Shared Model Repository
@@ -415,7 +413,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.3 -- Initial Solr Release##
+## v0.2.3 -- Initial Solr Release ## 
 
 - New Solr Project based on Solr TechProducts Demo Collection in v5.3.2
 - Embedded and HTTP Solr Server configuration (Profiles "dev" and "prod" respectively)
@@ -431,7 +429,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.2 -- Eclipse-Friendly NixMash Spring##
+## v0.2.2 -- Eclipse-Friendly NixMash Spring ## 
 
 - Modified Gradle build.gradle files to eliminate Eclipse Build errors
 - Added JDK JAVA_HOME properties to root Gradle .properties files
@@ -443,7 +441,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.1 -- Spring MVC and JavaScript Samplings##
+## v0.2.1 -- Spring MVC and JavaScript Samplings ## 
 
 - Bootstrap Dialog Box with requirement to be logged-in to view
 - JQuery Bootstrap Multiselect Plugin with Spring MVC JSON-populated Options and postback
@@ -457,7 +455,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.2.0 -- Spring Data JPA Auditing##
+## v0.2.0 -- Spring Data JPA Auditing ## 
 
 - Spring Data JPA Auditing
 - [Post: Spring JPA Auditing with ZonedDateTime and MySQL](http://nixmash.com/java/spring-jpa-auditing-with-zoneddatetime-and-mysql/)
@@ -467,7 +465,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.9 -- More Child Object Handling in MVC and Thymeleaf##
+## v0.1.9 -- More Child Object Handling in MVC and Thymeleaf ## 
 
 - Hobbies added to Contact Update Form w/ Custom Data Validation
 - Demo of Spring Boot CommandLineRunner
@@ -480,7 +478,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.8 -- Child Object Processing (Phones), MVC Method Level Security##
+## v0.1.8 -- Child Object Processing (Phones), MVC Method Level Security ## 
 
 - Add, Update, Remove Contact Phones added to Contact Update form
 - User Profile Page with @PreAuthorize to enforce owner-only plus administrator profile view
@@ -492,7 +490,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.7 -- Full MySQL Support, WAR Deployment##
+## v0.1.7 -- Full MySQL Support, WAR Deployment ## 
 
 - MySQL Spring Security Support (mysql.setup file now located in /install folder)
 - Deployed as a WAR at http://nixmashspring.daveburkevt.com
@@ -504,7 +502,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.6 -- Initial Release w/ Spring Security##
+## v0.1.6 -- Initial Release w/ Spring Security ## 
 
 - Spring Security with Login and User Registration. Supports Multiple Role Assignment with USERS, USER`AUTHORITIES and AUTHORITIES table storage
 - H2 Console support at http://site/console. USER Role Access Denied to Console
@@ -527,7 +525,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.5 -- Contact Add/Update Form, Dandelion Asset Bundling##
+## v0.1.5 -- Contact Add/Update Form, Dandelion Asset Bundling ## 
 
 - Multi-use Contact Add/Update Form
 - Fadeout Feedback Messages on Contact Add/Update with jQuery and Handlebars
@@ -546,7 +544,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.4 -- Contact Display, List and Search##
+## v0.1.4 -- Contact Display, List and Search ## 
 
 - jQuery, Bootstrap and Bootswatch Webjars
 - Using Bootswatch Webjar with Spring
@@ -559,7 +557,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.3 -- Initial release w/ Thymeleaf##
+## v0.1.3 -- Initial release w/ Thymeleaf ## 
 
 - Thymeleaf support added
 - [Post: Thymeleaf Configuration with Spring Boot](http://nixmash.com/java/thymeleaf-configuration-with-spring-boot/)
@@ -568,7 +566,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.2 -- Multi-Module with JPA and MVC Modules##
+## v0.1.2 -- Multi-Module with JPA and MVC Modules ## 
 
 - MVC Module Added
 - JPA and MVC Modules wired as single Spring Application
@@ -584,7 +582,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.1 -- @ManyToMany Hobbies added to Contact Model##
+## v0.1.1 -- @ManyToMany Hobbies added to Contact Model ## 
 
 - Addition of Hobbies, a @ManyToMany Entity with Contacts
 - Adding Hobbies dynamically on new and updated Contacts, and as separate process
@@ -595,7 +593,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.1.0 -- @OneToMany Contact Phones added to Contact Model##
+## v0.1.0 -- @OneToMany Contact Phones added to Contact Model ## 
 
 - Examples of Updating, Deleting and Adding records with focus on @OneToMany relationship handling
 - ContactDTO now containing Contact and ContactPhone Set
@@ -607,7 +605,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.9 -- Lazy Loading examples##
+## v0.0.9 -- Lazy Loading examples ## 
 
 - Several examples of Lazy Loading
 - First pass at creating schema DTO objects for use in updating and creating data
@@ -616,7 +614,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.8 -- Multi-database configuration w/ H2Console and MySQL##
+## v0.0.8 -- Multi-database configuration w/ H2Console and MySQL ## 
 
 - h2database and mySQL JPA Data Configuration
 - Profiles based on Enumerator value (ex: JpaDataConfig.MYSQL)
@@ -624,7 +622,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.7 -- Multi-profile configuration##
+## v0.0.7 -- Multi-profile configuration ## 
 
 - ApplicationContext and Data Retrieval Tests
 - "Production" and "Dev" Spring Profiles
@@ -637,7 +635,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.6 -- GUI Generated Entities and Diagram Examples##
+## v0.0.6 -- GUI Generated Entities and Diagram Examples ## 
 
 - Generated supplemental Contact, ContactTelDetail and Hobby Entities using the IntelliJ Persistence View GUI tools. (Models now contain "Entity" classname suffix.)
 - Output based on new Entities, shown below
@@ -650,7 +648,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.5 -- Hibernate and JPA Module structure##
+## v0.0.5 -- Hibernate and JPA Module structure ## 
 
 - Broke-up the application into two separate IntelliJ Modules
 - Root and child Gradle project configuration
@@ -658,7 +656,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.4 -- Initial Release with JPA##
+## v0.0.4 -- Initial Release with JPA ## 
 
 - Spring Data JPA Implementation
 - Dual SpringJPAConfiguration and SpringHbnConfiguration classes
@@ -672,7 +670,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.3 -- DAO Implementation##
+## v0.0.3 -- DAO Implementation ## 
 
 - Generic DAO Interface Implementation
 - Added Service Facade
@@ -683,7 +681,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 [[back to top](#nixmash-spring)]
 
-##v0.0.2 -- Using Spring Properties##
+## v0.0.2 -- Using Spring Properties ## 
 
 - Populating DataSource connection from Property File
 - Using both @Value and @Autowired Environment properties
@@ -698,7 +696,7 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
  
 [[back to top](#nixmash-spring)]
 
-##v0.0.1 -- Base Configuration in Spring and Hibernate##
+## v0.0.1 -- Base Configuration in Spring and Hibernate ## 
 
 - Changed XML Spring Configuration to Annotations
 - Changed datasource from embedded H2 to MySql
@@ -712,15 +710,15 @@ The application has five supporting modules, JPA, Mail, Solr, Batch and Jsoup, e
 
 ![Image of Output v0.0.1](http://nixmash.com/x/pics/github/spring-hibernate0411.png)
 
-##Installation##
+## Installation ## 
 
 The application supports an H2 Profile (default) and a MySQL Profile. To run JPA Console app use **$gradle jpa:bootRun.** To run MVC Web app use **$gradle mvc:bootRun.** The Tomcat Server Port is set for **9000** (set in the MVC `application.properties` file) so go to **http://localhost:9000** to view the app in your browser. 
 
-##Installation - Database Configuration##
+## Installation - Database Configuration ## 
 
 To use MySQL run `mysqlsetup.sql` script in the `/install/sql` directory to populate the database. Update Datasource connection properties in `/resources/META-INF/spring/mysql.properties` file. The H2 create-data script for the tests is located in `/resources/db.`
 
-##Installation - External Property Files##
+## Installation - External Property Files ## 
 
 The **JPA**, **Mail**, **Solr** and **Batch** Modules use external Property Files which must be configured to compile successfully. To Configure the location of the Properties Files, change the `@PropertySource` annotation setting in `Jpa/ApplicationSettings.class` and `Mail/MailSettings.java.` You can quickly locate these settings by searching "/home/daveburke" in your IDE.
 
@@ -732,7 +730,7 @@ public class ApplicationSettings {
 ```
 An example of `*.properties` files used by the modules are found in the `/install/samples` folder. Update the property values for your environment.
 
-##Installation - Solr##
+## Installation - Solr ## 
 
 Configure Solr as normally on your development machine. Documents are included in `/install/solr/docs` and scripts to populate the Solr Url and Embedded Servers located in `/install/solr`. Script name: `refreshSolr.sh`. It contains additional installation instructions.
 
@@ -740,17 +738,17 @@ The Solr Project demonstrates both Embedded Solr and Http Solr ("dev" and "prod"
 
 You can start by chosing not to include Solr in your application. To do so, remove `solr` from the root Gradle `settings.gradle` file and from **MVC** Module's `build.gradle` (compile project(':solr')). While in that `build.gradle` file you will notice a line to uncomment if you are not using Solr. That is to use *Tomcat* as your embedded Web Server. Otherwise the app will use the *Jetty* embedded server as part of the `Solr-Core` package dependency.
 
-##Installation - File Uploads##
+## Installation - File Uploads ## 
 
 You will need to create a physical `/files`  storage area to upload Profile Images. On a WAR deployment (like at [http://nixmashspring.daveburkevt.com](http://nixmashspring.daveburkevt.com)) you could use Apache2 mod_proxy to support those physical locations.  For development at `http://localhost:9000` you could create a soft-link to the `/files` location. See the NixMash.com post [Profile Image Uploads: On Image File Storage](http://nixmash.com/java/profile-image-uploads-on-image-file-storage/) for details on creating a soft-link. See [Deploying Your Spring Boot WAR Application](http://nixmash.com/java/deploying-your-spring-boot-war-application/) on adding a `/files` alias in Apache2. There are also bash scripts in `/install/sh` for creating a `build/files` soft-link and all site support directories.
 
-##Installation - Gradle BuildAll Script##
+## Installation - Gradle BuildAll Script ## 
 
 When you've added your  external`.properties` files, configured MySQL and, optionally, Solr, there is a bash script found in `/install/sh` named **buildAll.sh** which will build each module and run all tests (which should pass), at which point you can run the app in IntelliJ/Eclipse or at the command line:
 
 `$ gradle mvc:bootRun`
 
-##References##
+## References ## 
 
 **Version 0.0.1** of the app was based on Chapter #7 of Pro Spring, Fourth Edition from Apress, "Using Hibernate." (An excellent book, btw.) Here is [the book's listing on Apress](http://goo.gl/q2w50H). For Safari users, here is the online version of it [on Safari](http://goo.gl/TD6nuO).
 

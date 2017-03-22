@@ -279,5 +279,6 @@ create VIEW v_flashcards AS
          c.category  as category,
           p.post_title as post_title,
           p.post_id as post_id
-  from flashcard_slides s inner join flashcard_categories c on s.category_id = c.category_id inner join posts p on s.post_id = p.post_id
+  from flashcard_slides s inner join flashcard_categories c on s.category_id = c.category_id inner join posts p on s.post_id = p.post_id;
+
 
