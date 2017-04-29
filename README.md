@@ -16,9 +16,13 @@ NixMash Spring is a Web Bootstrap 3 application demonstrating Spring, Java and s
 | *MultiFile Upload w/Blueimp* | *JPA @SqlResultSetMapping and @ConstructorResult* |  *Spring Gradle Dependency Plugin*  |  *FreeMarker Templating (v0.4.0+)* |
 | *Spring Caching* |  *Spring Batch* | *AuthenticationFailure Handling* | |
 
-## Becoming Spring Masters Together
+## Please Note: NixMash Blog Is the New NixMash Spring
 
-The primary purpose for this app is to become Spring Masters together, and to blog about it along the way at [NixMash.com](http://nixmash.com) where we go deep on the Cool Tech of the Day. The latest release of NixMash Spring is online at **http://nixmashspring.daveburkevt.com.** The NixMash Spring changelist is [located here](http://nixmashspring.daveburkevt.com/x/html/changelist.html).
+> **NixMash Spring** has become **NixMash Blog Engine** and is online at [NixMash.com.](http://nixmash.com) The GitHub Repository is [located here.](https://github.com/mintster/nixmash-blog) There is also a **WordPress to NixMash Blog Migrator** for migrating WordPress blogs to the NixMash Blog Engine. That repository is [found here.](https://github.com/mintster/wp-nixmash-blog-migrator)
+
+## Learning Spring Boot
+
+The primary purpose for this app is to help fellow developers learn Spring Boot. Each feature in **NixMash Spring** has one or more companion blog posts at [NixMash.com](http://nixmash.com) where we go deep on the Cool Tech of the Day. See the list of blog posts on the Release Changelist below.
 
 **See the [Installation section](#installation) below** on how to configure NixMash Spring to get up and running. Once configured you can build the project in Gradle with a bash script:
 
