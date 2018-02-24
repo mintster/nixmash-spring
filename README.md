@@ -775,3 +775,4 @@ Spring Framework contributor Christoph Strobl's Spring Data Solr Showcase(https:
 The [Social Showcase for Spring Boot Sample Project](https://github.com/spring-projects/spring-social-samples/tree/master/spring-social-showcase-boot) was helpful in becoming oriented with Spring Social in **Version 0.2.8.** Petri Kainulainen remains my Go-To Spring Guru, here for Spring Social in his [4-Part Tutorial](http://www.petrikainulainen.net/spring-social-tutorial/).
 
 The Administrative Dashboard introduced in **Version 0.2.9** is based on the [Gentelella Bootstrap Dashboard](https://github.com/puikinsh/gentelella) on GitHub.
+
